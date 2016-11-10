@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import Spinner from './Spinner';
 import './Button.scss';
 
-const Button = ({children, loading, className, disabled, ...props}) => {
+const Button = ({children, className, loading, disabled, ...props}) => {
   const finalClassNames = (className || '') + (loading ?
     ' button button-loading' : ' button');
 
@@ -14,9 +14,10 @@ const Button = ({children, loading, className, disabled, ...props}) => {
 };
 
 Button.propTypes = {
-  children: PropTypes.array.isRequired,
-  loading: PropTypes.bool,
-  to: PropTypes.string
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
+  loading: PropTypes.bool
 };
 
 export default Button;
