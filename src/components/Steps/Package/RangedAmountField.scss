@@ -1,0 +1,29 @@
+.amount-ranged-input {
+  min-width: 8em;
+  margin-right: 8px;
+  padding-right: 3em;
+  padding: 8px;
+  appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  & + .amount-ranged-currency {
+    width: 3em;
+    position: relative;
+    left: -3.25em;
+    margin-right: -2.25em;
+    background-color: #fff;
+    color: #777;
+  }
+}
+
+.amount-ranged-range {
+  color: #777;
+  font-size: 12px;
+}
+.amount-ranged-btc-price {
+  color: #5ab76b;
+}

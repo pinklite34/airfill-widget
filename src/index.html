@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, user-scalable=no">
+    <title>React Slingshot</title>
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <style>
+      body {
+        font-family: -apple-system, ".SFNSText-Regular", "Helvetica Neue",
+          "Roboto", "Segoe UI", sans-serif !important;
+        padding: 0;
+        color: #333;
+        max-width: 720px;
+        margin: 0 auto;
+      }
+      .demo, form { display: inline-block; }
+      #widget { margin-bottom: 64px; }
+      .refill-step-container { border: 1px solid rgba(0, 0, 0, 0.16) !important; border-top-width: 0 !important;  }
+      .refill-step-container:first-child { border-top-width: 1px !important;  }
+    </style>
+  </head>
+  <body>
+    <h1>Refill Widget</h1>
+    <h2>Widget usage</h2>
+    <code><pre>
+&lt;script src="https://cdn.bitrefill.com//widget.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  AirfillWidget('#app', {
+    key: 'your widget api key', // Bitrefill Widget API key (required)
+    billingCurrency: 'BTC',     // Display prices in this currency, valid options are BTC, EUR or USD (default: BTC)
+    refundAddress: '',          // Used for automatic refunds if there is an error (only for bitcoin integrations)
+    userEmail: '',              // If set we won´t ask for the user email in step 3
+    sendEmail: true,            // Send email receipt (default: true)
+    sendSMS: true,              // Send SMS receipt, operator may send additional messages (default: true, only available for some operators)
+    showIntroduction: false,    // Show introductory notice (default: false)
+    showBTCAddress: false,      // Show BTC payment address and instructions (default: false)
+    paymentButtons: [{
+      title: 'Pay With Account Balance',
+      callback: function (order, next) {} // Called once the user confirms the order
+    }, {
+      // ...
+    }]
+  });
+&lt;/script&gt;
+    </pre></code>
+    <h2 class="demo">
+      Demo
+    </h2>
+    <form id="options">
+      <select name="currency">
+        <option value="XBT">BTC</option>
+        <option value="EUR" selected="selected">EUR</option>
+      </select>
+      <label for="collectEmail">
+        <input type="checkbox" name="collectEmail" id="collectEmail" value="true" /> Collect email
+      </label>
+      <label for="introduction">
+        <input type="checkbox" name="introduction" id="introduction" value="true" /> Show introduction
+      </label>
+    </form>
+    <div id="widget"></div>
+
+    <script src="/widget.js"></script>
+    <script>
+      var form = document.querySelector('#options');
+      var currency = form.querySelector('select[name=currency]');
+      var collectEmail = form.querySelector('input[name=collectEmail]');
+      var introduction = form.querySelector('input[name=introduction]');
+
+      function render () {
+        AirfillWidget('#widget', {
+          key: '5GY9TZBK8E05U9JQSTWFXNQS4',
+          billingCurrency: currency.value,
+          paymentButtons: [{
+            title: 'Send Payment',
+            callback: function (order) {
+              console.info(order);
+              confirm('Order ID:' + order.orderId + '\n\nSee console for order details');
+            }
+          }],
+          sendEmail: true,
+          userEmail: collectEmail.checked ? '' : 'test@testing.com',
+          showIntroduction: introduction.checked
+        });
+      }
+
+      form.addEventListener('change', render, false);
+      render();
+    </script>
+  </body>
+</html>
