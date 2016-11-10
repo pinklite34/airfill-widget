@@ -5,7 +5,7 @@
   "main": "dist/widget.js",
   "scripts": {
     "clean": "rm -rf dist/*",
-    "copy": "cp -f ./src/index.html ./src/favicon.ico ./dist",
+    "copy": "cp -f ./src/index.html ./dist",
     "dist": "npm run copy & webpack --env=dist",
     "lint": "eslint ./src",
     "posttest": "npm run lint",
