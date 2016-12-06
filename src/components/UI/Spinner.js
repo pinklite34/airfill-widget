@@ -4,9 +4,10 @@ import './Spinner.scss';
 export default ({
   children,
   hideText = false,
-  inverted = false
+  inverted = false,
+  className = ''
 }) => (
-  <div className="spinner-wrapper spinner-wrapper-ios" key="spinner">
+  <div className={`spinner-wrapper spinner-wrapper-ios ${className}`} key="spinner">
     <div className={
       `spinner spinner-ios ${inverted ? 'spinner-white' :''}`
     }>

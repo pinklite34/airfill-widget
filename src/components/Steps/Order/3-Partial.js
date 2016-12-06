@@ -7,7 +7,7 @@ const PartialPayment = ({order, paymentStatus}) => {
 
   return (
     <div>
-      <h3>Partial payment</h3>
+      <h3>Partial payment detected</h3>
       <p>
         We have received a partial payment from you. You paid <strong>
         {paidAmount} BTC</strong>, but the invoice was for <strong>

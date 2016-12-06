@@ -2,7 +2,7 @@ import React from 'react';
 import RefillStep from '../Step';
 import PusherSubscription from '../../PusherSubscription';
 
-import Spinner from '../../ui/Spinner';
+import Spinner from '../../UI/Spinner';
 
 import NewPayment from './0-New';
 import PaymentDetected from './1-Detected';

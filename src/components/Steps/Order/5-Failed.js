@@ -13,7 +13,19 @@ Thanks!`);
 
   return (
     <div>
-      <h3>Refill Failed</h3>
+      <h3 className="order-step">
+        <span className="order-step-symbol order-step-done">✓</span>
+        Payment complete
+      </h3>
+      <h3 className="order-step">
+        <span className="order-step-symbol order-step-done">✓</span>
+        Refill sent
+      </h3>
+      <h3 className="order-step">
+        <span className="order-step-symbol order-step-error">X</span>
+        Delivery failed
+      </h3>
+
       <p>
         For some reason we failed do deliver your refill. This can happen if you
         have typed the number incorrectly, if the number is not for a prepaid

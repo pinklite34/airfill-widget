@@ -119,6 +119,53 @@
     .refill-error-message {
       color: #D65C5C;
     }
+
+    .order-step {
+      opacity: 0.6;
+    }
+    .order-step + .order-step {
+      margin-top: 12px;
+    }
+    .order-step:last-of-type {
+      opacity: 1;
+    }
+
+    .order-step-done {
+      color: #98AE0A;
+    }
+    .order-step-error {
+      color: #E1283C;
+    }
+
+    .order-step-symbol {
+      display: flex;
+      height: 19px;
+      width: 16px;
+      margin-bottom: -19px;
+      padding: 0;
+      position: relative;
+      left: -24px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .order-step-symbol.spinner-wrapper {
+      flex-direction: row;
+      justify-content: flex-start;
+
+      .spinner.spinner-ios {
+        font-size: 16px;
+      }
+
+      .spinner-text {
+        text-align: left;
+        margin: 0 0 0 16px;
+
+        strong, a {
+          display: block;
+        }
+      }
+    }
   }
 
   .refill-step-back {

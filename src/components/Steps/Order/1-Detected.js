@@ -1,9 +1,18 @@
 import React, {PropTypes} from 'react';
+import Spinner from  '../../UI/Spinner';
 
 const PaymentDetected = ({order}) => {
   return (
     <div>
-      <h3>Payment detected</h3>
+
+      <h3 className="order-step">
+        <span className="order-step-symbol order-step-done">✓</span>
+        Payment detected
+      </h3>
+      <h3 className="order-step">
+        <Spinner hideText={true} className="order-step-symbol" />
+        Waiting for payment confirmation
+      </h3>
       <p>
         We have detected your payment, and will process your order as soon as
         the transaction is confirmed on the Bitcoin network. This usually
