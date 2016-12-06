@@ -45,8 +45,7 @@ export default (state={}, {type, payload}) => {
         status = 'paid';
       }
 
-      const nextState = { ...state };
-      nextState[id] = { status };
+      return { ...state, [id]: { status } };
     }
 
     default:
