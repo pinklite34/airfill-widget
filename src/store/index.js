@@ -1,4 +1,4 @@
-import { REHYDRATE } from 'redux-persist/constants';
+import {combineReducers} from 'redux';
 import ui, {
   selectWidgetState,
   selectNumber,
@@ -10,18 +10,12 @@ import numberLookup, { selectNumberLookup, selectOperator } from './numberLookup
 import paymentStatus, { selectPaymentStatus } from './paymentStatus';
 import order, { selectOrder } from './order';
 
-export default (state={}, action) => {
-  if (action.type === REHYDRATE) {
-    return action.payload
-  }
-
-  return {
-    ui: ui(state.ui, action),
-    numberLookup: numberLookup(state.numberLookup, action),
-    paymentStatus: paymentStatus(state.paymentStatus, action),
-    order: order(state.order, action)
-  }
-};
+export default combineReducers({
+  ui,
+  numberLookup,
+  paymentStatus,
+  order
+});
 
 export {
   // UI
