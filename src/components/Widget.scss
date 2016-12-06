@@ -50,17 +50,17 @@
     height: 28px;
     line-height: 1.55;
     border-radius: 50%;
-    background-color: hsla(130, 40%, 55%, 0.8);
+    background-color: rgba(152, 174, 10, 0.8);
     color: rgba(0,0,0,0.6);
     text-align: center;
     margin: 0 12px 0 0;
     color: #fff;
 
     .refill-step-expanded & {
-      background-color: hsl(130, 40%, 55%);
+      background-color: rgb(152, 174, 10);
     }
     .refill-step-expanded ~ .refill-step-container & {
-      background-color: hsla(130, 40%, 55%, 0.6);
+      background-color: rgba(152, 174, 10, 0.6);
     }
   }
   .refill-step-body {
