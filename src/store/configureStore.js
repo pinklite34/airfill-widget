@@ -18,7 +18,7 @@ export default function configureStore(initialState) {
     )
   );
 
-  persistStore(store, { whitelist: 'ui' });
+  persistStore(store);
 
   return store;
 }
