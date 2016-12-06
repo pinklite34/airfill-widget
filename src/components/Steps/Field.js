@@ -2,7 +2,7 @@ import React from 'react';
 
 const RefillStep = ({label, htmlFor, error, hint, children, className}) => {
   return (
-    <div className={"refill-field-container " + (className || '')}>
+    <div className={'refill-field-container ' + (className || '')}>
       {label &&
         <label className="refill-field-label" htmlFor={htmlFor}>{label}</label>
       }
@@ -13,7 +13,7 @@ const RefillStep = ({label, htmlFor, error, hint, children, className}) => {
         <p className="refill-error-message">{error}</p>
       }
       {!error && hint &&
-        <p className="refill-field-hint">{hint}</p>
+        <p className="refill-field-hint" dangerouslySetInnerHTML={{ __html: hint }} />
       }
     </div>
   );
