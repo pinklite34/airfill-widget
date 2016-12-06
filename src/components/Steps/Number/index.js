@@ -4,7 +4,7 @@ import Field from '../Field';
 import Button from '../../UI/Button';
 
 import IntlTelInput from 'react-intl-tel-input';
-import 'file?name=libphonenumber.js!react-intl-tel-input/dist/libphonenumber.js';
+import 'react-intl-tel-input/dist/libphonenumber.js';
 import 'react-intl-tel-input/dist/main.css';
 
 const getErrorMessage = error => {
