@@ -2,6 +2,8 @@ import React from 'react';
 import RefillStep from '../Step';
 import PusherSubscription from '../../PusherSubscription';
 
+import Spinner from '../../ui/Spinner';
+
 import NewPayment from './0-New';
 import PaymentDetected from './1-Detected';
 import PaymentConfirmed from './2-Confirmed';
@@ -50,7 +52,9 @@ const OrderStep = ({
     expanded
   };
 
-  if (expanded) {
+  if (!order) {
+    return <RefillStep {...stepProps}><Spinner>Loading order status</Spinner></RefillStep>;
+  } else if (expanded) {
     const PaymentComponent = componentForStatus(paymentStatus.status);
     const {orderId, payment: {address}} = order;
 

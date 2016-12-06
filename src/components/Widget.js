@@ -96,7 +96,7 @@ const NewRefill = ({
       />
       <OrderStep
         expanded={currentStep===3}
-        order={order.result}
+        order={!order.isLoading && order.result}
         paymentStatus={paymentStatus}
         paymentButtons={paymentButtons}
         showBTCAddress={showBTCAddress}
