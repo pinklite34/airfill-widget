@@ -1,4 +1,5 @@
 import {createAction} from 'redux-actions';
+import {REHYDRATE} from 'redux-persist/constants';
 import {fetch} from './api-client';
 
 const actionTypeForName = name => {
@@ -43,6 +44,10 @@ export const createCollectionReducer = name => {
 
       case baseType + '_ERROR': {
         return { ...state, isLoading: false, error: payload.message || payload, nbPage: 0, page: 0};
+      }
+
+      case REHYDRATE: {
+        return { ...state, ...payload[name], isLoading: false };
       }
 
       default:

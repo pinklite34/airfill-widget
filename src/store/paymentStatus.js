@@ -30,7 +30,7 @@ export default (state={}, {type, payload}) => {
         sent,
         paymentReceived
       } = payload;
-      let status = state[id].status;
+      let status = state[id] ? state[id].status : undefined;
 
       /*if (order.refunded) {
         status = 'refunded';
