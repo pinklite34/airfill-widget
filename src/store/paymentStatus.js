@@ -4,7 +4,7 @@ import {selectOrder} from './order';
 export default (state={}, {type, payload}) => {
   switch (type) {
     case REHYDRATE: {
-      const data = payload.airfillWidget.paymentStatus;
+      const data = payload.airfillWidget && payload.airfillWidget.paymentStatus;
       return { ...state, ...data };
     }
 

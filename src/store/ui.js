@@ -11,7 +11,7 @@ const initialState = {
 export default (state=initialState, {type, payload}) => {
   switch (type) {
     case REHYDRATE: {
-      const data = selectUiState(payload);
+      const data = payload.airfillWidget && selectUiState(payload);
       return { ...state, ...data };
     }
 
