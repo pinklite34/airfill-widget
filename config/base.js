@@ -1,7 +1,7 @@
 const path = require('path');
 
 const srcPath = path.join(__dirname, '/../src');
-const defaultPort = 8000;
+const defaultPort = process.env.PORT || 8000;
 const publicPath = '/';
 
 module.exports = {
