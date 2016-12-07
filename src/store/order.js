@@ -3,5 +3,5 @@ import {
   createSingleResultSelector
 } from '../lib/rest-helpers';
 
-export default createCollectionReducer('order');
-export const selectOrder = createSingleResultSelector('order');
+export default createCollectionReducer('airfillWidget.order');
+export const selectOrder = createSingleResultSelector('airfillWidget.order');

@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 import ui, {
-  selectWidgetState,
+  selectUiState,
   selectNumber,
   selectAmount,
   selectEmail,
@@ -10,16 +10,20 @@ import numberLookup, { selectNumberLookup, selectOperator } from './numberLookup
 import paymentStatus, { selectPaymentStatus } from './paymentStatus';
 import order, { selectOrder } from './order';
 
-export default combineReducers({
+// Export the reducer for use within other redux apps
+export const airfillWidget = combineReducers({
   ui,
   numberLookup,
   paymentStatus,
   order
 });
 
+// Keep the same state shape when using the standalone widget
+export default combineReducers({airfillWidget})
+
 export {
   // UI
-  selectWidgetState,
+  selectUiState,
   selectNumber,
   selectAmount,
   selectEmail,

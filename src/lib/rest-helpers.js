@@ -47,7 +47,8 @@ export const createCollectionReducer = name => {
       }
 
       case REHYDRATE: {
-        return { ...state, ...payload[name], isLoading: false };
+        const data = createCollectionSelector(name)(payload);
+        return { ...state, ...data, isLoading: false };
       }
 
       default:
@@ -62,7 +63,7 @@ export const createCollectionReducer = name => {
 
 export const createCollectionSelector = name => {
   const keyPath = Array.isArray(name) ? name : name.split('.');
-  return state => keyPath.reduce((mem, key) => mem[key], state);
+  return state => keyPath.reduce((mem, key) => mem && mem[key], state);
 };
 export const createIsLoadingSelector = name => {
   const collectionSelector = createCollectionSelector(name);

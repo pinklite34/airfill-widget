@@ -1,3 +1,5 @@
+import {REHYDRATE} from 'redux-persist/constants';
+
 const initialState = {
   currentStep: 1,
   number: null,
@@ -8,6 +10,11 @@ const initialState = {
 
 export default (state=initialState, {type, payload}) => {
   switch (type) {
+    case REHYDRATE: {
+      const data = selectUiState(payload);
+      return { ...state, ...data };
+    }
+
     case 'SET_STEP': {
       const currentStep = (payload > 0 && payload < 4)
         ? payload : state.currentStep;
@@ -90,11 +97,11 @@ export default (state=initialState, {type, payload}) => {
   }
 };
 
-export const selectWidgetState = state => state.ui;
-export const selectNumber = state => selectWidgetState(state).number;
-export const selectAmount = state => selectWidgetState(state).amount;
-export const selectCurrentStep = state => selectWidgetState(state).currentStep;
+export const selectUiState = state => state.airfillWidget.ui;
+export const selectNumber = state => selectUiState(state).number;
+export const selectAmount = state => selectUiState(state).amount;
+export const selectCurrentStep = state => selectUiState(state).currentStep;
 export const selectEmail = state => {
-  const email = selectWidgetState(state).email;
+  const email = selectUiState(state).email;
   return email.valid ? email.value : '';
 };

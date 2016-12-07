@@ -1,7 +1,13 @@
+import {REHYDRATE} from 'redux-persist/constants';
 import {selectOrder} from './order';
 
 export default (state={}, {type, payload}) => {
   switch (type) {
+    case REHYDRATE: {
+      const data = payload.airfillWidget.paymentStatus;
+      return { ...state, ...data };
+    }
+
     case 'UPDATE_PAYMENT_STATUS': {
       const { orderId, status, data } = payload;
 
@@ -56,7 +62,7 @@ export default (state={}, {type, payload}) => {
 export const selectPaymentStatus = (state) => {
   const order = selectOrder(state);
   if (order.result && order.result.orderId) {
-    return state.paymentStatus[order.result.orderId] || {};
+    return state.airfillWidget.paymentStatus[order.result.orderId] || {};
   }
   return {};
 };

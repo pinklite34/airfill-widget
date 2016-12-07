@@ -15,7 +15,7 @@ import {
   updatePaymentStatus
 } from '../actions';
 import {
-  selectWidgetState,
+  selectUiState,
   selectCurrentStep,
   selectNumberLookup,
   selectPaymentStatus,
@@ -122,7 +122,7 @@ const NewRefill = ({
 
 
 export default connect(state => ({
-  widgetState: selectWidgetState(state),
+  widgetState: selectUiState(state),
   currentStep: selectCurrentStep(state),
   numberLookup: selectNumberLookup(state),
   paymentStatus: selectPaymentStatus(state),

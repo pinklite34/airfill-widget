@@ -59,7 +59,7 @@ export const proccessOperatorPackages = response => {
 };
 
 const loadNumberLookup = createLoadAction({
-  name: 'numberLookup',
+  name: 'airfillWidget.numberLookup',
   uri: '/lookup_number',
   responseTransform: proccessOperatorPackages
 });
@@ -99,7 +99,7 @@ export const lookupRefillNumber = (operatorSlug) => (dispatch, getState) => {
 };
 
 const createOrder = createLoadAction({
-  name: 'order',
+  name: 'airfillWidget.order',
   uri: '/order'
 });
 
@@ -134,7 +134,7 @@ export const placeRefillOrder = (orderOptions) => (dispatch, getState) => {
 };
 
 
-const fetchOrder = createLoadAction('order');
+const fetchOrder = createLoadAction('airfillWidget.order');
 export const updateOrderStatus = () => (dispatch, getState) => {
   const order = selectOrder(getState());
 
