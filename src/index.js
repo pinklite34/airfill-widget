@@ -60,4 +60,4 @@ function AirfillWidget(ele, opt) {
   );
 }
 
-window.AirfillWidget = AirfillWidget;
+window.AirfillWidget = window.BitRefillWidget = AirfillWidget;
