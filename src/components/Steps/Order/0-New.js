@@ -8,7 +8,8 @@ const valueField = {
 };
 
 const NewPayment = ({order, number, showEmailField, showBTCAddress, billingCurrency, paymentButtons}) => {
-  const price = order[valueField[billingCurrency.toLowerCase()]] + ' ' + billingCurrency.toUpperCase();
+  const billingCurrencyDisplayName = billingCurrency === 'XBT' ? 'BTC' : billingCurrency;
+  const price = order[valueField[billingCurrency.toLowerCase()]] + ' ' + billingCurrencyDisplayName.toUpperCase();
 
   return (
     <div>
