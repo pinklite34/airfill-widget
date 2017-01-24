@@ -12,9 +12,11 @@ const RefillStep = ({label, htmlFor, error, hint, children, className}) => {
       {error &&
         <p className="refill-error-message">{error}</p>
       }
-      {!error && hint &&
-        <p className="refill-field-hint" dangerouslySetInnerHTML={{ __html: hint }} />
-      }
+      {(!error && hint) ?
+        (typeof hint === 'string' ?
+          <p className="refill-field-hint" dangerouslySetInnerHTML={{ __html: hint }} />
+        : <p className="refill-field-hint">{hint}</p>)
+      : null}
     </div>
   );
 };
