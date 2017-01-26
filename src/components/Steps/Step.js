@@ -1,11 +1,12 @@
 import React from 'react';
 
-const RefillStep = ({number, title, expanded, children, onBack, showSummary, onSubmit}) => {
+const RefillStep = ({number, title, subTitle, expanded, children, onBack, showSummary, onSubmit}) => {
   return (
     <section className={`refill-step-container ${expanded ? ' refill-step-expanded' : ''}`}>
       <h2 className="refill-step-title">
         <span className="refill-step-number">{number}</span>
         {title}
+        {subTitle ? <small className="refill-step-subtitle">{subTitle}</small> : null}
       </h2>
       {(showSummary || expanded) &&
         <form className="refill-step-body" onSubmit={(e) => {

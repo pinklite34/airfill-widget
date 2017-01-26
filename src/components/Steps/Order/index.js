@@ -48,7 +48,7 @@ const OrderStep = ({
 }) => {
   const stepProps = {
     number: 3,
-    title: "Order",
+    title: "Pay",
     expanded
   };
 
@@ -59,7 +59,7 @@ const OrderStep = ({
     const {orderId, payment: {address}} = order;
 
     return (
-      <RefillStep {...stepProps}>
+      <RefillStep {...stepProps} subTitle={expanded && paymentStatus.status ? `Order ID ${order.orderId}` : null}>
         <PusherSubscription
           channel={[orderId, address].join('-')}
           events={['paid', 'confirmed', 'partial', 'failed', 'delivered']}
