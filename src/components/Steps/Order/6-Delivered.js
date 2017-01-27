@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import Button from '../../UI/Button';
 
-const RefillDelivered = ({paymentStatus: { deliveryData = {} }}) => {
+const RefillDelivered = ({paymentStatus: { deliveryData = {} }, onReset}) => {
   return (
     <div>
       <h3 className="order-step">
@@ -39,12 +39,14 @@ const RefillDelivered = ({paymentStatus: { deliveryData = {} }}) => {
           {deliveryData.pinInfo.other}
         </p>
       )}
+      <Button onClick={onReset}>Send another refill</Button>
     </div>
   );
 };
 
 RefillDelivered.propTypes = {
-  paymentStatus: PropTypes.object.isRequired
+  paymentStatus: PropTypes.object.isRequired,
+  onReset: PropTypes.func.isRequired
 };
 
 export default RefillDelivered;

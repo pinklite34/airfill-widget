@@ -115,6 +115,7 @@ class AirfillWidget extends Component {
           showBTCAddress={showBTCAddress}
           onPaymentStatusChange={onPaymentStatusChange}
           refundAddress={refundAddress}
+          onReset={()=>goToRefillStep(1)}
           {...sharedProps}
         />
         {showIntroduction === true ?

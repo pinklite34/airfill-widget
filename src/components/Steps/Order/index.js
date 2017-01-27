@@ -41,6 +41,7 @@ const OrderStep = ({
   refundAddress,
   paymentButtons,
   onPaymentStatusChange,
+  onReset,
   showBTCAddress,
   showEmailField,
   billingCurrency,
@@ -80,6 +81,7 @@ const OrderStep = ({
           refundAddress={refundAddress}
           billingCurrency={billingCurrency}
           number={number}
+          onReset={onReset}
         />
       </RefillStep>
     );
