@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import NumberStep from './Steps/Number';
@@ -12,7 +12,8 @@ import {
   setRefillStep,
   lookupRefillNumber,
   placeRefillOrder,
-  updatePaymentStatus
+  updatePaymentStatus,
+  updateOrderStatus
 } from '../actions';
 import {
   selectUiState,
@@ -24,105 +25,117 @@ import {
 
 import './Widget.scss';
 
-const NewRefill = ({
-  /* State */
-  currentStep,
-  numberLookup,
-  paymentStatus,
-  order,
-  widgetState,
+class AirfillWidget extends Component {
+  componentDidMount() {
+    this.props.updateOrderStatus();
+  }
 
-  /* Actions */
-  onNumberChange,
-  onSubmitNumberStep,
-  onOperatorChange,
-  onAmountChange,
-  onEmailChange,
-  onSubmitPackageStep,
-  goToRefillStep,
-  onPaymentStatusChange,
+  render() {
+    const {
+      /* State */
+      currentStep,
+      numberLookup,
+      paymentStatus,
+      order,
+      form: {
+        country,
+        countryName,
+        number,
+        formattedNumber,
+        amount,
+        email,
+        autoDetectedOperator
+      },
 
-  /* Other props */
-  paymentButtons,
-  showBTCAddress,
-  billingCurrency,
-  orderOptions,
-  showIntroduction,
-  showTerms,
+      /* Actions */
+      onNumberChange,
+      onSubmitNumberStep,
+      onOperatorChange,
+      onAmountChange,
+      onEmailChange,
+      onSubmitPackageStep,
+      goToRefillStep,
+      onPaymentStatusChange,
 
-  ...rest
-}) => {
-  const showEmailField = !('email' in orderOptions) || orderOptions.email.indexOf('@') < 1;
-  const refundAddress = orderOptions.refundAddress;
+      /* Other props */
+      paymentButtons,
+      showBTCAddress=this.props.billingCurrency === 'BTC',
+      billingCurrency='XBT',
+      orderOptions,
+      showIntroduction,
+      showTerms,
 
-  // Only show BTC payment info if explicitly enabled or if the billing
-  // currency is BTC and it is not explicitly disabled
-  showBTCAddress = showBTCAddress !== null ? showBTCAddress :
-    billingCurrency === 'BTC';
+      updateOrderStatus, // eslint-disable-line no-unused-vars
 
-  const sharedProps = {
-    country: widgetState.country,
-    countryName: widgetState.countryName,
-    number: widgetState.number,
-    formattedNumber: widgetState.formattedNumber,
-    amount: widgetState.amount,
-    showEmailField: showEmailField,
-    billingCurrency: (billingCurrency || 'xbt').toUpperCase(),
-    numberLookup
-  };
+      ...rest
+    } = this.props;
 
-  return (
-    <div {...rest}>
-      <NumberStep
-        expanded={currentStep===1}
-        showSummary={currentStep > 1}
-        onNumberChange={onNumberChange}
-        onContinue={onSubmitNumberStep}
-        onBack={()=>goToRefillStep(1)}
-        {...sharedProps}
-      />
-      <PackageStep
-        expanded={currentStep===2}
-        showSummary={currentStep > 2}
-        email={widgetState.email}
-        onEmailChange={onEmailChange}
-        autoDetectedOperator={widgetState.autoDetectedOperator}
-        onOperatorChange={onOperatorChange}
-        onAmountChange={onAmountChange}
-        onContinue={()=>onSubmitPackageStep(orderOptions)}
-        onBack={()=>goToRefillStep(2)}
-        isLoadingOrder={order && order.isLoading}
-        {...sharedProps}
-      />
-      <OrderStep
-        expanded={currentStep===3}
-        order={!order.isLoading && order.result}
-        paymentStatus={paymentStatus}
-        paymentButtons={paymentButtons}
-        showBTCAddress={showBTCAddress}
-        onPaymentStatusChange={onPaymentStatusChange}
-        refundAddress={refundAddress}
-        {...sharedProps}
-      />
-      {showIntroduction === true ?
-        <p className="refill-introduction">With <strong>Bitrefill</strong> you can top up prepaid phones in over 150 countries. It’s fast, cheap and secure.</p>
-      : null}
-      {showTerms === true ?
-        <p className="refill-terms">
-          <a href="https://www.bitrefill.com/terms/" target="_blank">
-            Terms of Service
-          </a> and <a href="https://www.bitrefill.com/privacy/" target="_blank">
-            Privacy Policy
-          </a>
-        </p>
-      : null}
-    </div>
-  );
-};
+    const showEmailField = !('email' in orderOptions) || orderOptions.email.indexOf('@') < 1;
+    const refundAddress = orderOptions.refundAddress;
 
+    const sharedProps = {
+      country,
+      countryName,
+      number,
+      formattedNumber,
+      amount,
+      showEmailField,
+      billingCurrency,
+      numberLookup
+    };
+
+    return (
+      <div {...rest}>
+        <NumberStep
+          expanded={currentStep===1}
+          showSummary={currentStep > 1}
+          onNumberChange={onNumberChange}
+          onContinue={onSubmitNumberStep}
+          onBack={()=>goToRefillStep(1)}
+          {...sharedProps}
+        />
+        <PackageStep
+          expanded={currentStep===2}
+          showSummary={currentStep > 2}
+          email={email}
+          onEmailChange={onEmailChange}
+          autoDetectedOperator={autoDetectedOperator}
+          onOperatorChange={onOperatorChange}
+          onAmountChange={onAmountChange}
+          onContinue={()=>onSubmitPackageStep(orderOptions)}
+          onBack={()=>goToRefillStep(2)}
+          isLoadingOrder={order && order.isLoading}
+          {...sharedProps}
+        />
+        <OrderStep
+          expanded={currentStep===3}
+          order={!order.isLoading && order.result}
+          paymentStatus={paymentStatus}
+          paymentButtons={paymentButtons}
+          showBTCAddress={showBTCAddress}
+          onPaymentStatusChange={onPaymentStatusChange}
+          refundAddress={refundAddress}
+          {...sharedProps}
+        />
+        {showIntroduction === true ?
+          <p className="refill-introduction">With <strong>Bitrefill</strong> you can top up prepaid phones in over 150 countries. It’s fast, cheap and secure.</p>
+        : null}
+        {showTerms === true ?
+          <p className="refill-terms">
+            <a href="https://www.bitrefill.com/terms/" target="_blank">
+              Terms of Service
+            </a> and <a href="https://www.bitrefill.com/privacy/" target="_blank">
+              Privacy Policy
+            </a>
+          </p>
+        : null}
+      </div>
+    );
+  }
+}
 
 export default connect(state => ({
-  widgetState: selectUiState(state),
+  form: selectUiState(state),
   currentStep: selectCurrentStep(state),
   numberLookup: selectNumberLookup(state),
   paymentStatus: selectPaymentStatus(state),
@@ -135,5 +148,6 @@ export default connect(state => ({
   onEmailChange: setRefillEmail,
   onSubmitPackageStep: placeRefillOrder,
   onPaymentStatusChange: updatePaymentStatus,
-  goToRefillStep: setRefillStep
-})(NewRefill);
+  goToRefillStep: setRefillStep,
+  updateOrderStatus
+})(AirfillWidget);

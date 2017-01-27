@@ -9,7 +9,7 @@ import Widget from './components/Widget';
 import {client} from './lib/api-client';
 
 import configureStore from './store/configureStore';
-const store = configureStore();
+let store;
 
 function AirfillWidget(ele, opt) {
   const element = typeof ele === 'string' ? document.querySelector(ele) : ele;
@@ -21,7 +21,7 @@ function AirfillWidget(ele, opt) {
     sendEmail: true,            // Send email receipt (default: true)
     sendSMS: true,              // Send SMS receipt, operator may send additional messages (default: true, only available for some operators)
     showIntroduction: false,    // Show introductory notice (default: false)
-    showBTCAddress: null,       // Show BTC payment address and instructions (default: false)
+    showBTCAddress: false,      // Show BTC payment address and instructions (default: false)
     paymentButtons: [],
     ...opt
   };
@@ -44,6 +44,8 @@ function AirfillWidget(ele, opt) {
     showBTCAddress
   } = options;
   let orderOptions = { email: userEmail, sendEmail, sendSMS, refundAddress };
+
+  store = store || configureStore();
 
   render(
     <Provider store={store}>
