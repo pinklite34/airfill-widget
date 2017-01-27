@@ -20,13 +20,13 @@ const AmountPicker = ({
             <input
               type="radio"
               name="amount"
-              id={"amount_" + value}
+              id={'amount_' + value}
               value={value}
               className="pricelist_item"
               checked={selected && value === selected}
               onChange={()=>onChange(value)}
             />
-            <label htmlFor={"amount_" + value} className="amount-item-label" onClick={()=>onChange(value)}>
+            <label htmlFor={'amount_' + value} className="amount-item-label" onClick={()=>onChange(value)}>
               <var className="amount-value">{value} {currency}</var>
               <span className="amount-separator">you pay</span>
               <var className="amount-billing-price">{price}</var>

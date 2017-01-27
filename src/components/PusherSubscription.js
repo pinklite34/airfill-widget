@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import { Component, PropTypes } from 'react';
 import Pusher from 'pusher-js';
 
 const pusherClient = new Pusher('0837b617cfe786c32a91', {

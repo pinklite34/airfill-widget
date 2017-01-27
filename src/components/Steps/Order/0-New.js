@@ -4,7 +4,7 @@ import Button from '../../UI/Button';
 const valueField = {
   'xbt': 'btcPrice',
   'eur': 'eurPrice',
-  'usd': 'usdPrice',
+  'usd': 'usdPrice'
 };
 
 const NewPayment = ({order, number, showEmailField, showBTCAddress, billingCurrency, paymentButtons}) => {

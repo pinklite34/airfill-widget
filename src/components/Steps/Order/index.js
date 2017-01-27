@@ -48,7 +48,7 @@ const OrderStep = ({
 }) => {
   const stepProps = {
     number: 3,
-    title: "Pay",
+    title: 'Pay',
     expanded
   };
 

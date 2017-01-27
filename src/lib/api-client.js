@@ -73,12 +73,6 @@ export const createClient = (conf={}) => {
       };
     }
 
-    console.log(
-      (options.method).toUpperCase(),
-      url,
-      options
-    );
-
     return _fetch(url, options)
       .then(response => {
         if (response.status >= 200 && response.status < 300) {

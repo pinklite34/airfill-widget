@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-import Button from '../../UI/Button';
 
 const RefillFailed = ({ order, refundAddress }) => {
   let mailto = 'mailto:support@bitrefill.com?subject=' + encodeURIComponent(`Failed Order (ID ${order.orderId})`);

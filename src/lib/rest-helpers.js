@@ -101,7 +101,7 @@ export const createLoadAction = options => {
   if (typeof options === 'string') {
     options = { name: options, uri: '/' + options, targetApi: 'bitrefill' };
   }
-  const { uri, name, method, responseTransform, errorHandler } = options;
+  const { uri, name, responseTransform, errorHandler } = options;
   const baseType = actionTypeForName(name);
 
   // Create internal actions
@@ -129,7 +129,7 @@ export const createLoadAction = options => {
       const { query, body } = props;
       return fetch(props.uri, {
           query,
-          body,
+          body
         }).then(
         response => {
           response = responseTransform ? responseTransform(response) : response;

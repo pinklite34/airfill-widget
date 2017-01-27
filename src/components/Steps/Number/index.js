@@ -10,18 +10,18 @@ import 'react-intl-tel-input/dist/main.css';
 const getErrorMessage = error => {
   const messages = {
     'Country not supported':
-      "We're sorry, but this country is not supported right now.",
+      'We\'re sorry, but this country is not supported right now.',
     'Country code needed':
-      "Please enter the number including a country code, starting with '+'.",
+      'Please enter the number including a country code, starting with \'+\'.',
     'Phone number entered is too short':
-      "The number you entered is too short. Are you sure it is correct?"
+      'The number you entered is too short. Are you sure it is correct?'
   };
   if (error in messages) {
     return messages[error];
   } else if (error && error.indexOf('not a valid phone number') !== -1) {
-    return "This is not a valid phone number. Make sure it is correct and try again!";
+    return 'This is not a valid phone number. Make sure it is correct and try again!';
   }
-  return "Unknown error occurred. Please try again later or report to support@bitrefill.com";
+  return 'Unknown error occurred. Please try again later or report to support@bitrefill.com';
 };
 
 class NumberStep extends Component {
@@ -46,7 +46,7 @@ class NumberStep extends Component {
 
     const stepProps = {
       number: 1,
-      title: "Enter Phone Number",
+      title: 'Enter Phone Number',
       showSummary,
       expanded,
       onBack

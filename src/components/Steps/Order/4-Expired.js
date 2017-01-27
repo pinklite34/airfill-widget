@@ -1,7 +1,6 @@
-import React, {PropTypes} from 'react';
-import Button from '../../UI/Button';
+import React from 'react';
 
-const ExpiredPayment = ({order, onContinue}) => {
+const ExpiredPayment = ({}) => {
   return (
     <div>
       <h3>Order expired</h3>
@@ -17,8 +16,6 @@ const ExpiredPayment = ({order, onContinue}) => {
 };
 
 ExpiredPayment.propTypes = {
-  order: PropTypes.object.isRequired,
-  onContinue: PropTypes.object.isRequired
 };
 
 export default ExpiredPayment;

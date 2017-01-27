@@ -32,7 +32,7 @@ const PackageStep = ({
 }) => {
   const stepProps = {
     number: 2,
-    title: "Select Package",
+    title: 'Select Package',
     showSummary,
     expanded,
     onBack
