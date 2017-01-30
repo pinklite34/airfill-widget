@@ -64,8 +64,8 @@ class AirfillWidget extends Component {
       showBTCAddress=this.props.billingCurrency === 'XBT',
       billingCurrency='XBT',
       orderOptions,
-      showIntroduction,
-      showTerms,
+      showIntroduction=false,
+      showTerms=false,
 
       updateOrderStatus, // eslint-disable-line no-unused-vars
 

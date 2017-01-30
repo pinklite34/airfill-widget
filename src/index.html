@@ -15,35 +15,33 @@
         margin: 0 auto;
       }
       .demo, form { display: inline-block; }
-      #widget { margin-bottom: 64px; }
+      h1 { margin-bottom: 0; }
+      h2 { margin-top: 32px; }
       .refill-step-container { border: 1px solid rgba(0, 0, 0, 0.16) !important; border-top-width: 0 !important;  }
       .refill-step-container:first-child { border-top-width: 1px !important;  }
+      table { border-collapse: collapse; border: none; font-size: 14px; text-align: left; margin-bottom: 32px; }
+      table td, table th { padding: 8px; }
+      table td:first-child { white-space: nowrap; }
+      table tbody tr:nth-child(odd) { background-color: #f0f0f0; }
+      table thead th { border-bottom: 1px solid #ccc; }
     </style>
   </head>
   <body>
     <h1>Refill Widget</h1>
-    <h2>Widget usage</h2>
+
+    <h2>Basic Usage</h2>
     <code><pre>
 &lt;script src="https://cdn.airfill.com/widget.js"&gt;&lt;/script&gt;
 &lt;script&gt;
   AirfillWidget('#app', {
-    key: 'your widget api key', // Airfil Widget API key (required)
-    billingCurrency: 'BTC',     // Display prices in this currency, valid options are BTC, EUR or USD (default: BTC)
-    refundAddress: '',          // Used for automatic refunds if there is an error (only for bitcoin integrations)
-    userEmail: '',              // If set we won´t ask for the user email in step 3
-    sendEmail: true,            // Send email receipt (default: true)
-    sendSMS: true,              // Send SMS receipt, operator may send additional messages (default: true, only available for some operators)
-    showIntroduction: false,    // Show introductory notice (default: false)
-    showBTCAddress: false,      // Show BTC payment address and instructions (default: false)
+    key: 'your widget api key', // Airfill Widget API key (required)
     paymentButtons: [{
       title: 'Pay With Account Balance',
-      callback: function (order, next) {} // Called once the user confirms the order
-    }, {
-      // ...
+      callback: function (order) {} // Called once the user confirms the order
     }]
   });
-&lt;/script&gt;
-    </pre></code>
+&lt;/script&gt;</pre></code>
+
     <h2 class="demo">
       Demo
     </h2>
@@ -64,6 +62,118 @@
       </label>
     </form>
     <div id="widget"></div>
+
+    <h2>Widget Options</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Key</th>
+          <th>Type</th>
+          <th>Required</th>
+          <th>Comment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>key</strong></td>
+          <td><strong>string</strong></td>
+          <td><strong>yes</strong></td>
+          <td>Airfill/Bitrefill Widget API key</td>
+        </tr>
+        <tr>
+          <td><strong>paymentButtons</strong></td>
+          <td><strong>array</strong>&lt;paymentButton&gt;</td>
+          <td><strong>yes</strong></td>
+          <td>See the payment button options below</td>
+        </tr>
+        <tr>
+          <td>userAccountBalance</td>
+          <td>number</td>
+          <td>no</td>
+          <td>User account balance in <code>billingCurrency</code>. Setting this will dim refill packages that are too expensive for the current user.</td>
+        </tr>
+        <tr>
+          <td>requireAccountBalance</td>
+          <td>boolean</td>
+          <td>no</td>
+          <td>This will disable the selection of refill packages that are too expensive.</td>
+        </tr>
+        <tr>
+          <td>billingCurrency</td>
+          <td>string</td>
+          <td>no</td>
+          <td>Display prices in this currency, valid options are BTC, EUR or USD (default: BTC)</td>
+        </tr>
+        <tr>
+          <td>showBTCAddress</td>
+          <td>boolean</td>
+          <td>no</td>
+          <td>Show BTC payment address and instructions (default: false)</td>
+        </tr>
+        <tr>
+          <td>refundAddress</td>
+          <td>string</td>
+          <td>no</td>
+          <td>Used for automatic refunds if there is an error (only for bitcoin integrations)</td>
+        </tr>
+        <tr>
+          <td>userEmail</td>
+          <td>string</td>
+          <td>no</td>
+          <td>If set we will not ask for the user email in step 3 (recommended)</td>
+        </tr>
+        <tr>
+          <td>sendEmail</td>
+          <td>boolean</td>
+          <td>no</td>
+          <td>Send email receipt (default: true)</td>
+        </tr>
+        <tr>
+          <td>sendSMS</td>
+          <td>boolean</td>
+          <td>no</td>
+          <td>Send SMS receipt, operator may send additional messages (default: true, only available for some operators)</td>
+        </tr>
+        <tr>
+          <td>showIntroduction</td>
+          <td>boolean</td>
+          <td>no</td>
+          <td>Show introductory notice (default: false)</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>Payment Button Options</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Key</th>
+          <th>Type</th>
+          <th>Required</th>
+          <th>Comment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>title</strong></td>
+          <td><strong>string</strong></td>
+          <td><strong>yes</strong></td>
+          <td>The button title as displayed in the widget</td>
+        </tr>
+        <tr>
+          <td><strong>callback</strong></td>
+          <td><strong>function</strong></td>
+          <td><strong>yes</strong></td>
+          <td>Called once the user clicks or taps the payment button. This is where you should insert your custom payment handling. See the Airfill API documentation for further details on accepting orders and handling payments.</td>
+        </tr>
+        <tr>
+          <td>requireAccountBalance</td>
+          <td>boolean</td>
+          <td>no</td>
+          <td>Enable or disable this payment option if the order value is greater than the specified <code>userAccountBalance</code>. Will override the global <code>requireAccountBalance</code> option if set.</td>
+        </tr>
+      </tbody>
+    </table>
+
 
     <script src="/widget.js"></script>
     <script>
