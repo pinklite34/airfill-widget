@@ -37,6 +37,8 @@ const componentForStatus = status => {
 const OrderStep = ({
   expanded,
   order,
+  accountBalance,
+  requireAccountBalance,
   paymentStatus,
   refundAddress,
   paymentButtons,
@@ -74,6 +76,8 @@ const OrderStep = ({
         />
         <PaymentComponent
           order={order}
+          accountBalance={accountBalance}
+          requireAccountBalance={requireAccountBalance}
           paymentButtons={paymentButtons}
           paymentStatus={paymentStatus}
           showBTCAddress={showBTCAddress}

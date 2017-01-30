@@ -18,6 +18,8 @@ function AirfillWidget(ele, opt) {
     billingCurrency: 'BTC',     // Display prices in this currency, valid options are BTC, EUR or USD (defaults to BTC)
     refundAddress: '',          // Used for automatic refunds if there is an error (only for bitcoin integrations)
     userEmail: '',              // If set we won´t ask for the user email in step 3
+    userAccountBalance: Number.POSITIVE_INFINITY,
+    requireAccountBalance: false,
     sendEmail: true,            // Send email receipt (default: true)
     sendSMS: true,              // Send SMS receipt, operator may send additional messages (default: true, only available for some operators)
     showIntroduction: false,    // Show introductory notice (default: false)
@@ -36,6 +38,8 @@ function AirfillWidget(ele, opt) {
   let {
     billingCurrency,
     userEmail,
+    userAccountBalance,
+    requireAccountBalance,
     sendEmail,
     sendSMS,
     refundAddress,
@@ -57,6 +61,8 @@ function AirfillWidget(ele, opt) {
         showIntroduction={showIntroduction}
         showTerms={true}
         showBTCAddress={showBTCAddress}
+        accountBalance={userAccountBalance}
+        requireAccountBalance={requireAccountBalance}
       />
     </Provider>, element
   );

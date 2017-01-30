@@ -2,7 +2,7 @@ import React from 'react';
 import './AmountPicker.scss';
 
 const AmountPicker = ({
-  packages, selected, currency, billingCurrency, onChange
+  packages, selected, currency, billingCurrency, accountBalance, requireAccountBalance, onChange
 }) => {
   const showAsList = packages && packages.length > 12;
 
@@ -13,10 +13,19 @@ const AmountPicker = ({
 
         const billingCurrencyDisplayName = billingCurrency === 'XBT' ? 'BTC' : billingCurrency;
         const price = pkg[billingCurrencyDisplayName.toLowerCase() + 'Price']
-                        + ' ' + billingCurrencyDisplayName.toUpperCase();
+        const formattedPrice = price + ' ' + billingCurrencyDisplayName.toUpperCase();
+        const canAfford = price <= accountBalance;
+        const disabled = !canAfford && requireAccountBalance;
 
         return (
-          <li className="amount-item" key={'' + value + currency}>
+          <li
+            className={'amount-item ' + (canAfford ?
+              'amount-item-available ' : 'amount-item-unavailable '
+            ) + (disabled ?
+              'amount-item-disabled ' : ''
+            )}
+            key={'' + value + currency}
+          >
             <input
               type="radio"
               name="amount"
@@ -24,12 +33,12 @@ const AmountPicker = ({
               value={value}
               className="pricelist_item"
               checked={selected && value === selected}
-              onChange={()=>onChange(value)}
+              disabled={disabled}
             />
-            <label htmlFor={'amount_' + value} className="amount-item-label" onClick={()=>onChange(value)}>
+            <label htmlFor={'amount_' + value} className="amount-item-label" onClick={()=>!disabled && onChange(value)}>
               <var className="amount-value">{value} {currency}</var>
               <span className="amount-separator">you pay</span>
-              <var className="amount-billing-price">{price}</var>
+              <var className="amount-billing-price">{formattedPrice}</var>
             </label>
           </li>
         );

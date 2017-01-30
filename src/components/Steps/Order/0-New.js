@@ -7,9 +7,12 @@ const valueField = {
   'usd': 'usdPrice'
 };
 
-const NewPayment = ({order, number, showEmailField, showBTCAddress, billingCurrency, paymentButtons}) => {
+const NewPayment = ({order, number, accountBalance, requireAccountBalance, showEmailField, showBTCAddress, billingCurrency, paymentButtons}) => {
   const billingCurrencyDisplayName = billingCurrency === 'XBT' ? 'BTC' : billingCurrency;
-  const price = order[valueField[billingCurrency.toLowerCase()]] + ' ' + billingCurrencyDisplayName.toUpperCase();
+  const price = order[valueField[billingCurrency.toLowerCase()]];
+  const formattedPrice = price + ' ' + billingCurrencyDisplayName.toUpperCase();
+  const canAfford = price <= accountBalance;
+  const widgetRequireAccountBalance = requireAccountBalance;
 
   return (
     <div>
@@ -28,7 +31,7 @@ const NewPayment = ({order, number, showEmailField, showBTCAddress, billingCurre
           <dd key="1">{order.email}</dd>
         ] : null}
         <dt>Price</dt>
-        <dd>{price}</dd>
+        <dd>{formattedPrice}</dd>
         <dt>Order ID</dt>
         <dd>{order.orderId}</dd>
       </dl>
@@ -36,9 +39,23 @@ const NewPayment = ({order, number, showEmailField, showBTCAddress, billingCurre
       <div className="refill-payment-grid">
         {paymentButtons && (
           <div className="refill-payment-group">
-            {paymentButtons.map(({title, callback}) =>
-              <Button key={title} onClick={()=>callback(order)}>{title}</Button>
-            )}
+            {paymentButtons.map(({title, requireAccountBalance, lowBalanceText, callback}) => {
+              // disabled | canAfford | requireAccountBalance | widgetRequireAccountBalance
+              // true     | false     | undefined (!false)    | true
+              // true     | false     | true                  | true
+              // false    | false     | false                 | true
+              // false    | false     | undefined (!false)    | false
+              // true     | false     | true                  | false
+              // false    | false     | false                 | false
+              // false    | true      | any                   | any
+              const disabled = !canAfford && ((widgetRequireAccountBalance && requireAccountBalance !== false) || requireAccountBalance);
+              return [
+                <Button key={title} onClick={()=>callback(order)} disabled={disabled}>{title}</Button>,
+                (disabled ?
+                  <small>{lowBalanceText || 'Your account balance is too low to use this option'}</small>
+                : null)
+              ]
+            })}
           </div>
         )}
         {showBTCAddress && (

@@ -59,7 +59,9 @@ class AirfillWidget extends Component {
 
       /* Other props */
       paymentButtons,
-      showBTCAddress=this.props.billingCurrency === 'BTC',
+      accountBalance=Number.POSITIVE_INFINITY,
+      requireAccountBalance=false,
+      showBTCAddress=this.props.billingCurrency === 'XBT',
       billingCurrency='XBT',
       orderOptions,
       showIntroduction,
@@ -97,6 +99,8 @@ class AirfillWidget extends Component {
         <PackageStep
           expanded={currentStep===2}
           showSummary={currentStep > 2}
+          accountBalance={accountBalance}
+          requireAccountBalance={requireAccountBalance}
           email={email}
           onEmailChange={onEmailChange}
           autoDetectedOperator={autoDetectedOperator}
@@ -110,6 +114,8 @@ class AirfillWidget extends Component {
         <OrderStep
           expanded={currentStep===3}
           order={!order.isLoading && order.result}
+          accountBalance={accountBalance}
+          requireAccountBalance={requireAccountBalance}
           paymentStatus={paymentStatus}
           paymentButtons={paymentButtons}
           showBTCAddress={showBTCAddress}

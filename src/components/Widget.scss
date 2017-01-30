@@ -302,6 +302,13 @@
     }
 
     .button { display: block; }
+    .button + small {
+      display: block;
+      margin: 0 0 4px;
+    }
+    .button + small + .button {
+      margin-top: 12px;
+    }
   }
 
 }

@@ -51,12 +51,16 @@
       <select name="currency">
         <option value="XBT">BTC</option>
         <option value="EUR" selected="selected">EUR</option>
+        <option value="USD">USD</option>
       </select>
       <label for="collectEmail">
         <input type="checkbox" name="collectEmail" id="collectEmail" value="true" /> Collect email
       </label>
       <label for="introduction">
         <input type="checkbox" name="introduction" id="introduction" value="true" /> Show introduction
+      </label>
+      <label for="btc">
+        <input type="checkbox" name="btc" id="btc" value="true" /> Show BTC Address
       </label>
     </form>
     <div id="widget"></div>
@@ -67,6 +71,7 @@
       var currency = form.querySelector('select[name=currency]');
       var collectEmail = form.querySelector('input[name=collectEmail]');
       var introduction = form.querySelector('input[name=introduction]');
+      var btc = form.querySelector('input[name=btc]');
 
       function render () {
         AirfillWidget('#widget', {
@@ -81,7 +86,8 @@
           }],
           sendEmail: true,
           userEmail: collectEmail.checked ? '' : 'test@testing.com',
-          showIntroduction: introduction.checked
+          showIntroduction: introduction.checked,
+          showBTCAddress: btc.checked
         });
       }
 

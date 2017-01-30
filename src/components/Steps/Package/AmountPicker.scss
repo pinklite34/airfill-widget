@@ -31,6 +31,15 @@
   min-width: 90px;
   flex: 1 1 auto;
   text-align: center;
+
+  &.amount-item-unavailable .amount-item-label {
+    opacity: 0.3;
+  }
+  &.amount-item-disabled {
+     .amount-item-label {
+       cursor: not-allowed;
+     }
+  }
 }
 
 .amount-item-label {
@@ -42,7 +51,7 @@
   margin: 0;
   transition: all 250ms;
   box-shadow: 0 0 0 1px transparent;
-  opacity: 0.5;
+  opacity: 0.6;
   flex: 1 1 auto;
 
   @media (max-width: 560px) {

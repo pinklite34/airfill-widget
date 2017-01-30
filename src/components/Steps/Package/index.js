@@ -16,6 +16,8 @@ const PackageStep = ({
 
   // Config
   billingCurrency,
+  accountBalance,
+  requireAccountBalance,
   showEmailField,
 
   // Data/state
@@ -65,6 +67,8 @@ const PackageStep = ({
                 onChange={onAmountChange}
                 selected={amount}
                 billingCurrency={billingCurrency}
+                accountBalance={accountBalance}
+                requireAccountBalance={requireAccountBalance}
                 {...operator}
               />
             }
