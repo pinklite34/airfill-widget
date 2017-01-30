@@ -58,6 +58,7 @@ module.exports = {
         test: /\.(mp4|ogg|svg)$/,
         loader: 'file-loader'
       }
-    ]
+    ],
+    postcss: {}
   }
 };
