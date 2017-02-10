@@ -8,9 +8,8 @@ import Step from '../Step';
 import AmountPicker from './AmountPicker';
 import RangedAmountField from './RangedAmountField';
 
-import IntlTelInput from 'react-intl-tel-input';
-import 'react-intl-tel-input/dist/libphonenumber.js';
-import 'react-intl-tel-input/dist/main.css';
+import Cleave from 'cleave.js/dist/cleave-react';
+import 'cleave.js/dist/addons/cleave-phone.i18n';
 
 const getErrorMessage = error => {
   const messages = {
@@ -47,6 +46,9 @@ class PackageStep extends Component {
   handleSubmit = () => {
     this.props.createOrder(this.props.orderOptions).then(() => this.props.onContinue())
   }
+  handleNumberChange = event => {
+    this.props.setNumber(event.target.value)
+  }
 
   render() {
     const {
@@ -72,6 +74,7 @@ class PackageStep extends Component {
       operator,
       country,
       isLoadingOrder,
+      orderError,
       amount,
       email,
 
@@ -124,28 +127,22 @@ class PackageStep extends Component {
             <Field
               className="refill-number-field"
               label="Phone number"
-              error={getErrorMessage(errorText)}
+              error={!isLoadingOrder && getErrorMessage(orderError)}
               hint="The phone number to top up"
             >
-              <IntlTelInput
-                css={['intl-tel-input', errorText && 'refill-error']}
-                utilsScript={'/libphonenumber.js'}
-                onPhoneNumberChange={(status, value, country, number) => setNumber(number)}
-                allowDropdown={false}
-                autoComplete="phone"
-                value={number}
-                defaultCountry={country.alpha2.toLowerCase()}
-                onlyCountries={[country.alpha2.toLowerCase()]}
-                preferredCountries={[]}
-                formatOnInit={true}
-                ref="intlTelInput"
+              <Cleave
+                options={{phone: true, phoneRegionCode: country.alpha2}}
+                onChange={this.handleNumberChange}
+                value={number || country.countryCallingCodes[0]}
+                type="tel"
+                size="40"
               />
             </Field>
           }
 
           {showEmailField &&
             <Field
-              label="Your email address"
+              label="Email address"
               hint="The email address is used to send status updates about your order"
               error={(email && email.value && email.error) ? 'Please enter a valid email' : ''}
             >
@@ -171,6 +168,7 @@ class PackageStep extends Component {
       return (
         <Step {...stepProps}>
           <strong>{amount} {operator.result.currency}</strong>
+          {!operator.isPinBased && `,  ${number}`}
         </Step>
       );
     }
@@ -181,6 +179,7 @@ class PackageStep extends Component {
 export default connect((state) => ({
   operator: selectOperator(state),
   isLoadingOrder: selectOrder(state).isLoading,
+  orderError: selectOrder(state).error,
   number: selectNumber(state),
   country: selectCountry(state),
   amount: selectAmount(state),

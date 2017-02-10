@@ -48,6 +48,7 @@
     "webpack-dev-server": "^1.12.0"
   },
   "dependencies": {
+    "cleave.js": "github:nosir/cleave.js",
     "core-js": "^2.0.0",
     "fetch-ponyfill": "1.0.0",
     "normalize.css": "^4.0.0",
