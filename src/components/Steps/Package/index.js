@@ -89,7 +89,7 @@ class PackageStep extends Component {
     };
 
     if (expanded) {
-      const canContinue = amount && !isLoadingOrder && (showEmailField ? email.valid : true);
+      const canContinue = number && amount && !isLoadingOrder && (showEmailField ? email.valid : true);
       const hintText = operator.result.extraInfo || 'The selected amount will automatically be added to the target account once the payment is complete.';
       const errorText = !operator.isLoading && operator.error;
       const isRanged = operator.result && operator.result.isRanged;
@@ -133,7 +133,7 @@ class PackageStep extends Component {
               <Cleave
                 options={{phone: true, phoneRegionCode: country.alpha2}}
                 onChange={this.handleNumberChange}
-                value={number == null ? country.countryCallingCodes[0] : ''}
+                value={number || (number == null ? country.countryCallingCodes[0] : '')}
                 placeholder={country.countryCallingCodes[0]}
                 type="tel"
                 size="40"
