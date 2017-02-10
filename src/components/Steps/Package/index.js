@@ -93,40 +93,6 @@ class PackageStep extends Component {
 
       return (
         <Step {...stepProps} onSubmit={() => canContinue && this.handleSubmit()}>
-          {!operator.result.isPinBased &&
-            <Field
-              className="refill-number-field"
-              label="Phone number"
-              error={getErrorMessage(errorText)}
-              hint="The phone number to top up"
-            >
-              <IntlTelInput
-                css={['intl-tel-input', errorText && 'refill-error']}
-                utilsScript={'/libphonenumber.js'}
-                onPhoneNumberChange={(status, value, country, number) => setNumber(number)}
-                allowDropdown={false}
-                autoComplete="phone"
-                value={number}
-                defaultCountry={country.alpha2}
-                formatOnInit={true}
-                ref="intlTelInput"
-              />
-            </Field>
-          }
-          {showEmailField &&
-            <Field
-              label="Your email address"
-              hint="The email address is used to send status updates about your order"
-              error={(email && email.value && email.error) ? 'Please enter a valid email' : ''}
-            >
-              <input type="email" name="email" size="40"
-                defaultValue={email.value}
-                onChange={(e) => setEmail({ value: e.target.value, inFocus: true })}
-                onBlur={(e) => setEmail({ value: e.target.value, inFocus: false })}
-              />
-            </Field>
-          }
-
           <Field
             label="Select refill package"
             hint={!operator.isLoading && hintText}
@@ -152,6 +118,43 @@ class PackageStep extends Component {
               currency={operator.result.currency}
               range={operator.result.range}
             />
+          }
+
+          {!operator.result.isPinBased &&
+            <Field
+              className="refill-number-field"
+              label="Phone number"
+              error={getErrorMessage(errorText)}
+              hint="The phone number to top up"
+            >
+              <IntlTelInput
+                css={['intl-tel-input', errorText && 'refill-error']}
+                utilsScript={'/libphonenumber.js'}
+                onPhoneNumberChange={(status, value, country, number) => setNumber(number)}
+                allowDropdown={false}
+                autoComplete="phone"
+                value={number}
+                defaultCountry={country.alpha2.toLowerCase()}
+                onlyCountries={[country.alpha2.toLowerCase()]}
+                preferredCountries={[]}
+                formatOnInit={true}
+                ref="intlTelInput"
+              />
+            </Field>
+          }
+
+          {showEmailField &&
+            <Field
+              label="Your email address"
+              hint="The email address is used to send status updates about your order"
+              error={(email && email.value && email.error) ? 'Please enter a valid email' : ''}
+            >
+              <input type="email" name="email" size="40"
+                defaultValue={email.value}
+                onChange={(e) => setEmail({ value: e.target.value, inFocus: true })}
+                onBlur={(e) => setEmail({ value: e.target.value, inFocus: false })}
+              />
+            </Field>
           }
 
           <Button

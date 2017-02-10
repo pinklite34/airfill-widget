@@ -54,7 +54,7 @@
     "pusher-js": "^3.2.2",
     "react": "^15.0.0",
     "react-dom": "^15.0.0",
-    "react-intl-tel-input": "3.5.0",
+    "react-intl-tel-input": "4.0.0",
     "react-redux": "4.4.5",
     "redux": "3.5.2",
     "redux-actions": "0.9.1",
