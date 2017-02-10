@@ -133,7 +133,8 @@ class PackageStep extends Component {
               <Cleave
                 options={{phone: true, phoneRegionCode: country.alpha2}}
                 onChange={this.handleNumberChange}
-                value={number || country.countryCallingCodes[0]}
+                value={number == null ? country.countryCallingCodes[0] : ''}
+                placeholder={country.countryCallingCodes[0]}
                 type="tel"
                 size="40"
               />
