@@ -1,3 +1,12 @@
+.operator-group .refill-field-label .button {
+  float: right;
+  clear: right;
+  margin: 0 -4px !important;
+}
+.operator-group .refill-field-label {
+  clear: both;
+  overflow: hidden;
+}
 .operator-group .refill-field {
   display: flex;
   flex-direction: row;

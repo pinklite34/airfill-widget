@@ -72,43 +72,17 @@ export const setOperator = (operatorSlug) => (dispatch, getState) => {
 }
 
 const loadNumberLookup = createLoadAction({
-  name: 'airfillWidget.numberLookup',
+  name: 'airfillWidget.operator',
   uri: '/lookup_number',
   responseTransform: proccessOperatorPackages
 });
 
-export const lookupRefillNumber = (operatorSlug) => (dispatch, getState) => {
-  // const isLoading = refillNumberLookupIsLoadingSelector(getState());
-  const state = getState();
-  const number = selectNumber(state);
-  const operator = selectOperator(state);
-  let options = {
-    query: {
-      number,
-      operatorSlug
-    }
+export const lookupNumber = (number) => (dispatch) => {
+  const options = {
+    query: { number }
   };
 
-  // Resolve directly when we already have the correct data
-  if (
-    operator && operator.slug && operatorSlug === operator.slug && (
-    (operator.packages && operator.packages.length) || operator.isRanged
-  )) {
-    return Promise.resolve();
-  }
-
-  // custom credentials for dashboard widget
-  if (state.account && state.account.apiKeys) {
-    options.password = state.account.apiKeys.secret;
-    options.username = state.account.apiKeys.id;
-  }
-
-  // Dispatch number lookup
-  dispatch(
-    loadNumberLookup(options)
-  ).then(() => {
-    dispatch(setRefillStep(2));
-  });
+  return dispatch(loadNumberLookup(options));
 };
 
 const postOrder = createLoadAction({

@@ -31,6 +31,12 @@ export default (state, action) => {
         selectedOperator: action.payload.operatorSlug
       };
     }
+    case 'LOAD_OPERATOR_SUCCESS': {
+      return {
+        ...state,
+        selectedOperator: action.payload.slug
+      };
+    }
   }
   return state;
 }
