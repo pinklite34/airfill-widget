@@ -39,13 +39,13 @@ class AirfillWidget extends Component {
       showBTCAddress=this.props.billingCurrency === 'XBT',
       billingCurrency='XBT',
       orderOptions,
-      showEmailField=false,
       showIntroduction=false,
       showTerms=false,
 
       ...rest
     } = this.props;
 
+    const showEmailField = !('email' in orderOptions) || orderOptions.email.indexOf('@') < 1;
 
     return steps.map(({component, options}, i) => {
       const Component = component;
