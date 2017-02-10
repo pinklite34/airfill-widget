@@ -87,7 +87,7 @@ class AirfillWidget extends Component {
 
   render() {
     return (
-      <div>
+      <div className={this.props.className}>
         {this.renderSteps()}
         {this.renderFooter()}
       </div>

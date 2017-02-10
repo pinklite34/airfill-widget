@@ -2,9 +2,9 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 0 -4px;
+  margin: 0 -8px 0 -4px;
 }
-.operator-button {
+.operator-group .operator-button {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,7 +18,11 @@
   transition: all 250ms;
   box-shadow: 0 0 0 1px transparent;
   opacity: 0.8;
-  flex: 0 1 136px;
+  flex: 1 100 136px;
+  max-width: 156px;
+
+  font-size: 12px;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.08);
 
   color: #090909;
 

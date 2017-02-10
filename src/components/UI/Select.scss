@@ -1,11 +1,15 @@
 .select {
   position: relative;
   display: inline-block;
+  margin: 8px 8px 8px 0;
 }
 .select select {
   display: inline-block;
+  vertical-align: middle;
   width: 100%;
   padding: 8px 16px;
+  line-height: 24px;
+  height: 40px;
   cursor: pointer;
   color: #7b7b7b;
   border-radius: 0;
