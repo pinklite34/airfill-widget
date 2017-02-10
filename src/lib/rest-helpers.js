@@ -124,7 +124,7 @@ export const createLoadAction = options => {
 
     if (!isLoading) {
       props.uri = props.uri || uri;
-      dispatch(loadStart({ props }));
+      dispatch(loadStart({ ...props }));
 
       const { query, body } = props;
       return fetch(props.uri, {

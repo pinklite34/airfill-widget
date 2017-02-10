@@ -1,121 +1,190 @@
-import React from 'react';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+
 import Button from '../../UI/Button';
 import Spinner from '../../UI/Spinner';
 import Field from '../Field';
 import Step from '../Step';
-import OperatorPicker from './OperatorPicker';
 import AmountPicker from './AmountPicker';
 import RangedAmountField from './RangedAmountField';
 
-const PackageStep = ({
-  // Step props
-  expanded,
-  onContinue,
-  onBack,
-  showSummary,
+import IntlTelInput from 'react-intl-tel-input';
+import 'react-intl-tel-input/dist/libphonenumber.js';
+import 'react-intl-tel-input/dist/main.css';
 
-  // Config
-  billingCurrency,
-  accountBalance,
-  requireAccountBalance,
-  showEmailField,
-
-  // Data/state
-  numberLookup,
-  autoDetectedOperator,
-  isLoadingOrder,
-  amount,
-  email,
-
-  // Actions
-  onOperatorChange,
-  onAmountChange,
-  onEmailChange
-}) => {
-  const stepProps = {
-    number: 2,
-    title: 'Select Package',
-    showSummary,
-    expanded,
-    onBack
+const getErrorMessage = error => {
+  const messages = {
+    'Country not supported':
+      'We\'re sorry, but this country is not supported right now.',
+    'Country code needed':
+      'Please enter the number including a country code, starting with \'+\'.',
+    'Phone number entered is too short':
+      'The number you entered is too short. Are you sure it is correct?'
   };
-  numberLookup = numberLookup || {result: {}};
-  const {isLoading, result} = numberLookup;
-  const { operator } = result || {};
+  if (error in messages) {
+    return messages[error];
+  } else if (error && error.indexOf('not a valid phone number') !== -1) {
+    return 'This is not a valid phone number. Make sure it is correct and try again!';
+  }
+  return error;
+};
 
-  if (expanded) {
-    const canContinue = operator && operator.packages && operator.packages.length && !isLoadingOrder && (showEmailField ? email.valid : true);
-    const hintText = operator && operator.extraInfo || 'The selected amount will automatically be added to the target account once the payment is complete.';
-    const errorText = operator && !isLoading ? numberLookup.error || result.message : '';
-    const isRanged = !isLoading && operator && operator.isRanged;
 
-    return (
-      <Step {...stepProps} onSubmit={() => canContinue && onContinue()}>
-        <Field label="Select your operator">
-          <OperatorPicker onChange={onOperatorChange} autoDetectedOperator={autoDetectedOperator} {...result} />
-        </Field>
+import {
+  selectOperator,
+  selectOrder,
+  selectNumber,
+  selectCountry,
+  selectAmount,
+  selectEmail
+} from './../../../store';
 
-        {(operator || isLoading) &&
+import {
+  setAmount, setNumber, setEmail, createOrder
+} from '../../../actions';
+
+class PackageStep extends Component {
+  handleSubmit = () => {
+    this.props.createOrder(this.props.orderOptions).then(() => this.props.onContinue())
+  }
+
+  render() {
+    const {
+      // Step props
+      step,
+      expanded,
+      onBack,
+      showSummary,
+
+      // Config
+      billingCurrency,
+      accountBalance,
+      requireAccountBalance,
+      showEmailField,
+
+      // Action
+      setAmount,
+      setEmail,
+      setNumber,
+
+      // Data/state
+      number,
+      operator,
+      country,
+      isLoadingOrder,
+      amount,
+      email,
+
+    } = this.props;
+
+    const stepProps = {
+      step,
+      title: 'Select Package',
+      showSummary,
+      expanded,
+      onBack
+    };
+
+    if (expanded) {
+      const canContinue = amount && !isLoadingOrder && (showEmailField ? email.valid : true);
+      const hintText = operator.result.extraInfo || 'The selected amount will automatically be added to the target account once the payment is complete.';
+      const errorText = !operator.isLoading && operator.error;
+      const isRanged = operator.result && operator.result.isRanged;
+
+      return (
+        <Step {...stepProps} onSubmit={() => canContinue && this.handleSubmit()}>
+          {!operator.result.isPinBased &&
+            <Field
+              className="refill-number-field"
+              label="Phone number"
+              error={getErrorMessage(errorText)}
+              hint="The phone number to top up"
+            >
+              <IntlTelInput
+                css={['intl-tel-input', errorText && 'refill-error']}
+                utilsScript={'/libphonenumber.js'}
+                onPhoneNumberChange={(status, value, country, number) => setNumber(number)}
+                allowDropdown={false}
+                autoComplete="phone"
+                value={number}
+                defaultCountry={country.alpha2}
+                formatOnInit={true}
+                ref="intlTelInput"
+              />
+            </Field>
+          }
+          {showEmailField &&
+            <Field
+              label="Your email address"
+              hint="The email address is used to send status updates about your order"
+              error={(email && email.value && email.error) ? 'Please enter a valid email' : ''}
+            >
+              <input type="email" name="email" size="40"
+                defaultValue={email.value}
+                onChange={(e) => setEmail({ value: e.target.value, inFocus: true })}
+                onBlur={(e) => setEmail({ value: e.target.value, inFocus: false })}
+              />
+            </Field>
+          }
+
           <Field
             label="Select refill package"
-            hint={!isLoading && hintText}
+            hint={!operator.isLoading && hintText}
             error={errorText}
           >
-            {isLoading && <Spinner>Loading packages...</Spinner>}
-            {!isLoading &&
+            {operator.isLoading && <Spinner>Loading packages...</Spinner>}
+            {!operator.isLoading &&
               <AmountPicker
-                onChange={onAmountChange}
+                onChange={setAmount}
                 selected={amount}
                 billingCurrency={billingCurrency}
                 accountBalance={accountBalance}
                 requireAccountBalance={requireAccountBalance}
-                {...operator}
+                {...operator.result}
               />
             }
           </Field>
-        }
 
-        {isRanged &&
-          <RangedAmountField
-            onChange={onAmountChange}
-            amount={amount}
-            currency={operator.currency}
-            range={operator.range}
-          />
-        }
-
-        {(operator && showEmailField) &&
-          <Field
-            label="Your email address"
-            hint="The email address is used to send status updates about your order"
-            error={(email && email.value && email.error) ? 'Please enter a valid email' : ''}
-          >
-            <input type="email" name="email" size="40"
-              defaultValue={email.value}
-              onChange={(e) => onEmailChange({ value: e.target.value, inFocus: true })}
-              onBlur={(e) => onEmailChange({ value: e.target.value, inFocus: false })}
+          {isRanged &&
+            <RangedAmountField
+              onChange={setAmount}
+              amount={amount}
+              currency={operator.result.currency}
+              range={operator.result.range}
             />
-          </Field>
-        }
+          }
 
-        <Button
-          type="submit"
-          disabled={!canContinue}
-          loading={isLoadingOrder}
-          className={'button-submit'}
-        >
-          Continue
-        </Button>
-      </Step>
-    );
-  } else if (showSummary && operator) {
-    return (
-      <Step {...stepProps}>
-        <strong>{operator.name}</strong>, {amount} {operator.currency}
-      </Step>
-    );
+          <Button
+            type="submit"
+            disabled={!canContinue}
+            loading={isLoadingOrder}
+            className={'button-submit'}
+          >
+            Continue
+          </Button>
+        </Step>
+      );
+    } else if (showSummary && operator.result) {
+      return (
+        <Step {...stepProps}>
+          <strong>{amount} {operator.result.currency}</strong>
+        </Step>
+      );
+    }
+    return <Step {...stepProps} />;
   }
-  return <Step {...stepProps} />;
-};
+}
 
-export default PackageStep;
+export default connect((state) => ({
+  operator: selectOperator(state),
+  isLoadingOrder: selectOrder(state).isLoading,
+  number: selectNumber(state),
+  country: selectCountry(state),
+  amount: selectAmount(state),
+  email: selectEmail(state)
+}), {
+  setNumber,
+  setAmount,
+  setEmail,
+  createOrder
+})(PackageStep);

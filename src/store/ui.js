@@ -16,30 +16,19 @@ export default (state=initialState, {type, payload}) => {
     }
 
     case 'SET_STEP': {
-      const currentStep = (payload > 0 && payload < 4)
-        ? payload : state.currentStep;
-      return { ...state, currentStep };
+      return { ...state, currentStep: payload };
     }
 
     case 'SET_NUMBER': {
-      const {
-        number=state.number,
-        country=state.country,
-        countryName=state.countryName
-      } = payload;
-
       let autoDetectedOperator;
-
-      if (number === state.number) {
+      if (payload === state.number) {
         // Only persist auto detected operator slug if the number is the same
         autoDetectedOperator = state.autoDetectedOperator;
       }
 
       return {
         ...state,
-        number,
-        country,
-        countryName,
+        number: payload,
         autoDetectedOperator
       };
     }

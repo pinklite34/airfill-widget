@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RefillStep = ({label, htmlFor, error, hint, children, className}) => {
+const Field = ({label, htmlFor, error, hint, children, className}) => {
   return (
     <div className={'refill-field-container ' + (className || '')}>
       {label &&
@@ -21,4 +21,4 @@ const RefillStep = ({label, htmlFor, error, hint, children, className}) => {
   );
 };
 
-export default RefillStep;
+export default Field;

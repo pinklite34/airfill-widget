@@ -67,19 +67,13 @@ class NumberStep extends Component {
               utilsScript={'/libphonenumber.js'}
               onPhoneNumberChange={
                 (status, value, country, number) => onNumberChange({
-                  number,
-                  country: country.iso2,
-                  countryName: country.name
+                  number
                 })
               }
-              onSelectFlag={
-                (country) => onNumberChange({
-                  country: country.iso2,
-                  countryName: country.name
-                })
-              }
+              allowDropdown={false}
+              autoComplete="phone"
               value={number}
-              defaultCountry={country}
+              defaultCountry={country.alpha2}
               formatOnInit={true}
               ref="intlTelInput"
             />

@@ -1,11 +1,11 @@
 import {createAction} from 'redux-actions';
 import {createLoadAction} from '../lib/rest-helpers';
 
-export const setRefillStep = createAction('SET_STEP');
-export const setRefillNumber = createAction('SET_NUMBER');
-export const setRefillOperator = createAction('SET_OPERATOR');
-export const setRefillAmount = createAction('SET_AMOUNT');
-export const setRefillEmail = createAction('SET_EMAIL');
+export const setStep = createAction('SET_STEP');
+export const setCountry = createAction('SET_COUNTRY');
+export const setNumber = createAction('SET_NUMBER');
+export const setAmount = createAction('SET_AMOUNT');
+export const setEmail = createAction('SET_EMAIL');
 
 export const updatePaymentStatus = createAction('UPDATE_PAYMENT_STATUS');
 
@@ -19,6 +19,10 @@ import {
   selectOperator
 } from '../store';
 
+export const loadInventory = createLoadAction({
+  name: 'airfillWidget.inventory',
+  uri: '/inventory'
+});
 
 export const proccessOperatorPackages = response => {
   const { operator } = response;
@@ -55,8 +59,17 @@ export const proccessOperatorPackages = response => {
     response.operator = operator;
   }
 
-  return response;
+  return operator;
 };
+
+const loadOperator = createLoadAction({
+  name: 'airfillWidget.operator',
+  responseTransform: proccessOperatorPackages
+});
+
+export const setOperator = (operatorSlug) => (dispatch, getState) => {
+  dispatch(loadOperator({operatorSlug, uri: `/inventory/${operatorSlug}`}))
+}
 
 const loadNumberLookup = createLoadAction({
   name: 'airfillWidget.numberLookup',
@@ -98,39 +111,34 @@ export const lookupRefillNumber = (operatorSlug) => (dispatch, getState) => {
   });
 };
 
-const createOrder = createLoadAction({
+const postOrder = createLoadAction({
   name: 'airfillWidget.order',
   uri: '/order'
 });
 
-export const placeRefillOrder = (orderOptions) => (dispatch, getState) => {
+export const createOrder = (orderOptions) => (dispatch, getState) => {
   const state = getState();
   const number = selectNumber(state);
   const amount = selectAmount(state);
   const email = selectEmail(state) || orderOptions.email;
-  const numberLookup = selectNumberLookup(state);
   const operator = selectOperator(state);
   const order = selectOrder(state);
 
   const options = {
     body: {
       ...orderOptions,
-      operatorSlug: operator.slug,
+      operatorSlug: operator.result.slug,
       valuePackage: amount,
       number,
       email
     }
   };
 
-  if (order.isLoading || numberLookup.isLoading) {
+  if (order.isLoading || operator.isLoading) {
     return Promise.reject();
   }
 
-  dispatch(
-    createOrder(options)
-  ).then(() => {
-    dispatch(setRefillStep(3));
-  });
+  return dispatch(postOrder(options))
 };
 
 
