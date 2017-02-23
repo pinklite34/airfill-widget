@@ -56,7 +56,8 @@ export const proccessOperatorPackages = response => {
       item.btcPrice = Math.ceil(item.satoshiPrice / 10000) / 10000;
     });
 
-    response.operator = operator;
+  } else {
+    throw response.message || 'Unknown error';
   }
 
   return operator;

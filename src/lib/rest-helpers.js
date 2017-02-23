@@ -127,15 +127,12 @@ export const createLoadAction = options => {
       dispatch(loadStart({ ...props }));
 
       const { query, body } = props;
-      return fetch(props.uri, {
-          query,
-          body
-        }).then(
-        response => {
+      return fetch(props.uri, { query, body })
+        .then(response => {
           response = responseTransform ? responseTransform(response) : response;
           dispatch(loadSuccess({ props, response }));
-        },
-        error => {
+        })
+        .catch(error => {
           dispatch(loadError({ props, response: error }));
 
           if (errorHandler) {
