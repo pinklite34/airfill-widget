@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import RefillStep from '../Step';
 import PusherSubscription from '../../PusherSubscription';
 
+import RefillStep from '../Step';
 import Spinner from '../../UI/Spinner';
 
 import NewPayment from './0-New';

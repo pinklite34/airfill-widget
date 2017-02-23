@@ -3,31 +3,11 @@ import {connect} from 'react-redux';
 
 import Button from '../../UI/Button';
 import Spinner from '../../UI/Spinner';
-import Field from '../Field';
+import Field from '../../UI/Field';
+import PhoneNumberInput from '../../UI/PhoneNumberInput';
 import Step from '../Step';
 import AmountPicker from './AmountPicker';
 import RangedAmountField from './RangedAmountField';
-
-import Cleave from 'cleave.js/dist/cleave-react';
-import 'cleave.js/dist/addons/cleave-phone.i18n';
-
-const getErrorMessage = error => {
-  const messages = {
-    'Country not supported':
-      'We\'re sorry, but this country is not supported right now.',
-    'Country code needed':
-      'Please enter the number including a country code, starting with \'+\'.',
-    'Phone number entered is too short':
-      'The number you entered is too short. Are you sure it is correct?'
-  };
-  if (error in messages) {
-    return messages[error];
-  } else if (error && error.indexOf('not a valid phone number') !== -1) {
-    return 'This is not a valid phone number. Make sure it is correct and try again!';
-  }
-  return error;
-};
-
 
 import {
   selectOperator,
@@ -124,21 +104,12 @@ class PackageStep extends Component {
           }
 
           {!operator.result.isPinBased &&
-            <Field
-              className="refill-number-field"
-              label="Phone number"
-              error={!isLoadingOrder && getErrorMessage(orderError)}
-              hint="The phone number to top up"
-            >
-              <Cleave
-                options={{phone: true, phoneRegionCode: country.alpha2}}
-                onChange={this.handleNumberChange}
-                value={number || (number == null ? country.countryCallingCodes[0] : '')}
-                placeholder={country.countryCallingCodes[0]}
-                type="tel"
-                size="40"
-              />
-            </Field>
+            <PhoneNumberInput
+              country={country}
+              onChange={this.handleNumberChange}
+              value={number}
+              placeholder={country.countryCallingCodes[0]}
+            />
           }
 
           {showEmailField &&

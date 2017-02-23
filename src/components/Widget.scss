@@ -204,24 +204,18 @@
       display: flex;
       justify-content: flex-start;
 
-      .intl-tel-input, .button {
+      .button {
         vertical-align: middle;
         margin: 0;
       }
-      .intl-tel-input + .button {
+      input {
+        max-width: 240px;
+        min-width: 160px;
+      }
+      input + .button {
         margin-left: 8px;
       }
 
-      .intl-tel-input {
-        flex: 1;
-        max-width: 240px;
-        min-width: 160px;
-
-        input {
-          width: 100%;
-          padding-left: 48px;
-        }
-      }
       .button {
         flex: 1;
         padding-left: 8px;

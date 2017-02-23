@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import Step from '../Step';
-import Field from '../Field';
+import Field from '../../UI/Field';
 import Button from '../../UI/Button';
 import Select from '../../UI/Select';
 

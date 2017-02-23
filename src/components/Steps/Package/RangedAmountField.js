@@ -1,5 +1,5 @@
 import React from 'react';
-import Field from '../Field';
+import Field from '../../UI/Field';
 import './RangedAmountField.scss';
 
 const RangedAmountField = ({

@@ -2,15 +2,14 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import Step from '../Step';
-import Field from '../Field';
+import Field from '../../UI/Field';
 import Button from '../../UI/Button';
-import Select from '../../UI/Select';
+import PhoneNumberInput from '../../UI/PhoneNumberInput';
 
 import {setOperator, lookupNumber, setNumber} from '../../../actions';
 import {selectCountry, selectNumber, selectAvailableOperators, selectSelectedOperator, selectOperator} from '../../../store';
 import './index.scss';
-import Cleave from 'cleave.js/dist/cleave-react';
-import 'cleave.js/dist/addons/cleave-phone.i18n';
+
 const scaledLogo = url =>
   url && url.replace('/d_operator.png/', /d_operator.png,w_120,h_90,c_pad/)
 
@@ -41,22 +40,19 @@ class OperatorStep extends Component {
   renderPhoneAutoDetectForm() {
     const {country, number, numberLookup} = this.props;
 
-    return <Field
+    return <PhoneNumberInput
       label={'Auto Detect Mobile Operator'}
       className="operator-group"
+      country={country}
+      onChange={this.handleNumberChange}
+      value={number}
+      placeholder={country.countryCallingCodes[0]}
+      error={numberLookup.error}
     >
-      <Cleave
-        options={{phone: true, phoneRegionCode: country.alpha2}}
-        onChange={this.handleNumberChange}
-        value={number || (number == null ? country.countryCallingCodes[0] : '')}
-        placeholder={country.countryCallingCodes[0]}
-        type="tel"
-        size="40"
-      />
       <Button type="button" disabled={!number} loading={numberLookup.isLoading} onClick={this.handleAutoDetect}>
         Continue
       </Button>
-    </Field>
+    </PhoneNumberInput>
   }
 
   renderOperatorGroup(type, operators) {
