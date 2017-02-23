@@ -50,6 +50,12 @@
     margin: 12px 0 0 4px;
     line-height: 1;
     float: right;
+
+    .button {
+      padding: 0 8px;
+      min-height: 28px;
+      margin-top: -12px;
+    }
   }
   .refill-step-number {
     display: inline-block;
