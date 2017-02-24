@@ -114,7 +114,7 @@ export default connect((state) => ({
   country: selectCountry(state),
   number: selectNumber(state),
   operators: selectAvailableOperators(state),
-  selectedOperator: selectSelectedOperator(state),
+  selectedOperator: selectSelectedOperator(state) || selectOperator(state).result,
   numberLookup: selectOperator(state)
 }), {
   setOperator,
