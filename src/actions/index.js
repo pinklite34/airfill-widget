@@ -1,5 +1,6 @@
 import {createAction} from 'redux-actions';
 import {createLoadAction} from '../lib/rest-helpers';
+import {fetch} from '../lib/api-client';
 
 export const setStep = createAction('SET_STEP');
 export const setCountry = createAction('SET_COUNTRY');
@@ -15,7 +16,7 @@ import {
   selectAmount,
   selectEmail,
   selectOrder,
-  selectNumberLookup,
+  selectCountry,
   selectOperator
 } from '../store';
 
@@ -23,6 +24,14 @@ export const loadInventory = createLoadAction({
   name: 'airfillWidget.inventory',
   uri: '/inventory'
 });
+
+export const lookupLocation = () => (dispatch, getState) => {
+  fetch('/lookup_country', {}).then(country => {
+    if (country && !selectCountry(getState())) {
+      dispatch(setCountry(country.toUpperCase()))
+    }
+  })
+}
 
 export const proccessOperatorPackages = response => {
   const { operator } = response;

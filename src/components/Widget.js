@@ -6,7 +6,7 @@ import OperatorStep from './Steps/Operator';
 import PackageStep from './Steps/Package';
 import OrderStep from './Steps/Order';
 
-import {setStep, updateOrderStatus, loadInventory} from '../actions';
+import {setStep, updateOrderStatus, loadInventory, lookupLocation} from '../actions';
 import {selectCurrentStep} from '../store';
 
 import './Widget.scss';
@@ -24,6 +24,7 @@ const steps = [{
 class AirfillWidget extends Component {
   componentDidMount() {
     this.props.loadInventory();
+    this.props.lookupLocation();
     this.props.updateOrderStatus();
   }
 
@@ -100,5 +101,6 @@ export default connect(state => ({
 }), {
   setStep,
   updateOrderStatus,
-  loadInventory
+  loadInventory,
+  lookupLocation
 })(AirfillWidget);
