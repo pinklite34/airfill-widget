@@ -68,12 +68,14 @@ class PackageStep extends Component {
       onBack
     };
 
+    const operatorResult = !operator.isLoading && operator.result;
+
     if (expanded) {
       const canContinue = number && amount && !isLoadingOrder && (showEmailField ? email.valid : true);
-      const hintText = operator.result && operator.result.extraInfo || 'The selected amount will automatically be added to the target account once the payment is complete.';
       const errorText = !operator.isLoading && operator.error;
-      const isRanged = operator.result && operator.result.isRanged;
-      const isPinBased = operator.result && operator.result.isPinBased;
+      const hintText = operatorResult && operatorResult.extraInfo || 'The selected amount will automatically be added to the target account once the payment is complete.';
+      const isRanged = operatorResult && operatorResult.isRanged;
+      const isPinBased = operatorResult ? operatorResult.isPinBased : null;
 
       return (
         <Step {...stepProps} onSubmit={() => canContinue && this.handleSubmit()}>
@@ -90,17 +92,17 @@ class PackageStep extends Component {
                 billingCurrency={billingCurrency}
                 accountBalance={accountBalance}
                 requireAccountBalance={requireAccountBalance}
-                {...operator.result}
+                {...operatorResult}
               />
             }
           </Field>
 
-          {isRanged &&
+          {isRanged === true &&
             <RangedAmountField
               onChange={setAmount}
               amount={amount}
-              currency={operator.result.currency}
-              range={operator.result.range}
+              currency={operatorResult.currency}
+              range={operatorResult.range}
             />
           }
 
@@ -137,10 +139,10 @@ class PackageStep extends Component {
           </Button>
         </Step>
       );
-    } else if (showSummary && operator.result) {
+    } else if (showSummary && operatorResult) {
       return (
         <Step {...stepProps}>
-          <strong>{amount} {operator.result.currency}</strong>
+          <strong>{amount} {operatorResult.currency}</strong>
           {!operator.isPinBased && `,  ${number}`}
         </Step>
       );
