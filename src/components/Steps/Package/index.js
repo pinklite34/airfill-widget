@@ -70,9 +70,10 @@ class PackageStep extends Component {
 
     if (expanded) {
       const canContinue = number && amount && !isLoadingOrder && (showEmailField ? email.valid : true);
-      const hintText = operator.result.extraInfo || 'The selected amount will automatically be added to the target account once the payment is complete.';
+      const hintText = operator.result && operator.result.extraInfo || 'The selected amount will automatically be added to the target account once the payment is complete.';
       const errorText = !operator.isLoading && operator.error;
       const isRanged = operator.result && operator.result.isRanged;
+      const isPinBased = operator.result && operator.result.isPinBased;
 
       return (
         <Step {...stepProps} onSubmit={() => canContinue && this.handleSubmit()}>
@@ -103,7 +104,7 @@ class PackageStep extends Component {
             />
           }
 
-          {!operator.result.isPinBased &&
+          {isPinBased === false &&
             <PhoneNumberInput
               country={country}
               onChange={this.handleNumberChange}
