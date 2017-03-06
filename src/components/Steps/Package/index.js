@@ -71,12 +71,11 @@ class PackageStep extends Component {
     const operatorResult = !operator.isLoading && operator.result;
 
     if (expanded) {
-      const canContinue = number && amount && !isLoadingOrder && (showEmailField ? email.valid : true);
       const errorText = !operator.isLoading && operator.error;
       const hintText = operatorResult && operatorResult.extraInfo || 'The selected amount will automatically be added to the target account once the payment is complete.';
       const isRanged = operatorResult && operatorResult.isRanged;
       const isPinBased = operatorResult ? operatorResult.isPinBased : null;
-
+      const canContinue = (isPinBased || number) && amount && !isLoadingOrder && (showEmailField ? email.valid : true);
       return (
         <Step {...stepProps} onSubmit={() => canContinue && this.handleSubmit()}>
           <Field
