@@ -21,9 +21,12 @@ export default function configureStore(initialState) {
     )
   );
 
-  persistStore(store, {}, () => {
+  persistStore(store, { keyPrefix: 'airfill' }, () => {
     store.dispatch(updateOrderStatus())
   });
+  if (typeof window !== 'undefined' && window.localStorage) {
+    window.localStorage.removeItem('reduxPersist:airfillWidget');
+  }
 
   return store;
 }
