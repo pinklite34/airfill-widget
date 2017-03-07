@@ -1,0 +1,29 @@
+.refill-widget-root .refill-number-field-input-wrapper {
+  min-height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #fff;
+  max-width: 20em;
+
+  .refill-number-field-cc {
+    display: block;
+    color: #777;
+    margin: 0 -4px 0 8px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .refill-number-field-input {
+    border: none;
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 100px;
+  }
+}

@@ -2,7 +2,7 @@ import {REHYDRATE} from 'redux-persist/constants';
 
 const initialState = {
   currentStep: 1,
-  number: null,
+  number: { value: '', valid: false },
   operatorId: null,
   amount: 0,
   email: { value: '', valid: false, error: false }
@@ -24,7 +24,7 @@ export default (state=initialState, {type, payload}) => {
     }
 
     case 'SET_COUNTRY': {
-      return { ...state, number: null };
+      return { ...state, number: initialState.number };
     }
 
     case 'SET_OPERATOR': {

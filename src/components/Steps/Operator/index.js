@@ -24,9 +24,6 @@ class OperatorStep extends Component {
   handleAutoDetect = () => {
     this.props.lookupNumber(this.props.number).then(() => this.props.onContinue())
   }
-  handleNumberChange = event => {
-    this.props.setNumber(event.target.value)
-  }
   toggleAutoDetect = () => {
     this.setState(prev => ({...prev, showAutoDetect: !prev.showAutoDetect}))
   }
@@ -44,9 +41,8 @@ class OperatorStep extends Component {
       label={'Auto Detect Mobile Operator'}
       className="operator-group"
       country={country}
-      onChange={this.handleNumberChange}
-      value={number}
-      placeholder={country.countryCallingCodes[0]}
+      onChange={this.props.setNumber}
+      defaultValue={number.value}
       error={numberLookup.error}
     >
       <Button type="button" disabled={!number} loading={numberLookup.isLoading} onClick={this.handleAutoDetect}>

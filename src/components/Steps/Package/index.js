@@ -26,9 +26,6 @@ class PackageStep extends Component {
   handleSubmit = () => {
     this.props.createOrder(this.props.orderOptions).then(() => this.props.onContinue())
   }
-  handleNumberChange = event => {
-    this.props.setNumber(event.target.value)
-  }
 
   render() {
     const {
@@ -76,7 +73,7 @@ class PackageStep extends Component {
       const isRanged = operatorResult && operatorResult.isRanged;
       const isPinBased = operatorResult ? operatorResult.isPinBased : null;
       // const canContinue = (isPinBased || number) && amount && !isLoadingOrder && (showEmailField ? email.valid : true);
-      const canContinue = number && amount && !isLoadingOrder && (showEmailField ? email.valid : true);
+      const canContinue = number.valid && amount && !isLoadingOrder && (showEmailField ? email.valid : true);
       return (
         <Step {...stepProps} onSubmit={() => canContinue && this.handleSubmit()}>
           <Field
@@ -109,9 +106,9 @@ class PackageStep extends Component {
           {true /*isPinBased === false*/ &&
             <PhoneNumberInput
               country={country}
-              onChange={this.handleNumberChange}
-              value={number}
-              placeholder={country.countryCallingCodes[0]}
+              onChange={this.props.setNumber}
+              defaultValue={number.value}
+              error={orderError}
             />
           }
 
@@ -143,7 +140,7 @@ class PackageStep extends Component {
       return (
         <Step {...stepProps}>
           <strong>{amount} {operatorResult.currency}</strong>
-          {!operator.isPinBased && `,  ${number}`}
+          {!operator.isPinBased && `,  ${number.value}`}
         </Step>
       );
     }
