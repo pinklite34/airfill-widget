@@ -61,6 +61,7 @@ class AirfillWidget extends Component {
         showSummary={currentStep > step}
         onContinue={()=>setStep(step + 1)}
         onBack={()=>setStep(step)}
+        onReset={()=>setStep(1)}
 
         paymentButtons={paymentButtons}
         showBTCAddress={showBTCAddress}

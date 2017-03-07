@@ -21,7 +21,7 @@ import {
 } from './../../../store';
 
 import {
-  onReset, updatePaymentStatus
+  updatePaymentStatus
 } from '../../../actions';
 
 
@@ -115,6 +115,5 @@ export default connect((state) => ({
   paymentStatus: selectPaymentStatus(state),
   number: selectNumber(state)
 }), {
-  updatePaymentStatus,
-  onReset
+  updatePaymentStatus
 })(OrderStep);
