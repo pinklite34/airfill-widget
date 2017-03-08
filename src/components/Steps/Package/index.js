@@ -73,7 +73,7 @@ class PackageStep extends Component {
       const isRanged = operatorResult && operatorResult.isRanged;
       const isPinBased = operatorResult ? operatorResult.isPinBased : null;
       // const canContinue = (isPinBased || number) && amount && !isLoadingOrder && (showEmailField ? email.valid : true);
-      const canContinue = number.valid && amount && !isLoadingOrder && (showEmailField ? email.valid : true);
+      const canContinue = number && amount && !isLoadingOrder && (showEmailField ? email.valid : true);
       return (
         <Step {...stepProps} onSubmit={() => canContinue && this.handleSubmit()}>
           <Field
@@ -107,7 +107,7 @@ class PackageStep extends Component {
             <PhoneNumberInput
               country={country}
               onChange={this.props.setNumber}
-              defaultValue={number.value}
+              defaultValue={number}
               error={orderError}
             />
           }
@@ -140,7 +140,7 @@ class PackageStep extends Component {
       return (
         <Step {...stepProps}>
           <strong>{amount} {operatorResult.currency}</strong>
-          {!operator.isPinBased && `,  ${number.value}`}
+          {!operator.isPinBased && `,  ${number}`}
         </Step>
       );
     }

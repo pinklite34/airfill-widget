@@ -42,7 +42,7 @@ class OperatorStep extends Component {
       className="operator-group"
       country={country}
       onChange={this.props.setNumber}
-      defaultValue={number.value}
+      defaultValue={number}
       error={numberLookup.error}
     >
       <Button type="button" disabled={!number} loading={numberLookup.isLoading} onClick={this.handleAutoDetect}>

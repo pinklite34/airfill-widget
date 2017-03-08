@@ -102,7 +102,7 @@ const postOrder = createLoadAction({
 
 export const createOrder = (orderOptions) => (dispatch, getState) => {
   const state = getState();
-  const number = selectNumber(state).value;
+  const number = selectNumber(state);
   const amount = selectAmount(state);
   const email = selectEmail(state) || orderOptions.email;
   const operator = selectOperator(state);

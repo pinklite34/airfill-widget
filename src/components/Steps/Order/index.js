@@ -113,7 +113,7 @@ const OrderStep = ({
 export default connect((state) => ({
   order: selectOrder(state),
   paymentStatus: selectPaymentStatus(state),
-  number: selectNumber(state).value
+  number: selectNumber(state)
 }), {
   updatePaymentStatus
 })(OrderStep);

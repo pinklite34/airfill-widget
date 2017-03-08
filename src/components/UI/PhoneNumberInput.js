@@ -63,11 +63,9 @@ class PhoneNumberInput extends Component {
     const {country: { alpha2 }} = this.props;
 
     if (this.props.onChange) {
-      this.props.onChange({
-        valid: !!validNumber,
-        value: validNumber ?
-          format(validNumber, alpha2, 'International') : number
-      })
+      this.props.onChange(validNumber ?
+        format(validNumber, alpha2, 'International') : number
+      )
     }
   }
 
