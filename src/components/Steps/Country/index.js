@@ -51,7 +51,7 @@ class CountryStep extends Component {
 
     } else if (showSummary) {
       return (
-        <Step {...stepProps}><strong>{selectedCountry.name}</strong></Step>
+        <Step {...stepProps}><strong>{selectedCountry && selectedCountry.name}</strong></Step>
       );
     }
 
