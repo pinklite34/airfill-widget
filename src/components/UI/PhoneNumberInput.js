@@ -32,6 +32,10 @@ class PhoneNumberInput extends Component {
     const {defaultValue} = this.props;
     const cc = this.getCountryCode()
 
+    if (!defaultValue) {
+      return ''
+    }
+
     if (defaultValue.indexOf(cc + ' ') === 0) {
       return defaultValue.substr(cc.length + 1)
     } else if (defaultValue.indexOf(cc) === 0) {
@@ -44,6 +48,10 @@ class PhoneNumberInput extends Component {
   validateNumber = (number) => {
     const cc = this.getCountryCode();
     const {country: { alpha2 }} = this.props;
+
+    if (!number) {
+      return null;
+    }
 
     let { country, phone } = parse(number, alpha2);
 
