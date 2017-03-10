@@ -73,7 +73,7 @@ class PackageStep extends Component {
       const isRanged = operatorResult && operatorResult.isRanged;
       const isPinBased = operatorResult ? operatorResult.isPinBased : null;
       // const canContinue = (isPinBased || number) && amount && !isLoadingOrder && (showEmailField ? email.valid : true);
-      const canContinue = number && amount && !isLoadingOrder && (showEmailField ? email.valid : true);
+      const canContinue = number && amount && !isLoadingOrder && (showEmailField ? email : true);
       return (
         <Step {...stepProps} onSubmit={() => canContinue && this.handleSubmit()}>
           <Field
