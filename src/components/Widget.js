@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
+import Container from './UI/Container';
+
 import CountryStep from './Steps/Country';
 import OperatorStep from './Steps/Operator';
 import PackageStep from './Steps/Package';
@@ -89,10 +91,10 @@ class AirfillWidget extends Component {
 
   render() {
     return (
-      <div className={this.props.className}>
+      <Container className={this.props.className}>
         {this.renderSteps()}
         {this.renderFooter()}
-      </div>
+      </Container>
     );
   }
 }

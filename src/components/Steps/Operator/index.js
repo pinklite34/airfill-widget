@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import styled from 'styled-components';
 import {connect} from 'react-redux';
 
 import Step from '../Step';
@@ -9,6 +10,12 @@ import PhoneNumberInput from '../../UI/PhoneNumberInput';
 import {setOperator, lookupNumber, setNumber} from '../../../actions';
 import {selectCountry, selectNumber, selectAvailableOperators, selectSelectedOperator, selectOperator} from '../../../store';
 import './index.scss';
+
+const MiniButton = styled(Button)`
+  padding: 0 8px;
+  min-height: 28px;
+  margin: -12px -4px 0;
+`
 
 const scaledLogo = url =>
   url && url.replace('/d_operator.png/', /d_operator.png,w_120,h_90,c_pad/)
@@ -29,9 +36,9 @@ class OperatorStep extends Component {
   }
 
   renderToggle() {
-    return (<Button onClick={this.toggleAutoDetect}>
+    return (<MiniButton onClick={this.toggleAutoDetect}>
       { this.state.showAutoDetect ? 'Pick operator' : 'Auto detect operator' }
-    </Button>)
+    </MiniButton>)
   }
 
   renderPhoneAutoDetectForm() {

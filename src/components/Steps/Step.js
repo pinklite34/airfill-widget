@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../UI/Button';
 
 const RefillStep = ({step, title, subTitle, expanded, children, onBack, showSummary, onSubmit}) => {
   return (
@@ -17,7 +18,7 @@ const RefillStep = ({step, title, subTitle, expanded, children, onBack, showSumm
         </form>
       }
       {showSummary && onBack &&
-        <button type="button" onClick={onBack} className="refill-step-back button-secondary">Change</button>}
+        <Button secondary onClick={onBack} className="refill-step-back">Change</Button>}
     </section>
   );
 };
