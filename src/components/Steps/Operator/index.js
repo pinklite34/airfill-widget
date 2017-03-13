@@ -9,12 +9,70 @@ import PhoneNumberInput from '../../UI/PhoneNumberInput';
 
 import {setOperator, lookupNumber, setNumber} from '../../../actions';
 import {selectCountry, selectNumber, selectAvailableOperators, selectSelectedOperator, selectOperator} from '../../../store';
-import './index.scss';
 
 const MiniButton = styled(Button)`
-  padding: 0 8px;
+  padding: 0 12px;
   min-height: 28px;
   margin: -12px -4px 0;
+`
+
+const OperatorGroup = styled(Field)`
+  .refill-field-label {
+    clear: both;
+    overflow: hidden;
+  }
+  .refill-field {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 -8px 0 -4px;
+  }
+`
+
+const OperatorButton = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 4px;
+
+  border: 1px solid #aaa;
+  background: #f0f0f0 linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.03));
+  border-radius: 4px;
+  padding: 8px;
+  transition: all 250ms;
+  box-shadow: 0 0 0 1px transparent;
+  opacity: 0.8;
+  flex: 1 100 136px;
+  max-width: 156px;
+
+  font-size: 12px;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.08);
+
+  color: #090909;
+  outline: none;
+
+  &:hover, &:focus {
+    cursor: pointer;
+    background-color: #fff;
+    opacity: 1;
+  }
+  &:active {
+    border-color: #B0CB0B;
+    background-color: #fff;
+    box-shadow: 0 0 0 2px #B0CB0B, inset 0 0 2px #fff, 0 1px 16px rgba(0,0,0,0.2);
+    opacity: 1;
+  }
+
+  > * {
+    pointer-events: none;
+  }
+
+  img {
+    display: block;
+    height: 90px;
+    margin: 0 0 8px;
+  }
 `
 
 const scaledLogo = url =>
@@ -52,25 +110,24 @@ class OperatorStep extends Component {
       defaultValue={number}
       error={numberLookup.error}
     >
-      <Button type="button" disabled={!number} loading={numberLookup.isLoading} onClick={this.handleAutoDetect}>
+      <Button disabled={!number} loading={numberLookup.isLoading} onClick={this.handleAutoDetect}>
         Continue
       </Button>
     </PhoneNumberInput>
   }
 
   renderOperatorGroup(type, operators) {
-    return <Field
+    return <OperatorGroup
       label={`${type}`}
       key={type}
-      className="operator-group"
     >{
       operators.map(({name, slug, logoImage}) =>
-        <button key={slug} value={slug} onClick={this.handleOperatorClick} className="operator-button">
+        <OperatorButton type="button" key={slug} value={slug} onClick={this.handleOperatorClick}>
           <span><img src={scaledLogo(logoImage)} /></span>
           <strong>Refill {name}</strong>
-        </button>
+        </OperatorButton>
       )
-    }</Field>
+    }</OperatorGroup>
   }
 
   render () {

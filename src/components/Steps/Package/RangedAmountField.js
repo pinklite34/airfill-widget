@@ -1,6 +1,30 @@
 import React from 'react';
+import styled from 'styled-components';
 import Field from '../../UI/Field';
-import './RangedAmountField.scss';
+
+const Input = styled.input`
+  min-width: 8em;
+  margin-right: 8px;
+  padding-right: 3em;
+  padding: 8px;
+  appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+`
+const Label = styled.label`
+  width: 3em;
+  position: relative;
+  left: -3.25em;
+  margin-right: -2.25em;
+  background-color: #fff;
+  color: #777;
+`
+const BTCPrice = styled.strong`
+  color: #5ab76b;
+`
 
 const RangedAmountField = ({
   amount, range, currency, onChange
@@ -9,7 +33,7 @@ const RangedAmountField = ({
   const btcAmount = Math.ceil(amount * range.customerSatoshiPriceRate / 10000) / 10000;
   const hint = (
     <span className="">
-      You pay <strong className="amount-ranged-btc-price">{btcAmount} BTC</strong>.
+      You pay <BTCPrice className="amount-ranged-btc-price">{btcAmount} BTC</BTCPrice>.
       Min: <strong>{range.min} {currency}</strong>, max: <strong>{range.max} {currency}</strong>.
     </span>
   );
@@ -52,9 +76,8 @@ const RangedAmountField = ({
       hint={hint}
       error={error}
     >
-      {/*<span class="input-group-addon"><span class="input-text">{{currency}}</span></span>*/}
       <div>
-        <input
+        <Input
           type="number"
           id="custom_amount"
           name="custom_amount"
@@ -66,10 +89,7 @@ const RangedAmountField = ({
           placeholder="e.g. 200"
           onChange={(e)=>onChange(e.target.value)}
         />
-        <label htmlFor="custom_amount" className="amount-ranged-currency">{currency}</label>
-        <span className="amount-ranged-range">
-
-        </span>
+        <Label htmlFor="custom_amount">{currency}</Label>
       </div>
     </Field>
   );

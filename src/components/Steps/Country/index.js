@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import styled from 'styled-components';
 import {connect} from 'react-redux';
 
 import Step from '../Step';
@@ -8,6 +9,13 @@ import Select from '../../UI/Select';
 
 import {setCountry} from '../../../actions';
 import {selectCountryList, selectCountry} from '../../../store';
+
+const CountryField = styled(Field)`
+  .refill-field {
+    display: flex;
+    flex-direction: row;
+  }
+`
 
 class CountryStep extends Component {
   handleCountryChange = (event) => this.props.setCountry(event.target.value)
@@ -33,7 +41,7 @@ class CountryStep extends Component {
     if (expanded) {
       return (
         <Step {...stepProps} onSubmit={() => selectedCountry && onContinue()}>
-          <Field
+          <CountryField
             hint="Select the country you want to send a refill to"
           >
             <Select value={selectedCountry && selectedCountry.alpha2 || ''} onChange={this.handleCountryChange}>
@@ -45,7 +53,7 @@ class CountryStep extends Component {
             <Button type="submit" disabled={!selectedCountry}>
               Continue
             </Button>
-          </Field>
+          </CountryField>
         </Step>
       );
 

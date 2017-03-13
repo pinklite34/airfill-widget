@@ -2,8 +2,7 @@ import styled from 'styled-components';
 
 export default styled.div`
   a {
-    background-color: transparent; /* 1 */
-    -webkit-text-decoration-skip: objects; /* 2 */
+    -webkit-text-decoration-skip: objects;
   }
 
   /**
@@ -47,7 +46,7 @@ export default styled.div`
   }
 
 
-  font-size: 16px;
+  font-size: 14px;
   font-family: -apple-system, ".SFNSText-Regular", "Helvetica Neue",
     "Roboto", "Segoe UI", sans-serif !important;
   color: #333;
@@ -67,14 +66,19 @@ export default styled.div`
       margin-top: 0;
     }
   }
+  h3 {
+    margin: 8px 0;
+  }
 
   p {
     margin-top: 0;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
+    font-size: 14px;
+    line-height: 1.5;
   }
+  input + p {
+    margin-top: 1em;
+  }
+
 
   var {
     font-style: normal;
@@ -95,6 +99,8 @@ export default styled.div`
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 2px;
+    font-size: 14px;
+    font-family: inherit;
 
     &:hover {
       border-color: #bbb;
@@ -102,6 +108,22 @@ export default styled.div`
     &:active,
     &:focus {
       border-color: #999;
+    }
+  }
+
+  .refill-introduction, .refill-terms {
+    font-size: 12px;
+    text-align: center;
+    padding: 16px;
+    margin: 0;
+    color: #777;
+
+    a {
+      color: inherit;
+    }
+
+    & + & {
+      padding-top: 0;
     }
   }
 `

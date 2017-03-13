@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import styled from 'styled-components';
 import Button from '../../UI/Button';
 
 const valueField = {
@@ -6,6 +7,84 @@ const valueField = {
   'eur': 'eurPrice',
   'usd': 'usdPrice'
 };
+
+const PaymentContainer = styled.div`
+  .refill-payment-order-info {
+    dt, dd {
+      float: left;
+      min-width: 120px;
+      white-space: nowrap;
+      margin: 0;
+      padding-bottom: 8px;
+    }
+    dt {
+      float: left;
+      clear: left;
+      font-weight: bold;
+    }
+    dd {
+      clear: right;
+      min-width: 180px;
+    }
+
+    &:after {
+      content: ' ';
+      display: block;
+      clear: both;
+    }
+  }
+
+  .refill-payment-grid {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    align-items: center;
+  }
+  .refill-payment-group {
+    flex: 1;
+    margin: 0 32px;
+
+    &:first-child {
+      margin-left: 0;
+      &:after, &:before { display: none; }
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:before {
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin-left: -32px;
+      background-color: rgba(0,0,0,0.16);
+      width: 1px;
+      content: "";
+    }
+    &:after {
+      display: block;
+      position: absolute;
+      top: 50%;
+      margin-left: -38px;
+      margin-top: -1em;
+      content: "or";
+      background-color: hsl(130,5%,99%);
+      padding: 0.5em 0 0.6em;
+      line-height: 1;
+      color: #999;
+    }
+
+    .refill-payment-button { display: block; }
+    .refill-payment-button + small {
+      display: block;
+      margin: 0 0 4px;
+    }
+    .refill-payment-button + small + .refill-payment-button {
+      margin-top: 12px;
+    }
+  }
+`
 
 const NewPayment = ({order, number, accountBalance, requireAccountBalance, showEmailField, showBTCAddress, billingCurrency, paymentButtons}) => {
   const billingCurrencyDisplayName = billingCurrency === 'XBT' ? 'BTC' : billingCurrency;
@@ -15,7 +94,7 @@ const NewPayment = ({order, number, accountBalance, requireAccountBalance, showE
   const widgetRequireAccountBalance = requireAccountBalance;
 
   return (
-    <div>
+    <PaymentContainer>
       <p>
         Please double check that your information below is correct before
         placing the order.
@@ -50,7 +129,7 @@ const NewPayment = ({order, number, accountBalance, requireAccountBalance, showE
               // false    | true      | any                   | any
               const disabled = !canAfford && ((widgetRequireAccountBalance && requireAccountBalance !== false) || requireAccountBalance);
               return [
-                <Button key={title} onClick={()=>callback(order)} disabled={disabled}>{title}</Button>,
+                <Button key={title} onClick={()=>callback(order)} disabled={disabled} className="refill-payment-button">{title}</Button>,
                 (disabled ?
                   <small>{lowBalanceText || 'Your account balance is too low to use this option'}</small>
                 : null)
@@ -65,7 +144,7 @@ const NewPayment = ({order, number, accountBalance, requireAccountBalance, showE
           </div>
         )}
       </div>
-    </div>
+    </PaymentContainer>
   );
 };
 

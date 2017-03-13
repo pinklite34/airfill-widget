@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const SelectContainer = styled.div`
   position: relative;
   display: inline-block;
-  margin: 8px 8px 8px 0;
+  margin: 0 8px 0 0;
 
   select {
     display: inline-block;

@@ -52,14 +52,6 @@ module.exports = {
         ]
       },
       {
-        test: /\.css$/,
-        loader: 'style-loader!css-loader?importLoaders=1!postcss-loader'
-      },
-      {
-        test: /\.scss/,
-        loader: 'style-loader!css-loader?importLoaders=1!postcss-loader!sass-loader?outputStyle=expanded'
-      },
-      {
         test: /\.(png|jpg|gif|woff|woff2)$/,
         loader: 'url-loader'
       },

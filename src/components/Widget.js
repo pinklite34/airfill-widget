@@ -11,8 +11,6 @@ import OrderStep from './Steps/Order';
 import {setStep, updateOrderStatus, loadInventory, lookupLocation} from '../actions';
 import {selectCurrentStep} from '../store';
 
-import './Widget.scss';
-
 const steps = [{
   component: CountryStep
 },{

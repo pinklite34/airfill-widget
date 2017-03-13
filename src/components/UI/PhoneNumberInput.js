@@ -1,8 +1,45 @@
 import React, {Component} from 'react';
+import styled from 'styled-components';
 import { parse, format } from 'libphonenumber-js';
 import Field from './Field';
 
-import './PhoneNumberInput.scss';
+const PhoneNumberField = styled(Field)`
+  .refill-field {
+    display: flex;
+    justify-content: flex-start;
+  }
+  .refill-number-field-input-wrapper {
+    min-height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #fff;
+    max-width: 20em;
+    margin-right: 8px;
+
+    .refill-number-field-cc {
+      display: block;
+      color: #777;
+      margin: 0 -4px 0 8px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .refill-number-field-input {
+      border: none;
+      flex: 1 1 auto;
+      width: auto;
+      min-width: 100px;
+      outline: none;
+    }
+  }
+`
 
 const getErrorMessage = error => {
   const messages = {
@@ -82,7 +119,7 @@ class PhoneNumberInput extends Component {
     const {label, hint, error, children} = this.props;
 
     return (
-      <Field
+      <PhoneNumberField
         className="refill-number-field"
         label={label || 'Phone number'}
         hint={hint || 'The phone number to top up'}
@@ -98,7 +135,7 @@ class PhoneNumberInput extends Component {
            />
         </div>
         {children}
-      </Field>
+      </PhoneNumberField>
     );
   }
 }

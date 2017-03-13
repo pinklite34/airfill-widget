@@ -61,11 +61,11 @@ export default ({
   hideText = false,
   inverted = false,
   inline = false,
-  className = ''
+  ...rest
 }) => (
-  <Wrapper inline={inline}>
+  <Wrapper inline={inline} {...rest}>
     <Spinner>
-      {range(12).map(_ => <Blade inverted={inverted} />)}
+      {range(12).map(i => <Blade key={i} inverted={inverted} />)}
     </Spinner>
     {!hideText &&
       <Text>{children || 'Loading...'}</Text>

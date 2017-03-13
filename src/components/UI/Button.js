@@ -2,6 +2,23 @@ import React, {PropTypes} from 'react';
 import styled, {css} from 'styled-components';
 import Spinner from './Spinner';
 
+const Button = ({children, loading, href, ...props}) => {
+  if (href) {
+    return <a href={href} {...props}>{children}</a>
+  }
+  return (
+    <button type="button" {...props}>
+      {loading ? <Spinner hideText inverted inline /> : children}
+    </button>
+  );
+};
+
+Button.propTypes = {
+  children: PropTypes.node.isRequired,
+  loading: PropTypes.bool,
+  secondary: PropTypes.bool
+};
+
 const hsl = (h, s, l) => `hsl(${h}, ${s}%, ${l}%)`
 const buttonColors = (h, s, l, ) => css`
   background-color: ${({ loading }) => hsl(h, s, l - (loading ? 4 : 0))};
@@ -13,7 +30,7 @@ const buttonColors = (h, s, l, ) => css`
   }
 `
 
-const StyledButton = styled.button`
+const StyledButton = styled(Button)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,7 +42,7 @@ const StyledButton = styled.button`
   min-height: 40px;
   border: none;
   border-radius: 2px;
-  margin: 8px 0;
+  margin: 0;
   padding: ${(props) => props.loading ? 0 : '8px 16px'};
   min-width: 100px;
 
@@ -46,20 +63,12 @@ const StyledButton = styled.button`
     opacity: 0.4;
     cursor: not-allowed;
   }
+
+  &[href] {
+    white-space: nowrap;
+    display: inline-block;
+    line-height: 24px;
+  }
 `
 
-const Button = ({children, loading, ...props}) => {
-  return (
-    <StyledButton type="button" {...props}>
-      {loading ? <Spinner hideText inverted inline /> : children}
-    </StyledButton>
-  );
-};
-
-Button.propTypes = {
-  children: PropTypes.node.isRequired,
-  loading: PropTypes.bool,
-  secondary: PropTypes.bool
-};
-
-export default Button;
+export default StyledButton;
