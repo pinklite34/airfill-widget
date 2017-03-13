@@ -63,7 +63,7 @@ const Container = styled.section`
       min-height: 36px;
       min-width: 80px;
     }
-    @media(max-width: 320px) {
+    @media(max-width: 325px) {
       padding: 0 8px;
       min-height: 28px;
       margin: -26px 0 -2px auto;
