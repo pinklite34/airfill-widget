@@ -121,9 +121,8 @@ export default styled.div`
     a {
       color: inherit;
     }
-
-    & + & {
-      padding-top: 0;
-    }
+  }
+  .refill-introduction + .refill-terms {
+    padding-top: 0;
   }
 `

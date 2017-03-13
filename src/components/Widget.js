@@ -75,7 +75,7 @@ class AirfillWidget extends Component {
   }
 
   renderFooter() {
-    if (!this.props.showFooter) { return null; }
+    if (!this.props.showTerms) { return null; }
     return (
       <p className="refill-terms">
         <a href="https://www.bitrefill.com/terms/" target="_blank">
@@ -87,10 +87,18 @@ class AirfillWidget extends Component {
     )
   }
 
+  renderIntroduction() {
+    if (!this.props.showIntroduction) { return null; }
+    return (
+      <p className="refill-introduction">With <strong>Bitrefill</strong> you can top up prepaid phones in over 150 countries. It’s fast, cheap and secure.</p>
+    )
+  }
+
   render() {
     return (
       <Container className={this.props.className}>
         {this.renderSteps()}
+        {this.renderIntroduction()}
         {this.renderFooter()}
       </Container>
     );
