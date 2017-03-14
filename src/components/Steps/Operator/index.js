@@ -129,6 +129,13 @@ const OperatorButton = styled.a`
       border-width: 0 2px 2px 0;
       border-color: #333;
     }
+
+    &:active {
+      border-color: #ccc;
+      background-color: #fff;
+      box-shadow: none;
+      opacity: 1;
+    }
   }
 `
 
