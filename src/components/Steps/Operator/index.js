@@ -71,7 +71,7 @@ const OperatorButton = styled.button`
   img {
     display: block;
     height: 90px;
-    margin: 0 0 8px;
+    margin: 0 auto 8px;
   }
 `
 

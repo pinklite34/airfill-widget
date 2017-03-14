@@ -34,6 +34,7 @@ const StyledButton = styled(Button)`
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
 
   background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.04));
   box-shadow: inset 0 -1px 0 0 rgba(0,0,0,0.16),
@@ -68,6 +69,13 @@ const StyledButton = styled(Button)`
     white-space: nowrap;
     display: inline-block;
     line-height: 24px;
+  }
+
+  /* Fix alignment in Safari */
+  &:before,
+  &:after {
+    content: '';
+    flex: 1 0 auto;
   }
 `
 
