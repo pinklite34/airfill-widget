@@ -77,6 +77,7 @@ const Container = styled.section`
       width: 22px;
       height: 22px;
       margin-right: 8px;
+      line-height: 1.6;
     }
 
     .refill-step-title {
