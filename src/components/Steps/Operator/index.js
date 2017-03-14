@@ -14,9 +14,15 @@ const MiniButton = styled(Button)`
   padding: 0 12px;
   min-height: 28px;
   margin: -12px -4px 0;
+
+  @media(max-width: 480px) {
+    margin: -9px -4px 0;
+  }
 `
 
 const OperatorGroup = styled(Field)`
+  margin: 0 -8px 0 -4px;
+
   .refill-field-label {
     clear: both;
     overflow: hidden;
@@ -25,11 +31,28 @@ const OperatorGroup = styled(Field)`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin: 0 -8px 0 -4px;
+  }
+
+  @media(max-width: 480px) {
+    margin: 0 -12px 12px;
+    border-bottom: 1px solid #ccc;
+
+    &:last-child {
+      margin-bottom: -12px;
+      border-bottom: none;
+    }
+
+    .refill-field {
+      flex-direction: column;
+      flex-wrap: none;
+    }
+    .refill-field-label {
+      padding: 8px 12px 0;
+    }
   }
 `
 
-const OperatorButton = styled.button`
+const OperatorButton = styled.a`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -47,7 +70,6 @@ const OperatorButton = styled.button`
   max-width: 156px;
 
   font-size: 12px;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.08);
 
   color: #090909;
   outline: none;
@@ -70,8 +92,43 @@ const OperatorButton = styled.button`
 
   img {
     display: block;
-    height: 90px;
+    height: 44px;
     margin: 0 auto 8px;
+  }
+
+  @media(max-width: 480px) {
+    margin:  0;
+    max-width: 100%;
+    border-radius: 0;
+    border: none;
+    border-top: 1px solid #ccc;
+    background: #fff;
+
+    flex-direction: row;
+    justify-content: flex-start;
+    flex: 1 0 50px;
+
+    img {
+      width: 40px;
+      height: auto;
+      margin: 0 8px 0 0;
+    }
+
+    strong {
+      flex: 1;
+      text-align: left;
+    }
+    &:after {
+      content: '';
+      display: block;
+      width: 14px;
+      height: 14px;
+      margin: 0 4px;
+      transform: rotate(-45deg);
+      border-style: solid;
+      border-width: 0 2px 2px 0;
+      border-color: #333;
+    }
   }
 `
 
@@ -122,7 +179,7 @@ class OperatorStep extends Component {
       key={type}
     >{
       operators.map(({name, slug, logoImage}) =>
-        <OperatorButton type="button" key={slug} value={slug} onClick={this.handleOperatorClick}>
+        <OperatorButton key={slug} value={slug} onClick={this.handleOperatorClick}>
           <span><img src={scaledLogo(logoImage)} /></span>
           <strong>Refill {name}</strong>
         </OperatorButton>
