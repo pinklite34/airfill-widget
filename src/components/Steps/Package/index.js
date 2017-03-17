@@ -80,6 +80,7 @@ const PackageStep = ({
             onChange={onAmountChange}
             amount={amount}
             currency={operator.currency}
+            billingCurrency={billingCurrency}
             range={operator.range}
           />
         }
