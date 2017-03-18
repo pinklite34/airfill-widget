@@ -99,6 +99,7 @@ class PackageStep extends Component {
               onChange={setAmount}
               amount={amount}
               currency={operatorResult.currency}
+              billingCurrency={billingCurrency}
               range={operatorResult.range}
             />
           }

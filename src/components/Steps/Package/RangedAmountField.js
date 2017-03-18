@@ -22,18 +22,26 @@ const Label = styled.label`
   background-color: #fff;
   color: #777;
 `
-const BTCPrice = styled.strong`
+const Price = styled.strong`
   color: #5ab76b;
 `
 
 const RangedAmountField = ({
-  amount, range, currency, onChange
+  amount, range, currency, billingCurrency, onChange
 }) => {
   let error;
-  const btcAmount = Math.ceil(amount * range.customerSatoshiPriceRate / 10000) / 10000;
+  let currentPrice = amount * range.customerPriceRate;
+
+  if (billingCurrency === 'XBT') {
+    currentPrice = Math.ceil(currentPrice / 10000) / 10000;
+  } else {
+    currentPrice = currentPrice.toFixed(2);
+  }
+
+  const displayedCurrency = billingCurrency === 'XBT' ? 'BTC' : billingCurrency;
   const hint = (
     <span className="">
-      You pay <BTCPrice className="amount-ranged-btc-price">{btcAmount} BTC</BTCPrice>.
+      You pay <Price className="amount-ranged-btc-price">{currentPrice} {displayedCurrency}</Price>.
       Min: <strong>{range.min} {currency}</strong>, max: <strong>{range.max} {currency}</strong>.
     </span>
   );
