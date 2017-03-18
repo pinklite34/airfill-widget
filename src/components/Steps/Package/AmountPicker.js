@@ -155,9 +155,9 @@ const AmountList = styled.ul`
 `
 
 const AmountPicker = ({
-  packages, selected, currency, billingCurrency, accountBalance, requireAccountBalance, onChange
+  packages=[], selected, currency, billingCurrency, accountBalance, requireAccountBalance, onChange
 }) => (
-  <AmountList showAsList={packages && packages.length > 12}>
+  <AmountList showAsList={packages.length > 12}>
     {packages.map(pkg => {
       const {value} = pkg;
 
