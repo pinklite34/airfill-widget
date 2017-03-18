@@ -1,7 +1,8 @@
 import React from 'react';
-import RefillStep from '../Step';
+import {connect} from 'react-redux';
 import PusherSubscription from '../../PusherSubscription';
 
+import RefillStep from '../Step';
 import Spinner from '../../UI/Spinner';
 
 import NewPayment from './0-New';
@@ -12,6 +13,17 @@ import ExpiredPayment from './4-Expired';
 import RefillFailed from './5-Failed';
 import RefillDelivered from './6-Delivered';
 import BalanceTooLow from './7-BalanceTooLow';
+
+import {
+  selectOrder,
+  selectNumber,
+  selectPaymentStatus
+} from './../../../store';
+
+import {
+  updatePaymentStatus
+} from '../../../actions';
+
 
 const componentForStatus = status => {
   switch (status) {
@@ -35,22 +47,26 @@ const componentForStatus = status => {
 };
 
 const OrderStep = ({
+  step,
   expanded,
-  order,
+
   accountBalance,
   requireAccountBalance,
-  paymentStatus,
   refundAddress,
   paymentButtons,
-  onPaymentStatusChange,
-  onReset,
   showBTCAddress,
   showEmailField,
   billingCurrency,
-  number
+
+  order,
+  number,
+  paymentStatus,
+
+  updatePaymentStatus,
+  onReset
 }) => {
   const stepProps = {
-    number: 3,
+    step,
     title: 'Pay',
     expanded
   };
@@ -59,15 +75,15 @@ const OrderStep = ({
     return <RefillStep {...stepProps}><Spinner>Loading order status</Spinner></RefillStep>;
   } else if (expanded) {
     const PaymentComponent = componentForStatus(paymentStatus.status);
-    const {orderId, payment: {address}} = order;
+    const {orderId, payment: {address}} = order.result;
 
     return (
-      <RefillStep {...stepProps} subTitle={expanded && paymentStatus.status ? `Order ID ${order.orderId}` : null}>
+      <RefillStep {...stepProps} subTitle={expanded && paymentStatus.status ? `Order ID ${orderId}` : null}>
         <PusherSubscription
           channel={[orderId, address].join('-')}
           events={['paid', 'confirmed', 'partial', 'failed', 'delivered']}
           onUpdate={(event, data) =>
-            onPaymentStatusChange({
+            updatePaymentStatus({
               status: event,
               orderId,
               data
@@ -75,7 +91,7 @@ const OrderStep = ({
           }
         />
         <PaymentComponent
-          order={order}
+          order={order.result}
           accountBalance={accountBalance}
           requireAccountBalance={requireAccountBalance}
           paymentButtons={paymentButtons}
@@ -94,4 +110,10 @@ const OrderStep = ({
   return <RefillStep {...stepProps} />;
 };
 
-export default OrderStep;
+export default connect((state) => ({
+  order: selectOrder(state),
+  paymentStatus: selectPaymentStatus(state),
+  number: selectNumber(state)
+}), {
+  updatePaymentStatus
+})(OrderStep);

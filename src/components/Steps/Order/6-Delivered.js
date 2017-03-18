@@ -1,21 +1,13 @@
 import React, {PropTypes} from 'react';
-import Button from '../../UI/Button';
+import OrderStep from  '../../UI/OrderStep';
+import Button from  '../../UI/Button';
 
 const RefillDelivered = ({paymentStatus: { deliveryData = {} }, onReset}) => {
   return (
     <div>
-      <h3 className="order-step">
-        <span className="order-step-symbol order-step-done">✓</span>
-        Payment complete
-      </h3>
-      <h3 className="order-step">
-        <span className="order-step-symbol order-step-done">✓</span>
-        Refill sent
-      </h3>
-      <h3 className="order-step">
-        <span className="order-step-symbol order-step-done">✓</span>
-        Refill Delivered
-      </h3>
+      <OrderStep done>Payment complete</OrderStep>
+      <OrderStep done>Refill sent</OrderStep>
+      <OrderStep done>Refill Delivered</OrderStep>
 
       <p>{deliveryData.pinInfo ?
         'You should receive an email with instructions any minute now. They are also displayed below. Thanks for using Bitrefill!' :

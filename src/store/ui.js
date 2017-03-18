@@ -2,7 +2,7 @@ import {REHYDRATE} from 'redux-persist/constants';
 
 const initialState = {
   currentStep: 1,
-  number: null,
+  number: '',
   operatorId: null,
   amount: 0,
   email: { value: '', valid: false, error: false }
@@ -16,32 +16,15 @@ export default (state=initialState, {type, payload}) => {
     }
 
     case 'SET_STEP': {
-      const currentStep = (payload > 0 && payload < 4)
-        ? payload : state.currentStep;
-      return { ...state, currentStep };
+      return { ...state, currentStep: payload };
     }
 
     case 'SET_NUMBER': {
-      const {
-        number=state.number,
-        country=state.country,
-        countryName=state.countryName
-      } = payload;
+      return { ...state, number: payload };
+    }
 
-      let autoDetectedOperator;
-
-      if (number === state.number) {
-        // Only persist auto detected operator slug if the number is the same
-        autoDetectedOperator = state.autoDetectedOperator;
-      }
-
-      return {
-        ...state,
-        number,
-        country,
-        countryName,
-        autoDetectedOperator
-      };
+    case 'SET_COUNTRY': {
+      return { ...state, number: '' };
     }
 
     case 'SET_OPERATOR': {
@@ -63,33 +46,15 @@ export default (state=initialState, {type, payload}) => {
       return { ...state, email: { value, valid, error } };
     }
 
-    case 'LOAD_NUMBERLOOKUP_SUCCESS': {
-      const {operator} = payload;
-      let nextState = state;
+    case 'LOAD_OPERATOR_SUCCESS': {
+      const {packages} = payload;
+      const middle = Math.round((packages.length - 1) * 0.5);
 
-      if (operator) {
-        // Preselect middle package is possible
-        if (operator.packages) {
-          const {packages} = operator;
-          const middle = Math.round((packages.length - 1) * 0.5);
-
-          if (packages[middle]) {
-            nextState = { ...state, amount: packages[middle].value };
-          }
-        }
-
-        // Persist the auto detected operator slug if not set
-        nextState = {
-          ...nextState,
-          autoDetectedOperator: state.autoDetectedOperator == null ?
-            operator.slug : state.autoDetectedOperator
-        };
-      } else {
-        // Auto detect failed
-        nextState = { ...nextState, autoDetectedOperator: false };
+      if (packages[middle]) {
+        return { ...state, amount: packages[middle].value };
       }
 
-      return nextState;
+      return state;
     }
 
     default:

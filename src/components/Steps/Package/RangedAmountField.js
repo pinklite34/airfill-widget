@@ -1,6 +1,30 @@
 import React from 'react';
-import Field from '../Field';
-import './RangedAmountField.scss';
+import styled from 'styled-components';
+import Field from '../../UI/Field';
+
+const Input = styled.input`
+  min-width: 8em;
+  margin-right: 8px;
+  padding-right: 3em;
+  padding: 8px;
+  appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+`
+const Label = styled.label`
+  width: 3em;
+  position: relative;
+  left: -3.25em;
+  margin-right: -2.25em;
+  background-color: #fff;
+  color: #777;
+`
+const Price = styled.strong`
+  color: #5ab76b;
+`
 
 const RangedAmountField = ({
   amount, range, currency, billingCurrency, onChange
@@ -17,7 +41,7 @@ const RangedAmountField = ({
   const displayedCurrency = billingCurrency === 'XBT' ? 'BTC' : billingCurrency;
   const hint = (
     <span className="">
-      You pay <strong className="amount-ranged-btc-price">{currentPrice} {displayedCurrency}</strong>.
+      You pay <Price className="amount-ranged-btc-price">{currentPrice} {displayedCurrency}</Price>.
       Min: <strong>{range.min} {currency}</strong>, max: <strong>{range.max} {currency}</strong>.
     </span>
   );
@@ -60,9 +84,8 @@ const RangedAmountField = ({
       hint={hint}
       error={error}
     >
-      {/*<span class="input-group-addon"><span class="input-text">{{currency}}</span></span>*/}
       <div>
-        <input
+        <Input
           type="number"
           id="custom_amount"
           name="custom_amount"
@@ -74,10 +97,7 @@ const RangedAmountField = ({
           placeholder="e.g. 200"
           onChange={(e)=>onChange(e.target.value)}
         />
-        <label htmlFor="custom_amount" className="amount-ranged-currency">{currency}</label>
-        <span className="amount-ranged-range">
-
-        </span>
+        <Label htmlFor="custom_amount">{currency}</Label>
       </div>
     </Field>
   );

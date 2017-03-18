@@ -1,11 +1,12 @@
 import {createAction} from 'redux-actions';
 import {createLoadAction} from '../lib/rest-helpers';
+import {fetch} from '../lib/api-client';
 
-export const setRefillStep = createAction('SET_STEP');
-export const setRefillNumber = createAction('SET_NUMBER');
-export const setRefillOperator = createAction('SET_OPERATOR');
-export const setRefillAmount = createAction('SET_AMOUNT');
-export const setRefillEmail = createAction('SET_EMAIL');
+export const setStep = createAction('SET_STEP');
+export const setCountry = createAction('SET_COUNTRY');
+export const setNumber = createAction('SET_NUMBER');
+export const setAmount = createAction('SET_AMOUNT');
+export const setEmail = createAction('SET_EMAIL');
 
 export const updatePaymentStatus = createAction('UPDATE_PAYMENT_STATUS');
 
@@ -15,10 +16,22 @@ import {
   selectAmount,
   selectEmail,
   selectOrder,
-  selectNumberLookup,
+  selectCountry,
   selectOperator
 } from '../store';
 
+export const loadInventory = createLoadAction({
+  name: 'airfillWidget.inventory',
+  uri: '/inventory'
+});
+
+export const lookupLocation = () => (dispatch, getState) => {
+  fetch('/lookup_country', {}).then(country => {
+    if (country && !selectCountry(getState())) {
+      dispatch(setCountry(country.toUpperCase()))
+    }
+  })
+}
 
 export const proccessOperatorPackages = response => {
   const { operator } = response;
@@ -52,85 +65,64 @@ export const proccessOperatorPackages = response => {
       item.btcPrice = Math.ceil(item.satoshiPrice / 10000) / 10000;
     });
 
-    response.operator = operator;
+  } else {
+    throw response.message || 'Unknown error';
   }
 
-  return response;
+  return operator;
 };
 
+const loadOperator = createLoadAction({
+  name: 'airfillWidget.operator',
+  responseTransform: proccessOperatorPackages
+});
+
+export const setOperator = (operatorSlug) => (dispatch, getState) => {
+  dispatch(loadOperator({operatorSlug, uri: `/inventory/${operatorSlug}`}))
+}
+
 const loadNumberLookup = createLoadAction({
-  name: 'airfillWidget.numberLookup',
+  name: 'airfillWidget.operator',
   uri: '/lookup_number',
   responseTransform: proccessOperatorPackages
 });
 
-export const lookupRefillNumber = (operatorSlug) => (dispatch, getState) => {
-  // const isLoading = refillNumberLookupIsLoadingSelector(getState());
-  const state = getState();
-  const number = selectNumber(state);
-  const operator = selectOperator(state);
-  let options = {
-    query: {
-      number,
-      operatorSlug
-    }
+export const lookupNumber = (number) => (dispatch) => {
+  const options = {
+    query: { number }
   };
 
-  // Resolve directly when we already have the correct data
-  if (
-    operator && operator.slug && operatorSlug === operator.slug && (
-    (operator.packages && operator.packages.length) || operator.isRanged
-  )) {
-    return Promise.resolve();
-  }
-
-  // custom credentials for dashboard widget
-  if (state.account && state.account.apiKeys) {
-    options.password = state.account.apiKeys.secret;
-    options.username = state.account.apiKeys.id;
-  }
-
-  // Dispatch number lookup
-  dispatch(
-    loadNumberLookup(options)
-  ).then(() => {
-    dispatch(setRefillStep(2));
-  });
+  return dispatch(loadNumberLookup(options));
 };
 
-const createOrder = createLoadAction({
+const postOrder = createLoadAction({
   name: 'airfillWidget.order',
   uri: '/order'
 });
 
-export const placeRefillOrder = (orderOptions) => (dispatch, getState) => {
+export const createOrder = (orderOptions) => (dispatch, getState) => {
   const state = getState();
   const number = selectNumber(state);
   const amount = selectAmount(state);
   const email = selectEmail(state) || orderOptions.email;
-  const numberLookup = selectNumberLookup(state);
   const operator = selectOperator(state);
   const order = selectOrder(state);
 
   const options = {
     body: {
       ...orderOptions,
-      operatorSlug: operator.slug,
+      operatorSlug: operator.result.slug,
       valuePackage: amount,
       number,
       email
     }
   };
 
-  if (order.isLoading || numberLookup.isLoading) {
+  if (order.isLoading || operator.isLoading) {
     return Promise.reject();
   }
 
-  dispatch(
-    createOrder(options)
-  ).then(() => {
-    dispatch(setRefillStep(3));
-  });
+  return dispatch(postOrder(options))
 };
 
 

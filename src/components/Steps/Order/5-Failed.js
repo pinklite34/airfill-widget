@@ -1,4 +1,6 @@
 import React, {PropTypes} from 'react';
+import OrderStep from  '../../UI/OrderStep';
+import Button from  '../../UI/Button';
 
 const RefillFailed = ({ order, refundAddress }) => {
   let mailto = 'mailto:support@bitrefill.com?subject=' + encodeURIComponent(`Failed Order (ID ${order.orderId})`);
@@ -12,19 +14,9 @@ Thanks!`);
 
   return (
     <div>
-      <h3 className="order-step">
-        <span className="order-step-symbol order-step-done">✓</span>
-        Payment complete
-      </h3>
-      <h3 className="order-step">
-        <span className="order-step-symbol order-step-done">✓</span>
-        Refill sent
-      </h3>
-      <h3 className="order-step">
-        <span className="order-step-symbol order-step-error">X</span>
-        Delivery failed
-      </h3>
-
+      <OrderStep done>Payment complete</OrderStep>
+      <OrderStep done>Refill sent</OrderStep>
+      <OrderStep error>Delivery failed</OrderStep>
       <p>
         For some reason we failed do deliver your refill. This can happen if you
         have typed the number incorrectly, if the number is not for a prepaid
@@ -41,7 +33,7 @@ Thanks!`);
           target="_blank">Click here to see how it's going</a> or <a href={mailto}>contact support@birefill.com</a>.
         </p>
       ) : (
-        <a className="button" href={mailto}>Contact Support</a>
+        <Button href={mailto}>Contact Support</Button>
       )}
     </div>
   );

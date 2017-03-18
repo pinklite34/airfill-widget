@@ -6,13 +6,17 @@ import ui, {
   selectEmail,
   selectCurrentStep
 } from './ui';
-import numberLookup, { selectNumberLookup, selectOperator } from './numberLookup';
+import numberLookup, { selectNumberLookup } from './numberLookup';
 import paymentStatus, { selectPaymentStatus } from './paymentStatus';
+import inventory, { selectCountry, selectCountryList, selectAvailableOperators, selectSelectedOperator } from './inventory';
+import operator, { selectOperator } from './operator';
 import order, { selectOrder } from './order';
 
 // Export the reducer for use within other redux apps
 export const airfillWidget = combineReducers({
   ui,
+  inventory,
+  operator,
   numberLookup,
   paymentStatus,
   order
@@ -29,9 +33,17 @@ export {
   selectEmail,
   selectCurrentStep,
 
+  // Inventory
+  selectCountry,
+  selectCountryList,
+  selectAvailableOperators,
+  selectSelectedOperator,
+
+  // Operator
+  selectOperator,
+
   // Number lookup
   selectNumberLookup,
-  selectOperator,
 
   // Payment status
   selectPaymentStatus,
