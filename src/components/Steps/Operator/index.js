@@ -145,16 +145,16 @@ const scaledLogo = url =>
 class OperatorStep extends Component {
   state = { showAutoDetect: false }
 
-  handleOperatorClick = (event) => {
-    this.props.setOperator(event.target.value)
-    this.props.onContinue()
-  }
-
   handleAutoDetect = () => {
     this.props.lookupNumber(this.props.number).then(() => this.props.onContinue())
   }
   toggleAutoDetect = () => {
     this.setState(prev => ({...prev, showAutoDetect: !prev.showAutoDetect}))
+  }
+
+  handleOperatorClick(slug) {
+    this.props.setOperator(slug)
+    this.props.onContinue()
   }
 
   renderToggle() {
@@ -186,7 +186,7 @@ class OperatorStep extends Component {
       key={type}
     >{
       operators.map(({name, slug, logoImage}) =>
-        <OperatorButton key={slug} value={slug} onClick={this.handleOperatorClick}>
+        <OperatorButton key={slug} onClick={() => this.handleOperatorClick(slug)}>
           <span><img src={scaledLogo(logoImage)} /></span>
           <strong>Refill {name}</strong>
         </OperatorButton>
