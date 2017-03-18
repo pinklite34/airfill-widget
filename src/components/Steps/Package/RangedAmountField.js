@@ -30,12 +30,12 @@ const RangedAmountField = ({
   amount, range, currency, billingCurrency, onChange
 }) => {
   let error;
-  let currentPrice = amount * range.customerPriceRate;
+  let currentPrice;
 
   if (billingCurrency === 'XBT') {
-    currentPrice = Math.ceil(currentPrice / 10000) / 10000;
+    currentPrice = Math.ceil(amount * range.customerSatoshiPriceRate / 10000) / 10000;
   } else {
-    currentPrice = currentPrice.toFixed(2);
+    currentPrice = (amount * range.customerPriceRate).toFixed(2);
   }
 
   const displayedCurrency = billingCurrency === 'XBT' ? 'BTC' : billingCurrency;
