@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, {css, keyframes} from 'styled-components';
 
-const range = n => Array.from(Array(n).keys())
+const range = n => Array.apply(null, Array(n)).map((_, i) => i);
 
 const animation = keyframes`
   from { background-color: #777; }
