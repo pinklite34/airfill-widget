@@ -40,10 +40,7 @@ class AirfillWidget extends Component {
       showBTCAddress=this.props.billingCurrency === 'XBT',
       billingCurrency='XBT',
       orderOptions={},
-      showIntroduction=false,
-      showTerms=false,
-
-      ...rest
+      defaultNumber
     } = this.props;
 
     const showEmailField = !orderOptions.email || orderOptions.email.indexOf('@') < 1;
@@ -70,6 +67,7 @@ class AirfillWidget extends Component {
         accountBalance={accountBalance}
         requireAccountBalance={requireAccountBalance}
         showEmailField={showEmailField}
+        defaultNumber={defaultNumber}
       />;
     })
   }

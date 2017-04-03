@@ -35,6 +35,7 @@ function AirfillWidget(ele, opt) {
 
   const {
     billingCurrency,
+    defaultNumber,
     userEmail,
     userAccountBalance,
     requireAccountBalance,
@@ -59,6 +60,7 @@ function AirfillWidget(ele, opt) {
         showIntroduction={showIntroduction}
         showTerms={true}
         showBTCAddress={showBTCAddress}
+        defaultNumber={defaultNumber}
         accountBalance={userAccountBalance}
         requireAccountBalance={requireAccountBalance}
       />

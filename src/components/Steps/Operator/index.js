@@ -164,14 +164,14 @@ class OperatorStep extends Component {
   }
 
   renderPhoneAutoDetectForm() {
-    const {country, number, numberLookup} = this.props;
+    const {country, number, numberLookup, defaultNumber} = this.props;
 
     return <PhoneNumberInput
       label={'Auto Detect Mobile Operator'}
       className="operator-group"
       country={country}
       onChange={this.props.setNumber}
-      defaultValue={number}
+      defaultValue={number || defaultNumber}
       error={numberLookup.error}
     >
       <Button disabled={!number} loading={numberLookup.isLoading} onClick={this.handleAutoDetect}>

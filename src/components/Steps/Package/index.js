@@ -48,6 +48,7 @@ class PackageStep extends Component {
 
       // Data/state
       number,
+      defaultNumber,
       operator,
       country,
       isLoadingOrder,
@@ -108,7 +109,7 @@ class PackageStep extends Component {
             <PhoneNumberInput
               country={country}
               onChange={this.props.setNumber}
-              defaultValue={number}
+              defaultValue={number || defaultNumber}
               error={orderError}
             />
           }
