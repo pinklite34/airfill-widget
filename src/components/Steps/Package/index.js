@@ -44,18 +44,15 @@ class PackageStep extends Component {
       // Action
       setAmount,
       setEmail,
-      setNumber,
 
       // Data/state
       number,
-      defaultNumber,
       operator,
       country,
       isLoadingOrder,
       orderError,
       amount,
-      email,
-
+      email
     } = this.props;
 
     const stepProps = {
@@ -109,7 +106,7 @@ class PackageStep extends Component {
             <PhoneNumberInput
               country={country}
               onChange={this.props.setNumber}
-              defaultValue={number || defaultNumber}
+              defaultValue={number}
               error={orderError}
             />
           }

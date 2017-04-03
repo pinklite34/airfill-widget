@@ -8,7 +8,7 @@ import OperatorStep from './Steps/Operator';
 import PackageStep from './Steps/Package';
 import OrderStep from './Steps/Order';
 
-import {setStep, updateOrderStatus, loadInventory, lookupLocation} from '../actions';
+import {init, setStep} from '../actions';
 import {selectCurrentStep} from '../store';
 
 const steps = [{
@@ -23,9 +23,9 @@ const steps = [{
 
 class AirfillWidget extends Component {
   componentDidMount() {
-    this.props.loadInventory();
-    this.props.lookupLocation();
-    this.props.updateOrderStatus();
+    this.props.init({
+      defaultNumber: this.props.defaultNumber
+    });
   }
 
   renderSteps() {
@@ -39,8 +39,7 @@ class AirfillWidget extends Component {
       requireAccountBalance=false,
       showBTCAddress=this.props.billingCurrency === 'XBT',
       billingCurrency='XBT',
-      orderOptions={},
-      defaultNumber
+      orderOptions={}
     } = this.props;
 
     const showEmailField = !orderOptions.email || orderOptions.email.indexOf('@') < 1;
@@ -67,7 +66,6 @@ class AirfillWidget extends Component {
         accountBalance={accountBalance}
         requireAccountBalance={requireAccountBalance}
         showEmailField={showEmailField}
-        defaultNumber={defaultNumber}
       />;
     })
   }
@@ -106,8 +104,6 @@ class AirfillWidget extends Component {
 export default connect(state => ({
   currentStep: selectCurrentStep(state)
 }), {
-  setStep,
-  updateOrderStatus,
-  loadInventory,
-  lookupLocation
+  init,
+  setStep
 })(AirfillWidget);

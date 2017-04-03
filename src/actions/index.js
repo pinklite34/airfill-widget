@@ -1,6 +1,7 @@
 import {createAction} from 'redux-actions';
 import {createLoadAction} from '../lib/rest-helpers';
 import {fetch} from '../lib/api-client';
+import {parse, format} from 'libphonenumber-js';
 
 export const setStep = createAction('SET_STEP');
 export const setCountry = createAction('SET_COUNTRY');
@@ -129,10 +130,37 @@ export const createOrder = (orderOptions) => (dispatch, getState) => {
 const fetchOrder = createLoadAction('airfillWidget.order');
 export const updateOrderStatus = () => (dispatch, getState) => {
   const order = selectOrder(getState());
-
   if (order && order.result && order.result.id && order.result.payment && order.result.payment.address) {
     dispatch(
       fetchOrder({uri: `/order/${order.result.id}?incoming_btc_address=${encodeURIComponent(order.result.payment.address)}`})
     )
+  }
+}
+
+export const init = options => (dispatch, getState) => {
+  const inventoryPromise = dispatch(loadInventory());
+  dispatch(updateOrderStatus());
+
+  const state = getState();
+  const number = selectNumber(state);
+  const { defaultNumber = '' } = options;
+
+  if (!number && defaultNumber) {
+    // Try to auto detect country
+    inventoryPromise.then(() => {
+      const parsedNumber = defaultNumber.indexOf('+') > -1
+        && parse(defaultNumber);
+
+      if (parsedNumber && parsedNumber.country) {
+        // Set country and number
+        dispatch(setCountry(parsedNumber.country));
+        dispatch(setNumber(format(parsedNumber,  'International')));
+      } else {
+        // Set only number
+        dispatch(setNumber(defaultNumber));
+      }
+    });
+  } else if (!number) {
+    dispatch(lookupLocation());
   }
 }

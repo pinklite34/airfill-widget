@@ -1,4 +1,6 @@
+import {parse, format} from 'libphonenumber-js';
 import {REHYDRATE} from 'redux-persist/constants';
+import {selectCountry} from './inventory';
 
 const initialState = {
   currentStep: 1,
@@ -21,10 +23,6 @@ export default (state=initialState, {type, payload}) => {
 
     case 'SET_NUMBER': {
       return { ...state, number: payload };
-    }
-
-    case 'SET_COUNTRY': {
-      return { ...state, number: '' };
     }
 
     case 'SET_OPERATOR': {
@@ -63,9 +61,28 @@ export default (state=initialState, {type, payload}) => {
 };
 
 export const selectUiState = state => state.airfillWidget.ui;
-export const selectNumber = state => selectUiState(state).number;
 export const selectAmount = state => selectUiState(state).amount;
 export const selectCurrentStep = state => selectUiState(state).currentStep;
+
+export const selectNumber = state => {
+  const number = selectUiState(state).number;
+  const country = selectCountry(state);
+
+  if (!number || !country) {
+    return number;
+  }
+
+  // Make sure to always include country code in number, this is needed because
+  // a valid number can be provided through the defaultNumber option without
+  // including a country code before the country has been selected
+  const parsedNumber = parse(number, country && country.alpha2);
+  if (parsedNumber && parsedNumber.country) {
+    return format(parsedNumber,  'International');
+  }
+
+  return number;
+}
+
 export const selectEmail = state => {
   const email = selectUiState(state).email;
   return email.valid ? email.value : '';
