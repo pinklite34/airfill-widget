@@ -9,12 +9,16 @@
       body {
         font-family: -apple-system, ".SFNSText-Regular", "Helvetica Neue",
           "Roboto", "Segoe UI", sans-serif !important;
-        padding: 0;
+        padding: 8px;
         color: #333;
         max-width: 720px;
         margin: 0 auto;
       }
-      .demo, form { display: inline-block; }
+      .demo, body > form { display: inline-block; }
+      .demo { margin-bottom: 0; margin-right: 16px; }
+      body > form { margin-bottom: 16px; }
+      body > form label { white-space: nowrap; }
+      body > form select { min-width: 10em; }
       h1 { margin-bottom: 0; }
       h2 { margin-top: 32px; }
       .refill-step-container { border: 1px solid rgba(0, 0, 0, 0.16) !important; border-top-width: 0 !important;  }
@@ -28,19 +32,6 @@
   </head>
   <body>
     <h1>Refill Widget</h1>
-
-    <h2>Basic Usage</h2>
-    <code><pre>
-&lt;script src="https://cdn.airfill.com/widget.js"&gt;&lt;/script&gt;
-&lt;script&gt;
-  AirfillWidget('#app', {
-    key: 'your widget api key', // Airfill Widget API key (required)
-    paymentButtons: [{
-      title: 'Pay With Account Balance',
-      callback: function (order) {} // Called once the user confirms the order
-    }]
-  });
-&lt;/script&gt;</pre></code>
 
     <h2 class="demo">
       Demo
@@ -62,6 +53,21 @@
       </label>
     </form>
     <div id="widget"></div>
+
+
+    <h2>Basic Usage</h2>
+    <code><pre>
+&lt;script src="https://cdn.airfill.com/widget.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  AirfillWidget('#app', {
+    key: 'your widget api key', // Airfill Widget API key (required)
+    paymentButtons: [{
+      title: 'Pay With Account Balance',
+      callback: function (order) {} // Called once the user confirms the order
+    }]
+  });
+&lt;/script&gt;</pre></code>
+
 
     <h2>Widget Options</h2>
     <table>
