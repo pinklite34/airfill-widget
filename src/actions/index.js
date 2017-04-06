@@ -132,7 +132,10 @@ export const updateOrderStatus = () => (dispatch, getState) => {
   const order = selectOrder(getState());
   if (order && order.result && order.result.id && order.result.payment && order.result.payment.address) {
     dispatch(
-      fetchOrder({uri: `/order/${order.result.id}?incoming_btc_address=${encodeURIComponent(order.result.payment.address)}`})
+      fetchOrder({
+        uri: `/order/${order.result.id}?incoming_btc_address=${encodeURIComponent(order.result.payment.address)}`,
+        silent: true
+      })
     )
   }
 }
