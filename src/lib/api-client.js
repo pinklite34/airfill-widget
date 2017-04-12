@@ -15,13 +15,14 @@ if (!global.btoa) {
   };
 }
 
-function encodeQueryString(obj) {
-  return '?' + (
+export function encodeQueryString(obj) {
+  const queryString = (typeof obj === 'object' && !!obj) &&
     Object.keys(obj)
       .filter(k => obj[k])
       .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(obj[k]))
       .join('&')
-  );
+
+  return queryString ? '?' + queryString : '';
 }
 
 export const createClient = (conf={}) => {
@@ -118,7 +119,7 @@ export const createClient = (conf={}) => {
   };
 
   const createHref = (uri, queryParams) => {
-    return baseUrl + uri + encodeQueryString(queryParams);
+    return baseUrl + (uri ? uri : '') + encodeQueryString(queryParams);
   };
 
   return { fetch: doFetch, configure, createHref };
