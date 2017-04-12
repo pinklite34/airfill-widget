@@ -1,6 +1,9 @@
 // Mock fetch so we can make sure it's called correctly
 jest.mock('fetch-ponyfill', () => {
-  const mockFetch = jest.fn(() => Promise.resolve());
+  const mockFetch = jest.fn(() => Promise.resolve({
+    status: 200,
+    json: () => Promise.resolve()
+  }));
   return () => mockFetch;
 });
 
