@@ -41,13 +41,19 @@ class PhoneNumberInput extends Component {
     return country ? country.countryCallingCodes[0] : undefined;
   }
 
+  getAlpha2 = () => {
+    const { country={} } = this.props;
+    const { alpha2=null } = country;
+    return alpha2;
+  }
+
   formatDefaultValue = () => {
     let { defaultValue = '' } = this.props;
 
     const cc = this.getCountryCode();
+    const alpha2 = this.getAlpha2();
     const number = defaultValue.replace(/[^\d\+]/, '');
     const validNumber = this.validateNumber(number);
-    const { country: { alpha2 } } = this.props;
 
     defaultValue = validNumber
       ? format(validNumber, alpha2, 'International')
@@ -58,7 +64,7 @@ class PhoneNumberInput extends Component {
 
   validateNumber = (number) => {
     const cc = this.getCountryCode();
-    const {country: { alpha2 }} = this.props;
+    const alpha2 = this.getAlpha2();
 
     if (!number) {
       return null;
