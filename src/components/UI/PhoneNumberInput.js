@@ -8,36 +8,12 @@ const PhoneNumberField = styled(Field)`
     display: flex;
     justify-content: flex-start;
   }
-  .refill-number-field-input-wrapper {
-    min-height: 40px;
-    border: 1px solid #ccc;
-    border-radius: 2px;
-
-    display: flex;
+  .refill-number-field-input {
     flex: 1 1 auto;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-
-    background-color: #fff;
+    width: auto;
+    min-width: 100px;
     max-width: 20em;
     margin-right: 8px;
-
-    .refill-number-field-cc {
-      display: block;
-      color: #777;
-      margin: 0 -4px 0 8px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .refill-number-field-input {
-      border: none;
-      flex: 1 1 auto;
-      width: auto;
-      min-width: 100px;
-      outline: none;
-    }
   }
 `
 
@@ -77,19 +53,7 @@ class PhoneNumberInput extends Component {
       ? format(validNumber, alpha2, 'International')
       : number;
 
-    // Strip country code if present
-    if (defaultValue.indexOf(cc + ' ') === 0) {
-      return defaultValue.substr(cc.length + 1)
-    } else if (defaultValue.indexOf(cc) === 0) {
-      return defaultValue.substr(cc.length)
-
-    // Ignore default value if the countries do not match
-    } else if (defaultValue.indexOf('+') !== -1) {
-      return ''
-    }
-
-    // There is no country code - return value as is
-    return defaultValue
+    return defaultValue || `${cc} `;
   }
 
   validateNumber = (number) => {
@@ -100,14 +64,18 @@ class PhoneNumberInput extends Component {
       return null;
     }
 
-    let { country, phone } = parse(number, alpha2);
+    // Try to validate number
+    const { country, phone } = parse(number, alpha2);
 
-    if (phone && country === alpha2) {
-      return phone
+    if (phone && country) {
+      // Number is valid, return it
+      return phone;
     } else if (number.charAt(0) !== '+') {
+      // Number lacks country code - add it and try again
       return this.validateNumber(cc + number);
     }
 
+    // Number is not valid
     return null
   }
 
@@ -135,15 +103,12 @@ class PhoneNumberInput extends Component {
         hint={hint || 'The phone number to top up'}
         error={getErrorMessage(error)}
       >
-        <div className="refill-number-field-input-wrapper">
-          <span className="refill-number-field-cc">{this.getCountryCode()}</span>
-          <input
-            className="refill-number-field-input"
-            type="tel"
-            onChange={this.handleChange}
-            defaultValue={this.formatDefaultValue()}
-           />
-        </div>
+        <input
+          className="refill-number-field-input"
+          type="tel"
+          onChange={this.handleChange}
+          defaultValue={this.formatDefaultValue()}
+        />
         {children}
       </PhoneNumberField>
     );
