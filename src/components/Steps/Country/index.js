@@ -6,6 +6,8 @@ import Step from '../Step';
 import Field from '../../UI/Field';
 import Button from '../../UI/Button';
 import Select from '../../UI/Select';
+import Spinner from '../../UI/Spinner';
+import RecentRefills from './RecentRefills';
 
 import {setCountry} from '../../../actions';
 import {selectCountryList, selectCountry} from '../../../store';
@@ -27,7 +29,8 @@ class CountryStep extends Component {
       onBack,
       showSummary,
       selectedCountry,
-      step
+      step,
+      refillHistory
     } = this.props;
 
     const stepProps = {
@@ -38,7 +41,9 @@ class CountryStep extends Component {
       onBack
     };
 
-    if (expanded) {
+    if (!this.props.countries || !this.props.countries.length) {
+      return <Spinner />
+    } else if (expanded) {
       return (
         <Step {...stepProps} onSubmit={() => selectedCountry && onContinue()}>
           <CountryField
@@ -54,6 +59,7 @@ class CountryStep extends Component {
               Continue
             </Button>
           </CountryField>
+          {refillHistory && <RecentRefills history={refillHistory} />}
         </Step>
       );
 

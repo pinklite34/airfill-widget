@@ -140,6 +140,20 @@ export const updateOrderStatus = () => (dispatch, getState) => {
   }
 }
 
+const prefillNumber = number => (dispatch, getState) => {
+  const parsedNumber = number.indexOf('+') > -1
+    && parse(number);
+
+  if (parsedNumber && parsedNumber.country) {
+    // Set country and number
+    dispatch(setCountry(parsedNumber.country));
+    dispatch(setNumber(format(parsedNumber,  'International')));
+  } else {
+    // Set only number
+    dispatch(setNumber(number));
+  }
+}
+
 export const init = options => (dispatch, getState) => {
   const inventoryPromise = dispatch(loadInventory());
   dispatch(updateOrderStatus());
@@ -151,19 +165,21 @@ export const init = options => (dispatch, getState) => {
   if (!number && defaultNumber) {
     // Try to auto detect country
     inventoryPromise.then(() => {
-      const parsedNumber = defaultNumber.indexOf('+') > -1
-        && parse(defaultNumber);
-
-      if (parsedNumber && parsedNumber.country) {
-        // Set country and number
-        dispatch(setCountry(parsedNumber.country));
-        dispatch(setNumber(format(parsedNumber,  'International')));
-      } else {
-        // Set only number
-        dispatch(setNumber(defaultNumber));
-      }
+      dispatch(prefillNumber(defaultNumber));
     });
   } else if (!number) {
     dispatch(lookupLocation());
+  }
+}
+
+export const useRecentRefill = recentRefill => dispatch => {
+  dispatch(prefillNumber(recentRefill.number));
+  if (recentRefill.operator) {
+    dispatch(setOperator(recentRefill.operator));
+    dispatch(setStep(3));
+  } else {
+    dispatch(lookupNumber(recentRefill.number)).then(
+      () => dispatch(setStep(3)),
+      () => dispatch(setStep(2)));
   }
 }
