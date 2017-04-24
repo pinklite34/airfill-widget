@@ -24,10 +24,7 @@ export default (state = [], { type, payload }) => {
       );
 
     case REHYDRATE:
-      return [
-        ...state,
-        ...selectRecentNumbers(payload)
-      ];
+      return selectRecentNumbers(payload) || [];
 
     default:
       return state;
