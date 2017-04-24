@@ -9,18 +9,23 @@ const mapStateToProps = (state, { history }) => {
   const inventory = selectInventory(state).result;
 
   const items = history.reduce(
-    (acc, refill) => {
-      const parsedNumber = parse(refill.number);
-      const { country } = parsedNumber;
+    (acc, { number, operator }) => {
+      const { country } = parse(number);
 
-      if (
-        (country in inventory && refill.operator in inventory[country].operators)
-      ) {
-        acc.push({
-          ...refill,
-          number: format(parsedNumber, 'International'),
-          operatorName: inventory[country].operators[refill.operator].name
-        });
+      if (country in inventory) {
+        const formattedNumber = format(number, 'International');
+
+        if (operator && operator in inventory[country].operators) {
+          acc.push({
+            operator,
+            number: formattedNumber
+          });
+        } else {
+          // Allow refill history with invalid/without operator
+          acc.push({
+            number: formattedNumber
+          });
+        }
       }
 
       return acc;
@@ -33,6 +38,7 @@ const mapStateToProps = (state, { history }) => {
 
 const ButtonContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `;
 
 const RefillButton = styled.a`
@@ -42,15 +48,10 @@ const RefillButton = styled.a`
   border-radius: 16px;
   border: 1px solid rgba(0,0,0,0.08);
   margin-right: 8px;
+  margin-bottom: 4px;
 `;
 
-const RefillNumber = styled.strong`
-  display: block;
-  margin-bottom: 2px;
-`;
-const RefillOperator = styled.span`
-  font-size: 12px;
-`;
+const RefillNumber = styled.strong``;
 
 const RecentRefills = ({ items, useRecentRefill }) => (
   <div>
@@ -59,7 +60,6 @@ const RecentRefills = ({ items, useRecentRefill }) => (
       {items.map(refill => (
         <RefillButton onClick={() => useRecentRefill(refill)} key={refill.number}>
           <RefillNumber>{refill.number}</RefillNumber>
-          {/*<RefillOperator>{refill.operatorName}</RefillOperator>*/}
         </RefillButton>
       ))}
     </ButtonContainer>

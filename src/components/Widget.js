@@ -9,7 +9,7 @@ import PackageStep from './Steps/Package';
 import OrderStep from './Steps/Order';
 
 import {init, setStep} from '../actions';
-import {selectCurrentStep} from '../store';
+import {selectCurrentStep, selectRecentNumbers} from '../store';
 
 const steps = [{
   component: CountryStep
@@ -39,10 +39,16 @@ class AirfillWidget extends Component {
       requireAccountBalance=false,
       showBTCAddress=this.props.billingCurrency === 'XBT',
       billingCurrency='XBT',
-      orderOptions={}
+      orderOptions={},
+      refillHistory=null,
+      recentNumbers
     } = this.props;
 
     const showEmailField = !orderOptions.email || orderOptions.email.indexOf('@') < 1;
+
+    const history = refillHistory
+      ? refillHistory
+      : recentNumbers.length ? recentNumbers : null;
 
     return steps.map(({component, options}, i) => {
       const Component = component;
@@ -66,6 +72,7 @@ class AirfillWidget extends Component {
         accountBalance={accountBalance}
         requireAccountBalance={requireAccountBalance}
         showEmailField={showEmailField}
+        refillHistory={history}
       />;
     })
   }
@@ -102,7 +109,8 @@ class AirfillWidget extends Component {
 }
 
 export default connect(state => ({
-  currentStep: selectCurrentStep(state)
+  currentStep: selectCurrentStep(state),
+  recentNumbers: selectRecentNumbers(state)
 }), {
   init,
   setStep

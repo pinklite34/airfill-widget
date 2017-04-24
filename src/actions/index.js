@@ -174,6 +174,12 @@ export const init = options => (dispatch, getState) => {
 
 export const useRecentRefill = recentRefill => dispatch => {
   dispatch(prefillNumber(recentRefill.number));
-  dispatch(setOperator(recentRefill.operator));
-  dispatch(setStep(3));
+  if (recentRefill.operator) {
+    dispatch(setOperator(recentRefill.operator));
+    dispatch(setStep(3));
+  } else {
+    dispatch(lookupNumber(recentRefill.number)).then(
+      () => dispatch(setStep(3)),
+      () => dispatch(setStep(2)));
+  }
 }
