@@ -49,6 +49,7 @@ const RefillButton = styled.a`
   border: 1px solid rgba(0,0,0,0.08);
   margin-right: 8px;
   margin-bottom: 4px;
+  cursor: pointer;
 `;
 
 const RefillNumber = styled.strong``;
