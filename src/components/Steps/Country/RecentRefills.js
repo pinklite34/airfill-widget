@@ -44,12 +44,16 @@ const ButtonContainer = styled.div`
 const RefillButton = styled.a`
   display: block;
   padding: 4px 12px;
-  background-color: rgba(0,0,0,0.08);
+  background-color: rgba(0,0,0,0.04);
   border-radius: 16px;
-  border: 1px solid rgba(0,0,0,0.08);
+  border: 1px solid rgba(0,0,0,0.12);
   margin-right: 8px;
   margin-bottom: 4px;
   cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0,0,0,0);
+  }
 `;
 
 const RefillNumber = styled.strong``;
