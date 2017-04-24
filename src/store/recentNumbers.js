@@ -1,6 +1,7 @@
-import {REHYDRATE} from 'redux-persist/constants';
+import { REHYDRATE } from 'redux-persist/constants';
 
-export const selectRecentNumbers = state => state.airfillWidget.recentNumbers;
+export const selectRecentNumbers = state =>
+  state.airfillWidget && state.airfillWidget.recentNumbers;
 
 export default (state = [], { type, payload }) => {
   switch (type) {
@@ -23,7 +24,10 @@ export default (state = [], { type, payload }) => {
       );
 
     case REHYDRATE:
-      return selectRecentNumbers(payload);
+      return [
+        ...state,
+        ...selectRecentNumbers(payload)
+      ];
 
     default:
       return state;
