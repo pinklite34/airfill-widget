@@ -361,6 +361,7 @@ describe('createLoadAction', () => {
     return actionCreatorWithErrorHandler(props)(dispatch, getState).catch(() => {
       expect(dispatch).toHaveBeenCalledWith({
         type: 'LOAD_COLLECTION_ERROR',
+        error: true,
         payload: error,
         meta: {
           props: { ...props, uri },
