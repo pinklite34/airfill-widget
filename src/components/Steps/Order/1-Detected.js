@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import OrderStep from  '../../UI/OrderStep';
 
 const PaymentDetected = ({order}) => {

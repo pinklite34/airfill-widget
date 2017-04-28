@@ -16,9 +16,7 @@ export const createCollectionReducer = name => {
   const initialState = {
     isLoading: false,
     error: null,
-    items: [],
-    page: 0,
-    nbPage : 0
+    items: []
   };
   const baseType = actionTypeForName(name);
 
@@ -29,21 +27,12 @@ export const createCollectionReducer = name => {
       }
 
       case baseType + '_SUCCESS': {
-        let items;
-        if (Array.isArray(payload)) {
-          items = payload;
-        } else if (payload.page) {
-          items = payload.items;
-        } else {
-          items = [payload];
-        }
-
-        let { nbPage, page } = payload;
-        return { ...state, items, isLoading: false, error: null, nbPage, page };
+        let items = Array.isArray(payload) ? payload : [payload];
+        return { ...state, items, isLoading: false, error: null };
       }
 
       case baseType + '_ERROR': {
-        return { ...state, isLoading: false, error: payload.message || payload, nbPage: 0, page: 0};
+        return { ...state, isLoading: false, error: payload.message || payload };
       }
 
       case REHYDRATE: {
@@ -119,7 +108,8 @@ export const createLoadAction = options => {
   const isLoadingSelector = createIsLoadingSelector(name);
 
   // Create final thunk action
-  return (props={}) => (dispatch, getState) => {
+  return (payload={}) => (dispatch, getState) => {
+    const props = { ...payload }; // avoid mutating original object to prevent nasty side effects
     const isLoading = isLoadingSelector(getState());
 
     if (!isLoading) {

@@ -1,0 +1,256 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Spinner renders correctly 1`] = `
+<div
+  className="gLiHgo"
+>
+  <div
+    className="gcAxYX"
+  >
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+  </div>
+  <div
+    className="kHkHSj"
+  >
+    Loading...
+  </div>
+</div>
+`;
+
+exports[`Spinner renders inline 1`] = `
+<div
+  className="cnXlTn"
+>
+  <div
+    className="gcAxYX"
+  >
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+  </div>
+  <div
+    className="kHkHSj"
+  >
+    Loading...
+  </div>
+</div>
+`;
+
+exports[`Spinner renders with custom text 1`] = `
+<div
+  className="gLiHgo"
+>
+  <div
+    className="gcAxYX"
+  >
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+  </div>
+  <div
+    className="kHkHSj"
+  >
+    Custom loading text
+  </div>
+</div>
+`;
+
+exports[`Spinner renders with inverted animation 1`] = `
+<div
+  className="gLiHgo"
+>
+  <div
+    className="gcAxYX"
+  >
+    <div
+      className="fyPcrT"
+    />
+    <div
+      className="fyPcrT"
+    />
+    <div
+      className="fyPcrT"
+    />
+    <div
+      className="fyPcrT"
+    />
+    <div
+      className="fyPcrT"
+    />
+    <div
+      className="fyPcrT"
+    />
+    <div
+      className="fyPcrT"
+    />
+    <div
+      className="fyPcrT"
+    />
+    <div
+      className="fyPcrT"
+    />
+    <div
+      className="fyPcrT"
+    />
+    <div
+      className="fyPcrT"
+    />
+    <div
+      className="fyPcrT"
+    />
+  </div>
+  <div
+    className="kHkHSj"
+  >
+    Loading...
+  </div>
+</div>
+`;
+
+exports[`Spinner renders without text 1`] = `
+<div
+  className="gLiHgo"
+>
+  <div
+    className="gcAxYX"
+  >
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+    <div
+      className="imwLvD"
+    />
+  </div>
+</div>
+`;

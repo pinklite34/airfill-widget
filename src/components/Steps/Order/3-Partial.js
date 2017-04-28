@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const PartialPayment = ({order, paymentStatus}) => {
   const paidAmount = Math.round(paymentStatus.paidAmount / 10000) / 10000;
