@@ -71,11 +71,14 @@ class PhoneNumberInput extends Component {
     }
 
     // Try to validate number
-    const { country, phone } = parse(number, alpha2);
+    let parsedNumber;
+    try {
+      parsedNumber = parse(number, alpha2);
+    } catch (e) {}
 
-    if (phone && country) {
+    if (parsedNumber && parsedNumber.phone && parsedNumber.country) {
       // Number is valid, return it
-      return phone;
+      return parsedNumber.phone;
     } else if (number.charAt(0) !== '+') {
       // Number lacks country code - add it and try again
       return this.validateNumber(cc + number);

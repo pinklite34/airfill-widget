@@ -67,6 +67,7 @@ export const selectCurrentStep = state => selectUiState(state).currentStep;
 export const selectNumber = state => {
   const number = selectUiState(state).number;
   const country = selectCountry(state);
+  let parsedNumber;
 
   if (!number || !country) {
     return number;
@@ -75,10 +76,12 @@ export const selectNumber = state => {
   // Make sure to always include country code in number, this is needed because
   // a valid number can be provided through the defaultNumber option without
   // including a country code before the country has been selected
-  const parsedNumber = parse(number, country && country.alpha2);
-  if (parsedNumber && parsedNumber.country) {
-    return format(parsedNumber,  'International');
-  }
+  try {
+    parsedNumber = parse(number, country && country.alpha2);
+    if (parsedNumber && parsedNumber.country) {
+      return format(parsedNumber,  'International');
+    }
+  } catch (e) {}
 
   return number;
 }

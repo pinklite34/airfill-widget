@@ -10,9 +10,12 @@ const mapStateToProps = (state, { history }) => {
 
   const items = history.reduce(
     (acc, { number, operator }) => {
-      const { country } = parse(number);
+      let country;
+      try {
+        country = parse(number).country;
+      } catch (e) {}
 
-      if (country in inventory) {
+      if (country && country in inventory) {
         const formattedNumber = format(number, 'International');
 
         if (operator && operator in inventory[country].operators) {

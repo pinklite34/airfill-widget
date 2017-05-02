@@ -141,8 +141,10 @@ export const updateOrderStatus = () => (dispatch, getState) => {
 }
 
 const prefillNumber = number => (dispatch, getState) => {
-  const parsedNumber = number.indexOf('+') > -1
-    && parse(number);
+  let parsedNumber;
+  try {
+    parsedNumber = number.indexOf('+') > -1 && parse(number);
+  } catch (e) {}
 
   if (parsedNumber && parsedNumber.country) {
     // Set country and number
