@@ -60,7 +60,7 @@
     "redux-actions": "^2.0.2",
     "redux-persist": "^4.6.0",
     "redux-thunk": "^2.2.0",
-    "styled-components": "^1.4.5"
+    "styled-components": "^1.4.6"
   },
   "name": "airfill-widget",
   "license": "MIT",
