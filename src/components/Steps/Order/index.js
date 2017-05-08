@@ -16,7 +16,9 @@ import BalanceTooLow from './7-BalanceTooLow';
 
 import {
   selectOrder,
+  selectOperator,
   selectNumber,
+  selectCountry,
   selectPaymentStatus
 } from './../../../store';
 
@@ -59,7 +61,9 @@ const OrderStep = ({
   billingCurrency,
 
   order,
+  operator,
   number,
+  country,
   paymentStatus,
 
   updatePaymentStatus,
@@ -92,6 +96,8 @@ const OrderStep = ({
         />
         <PaymentComponent
           order={order.result}
+          operator={operator.result}
+          country={country}
           accountBalance={accountBalance}
           requireAccountBalance={requireAccountBalance}
           paymentButtons={paymentButtons}
@@ -112,6 +118,8 @@ const OrderStep = ({
 
 export default connect((state) => ({
   order: selectOrder(state),
+  operator: selectOperator(state),
+  country: selectCountry(state),
   paymentStatus: selectPaymentStatus(state),
   number: selectNumber(state)
 }), {

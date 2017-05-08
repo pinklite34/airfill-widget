@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 import Button from '../../UI/Button';
+import {isPhoneNumber, formatDisplayValue} from '../../../lib/number-helpers';
 
 const valueField = {
   'xbt': 'btcPrice',
@@ -87,7 +88,23 @@ const PaymentContainer = styled.div`
   }
 `
 
-const NewPayment = ({order, number, accountBalance, requireAccountBalance, showEmailField, showBTCAddress, billingCurrency, paymentButtons}) => {
+const labelForNumberType = type =>
+  isPhoneNumber(type)
+    ? 'Phone number'
+    : 'Account number';
+
+const NewPayment = ({
+  order,
+  operator,
+  number,
+  country,
+  accountBalance,
+  requireAccountBalance,
+  showEmailField,
+  showBTCAddress,
+  billingCurrency,
+  paymentButtons
+}) => {
   const billingCurrencyDisplayName = billingCurrency === 'XBT' ? 'BTC' : billingCurrency;
   const price = order[valueField[billingCurrency.toLowerCase()]];
   const formattedPrice = price + ' ' + billingCurrencyDisplayName.toUpperCase();
@@ -104,8 +121,8 @@ const NewPayment = ({order, number, accountBalance, requireAccountBalance, showE
       <dl className="refill-payment-order-info">
         <dt>Package</dt>
         <dd>{order.itemDesc}</dd>
-        <dt>Phone number</dt>
-        <dd>{number}</dd>
+        <dt>{labelForNumberType(operator.type)}</dt>
+        <dd>{formatDisplayValue(operator.type, number, country)}</dd>
         {showEmailField ? [
           <dt key="0">Email address</dt>,
           <dd key="1">{order.email}</dd>

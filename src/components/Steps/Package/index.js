@@ -22,6 +22,8 @@ import {
   setAmount, setNumber, setEmail, createOrder
 } from '../../../actions';
 
+import { formatDisplayValue } from '../../../lib/number-helpers';
+
 class PackageStep extends Component {
   handleSubmit = () => {
     this.props.createOrder(this.props.orderOptions).then(() => this.props.onContinue())
@@ -108,6 +110,7 @@ class PackageStep extends Component {
               onChange={this.props.setNumber}
               defaultValue={number}
               error={orderError}
+              type={operator.result.type}
             />
           }
 
@@ -139,7 +142,7 @@ class PackageStep extends Component {
       return (
         <Step {...stepProps}>
           <strong>{amount} {operatorResult.currency}</strong>
-          {!operator.isPinBased && `,  ${number}`}
+          {!operator.isPinBased && `,  ${formatDisplayValue(operatorResult.type, number, country)}`}
         </Step>
       );
     }

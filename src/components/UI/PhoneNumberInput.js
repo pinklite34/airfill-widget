@@ -1,6 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
-import { parse, format } from 'libphonenumber-js';
+import {
+  isPhoneNumber,
+  formatNumber,
+  formatDefaultValue
+} from '../../lib/number-helpers';
 import Field from './Field';
 
 const PhoneNumberField = styled(Field)`
@@ -15,108 +19,65 @@ const PhoneNumberField = styled(Field)`
     max-width: 20em;
     margin-right: 8px;
   }
-`
+`;
 
 const getErrorMessage = error => {
   const messages = {
-    'Country not supported':
-      'We\'re sorry, but this country is not supported right now.',
-    'Country code needed':
-      'Please enter the number including a country code, starting with \'+\'.',
-    'Phone number entered is too short':
-      'The number you entered is too short. Are you sure it is correct?'
+    'Country not supported': "We're sorry, but this country is not supported right now.",
+    'Country code needed': "Please enter the number including a country code, starting with '+'.",
+    'Phone number entered is too short': 'The number you entered is too short. Are you sure it is correct?'
   };
   if (error in messages) {
     return messages[error];
-  } else if (error && error.indexOf('Number is not valid') !== -1 || error === true) {
+  } else if (
+    (error && error.indexOf('Number is not valid') !== -1) ||
+    error === true
+  ) {
     return 'This is not a valid phone number. Make sure it is correct and try again!';
   }
   return error;
 };
 
-
 class PhoneNumberInput extends Component {
-  getCountryCode = () => {
-    const {country} = this.props;
-    return country ? country.countryCallingCodes[0] : undefined;
-  }
-
-  getAlpha2 = () => {
-    const { country={} } = this.props;
-    const { alpha2=null } = country;
-    return alpha2;
-  }
-
   formatDefaultValue = () => {
-    let { defaultValue = '' } = this.props;
+    let { type, country, defaultValue = '' } = this.props;
+    return formatDefaultValue(type, defaultValue, country);
+  };
 
-    const cc = this.getCountryCode();
-    const alpha2 = this.getAlpha2();
-    const number = defaultValue.replace(/[^\d\+]/, '');
-    const validNumber = this.validateNumber(number);
+  formatNumber = number => {
+    const { type, country } = this.props;
+    return formatNumber(type, number, country);
+  };
 
-    defaultValue = validNumber
-      ? format(validNumber, alpha2, 'International')
-      : number;
-
-    return defaultValue || `${cc} `;
-  }
-
-  validateNumber = (number) => {
-    const cc = this.getCountryCode();
-    const alpha2 = this.getAlpha2();
-
-    if (!number) {
-      return null;
-    }
-
-    // Try to validate number
-    let parsedNumber;
-    try {
-      parsedNumber = parse(number, alpha2);
-    } catch (e) {}
-
-    if (parsedNumber && parsedNumber.phone && parsedNumber.country) {
-      // Number is valid, return it
-      return parsedNumber.phone;
-    } else if (number.charAt(0) !== '+') {
-      // Number lacks country code - add it and try again
-      return this.validateNumber(cc + number);
-    }
-
-    // Number is not valid
-    return null
-  }
-
-  handleChange = (event) => {
-    const number = event.target.value.replace(/[^\d\+]/, '');
-
-    const validNumber = this.validateNumber(number);
-    const {country: { alpha2 }} = this.props;
+  handleChange = event => {
+    const number = event.target.value;
 
     if (this.props.onChange) {
-      this.props.onChange(validNumber ?
-        format(validNumber, alpha2, 'International') : number
-      )
+      this.props.onChange(this.formatNumber(number));
     }
-  }
-
+  };
 
   render() {
-    const {label, hint, error, children} = this.props;
+    const { label, hint, error, children, type } = this.props;
+    const defaultLabel = type ? 'Account number' : 'Phone number';
+    const defaultHint = isPhoneNumber(type)
+      ? 'The phone number to top up'
+      : `The ${type} account number to top up`;
+    const defaultValue = this.formatDefaultValue();
 
     return (
       <PhoneNumberField
         className="refill-number-field"
-        label={label || 'Phone number'}
-        hint={hint || 'The phone number to top up'}
+        label={label || defaultLabel}
+        hint={hint || defaultHint}
         error={getErrorMessage(error)}
       >
         <input
           className="refill-number-field-input"
           type="tel"
           onChange={this.handleChange}
-          defaultValue={this.formatDefaultValue()}
+          defaultValue={defaultValue}
+          key={type} /* needed to reset the default value in type change */
         />
         {children}
       </PhoneNumberField>
