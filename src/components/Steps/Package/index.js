@@ -110,7 +110,7 @@ class PackageStep extends Component {
               onChange={this.props.setNumber}
               defaultValue={number}
               error={orderError}
-              type={operator.result.type}
+              type={operatorResult && operatorResult.type}
             />
           }
 
@@ -142,7 +142,9 @@ class PackageStep extends Component {
       return (
         <Step {...stepProps}>
           <strong>{amount} {operatorResult.currency}</strong>
-          {!operator.isPinBased && `,  ${formatDisplayValue(operatorResult.type, number, country)}`}
+          {!operator.isPinBased && `,  ${
+            formatDisplayValue(operatorResult && operatorResult.type, number, country)
+          }`}
         </Step>
       );
     }

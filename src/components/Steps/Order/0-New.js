@@ -121,8 +121,8 @@ const NewPayment = ({
       <dl className="refill-payment-order-info">
         <dt>Package</dt>
         <dd>{order.itemDesc}</dd>
-        <dt>{labelForNumberType(operator.type)}</dt>
-        <dd>{formatDisplayValue(operator.type, number, country)}</dd>
+        <dt>{labelForNumberType(operator && operator.type)}</dt>
+        <dd>{formatDisplayValue(operator && operator.type, number, country)}</dd>
         {showEmailField ? [
           <dt key="0">Email address</dt>,
           <dd key="1">{order.email}</dd>
