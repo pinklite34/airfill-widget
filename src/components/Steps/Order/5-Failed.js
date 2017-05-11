@@ -3,7 +3,7 @@ import React from 'react';
 import OrderStep from  '../../UI/OrderStep';
 import Button from  '../../UI/Button';
 
-const RefillFailed = ({ order, refundAddress, onReset }) => {
+const RefillFailed = ({ order, paymentStatus: { failureData = {} }, refundAddress, onReset }) => {
   let mailto = 'mailto:support@bitrefill.com?subject=' + encodeURIComponent(`Failed Order (ID ${order.id})`);
 
   if (!refundAddress) {
@@ -15,9 +15,12 @@ Thanks!`);
 
   let text;
   let action;
+  const needRefund = failureData && failureData.needRefund != null
+    ? failureData.needRefund
+    : order.needRefund;
 
   // Order is already refunded / not charged
-  if (!refundAddress && order.needRefund === false) {
+  if (!refundAddress && needRefund === false) {
     text = 'We have sent you an automatic refund. Please make sure your details are correct and try again!';
     action = <Button onClick={onReset}>Send another refill</Button>;
   } else if (refundAddress) {

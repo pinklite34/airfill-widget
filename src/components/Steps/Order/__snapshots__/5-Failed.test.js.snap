@@ -95,6 +95,54 @@ exports[`supports auto-refunded orders 1`] = `
 </div>
 `;
 
+exports[`supports auto-refunded orders 2`] = `
+<div>
+  <h3
+    className="elengw"
+  >
+    <span
+      className="camDcq"
+    >
+      ✓ 
+    </span>
+    Payment complete
+  </h3>
+  <h3
+    className="elengw"
+  >
+    <span
+      className="camDcq"
+    >
+      ✓ 
+    </span>
+    Refill sent
+  </h3>
+  <h3
+    className="elengw"
+  >
+    <span
+      className="dIUkup"
+    >
+      X 
+    </span>
+    Delivery failed
+  </h3>
+  <p>
+    For some reason we failed do deliver your refill. This can happen if you have typed the number incorrectly, if the number is not for a prepaid phone or if the operator you selected was not the right one.
+  </p>
+  <p>
+    We have sent you an automatic refund. Please make sure your details are correct and try again!
+  </p>
+  <button
+    className="eFndht"
+    onClick={[Function]}
+    type="button"
+  >
+    Send another refill
+  </button>
+</div>
+`;
+
 exports[`supports refund address 1`] = `
 <div>
   <h3

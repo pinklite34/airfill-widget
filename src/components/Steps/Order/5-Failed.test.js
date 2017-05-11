@@ -4,7 +4,8 @@ import renderer from 'react-test-renderer';
 
 const props = {
   order: { id: '--ORDER_ID--' },
-  onReset: jest.fn()
+  onReset: jest.fn(),
+  paymentStatus: {}
 };
 
 it('renders correctly', () => {
@@ -17,6 +18,11 @@ it('supports auto-refunded orders', () => {
     .create(<RefillFailed {...props} order={{ needRefund: false }} />)
     .toJSON();
   expect(tree).toMatchSnapshot();
+
+  const tree2 = renderer
+    .create(<RefillFailed {...props} order={{ needRefund: true }} paymentStatus={{ failureData: {needRefund: false} }} />)
+    .toJSON();
+  expect(tree2).toMatchSnapshot();
 });
 
 it('supports refund address', () => {
