@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import ui, {
   selectUiState,
   selectNumber,
@@ -6,9 +6,14 @@ import ui, {
   selectEmail,
   selectCurrentStep
 } from './ui';
-import numberLookup, { selectNumberLookup } from './numberLookup';
 import paymentStatus, { selectPaymentStatus } from './paymentStatus';
-import inventory, { selectCountry, selectCountryList, selectAvailableOperators, selectSelectedOperator } from './inventory';
+import inventory, {
+  selectCountry,
+  selectCountryList,
+  selectAvailableOperators,
+  selectSelectedOperator,
+  selectInventory
+} from './inventory';
 import operator, { selectOperator } from './operator';
 import order, { selectOrder } from './order';
 import recentNumbers, { selectRecentNumbers } from './recentNumbers';
@@ -18,14 +23,13 @@ export const airfillWidget = combineReducers({
   ui,
   inventory,
   operator,
-  numberLookup,
   paymentStatus,
   order,
   recentNumbers
 });
 
 // Keep the same state shape when using the standalone widget
-export default combineReducers({airfillWidget})
+export default combineReducers({ airfillWidget });
 
 export {
   // UI
@@ -34,25 +38,18 @@ export {
   selectAmount,
   selectEmail,
   selectCurrentStep,
-
   // Inventory
   selectCountry,
   selectCountryList,
   selectAvailableOperators,
   selectSelectedOperator,
-
+  selectInventory,
   // Operator
   selectOperator,
-
-  // Number lookup
-  selectNumberLookup,
-
   // Payment status
   selectPaymentStatus,
-
   // Order
   selectOrder,
-
   // Recent numbers
   selectRecentNumbers
-}
+};
