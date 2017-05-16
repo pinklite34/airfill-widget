@@ -50,7 +50,7 @@ class CountryStep extends Component {
             hint="Select the country you want to send a refill to"
           >
             <Select value={selectedCountry && selectedCountry.alpha2 || ''} onChange={this.handleCountryChange}>
-              <option disabled>Select a country</option>
+              <option disabled value="">Select a country</option>
               {this.props.countries.map(({name, alpha2}) =>
                 <option key={alpha2} value={alpha2}>{name}</option>
               )}
