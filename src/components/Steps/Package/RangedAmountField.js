@@ -34,7 +34,7 @@ const RangedAmountField = ({
 
   // BTC
   if (billingCurrency === 'XBT') {
-    currentPrice = Math.ceil(currentPrice / 10000) / 10000;
+    currentPrice = Math.ceil(currentPrice / 100) / 1000000;
   } else { // USD or EUR
     currentPrice = currentPrice.toFixed(2);
   }

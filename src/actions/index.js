@@ -63,7 +63,7 @@ export const proccessOperatorPackages = response => {
 
     // Add BTC price for use in templates
     operator.packages.forEach(item => {
-      item.btcPrice = Math.ceil(item.satoshiPrice / 10000) / 10000;
+      item.btcPrice = Math.ceil(item.satoshiPrice / 100) / 1000000;
     });
 
   } else {
