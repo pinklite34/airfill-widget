@@ -3,11 +3,9 @@
 // With Redux, the actual stores are in /reducers.
 
 import { createStore, compose, applyMiddleware } from 'redux';
-import { persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 import rootReducer from './index';
-
-import {updateOrderStatus} from '../actions';
+import enhanceStore from './enhanceStore';
 
 export default function configureStore(initialState) {
   const store = createStore(
@@ -15,17 +13,15 @@ export default function configureStore(initialState) {
     initialState,
     compose(
       applyMiddleware(thunk),
-      (process.env.NODE_ENV !== 'production' && window.devToolsExtension) ?
-        window.devToolsExtension() : f => f // add support for Redux dev tools
+      process.env.NODE_ENV !== 'production' && window.devToolsExtension
+        ? window.devToolsExtension()
+        : f => f // add support for Redux dev tools
     )
   );
 
-  persistStore(store, { keyPrefix: 'airfill' }, () => {
-    store.dispatch(updateOrderStatus())
-  });
-  if (typeof window !== 'undefined' && window.localStorage) {
-    window.localStorage.removeItem('reduxPersist:airfillWidget');
-  }
+  // Enable store persistance. Exported as a standalone enhancer to enable
+  // reuse when integrating the widget in to other react projects.
+  enhanceStore(store);
 
   return store;
 }
