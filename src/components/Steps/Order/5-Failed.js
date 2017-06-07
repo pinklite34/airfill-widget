@@ -20,7 +20,7 @@ Thanks!`);
     : order.needRefund;
 
   // Order is already refunded / not charged
-  if (!refundAddress && needRefund === false) {
+  if (!refundAddress && (needRefund === false || order.refunded === true)) {
     text = 'We have sent you an automatic refund. Please make sure your details are correct and try again!';
     action = <Button onClick={onReset}>Send another refill</Button>;
   } else if (refundAddress) {

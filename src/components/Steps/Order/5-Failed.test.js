@@ -14,15 +14,31 @@ it('renders correctly', () => {
 });
 
 it('supports auto-refunded orders', () => {
-  const tree = renderer
+  const orderNoNeedRefund = renderer
     .create(<RefillFailed {...props} order={{ needRefund: false }} />)
     .toJSON();
-  expect(tree).toMatchSnapshot();
+  expect(orderNoNeedRefund).toMatchSnapshot();
 
-  const tree2 = renderer
-    .create(<RefillFailed {...props} order={{ needRefund: true }} paymentStatus={{ failureData: {needRefund: false} }} />)
+  const paymentStatus = renderer
+    .create(
+      <RefillFailed
+        {...props}
+        order={{ needRefund: true }}
+        paymentStatus={{ failureData: { needRefund: false } }}
+      />
+    )
     .toJSON();
-  expect(tree2).toMatchSnapshot();
+  expect(paymentStatus).toEqual(orderNoNeedRefund);
+
+  const orderRefunded = renderer
+    .create(
+      <RefillFailed
+        {...props}
+        order={{ refunded: true }}
+      />
+    )
+    .toJSON();
+  expect(orderRefunded).toEqual(orderNoNeedRefund);
 });
 
 it('supports refund address', () => {
