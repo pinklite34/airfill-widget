@@ -6,19 +6,23 @@ const props = {
   packages: [
     {
       value: 10,
-      btcPrice: 0.01
+      btcPrice: 0.01,
+      usdPrice: 15
     },
     {
       value: 20,
-      btcPrice: 0.02
+      btcPrice: 0.02,
+      usdPrice: 30
     },
     {
       value: 30,
-      btcPrice: 0.03
+      btcPrice: 0.03,
+      usdPrice: 45
     },
     {
       value: 40,
-      btcPrice: 0.04
+      btcPrice: 0.04,
+      usdPrice: 60
     }
   ],
   currency: 'XBT',
@@ -67,7 +71,7 @@ describe('selectValidAmount', () => {
       selectValidAmount({
         ...props,
         amount: 21,
-        maxCost: 0.025,
+        maxCost: 0.021,
         ranged: true
       })
     ).toEqual(21);
@@ -81,4 +85,40 @@ describe('selectValidAmount', () => {
       })
     ).toEqual(21);
   });
+
+  it('should handle non-BTC billing currencies', () => {
+    expect(
+      selectValidAmount({
+        ...props,
+        amount: 10,
+        maxCost: 25,
+        costConversionRate: 1.5,
+        currency: 'USD',
+        ranged: true
+      })
+    ).toEqual(10);
+
+    expect(
+      selectValidAmount({
+        ...props,
+        amount: 10,
+        maxCost: 15,
+        costConversionRate: 1.5,
+        currency: 'USD',
+        ranged: true
+      })
+    ).toEqual(10);
+
+    expect(
+      selectValidAmount({
+        ...props,
+        amount: 15,
+        maxCost: 15,
+        costConversionRate: 1.5,
+        currency: 'USD',
+        ranged: true
+      })
+    ).toEqual(10);
+  });
+
 });

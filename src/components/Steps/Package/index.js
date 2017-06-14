@@ -51,10 +51,14 @@ export const selectValidAmount = ({
     if (selectedAmountCost <= maxCost) {
       return amount; // Return amount as is for ranged operators
     } else {
-      const amountForMaxCost = Math.floor(
-        maxCost * 100000000 / costConversionRate
-      );
-      return amountForMaxCost; // Return the maximum amount allowed
+      if (currency === 'XBT') {
+        const amountForMaxCost = Math.floor(
+          maxCost * 100000000 / costConversionRate
+        );
+        return amountForMaxCost; // Return the maximum amount allowed
+      } else {
+        return maxCost / costConversionRate;
+      }
     }
   } else {
     const currencyAPIName = currency === 'XBT' ? 'BTC' : currency;
@@ -103,8 +107,7 @@ class PackageStep extends Component {
 
     if (operator) {
       // Always require account balance for the default value
-      const requireAccountBalance =
-        props.requireAccountBalance || !amount;
+      const requireAccountBalance = props.requireAccountBalance || !amount;
 
       // Default to infinity if account balance is optional
       const maxCost = requireAccountBalance
