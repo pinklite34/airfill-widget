@@ -44,17 +44,6 @@ export default (state=initialState, {type, payload}) => {
       return { ...state, email: { value, valid, error } };
     }
 
-    case 'LOAD_OPERATOR_SUCCESS': {
-      const {packages} = payload;
-      const middle = Math.round((packages.length - 1) * 0.5);
-
-      if (packages[middle]) {
-        return { ...state, amount: packages[middle].value };
-      }
-
-      return state;
-    }
-
     default:
       return state;
   }

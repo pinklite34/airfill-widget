@@ -181,7 +181,7 @@ const AmountPicker = ({
             name="amount"
             id={'amount_' + value}
             value={value}
-            checked={selected && value === selected}
+            checked={selected && Number(value) === selected}
             disabled={disabled}
             readOnly
           />

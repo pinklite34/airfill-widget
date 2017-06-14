@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Button from '../../UI/Button';
 import Spinner from '../../UI/Spinner';
@@ -18,16 +18,124 @@ import {
   selectEmail
 } from './../../../store';
 
-import {
-  setAmount, setNumber, setEmail, createOrder
-} from '../../../actions';
+import { setAmount, setNumber, setEmail, createOrder } from '../../../actions';
 
 import { formatDisplayValue } from '../../../lib/number-helpers';
 
-class PackageStep extends Component {
-  handleSubmit = () => {
-    this.props.createOrder(this.props.orderOptions).then(() => this.props.onContinue())
+const rangedCostForAmount = (conversionRate, currency, amount) => {
+  let amountCost = amount * conversionRate;
+  // BTC
+  if (currency === 'XBT') {
+    return Math.ceil(amountCost / 100) / 1000000;
+  } else {
+    // USD or EUR
+    return Number(amountCost.toFixed(2));
   }
+};
+
+export const selectValidAmount = ({
+  amount,
+  maxCost,
+  costConversionRate,
+  currency,
+  packages,
+  ranged
+}) => {
+  if (ranged && amount) {
+    const selectedAmountCost = rangedCostForAmount(
+      costConversionRate,
+      currency,
+      amount
+    );
+
+    if (selectedAmountCost <= maxCost) {
+      return amount; // Return amount as is for ranged operators
+    } else {
+      const amountForMaxCost = Math.floor(
+        maxCost * 100000000 / costConversionRate
+      );
+      return amountForMaxCost; // Return the maximum amount allowed
+    }
+  } else {
+    const currencyAPIName = currency === 'XBT' ? 'BTC' : currency;
+    const packageCostKey = currencyAPIName.toLowerCase() + 'Price';
+    const packageValues = packages.map(pkg => Number(pkg.value));
+
+    // If no amount is selected, pick a package in the middle
+    if (!amount) {
+      const middle = Math.round((packageValues.length - 1) * 0.6);
+
+      if (packageValues[middle]) {
+        amount = packageValues[middle];
+      }
+    }
+
+    // If we have a selected package, make sure the user can afford it
+    const selectedPackageIndex = packageValues.indexOf(amount);
+    if (selectedPackageIndex != -1) {
+      // Use the cost (price) from the api
+      const packageCost = packages[selectedPackageIndex][packageCostKey];
+
+      // If amount is a valid package (and within limits) just return it
+      if (packageCost <= maxCost) {
+        return amount;
+      }
+    }
+
+    // Otherwise pick the highest value package the user can afford
+    const selectedPackage = packages
+      .filter(pkg => pkg[packageCostKey] <= maxCost)
+      .pop();
+
+    return Number(selectedPackage.value);
+  }
+};
+
+class PackageStep extends Component {
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.operator.isLoading && this.props.operator.isLoading) {
+      this._handleAmountChange(nextProps, nextProps.amount);
+    }
+  }
+
+  _handleAmountChange = (props, amount) => {
+    const operator = props.operator && props.operator.result;
+
+    if (operator) {
+      // Always require account balance for the default value
+      const requireAccountBalance =
+        props.requireAccountBalance || !amount;
+
+      // Default to infinity if account balance is optional
+      const maxCost = requireAccountBalance
+        ? props.accountBalance
+        : Number.POSITIVE_INFINITY;
+
+      const currency = props.billingCurrency;
+      const packages = operator.packages;
+      const ranged = operator.isRanged;
+      const costConversionRate = ranged && operator.range.userPriceRate;
+      amount = Number(amount);
+
+      props.setAmount(
+        selectValidAmount({
+          amount,
+          packages,
+          currency,
+          maxCost,
+          costConversionRate,
+          ranged
+        })
+      );
+    }
+  };
+  handleAmountChange = amount => this._handleAmountChange(this.props, amount);
+
+  handleSubmit = () => {
+    this.props
+      .createOrder(this.props.orderOptions)
+      .then(() => this.props.onContinue());
+  };
 
   render() {
     const {
@@ -44,7 +152,6 @@ class PackageStep extends Component {
       showEmailField,
 
       // Action
-      setAmount,
       setEmail,
 
       // Data/state
@@ -53,8 +160,8 @@ class PackageStep extends Component {
       country,
       isLoadingOrder,
       orderError,
-      amount,
-      email
+      email,
+      amount
     } = this.props;
 
     const stepProps = {
@@ -69,13 +176,20 @@ class PackageStep extends Component {
 
     if (expanded) {
       const errorText = !operator.isLoading && operator.error;
-      const hintText = operatorResult && operatorResult.extraInfo || 'The selected amount will automatically be added to the target account once the payment is complete.';
+      const hintText =
+        (operatorResult && operatorResult.extraInfo) ||
+        'The selected amount will automatically be added to the target account once the payment is complete.';
       const isRanged = operatorResult && operatorResult.isRanged;
       const isPinBased = operatorResult ? operatorResult.isPinBased : null;
       // const canContinue = (isPinBased || number) && amount && !isLoadingOrder && (showEmailField ? email.valid : true);
-      const canContinue = number && amount && !isLoadingOrder && (showEmailField ? email : true);
+      const canContinue =
+        number && amount && !isLoadingOrder && (showEmailField ? email : true);
+
       return (
-        <Step {...stepProps} onSubmit={() => canContinue && this.handleSubmit()}>
+        <Step
+          {...stepProps}
+          onSubmit={() => canContinue && this.handleSubmit()}
+        >
           <Field
             label="Select refill package"
             hint={!operator.isLoading && hintText}
@@ -84,25 +198,23 @@ class PackageStep extends Component {
             {operator.isLoading && <Spinner>Loading packages...</Spinner>}
             {!operator.isLoading &&
               <AmountPicker
-                onChange={setAmount}
+                onChange={this.handleAmountChange}
                 selected={amount}
                 billingCurrency={billingCurrency}
                 accountBalance={accountBalance}
                 requireAccountBalance={requireAccountBalance}
                 {...operatorResult}
-              />
-            }
+              />}
           </Field>
 
           {isRanged === true &&
             <RangedAmountField
-              onChange={setAmount}
+              onChange={this.handleAmountChange}
               amount={amount}
               currency={operatorResult.currency}
               billingCurrency={billingCurrency}
               range={operatorResult.range}
-            />
-          }
+            />}
 
           {true /*isPinBased === false*/ &&
             <PhoneNumberInput
@@ -111,22 +223,29 @@ class PackageStep extends Component {
               defaultValue={number}
               error={orderError}
               type={operatorResult && operatorResult.type}
-            />
-          }
+            />}
 
           {showEmailField &&
             <Field
               label="Email address"
               hint="The email address is used to send status updates about your order"
-              error={(email && email.value && email.error) ? 'Please enter a valid email' : ''}
+              error={
+                email && email.value && email.error
+                  ? 'Please enter a valid email'
+                  : ''
+              }
             >
-              <input type="email" name="email" size="40"
+              <input
+                type="email"
+                name="email"
+                size="40"
                 defaultValue={email.value}
-                onChange={(e) => setEmail({ value: e.target.value, inFocus: true })}
-                onBlur={(e) => setEmail({ value: e.target.value, inFocus: false })}
+                onChange={e =>
+                  setEmail({ value: e.target.value, inFocus: true })}
+                onBlur={e =>
+                  setEmail({ value: e.target.value, inFocus: false })}
               />
-            </Field>
-          }
+            </Field>}
 
           <Button
             type="submit"
@@ -142,9 +261,8 @@ class PackageStep extends Component {
       return (
         <Step {...stepProps}>
           <strong>{amount} {operatorResult.currency}</strong>
-          {!operator.isPinBased && `,  ${
-            formatDisplayValue(operatorResult && operatorResult.type, number, country)
-          }`}
+          {!operator.isPinBased &&
+            `,  ${formatDisplayValue(operatorResult && operatorResult.type, number, country)}`}
         </Step>
       );
     }
@@ -152,17 +270,20 @@ class PackageStep extends Component {
   }
 }
 
-export default connect((state) => ({
-  operator: selectOperator(state),
-  isLoadingOrder: selectOrder(state).isLoading,
-  orderError: selectOrder(state).error,
-  number: selectNumber(state),
-  country: selectCountry(state),
-  amount: selectAmount(state),
-  email: selectEmail(state)
-}), {
-  setNumber,
-  setAmount,
-  setEmail,
-  createOrder
-})(PackageStep);
+export default connect(
+  state => ({
+    operator: selectOperator(state),
+    isLoadingOrder: selectOrder(state).isLoading,
+    orderError: selectOrder(state).error,
+    number: selectNumber(state),
+    country: selectCountry(state),
+    amount: selectAmount(state),
+    email: selectEmail(state)
+  }),
+  {
+    setNumber,
+    setAmount,
+    setEmail,
+    createOrder
+  }
+)(PackageStep);
