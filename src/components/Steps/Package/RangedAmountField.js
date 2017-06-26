@@ -32,6 +32,10 @@ const RangedAmountField = ({
   let error;
   let currentPrice = amount * range.userPriceRate;
 
+  // Round decimal ranges since we do not accept them atm
+  const min = Math.ceil(range.min);
+  const max = Math.floor(range.max);
+
   // BTC
   if (billingCurrency === 'XBT') {
     currentPrice = Math.ceil(currentPrice / 100) / 1000000;
@@ -43,7 +47,7 @@ const RangedAmountField = ({
   const hint = (
     <span className="">
       You pay <Price className="amount-ranged-btc-price">{currentPrice} {displayedCurrency}</Price>.
-      Min: <strong>{range.min} {currency}</strong>, max: <strong>{range.max} {currency}</strong>.
+      Min: <strong>{min} {currency}</strong>, max: <strong>{max} {currency}</strong>.
     </span>
   );
 
@@ -58,11 +62,11 @@ const RangedAmountField = ({
     );
   }
   // Value out of range
-  else if (amount < range.min || amount > range.max) {
+  else if (amount < min || amount > max) {
     error = (
       <span>
-        Please choose an amount between <strong>{range.min} {currency}
-        </strong> and <strong>{range.max} {currency}</strong>.
+        Please choose an amount between <strong>{min} {currency}
+        </strong> and <strong>{max} {currency}</strong>.
       </span>
     );
   }
@@ -91,8 +95,8 @@ const RangedAmountField = ({
           id="custom_amount"
           name="custom_amount"
           className="amount-ranged-input"
-          min={range.min}
-          max={range.max}
+          min={min}
+          max={max}
           step={range.step}
           value={amount}
           placeholder="e.g. 200"
