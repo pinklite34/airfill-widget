@@ -33,65 +33,79 @@ const rangedCostForAmount = (conversionRate, currency, amount) => {
   }
 };
 
-export const selectValidAmount = ({
+const selectValidPackage = ({ amount, maxCost, currency, packages }) => {
+  const currencyAPIName = currency === 'XBT' ? 'BTC' : currency;
+  const packageCostKey = currencyAPIName.toLowerCase() + 'Price';
+  const packageValues = packages.map(pkg => Number(pkg.value));
+
+  // If no amount is selected, pick a package in the middle
+  if (!amount) {
+    const middle = Math.round((packageValues.length - 1) * 0.6);
+
+    if (packageValues[middle]) {
+      amount = packageValues[middle];
+    }
+  }
+
+  // If we have a selected package, make sure the user can afford it
+  const selectedPackageIndex = packageValues.indexOf(amount);
+  if (selectedPackageIndex != -1) {
+    // Use the cost (price) from the api
+    const packageCost = packages[selectedPackageIndex][packageCostKey];
+
+    // If amount is a valid package (and within limits) just return it
+    if (packageCost <= maxCost) {
+      return amount;
+    }
+  }
+
+  // Otherwise try to pick the highest value package the user can afford
+  const selectedPackage = packages
+    .filter(pkg => pkg[packageCostKey] <= maxCost)
+    .pop();
+
+  if (selectedPackage) {
+    return Number(selectedPackage.value);
+  }
+
+  // If there are no packages the user can afford, return the amount as is
+  return amount;
+};
+
+const selectValidRangedAmount = ({
   amount,
   maxCost,
   costConversionRate,
-  currency,
-  packages,
-  ranged
+  currency
 }) => {
-  if (ranged && amount) {
-    const selectedAmountCost = rangedCostForAmount(
-      costConversionRate,
-      currency,
-      amount
-    );
+  const selectedAmountCost = rangedCostForAmount(
+    costConversionRate,
+    currency,
+    amount
+  );
 
-    if (selectedAmountCost <= maxCost) {
-      return amount; // Return amount as is for ranged operators
-    } else {
-      if (currency === 'XBT') {
-        const amountForMaxCost = Math.floor(
-          maxCost * 100000000 / costConversionRate
-        );
-        return amountForMaxCost; // Return the maximum amount allowed
-      } else {
-        return maxCost / costConversionRate;
-      }
-    }
+  if (selectedAmountCost <= maxCost) {
+    return amount; // Return amount as is for ranged operators
   } else {
-    const currencyAPIName = currency === 'XBT' ? 'BTC' : currency;
-    const packageCostKey = currencyAPIName.toLowerCase() + 'Price';
-    const packageValues = packages.map(pkg => Number(pkg.value));
-
-    // If no amount is selected, pick a package in the middle
-    if (!amount) {
-      const middle = Math.round((packageValues.length - 1) * 0.6);
-
-      if (packageValues[middle]) {
-        amount = packageValues[middle];
-      }
+    if (currency === 'XBT') {
+      const amountForMaxCost = Math.floor(
+        maxCost * 100000000 / costConversionRate
+      );
+      return amountForMaxCost; // Return the maximum amount allowed
+    } else {
+      return maxCost / costConversionRate;
     }
+  }
+};
 
-    // If we have a selected package, make sure the user can afford it
-    const selectedPackageIndex = packageValues.indexOf(amount);
-    if (selectedPackageIndex != -1) {
-      // Use the cost (price) from the api
-      const packageCost = packages[selectedPackageIndex][packageCostKey];
+export const selectValidAmount = args => {
+  const ranged = args.ranged;
+  const validPackageAmount = selectValidPackage(args);
 
-      // If amount is a valid package (and within limits) just return it
-      if (packageCost <= maxCost) {
-        return amount;
-      }
-    }
-
-    // Otherwise pick the highest value package the user can afford
-    const selectedPackage = packages
-      .filter(pkg => pkg[packageCostKey] <= maxCost)
-      .pop();
-
-    return Number(selectedPackage.value);
+  if (ranged) {
+    return selectValidRangedAmount({ ...args, amount: args.amount || validPackageAmount })
+  } else {
+    return validPackageAmount;
   }
 };
 
@@ -265,7 +279,11 @@ class PackageStep extends Component {
         <Step {...stepProps}>
           <strong>{amount} {operatorResult.currency}</strong>
           {!operator.isPinBased &&
-            `,  ${formatDisplayValue(operatorResult && operatorResult.type, number, country)}`}
+            `,  ${formatDisplayValue(
+              operatorResult && operatorResult.type,
+              number,
+              country
+            )}`}
         </Step>
       );
     }
