@@ -3,14 +3,6 @@ import {createLoadAction} from '../lib/rest-helpers';
 import {fetch} from '../lib/api-client';
 import {parse, format} from 'libphonenumber-js';
 
-export const setStep = createAction('SET_STEP');
-export const setCountry = createAction('SET_COUNTRY');
-export const setNumber = createAction('SET_NUMBER');
-export const setAmount = createAction('SET_AMOUNT');
-export const setEmail = createAction('SET_EMAIL');
-
-export const updatePaymentStatus = createAction('UPDATE_PAYMENT_STATUS');
-
 // import {refillNumberLookupIsLoadingSelector} from '../reducers/refill-widget';
 import {
   selectNumber,
@@ -20,6 +12,14 @@ import {
   selectCountry,
   selectOperator
 } from '../store';
+
+
+export const setStep = createAction('SET_STEP');
+export const setCountry = createAction('SET_COUNTRY');
+export const setNumber = createAction('SET_NUMBER');
+export const setAmount = createAction('SET_AMOUNT');
+export const setEmail = createAction('SET_EMAIL');
+export const updatePaymentStatus = createAction('UPDATE_PAYMENT_STATUS');
 
 export const loadInventory = createLoadAction({
   name: 'airfillWidget.inventory',

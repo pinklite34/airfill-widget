@@ -63,7 +63,7 @@ export const parseNumber = (number, country) => {
   // Try to validate number
   let parsedNumber;
   try {
-    parsedNumber = parse(number.replace(/[^\d\+]/, ''), iso2);
+    parsedNumber = parse(number.replace(/[^\d+]/, ''), iso2);
   } catch (e) {}
 
   if (parsedNumber && parsedNumber.phone && parsedNumber.country) {

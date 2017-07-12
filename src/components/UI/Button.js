@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled, {css} from 'styled-components';
 import Spinner from './Spinner';
 
-const Button = ({children, loading, href, ...props}) => {
+const Button = ({children, loading, href, secondary, ...props}) => {
   if (href) {
     return <a href={href} {...props}>{children}</a>
   }

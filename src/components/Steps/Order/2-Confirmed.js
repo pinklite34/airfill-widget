@@ -12,6 +12,4 @@ const PaymentConfirmed = () => {
   );
 };
 
-PaymentConfirmed.propTypes = {};
-
 export default PaymentConfirmed;

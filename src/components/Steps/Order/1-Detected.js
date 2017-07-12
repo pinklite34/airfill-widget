@@ -14,7 +14,7 @@ const PaymentDetected = ({order}) => {
       </p>
       <p>
         <a href={`https://live.blockcypher.com/btc/address/${order.payment.address}/`}
-        target="_blank">Click here to see how it's going</a>
+        target="_blank" rel="noopener noreferrer">Click here to see how it's going</a>
       </p>
     </div>
   );

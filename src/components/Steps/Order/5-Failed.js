@@ -28,7 +28,7 @@ Thanks!`);
     action = (
       <p>
         <a href={`https://live.blockcypher.com/btc/address/${refundAddress}/`}
-        target="_blank">Click here to see how it's going</a> or <a href={mailto}>contact support@birefill.com</a>.
+        target="_blank" rel="noopener noreferrer">Click here to see how it's going</a> or <a href={mailto}>contact support@birefill.com</a>.
       </p>
     );
   } else {

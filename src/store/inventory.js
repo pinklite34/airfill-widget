@@ -37,8 +37,10 @@ export default (state, action) => {
         selectedOperator: action.payload.slug
       };
     }
+
+    default:
+      return state;
   }
-  return state;
 }
 
 export const selectInventory = createSingleResultSelector('airfillWidget.inventory');

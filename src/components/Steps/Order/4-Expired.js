@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ExpiredPayment = ({}) => {
+const ExpiredPayment = () => {
   return (
     <div>
       <h3>Order expired</h3>
@@ -13,9 +13,6 @@ const ExpiredPayment = ({}) => {
       </p>
     </div>
   );
-};
-
-ExpiredPayment.propTypes = {
 };
 
 export default ExpiredPayment;

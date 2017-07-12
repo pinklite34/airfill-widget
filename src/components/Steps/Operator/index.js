@@ -187,7 +187,7 @@ class OperatorStep extends Component {
     >{
       operators.map(({name, slug, logoImage}) =>
         <OperatorButton key={slug} onClick={() => this.handleOperatorClick(slug)}>
-          <span><img src={scaledLogo(logoImage)} /></span>
+          <span><img src={scaledLogo(logoImage)} alt={name} /></span>
           <strong>Refill {name}</strong>
         </OperatorButton>
       )

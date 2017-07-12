@@ -49,7 +49,7 @@ const selectValidPackage = ({ amount, maxCost, currency, packages }) => {
 
   // If we have a selected package, make sure the user can afford it
   const selectedPackageIndex = packageValues.indexOf(amount);
-  if (selectedPackageIndex != -1) {
+  if (selectedPackageIndex !== -1) {
     // Use the cost (price) from the api
     const packageCost = packages[selectedPackageIndex][packageCostKey];
 
@@ -197,7 +197,7 @@ class PackageStep extends Component {
         (operatorResult && operatorResult.extraInfo) ||
         'The selected amount will automatically be added to the target account once the payment is complete.';
       const isRanged = operatorResult && operatorResult.isRanged;
-      const isPinBased = operatorResult ? operatorResult.isPinBased : null;
+      // const isPinBased = operatorResult ? operatorResult.isPinBased : null;
       // const canContinue = (isPinBased || number) && amount && !isLoadingOrder && (showEmailField ? email.valid : true);
       const canContinue =
         number && amount && !isLoadingOrder && (showEmailField ? email : true);

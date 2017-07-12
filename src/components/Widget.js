@@ -81,9 +81,9 @@ class AirfillWidget extends Component {
     if (!this.props.showTerms) { return null; }
     return (
       <p className="refill-terms">
-        <a href="https://www.bitrefill.com/terms/" target="_blank">
+        <a href="https://www.bitrefill.com/terms/" target="_blank" rel="noopener noreferrer">
           Terms of Service
-        </a> and <a href="https://www.bitrefill.com/privacy/" target="_blank">
+        </a> and <a href="https://www.bitrefill.com/privacy/" target="_blank" rel="noopener noreferrer">
           Privacy Policy
         </a>
       </p>
