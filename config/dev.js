@@ -14,7 +14,7 @@ const config = Object.assign({}, baseConfig, {
   cache: true,
   devtool: 'none',
   plugins: [
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
   ]
 });
 
