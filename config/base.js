@@ -5,9 +5,7 @@ const defaultPort = process.env.PORT || 8000;
 const publicPath = '/';
 
 module.exports = {
-  port: defaultPort,
-  debug: true,
-  devtool: 'eval',
+  devtool: 'none',
   output: {
     path: path.join(__dirname, '/../dist'),
     filename: 'widget.js',
@@ -21,19 +19,18 @@ module.exports = {
     noInfo: false
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
     alias: {
     }
   },
   module: {
-    preLoaders: [
+    loaders: [
       {
         test: /\.(js|jsx)$/,
         include: srcPath,
-        loader: 'eslint-loader'
-      }
-    ],
-    loaders: [
+        loader: 'eslint-loader',
+        enforce: 'pre'
+      },
       {
         test: /\.(js|jsx)$/,
         loader: 'babel-loader',
@@ -59,7 +56,6 @@ module.exports = {
         test: /\.(mp4|ogg|svg)$/,
         loader: 'file-loader'
       }
-    ],
-    postcss: {}
+    ]
   }
 };
