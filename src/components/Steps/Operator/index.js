@@ -26,7 +26,13 @@ const OperatorGroup = styled(Field)`
   .refill-field-label {
     clear: both;
     overflow: hidden;
+    margin-top: 16px;
+    margin-left: 4px;
   }
+  &:first-child .refill-field-label {
+    margin-top: 0;
+  }
+
   .refill-field {
     display: flex;
     flex-direction: row;
@@ -182,13 +188,13 @@ class OperatorStep extends Component {
 
   renderOperatorGroup(type, operators) {
     return <OperatorGroup
-      label={`${type}`}
+      label={`${type} Refill`}
       key={type}
     >{
       operators.map(({name, slug, logoImage}) =>
         <OperatorButton key={slug} onClick={() => this.handleOperatorClick(slug)}>
           <span><img src={scaledLogo(logoImage)} alt={name} /></span>
-          <strong>Refill {name}</strong>
+          <strong>{name}</strong>
         </OperatorButton>
       )
     }</OperatorGroup>
