@@ -40,7 +40,7 @@ exports[`Treats VOIP as phone number 1`] = `
     className="refill-field-label"
     htmlFor={undefined}
   >
-    Account number
+    Phone number
   </label>
   <div
     className="refill-field"

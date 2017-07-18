@@ -136,6 +136,7 @@ exports[`supports refund address 1`] = `
   <p>
     <a
       href="https://live.blockcypher.com/btc/address/--REFUND_ADDR--/"
+      rel="noopener noreferrer"
       target="_blank"
     >
       Click here to see how it's going
