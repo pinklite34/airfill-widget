@@ -24,6 +24,10 @@ describe('isPhoneNumber', () => {
     expect(isPhoneNumber('VOIP')).toBe(true);
     expect(isPhoneNumber('voip')).toBe(true);
   });
+  it('Treats data as phone', () => {
+    expect(isPhoneNumber('data')).toBe(true);
+    expect(isPhoneNumber('DATA')).toBe(true);
+  });
   it('Treats other strings as non-phones', () => {
     expect(isPhoneNumber('DHT')).toBe(false);
     expect(isPhoneNumber('foo')).toBe(false);

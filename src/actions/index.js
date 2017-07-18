@@ -79,7 +79,7 @@ const loadOperator = createLoadAction({
 });
 
 export const setOperator = (operatorSlug) => (dispatch, getState) => {
-  dispatch(setAmount(0));
+  dispatch(setAmount(''));
   dispatch(loadOperator({operatorSlug, uri: `/inventory/${operatorSlug}`}))
 }
 

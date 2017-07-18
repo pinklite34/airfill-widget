@@ -155,7 +155,7 @@ const AmountList = styled.ul`
 `
 
 const AmountPicker = ({
-  packages=[], selected, currency, billingCurrency, accountBalance, requireAccountBalance, onChange
+  packages=[], selected, currency, billingCurrency, accountBalance, requireAccountBalance, type, onChange
 }) => (
   <AmountList showAsList={packages.length > 12}>
     {packages.map(pkg => {
@@ -181,12 +181,14 @@ const AmountPicker = ({
             name="amount"
             id={'amount_' + value}
             value={value}
-            checked={selected && Number(value) === selected}
+            checked={selected && String(value) === selected}
             disabled={disabled}
             readOnly
           />
           <label htmlFor={'amount_' + value} className="amount-item-label" onClick={()=>!disabled && onChange(value)}>
-            <var className="amount-value">{value} {currency}</var>
+            <var className="amount-value">
+              {isNaN(value) ? value : `${value} ${currency}`}
+            </var>
             <span className="amount-separator">you pay</span>
             <var className="amount-billing-price">{formattedPrice}</var>
           </label>

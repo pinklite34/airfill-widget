@@ -9,7 +9,8 @@ const getCountryData = country => {
   return { countryCode: null, iso2: null };
 };
 
-export const isPhoneNumber = type => !type || type.toLowerCase() === 'voip';
+export const isPhoneNumber = type =>
+  !type || ['voip', 'data'].indexOf(type.toLowerCase()) > -1;
 
 export const formatNumber = (type, number, country) => {
   // Format any number type in a good way for persistance and api calls. Will
@@ -50,7 +51,7 @@ export const formatDisplayValue = (type, number, country) => {
   return isPhoneNumber(type) && number
     ? formatNumber(type, number, country)
     : String(number).replace(countryCode, '').trim();
-}
+};
 
 export const parseNumber = (number, country) => {
   // Try to parse numbers - no matter how badly formatted they are

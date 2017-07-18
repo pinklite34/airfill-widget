@@ -36,7 +36,7 @@ const rangedCostForAmount = (conversionRate, currency, amount) => {
 const selectValidPackage = ({ amount, maxCost, currency, packages }) => {
   const currencyAPIName = currency === 'XBT' ? 'BTC' : currency;
   const packageCostKey = currencyAPIName.toLowerCase() + 'Price';
-  const packageValues = packages.map(pkg => Number(pkg.value));
+  const packageValues = packages.map(pkg => String(pkg.value));
 
   // If no amount is selected, pick a package in the middle
   if (!amount) {
@@ -46,6 +46,9 @@ const selectValidPackage = ({ amount, maxCost, currency, packages }) => {
       amount = packageValues[middle];
     }
   }
+
+  // Cast amount to string if we have a value
+  amount = amount ? String(amount) : amount;
 
   // If we have a selected package, make sure the user can afford it
   const selectedPackageIndex = packageValues.indexOf(amount);
@@ -65,7 +68,7 @@ const selectValidPackage = ({ amount, maxCost, currency, packages }) => {
     .pop();
 
   if (selectedPackage) {
-    return Number(selectedPackage.value);
+    return String(selectedPackage.value);
   }
 
   // If there are no packages the user can afford, return the amount as is
@@ -85,15 +88,15 @@ const selectValidRangedAmount = ({
   );
 
   if (selectedAmountCost <= maxCost) {
-    return amount; // Return amount as is for ranged operators
+    return String(amount); // Return amount as is for ranged operators
   } else {
     if (currency === 'XBT') {
       const amountForMaxCost = Math.floor(
         maxCost * 100000000 / costConversionRate
       );
-      return amountForMaxCost; // Return the maximum amount allowed
+      return String(amountForMaxCost); // Return the maximum amount allowed
     } else {
-      return maxCost / costConversionRate;
+      return String(maxCost / costConversionRate);
     }
   }
 };
@@ -132,7 +135,7 @@ class PackageStep extends Component {
       const packages = operator.packages;
       const ranged = operator.isRanged;
       const costConversionRate = ranged && operator.range.userPriceRate;
-      amount = Number(amount);
+      amount = String(amount);
 
       props.setAmount(
         selectValidAmount({

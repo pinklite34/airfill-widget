@@ -59,7 +59,7 @@ class PhoneNumberInput extends Component {
 
   render() {
     const { label, hint, error, children, type } = this.props;
-    const defaultLabel = type ? 'Account number' : 'Phone number';
+    const defaultLabel = isPhoneNumber(type) ? 'Phone number' : 'Account number';
     const defaultHint = isPhoneNumber(type)
       ? 'The phone number to top up'
       : `The ${type} account number to top up`;

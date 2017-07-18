@@ -33,8 +33,8 @@ const props = {
 
 describe('selectValidAmount', () => {
   it('all: should select the middle package by default', () => {
-    expect(selectValidAmount({ ...props })).toEqual(30);
-    expect(selectValidAmount({ ...props, ranged: true })).toEqual(30);
+    expect(selectValidAmount({ ...props })).toEqual('30');
+    expect(selectValidAmount({ ...props, ranged: true })).toEqual('30');
   });
 
   it('all: should pass through the value if a matching package exists', () => {
@@ -43,7 +43,7 @@ describe('selectValidAmount', () => {
         ...props,
         amount: 20
       })
-    ).toEqual(20);
+    ).toEqual('20');
   });
 
   it('all: should select the highest value package the user can afford (maxCost) if no matching packages are found', () => {
@@ -54,7 +54,7 @@ describe('selectValidAmount', () => {
         maxCost: 0.025,
         ranged: false
       })
-    ).toEqual(20);
+    ).toEqual('20');
     expect(
       selectValidAmount({
         ...props,
@@ -62,7 +62,7 @@ describe('selectValidAmount', () => {
         maxCost: 0.025,
         ranged: true
       })
-    ).toEqual(20);
+    ).toEqual('20');
   });
 
   it('ranged: should allow arbitrary values (costing less maxCost) for ranged operators', () => {
@@ -75,7 +75,7 @@ describe('selectValidAmount', () => {
         maxCost: 0.025,
         ranged: true
       })
-    ).toEqual(21);
+    ).toEqual('21');
 
     // cost(amount) == maxCost
     expect(
@@ -85,7 +85,7 @@ describe('selectValidAmount', () => {
         maxCost: 0.023,
         ranged: true
       })
-    ).toEqual(21);
+    ).toEqual('21');
 
     // cost(amount) > maxCost
     expect(
@@ -95,7 +95,7 @@ describe('selectValidAmount', () => {
         maxCost: 0.021,
         ranged: true
       })
-    ).toEqual(21);
+    ).toEqual('21');
   });
 
   it('non-ranged: should return the value as is (or default) when the user cant afford anything', () => {
@@ -107,7 +107,7 @@ describe('selectValidAmount', () => {
         maxCost: 0.0001,
         ranged: false
       })
-    ).toEqual(30);
+    ).toEqual('30');
 
     // Should be unaltered when amount is set
     expect(
@@ -117,7 +117,7 @@ describe('selectValidAmount', () => {
         maxCost: 0.001,
         ranged: false
       })
-    ).toEqual(10);
+    ).toEqual('10');
   });
 
   it('all: should handle non-BTC billing currencies', () => {
@@ -131,7 +131,7 @@ describe('selectValidAmount', () => {
         currency: 'USD',
         ranged: true
       })
-    ).toEqual(10);
+    ).toEqual('10');
 
     // cost(amount) == maxCost
     expect(
@@ -143,7 +143,7 @@ describe('selectValidAmount', () => {
         currency: 'USD',
         ranged: true
       })
-    ).toEqual(10);
+    ).toEqual('10');
 
     // cost(amount) > maxCost
     expect(
@@ -155,6 +155,6 @@ describe('selectValidAmount', () => {
         currency: 'USD',
         ranged: true
       })
-    ).toEqual(10);
+    ).toEqual('10');
   });
 });

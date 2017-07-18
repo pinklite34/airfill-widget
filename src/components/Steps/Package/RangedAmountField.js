@@ -30,6 +30,8 @@ const RangedAmountField = ({
   amount, range, currency, billingCurrency, onChange
 }) => {
   let error;
+
+  amount = Number(amount);
   let currentPrice = amount * range.userPriceRate;
 
   // Round decimal ranges since we do not accept them atm
