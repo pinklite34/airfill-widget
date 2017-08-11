@@ -115,11 +115,11 @@ export const selectValidAmount = args => {
 class PackageStep extends Component {
   componentWillReceiveProps(nextProps) {
     if (!nextProps.operator.isLoading && this.props.operator.isLoading) {
-      this._handleAmountChange(nextProps, nextProps.amount);
+      this._selectValidAmount(nextProps, nextProps.amount);
     }
   }
 
-  _handleAmountChange = (props, amount) => {
+  _selectValidAmount = (props, amount) => {
     const operator = props.operator && props.operator.result;
 
     if (operator) {
@@ -149,7 +149,14 @@ class PackageStep extends Component {
       );
     }
   };
-  handleAmountChange = amount => this._handleAmountChange(this.props, amount);
+  handleAmountChange = amount => {
+    if (amount) {
+      this._selectValidAmount(this.props, amount);
+    } else {
+      this._selectValidAmount(this.props, 0);
+    }
+  }
+  handleAmountBlur = amount => this._selectValidAmount(this.props, amount || '');
 
   handleSubmit = () => {
     this.props
@@ -230,6 +237,7 @@ class PackageStep extends Component {
           {isRanged === true &&
             <RangedAmountField
               onChange={this.handleAmountChange}
+              onBlur={this.handleAmountBlur}
               amount={amount}
               currency={operatorResult.currency}
               billingCurrency={billingCurrency}

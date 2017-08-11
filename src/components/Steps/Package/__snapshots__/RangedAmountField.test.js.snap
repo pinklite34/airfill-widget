@@ -20,11 +20,12 @@ exports[`RangedAmountField renders with the min/max rounded up/down 1`] = `
         max={50}
         min={5}
         name="custom_amount"
+        onBlur={[Function]}
         onChange={[Function]}
         placeholder="e.g. 200"
         step={undefined}
         type="number"
-        value={18}
+        value="18"
       />
       <label
         className="fEuSWJ"

@@ -27,7 +27,7 @@ const Price = styled.strong`
 `
 
 const RangedAmountField = ({
-  amount, range, currency, billingCurrency, onChange
+  amount, range, currency, billingCurrency, onChange, onBlur
 }) => {
   let error;
 
@@ -100,9 +100,10 @@ const RangedAmountField = ({
           min={min}
           max={max}
           step={range.step}
-          value={amount}
+          value={String(amount)}
           placeholder="e.g. 200"
-          onChange={(e)=>onChange(e.target.value)}
+          onChange={(e) => onChange(parseInt(e.target.value, 10))}
+          onBlur={(e) => onBlur(parseInt(e.target.value, 10))}
         />
         <Label htmlFor="custom_amount">{currency}</Label>
       </div>
