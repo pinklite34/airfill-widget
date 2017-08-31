@@ -1,0 +1,56 @@
+import styled from 'styled-components';
+
+export default styled.div`
+  a {
+    -webkit-text-decoration-skip: objects;
+  }
+
+  /**
+   * Remove the outline on focused links when they are also active or hovered
+   * in all browsers (opinionated).
+   */
+
+  a:active,
+  a:hover {
+    outline-width: 0;
+  }
+
+  /**
+   * Add the correct font size in all browsers.
+   */
+
+  small {
+    font-size: 80%;
+  }
+
+  /**
+   * Remove the border on images inside links in IE 10-.
+   */
+
+  img {
+    border-style: none;
+  }
+
+
+  /**
+   * 1. Prevent a WebKit bug where (2) destroys native audio and video
+   *    controls in Android 4.
+   * 2. Correct the inability to style clickable types in iOS and Safari.
+   */
+
+  button,
+  html & [type="button"], /* 1 */
+  [type="reset"],
+  [type="submit"] {
+    -webkit-appearance: button; /* 2 */
+  }
+
+
+  font-size: 14px;
+  font-family: "Museo Sans Rounded", -apple-system, ".SFNSText-Regular", "Helvetica Neue",
+    "Roboto", "Segoe UI", sans-serif !important;
+  color: #333;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+`

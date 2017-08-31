@@ -1,4 +1,5 @@
 const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const srcPath = path.join(__dirname, '/../src');
 const defaultPort = process.env.PORT || 8000;
@@ -20,8 +21,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
-    alias: {
-    }
+    alias: {}
   },
   module: {
     loaders: [
@@ -45,7 +45,7 @@ module.exports = {
         include: [
           path.join(__dirname, '/../src'),
           path.join(__dirname, '/../test'),
-          path.join(__dirname, '/../node_modules'),
+          path.join(__dirname, '/../node_modules')
         ]
       },
       {
@@ -53,8 +53,68 @@ module.exports = {
         loader: 'url-loader'
       },
       {
-        test: /\.(mp4|ogg|svg)$/,
+        test: /\.(mp4|ogg)$/,
         loader: 'file-loader'
+      },
+      {
+        test: /\.svg$/,
+        use: ['desvg-loader/react', 'svg-loader']
+      },
+      {
+        test: /\.css$/,
+        include: path.join(__dirname, '/../node_modules/react-phone-number-input'),
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              minimize: true
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
+              plugins: () => [
+                require('postcss-flexbugs-fixes'),
+                require('postcss-cssnext')
+              ],
+              sourceMap: true,
+              sourceComments: true
+            }
+          }
+        ]
+      },
+      {
+        test: /\.css$/,
+        include: path.join(__dirname, '/../node_modules/react-toolbox'),
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              minimize: true,
+              modules: true,
+              localIdentName: '[name]__[local]___[hash:base64:5]'
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
+              plugins: () => [
+                require('postcss-flexbugs-fixes'),
+                require('postcss-cssnext')
+              ],
+              sourceMap: true,
+              sourceComments: true
+            }
+          },
+          'sass-loader'
+        ]
+        // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
       }
     ]
   }

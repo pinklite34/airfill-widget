@@ -1,11 +1,12 @@
 /* eslint-disable import/default */
 
 import React from 'react';
-import {render} from 'react-dom';
-import {Provider} from 'react-redux';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router';
 
 import Widget from './components/Widget';
-import {client} from './lib/api-client';
+import { client } from './lib/api-client';
 
 import configureStore from './store/configureStore';
 let store;
@@ -17,10 +18,10 @@ function AirfillWidget(ele, opt) {
     key: null,
 
     // Pass through order options
-    refundAddress: '',          // Used for automatic refunds if there is an error (only for bitcoin integrations)
-    userEmail: '',              // If set we won´t ask for the user email in step 3
-    sendEmail: true,            // Send email receipt (default: true)
-    sendSMS: true,              // Send SMS receipt, operator may send additional messages (default: true, only available for some operators)
+    refundAddress: '', // Used for automatic refunds if there is an error (only for bitcoin integrations)
+    userEmail: '', // If set we won´t ask for the user email in step 3
+    sendEmail: true, // Send email receipt (default: true)
+    sendSMS: true, // Send SMS receipt, operator may send additional messages (default: true, only available for some operators)
 
     ...opt
   };
@@ -30,7 +31,10 @@ function AirfillWidget(ele, opt) {
     options.billingCurrency = 'XBT';
   }
 
-  client.configure({ token: options.key, baseUrl: options.baseUrl || 'https://api.bitrefill.com/widget' });
+  client.configure({
+    token: options.key,
+    baseUrl: options.baseUrl || 'https://api.bitrefill.com/widget'
+  });
 
   const {
     billingCurrency,
@@ -51,19 +55,22 @@ function AirfillWidget(ele, opt) {
 
   render(
     <Provider store={store}>
-      <Widget
-        className="refill-widget-root standalone"
-        billingCurrency={billingCurrency}
-        orderOptions={orderOptions}
-        paymentButtons={paymentButtons}
-        showIntroduction={showIntroduction}
-        showTerms={true}
-        showBTCAddress={showBTCAddress}
-        defaultNumber={defaultNumber}
-        accountBalance={userAccountBalance}
-        requireAccountBalance={requireAccountBalance}
-      />
-    </Provider>, element
+      <MemoryRouter>
+        <Widget
+          className="refill-widget-root standalone"
+          billingCurrency={billingCurrency}
+          orderOptions={orderOptions}
+          paymentButtons={paymentButtons}
+          showIntroduction={showIntroduction}
+          showTerms={true}
+          showBTCAddress={showBTCAddress}
+          defaultNumber={defaultNumber}
+          accountBalance={userAccountBalance}
+          requireAccountBalance={requireAccountBalance}
+        />
+      </MemoryRouter>
+    </Provider>,
+    element
   );
 }
 

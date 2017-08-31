@@ -10,6 +10,7 @@ import paymentStatus, { selectPaymentStatus } from './paymentStatus';
 import inventory, {
   selectCountry,
   selectCountryList,
+  selectCountryCode,
   selectAvailableOperators,
   selectSelectedOperator,
   selectInventory
@@ -41,6 +42,7 @@ export {
   // Inventory
   selectCountry,
   selectCountryList,
+  selectCountryCode,
   selectAvailableOperators,
   selectSelectedOperator,
   selectInventory,

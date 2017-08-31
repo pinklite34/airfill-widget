@@ -50,18 +50,33 @@
   },
   "dependencies": {
     "core-js": "^2.0.0",
+    "css-loader": "^0.28.4",
+    "desvg-loader": "^0.1.0",
+    "extract-text-webpack-plugin": "2.1.2",
     "fetch-ponyfill": "1.0.0",
+    "glamor": "^2.20.39",
     "libphonenumber-js": "^0.3.10",
+    "node-sass": "^4.5.3",
+    "postcss-cssnext": "^3.0.2",
+    "postcss-flexbugs-fixes": "^3.2.0",
+    "postcss-loader": "^2.0.6",
     "prop-types": "^15.5.8",
     "pusher-js": "^3.2.2",
     "react": "^15.0.0",
     "react-dom": "^15.0.0",
+    "react-phone-number-input": "^0.12.7",
     "react-redux": "^5.0.4",
+    "react-router": "^4.1.2",
+    "react-svg-loader": "^1.1.1",
+    "react-toolbox": "^2.0.0-beta.12",
     "redux": "^3.6.0",
     "redux-actions": "^2.0.2",
     "redux-persist": "^4.6.0",
     "redux-thunk": "^2.2.0",
-    "styled-components": "^1.4.6"
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.18.2",
+    "styled-components": "^1.4.6",
+    "svg-loader": "^0.0.2"
   },
   "name": "airfill-widget",
   "license": "MIT",
@@ -73,7 +88,10 @@
     "transform": {
       ".(js)": "<rootDir>/node_modules/babel-jest"
     },
-    "moduleFileExtensions": ["js", "json"]
+    "moduleFileExtensions": [
+      "js",
+      "json"
+    ]
   },
   "babel": {
     "presets": [
