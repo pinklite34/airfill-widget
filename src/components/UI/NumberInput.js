@@ -21,7 +21,7 @@ const style = {
     minWidth: '48px !important',
     height: 'auto !important',
     '& svg': {
-      marginRight: '0'
+      marginRight: '0 !important'
     }
   }),
   phone: css({

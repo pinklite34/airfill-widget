@@ -49,7 +49,7 @@ export default styled.div`
   font-size: 14px;
   font-family: "Museo Sans Rounded", -apple-system, ".SFNSText-Regular", "Helvetica Neue",
     "Roboto", "Segoe UI", sans-serif !important;
-  color: #333;
+  color: #444;
   box-sizing: border-box;
   padding: 0;
   margin: 0;

@@ -106,7 +106,13 @@ module.exports = {
               ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
               plugins: () => [
                 require('postcss-flexbugs-fixes'),
-                require('postcss-cssnext')
+                require('postcss-cssnext')({
+                  features: {
+                    customProperties: {
+                      variables: require(path.join(__dirname, '/../src/theme'))
+                    }
+                  }
+                })
               ],
               sourceMap: true,
               sourceComments: true

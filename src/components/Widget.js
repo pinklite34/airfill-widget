@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route } from 'react-router';
+import { Route, withRouter } from 'react-router';
 
 import { Card } from 'react-toolbox/lib/card';
 
@@ -12,8 +12,10 @@ import Root from './UI/Root';
 import Header from './Header';
 import Footer from './Footer';
 
-import Services from './Services';
+import Country from './Country';
+import Providers from './Providers';
 import Instructions from './Instructions';
+import Amounts from './Amounts';
 
 // import CountryStep from './Steps/Country';
 // import OperatorStep from './Steps/Operator';
@@ -92,10 +94,18 @@ class AirfillWidget extends Component {
   render() {
     return (
       <Root className={this.props.className}>
+        <Route
+          render={({ location }) => {
+            console.log('Changing to route', location.pathname);
+            return null;
+          }}
+        />
         <Card>
           <Header branded />
-          <Route path="/" render={Services} />
-          <Route path="/" render={Instructions} />
+          <Country />
+          <Providers />
+          <Amounts />
+          <Instructions />
         </Card>
         <Footer branded />
       </Root>
@@ -103,14 +113,15 @@ class AirfillWidget extends Component {
   }
 }
 
-export default connect(
-  state => ({
-    // currentStep: selectCurrentStep(state),
-    // recentNumbers: selectRecentNumbers(state)
-  }),
-  {
-    init
-    // setStep
-  }
-)(AirfillWidget);
+export default withRouter(
+  connect(
+    state => ({
+      // currentStep: selectCurrentStep(state),
+      // recentNumbers: selectRecentNumbers(state)
+    }),
+    {
+      init
+    }
+  )(AirfillWidget)
+);
 // export default AirfillWidget;

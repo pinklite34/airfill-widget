@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import { css } from 'glamor';
 import { connect } from 'react-redux';
-import { selectCountry } from '../store';
+import { selectCountry } from '../../store';
 
-import Service from './Service';
+import ActiveSection from '../UI/ActiveSection';
+import Provider, { ShowAll } from './Provider';
 
 const styles = {
-  container: css({
-    backgroundColor: '#FAFAFA',
-    padding: 16
-  }),
   grid: css({
     display: 'flex',
     flexWrap: 'wrap',
@@ -17,7 +14,7 @@ const styles = {
   })
 };
 
-class ServiceGrid extends Component {
+class ProviderGrid extends Component {
   constructor() {
     super();
 
@@ -33,9 +30,9 @@ class ServiceGrid extends Component {
 
     if (!country) {
       return (
-        <div {...styles.container}>
+        <ActiveSection>
           Your country is not yet supported in Bitrefill.
-        </div>
+        </ActiveSection>
       );
     }
 
@@ -45,17 +42,20 @@ class ServiceGrid extends Component {
     const visibleOperators = showAll ? operators : operators.slice(0, 4);
 
     return (
-      <div {...styles.container}>
+      <ActiveSection>
         <div {...styles.grid}>
           {visibleOperators.map(operator => (
-            <Service key={operator} data={country.operators[operator]} />
+            <Provider key={operator} data={country.operators[operator]} />
           ))}
+          {!showAll && (
+            <ShowAll onClick={this.showAll} count={operators.length} />
+          )}
         </div>
-      </div>
+      </ActiveSection>
     );
   }
 }
 
 export default connect(state => ({
   country: selectCountry(state)
-}))(ServiceGrid);
+}))(ProviderGrid);

@@ -22,15 +22,17 @@ const styles = {
   subtitle: css({
     fontSize: 12,
     fontWeight: 700,
-    color: 'rgba(255, 255, 255, 0.9)',
-    width: 260
+    color: 'rgba(255, 255, 255, 0.8)',
+    width: 260,
+    marginTop: 8
   }),
   description: css({
     marginTop: 8,
     fontSize: 12,
     color: 'rgba(255, 255, 255, 0.9)',
-    width: 260,
-    lineHeihgt: 1.5
+    width: 300,
+    lineHeight: 1.5,
+    fontWeight: 500
   })
 };
 

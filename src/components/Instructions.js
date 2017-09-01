@@ -6,7 +6,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    padding: '16px'
+    padding: '20px'
   }),
   instruction: css({
     display: 'flex',
@@ -14,8 +14,9 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    padding: 16,
-    flex: '0 1 220px'
+    flex: '0 1 168px',
+    lineHeight: 1.4,
+    fontSize: 14
   }),
   badge: css({
     width: 40,
@@ -31,7 +32,7 @@ const styles = {
   }),
   title: css({
     color: '#2079D6',
-    margin: 8
+    margin: '8px 0'
   })
 };
 
