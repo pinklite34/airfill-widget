@@ -57,7 +57,7 @@ const RefillButton = styled.a`
   align-items: center;
   justify-content: center;
 
-  padding: 4px 12px;
+  padding: 6px 14px;
   background-color: rgba(0,0,0,0.04);
   border-radius: 16px;
   border: 1px solid rgba(0,0,0,0.12);

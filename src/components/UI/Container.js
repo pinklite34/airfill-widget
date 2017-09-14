@@ -46,7 +46,7 @@ export default styled.div`
   }
 
 
-  font-size: 14px;
+  font-size: 16px;
   font-family: -apple-system, ".SFNSText-Regular", "Helvetica Neue",
     "Roboto", "Segoe UI", sans-serif !important;
   color: #333;
@@ -96,10 +96,10 @@ export default styled.div`
   input[type="email"],
   select {
     min-height: 40px;
-    padding: 8px;
+    padding: 8px 12px;
     border: 1px solid #ccc;
     border-radius: 2px;
-    font-size: 14px;
+    font-size: 16px;
     font-family: inherit;
 
     &:hover {
