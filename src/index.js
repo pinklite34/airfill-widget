@@ -1,7 +1,7 @@
 /* eslint-disable import/default */
 
 import React from 'react';
-import {render} from 'react-dom';
+import {render, unmountComponentAtNode} from 'react-dom';
 import {Provider} from 'react-redux';
 
 import Widget from './components/Widget';
@@ -9,6 +9,7 @@ import {client} from './lib/api-client';
 
 import configureStore from './store/configureStore';
 let store;
+let lastKey;
 
 function AirfillWidget(ele, opt) {
   const element = typeof ele === 'string' ? document.querySelector(ele) : ele;
@@ -46,6 +47,13 @@ function AirfillWidget(ele, opt) {
     showBTCAddress
   } = options;
   const orderOptions = { email: userEmail, sendEmail, sendSMS, refundAddress };
+
+  // Needed for the currency switcher on the demo page
+  if (lastKey !== options.key) {
+    lastKey = options.key;
+    store = configureStore();
+    unmountComponentAtNode(element);
+  }
 
   store = store || configureStore();
 

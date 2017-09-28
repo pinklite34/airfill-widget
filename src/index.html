@@ -37,11 +37,11 @@
       Demo
     </h2>
     <form id="options">
-      <!--<select name="currency">
-        <option value="XBT">BTC</option>
-        <option value="EUR" selected="selected">EUR</option>
-        <option value="USD">USD</option>
-      </select>-->
+      <select name="currency">
+        <option value="USD" selected="selected">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="BTC">BTC</option>
+      </select>
       <label for="collectEmail">
         <input type="checkbox" name="collectEmail" id="collectEmail" value="true" /> Collect email
       </label>
@@ -196,15 +196,21 @@
     <script src="/widget.js"></script>
     <script>
       var form = document.querySelector('#options');
-      // var currency = form.querySelector('select[name=currency]');
+      var currency = form.querySelector('select[name=currency]');
       var collectEmail = form.querySelector('input[name=collectEmail]');
       var introduction = form.querySelector('input[name=introduction]');
       var btc = form.querySelector('input[name=btc]');
 
+      var keys = {
+        BTC: 'xmDzEQpqEvN0UZwj',
+        USD: 'QlgBtVPbmy6WtvAs',
+        EUR: '4HavjvSOx4vwYUfx'
+      }
+
       function render () {
         AirfillWidget('#widget', {
-          key: '5GY9TZBK8E05U9JQSTWFXNQS4',
-          billingCurrency: 'BTC',
+          key: keys[currency.value],
+          billingCurrency: currency.value,
           paymentButtons: [{
             title: 'Send Payment',
             callback: function (order) {
