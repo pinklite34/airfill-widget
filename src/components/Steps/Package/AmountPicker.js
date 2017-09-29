@@ -163,7 +163,8 @@ const AmountPicker = ({
 
       const billingCurrencyDisplayName = billingCurrency === 'XBT' ? 'BTC' : billingCurrency;
       const price = pkg[billingCurrencyDisplayName.toLowerCase() + 'Price']
-      const formattedPrice = price + ' ' + billingCurrencyDisplayName.toUpperCase();
+      const formattedPrice = billingCurrencyDisplayName !== 'BTC' ? price.toFixed(2) : price;
+      const priceText = formattedPrice + ' ' + billingCurrencyDisplayName.toUpperCase();
       const canAfford = price <= accountBalance;
       const disabled = !canAfford && requireAccountBalance;
 
@@ -190,7 +191,7 @@ const AmountPicker = ({
               {isNaN(value) ? value : `${value} ${currency}`}
             </var>
             <span className="amount-separator">you pay</span>
-            <var className="amount-billing-price">{formattedPrice}</var>
+            <var className="amount-billing-price">{priceText}</var>
           </label>
         </li>
       );
