@@ -1,7 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { css } from 'glamor';
 import { Card } from 'react-toolbox/lib/card';
 import { Button } from 'react-toolbox/lib/button';
+
+import {
+  selectCountryList,
+  selectCountryCode,
+  selectNumber
+} from '../../store';
+import { setCountry, setNumber } from '../../actions';
+
 import Phone from 'react-phone-number-input';
 import Check from './check.svg';
 
@@ -63,18 +72,56 @@ const style = {
   })
 };
 
-const NumberInput = ({ country }) => (
-  <Card {...style.container}>
-    <Phone
-      onChange={() => null}
-      className={`${style.phone}`}
-      country={country}
-      nativeExpanded
-    />
-    <Button {...style.button}>
-      <Check />
-    </Button>
-  </Card>
-);
+// These countries/areas don't have "real" ISO codes. This means there's no flag
+// library that includes their flags etc. We need some kind of special treatment
+// to allow for these to be selected. This is just a workaround to get anything
+// to render.
+const nonIsoCountries = {
+  EA: 'Ceuta, Melilla',
+  XK: 'Kosovo',
+  CS: 'Serbia and Montenegro',
+  AN: 'Netherlands Antilles'
+};
 
-export default NumberInput;
+const NumberInput = ({
+  country,
+  setCountry,
+  countryList,
+  setNumber,
+  number,
+  onSubmit
+}) => {
+  if (!countryList.length) {
+    return null;
+  }
+  return (
+    <Card {...style.container}>
+      <Phone
+        placeholder="Enter a phone number"
+        onChange={setNumber}
+        value={number}
+        className={`${style.phone}`}
+        country={country}
+        countries={countryList.map(c => c.alpha2)}
+        dictionary={nonIsoCountries}
+        onCountryChange={setCountry}
+        nativeExpanded
+      />
+      <Button {...style.button} onClick={onSubmit}>
+        <Check />
+      </Button>
+    </Card>
+  );
+};
+
+export default connect(
+  state => ({
+    country: selectCountryCode(state),
+    countryList: selectCountryList(state),
+    number: selectNumber(state)
+  }),
+  {
+    setCountry,
+    setNumber
+  }
+)(NumberInput);

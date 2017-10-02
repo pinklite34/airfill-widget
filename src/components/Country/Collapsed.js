@@ -1,13 +1,28 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { css } from 'glamor';
+import { connect } from 'react-redux';
 import { selectCountry } from '../../store';
 import CollapsedSection from '../UI/CollapsedSection';
+import SelectCountry from '../UI/SelectCountry';
+import { Button } from 'react-toolbox/lib/button';
 
-const Collapsed = ({ country, prefix }) => {
+const styles = {
+  strong: css({
+    position: 'relative'
+  }),
+  button: css({
+    position: 'relative'
+  })
+};
+
+const Collapsed = ({ country, prefix, darken }) => {
   if (country) {
     return (
-      <CollapsedSection onClick={() => null} type="country">
-        {prefix} <strong>{country.name}</strong>
+      <CollapsedSection hideButton darken={darken}>
+        {prefix} <strong {...styles.strong}>
+          <SelectCountry />
+          {country.name}
+        </strong>
       </CollapsedSection>
     );
   } else {

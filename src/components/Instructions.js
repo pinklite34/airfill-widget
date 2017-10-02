@@ -54,7 +54,7 @@ const Instructions = () => (
     <Instruction number={2} title="Pick package & pay">
       Select your desired refill amount and pay with a single click
     </Instruction>
-    <Instruction number={1} title="Instant refill delivery">
+    <Instruction number={3} title="Instant refill delivery">
       We send your refill the second we receive your payment
     </Instruction>
   </div>

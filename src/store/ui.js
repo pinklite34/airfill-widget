@@ -75,7 +75,8 @@ export const selectNumber = state => {
   return number;
 }
 
-export const selectEmail = state => {
-  const email = selectUiState(state).email;
-  return email.valid ? email.value : '';
-};
+export const selectEmail = state => selectUiState(state).email;
+export const selectValidEmail = state => {
+  const email = selectEmail(state);
+  return email && email.valid ? email.value : null;
+}

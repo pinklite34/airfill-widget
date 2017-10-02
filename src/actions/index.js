@@ -7,7 +7,7 @@ import {parse, format} from 'libphonenumber-js';
 import {
   selectNumber,
   selectAmount,
-  selectEmail,
+  selectValidEmail,
   selectOrder,
   selectCountry,
   selectOperator
@@ -80,7 +80,7 @@ const loadOperator = createLoadAction({
 
 export const setOperator = (operatorSlug) => (dispatch, getState) => {
   dispatch(setAmount(''));
-  dispatch(loadOperator({operatorSlug, uri: `/inventory/${operatorSlug}`}))
+  return dispatch(loadOperator({operatorSlug, uri: `/inventory/${operatorSlug}`}))
 }
 
 const loadNumberLookup = createLoadAction({
@@ -94,6 +94,7 @@ export const lookupNumber = (number) => (dispatch) => {
     query: { number }
   };
 
+  dispatch(setAmount(''));
   return dispatch(loadNumberLookup(options));
 };
 
@@ -106,7 +107,7 @@ export const createOrder = (orderOptions) => (dispatch, getState) => {
   const state = getState();
   const number = selectNumber(state);
   const amount = selectAmount(state);
-  const email = selectEmail(state) || orderOptions.email;
+  const email = selectValidEmail(state) || orderOptions.email;
   const operator = selectOperator(state);
   const order = selectOrder(state);
 
@@ -161,9 +162,14 @@ export const init = options => (dispatch, getState) => {
   const inventoryPromise = dispatch(loadInventory());
   dispatch(updateOrderStatus());
 
+  const { defaultNumber, defaultEmail } = options;
   const state = getState();
+
+  if (!selectValidEmail(state) && defaultEmail) {
+    dispatch(setEmail(defaultEmail))
+  }
+
   const number = selectNumber(state);
-  const { defaultNumber = '' } = options;
 
   if (!number && defaultNumber) {
     // Try to auto detect country

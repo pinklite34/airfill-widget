@@ -5,9 +5,10 @@ import { Route, withRouter } from 'react-router';
 import { Card } from 'react-toolbox/lib/card';
 
 import { init } from '../actions';
+import { selectInventory } from '../store';
 
+import SpinnerWhileLoading from './UI/SpinnerWhileLoading';
 import Root from './UI/Root';
-// import Container from './UI/Container';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -15,38 +16,26 @@ import Footer from './Footer';
 import Country from './Country';
 import Providers from './Providers';
 import Instructions from './Instructions';
-import Amounts from './Amounts';
-
-// import CountryStep from './Steps/Country';
-// import OperatorStep from './Steps/Operator';
-// import PackageStep from './Steps/Package';
-// import OrderStep from './Steps/Order';
-
-// import {init, setStep} from '../actions';
-// import {selectCurrentStep, selectRecentNumbers} from '../store';
-
-// const steps = [{
-//   component: CountryStep
-// },{
-//   component: OperatorStep
-// },{
-//   component: PackageStep
-// },{
-//   component: OrderStep
-// }];
+import Amount from './Amount';
+import Order from './Order';
+import Details from './Details';
 
 class AirfillWidget extends Component {
+  static defaultProps = {
+    userAccountBalance: Number.POSITIVE_INFINITY,
+    requireAccountBalance: false,
+    billingCurrency: 'XBT'
+  };
+
   componentDidMount() {
     this.props.init({
-      defaultNumber: this.props.defaultNumber
+      defaultNumber: this.props.defaultNumber,
+      email: this.props.orderOptions.email
     });
   }
 
   // renderSteps() {
   //   const {
-  //     currentStep,
-  //     setStep,
-
   //     // Config options
   //     paymentButtons,
   //     accountBalance=Number.POSITIVE_INFINITY,
@@ -92,6 +81,8 @@ class AirfillWidget extends Component {
   // }
 
   render() {
+    const config = this.props;
+
     return (
       <Root className={this.props.className}>
         <Route
@@ -101,11 +92,19 @@ class AirfillWidget extends Component {
           }}
         />
         <Card>
-          <Header branded />
-          <Country />
-          <Providers />
-          <Amounts />
-          <Instructions />
+          <SpinnerWhileLoading hasLoaded={!!this.props.inventory.result}>
+            <Header branded />
+            <Country />
+            <Providers />
+            <Amount config={config} />
+            <Details config={config} />
+            <Order config={config} />
+            <Route
+              path="/"
+              exact
+              render={() => <Instructions config={config} />}
+            />
+          </SpinnerWhileLoading>
         </Card>
         <Footer branded />
       </Root>
@@ -116,12 +115,11 @@ class AirfillWidget extends Component {
 export default withRouter(
   connect(
     state => ({
-      // currentStep: selectCurrentStep(state),
       // recentNumbers: selectRecentNumbers(state)
+      inventory: selectInventory(state)
     }),
     {
       init
     }
   )(AirfillWidget)
 );
-// export default AirfillWidget;

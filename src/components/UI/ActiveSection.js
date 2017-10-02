@@ -1,14 +1,19 @@
 import React from 'react';
 import { css } from 'glamor';
+import SectionTitle from './SectionTitle';
 
-const container = css({
-  backgroundColor: '#FAFAFA',
-  padding: 16
-})
+const styles = {
+  container: css({
+    backgroundColor: '#FAFAFA',
+    padding: 16
+  })
+};
 
-const ActiveSection = ({ children }) =>
-  <div {...container}>
+const ActiveSection = ({ title, children, ...props }) => (
+  <div {...styles.container} {...props}>
+    {title && <SectionTitle>{title}</SectionTitle>}
     {children}
-  </div>;
+  </div>
+);
 
-  export default ActiveSection;
+export default ActiveSection;

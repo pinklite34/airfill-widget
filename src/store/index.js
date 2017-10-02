@@ -4,6 +4,7 @@ import ui, {
   selectNumber,
   selectAmount,
   selectEmail,
+  selectValidEmail,
   selectCurrentStep
 } from './ui';
 import paymentStatus, { selectPaymentStatus } from './paymentStatus';
@@ -38,6 +39,7 @@ export {
   selectNumber,
   selectAmount,
   selectEmail,
+  selectValidEmail,
   selectCurrentStep,
   // Inventory
   selectCountry,

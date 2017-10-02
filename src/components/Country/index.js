@@ -5,7 +5,9 @@ import Collapsed from './Collapsed';
 const Country = () => (
   <Switch>
     <Route path="/" exact render={() => <Collapsed prefix="Services in" />} />
-    <Route component={Collapsed} />
+    <Route path="/selectProvider" component={Collapsed} />
+    <Route path="/selectAmount" render={props => <Collapsed darken={1} {...props} />} />
+    <Route render={props => <Collapsed darken={2} {...props} />} />
   </Switch>
 );
 

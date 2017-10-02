@@ -1,30 +1,39 @@
 import React from 'react';
 import { Route } from 'react-router';
 import { css } from 'glamor';
-import { Card } from 'react-toolbox/lib/card';
 
 import Introduction from './Introduction';
 
 import Logo from './logo.svg';
 
-const container = css({
-  background: '#3e8fe4',
-  borderRadius: 0,
-  padding: 24,
-  textAlign: 'center',
-  color: '#ffffff',
-  zIndex: 10,
-  boxShadow: '0 1px 2px 0 rgba(0,0,0,.16)'
-})
+const styles = {
+  container: css({
+    background: '#3e8fe4',
+    borderRadius: 0,
+    padding: 24,
+    textAlign: 'center',
+    color: '#ffffff',
+    zIndex: 10,
+    boxShadow: '0 1px 2px 0 rgba(0,0,0,.16)'
+  }),
+  logo: css({
+    cursor: 'pointer'
+  })
+};
 
 const Header = ({ branded }) => (
-  <div {...container}>
-    <Logo fill="#fff" width="104" />
+  <div {...styles.container}>
     <Route
-      path="/"
-      render={() => <Introduction branded={branded} />}
-      exact
+      render={({ history }) => (
+        <Logo
+          fill="#fff"
+          width="104"
+          {...styles.logo}
+          onClick={() => history.push('/')}
+        />
+      )}
     />
+    <Route path="/" render={props => <Introduction branded={branded} {...props} />} exact />
   </div>
 );
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { css } from 'glamor';
 import { connect } from 'react-redux';
+import { setOperator } from '../../actions';
 import { selectCountry } from '../../store';
 
 import ActiveSection from '../UI/ActiveSection';
@@ -25,6 +26,11 @@ class ProviderGrid extends Component {
 
   showAll = () => this.setState({ showAll: true });
 
+  selectOperator = slug =>
+    this.props
+      .setOperator(slug)
+      .then(() => this.props.history.push('/selectAmount'));
+
   render() {
     const { country } = this.props;
 
@@ -39,15 +45,21 @@ class ProviderGrid extends Component {
     const operators = Object.keys(country.operators);
 
     const { showAll } = this.state;
-    const visibleOperators = showAll ? operators : operators.slice(0, 4);
+    const visibleOperators =
+      showAll || operators.length <= 5 ? operators : operators.slice(0, 4);
 
     return (
-      <ActiveSection>
+      <ActiveSection title="Select provider">
         <div {...styles.grid}>
           {visibleOperators.map(operator => (
-            <Provider key={operator} data={country.operators[operator]} />
+            <Provider
+              key={operator}
+              data={country.operators[operator]}
+              onSelect={() =>
+                this.selectOperator(country.operators[operator].slug)}
+            />
           ))}
-          {!showAll && (
+          {operators.length > visibleOperators.length && (
             <ShowAll onClick={this.showAll} count={operators.length} />
           )}
         </div>
@@ -56,6 +68,11 @@ class ProviderGrid extends Component {
   }
 }
 
-export default connect(state => ({
-  country: selectCountry(state)
-}))(ProviderGrid);
+export default connect(
+  state => ({
+    country: selectCountry(state)
+  }),
+  {
+    setOperator
+  }
+)(ProviderGrid);

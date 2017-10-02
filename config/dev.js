@@ -12,7 +12,7 @@ const config = Object.assign({}, baseConfig, {
     './src/index'
   ],
   cache: true,
-  devtool: 'none',
+  devtool: 'cheap-module-source-map',
   plugins: [
     new webpack.NoEmitOnErrorsPlugin()
   ]

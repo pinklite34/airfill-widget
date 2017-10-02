@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { css } from 'glamor';
-import { selectCountryCode } from '../store';
+import { selectCountryCode, selectNumber } from '../store';
+import { lookupNumber } from '../actions';
 
 import NumberInput from './UI/NumberInput';
 
@@ -36,23 +37,36 @@ const styles = {
   })
 };
 
-const Introduction = ({ branded, country }) =>
+const Introduction = ({ branded, country, lookupNumber, number, history }) => (
   <div {...styles.container}>
-    {branded
-      ? <div {...styles.head}>
-          <h2 {...styles.title}>Send Global Top Ups With Bitcoin</h2>
-          <div {...styles.subtitle}>Trusted by More Than 500 000 People</div>
-        </div>
-      : <div {...styles.head}>
-          <h2 {...styles.title}>Top Up Anything With Bitcoin</h2>
-        </div>}
-    <NumberInput country={country} />
+    {branded ? (
+      <div {...styles.head}>
+        <h2 {...styles.title}>Send Global Top Ups With Bitcoin</h2>
+        <div {...styles.subtitle}>Trusted by More Than 500 000 People</div>
+      </div>
+    ) : (
+      <div {...styles.head}>
+        <h2 {...styles.title}>Top Up Anything With Bitcoin</h2>
+      </div>
+    )}
+    <NumberInput
+      country={country}
+      onSubmit={() =>
+        lookupNumber(number).then(() => history.push('/selectAmount'))}
+    />
     <div {...styles.description}>
       Enter a phone number to see available services or select a provider below
       for more information
     </div>
-  </div>;
+  </div>
+);
 
-export default connect(state => ({
-  country: selectCountryCode(state)
-}))(Introduction);
+export default connect(
+  state => ({
+    country: selectCountryCode(state),
+    number: selectNumber(state)
+  }),
+  {
+    lookupNumber
+  }
+)(Introduction);

@@ -1,9 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { css } from 'glamor';
 import { Card } from 'react-toolbox/lib/card';
-import { setOperator } from '../../actions';
 
 import More from './more.svg';
 
@@ -22,17 +19,24 @@ const styles = {
     lineHeight: 1.4,
     cursor: 'pointer'
   }),
+  logoWrapper: css({
+    height: 42,
+    width: 88,
+    marginBottom: 6,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }),
   logo: css({
     maxHeight: 42,
     maxWidth: 88,
-    marginBottom: 6,
     display: 'block'
   })
 };
 
 export const ShowAll = ({ onClick, count }) => (
   <Card {...styles.container} onClick={onClick}>
-    <div {...styles.logo}>
+    <div {...styles.logoWrapper}>
       <More fill="#777777" width="42px" height="42px" />
     </div>
     <div>
@@ -41,21 +45,13 @@ export const ShowAll = ({ onClick, count }) => (
   </Card>
 );
 
-const Provider = ({ data, setOperator, history }) => (
-  <Card
-    {...styles.container}
-    onClick={() => {
-      setOperator(data.slug);
-      history.push('/selectAmount');
-    }}
-  >
-    <img src={data.logoImage} alt={data.name} {...styles.logo} />
+const Provider = ({ data, onSelect }) => (
+  <Card {...styles.container} onClick={onSelect}>
+    <div {...styles.logoWrapper}>
+      <img src={data.logoImage} alt={data.name} {...styles.logo} />
+    </div>
     <div>{data.name}</div>
   </Card>
 );
 
-export default withRouter(
-  connect(null, {
-    setOperator
-  })(Provider)
-);
+export default Provider;

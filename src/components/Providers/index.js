@@ -7,7 +7,8 @@ const Providers = () => (
   <Switch>
     <Route path="/" exact component={ProviderGrid} />
     <Route path="/selectProvider" component={ProviderGrid} />
-    <Route component={Collapsed} />
+    <Route path="/selectAmount" component={Collapsed} />
+    <Route render={props => <Collapsed darken={1} {...props} />} />
   </Switch>
 );
 

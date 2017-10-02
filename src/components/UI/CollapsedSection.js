@@ -4,14 +4,11 @@ import { Button } from 'react-toolbox/lib/button';
 
 const styles = {
   container: css({
-    backgroundColor: '#EEEEEE',
     padding: 16,
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    '& + &': {
-      borderTop: '1px solid rgba(0,0,0,0.08)'
-    }
+    transition: 'background-color 0.2s ease'
   }),
   button: css({
     backgroundColor: '#fff !important',
@@ -27,12 +24,29 @@ const styles = {
   })
 };
 
-const Collapsed = ({ onClick, type, children }) => (
-  <div {...styles.container}>
+const background = [
+  css({
+    backgroundColor: '#EEEEEE'
+  }),
+  css({
+    backgroundColor: '#E3E3E3'
+  }),
+  css({
+    backgroundColor: '#D8D8D8'
+  }),
+  css({
+    backgroundColor: '#CDCDCD'
+  })
+]
+
+const Collapsed = ({ onClick, type, hideButton, children, darken=0 }) => (
+  <div {...styles.container} {...background[darken]}>
     <div {...styles.text}>{children}</div>
-    <Button {...styles.button} onClick={onClick}>
-      Change {type}
-    </Button>
+    {hideButton ? null : (
+      <Button {...styles.button} onClick={onClick}>
+        Change {type}
+      </Button>
+    )}
   </div>
 );
 
