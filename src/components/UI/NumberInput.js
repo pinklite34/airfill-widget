@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { css } from 'glamor';
 import { Card } from 'react-toolbox/lib/card';
 import { Button } from 'react-toolbox/lib/button';
+import { ProgressBar } from 'react-toolbox/lib/progress_bar';
 
 import {
   selectCountryList,
@@ -17,7 +18,7 @@ import Check from './check.svg';
 import 'react-phone-number-input/rrui.css';
 import 'react-phone-number-input/style.css';
 
-const style = {
+const styles = {
   container: css({
     display: 'flex',
     flexDirection: 'row',
@@ -29,6 +30,7 @@ const style = {
     color: '#3E8FE4 !important',
     minWidth: '48px !important',
     height: 'auto !important',
+    display: 'flex !important',
     '& svg': {
       marginRight: '0 !important'
     }
@@ -69,6 +71,10 @@ const style = {
     '& input.rrui__input-field': {
       border: 'none !important'
     }
+  }),
+  progressBar: css({
+    width: '24px !important',
+    height: '24px !important'
   })
 };
 
@@ -89,26 +95,31 @@ const NumberInput = ({
   countryList,
   setNumber,
   number,
-  onSubmit
+  onSubmit,
+  loading
 }) => {
   if (!countryList.length) {
     return null;
   }
   return (
-    <Card {...style.container}>
+    <Card {...styles.container}>
       <Phone
         placeholder="Enter a phone number"
         onChange={setNumber}
         value={number}
-        className={`${style.phone}`}
+        className={`${styles.phone}`}
         country={country}
         countries={countryList.map(c => c.alpha2)}
         dictionary={nonIsoCountries}
         onCountryChange={setCountry}
         nativeExpanded
       />
-      <Button {...style.button} onClick={onSubmit}>
-        <Check />
+      <Button disabled={loading} {...styles.button} onClick={onSubmit}>
+        {loading ? (
+          <ProgressBar type="circular" className={`${styles.progressBar}`} />
+        ) : (
+          <Check />
+        )}
       </Button>
     </Card>
   );

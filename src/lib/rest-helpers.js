@@ -12,7 +12,7 @@ const actionTypeForName = name => {
 // --- Collection Reducer ---
 // --------------------------
 
-export const createCollectionReducer = name => {
+export const createCollectionReducer = (name, clearStateOnLoad=false) => {
   const initialState = {
     isLoading: false,
     error: null,
@@ -23,7 +23,11 @@ export const createCollectionReducer = name => {
   return (state=initialState, {type, payload}) => {
     switch (type) {
       case baseType: {
-        return { ...state, isLoading: true };
+        if (clearStateOnLoad) {
+          return { ...state, isLoading: true, items: [] }
+        } else {
+          return { ...state, isLoading: true };
+        }
       }
 
       case baseType + '_SUCCESS': {

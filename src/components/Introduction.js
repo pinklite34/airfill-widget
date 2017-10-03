@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { css } from 'glamor';
 import { selectCountryCode, selectNumber } from '../store';
@@ -37,29 +37,65 @@ const styles = {
   })
 };
 
-const Introduction = ({ branded, country, lookupNumber, number, history }) => (
-  <div {...styles.container}>
-    {branded ? (
-      <div {...styles.head}>
-        <h2 {...styles.title}>Send Global Top Ups With Bitcoin</h2>
-        <div {...styles.subtitle}>Trusted by More Than 500 000 People</div>
+class Introduction extends Component {
+  state = {
+    isLoading: false,
+    error: null
+  };
+
+  lookupNumber = () => {
+    this.setState({
+      isLoading: true
+    });
+
+    const { lookupNumber, history, number } = this.props;
+
+    lookupNumber(number)
+      .then(() =>
+        history.push('/selectProvider', {
+          suggested: true
+        })
+      )
+      .catch(error =>
+        this.setState({
+          isLoading: false,
+          error
+        })
+      );
+  };
+
+  render() {
+    const { branded, country } = this.props;
+    const { isLoading, error } = this.state;
+    return (
+      <div {...styles.container}>
+        {branded ? (
+          <div {...styles.head}>
+            <h2 {...styles.title}>Send Global Top Ups With Bitcoin</h2>
+            <div {...styles.subtitle}>Trusted by More Than 500 000 People</div>
+          </div>
+        ) : (
+          <div {...styles.head}>
+            <h2 {...styles.title}>Top Up Anything With Bitcoin</h2>
+          </div>
+        )}
+        <NumberInput
+          loading={isLoading}
+          country={country}
+          onSubmit={this.lookupNumber}
+        />
+        {error ? (
+          <div {...styles.error}>{error.message}</div>
+        ) : (
+          <div {...styles.description}>
+            Enter a phone number to see available services or select a provider
+            below for more information
+          </div>
+        )}
       </div>
-    ) : (
-      <div {...styles.head}>
-        <h2 {...styles.title}>Top Up Anything With Bitcoin</h2>
-      </div>
-    )}
-    <NumberInput
-      country={country}
-      onSubmit={() =>
-        lookupNumber(number).then(() => history.push('/selectAmount'))}
-    />
-    <div {...styles.description}>
-      Enter a phone number to see available services or select a provider below
-      for more information
-    </div>
-  </div>
-);
+    );
+  }
+}
 
 export default connect(
   state => ({

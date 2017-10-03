@@ -6,7 +6,7 @@ const styles = {
     fontSize: 16,
     border: '1px solid #ccc',
     borderRadius: 2,
-    padding: 8
+    padding: 8,
   })
 };
 

@@ -7,8 +7,10 @@ import { createOrder, setNumber, setEmail } from '../../actions';
 import { selectNumber, selectEmail, selectAmount } from '../../store';
 
 import { Input } from 'react-toolbox/lib/input';
+import { ProgressBar } from 'react-toolbox/lib/progress_bar';
 import Field from '../UI/Field';
-import SectionTitle from '../UI/SectionTitle';
+
+import Error from './error.svg';
 
 const styles = {
   title: css({
@@ -25,23 +27,63 @@ const styles = {
   }),
   input: css({
     maxWidth: 250,
-    padding: '0 !important'
+    padding: '0 !important',
+    backgroundColor: '#fff',
+    margin: '4px -8px',
+    '& > input': {
+      padding: 8
+    }
   }),
   button: css({
     width: 250,
-    marginBottom: 8
+    marginBottom: 0
+  }),
+  error: css({
+    backgroundColor: '#E1283C',
+    margin: '0 -16px 16px',
+    padding: 16,
+    color: '#fff',
+    fontWeight: 700,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    boxShadow: '0 1px 2px 0 rgba(0,0,0,.16)',
+    position: 'relative',
+    zIndex: 10
+  }),
+  icon: css({
+    marginRight: 16
+  }),
+  progressBar: css({
+    width: '36px !important',
+    height: '36px !important',
+    padding: 8,
+    '& .theme__path___1xZSU': {
+      stroke: '#fff'
+    }
   })
 };
 
 class TopupDetails extends Component {
   state = {
-    showEmail: true
+    error: null,
+    showEmail: true,
+    isLoading: false
   };
 
   createOrder = () => {
+    this.setState({
+      isLoading: true
+    });
     this.props
       .createOrder(this.props.config.orderOptions)
-      .then(() => this.props.history.push('/payment'));
+      .then(() => this.props.history.push('/payment'))
+      .catch(error =>
+        this.setState({
+          isLoading: false,
+          error
+        })
+      );
   };
 
   isComplete = () =>
@@ -60,11 +102,21 @@ class TopupDetails extends Component {
 
   render() {
     const { number, email } = this.props;
-    const { showEmail } = this.state;
+    const { showEmail, error, isLoading } = this.state;
 
     return (
       <div {...styles.container}>
-        <Field label="Phone number" hint="The phone number to top up" {...styles.field}>
+        {error && (
+          <div {...styles.error}>
+            <Error fill="#fff" {...styles.icon} />
+            <div>{error.message}</div>
+          </div>
+        )}
+        <Field
+          label="Phone number"
+          hint="The phone number to top up"
+          {...styles.field}
+        >
           <Input
             onChange={this.props.setNumber}
             type="tel"
@@ -97,11 +149,15 @@ class TopupDetails extends Component {
         <Button
           primary
           raised
-          disabled={!this.isComplete()}
+          disabled={!this.isComplete() || isLoading}
           onClick={this.createOrder}
           className={`${styles.button}`}
         >
-          Continue
+          {isLoading ? (
+            <ProgressBar type="circular" className={`${styles.progressBar}`} />
+          ) : (
+            'Continue'
+          )}
         </Button>
       </div>
     );

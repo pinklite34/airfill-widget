@@ -8,6 +8,7 @@ import { selectValidAmount } from '../../lib/amount-validation';
 import { getPrice, getDisplayName } from '../../lib/currency-helpers';
 
 import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
+import { ProgressBar } from 'react-toolbox/lib/progress_bar';
 
 import ActiveSection from '../UI/ActiveSection';
 
@@ -69,8 +70,12 @@ class Picker extends Component {
   render() {
     const { amount, operator, setAmount, config } = this.props;
 
-    if (operator.isLoading || !operator.result) {
-      return null;
+    if (operator.isLoading || !operator.result.packages) {
+      return (
+        <ActiveSection title="Select amount">
+          <ProgressBar type="circular" />
+        </ActiveSection>
+      );
     }
 
     const {
@@ -78,7 +83,6 @@ class Picker extends Component {
       requireAccountBalance,
       billingCurrency
     } = config;
-    const supportsRanged = operator.result.isRanged;
 
     return (
       <ActiveSection title="Select amount">
@@ -110,7 +114,7 @@ class Picker extends Component {
           })}
         </RadioGroup>
 
-        {supportsRanged && (
+        {operator.result.isRanged && (
           <Ranged
             amount={amount}
             range={operator.result.range}

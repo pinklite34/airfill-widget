@@ -5,18 +5,28 @@ const styles = {
   container: css({
     display: 'flex',
     flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-around',
     padding: '20px'
   }),
   instruction: css({
     display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
+    flexDirection: 'row',
     alignItems: 'center',
-    textAlign: 'center',
-    flex: '0 1 168px',
+    flex: '1 1 auto',
     lineHeight: 1.4,
-    fontSize: 14
+    fontSize: 14,
+    '& + &': {
+      marginTop: 20
+    },
+    '@media(min-width: 620px)': {
+      flexDirection: 'column',
+      textAlign: 'center',
+      flex: '0 0 180px',
+      '& + &': {
+        marginTop: 0
+      }
+    }
   }),
   badge: css({
     width: 40,
@@ -26,23 +36,34 @@ const styles = {
     color: '#009FE6',
     fontSize: 20,
     fontWeight: 700,
+    flex: '0 0 auto',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginRight: 20,
+    '@media(min-width: 620px)': {
+      marginRight: 0
+    }
   }),
   title: css({
     color: '#2079D6',
-    margin: '8px 0'
+    margin: 0,
+    '@media(min-width: 620px)': {
+      margin: '8px 0'
+    }
+  }),
+  content: css({
+    flex: '1 1 auto'
   })
 };
 
-const Badge = ({ children }) => <div {...styles.badge}>{children}</div>;
-
 const Instruction = ({ number, title, children }) => (
   <div {...styles.instruction}>
-    <Badge>{number}</Badge>
-    <h3 {...styles.title}>{title}</h3>
-    <div>{children}</div>
+    <div {...styles.badge}>{number}</div>
+    <div {...styles.content}>
+      <h3 {...styles.title}>{title}</h3>
+      <div>{children}</div>
+    </div>
   </div>
 );
 

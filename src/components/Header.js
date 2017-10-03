@@ -14,7 +14,8 @@ const styles = {
     textAlign: 'center',
     color: '#ffffff',
     zIndex: 10,
-    boxShadow: '0 1px 2px 0 rgba(0,0,0,.16)'
+    boxShadow: '0 1px 2px 0 rgba(0,0,0,.16)',
+    position: 'relative'
   }),
   logo: css({
     cursor: 'pointer'
