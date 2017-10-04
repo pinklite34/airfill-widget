@@ -1,10 +1,10 @@
 import React from 'react';
-import { Route } from 'react-router';
+import { Switch, Route } from 'react-router';
 import { css } from 'glamor';
 
 import Introduction from './Introduction';
 
-import Logo from './logo.svg';
+import BitrefillLogo from './logo.svg';
 
 const styles = {
   container: css({
@@ -19,24 +19,46 @@ const styles = {
   }),
   logo: css({
     cursor: 'pointer',
-    marginBottom: 20
+    '& + div': {
+      marginTop: 20
+    }
   })
 };
 
+const Logo = () => (
+  <Route
+    render={({ history }) => (
+      <BitrefillLogo
+        fill="#fff"
+        width="104"
+        {...styles.logo}
+        onClick={() => history.push('/')}
+      />
+    )}
+  />
+);
+
 const Header = ({ branded }) => (
-  <div {...styles.container}>
-    {branded && <Route
-      render={({ history }) => (
-        <Logo
-          fill="#fff"
-          width="104"
-          {...styles.logo}
-          onClick={() => history.push('/')}
-        />
+  <Switch>
+    <Route
+      path="/"
+      exact
+      render={props => (
+        <div {...styles.container}>
+          {branded && <Logo />}
+          <Introduction branded={branded} {...props} />
+        </div>
       )}
-    />}
-    <Route path="/" render={props => <Introduction branded={branded} {...props} />} exact />
-  </div>
+    />
+    <Route
+      render={props =>
+        branded && (
+          <div {...styles.container}>
+            <Logo />
+          </div>
+        )}
+    />
+  </Switch>
 );
 
 export default Header;
