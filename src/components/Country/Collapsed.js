@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { selectCountry } from '../../store';
 import CollapsedSection from '../UI/CollapsedSection';
 import SelectCountry from '../UI/SelectCountry';
-import { Button } from 'react-toolbox/lib/button';
 
 const styles = {
   strong: css({

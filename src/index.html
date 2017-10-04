@@ -45,11 +45,14 @@
       <label for="collectEmail">
         <input type="checkbox" name="collectEmail" id="collectEmail" value="true" /> Collect email
       </label>
-      <label for="introduction">
-        <input type="checkbox" name="introduction" id="introduction" value="true" /> Show introduction
+      <label for="instructions">
+        <input type="checkbox" name="instructions" id="instructions" value="true" checked="checked" /> Show instructions
       </label>
       <label for="btc">
         <input type="checkbox" name="btc" id="btc" value="true" /> Show BTC Address
+      </label>
+      <label for="showLogo">
+        <input type="checkbox" name="showLogo" id="showLogo" value="true" checked="checked" /> Show Bitrefill logo
       </label>
     </form>
     <div id="widget"></div>
@@ -198,8 +201,9 @@
       var form = document.querySelector('#options');
       // var currency = form.querySelector('select[name=currency]');
       var collectEmail = form.querySelector('input[name=collectEmail]');
-      var introduction = form.querySelector('input[name=introduction]');
+      var instructions = form.querySelector('input[name=instructions]');
       var btc = form.querySelector('input[name=btc]');
+      var showLogo = form.querySelector('input[name=showLogo');
 
       function render () {
         AirfillWidget('#widget', {
@@ -214,8 +218,9 @@
           }],
           sendEmail: true,
           userEmail: collectEmail.checked ? '' : 'test@testing.com',
-          showIntroduction: introduction.checked,
-          showBTCAddress: btc.checked
+          showInstructions: instructions.checked,
+          showBTCAddress: btc.checked,
+          showLogo: showLogo.checked
         });
       }
 

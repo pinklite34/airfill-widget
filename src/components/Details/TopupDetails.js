@@ -87,7 +87,10 @@ class TopupDetails extends Component {
   };
 
   isComplete = () =>
-    this.props.amount && this.props.number && this.props.email.valid;
+    this.props.amount &&
+    this.props.number &&
+    (isValidEmail(this.props.config.orderOptions.email) ||
+      this.props.email.valid);
 
   render() {
     const { number, email } = this.props;

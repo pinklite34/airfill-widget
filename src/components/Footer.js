@@ -1,65 +1,65 @@
 import React from 'react';
-import styled from 'styled-components';
+import { css } from 'glamor';
 
-const Container = styled.footer`
-  padding: 16px;
-  display: flex;
-  justify-content: ${props => (props.branded ? 'space-between' : 'center')};
-  font-size: 12px;
-  color: #999999;
+const styles = {
+  container: css({
+    padding: 16,
+    display: 'flex',
+    justifyContent: 'center',
+    fontSize: 12,
+    color: '#999',
+    '& strong': {
+      color: '#777'
+    },
+    '& a': {
+      color: '#999'
+    }
+  }),
+  branded: css({
+    justifyContent: 'space-between'
+  }),
+  linkList: css({
+    display: 'flex',
+    listStyleType: 'none',
+    margin: 0,
+    padding: 0
+  }),
+  link: css({
+    display: 'block',
+    marginLeft: 12
+  })
+};
 
-  strong {
-    color: #777777;
-  }
-
-  a {
-    color: #999999;
-  }
-`;
-
-const LinkList = styled.ul`
-  display: flex;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-
-  li {
-    dislay: block;
-    margin-left: 12px;
-  }
-`;
-
-const Link = ({ children, ...props }) =>
-  <li>
-    <a {...props}>
-      {children}
-    </a>
-  </li>;
-
-const Footer = ({ branded }) =>
-  <Container branded={branded}>
-    {branded &&
+const Footer = ({ branded }) => (
+  <div {...css(styles.container, branded && styles.branded)}>
+    {branded && (
       <div>
         Powered by <strong>bitrefill</strong>
-      </div>}
+      </div>
+    )}
     <div>
-      <LinkList>
-        <Link
-          href="https://www.bitrefill.com/privacy/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Privacy Policy
-        </Link>
-        <Link
-          href="https://www.bitrefill.com/terms/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Terms of Service
-        </Link>
-      </LinkList>
+      <ul {...styles.linkList}>
+        <li {...styles.link}>
+          <a
+            href="https://www.bitrefill.com/privacy/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Privacy Policy
+          </a>
+        </li>
+        <li {...styles.link}>
+          <a
+            href="https://www.bitrefill.com/terms/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Terms of Service
+          </a>
+        </li>
+      </ul>
     </div>
-  </Container>;
+  </div>
+);
 
 export default Footer;

@@ -67,7 +67,7 @@ const styles = {
     }
   }),
   buttonGroup: css({
-    margin: '-8px 24px'
+    margin: -8
   }),
   button: css({
     margin: 8

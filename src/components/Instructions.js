@@ -72,7 +72,7 @@ const Instructions = () => (
     <Instruction number={1} title="Find a service">
       Select a country or enter a phone number to see available operators
     </Instruction>
-    <Instruction number={2} title="Pick package & pay">
+    <Instruction number={2} title="Pick package &amp; pay">
       Select your desired refill amount and pay with a single click
     </Instruction>
     <Instruction number={3} title="Instant refill delivery">

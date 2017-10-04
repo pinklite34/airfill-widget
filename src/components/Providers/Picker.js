@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { css } from 'glamor';
 
 import { setOperator } from '../../actions';
 import { selectAvailableOperators, selectSelectedOperator } from '../../store';

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router';
 
@@ -21,10 +22,62 @@ import Order from './Order';
 import Details from './Details';
 
 class AirfillWidget extends Component {
+  static propTypes = {
+    // User data
+    defaultNumber: PropTypes.string,
+    userAccountBalance: PropTypes.number,
+    userEmail: PropTypes.string,
+
+    // Payment options
+    paymentButtons: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        callback: PropTypes.func.isRequired,
+        requireAccountBalance: PropTypes.bool
+      })
+    ).isRequired,
+    showBTCAddress: PropTypes.bool,
+    billingCurrency: PropTypes.string,
+    requireAccountBalance: PropTypes.bool,
+
+    // Receipt
+    sendEmail: PropTypes.bool,
+    sendSMS: PropTypes.bool,
+
+    // Widget appearance
+    showInstructions: PropTypes.bool,
+    showLogo: PropTypes.bool,
+    showPoweredBy: PropTypes.bool,
+    showTerms: PropTypes.bool,
+
+    // Refill history
+    refillHistory: PropTypes.arrayOf(
+      PropTypes.shape({
+        number: PropTypes.string,
+        operator: PropTypes.string
+      })
+    )
+  };
+
   static defaultProps = {
+    defaultNumber: '',
     userAccountBalance: Number.POSITIVE_INFINITY,
+    userEmail: null,
+
+    paymentButtons: [],
+    showBTCAddress: false,
+    billingCurrency: 'XBT',
     requireAccountBalance: false,
-    billingCurrency: 'XBT'
+
+    sendEmail: true,
+    sendSMS: true,
+
+    showInstructions: true,
+    showLogo: true,
+    showPoweredBy: false,
+    showTerms: true,
+
+    refillHistory: []
   };
 
   componentDidMount() {
@@ -86,28 +139,24 @@ class AirfillWidget extends Component {
     return (
       <MemoryRouter>
         <Root className={this.props.className}>
-          <Route
-            render={({ location }) => {
-              console.log('Changing to route', location.pathname);
-              return null;
-            }}
-          />
           <Card>
             <SpinnerWhileLoading hasLoaded={!!this.props.inventory.result}>
-              <Header branded />
+              <Header branded={config.showLogo} />
               <Country />
               <Providers />
               <Amount config={config} />
               <Details config={config} />
               <Order config={config} />
-              <Route
-                path="/"
-                exact
-                render={() => <Instructions config={config} />}
-              />
+              {config.showInstructions && (
+                <Route
+                  path="/"
+                  exact
+                  render={() => <Instructions config={config} />}
+                />
+              )}
             </SpinnerWhileLoading>
           </Card>
-          <Footer branded />
+          <Footer showTerms={config.showTerms} branded={config.showPoweredBy} />
         </Root>
       </MemoryRouter>
     );

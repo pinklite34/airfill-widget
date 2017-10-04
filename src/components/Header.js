@@ -18,13 +18,14 @@ const styles = {
     position: 'relative'
   }),
   logo: css({
-    cursor: 'pointer'
+    cursor: 'pointer',
+    marginBottom: 20
   })
 };
 
 const Header = ({ branded }) => (
   <div {...styles.container}>
-    <Route
+    {branded && <Route
       render={({ history }) => (
         <Logo
           fill="#fff"
@@ -33,7 +34,7 @@ const Header = ({ branded }) => (
           onClick={() => history.push('/')}
         />
       )}
-    />
+    />}
     <Route path="/" render={props => <Introduction branded={branded} {...props} />} exact />
   </div>
 );

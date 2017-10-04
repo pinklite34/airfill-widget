@@ -38,17 +38,18 @@ function AirfillWidget(ele, opt) {
   const {
     billingCurrency,
     defaultNumber,
-    userEmail,
+    userEmail: email,
     userAccountBalance,
     requireAccountBalance,
     sendEmail,
     sendSMS,
     refundAddress,
     paymentButtons,
-    showIntroduction,
-    showBTCAddress
+    showBTCAddress,
+    showLogo,
+    showInstructions
   } = options;
-  const orderOptions = { email: userEmail, sendEmail, sendSMS, refundAddress };
+  const orderOptions = { email, sendEmail, sendSMS, refundAddress };
 
   store = store || configureStore();
 
@@ -59,12 +60,13 @@ function AirfillWidget(ele, opt) {
         billingCurrency={billingCurrency}
         orderOptions={orderOptions}
         paymentButtons={paymentButtons}
-        showIntroduction={showIntroduction}
-        showTerms={true}
         showBTCAddress={showBTCAddress}
         defaultNumber={defaultNumber}
         accountBalance={userAccountBalance}
         requireAccountBalance={requireAccountBalance}
+        showInstructions={showInstructions}
+        showLogo={showLogo}
+        showPoweredBy={!showLogo}
       />
     </Provider>,
     element

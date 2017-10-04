@@ -13,7 +13,7 @@ const styles = {
     alignItems: 'center'
   }),
   head: css({
-    margin: '20px 0'
+    marginBottom: 20
   }),
   title: css({
     margin: 0,
