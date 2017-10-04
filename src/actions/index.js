@@ -1,7 +1,7 @@
-import {createAction} from 'redux-actions';
-import {createLoadAction} from '../lib/rest-helpers';
-import {fetch} from '../lib/api-client';
-import {parse, format} from 'libphonenumber-js';
+import { createAction } from 'redux-actions';
+import { createLoadAction } from '../lib/rest-helpers';
+import { fetch } from '../lib/api-client';
+import { parse, format } from 'libphonenumber-js';
 
 // import {refillNumberLookupIsLoadingSelector} from '../reducers/refill-widget';
 import {
@@ -12,7 +12,6 @@ import {
   selectCountry,
   selectOperator
 } from '../store';
-
 
 export const setStep = createAction('SET_STEP');
 export const setCountry = createAction('SET_COUNTRY');
@@ -29,10 +28,10 @@ export const loadInventory = createLoadAction({
 export const lookupLocation = () => (dispatch, getState) => {
   fetch('/lookup_country', {}).then(country => {
     if (country && !selectCountry(getState())) {
-      dispatch(setCountry(country.toUpperCase()))
+      dispatch(setCountry(country.toUpperCase()));
     }
-  })
-}
+  });
+};
 
 export const proccessOperatorPackages = response => {
   const { operator } = response;
@@ -48,10 +47,9 @@ export const proccessOperatorPackages = response => {
     // Try to pick a subset of reasonable packages for ranged operators
     if (operator.isRanged) {
       operator.packages = [0, 0.2, 0.4, 0.6, 0.8, 1]
-        .map(pos =>
-          operator.packages[
-            Math.round((operator.packages.length - 1) * pos)
-          ]
+        .map(
+          pos =>
+            operator.packages[Math.round((operator.packages.length - 1) * pos)]
         )
         .reduce((mem, pack) => {
           if (!mem.length || mem[mem.length - 1] !== pack) {
@@ -65,7 +63,6 @@ export const proccessOperatorPackages = response => {
     operator.packages.forEach(item => {
       item.btcPrice = Math.ceil(item.satoshiPrice / 100) / 1000000;
     });
-
   } else {
     throw response.message || 'Unknown error';
   }
@@ -78,10 +75,12 @@ const loadOperator = createLoadAction({
   responseTransform: proccessOperatorPackages
 });
 
-export const setOperator = (operatorSlug) => (dispatch, getState) => {
+export const setOperator = operatorSlug => (dispatch, getState) => {
   dispatch(setAmount(''));
-  return dispatch(loadOperator({operatorSlug, uri: `/inventory/${operatorSlug}`}))
-}
+  return dispatch(
+    loadOperator({ operatorSlug, uri: `/inventory/${operatorSlug}` })
+  );
+};
 
 const loadNumberLookup = createLoadAction({
   name: 'airfillWidget.operator',
@@ -89,7 +88,7 @@ const loadNumberLookup = createLoadAction({
   responseTransform: proccessOperatorPackages
 });
 
-export const lookupNumber = (number) => (dispatch) => {
+export const lookupNumber = number => dispatch => {
   const options = {
     query: { number }
   };
@@ -103,7 +102,7 @@ const postOrder = createLoadAction({
   uri: '/order'
 });
 
-export const createOrder = (orderOptions) => (dispatch, getState) => {
+export const createOrder = orderOptions => (dispatch, getState) => {
   const state = getState();
   const number = selectNumber(state);
   const amount = selectAmount(state);
@@ -125,22 +124,30 @@ export const createOrder = (orderOptions) => (dispatch, getState) => {
     return Promise.reject();
   }
 
-  return dispatch(postOrder(options))
+  return dispatch(postOrder(options));
 };
-
 
 const fetchOrder = createLoadAction('airfillWidget.order');
 export const updateOrderStatus = () => (dispatch, getState) => {
   const order = selectOrder(getState());
-  if (order && order.result && order.result.id && order.result.payment && order.result.payment.address) {
+  if (
+    order &&
+    order.result &&
+    order.result.id &&
+    order.result.payment &&
+    order.result.payment.address
+  ) {
     dispatch(
       fetchOrder({
-        uri: `/order/${order.result.id}?incoming_btc_address=${encodeURIComponent(order.result.payment.address)}`,
+        uri: `/order/${order.result
+          .id}?incoming_btc_address=${encodeURIComponent(
+          order.result.payment.address
+        )}`,
         silent: true
       })
-    )
+    );
   }
-}
+};
 
 const prefillNumber = number => (dispatch, getState) => {
   let parsedNumber;
@@ -151,23 +158,19 @@ const prefillNumber = number => (dispatch, getState) => {
   if (parsedNumber && parsedNumber.country) {
     // Set country and number
     dispatch(setCountry(parsedNumber.country));
-    dispatch(setNumber(format(parsedNumber,  'International')));
+    dispatch(setNumber(format(parsedNumber, 'International')));
   } else {
     // Set only number
     dispatch(setNumber(number));
   }
-}
+};
 
 export const init = options => (dispatch, getState) => {
   const inventoryPromise = dispatch(loadInventory());
   dispatch(updateOrderStatus());
 
-  const { defaultNumber, defaultEmail } = options;
+  const { defaultNumber } = options;
   const state = getState();
-
-  if (!selectValidEmail(state) && defaultEmail) {
-    dispatch(setEmail(defaultEmail))
-  }
 
   const number = selectNumber(state);
 
@@ -179,7 +182,7 @@ export const init = options => (dispatch, getState) => {
   } else if (!number) {
     dispatch(lookupLocation());
   }
-}
+};
 
 export const useRecentRefill = recentRefill => dispatch => {
   dispatch(prefillNumber(recentRefill.number));
@@ -189,6 +192,7 @@ export const useRecentRefill = recentRefill => dispatch => {
   } else {
     dispatch(lookupNumber(recentRefill.number)).then(
       () => dispatch(setStep(3)),
-      () => dispatch(setStep(2)));
+      () => dispatch(setStep(2))
+    );
   }
-}
+};

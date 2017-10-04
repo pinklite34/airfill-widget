@@ -1,6 +1,7 @@
-import {parse, format} from 'libphonenumber-js';
-import {REHYDRATE} from 'redux-persist/constants';
-import {selectCountry} from './inventory';
+import { parse, format } from 'libphonenumber-js';
+import { REHYDRATE } from 'redux-persist/constants';
+import { selectCountry } from './inventory';
+import { isValidEmail } from '../lib/email-validation';
 
 const initialState = {
   currentStep: 1,
@@ -10,7 +11,7 @@ const initialState = {
   email: { value: '', valid: false, error: false }
 };
 
-export default (state=initialState, {type, payload}) => {
+export default (state = initialState, { type, payload }) => {
   switch (type) {
     case REHYDRATE: {
       const data = payload.airfillWidget && selectUiState(payload);
@@ -35,7 +36,7 @@ export default (state=initialState, {type, payload}) => {
 
     case 'SET_EMAIL': {
       const { value, inFocus } = payload;
-      const valid = !!value.match(/.+@.+\..+/);
+      const valid = isValidEmail(value);
 
       // Only update error value if inFocus and valid,
       // otherwise hold of the error until blur
@@ -68,15 +69,15 @@ export const selectNumber = state => {
   try {
     parsedNumber = parse(number, country && country.alpha2);
     if (parsedNumber && parsedNumber.country) {
-      return format(parsedNumber,  'International');
+      return format(parsedNumber, 'International');
     }
   } catch (e) {}
 
   return number;
-}
+};
 
 export const selectEmail = state => selectUiState(state).email;
 export const selectValidEmail = state => {
   const email = selectEmail(state);
   return email && email.valid ? email.value : null;
-}
+};

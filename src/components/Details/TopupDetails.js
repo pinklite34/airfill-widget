@@ -5,6 +5,7 @@ import { Button } from 'react-toolbox/lib/button';
 
 import { createOrder, setNumber, setEmail } from '../../actions';
 import { selectNumber, selectEmail, selectAmount } from '../../store';
+import { isValidEmail } from '../../lib/email-validation';
 
 import { Input } from 'react-toolbox/lib/input';
 import { ProgressBar } from 'react-toolbox/lib/progress_bar';
@@ -67,7 +68,6 @@ const styles = {
 class TopupDetails extends Component {
   state = {
     error: null,
-    showEmail: true,
     isLoading: false
   };
 
@@ -89,20 +89,10 @@ class TopupDetails extends Component {
   isComplete = () =>
     this.props.amount && this.props.number && this.props.email.valid;
 
-  componentDidMount() {
-    const showEmail = !(
-      this.props.email.valid &&
-      this.props.email.value === this.props.config.orderOptions.email
-    );
-
-    this.setState({
-      showEmail
-    });
-  }
-
   render() {
     const { number, email } = this.props;
-    const { showEmail, error, isLoading } = this.state;
+    const { error, isLoading } = this.state;
+    const showEmail = !isValidEmail(this.props.config.orderOptions.email);
 
     return (
       <div {...styles.container}>

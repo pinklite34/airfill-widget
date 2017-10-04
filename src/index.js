@@ -3,7 +3,6 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router';
 
 import Widget from './components/Widget';
 import { client } from './lib/api-client';
@@ -55,20 +54,18 @@ function AirfillWidget(ele, opt) {
 
   render(
     <Provider store={store}>
-      <MemoryRouter>
-        <Widget
-          className="refill-widget-root standalone"
-          billingCurrency={billingCurrency}
-          orderOptions={orderOptions}
-          paymentButtons={paymentButtons}
-          showIntroduction={showIntroduction}
-          showTerms={true}
-          showBTCAddress={showBTCAddress}
-          defaultNumber={defaultNumber}
-          accountBalance={userAccountBalance}
-          requireAccountBalance={requireAccountBalance}
-        />
-      </MemoryRouter>
+      <Widget
+        className="refill-widget-root standalone"
+        billingCurrency={billingCurrency}
+        orderOptions={orderOptions}
+        paymentButtons={paymentButtons}
+        showIntroduction={showIntroduction}
+        showTerms={true}
+        showBTCAddress={showBTCAddress}
+        defaultNumber={defaultNumber}
+        accountBalance={userAccountBalance}
+        requireAccountBalance={requireAccountBalance}
+      />
     </Provider>,
     element
   );

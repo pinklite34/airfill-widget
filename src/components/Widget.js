@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route, withRouter } from 'react-router';
+import { MemoryRouter, Route } from 'react-router';
 
 import { Card } from 'react-toolbox/lib/card';
 
@@ -84,42 +84,42 @@ class AirfillWidget extends Component {
     const config = this.props;
 
     return (
-      <Root className={this.props.className}>
-        <Route
-          render={({ location }) => {
-            console.log('Changing to route', location.pathname);
-            return null;
-          }}
-        />
-        <Card>
-          <SpinnerWhileLoading hasLoaded={!!this.props.inventory.result}>
-            <Header branded />
-            <Country />
-            <Providers />
-            <Amount config={config} />
-            <Details config={config} />
-            <Order config={config} />
-            <Route
-              path="/"
-              exact
-              render={() => <Instructions config={config} />}
-            />
-          </SpinnerWhileLoading>
-        </Card>
-        <Footer branded />
-      </Root>
+      <MemoryRouter>
+        <Root className={this.props.className}>
+          <Route
+            render={({ location }) => {
+              console.log('Changing to route', location.pathname);
+              return null;
+            }}
+          />
+          <Card>
+            <SpinnerWhileLoading hasLoaded={!!this.props.inventory.result}>
+              <Header branded />
+              <Country />
+              <Providers />
+              <Amount config={config} />
+              <Details config={config} />
+              <Order config={config} />
+              <Route
+                path="/"
+                exact
+                render={() => <Instructions config={config} />}
+              />
+            </SpinnerWhileLoading>
+          </Card>
+          <Footer branded />
+        </Root>
+      </MemoryRouter>
     );
   }
 }
 
-export default withRouter(
-  connect(
-    state => ({
-      // recentNumbers: selectRecentNumbers(state)
-      inventory: selectInventory(state)
-    }),
-    {
-      init
-    }
-  )(AirfillWidget)
-);
+export default connect(
+  state => ({
+    // recentNumbers: selectRecentNumbers(state)
+    inventory: selectInventory(state)
+  }),
+  {
+    init
+  }
+)(AirfillWidget);
