@@ -48,7 +48,7 @@ class AirfillWidget extends Component {
     showInstructions: PropTypes.bool,
     showLogo: PropTypes.bool,
     showPoweredBy: PropTypes.bool,
-    showTerms: PropTypes.bool,
+    showFooter: PropTypes.bool,
 
     // Refill history
     refillHistory: PropTypes.arrayOf(
@@ -75,7 +75,7 @@ class AirfillWidget extends Component {
     showInstructions: true,
     showLogo: true,
     showPoweredBy: false,
-    showTerms: true,
+    showFooter: true,
 
     refillHistory: []
   };
@@ -156,7 +156,7 @@ class AirfillWidget extends Component {
               )}
             </SpinnerWhileLoading>
           </Card>
-          <Footer showTerms={config.showTerms} branded={config.showPoweredBy} />
+          {config.showFooter && <Footer branded={config.showPoweredBy} />}
         </Root>
       </MemoryRouter>
     );
