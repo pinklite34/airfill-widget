@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router';
+import { css } from 'glamor';
 
 import { Card } from 'react-toolbox/lib/card';
+import { ProgressBar } from 'react-toolbox/lib/progress_bar';
 
 import { init } from '../actions';
 import { selectInventory } from '../store';
 
-import SpinnerWhileLoading from './UI/SpinnerWhileLoading';
 import Root from './UI/Root';
 
 import Header from './Header';
@@ -135,12 +136,13 @@ class AirfillWidget extends Component {
 
   render() {
     const config = this.props;
+    const hasLoaded = !!this.props.inventory.result;
 
     return (
       <MemoryRouter>
         <Root className={this.props.className}>
-          <Card>
-            <SpinnerWhileLoading hasLoaded={!!this.props.inventory.result}>
+          {hasLoaded ? (
+            <Card>
               <Header branded={config.showLogo} />
               <Country />
               <Providers />
@@ -154,8 +156,19 @@ class AirfillWidget extends Component {
                   render={() => <Instructions config={config} />}
                 />
               )}
-            </SpinnerWhileLoading>
-          </Card>
+            </Card>
+          ) : (
+            <Card>
+              <div {...css({
+                display: 'flex',
+                justifyContent: 'center',
+                margin: 64
+              })}>
+                <ProgressBar type="circular" />
+              </div>
+            </Card>
+          )}
+
           {config.showFooter && <Footer branded={config.showPoweredBy} />}
         </Root>
       </MemoryRouter>

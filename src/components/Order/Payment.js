@@ -2,10 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { css } from 'glamor';
 
+import { ProgressBar } from 'react-toolbox/lib/progress_bar';
+
 import PusherSubscription from '../PusherSubscription';
 
 import ActiveSection from '../UI/ActiveSection';
-import Spinner from '../UI/Spinner';
 
 import NewPayment from './NewPayment';
 import PaymentDetected from './PaymentDetected';
@@ -50,6 +51,15 @@ const componentForStatus = status => {
 const styles = {
   title: css({
     margin: 0
+  }),
+  spinner: css({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    margin: 64
+  }),
+  spinnerText: css({
+    marginTop: 16
   })
 };
 
@@ -71,7 +81,12 @@ const Payment = ({
   updatePaymentStatus
 }) => {
   if (!order.result) {
-    return <Spinner>Loading order status</Spinner>;
+    return (
+      <div {...styles.spinner}>
+        <ProgressBar type="circular" />
+        <div {...styles.spinnerText}>Loading order status...</div>
+      </div>
+    );
   }
 
   const PaymentComponent = componentForStatus(paymentStatus.status);

@@ -1,72 +1,39 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import styled from 'styled-components';
-import Spinner from './Spinner';
+import { css } from 'glamor';
+import { ProgressBar } from 'react-toolbox/lib/progress_bar';
 
-const Step = styled.h3`
-  display: flex;
-  opacity: 0.6;
+import Check from './check.svg';
+import Error from './error.svg';
 
-  & + & {
-    margin-top: 12px;
-  }
-  &:last-of-type {
-    opacity: 1;
-  }
-  strong, a {
-    display: block;
-  }
-`
-
-const StepSymbol = styled.span`
-  display: flex;
-  height: 19px;
-  width: 16px;
-  margin-bottom: -19px;
-  padding: 0;
-  position: relative;
-  left: -24px;
-  margin-right: -16px;
-  align-items: center;
-  justify-content: center;
-
-  @media(max-width: 480px) {
-    left: -2px;
-    margin-right: 6px;
-  }
-`
-
-const DoneSymbol = styled(StepSymbol)`
-  color: #98AE0A;
-`
-DoneSymbol.defaultProps = { children: '✓ '}
-
-const ErrorSymbol = styled(StepSymbol)`
-  color: #E1283C;
-`
-ErrorSymbol.defaultProps = { children: 'X '}
-
-const SpinnerSymbol = styled(Spinner)`
-  flex: 0;
-  margin-right: 0px;
-  margin-left: -32px;
-
-  > * { font-size: 16px; }
-
-  @media(max-width: 480px) {
-    margin-left: -10px;
-  }
-`
+const styles = {
+  container: css({
+    display: 'flex',
+    opacity: 0.6,
+    '& + &': {
+      marginTop: 12
+    },
+    '&:last-of-type': {
+      opacity: 1
+    },
+    alignItems: 'center'
+  }),
+  icon: css({
+    height: '19px !important',
+    width: '19px !important',
+    marginRight: 8
+  })
+}
 
 const OrderStep = ({children, done, error}) => {
   return (
-    <Step>
-      {error ? <ErrorSymbol /> :
-        done ? <DoneSymbol /> :
-        <SpinnerSymbol hideText inline />
+    <h3 {...styles.container}>
+      {error ? <Error fill="#E1283C" {...styles.icon} /> :
+        done ? <Check fill="#98AE0A" {...styles.icon} /> :
+        <ProgressBar type="circular" className={`${styles.icon}`} />
       }
       {children}
-    </Step>
+    </h3>
   );
 };
 

@@ -20,9 +20,9 @@ import 'react-phone-number-input/style.css';
 
 const styles = {
   container: css({
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: '',
+    display: 'flex !important',
+    flexDirection: 'row !important',
+    alignItems: 'stretch',
     maxWidth: '400px'
   }),
   button: css({
