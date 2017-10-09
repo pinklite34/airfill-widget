@@ -16,13 +16,16 @@ const styles = {
 
 class SelectCountry extends Component {
   render() {
-    const { countries, selected, setCountry } = this.props;
+    const { countries, selected, setCountry, onChange } = this.props;
     return (
       <select
         {...styles.select}
         value={selected}
         ref={n => (this.select = n)}
-        onChange={event => setCountry(event.target.value)}
+        onChange={event => {
+          setCountry(event.target.value);
+          onChange && onChange(event.target.value);
+        }}
       >
         {countries.map(country => (
           <option value={country.alpha2} key={country.alpha2}>

@@ -14,12 +14,14 @@ const styles = {
   })
 };
 
-const Collapsed = ({ country, prefix, darken }) => {
+const Collapsed = ({ home, country, prefix, darken, history }) => {
   if (country) {
     return (
       <CollapsedSection hideButton darken={darken}>
-        {prefix} <strong {...styles.strong}>
-          <SelectCountry />
+        {home && 'Services in'} <strong {...styles.strong}>
+          <SelectCountry
+            onChange={() => !home && history.push('/selectProvider')}
+          />
           {country.name}
         </strong>
       </CollapsedSection>

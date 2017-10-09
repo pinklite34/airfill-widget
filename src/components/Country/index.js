@@ -4,7 +4,7 @@ import Collapsed from './Collapsed';
 
 const Country = () => (
   <Switch>
-    <Route path="/" exact render={() => <Collapsed prefix="Services in" />} />
+    <Route path="/" exact render={props => <Collapsed home {...props} />} />
     <Route path="/selectProvider" component={Collapsed} />
     <Route path="/selectAmount" render={props => <Collapsed darken={1} {...props} />} />
     <Route render={props => <Collapsed darken={2} {...props} />} />
