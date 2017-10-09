@@ -8,3 +8,6 @@ export const getPriceKey = currency =>
 
 // Return price for specified currency
 export const getPrice = (pkg, currency) => pkg[getPriceKey(currency)];
+
+// Convert Satoshi to Bitcoins
+export const satoshiToBTC = amount => Math.ceil(amount / 100) / 1000000;
