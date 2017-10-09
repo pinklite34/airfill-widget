@@ -89,7 +89,7 @@ class Picker extends Component {
         <RadioGroup
           value={String(amount)}
           onChange={setAmount}
-          className={`${styles.packages}`}
+          className={`${styles.packages} amount-picker`}
         >
           {operator.result.packages.map((pkg, i) => {
             const price = getPrice(pkg, billingCurrency);

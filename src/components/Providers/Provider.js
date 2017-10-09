@@ -50,7 +50,7 @@ const Provider = ({ data, onSelect }) => (
     <div {...styles.logoWrapper}>
       <img src={data.logoImage} alt={data.name} {...styles.logo} />
     </div>
-    <div>{data.name}</div>
+    <div data-package-slug={data.slug}>{data.name}</div>
   </Card>
 );
 
