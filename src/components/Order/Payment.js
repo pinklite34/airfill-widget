@@ -118,6 +118,7 @@ const Payment = ({
         refundAddress={refundAddress}
         billingCurrency={billingCurrency}
         number={number}
+        onReset={() => history.push('/')}
       />
     </ActiveSection>
   );
