@@ -54,10 +54,10 @@ const styles = {
             display: 'block'
           }
         },
-        '& button.rrui__select__selected': {
+        '& button.rrui__select__button': {
           border: 'none !important',
           padding: '16px',
-          '& .rrui__select__selected-label': {
+          '& .rrui__select__button-label': {
             display: 'flex',
             justifyContent: 'center',
             height: '16px'
