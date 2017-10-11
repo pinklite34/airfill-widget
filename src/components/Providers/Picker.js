@@ -2,7 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { setOperator } from '../../actions';
-import { selectAvailableOperators, selectSelectedOperator } from '../../store';
+import {
+  selectAvailableOperators,
+  selectSelectedOperator,
+  selectCountry
+} from '../../store';
 
 import ActiveSection from '../UI/ActiveSection';
 import Grid from './Grid';
@@ -57,7 +61,8 @@ const Picker = ({
 export default connect(
   state => ({
     operators: selectAvailableOperators(state),
-    selectedOperator: selectSelectedOperator(state)
+    selectedOperator: selectSelectedOperator(state),
+    country: selectCountry(state)
   }),
   {
     setOperator

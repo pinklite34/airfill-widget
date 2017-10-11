@@ -66,24 +66,24 @@ export const selectCountry = state => {
 export const selectCountryCode = state =>
   state.airfillWidget.inventory.selectedCountry || null;
 
-const empty = { Mobile: [] };
 export const selectAvailableOperators = state => {
   const country = selectCountry(state);
   if (!country) {
-    return empty;
+    return null;
   }
 
-  return toArray(country.operators)
-    .sort(sortBy('name'))
-    .reduce(
-      (mem, operator) => {
-        const type = operator.type || 'Mobile';
-        mem[type] = mem[type] || [];
-        mem[type].push(operator);
-        return mem;
-      },
-      { Mobile: [] }
-    );
+  const operators = toArray(country.operators);
+
+  if (!operators) {
+    return null;
+  }
+
+  return operators.sort(sortBy('name')).reduce((mem, operator) => {
+    const type = operator.type || 'Mobile';
+    mem[type] = mem[type] || [];
+    mem[type].push(operator);
+    return mem;
+  }, {});
 };
 
 export const selectSelectedOperator = state => {

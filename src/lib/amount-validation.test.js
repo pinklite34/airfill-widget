@@ -1,5 +1,5 @@
 import React from 'react';
-import { selectValidAmount } from './index';
+import { selectValidAmount } from './amount-validation';
 
 const props = {
   amount: 0,

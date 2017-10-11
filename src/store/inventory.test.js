@@ -130,7 +130,7 @@ describe('selectors', () => {
         airfillWidget: { inventory: { ...baseState.airfillWidget.inventory, selectedCountry: null}}
       };
 
-      const expected = { Mobile: [] };
+      const expected = null;
 
       expect(selectAvailableOperators(state)).toEqual(expected);
     });

@@ -13,6 +13,8 @@ import {
 import { setCountry, setNumber } from '../../actions';
 
 import Phone from 'react-phone-number-input';
+import SelectCountry from './SelectCountry';
+
 import Check from './check.svg';
 
 import 'react-phone-number-input/rrui.css';
@@ -22,8 +24,14 @@ const styles = {
   container: css({
     display: 'flex !important',
     flexDirection: 'row !important',
+    justifyContent: 'space-around',
     alignItems: 'stretch',
-    maxWidth: '400px'
+    maxWidth: '400px',
+    color: '#444'
+  }),
+  selectCountry: css({
+    position: 'relative',
+    textDecoration: 'underline'
   }),
   button: css({
     backgroundColor: '#F0F6FA !important',
@@ -101,28 +109,42 @@ const NumberInput = ({
   if (!countryList.length) {
     return null;
   }
-  return (
-    <Card {...styles.container}>
-      <Phone
-        placeholder="Enter a phone number"
-        onChange={setNumber}
-        value={number}
-        className={`${styles.phone}`}
-        country={country}
-        countries={countryList.map(c => c.alpha2)}
-        dictionary={nonIsoCountries}
-        onCountryChange={setCountry}
-        nativeExpanded
-      />
-      <Button disabled={loading} {...styles.button} onClick={onSubmit}>
-        {loading ? (
-          <ProgressBar type="circular" className={`${styles.progressBar}`} />
-        ) : (
-          <Check />
-        )}
-      </Button>
-    </Card>
-  );
+
+  if (countryList.find(c => c.alpha2 === country)) {
+    return (
+      <Card {...styles.container}>
+        <Phone
+          placeholder="Enter a phone number"
+          onChange={setNumber}
+          value={number}
+          className={`${styles.phone}`}
+          country={country}
+          countries={countryList.map(c => c.alpha2)}
+          dictionary={nonIsoCountries}
+          onCountryChange={setCountry}
+          nativeExpanded
+        />
+        <Button disabled={loading} {...styles.button} onClick={onSubmit}>
+          {loading ? (
+            <ProgressBar type="circular" className={`${styles.progressBar}`} />
+          ) : (
+            <Check />
+          )}
+        </Button>
+      </Card>
+    );
+  } else {
+    return (
+      <Card {...styles.container}>
+        <div>
+          <p {...styles.selectCountry}>
+            <SelectCountry />
+            <strong>Select country</strong>
+          </p>
+        </div>
+      </Card>
+    );
+  }
 };
 
 export default connect(
