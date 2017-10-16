@@ -46,4 +46,8 @@ const style = css({
   }
 });
 
-export default ({ children }) => <div {...style}>{children}</div>;
+export default ({ children, className }) => (
+  <div className={className} {...style}>
+    {children}
+  </div>
+);
