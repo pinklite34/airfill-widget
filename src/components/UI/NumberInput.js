@@ -31,7 +31,8 @@ const styles = {
   }),
   selectCountry: css({
     position: 'relative',
-    textDecoration: 'underline'
+    textDecoration: 'underline',
+    margin: 16
   }),
   button: css({
     backgroundColor: '#F0F6FA !important',

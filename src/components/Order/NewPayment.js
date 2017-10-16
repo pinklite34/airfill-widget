@@ -36,11 +36,7 @@ const styles = {
     margin: '0 32px',
 
     '&:first-child': {
-      marginLeft: 0,
       '&:after, &:before': { display: 'none' }
-    },
-    '&:last-child': {
-      marginRight: 0
     },
 
     '&:before': {
@@ -70,7 +66,13 @@ const styles = {
     margin: -8
   }),
   button: css({
-    margin: 8
+    margin: 8,
+    '&:first-child': {
+      marginLeft: 0
+    },
+    '&:last-child': {
+      marginRight: 0
+    }
   })
 };
 
@@ -110,9 +112,9 @@ const NewPayment = ({
         <dd>
           {formatDisplayValue(operator && operator.type, number, country)}
         </dd>
-        {showEmailField ? (
-          [<dt key="0">Email address</dt>, <dd key="1">{order.email}</dd>]
-        ) : null}
+        {showEmailField
+          ? [<dt key="0">Email address</dt>, <dd key="1">{order.email}</dd>]
+          : null}
         <dt>Price</dt>
         <dd>{formattedPrice}</dd>
         <dt>Order ID</dt>

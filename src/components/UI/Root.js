@@ -9,8 +9,9 @@ const style = css({
   boxSizing: 'border-box',
   padding: 0,
   margin: 0,
+  maxWidth: 736,
 
-  a: {
+  '& a': {
     '-webkit-text-decoration-skip': 'objects'
   },
   /**
@@ -18,19 +19,19 @@ const style = css({
    * in all browsers (opinionated).
    */
 
-  'a:active, a:hover': {
+  '& a:active, & a:hover': {
     outlineWidth: 0
   },
   /**
    * Add the correct font size in all browsers.
    */
-  small: {
+  '& small': {
     fontSize: '80%'
   },
   /**
    * Remove the border on images inside links in IE 10-.
    */
-  img: {
+  '& img': {
     borderStyle: 'none'
   },
 
