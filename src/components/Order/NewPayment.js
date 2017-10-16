@@ -66,13 +66,7 @@ const styles = {
     margin: -8
   }),
   button: css({
-    margin: 8,
-    '&:first-child': {
-      marginLeft: 0
-    },
-    '&:last-child': {
-      marginRight: 0
-    }
+    margin: 8
   })
 };
 
