@@ -22,7 +22,9 @@ const styles = {
     marginRight: 20
   }),
   button: css({
-    width: 250
+    width: 220,
+    marginRight: 8,
+    marginTop: 8
   }),
   content: css({
     flex: '0 1 auto'
@@ -32,7 +34,7 @@ const styles = {
   })
 };
 
-const SuggestedOperator = ({ operator, onSelect }) => (
+const SuggestedOperator = ({ operator, onAccept, onReject }) => (
   <div {...styles.container}>
     <img src={operator.logoImage} alt={operator.name} {...styles.logo} />
     <div {...styles.content}>
@@ -40,8 +42,11 @@ const SuggestedOperator = ({ operator, onSelect }) => (
         We've detected <strong>{operator.name}</strong> as your operator. If
         this is not correct, please select another operator below.
       </p>
-      <Button primary raised onClick={onSelect} {...styles.button}>
+      <Button primary raised onClick={onAccept} {...styles.button}>
         Yes, this is my operator
+      </Button>
+      <Button raised onClick={onReject} {...styles.button}>
+        No, it's not correct
       </Button>
     </div>
   </div>

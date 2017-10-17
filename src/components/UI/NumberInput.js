@@ -29,10 +29,16 @@ const styles = {
     maxWidth: '400px',
     color: '#444'
   }),
-  selectCountry: css({
+  noCountry: css({
     position: 'relative',
     textDecoration: 'underline',
-    margin: 16
+    padding: 16,
+    width: '100%',
+    '& select': {
+      left: 0,
+      top: 0,
+      cursor: 'pointer'
+    }
   }),
   button: css({
     backgroundColor: '#F0F6FA !important',
@@ -111,7 +117,7 @@ const NumberInput = ({
     return null;
   }
 
-  if (countryList.find(c => c.alpha2 === country)) {
+  if (!country || countryList.find(c => c.alpha2 === country)) {
     return (
       <Card {...styles.container}>
         <Phone
@@ -137,11 +143,9 @@ const NumberInput = ({
   } else {
     return (
       <Card {...styles.container}>
-        <div>
-          <p {...styles.selectCountry}>
-            <SelectCountry />
-            <strong>Select country</strong>
-          </p>
+        <div {...styles.noCountry}>
+          <SelectCountry />
+          <strong>Select country</strong>
         </div>
       </Card>
     );

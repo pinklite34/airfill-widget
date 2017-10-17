@@ -5,7 +5,7 @@ import { setOperator } from '../../actions';
 import {
   selectAvailableOperators,
   selectSelectedOperator,
-  selectCountry
+  selectCountryCode
 } from '../../store';
 
 import ActiveSection from '../UI/ActiveSection';
@@ -22,12 +22,19 @@ const Picker = ({
   setOperator,
   history,
   location,
-  selectedOperator
+  selectedOperator,
+  countryCode
 }) => {
-  if (!operators) {
+  if (!countryCode) {
     return (
       <ActiveSection>
-        Your country is not yet supported in Bitrefill.
+        Select a country to see available providers.
+      </ActiveSection>
+    )
+  } else if (!operators) {
+    return (
+      <ActiveSection>
+        Your country ({countryCode}) is not yet supported in Bitrefill.
       </ActiveSection>
     );
   }
@@ -40,7 +47,8 @@ const Picker = ({
       state.suggested && (
         <SuggestedOperator
           operator={selectedOperator}
-          onSelect={() => history.push('/selectAmount')}
+          onAccept={() => history.push('/selectAmount')}
+          onReject={() => history.replace('/selectProvider')}
         />
       )}
       {Object.keys(operators).map(key => (
@@ -62,7 +70,7 @@ export default connect(
   state => ({
     operators: selectAvailableOperators(state),
     selectedOperator: selectSelectedOperator(state),
-    country: selectCountry(state)
+    countryCode: selectCountryCode(state)
   }),
   {
     setOperator

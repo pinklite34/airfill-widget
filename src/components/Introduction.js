@@ -34,6 +34,20 @@ const styles = {
     width: 300,
     lineHeight: 1.5,
     fontWeight: 500
+  }),
+  error: css({
+    fontSize: 14,
+    backgroundColor: 'rgba(255,255,255,0.8)',
+    padding: 8,
+    color: '#333',
+    width: '100%',
+    maxWidth: 400,
+    lineHeight: 1.5,
+    boxShadow: '0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)',
+    borderRadius: '0 0 2px 2px',
+    marginTop: -2,
+    position: 'relative',
+    zIndex: -1
   })
 };
 
@@ -85,7 +99,7 @@ class Introduction extends Component {
           onSubmit={this.lookupNumber}
         />
         {error ? (
-          <div {...styles.error}>{error.message}</div>
+          <div {...styles.error}>The number lookup failed with the error: {error.message || error}</div>
         ) : (
           <div {...styles.description}>
             Enter a phone number to see available services or select a provider

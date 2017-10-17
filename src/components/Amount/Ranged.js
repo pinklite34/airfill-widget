@@ -12,34 +12,42 @@ const styles = {
     marginTop: 16
   }),
   row: css({
-    display: 'flex',
     backgroundColor: '#fff',
     margin: '0 -16px',
     borderTop: '1px solid rgba(0,0,0,0.08)',
     borderBottom: '1px solid rgba(0,0,0,0.08)',
-    padding: '8px 16px',
-    alignItems: 'center'
+    padding: '8px 16px'
+  }),
+  field: css({
+    display: 'flex',
+    flexDirection: 'row'
   }),
   input: css({
-    width: 160,
     display: 'inline-block',
-    '& > div': {
-      padding: 0
-    }
+    width: 120,
+    padding: '0 !important'
   }),
   label: css({
     position: 'relative',
     display: 'inline-block',
-    width: 40,
-    left: -40,
-    marginRight: -40,
-    backgroundColor: '#FAFAFA',
+    width: 48,
+    left: -48,
+    marginRight: -48,
+    backgroundColor: '#FFF',
     color: '#777',
-    padding: 4
+    padding: '4px 12px 4px 0',
+    textAlign: 'right'
   }),
   meta: css({
-    marginLeft: 8,
+    color: 'rgba(0,0,0,0.8)',
+    marginTop: 8,
     fontSize: 12
+  }),
+  cost: css({
+    display: 'flex',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.08)',
+    padding: '0 12px'
   })
 };
 
@@ -56,7 +64,7 @@ const Ranged = ({ amount, range, currency, billingCurrency, onChange }) => {
       <SectionTitle>...or select custom amount</SectionTitle>
       <div {...styles.row}>
         <div {...styles.field}>
-          <div {...styles.input}>
+          <div>
             <Input
               type="number"
               min={min}
@@ -68,20 +76,22 @@ const Ranged = ({ amount, range, currency, billingCurrency, onChange }) => {
                 amount > range.max
                   ? onChange(range.max)
                   : amount < range.min ? onChange(range.min) : null}
+              className={`${styles.input}`}
             />
+            <label {...styles.label} htmlFor="custom_amount">
+              {currency}
+            </label>
           </div>
-          <label {...styles.label} htmlFor="custom_amount">
-            {currency}
-          </label>
+          <div {...styles.cost}>
+            <strong>
+              {displayableCost} {getDisplayName(billingCurrency)}
+            </strong>
+          </div>
         </div>
         <div {...styles.meta}>
           <div>
-            <strong>Min:</strong> {range.min} {currency}{' '}
-            <strong>Max:</strong> {range.max} {currency}
-          </div>
-          <div>
-            <strong>You pay:</strong> {displayableCost}{' '}
-            {getDisplayName(billingCurrency)}
+            <strong>Min:</strong> {range.min} {currency} <strong>Max:</strong>{' '}
+            {range.max} {currency}
           </div>
         </div>
       </div>
