@@ -57,7 +57,8 @@ const Ranged = ({ amount, range, currency, billingCurrency, onChange }) => {
   const step = range.step;
 
   const cost = amount * range.userPriceRate;
-  const displayableCost = billingCurrency === 'XBT' ? satoshiToBTC(cost) : cost;
+  const displayableCost =
+    billingCurrency === 'XBT' ? satoshiToBTC(cost) : cost.toFixed(2);
 
   return (
     <div {...styles.container}>
@@ -83,9 +84,12 @@ const Ranged = ({ amount, range, currency, billingCurrency, onChange }) => {
             </label>
           </div>
           <div {...styles.cost}>
-            <strong>
-              {displayableCost} {getDisplayName(billingCurrency)}
-            </strong>
+            <span>
+              You pay:{' '}
+              <strong>
+                {displayableCost} {getDisplayName(billingCurrency)}
+              </strong>
+            </span>
           </div>
         </div>
         <div {...styles.meta}>

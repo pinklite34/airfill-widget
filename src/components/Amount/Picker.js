@@ -7,13 +7,16 @@ import { setAmount, createOrder } from '../../actions';
 import { selectValidAmount } from '../../lib/amount-validation';
 import { getPrice, getDisplayName } from '../../lib/currency-helpers';
 
+import { Card } from 'react-toolbox/lib/card';
 import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
 import { ProgressBar } from 'react-toolbox/lib/progress_bar';
 
 import ActiveSection from '../UI/ActiveSection';
+import SectionTitle from '../UI/SectionTitle';
 
 import Package from './Package';
 import Ranged from './Ranged';
+import Info from './info.svg';
 
 const styles = {
   packages: css({
@@ -32,6 +35,21 @@ const styles = {
       '& > span': {
         paddingLeft: 24
       }
+    }
+  }),
+  operatorInfoContainer: css({
+    fontWeight: 500,
+    marginBottom: 16
+  }),
+  operatorInfo: css({
+    padding: 12,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    '& svg': {
+      marginRight: 8,
+      width: 32,
+      height: 32
     }
   })
 };
@@ -85,7 +103,18 @@ class Picker extends Component {
     } = config;
 
     return (
-      <ActiveSection title="Select amount">
+      <ActiveSection>
+        {operator.result.extraInfo && (
+          <Card className={`${styles.operatorInfoContainer}`}>
+            <div {...styles.operatorInfo}>
+              <Info fill="#555555" />
+              <div>{operator.result.extraInfo}</div>
+            </div>
+          </Card>
+        )}
+
+        <SectionTitle>Select amount</SectionTitle>
+
         <RadioGroup
           value={String(amount)}
           onChange={setAmount}
@@ -98,17 +127,18 @@ class Picker extends Component {
             const disabled =
               requireAccountBalance && price > userAccountBalance;
 
+            // Data packages should not have currency in the title
+            const name =
+              operator.result.type === 'data'
+                ? pkg.value
+                : `${pkg.value} ${operator.result.currency}`;
+
             return (
               <RadioButton
                 key={i}
                 disabled={disabled}
                 value={String(pkg.value)}
-                label={
-                  <Package
-                    name={`${pkg.value} ${operator.result.currency}`}
-                    price={formattedPrice}
-                  />
-                }
+                label={<Package name={name} price={formattedPrice} />}
               />
             );
           })}
