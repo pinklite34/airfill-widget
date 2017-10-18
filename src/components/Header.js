@@ -20,7 +20,7 @@ const styles = {
   logo: css({
     cursor: 'pointer',
     '& + div': {
-      marginTop: 20
+      marginTop: 16
     }
   })
 };

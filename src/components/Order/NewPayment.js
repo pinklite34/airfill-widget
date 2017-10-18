@@ -119,7 +119,7 @@ const NewPayment = ({
         {paymentButtons && (
           <div {...styles.paymentGroup} {...styles.buttonGroup}>
             {paymentButtons.map(
-              ({ title, requireAccountBalance, lowBalanceText, callback }) => {
+              ({ title, requireAccountBalance, lowBalanceText, callback }, i) => {
                 // disabled | canAfford | requireAccountBalance | widgetRequireAccountBalance
                 // true     | false     | undefined (!false)    | true
                 // true     | false     | true                  | true
@@ -140,6 +140,7 @@ const NewPayment = ({
                     key={title}
                     onClick={() => callback(order)}
                     disabled={disabled}
+                    primary={i === 0}
                   >
                     {title}
                   </Button>,

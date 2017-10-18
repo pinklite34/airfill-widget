@@ -88,52 +88,6 @@ class AirfillWidget extends Component {
     });
   }
 
-  // renderSteps() {
-  //   const {
-  //     // Config options
-  //     paymentButtons,
-  //     accountBalance=Number.POSITIVE_INFINITY,
-  //     requireAccountBalance=false,
-  //     showBTCAddress=this.props.billingCurrency === 'XBT',
-  //     billingCurrency='XBT',
-  //     orderOptions={},
-  //     refillHistory=null,
-  //     recentNumbers
-  //   } = this.props;
-
-  //   const showEmailField = !orderOptions.email || orderOptions.email.indexOf('@') < 1;
-
-  //   const history = refillHistory
-  //     ? refillHistory
-  //     : recentNumbers.length ? recentNumbers : null;
-
-  //   return steps.map(({component, options}, i) => {
-  //     const Component = component;
-  //     const step = i + 1;
-
-  //     if (currentStep < step) { return null; }
-
-  //     return <Component
-  //       key={step}
-  //       step={step}
-  //       expanded={currentStep===step}
-  //       showSummary={currentStep > step}
-  //       onContinue={()=>setStep(step + 1)}
-  //       onBack={()=>setStep(step)}
-  //       onReset={()=>setStep(1)}
-
-  //       paymentButtons={paymentButtons}
-  //       showBTCAddress={showBTCAddress}
-  //       orderOptions={orderOptions}
-  //       billingCurrency={billingCurrency}
-  //       accountBalance={accountBalance}
-  //       requireAccountBalance={requireAccountBalance}
-  //       showEmailField={showEmailField}
-  //       refillHistory={history}
-  //     />;
-  //   })
-  // }
-
   render() {
     const config = this.props;
     const hasLoaded = !!this.props.inventory.result;

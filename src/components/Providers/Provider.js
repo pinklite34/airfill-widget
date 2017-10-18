@@ -12,7 +12,6 @@ const styles = {
     margin: 6,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
     alignItems: 'center',
     textAlign: 'center',
     fontSize: 12,
@@ -25,7 +24,8 @@ const styles = {
     marginBottom: 6,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flex: '1 0 auto'
   }),
   logo: css({
     maxHeight: 42,
