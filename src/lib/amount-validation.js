@@ -1,3 +1,5 @@
+import { getDisplayName } from './currency-helpers';
+
 // Handle XBT
 export const getCostForAmount = (conversionRate, amount) =>
   Number(amount * conversionRate).toFixed(2);
@@ -6,10 +8,11 @@ const pickMiddlePackage = ({ packages }) => {
   const middle = Math.round((packages.length - 1) * 0.6);
   const pkg = packages[middle];
   return pkg ? String(pkg.value) : null;
-}
+};
 
 const pickAffordablePackage = ({ packages, amount, currency, maxCost }) => {
-  const costKey = currency.toLowerCase() + 'Price';
+  const costKey = getDisplayName(currency).toLowerCase() + 'Price';
+
   const isAffordable = pkg => pkg[costKey] <= maxCost;
 
   // Make sure user can afford the selected package
@@ -27,7 +30,7 @@ const pickAffordablePackage = ({ packages, amount, currency, maxCost }) => {
 
   // If there are no packages the user can afford, return the amount as is
   return amount;
-}
+};
 
 export const selectValidPackage = ({ packages, maxCost, currency, amount }) => {
   // If no amount is selected, pick a package in the middle
@@ -35,7 +38,7 @@ export const selectValidPackage = ({ packages, maxCost, currency, amount }) => {
 
   // Make sure user can afford the package
   return pickAffordablePackage({ packages, amount, maxCost, currency });
-}
+};
 
 const rangedCostForAmount = (conversionRate, currency, amount) => {
   let amountCost = amount * conversionRate;

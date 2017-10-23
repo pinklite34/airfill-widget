@@ -4,12 +4,14 @@ jest.mock('fetch-ponyfill', () => {
     status: 200,
     json: () => Promise.resolve()
   }));
-  return () => mockFetch;
+  return () => ({
+    fetch: mockFetch
+  });
 });
 
 // Retrieve fetch mock so we can use it in assertions
 import ponyFetch from 'fetch-ponyfill';
-const fetch = ponyFetch();
+const { fetch } = ponyFetch();
 
 import { encodeQueryString, createClient } from './api-client';
 

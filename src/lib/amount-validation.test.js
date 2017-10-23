@@ -1,4 +1,3 @@
-import React from 'react';
 import { selectValidAmount } from './amount-validation';
 
 const props = {
@@ -66,7 +65,6 @@ describe('selectValidAmount', () => {
   });
 
   it('ranged: should allow arbitrary values (costing less maxCost) for ranged operators', () => {
-
     // cost(amount) < maxCost
     expect(
       selectValidAmount({
