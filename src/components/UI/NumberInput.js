@@ -70,6 +70,8 @@ const styles = {
           }
         },
         '& button.rrui__select__button': {
+          width: 48,
+          height: 48,
           border: 'none !important',
           padding: '16px',
           '& .rrui__select__button-label': {

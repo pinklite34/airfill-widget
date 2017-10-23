@@ -34,7 +34,8 @@ export default (state, action) => {
     case 'LOAD_OPERATOR_SUCCESS': {
       return {
         ...state,
-        selectedOperator: action.payload.slug
+        selectedOperator: action.payload.slug,
+        selectedCountry: action.payload.countryCode
       };
     }
 

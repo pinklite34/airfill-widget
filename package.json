@@ -65,7 +65,7 @@
     "pusher-js": "^3.2.2",
     "react": "^15.0.0",
     "react-dom": "^15.0.0",
-    "react-phone-number-input": "^0.14.0",
+    "react-phone-number-input": "bitrefill/react-phone-number-input#470bba1da48b06a84af900d5b98f853438a1735c",
     "react-redux": "^5.0.4",
     "react-router": "^4.1.2",
     "react-svg-loader": "^1.1.1",
