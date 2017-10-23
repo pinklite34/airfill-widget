@@ -4,7 +4,7 @@ import { css } from 'glamor';
 import { selectCountryCode, selectNumber } from '../store';
 import { lookupNumber } from '../actions';
 
-import NumberInput from './UI/NumberInput';
+import ComboInput from './UI/ComboInput';
 
 const styles = {
   container: css({
@@ -93,7 +93,7 @@ class Introduction extends Component {
             <h2 {...styles.title}>Top Up Anything With Bitcoin</h2>
           </div>
         )}
-        <NumberInput
+        <ComboInput
           loading={isLoading}
           country={country}
           onSubmit={this.lookupNumber}

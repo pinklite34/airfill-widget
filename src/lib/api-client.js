@@ -1,5 +1,5 @@
 import ponyFetch from 'fetch-ponyfill';
-const _fetch = ponyFetch();
+const { fetch: _fetch } = ponyFetch();
 
 if (!global.btoa) {
   global.btoa = (str) => {
