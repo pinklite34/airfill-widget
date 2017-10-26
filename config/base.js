@@ -62,32 +62,6 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        include: path.join(__dirname, '/../node_modules/react-phone-number-input'),
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-              minimize: true
-            }
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
-              plugins: () => [
-                require('postcss-flexbugs-fixes'),
-                require('postcss-cssnext')
-              ],
-              sourceMap: true,
-              sourceComments: true
-            }
-          }
-        ]
-      },
-      {
-        test: /\.css$/,
         include: path.join(__dirname, '/../node_modules/react-toolbox'),
         use: [
           'style-loader',

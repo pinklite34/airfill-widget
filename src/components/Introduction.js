@@ -79,7 +79,7 @@ class Introduction extends Component {
   };
 
   render() {
-    const { branded, country } = this.props;
+    const { branded, country, history } = this.props;
     const { isLoading, error } = this.state;
     return (
       <div {...styles.container}>
@@ -94,6 +94,7 @@ class Introduction extends Component {
           </div>
         )}
         <ComboInput
+          history={history}
           loading={isLoading}
           country={country}
           onSubmit={this.lookupNumber}

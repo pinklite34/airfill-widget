@@ -3,18 +3,22 @@ import { connect } from 'react-redux';
 import { css } from 'glamor';
 import Downshift from 'downshift';
 
-import { Card } from 'react-toolbox/lib/card';
-
 import {
   selectCountryList,
   selectCountryCode,
-  selectNumber
+  selectNumber,
+  selectAvailableOperators
 } from '../../../store';
-import { setCountry, setNumber } from '../../../actions';
+import { setCountry, setNumber, setOperator } from '../../../actions';
+import {
+  isPhoneNumber,
+  removeNextDigit,
+  removePreviousDigit,
+  formatNumber
+} from '../../../lib/number-input-helpers';
 
 import Dropdown from './Dropdown';
 import InputRow from './InputRow';
-import Check from '../check.svg';
 
 const styles = {
   container: css({
@@ -52,82 +56,153 @@ const itemToString = item => {
 
 class ComboInput extends Component {
   state = {
-    inputValue: '',
-    isOpen: false
+    inputValue: ''
   };
 
-  changeValue = inputValue => {
-    this.setState(state => ({
-      inputValue,
-      isOpen: inputValue ? true : state.isOpen
-    }));
+  changeValue = (inputValue, currentCaret) => {
+    if (isPhoneNumber(inputValue)) {
+      const { formattedValue, number, country, caret } = formatNumber(
+        this.props.country,
+        inputValue,
+        currentCaret
+      );
+
+      if (country && country !== this.props.country) {
+        this.props.setCountry(country);
+      }
+
+      this.props.setNumber(number);
+      this.setState({ inputValue: formattedValue }, () =>
+        this.input.setSelectionRange(caret, caret)
+      );
+    } else {
+      this.setState(state => ({
+        inputValue
+      }));
+    }
   };
 
   handleSelect = item => {
-    console.log('Selected', item);
-
     if (item.alpha2) {
       this.props.setCountry(item.alpha2);
+      this.setState({
+        inputValue: ''
+      });
+    } else if (item.slug) {
+      this.props.setOperator(item.slug);
+      this.props.history.push('/selectAmount');
     }
-    this.setState({
-      inputValue: '',
-      isOpen: false
-    });
   };
 
-  resetCountry = () => {
+  resetCountry = openMenu => () => {
     this.props.setCountry('');
     this.input.focus();
-    this.setState({
-      isOpen: true
-    });
+    openMenu && openMenu();
   };
 
   setInputRef = ref => (this.input = ref);
-  onInputKeyDown = e => {
-    // Handle backspace
-    if (!e.target.value.length && e.keyCode === 8) {
-      this.resetCountry();
+  onInputKeyDown = openMenu => e => {
+    const { selectionStart, selectionEnd } = e.target;
+    const selectionRange = selectionEnd - selectionStart;
+
+    if (e.keyCode === 8) {
+      // Handle backspace
+      if (!e.target.value.length) {
+        this.resetCountry(null)();
+      } else if (isPhoneNumber(e.target.value)) {
+        if (!selectionRange) {
+          e.preventDefault();
+          this.changeValue(
+            removePreviousDigit(e.target.value, selectionStart),
+            selectionStart - 1
+          );
+        }
+      }
+    } else if (e.keyCode === 46) {
+      // Delete key
+      if (!selectionRange) {
+        e.preventDefault();
+        this.changeValue(
+          removeNextDigit(e.target.value, selectionStart),
+          selectionStart
+        );
+      }
+    } else if (e.keyCode === 13) {
+      if (isPhoneNumber(e.target.value)) {
+        this.props.onSubmit();
+      }
+    }
+  };
+
+  getMatchingItems = () => {
+    const { country, countryList, operators } = this.props;
+
+    const normalizedInputValue = this.state.inputValue.toLowerCase();
+
+    if (!country) {
+      return countryList
+        .filter(
+          country =>
+            country.name.toLowerCase().indexOf(normalizedInputValue) !== -1
+        )
+        .map(item => ({ ...item, __type: 'country' }));
+    } else if (countryList.find(c => c.alpha2 === country)) {
+      return Object.keys(operators)
+        .reduce(
+          (reduced, type) =>
+            reduced.concat(
+              operators[type].filter(
+                operator =>
+                  operator.name.toLowerCase().indexOf(normalizedInputValue) !==
+                  -1
+              )
+            ),
+          []
+        )
+        .map(item => ({ ...item, __type: 'provider' }));
+    } else {
+      return [];
     }
   };
 
   render() {
-    const { inputValue, isOpen } = this.state;
+    const { inputValue } = this.state;
 
-    const { countryList, country } = this.props;
-    const filteredCountries = countryList.filter(
-      c => c.name.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1
-    );
+    const { country, onSubmit, loading } = this.props;
+
+    const items = this.getMatchingItems();
 
     return (
       <Downshift
         onChange={this.handleSelect}
         inputValue={inputValue}
         itemToString={itemToString}
-        isOpen={isOpen}
+        selectedItem={null}
+        itemCount={items.length}
       >
         {({
           getInputProps,
           getItemProps,
           inputValue,
           highlightedIndex,
-          isOpen
+          isOpen,
+          openMenu
         }) => (
           <div {...styles.container}>
             <InputRow
               getInputProps={getInputProps}
               onChange={this.changeValue}
               country={country}
-              resetCountry={this.resetCountry}
+              resetCountry={this.resetCountry(openMenu)}
               inputRef={this.setInputRef}
-              onKeyDown={this.onInputKeyDown}
+              onKeyDown={this.onInputKeyDown(openMenu)}
+              loading={loading}
+              onSubmit={onSubmit}
             />
-            {isOpen && filteredCountries.length ? (
+            {isOpen && items.length ? (
               <Dropdown
                 getItemProps={getItemProps}
-                countries={filteredCountries}
-                providers={[]}
-                history={[]}
+                items={items}
                 highlightedIndex={highlightedIndex}
               />
             ) : null}
@@ -140,12 +215,14 @@ class ComboInput extends Component {
 
 export default connect(
   state => ({
+    operators: selectAvailableOperators(state),
     country: selectCountryCode(state),
     countryList: selectCountryList(state),
     number: selectNumber(state)
   }),
   {
     setCountry,
-    setNumber
+    setNumber,
+    setOperator
   }
 )(ComboInput);

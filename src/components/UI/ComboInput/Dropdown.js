@@ -1,7 +1,11 @@
 import React from 'react';
+import VirtualList from 'react-tiny-virtual-list';
+
 import { css } from 'glamor';
 import { Card } from 'react-toolbox/lib/card';
-import flags from '../../flags';
+
+import CountryRow from './CountryRow';
+import ProviderRow from './ProviderRow';
 
 const styles = {
   container: css({
@@ -23,56 +27,50 @@ const styles = {
     padding: 12,
     fontWeight: 700,
     marginLeft: 32
-  }),
-  row: css({
-    fontSize: 16,
-    borderTop: '1px solid rgba(0,0,0,0.08)',
-    display: 'flex',
-    alignItems: 'center'
-  }),
-  highlightedRow: css({
-    background: 'rgba(0,0,0,0.08)'
-  }),
-  image: css({
-    padding: 12
-  }),
-  text: css({
-    padding: '12px 0'
   })
+};
+
+const rowComponents = {
+  country: CountryRow,
+  provider: ProviderRow
 };
 
 const Dropdown = ({
   getItemProps,
-  countries,
-  providers,
-  history,
+  items,
   highlightedIndex
 }) => (
   <div {...styles.container}>
     <Card {...styles.containerCard}>
       <div {...styles.content}>
-        <div {...styles.section}>
-          <div {...styles.sectionTitle}>Countries</div>
-          {countries.map((item, index) => {
-            const Flag = flags[item.alpha2.toLowerCase()];
+        <VirtualList
+          width="100%"
+          height={items.length < 6 ? items.length * 44 : 240}
+          scrollToAlignment="auto"
+          scrollToIndex={highlightedIndex || 0}
+          itemSize={44}
+          itemCount={items.length}
+          renderItem={({ index, style }) => {
+            const item = items[index];
+            const Row =
+              item.__type && rowComponents[item.__type]
+                ? rowComponents[item.__type]
+                : rowComponents.country;
 
             return (
-              <div
+              <Row
                 key={item.alpha2}
-                {...getItemProps({ item })}
-                {...css([
-                  styles.row,
-                  highlightedIndex === index ? styles.highlightedRow : null
-                ])}
-              >
-                <div {...styles.image}>
-                  {Flag && <Flag width={24} height={18} />}
-                </div>
-                <div {...styles.text}>{item.name}</div>
-              </div>
+                itemProps={getItemProps({
+                  style,
+                  index,
+                  item
+                })}
+                isActive={highlightedIndex === index}
+                item={item}
+              />
             );
-          })}
-        </div>
+          }}
+        />
       </div>
     </Card>
   </div>
