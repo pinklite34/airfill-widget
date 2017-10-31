@@ -1,20 +1,6 @@
 import ponyFetch from 'fetch-ponyfill';
 const _fetch = ponyFetch();
 
-if (!global.btoa) {
-  global.btoa = (str) => {
-    var buffer;
-
-    if (str instanceof Buffer) {
-      buffer = str;
-    } else {
-      buffer = new Buffer(str.toString(), 'binary');
-    }
-
-    return buffer.toString('base64');
-  };
-}
-
 export function encodeQueryString(obj) {
   const queryString = (typeof obj === 'object' && !!obj) &&
     Object.keys(obj)
