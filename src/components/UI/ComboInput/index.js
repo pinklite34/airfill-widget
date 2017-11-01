@@ -5,7 +5,7 @@ import Downshift from 'downshift';
 
 import {
   selectCountryList,
-  selectCountryCode,
+  selectCountry,
   selectNumber,
   selectAvailableOperators
 } from '../../../store';
@@ -67,7 +67,11 @@ class ComboInput extends Component {
         currentCaret
       );
 
-      if (country && country !== this.props.country) {
+      if (
+        country &&
+        this.props.country &&
+        country !== this.props.country.alpha2
+      ) {
         this.props.setCountry(country);
       }
 
@@ -146,7 +150,7 @@ class ComboInput extends Component {
             country.name.toLowerCase().indexOf(normalizedInputValue) !== -1
         )
         .map(item => ({ ...item, __type: 'country' }));
-    } else if (countryList.find(c => c.alpha2 === country)) {
+    } else if (countryList.find(c => c.alpha2 === country.alpha2)) {
       return Object.keys(operators)
         .reduce(
           (reduced, type) =>
@@ -192,7 +196,7 @@ class ComboInput extends Component {
             <InputRow
               getInputProps={getInputProps}
               onChange={this.changeValue}
-              country={country}
+              country={country && country.alpha2}
               resetCountry={this.resetCountry(openMenu)}
               inputRef={this.setInputRef}
               onKeyDown={this.onInputKeyDown(openMenu)}
@@ -216,7 +220,7 @@ class ComboInput extends Component {
 export default connect(
   state => ({
     operators: selectAvailableOperators(state),
-    country: selectCountryCode(state),
+    country: selectCountry(state),
     countryList: selectCountryList(state),
     number: selectNumber(state)
   }),

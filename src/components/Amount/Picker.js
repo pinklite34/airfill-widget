@@ -33,7 +33,7 @@ const styles = {
         borderBottom: '1px solid rgba(0,0,0,0.08)'
       },
       '& > span': {
-        paddingLeft: 24
+        paddingLeft: 16
       }
     }
   }),
@@ -51,6 +51,9 @@ const styles = {
       width: 32,
       height: 32
     }
+  }),
+  title: css({
+    marginLeft: 36
   })
 };
 
@@ -113,7 +116,7 @@ class Picker extends Component {
           </Card>
         )}
 
-        <SectionTitle>Select amount</SectionTitle>
+        <SectionTitle {...styles.title}>Select amount</SectionTitle>
 
         <RadioGroup
           value={String(amount)}

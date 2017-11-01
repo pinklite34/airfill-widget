@@ -4,7 +4,6 @@ import { selectCountry } from './inventory';
 import { isValidEmail } from '../lib/email-validation';
 
 const initialState = {
-  currentStep: 1,
   number: '',
   operatorId: null,
   amount: 0,
@@ -16,10 +15,6 @@ export default (state = initialState, { type, payload }) => {
     case REHYDRATE: {
       const data = payload.airfillWidget && selectUiState(payload);
       return { ...state, ...data };
-    }
-
-    case 'SET_STEP': {
-      return { ...state, currentStep: payload };
     }
 
     case 'SET_NUMBER': {
@@ -52,7 +47,6 @@ export default (state = initialState, { type, payload }) => {
 
 export const selectUiState = state => state.airfillWidget.ui;
 export const selectAmount = state => selectUiState(state).amount;
-export const selectCurrentStep = state => selectUiState(state).currentStep;
 
 export const selectNumber = state => {
   const number = selectUiState(state).number;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { css } from 'glamor';
-import { selectCountryCode, selectNumber } from '../store';
+import { selectNumber } from '../store';
 import { lookupNumber } from '../actions';
 
 import ComboInput from './UI/ComboInput';
@@ -79,7 +79,7 @@ class Introduction extends Component {
   };
 
   render() {
-    const { branded, country, history } = this.props;
+    const { branded, history } = this.props;
     const { isLoading, error } = this.state;
     return (
       <div {...styles.container}>
@@ -96,7 +96,6 @@ class Introduction extends Component {
         <ComboInput
           history={history}
           loading={isLoading}
-          country={country}
           onSubmit={this.lookupNumber}
         />
         {error ? (
@@ -114,7 +113,6 @@ class Introduction extends Component {
 
 export default connect(
   state => ({
-    country: selectCountryCode(state),
     number: selectNumber(state)
   }),
   {

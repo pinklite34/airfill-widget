@@ -5,49 +5,68 @@ import { Input } from 'react-toolbox/lib/input';
 
 import { getDisplayName, satoshiToBTC } from '../../lib/currency-helpers';
 
+import Package from './Package';
 import SectionTitle from '../UI/SectionTitle';
+
+import Settings from './settings.svg';
 
 const styles = {
   container: css({
     marginTop: 16
   }),
   row: css({
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: '#fff',
     margin: '0 -16px',
     borderTop: '1px solid rgba(0,0,0,0.08)',
     borderBottom: '1px solid rgba(0,0,0,0.08)',
     padding: '8px 16px'
   }),
-  field: css({
-    display: 'flex',
-    flexDirection: 'row'
+  settings: css({
+    flex: '0 0 auto',
+    marginRight: 16,
+    width: 20,
+    height: 20,
+    fill: 'rgba(0,0,0,0.8)'
   }),
   input: css({
     display: 'inline-block',
-    width: 120,
-    padding: '0 !important'
+    width: 100,
+    padding: '0 !important',
+    '& input': {
+      fontFamily: 'inherit',
+      padding: '0 !important',
+      color: '#000',
+      fontWeight: 500
+    }
   }),
   label: css({
     position: 'relative',
     display: 'inline-block',
+    color: '#000',
     width: 48,
     left: -48,
     marginRight: -48,
     backgroundColor: '#FFF',
-    color: '#777',
-    padding: '4px 12px 4px 0',
-    textAlign: 'right'
-  }),
-  meta: css({
-    color: 'rgba(0,0,0,0.8)',
-    marginTop: 8,
-    fontSize: 12
+    textAlign: 'right',
+    fontSize: 16,
+    lineHeight: 1
   }),
   cost: css({
-    display: 'flex',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.08)',
-    padding: '0 12px'
+    lineHeight: '20px'
+  }),
+  title: css({
+    marginLeft: 36
+  }),
+  meta: css({
+    background: 'rgba(0,0,0,0.1)',
+    padding: 4,
+    fontSize: 12,
+    lineHeight: '16px',
+    color: '#333',
+    marginLeft: 16
   })
 };
 
@@ -62,40 +81,43 @@ const Ranged = ({ amount, range, currency, billingCurrency, onChange }) => {
 
   return (
     <div {...styles.container}>
-      <SectionTitle>...or select custom amount</SectionTitle>
+      <SectionTitle {...styles.title}>...or select custom amount</SectionTitle>
       <div {...styles.row}>
-        <div {...styles.field}>
-          <div>
-            <Input
-              type="number"
-              min={min}
-              max={max}
-              step={step}
-              value={amount}
-              onChange={onChange}
-              onBlur={() =>
-                amount > range.max
-                  ? onChange(range.max)
-                  : amount < range.min ? onChange(range.min) : null}
-              className={`${styles.input}`}
-            />
-            <label {...styles.label} htmlFor="custom_amount">
-              {currency}
-            </label>
-          </div>
-          <div {...styles.cost}>
-            <span>
-              You pay:{' '}
-              <strong>
-                {displayableCost} {getDisplayName(billingCurrency)}
-              </strong>
+        <Settings {...styles.settings} />
+        <Package
+          name={
+            <div>
+              <Input
+                type="number"
+                min={min}
+                max={max}
+                step={step}
+                value={amount}
+                onChange={onChange}
+                onBlur={() =>
+                  amount > range.max
+                    ? onChange(range.max)
+                    : amount < range.min ? onChange(range.min) : null}
+                className={`${styles.input}`}
+                id="custom_amount"
+              />
+              <label {...styles.label} htmlFor="custom_amount">
+                {currency}
+              </label>
+            </div>
+          }
+          price={
+            <span {...styles.cost}>
+              {displayableCost} {getDisplayName(billingCurrency)}
             </span>
-          </div>
-        </div>
+          }
+        />
         <div {...styles.meta}>
           <div>
-            <strong>Min:</strong> {range.min} {currency} <strong>Max:</strong>{' '}
-            {range.max} {currency}
+            <strong>Min:</strong> {range.min} {getDisplayName(currency)}
+          </div>
+          <div>
+            <strong>Max:</strong> {range.max} {getDisplayName(currency)}
           </div>
         </div>
       </div>

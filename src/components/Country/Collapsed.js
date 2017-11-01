@@ -3,7 +3,7 @@ import Downshift from 'downshift';
 import { css } from 'glamor';
 import { connect } from 'react-redux';
 import { setCountry } from '../../actions';
-import { selectCountryCode, selectCountryList } from '../../store';
+import { selectCountry, selectCountryList } from '../../store';
 
 import { Card } from 'react-toolbox/lib/card';
 import CollapsedSection from '../UI/CollapsedSection';
@@ -76,9 +76,8 @@ class Collapsed extends Component {
   render() {
     const {
       home,
-      countryCode,
+      country,
       countryList,
-      prefix,
       darken,
       history,
       setCountry
@@ -86,16 +85,10 @@ class Collapsed extends Component {
 
     const { inputValue } = this.state;
 
-    if (!countryCode) {
-      return null;
-    }
-
-    const country = countryList.find(country => country.alpha2 === countryCode);
-
     if (!country) {
       return (
-        <CollapsedSection darken={darken} type="country">
-          Your country ({countryCode}) is not supported in Bitrefill.
+        <CollapsedSection hideButton darken={darken} type="country">
+          Select a country above to see available providers.
         </CollapsedSection>
       );
     }
@@ -171,7 +164,7 @@ class Collapsed extends Component {
 
 export default connect(
   state => ({
-    countryCode: selectCountryCode(state),
+    country: selectCountry(state),
     countryList: selectCountryList(state)
   }),
   {
