@@ -79,12 +79,14 @@ export const selectAvailableOperators = state => {
     return null;
   }
 
-  return operators.sort(sortBy('name')).reduce((mem, operator) => {
-    const type = operator.type || 'Mobile';
-    mem[type] = mem[type] || [];
-    mem[type].push(operator);
-    return mem;
-  }, {});
+  return operators
+    .sort(sortBy('stats', true, (stats) => stats ? stats.popularity : -1))
+    .reduce((mem, operator) => {
+      const type = operator.type || 'Mobile';
+      mem[type] = mem[type] || [];
+      mem[type].push(operator);
+      return mem;
+    }, {});
 };
 
 export const selectSelectedOperator = state => {
