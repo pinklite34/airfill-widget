@@ -10,7 +10,7 @@ import ProviderRow from './ProviderRow';
 const styles = {
   container: css({
     position: 'absolute',
-    zIndex: 9,
+    zIndex: 10,
     width: '100%',
     marginTop: -4,
     textAlign: 'left'
@@ -35,11 +35,7 @@ const rowComponents = {
   provider: ProviderRow
 };
 
-const Dropdown = ({
-  getItemProps,
-  items,
-  highlightedIndex
-}) => (
+const Dropdown = ({ getItemProps, items, highlightedIndex }) => (
   <div {...styles.container}>
     <Card {...styles.containerCard}>
       <div {...styles.content}>

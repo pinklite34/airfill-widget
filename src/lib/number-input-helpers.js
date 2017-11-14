@@ -58,12 +58,21 @@ export const formatNumber = (countryCode, inputValue, currentCaret) => {
       template: formatter.template
     }));
 
-    return {
-      formattedValue: formattedNumber,
-      number: value,
-      country: formatter.country,
-      caret: nextCaret
-    };
+    if (
+      (formatter.country &&
+        formatter.chosen_format == null &&
+        inputValue.indexOf(formatter.country_metadata[0]) === 0) ||
+      (!formatter.country && inputValue.indexOf('+') < 0)
+    ) {
+      return formatNumber(countryCode, `+${inputValue}`, currentCaret + 1);
+    } else {
+      return {
+        formattedValue: formattedNumber,
+        number: value,
+        country: formatter.country,
+        caret: nextCaret
+      };
+    }
   } else {
     return null;
   }

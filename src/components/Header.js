@@ -15,7 +15,12 @@ const styles = {
     color: '#ffffff',
     zIndex: 10,
     boxShadow: '0 1px 2px 0 rgba(0,0,0,.16)',
-    position: 'relative'
+    position: 'relative',
+    '@media(max-width: 400px)': {
+      '&': {
+        padding: 12
+      }
+    }
   }),
   logo: css({
     cursor: 'pointer',

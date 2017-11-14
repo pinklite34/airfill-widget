@@ -31,7 +31,8 @@ const styles = {
     marginTop: 8,
     fontSize: 12,
     color: 'rgba(255, 255, 255, 0.9)',
-    width: 300,
+    width: '100%',
+    maxWidth: 300,
     lineHeight: 1.5,
     fontWeight: 500
   }),

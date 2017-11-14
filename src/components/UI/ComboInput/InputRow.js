@@ -11,7 +11,7 @@ import DefaultFlag from './flag.svg';
 const styles = {
   container: css({
     position: 'relative',
-    zIndex: 10
+    zIndex: 11
   }),
 
   row: css({
@@ -21,7 +21,7 @@ const styles = {
   }),
   inputContainer: css({
     padding: 12,
-    flex: '1 0 auto'
+    flex: '1 1 auto'
   }),
   input: css({
     width: '100%',

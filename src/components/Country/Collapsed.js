@@ -14,7 +14,8 @@ import NoFlag from '../UI/ComboInput/flag.svg';
 const styles = {
   container: css({
     position: 'relative',
-    width: 350
+    width: '100%',
+    maxWidth: 350
   }),
   openContainer: css({
     margin: -12
@@ -24,11 +25,12 @@ const styles = {
     alignItems: 'center',
     cursor: 'pointer',
     position: 'relative',
-    zIndex: 10
+    zIndex: 9
   }),
   openCountry: css({
     padding: 12,
-    alignItems: 'stretch'
+    alignItems: 'stretch',
+    zIndex: 11
   }),
   row: css({
     display: 'flex',

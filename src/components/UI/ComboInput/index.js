@@ -62,18 +62,12 @@ class ComboInput extends Component {
   changeValue = (inputValue, currentCaret) => {
     if (isPhoneNumber(inputValue)) {
       const { formattedValue, number, country, caret } = formatNumber(
-        this.props.country,
+        this.props.country && this.props.country.alpha2,
         inputValue,
         currentCaret
       );
 
-      if (
-        country &&
-        this.props.country &&
-        country !== this.props.country.alpha2
-      ) {
-        this.props.setCountry(country);
-      }
+      this.props.setCountry(country);
 
       this.props.setNumber(number);
       this.setState({ inputValue: formattedValue }, () =>
@@ -100,6 +94,7 @@ class ComboInput extends Component {
 
   resetCountry = openMenu => () => {
     this.props.setCountry('');
+    this.setState({ inputValue: '' });
     this.input.focus();
     openMenu && openMenu();
   };

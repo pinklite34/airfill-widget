@@ -20,7 +20,8 @@ const styles = {
     '& strong': {
       paddingBottom: 2,
       borderBottom: '1px solid #CCCCCC'
-    }
+    },
+    flex: '1 0 auto'
   })
 };
 
