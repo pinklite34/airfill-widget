@@ -6,6 +6,8 @@ import { Card } from 'react-toolbox/lib/card';
 
 import CountryRow from './CountryRow';
 import ProviderRow from './ProviderRow';
+import HistoryRow from './HistoryRow';
+import SectionTitle from '../SectionTitle';
 
 const styles = {
   container: css({
@@ -20,56 +22,78 @@ const styles = {
     paddingTop: 4
   }),
   content: css({
-    maxHeight: 250,
+    maxHeight: 264,
     overflow: 'scroll !important'
   }),
   sectionTitle: css({
-    padding: 12,
-    fontWeight: 700,
-    marginLeft: 32
+    marginLeft: 60,
+    paddingTop: 6
   })
 };
 
 const rowComponents = {
   country: CountryRow,
-  provider: ProviderRow
+  provider: ProviderRow,
+  history: HistoryRow,
+  sectionTitle: ({ item, style }) => <div style={style}>{item.title}</div>
 };
 
-const Dropdown = ({ getItemProps, items, highlightedIndex }) => (
-  <div {...styles.container}>
-    <Card {...styles.containerCard}>
-      <div {...styles.content}>
-        <VirtualList
-          width="100%"
-          height={items.length < 6 ? items.length * 44 : 240}
-          scrollToAlignment="auto"
-          scrollToIndex={highlightedIndex || 0}
-          itemSize={44}
-          itemCount={items.length}
-          renderItem={({ index, style }) => {
-            const item = items[index];
-            const Row =
-              item.__type && rowComponents[item.__type]
-                ? rowComponents[item.__type]
-                : rowComponents.country;
+const Dropdown = ({ getItemProps, items, highlightedIndex }) => {
+  const itemCount = items.length;
+  const height =
+    itemCount < 6
+      ? items.reduce(
+          (height, item) => height + (item.__type === 'sectionTitle' ? 24 : 44),
+          0
+        )
+      : 264;
 
-            return (
-              <Row
-                key={item.alpha2}
-                itemProps={getItemProps({
-                  style,
-                  index,
-                  item
-                })}
-                isActive={highlightedIndex === index}
-                item={item}
-              />
-            );
-          }}
-        />
-      </div>
-    </Card>
-  </div>
-);
+  return (
+    <div {...styles.container}>
+      <Card {...styles.containerCard}>
+        <div {...styles.content}>
+          <VirtualList
+            width="100%"
+            height={height}
+            scrollToAlignment="auto"
+            scrollToIndex={highlightedIndex || 0}
+            itemSize={i => (items[i].__type === 'sectionTitle' ? 24 : 44)}
+            itemCount={itemCount}
+            renderItem={({ index, style }) => {
+              const item = items[index];
+
+              if (item.__type === 'sectionTitle') {
+                return (
+                  <SectionTitle
+                    key={item.key}
+                    style={style}
+                    {...styles.sectionTitle}
+                  >
+                    {item.title}
+                  </SectionTitle>
+                );
+              } else {
+                const Row = rowComponents[item.__type];
+
+                return (
+                  <Row
+                    key={item.key}
+                    itemProps={getItemProps({
+                      style,
+                      index: item.index,
+                      item
+                    })}
+                    isActive={item.index === highlightedIndex}
+                    item={item}
+                  />
+                );
+              }
+            }}
+          />
+        </div>
+      </Card>
+    </div>
+  );
+};
 
 export default Dropdown;

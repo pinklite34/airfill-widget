@@ -70,7 +70,7 @@ export const selectCountryCode = state =>
 export const selectAvailableOperators = state => {
   const country = selectCountry(state);
   if (!country) {
-    return null;
+    return {};
   }
 
   const operators = toArray(country.operators);

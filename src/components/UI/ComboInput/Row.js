@@ -22,16 +22,10 @@ const styles = {
     fontSize: 16,
     padding: 12
   })
-}
+};
 
 const Row = ({ itemProps, isActive, icon, content }) => (
-  <div
-    {...itemProps}
-    {...css([
-      styles.container,
-      isActive && styles.active
-    ])}
-  >
+  <div {...itemProps} {...css([styles.container, isActive && styles.active])}>
     <div {...styles.icon}>{icon}</div>
     <div {...styles.content}>{content}</div>
   </div>

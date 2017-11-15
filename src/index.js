@@ -3,6 +3,12 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+import createHistory from 'history/createMemoryHistory';
+import {
+  ConnectedRouter,
+  routerReducer,
+  routerMiddleware
+} from 'react-router-redux';
 
 import Widget from './components/Widget';
 import { client } from './lib/api-client';
@@ -51,23 +57,28 @@ function AirfillWidget(ele, opt) {
   } = options;
   const orderOptions = { email, sendEmail, sendSMS, refundAddress };
 
-  store = store || configureStore();
+  const history = createHistory();
+  const middleware = routerMiddleware(history);
+
+  store = store || configureStore(routerReducer, middleware);
 
   render(
     <Provider store={store}>
-      <Widget
-        className="refill-widget-root standalone"
-        billingCurrency={billingCurrency}
-        orderOptions={orderOptions}
-        paymentButtons={paymentButtons}
-        showBTCAddress={showBTCAddress}
-        defaultNumber={defaultNumber}
-        accountBalance={userAccountBalance}
-        requireAccountBalance={requireAccountBalance}
-        showInstructions={showInstructions}
-        showLogo={showLogo}
-        showPoweredBy={!showLogo}
-      />
+      <ConnectedRouter history={history}>
+        <Widget
+          className="refill-widget-root standalone"
+          billingCurrency={billingCurrency}
+          orderOptions={orderOptions}
+          paymentButtons={paymentButtons}
+          showBTCAddress={showBTCAddress}
+          defaultNumber={defaultNumber}
+          accountBalance={userAccountBalance}
+          requireAccountBalance={requireAccountBalance}
+          showInstructions={showInstructions}
+          showLogo={showLogo}
+          showPoweredBy={!showLogo}
+        />
+      </ConnectedRouter>
     </Provider>,
     element
   );

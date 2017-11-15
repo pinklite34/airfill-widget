@@ -7,7 +7,8 @@ import {
   selectCountryList,
   selectCountry,
   selectNumber,
-  selectAvailableOperators
+  selectAvailableOperators,
+  selectRecentNumbers
 } from '../../../store';
 import { setCountry, setNumber, setOperator } from '../../../actions';
 import {
@@ -16,6 +17,10 @@ import {
   removePreviousDigit,
   formatNumber
 } from '../../../lib/number-input-helpers';
+import {
+  sectionsToItemList,
+  virtualIndexToItemIndex
+} from '../../../lib/comboinput-helpers';
 
 import Dropdown from './Dropdown';
 import InputRow from './InputRow';
@@ -28,17 +33,6 @@ const styles = {
     color: '#444',
     overflow: 'visible'
   })
-};
-
-// These countries/areas don't have "real" ISO codes. This means there's no flag
-// library that includes their flags etc. We need some kind of special treatment
-// to allow for these to be selected. This is just a workaround to get anything
-// to render.
-const nonIsoCountries = {
-  EA: 'Ceuta, Melilla',
-  XK: 'Kosovo',
-  CS: 'Serbia and Montenegro',
-  AN: 'Netherlands Antilles'
 };
 
 const itemToString = item => {
@@ -56,7 +50,7 @@ const itemToString = item => {
 
 class ComboInput extends Component {
   state = {
-    inputValue: ''
+    inputValue: this.props.number || ''
   };
 
   changeValue = (inputValue, currentCaret) => {
@@ -74,6 +68,9 @@ class ComboInput extends Component {
         this.input.setSelectionRange(caret, caret)
       );
     } else {
+      if (this.props.country && !inputValue) {
+        this.props.setNumber('');
+      }
       this.setState(state => ({
         inputValue
       }));
@@ -81,12 +78,12 @@ class ComboInput extends Component {
   };
 
   handleSelect = item => {
-    if (item.alpha2) {
+    if (item.__type === 'country') {
       this.props.setCountry(item.alpha2);
       this.setState({
-        inputValue: ''
+        inputValue: this.props.number || ''
       });
-    } else if (item.slug) {
+    } else if (item.__type === 'provider') {
       this.props.setOperator(item.slug);
       this.props.history.push('/selectAmount');
     }
@@ -133,35 +130,49 @@ class ComboInput extends Component {
     }
   };
 
+  getMatchingCountries = value => {
+    const { countryList } = this.props;
+    return countryList
+      .filter(country => country.name.toLowerCase().indexOf(value) > -1)
+      .map(item => ({ ...item, __type: 'country', key: item.alpha2 }));
+  };
+
+  getMatchingOperators = value => {
+    const { operators } = this.props;
+    return Object.keys(operators)
+      .reduce(
+        (matches, type) =>
+          matches.concat(
+            operators[type].filter(
+              operator => operator.name.toLowerCase().indexOf(value) > -1
+            )
+          ),
+        []
+      )
+      .map(item => ({ ...item, __type: 'provider', key: item.slug }));
+  };
+
+  getMatchingRecentNumbers = value => {
+    const { recentNumbers } = this.props;
+    return recentNumbers
+      .filter(recentNumber => !value || recentNumber.number.indexOf(value) > -1)
+      .map(item => ({
+        ...item,
+        __type: 'history',
+        key: `${item.operator}-${item.number}`
+      }));
+  };
+
   getMatchingItems = () => {
-    const { country, countryList, operators } = this.props;
+    const { country } = this.props;
 
     const normalizedInputValue = this.state.inputValue.toLowerCase();
 
-    if (!country) {
-      return countryList
-        .filter(
-          country =>
-            country.name.toLowerCase().indexOf(normalizedInputValue) !== -1
-        )
-        .map(item => ({ ...item, __type: 'country' }));
-    } else if (countryList.find(c => c.alpha2 === country.alpha2)) {
-      return Object.keys(operators)
-        .reduce(
-          (reduced, type) =>
-            reduced.concat(
-              operators[type].filter(
-                operator =>
-                  operator.name.toLowerCase().indexOf(normalizedInputValue) !==
-                  -1
-              )
-            ),
-          []
-        )
-        .map(item => ({ ...item, __type: 'provider' }));
-    } else {
-      return [];
-    }
+    return [
+      ...this.getMatchingRecentNumbers(normalizedInputValue),
+      ...(!country ? this.getMatchingCountries(normalizedInputValue) : []),
+      ...(country ? this.getMatchingOperators(normalizedInputValue) : [])
+    ];
   };
 
   render() {
@@ -169,7 +180,25 @@ class ComboInput extends Component {
 
     const { country, onSubmit, loading } = this.props;
 
-    const items = this.getMatchingItems();
+    const normalizedInputValue = this.state.inputValue.toLowerCase();
+    const countries = country
+      ? []
+      : this.getMatchingCountries(normalizedInputValue);
+    const operators = this.getMatchingOperators(normalizedInputValue);
+    const recentNumbers = country
+      ? []
+      : this.getMatchingRecentNumbers(normalizedInputValue);
+
+    const sections = [recentNumbers, countries, operators];
+    const titles = ['Recent numbers', 'Countries', 'Providers'];
+
+    const items = sectionsToItemList(sections, titles).map((item, index) => ({
+      ...item,
+      index: virtualIndexToItemIndex(sections, index)
+    }));
+
+    const itemCount =
+      countries.length + operators.length + recentNumbers.length;
 
     return (
       <Downshift
@@ -177,7 +206,7 @@ class ComboInput extends Component {
         inputValue={inputValue}
         itemToString={itemToString}
         selectedItem={null}
-        itemCount={items.length}
+        itemCount={itemCount}
       >
         {({
           getInputProps,
@@ -198,11 +227,11 @@ class ComboInput extends Component {
               loading={loading}
               onSubmit={onSubmit}
             />
-            {isOpen && items.length ? (
+            {isOpen && itemCount ? (
               <Dropdown
                 getItemProps={getItemProps}
                 items={items}
-                highlightedIndex={highlightedIndex}
+                highlightedIndex={highlightedIndex || 0}
               />
             ) : null}
           </div>
@@ -217,7 +246,8 @@ export default connect(
     operators: selectAvailableOperators(state),
     country: selectCountry(state),
     countryList: selectCountryList(state),
-    number: selectNumber(state)
+    number: selectNumber(state),
+    recentNumbers: selectRecentNumbers(state)
   }),
   {
     setCountry,

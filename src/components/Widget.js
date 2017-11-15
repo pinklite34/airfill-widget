@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { MemoryRouter, Route } from 'react-router';
+import { Route } from 'react-router';
 import { css } from 'glamor';
 
 import { Card } from 'react-toolbox/lib/card';
@@ -93,39 +93,39 @@ class AirfillWidget extends Component {
     const hasLoaded = !!this.props.inventory.result;
 
     return (
-      <MemoryRouter>
-        <Root className={this.props.className}>
-          {hasLoaded ? (
-            <Card>
-              <Header branded={config.showLogo} />
-              <Country />
-              <Providers />
-              <Amount config={config} />
-              <Details config={config} />
-              <Order config={config} />
-              {config.showInstructions && (
-                <Route
-                  path="/"
-                  exact
-                  render={() => <Instructions config={config} />}
-                />
-              )}
-            </Card>
-          ) : (
-            <Card>
-              <div {...css({
+      <Root className={this.props.className}>
+        {hasLoaded ? (
+          <Card>
+            <Header branded={config.showLogo} />
+            <Country />
+            <Providers />
+            <Amount config={config} />
+            <Details config={config} />
+            <Order config={config} />
+            {config.showInstructions && (
+              <Route
+                path="/"
+                exact
+                render={() => <Instructions config={config} />}
+              />
+            )}
+          </Card>
+        ) : (
+          <Card>
+            <div
+              {...css({
                 display: 'flex',
                 justifyContent: 'center',
                 margin: 64
-              })}>
-                <ProgressBar type="circular" />
-              </div>
-            </Card>
-          )}
+              })}
+            >
+              <ProgressBar type="circular" />
+            </div>
+          </Card>
+        )}
 
-          {config.showFooter && <Footer branded={config.showPoweredBy} />}
-        </Root>
-      </MemoryRouter>
+        {config.showFooter && <Footer branded={config.showPoweredBy} />}
+      </Root>
     );
   }
 }
