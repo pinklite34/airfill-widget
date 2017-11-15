@@ -10,7 +10,12 @@ import {
   selectAvailableOperators,
   selectRecentNumbers
 } from '../../../store';
-import { setCountry, setNumber, setOperator } from '../../../actions';
+import {
+  setCountry,
+  setNumber,
+  setOperator,
+  useRecentRefill
+} from '../../../actions';
 import {
   isPhoneNumber,
   removeNextDigit,
@@ -85,6 +90,9 @@ class ComboInput extends Component {
       });
     } else if (item.__type === 'provider') {
       this.props.setOperator(item.slug);
+      this.props.history.push('/selectAmount');
+    } else if (item.__type === 'history') {
+      this.props.useRecentRefill(item);
       this.props.history.push('/selectAmount');
     }
   };
@@ -252,6 +260,7 @@ export default connect(
   {
     setCountry,
     setNumber,
-    setOperator
+    setOperator,
+    useRecentRefill
   }
 )(ComboInput);
