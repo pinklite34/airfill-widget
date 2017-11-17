@@ -198,7 +198,7 @@ class ComboInput extends Component {
       : this.getMatchingRecentNumbers(normalizedInputValue);
 
     const sections = [recentNumbers, countries, operators];
-    const titles = ['Recent numbers', 'Countries', 'Providers'];
+    const titles = ['Recent refills', 'Countries', 'Providers'];
 
     const items = sectionsToItemList(sections, titles).map((item, index) => ({
       ...item,
