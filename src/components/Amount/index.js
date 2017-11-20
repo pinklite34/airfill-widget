@@ -6,10 +6,10 @@ import Picker from './Picker';
 
 const Amounts = ({ config }) => (
   <Switch>
-    <Route path="/" exact />
-    <Route path="/selectProvider" />
+    <Route path="/refill" exact />
+    <Route path="/refill/selectProvider" />
     <Route
-      path="/selectAmount"
+      path="/refill/selectAmount"
       render={props => <Picker config={config} {...props} />}
     />
     <Route component={Collapsed} />

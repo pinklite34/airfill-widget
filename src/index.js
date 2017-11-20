@@ -61,6 +61,7 @@ function AirfillWidget(ele, opt) {
   const middleware = routerMiddleware(history);
 
   store = store || configureStore(routerReducer, middleware);
+  history.push('/refill');
 
   render(
     <Provider store={store}>

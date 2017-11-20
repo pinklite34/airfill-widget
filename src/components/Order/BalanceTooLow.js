@@ -9,7 +9,7 @@ const BalanceTooLow = ({ order, history }) => {
         Your balance on this account is too low to purchase the refill{' '}
         <strong>{order.itemDesc}</strong>.
       </p>
-      <Button raised onClick={() => history.push('/selectAmount')}>
+      <Button raised onClick={() => history.push('/refill/selectAmount')}>
         Pick another package
       </Button>
     </div>

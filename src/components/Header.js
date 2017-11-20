@@ -37,7 +37,7 @@ const Logo = () => (
         fill="#fff"
         width="104"
         {...styles.logo}
-        onClick={() => history.push('/')}
+        onClick={() => history.push('/refill')}
       />
     )}
   />
@@ -46,7 +46,7 @@ const Logo = () => (
 const Header = ({ branded }) => (
   <Switch>
     <Route
-      path="/"
+      path="/refill"
       exact
       render={props => (
         <div {...styles.container}>

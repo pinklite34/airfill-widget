@@ -32,7 +32,7 @@ const styles = {
 const Collapsed = ({ operator, history, darken }) => (
   <CollapsedSection
     darken={darken}
-    onClick={() => history.push('/selectProvider')}
+    onClick={() => history.push('/refill/selectProvider')}
     type="provider"
   >
     {operator && (

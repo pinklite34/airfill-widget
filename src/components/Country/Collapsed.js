@@ -96,17 +96,19 @@ class Collapsed extends Component {
     }
 
     const Flag = flags[country.alpha2.toLowerCase()];
-    const items = countryList.filter(
-      country =>
-        country.name.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1
-    );
+    const items = countryList
+      .filter(
+        country =>
+          country.name.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1
+      )
+      .map((item, index) => ({ ...item, __type: 'country', index }));
 
     return (
       <Downshift
         onChange={item => {
           setCountry(item.alpha2);
           this.handleInputChange('');
-          !home && history.push('/selectProvider');
+          !home && history.push('/refill/selectProvider');
         }}
         selectedItem={country}
         inputValue={inputValue}

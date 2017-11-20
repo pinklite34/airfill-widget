@@ -37,8 +37,8 @@ const Picker = ({
         state.suggested && (
           <SuggestedOperator
             operator={selectedOperator}
-            onAccept={() => history.push('/selectAmount')}
-            onReject={() => history.replace('/selectProvider')}
+            onAccept={() => history.push('/refill/selectAmount')}
+            onReject={() => history.replace('/refill/selectProvider')}
           />
         )}
       {Object.keys(operators).map(key => (
@@ -48,7 +48,7 @@ const Picker = ({
           providers={operators[key]}
           onSelect={operator => {
             setOperator(operator);
-            history.push('/selectAmount');
+            history.push('/refill/selectAmount');
           }}
         />
       ))}

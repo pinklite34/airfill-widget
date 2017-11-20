@@ -5,9 +5,9 @@ import Picker from './Picker';
 
 const Providers = () => (
   <Switch>
-    <Route path="/" exact component={Picker} />
-    <Route path="/selectProvider" component={Picker} />
-    <Route path="/selectAmount" component={Collapsed} />
+    <Route path="/refill" exact component={Picker} />
+    <Route path="/refill/selectProvider" component={Picker} />
+    <Route path="/refill/selectAmount" component={Collapsed} />
     <Route render={props => <Collapsed darken={1} {...props} />} />
   </Switch>
 );

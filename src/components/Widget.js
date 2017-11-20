@@ -104,7 +104,7 @@ class AirfillWidget extends Component {
             <Order config={config} />
             {config.showInstructions && (
               <Route
-                path="/"
+                path="/refill"
                 exact
                 render={() => <Instructions config={config} />}
               />

@@ -67,7 +67,7 @@ class Introduction extends Component {
 
     lookupNumber(number)
       .then(() =>
-        history.push('/selectProvider', {
+        history.push('/refill/selectProvider', {
           suggested: true
         })
       )

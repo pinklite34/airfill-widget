@@ -5,10 +5,10 @@ import TopupDetails from './TopupDetails';
 
 const Details = ({ config }) => (
   <Switch>
-    <Route path="/" exact />
-    <Route path="/selectProvider" />
+    <Route path="/refill" exact />
+    <Route path="/refill/selectProvider" />
     <Route
-      path="/selectAmount"
+      path="/refill/selectAmount"
       render={props => <TopupDetails config={config} {...props} />}
     />
   </Switch>

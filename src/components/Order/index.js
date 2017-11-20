@@ -4,11 +4,11 @@ import Payment from './Payment';
 
 const Order = ({ config }) => (
   <Switch>
-    <Route path="/" exact />
-    <Route path="/selectProvider" />
-    <Route path="/selectAmount" />
+    <Route path="/refill" exact />
+    <Route path="/refill/selectProvider" />
+    <Route path="/refill/selectAmount" />
     <Route
-      path="/payment"
+      path="/refill/payment"
       render={props => <Payment {...props} {...config} />}
     />
   </Switch>

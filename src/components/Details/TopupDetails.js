@@ -77,7 +77,7 @@ class TopupDetails extends Component {
     });
     this.props
       .createOrder(this.props.config.orderOptions)
-      .then(() => this.props.history.push('/payment'))
+      .then(() => this.props.history.push('/refill/payment'))
       .catch(error =>
         this.setState({
           isLoading: false,

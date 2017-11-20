@@ -90,10 +90,10 @@ class ComboInput extends Component {
       });
     } else if (item.__type === 'provider') {
       this.props.setOperator(item.slug);
-      this.props.history.push('/selectAmount');
+      this.props.history.push('/refill/selectAmount');
     } else if (item.__type === 'history') {
       this.props.useRecentRefill(item);
-      this.props.history.push('/selectAmount');
+      this.props.history.push('/refill/selectAmount');
     }
   };
 
