@@ -111,7 +111,9 @@ class Picker extends Component {
           <Card className={`${styles.operatorInfoContainer}`}>
             <div {...styles.operatorInfo}>
               <Info fill="#555555" />
-              <div>{operator.result.extraInfo}</div>
+              <div
+                dangerouslySetInnerHTML={{ __html: operator.result.extraInfo }}
+              />
             </div>
           </Card>
         )}
