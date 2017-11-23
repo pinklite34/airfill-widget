@@ -56,7 +56,7 @@ const Dropdown = ({ getItemProps, items, highlightedIndex }) => {
             width="100%"
             height={height}
             scrollToAlignment="auto"
-            scrollToIndex={highlightedIndex || 0}
+            scrollToIndex={highlightedIndex || undefined}
             itemSize={i => (items[i].__type === 'sectionTitle' ? 24 : 44)}
             itemCount={itemCount}
             renderItem={({ index, style }) => {

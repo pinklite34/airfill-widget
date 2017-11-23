@@ -132,9 +132,7 @@ class ComboInput extends Component {
         );
       }
     } else if (e.keyCode === 13) {
-      if (isPhoneNumber(e.target.value)) {
-        this.props.onSubmit();
-      }
+      this.handleSubmit();
     }
   };
 
@@ -160,10 +158,31 @@ class ComboInput extends Component {
       .map(item => ({ ...item, __type: 'provider', key: item.slug }));
   };
 
-  getMatchingRecentNumbers = value => {
-    const { recentNumbers } = this.props;
+  getMatchingRecentNumbers = (value, countryCode) => {
+    const { recentNumbers, countryList } = this.props;
+    const country = countryCode
+      ? countryList.find(country => country.alpha2 === countryCode)
+      : null;
+
     return recentNumbers
-      .filter(recentNumber => !value || recentNumber.number.indexOf(value) > -1)
+      .filter(recentNumber => {
+        if (!country && !value) {
+          // No filtering enabled, show everything
+          return true;
+        } else if (
+          country &&
+          !country.operators[recentNumber.operator]
+        ) {
+          // Don't show recent refills of other countries but the selected one
+          return false;
+        } else if (recentNumber.number.indexOf(value) > -1) {
+          // Show recent refills with matching phone number
+          return true;
+        } else {
+          // Don't show anything else
+          return false;
+        }
+      })
       .map(item => ({
         ...item,
         __type: 'history',
@@ -183,19 +202,26 @@ class ComboInput extends Component {
     ];
   };
 
+  handleSubmit = () => {
+    if (isPhoneNumber(this.state.inputValue)) {
+      this.props.onSubmit();
+    }
+  };
+
   render() {
     const { inputValue } = this.state;
 
-    const { country, onSubmit, loading } = this.props;
+    const { country, loading } = this.props;
 
     const normalizedInputValue = this.state.inputValue.toLowerCase();
     const countries = country
       ? []
       : this.getMatchingCountries(normalizedInputValue);
     const operators = this.getMatchingOperators(normalizedInputValue);
-    const recentNumbers = country
-      ? []
-      : this.getMatchingRecentNumbers(normalizedInputValue);
+    const recentNumbers = this.getMatchingRecentNumbers(
+      normalizedInputValue,
+      country && country.alpha2
+    );
 
     const sections = [recentNumbers, countries, operators];
     const titles = ['Recent refills', 'Countries', 'Providers'];
@@ -207,6 +233,8 @@ class ComboInput extends Component {
 
     const itemCount =
       countries.length + operators.length + recentNumbers.length;
+
+    const submitEnabled = isPhoneNumber(this.state.inputValue);
 
     return (
       <Downshift
@@ -233,13 +261,14 @@ class ComboInput extends Component {
               inputRef={this.setInputRef}
               onKeyDown={this.onInputKeyDown(openMenu)}
               loading={loading}
-              onSubmit={onSubmit}
+              onSubmit={this.handleSubmit}
+              submitEnabled={submitEnabled}
             />
             {isOpen && itemCount ? (
               <Dropdown
                 getItemProps={getItemProps}
                 items={items}
-                highlightedIndex={highlightedIndex || 0}
+                highlightedIndex={highlightedIndex}
               />
             ) : null}
           </div>

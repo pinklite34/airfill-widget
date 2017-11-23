@@ -5,7 +5,8 @@ const styles = {
   container: css({
     borderTop: '1px solid rgba(0,0,0,0.08)',
     display: 'flex',
-    alignItems: 'stretch'
+    alignItems: 'stretch',
+    cursor: 'pointer'
   }),
   active: css({
     background: 'rgba(0,0,0,0.08)'

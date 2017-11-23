@@ -57,6 +57,9 @@ const styles = {
       marginRight: '0 !important'
     }
   }),
+  buttonDisabled: css({
+    color: '#cccccc !important'
+  }),
   progressBar: css({
     width: '24px !important',
     height: '24px !important'
@@ -72,7 +75,8 @@ const InputRow = ({
   onFocus,
   onKeyDown,
   loading,
-  onSubmit
+  onSubmit,
+  submitEnabled
 }) => {
   const Flag = country && flags[country.toLowerCase()];
 
@@ -108,7 +112,11 @@ const InputRow = ({
               })}
             />
           </div>
-          <Button disabled={loading} {...styles.button} type="submit">
+          <Button
+            disabled={loading || !submitEnabled}
+            {...css([styles.button, !submitEnabled && styles.buttonDisabled])}
+            type="submit"
+          >
             {loading ? (
               <ProgressBar
                 type="circular"

@@ -16,8 +16,8 @@ const styles = {
     position: 'relative'
   }),
   logo: css({
-    width: 150,
-    height: 71,
+    maxWidth: 150,
+    maxHeight: 71,
     flex: '0 0 auto',
     marginRight: 20
   }),
