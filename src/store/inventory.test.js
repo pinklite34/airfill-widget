@@ -143,6 +143,51 @@ describe('selectors', () => {
 
       expect(selectAvailableOperators(baseState)).toEqual(groupedOperators);
     });
+
+    it('returns an object with operators sorted by popularity', () => {
+      const operators = {
+        'e-plus-germany': {
+          name: 'E-Plus Germany',
+          slug: 'e-plus-germany',
+          stats: {
+            popularity: 30.017241379310345
+          },
+        },
+        'o2-germany': {
+          name: 'O2 Germany',
+          slug: 'o2-germany',
+          stats: {
+            popularity: 55
+          }
+        }
+      };
+
+      const state = {
+        airfillWidget: {
+          inventory: {
+            ...baseState.airfillWidget.inventory,
+            items: [{
+              [germany.alpha2]: {
+                operators: {
+                  'atg-mobile-germany': germany.operators['atg-mobile-germany'],
+                  ...operators
+                }
+              }
+            }]
+          }
+        }
+      };
+
+      const sortedOperators = {
+        Mobile: [
+          operators['o2-germany'],
+          operators['e-plus-germany'],
+          germany.operators['atg-mobile-germany']
+        ],
+      };
+
+      expect(selectAvailableOperators(state)).toEqual(sortedOperators);
+    });
   });
 
   describe('selectSelectedOperator', () => {
