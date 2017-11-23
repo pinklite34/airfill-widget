@@ -169,10 +169,7 @@ class ComboInput extends Component {
         if (!country && !value) {
           // No filtering enabled, show everything
           return true;
-        } else if (
-          country &&
-          !country.operators[recentNumber.operator]
-        ) {
+        } else if (country && !country.operators[recentNumber.operator]) {
           // Don't show recent refills of other countries but the selected one
           return false;
         } else if (recentNumber.number.indexOf(value) > -1) {
@@ -183,6 +180,10 @@ class ComboInput extends Component {
           return false;
         }
       })
+      .filter(
+        recentNumber =>
+          !!countryList.find(c => c.operators[recentNumber.operator])
+      )
       .map(item => ({
         ...item,
         __type: 'history',
