@@ -101,6 +101,8 @@ class Collapsed extends Component {
       )
       .map((item, index) => ({ ...item, __type: 'country', index }));
 
+    const startOver = () => history.push('/refill');
+
     return (
       <Downshift
         onChange={item => {
@@ -121,12 +123,16 @@ class Collapsed extends Component {
           openMenu
         }) => (
           <div>
-            <CollapsedSection darken={darken} onClick={openMenu} type="country">
+            <CollapsedSection
+              darken={darken}
+              onClick={home ? openMenu : startOver}
+              type="country"
+            >
               {isOpen ? (
                 <div {...css([styles.container, styles.openContainer])}>
                   <Card
                     {...css([styles.country, styles.openCountry])}
-                    onClick={openMenu}
+                    onClick={home ? openMenu : startOver}
                   >
                     <div {...styles.row}>
                       <div {...styles.flag}>

@@ -264,6 +264,7 @@ class ComboInput extends Component {
               loading={loading}
               onSubmit={this.handleSubmit}
               submitEnabled={submitEnabled}
+              onFocus={openMenu}
             />
             {isOpen && itemCount ? (
               <Dropdown
