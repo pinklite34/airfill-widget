@@ -55,7 +55,7 @@
     "downshift": "^1.15.0",
     "extract-text-webpack-plugin": "2.1.2",
     "fetch-ponyfill": "^4.1.0",
-    "flag-icon-css": "^2.8.0",
+    "flag-icons": "^1.0.2",
     "glamor": "^2.20.39",
     "history": "^4.7.2",
     "input-format": "^0.1.15",

@@ -8,8 +8,7 @@ import { selectCountry, selectCountryList } from '../../store';
 import { Card } from 'react-toolbox/lib/card';
 import CollapsedSection from '../UI/CollapsedSection';
 import Dropdown from '../UI/ComboInput/Dropdown';
-import flags from '../flags';
-import NoFlag from '../UI/ComboInput/flag.svg';
+import Flag from '../UI/Flag';
 
 const styles = {
   container: css({
@@ -95,7 +94,6 @@ class Collapsed extends Component {
       );
     }
 
-    const Flag = flags[country.alpha2.toLowerCase()];
     const items = countryList
       .filter(
         country =>
@@ -132,7 +130,7 @@ class Collapsed extends Component {
                   >
                     <div {...styles.row}>
                       <div {...styles.flag}>
-                        <NoFlag />
+                        <Flag />
                       </div>
                       <input
                         {...getInputProps({
@@ -153,7 +151,9 @@ class Collapsed extends Component {
               ) : (
                 <div {...styles.container}>
                   <div {...styles.country} onClick={openMenu}>
-                    <div {...styles.flag}>{Flag && <Flag />}</div>
+                    <div {...styles.flag}>
+                      <Flag country={country.alpha2} />
+                    </div>
                     <div {...styles.countryName}>{country.name}</div>
                   </div>
                 </div>

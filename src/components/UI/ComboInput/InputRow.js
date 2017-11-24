@@ -3,10 +3,9 @@ import { css } from 'glamor';
 import { Button } from 'react-toolbox/lib/button';
 import { Card } from 'react-toolbox/lib/card';
 import { ProgressBar } from 'react-toolbox/lib/progress_bar';
-import flags from '../../flags';
 
+import Flag from '../Flag';
 import Check from '../check.svg';
-import DefaultFlag from './flag.svg';
 
 const styles = {
   container: css({
@@ -41,11 +40,7 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    cursor: 'pointer',
-    '& svg': {
-      borderRadius: 1,
-      boxShadow: '1px 1px 1px rgba(0,0,0,0.08)'
-    }
+    cursor: 'pointer'
   }),
   button: css({
     backgroundColor: '#F0F6FA !important',
@@ -77,59 +72,47 @@ const InputRow = ({
   loading,
   onSubmit,
   submitEnabled
-}) => {
-  const Flag = country && flags[country.toLowerCase()];
-
-  return (
-    <Card {...styles.container}>
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          onSubmit();
-        }}
-      >
-        <div {...styles.row}>
-          <div {...styles.flag} onClick={resetCountry}>
-            {Flag ? (
-              <Flag width={24} height={18} />
-            ) : (
-              <DefaultFlag width={24} height={18} />
-            )}
-          </div>
-          <div {...styles.inputContainer}>
-            <input
-              {...getInputProps({
-                onKeyDown,
-                onFocus,
-                onChange: e =>
-                  onChange(e.target.value, e.target.selectionStart),
-                ref: inputRef,
-                type: 'text',
-                placeholder: country
-                  ? 'Enter phone number or provider'
-                  : 'Enter country or phone number',
-                ...styles.input
-              })}
-            />
-          </div>
-          <Button
-            disabled={loading || !submitEnabled}
-            {...css([styles.button, !submitEnabled && styles.buttonDisabled])}
-            type="submit"
-          >
-            {loading ? (
-              <ProgressBar
-                type="circular"
-                className={`${styles.progressBar}`}
-              />
-            ) : (
-              <Check />
-            )}
-          </Button>
+}) => (
+  <Card {...styles.container}>
+    <form
+      onSubmit={e => {
+        e.preventDefault();
+        onSubmit();
+      }}
+    >
+      <div {...styles.row}>
+        <div {...styles.flag} onClick={resetCountry}>
+          <Flag country={country} />
         </div>
-      </form>
-    </Card>
-  );
-};
+        <div {...styles.inputContainer}>
+          <input
+            {...getInputProps({
+              onKeyDown,
+              onFocus,
+              onChange: e => onChange(e.target.value, e.target.selectionStart),
+              ref: inputRef,
+              type: 'text',
+              placeholder: country
+                ? 'Enter phone number or provider'
+                : 'Enter country or phone number',
+              ...styles.input
+            })}
+          />
+        </div>
+        <Button
+          disabled={loading || !submitEnabled}
+          {...css([styles.button, !submitEnabled && styles.buttonDisabled])}
+          type="submit"
+        >
+          {loading ? (
+            <ProgressBar type="circular" className={`${styles.progressBar}`} />
+          ) : (
+            <Check />
+          )}
+        </Button>
+      </div>
+    </form>
+  </Card>
+);
 
 export default InputRow;

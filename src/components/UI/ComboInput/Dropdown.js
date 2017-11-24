@@ -26,8 +26,12 @@ const styles = {
     overflow: 'scroll !important'
   }),
   sectionTitle: css({
-    marginLeft: 60,
-    paddingTop: 6
+    paddingLeft: 60,
+    paddingTop: 6,
+    borderTop: '1px solid rgba(0,0,0,0.08)',
+    '&:first-of-type': {
+      borderTop: '0'
+    }
   })
 };
 
