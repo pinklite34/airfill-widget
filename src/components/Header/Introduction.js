@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { css } from 'glamor';
-import { selectNumber } from '../store';
-import { lookupNumber } from '../actions';
+import { selectNumber, selectNumberLookup } from '../../store';
+import { lookupNumber } from '../../actions';
 
-import ComboInput from './UI/ComboInput';
+import ComboInput from '../UI/ComboInput';
+import Info from '../../assets/info.svg';
 
 const styles = {
   container: css({
@@ -37,51 +38,46 @@ const styles = {
     fontWeight: 500
   }),
   error: css({
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    textAlign: 'initial',
     fontSize: 14,
     backgroundColor: 'rgba(255,255,255,0.8)',
     padding: 8,
+    paddingTop: 10,
     color: '#333',
     width: '100%',
     maxWidth: 400,
     lineHeight: 1.5,
-    boxShadow: '0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)',
+    boxShadow:
+      '0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)',
     borderRadius: '0 0 2px 2px',
     marginTop: -2,
     position: 'relative',
     zIndex: -1
+  }),
+  errorIcon: css({
+    marginRight: 8,
+    fill: '#555555',
+    width: 24,
+    height: 24,
+    flex: '0 0 auto'
   })
 };
 
 class Introduction extends Component {
-  state = {
-    isLoading: false,
-    error: null
-  };
-
   lookupNumber = () => {
-    this.setState({
-      isLoading: true
-    });
-
     const { lookupNumber, history, number } = this.props;
 
-    lookupNumber(number)
-      .then(() =>
-        history.push('/refill/selectProvider', {
-          suggested: true
-        })
-      )
-      .catch(error =>
-        this.setState({
-          isLoading: false,
-          error
-        })
-      );
+    lookupNumber(number).then(
+      result => history.push('/refill/selectProvider'),
+      () => null // No uncaught promise rejections
+    );
   };
 
   render() {
-    const { branded, history } = this.props;
-    const { isLoading, error } = this.state;
+    const { branded, history, numberLookup } = this.props;
     return (
       <div {...styles.container}>
         {branded ? (
@@ -96,11 +92,14 @@ class Introduction extends Component {
         )}
         <ComboInput
           history={history}
-          loading={isLoading}
+          loading={numberLookup.isLoading}
           onSubmit={this.lookupNumber}
         />
-        {error ? (
-          <div {...styles.error}>The number lookup failed with the error: {error.message || error}</div>
+        {numberLookup.error ? (
+          <div {...styles.error}>
+            <Info {...styles.errorIcon} />
+            <div>{numberLookup.error.message || numberLookup.error}</div>
+          </div>
         ) : (
           <div {...styles.description}>
             Enter a phone number to see available services or select a provider
@@ -114,7 +113,8 @@ class Introduction extends Component {
 
 export default connect(
   state => ({
-    number: selectNumber(state)
+    number: selectNumber(state),
+    numberLookup: selectNumberLookup(state)
   }),
   {
     lookupNumber

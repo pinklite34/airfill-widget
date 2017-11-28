@@ -2,6 +2,7 @@ import React from 'react';
 import { css } from 'glamor';
 
 import { Button } from 'react-toolbox/lib/button';
+import Info from '../../assets/info.svg';
 
 const styles = {
   container: css({
@@ -31,25 +32,51 @@ const styles = {
   }),
   text: css({
     marginTop: 0
+  }),
+  error: css({
+    margin: 0
+  }),
+  icon: css({
+    width: 24,
+    height: 24,
+    fill: '#555555',
+    flex: '0 0 auto',
+    marginRight: 8
   })
 };
 
-const SuggestedOperator = ({ operator, onAccept, onReject }) => (
-  <div {...styles.container}>
-    <img src={operator.logoImage} alt={operator.name} {...styles.logo} />
-    <div {...styles.content}>
-      <p {...styles.text}>
-        We've detected <strong>{operator.name}</strong> as your operator. If
-        this is not correct, please select another operator below.
-      </p>
-      <Button primary raised onClick={onAccept} {...styles.button}>
-        Yes, this is my operator
-      </Button>
-      <Button raised onClick={onReject} {...styles.button}>
-        No, it's not correct
-      </Button>
-    </div>
-  </div>
-);
+const SuggestedOperator = ({ operator, onAccept, onReject }) => {
+  if (operator) {
+    return (
+      <div {...styles.container}>
+        <img src={operator.logoImage} alt={operator.name} {...styles.logo} />
+        <div {...styles.content}>
+          <p {...styles.text}>
+            We've detected <strong>{operator.name}</strong> as your operator. If
+            this is not correct, please select another operator below.
+          </p>
+          <Button primary raised onClick={onAccept} {...styles.button}>
+            Yes, this is my operator
+          </Button>
+          <Button raised onClick={onReject} {...styles.button}>
+            No, it's not correct
+          </Button>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div {...styles.container}>
+        <Info {...styles.icon} />
+        <div {...styles.content}>
+          <p {...styles.error}>
+            We could not automatically identify your operator. Please select the
+            provider below.
+          </p>
+        </div>
+      </div>
+    );
+  }
+};
 
 export default SuggestedOperator;

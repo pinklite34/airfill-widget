@@ -19,6 +19,10 @@ import inventory, {
 import operator, { selectOperator } from './operator';
 import order, { selectOrder } from './order';
 import recentNumbers, { selectRecentNumbers } from './recentNumbers';
+import numberLookup, {
+  selectNumberLookup,
+  selectNumberLookupError
+} from './numberLookup';
 
 // Export the reducer for use within other redux apps
 export const airfillWidget = combineReducers({
@@ -27,7 +31,8 @@ export const airfillWidget = combineReducers({
   operator,
   paymentStatus,
   order,
-  recentNumbers
+  recentNumbers,
+  numberLookup
 });
 
 // Keep the same state shape when using the standalone widget
@@ -55,5 +60,8 @@ export {
   // Order
   selectOrder,
   // Recent numbers
-  selectRecentNumbers
+  selectRecentNumbers,
+  // Number lookup
+  selectNumberLookup,
+  selectNumberLookupError
 };

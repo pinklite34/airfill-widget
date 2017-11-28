@@ -46,16 +46,29 @@ const itemToString = item => {
   }
 
   // Country
-  if (item.alpha2) {
+  if (item.__type === 'country') {
     return item.name;
   }
 
   return item;
 };
 
+const getInitialInputValue = (country, number) => {
+  const result = formatNumber(country, number, number.length);
+
+  if (result && result.formattedValue) {
+    return result.formattedValue;
+  } else {
+    return '';
+  }
+};
+
 class ComboInput extends Component {
   state = {
-    inputValue: this.props.number || ''
+    inputValue: getInitialInputValue(
+      this.props.country && this.props.country.alpha2,
+      this.props.number
+    )
   };
 
   changeValue = (inputValue, currentCaret) => {

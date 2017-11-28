@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { css } from 'glamor';
+import { push } from 'react-router-redux';
 
 import { ProgressBar } from 'react-toolbox/lib/progress_bar';
 
@@ -25,7 +26,7 @@ import {
   selectPaymentStatus
 } from './../../store';
 
-import { updatePaymentStatus } from '../../actions';
+import { updatePaymentStatus, resetNumberLookup } from '../../actions';
 
 const componentForStatus = status => {
   switch (status) {
@@ -78,7 +79,8 @@ const Payment = ({
   country,
   paymentStatus,
 
-  updatePaymentStatus
+  updatePaymentStatus,
+  reset
 }) => {
   if (!order.result) {
     return (
@@ -103,7 +105,8 @@ const Payment = ({
             status: event,
             orderId,
             data
-          })}
+          })
+        }
       />
       <PaymentComponent
         history={history}
@@ -118,7 +121,7 @@ const Payment = ({
         refundAddress={refundAddress}
         billingCurrency={billingCurrency}
         number={number}
-        onReset={() => history.push('/refill')}
+        onReset={reset}
       />
     </ActiveSection>
   );
@@ -132,7 +135,8 @@ export default connect(
     paymentStatus: selectPaymentStatus(state),
     number: selectNumber(state)
   }),
-  {
-    updatePaymentStatus
-  }
+  dispatch => ({
+    updatePaymentStatus: (...args) => dispatch(updatePaymentStatus(...args)),
+    reset: () => dispatch(resetNumberLookup()) && dispatch(push('/refill'))
+  })
 )(Payment);

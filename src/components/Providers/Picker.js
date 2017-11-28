@@ -5,7 +5,8 @@ import { setOperator } from '../../actions';
 import {
   selectAvailableOperators,
   selectSelectedOperator,
-  selectCountry
+  selectCountry,
+  selectNumberLookup
 } from '../../store';
 
 import ActiveSection from '../UI/ActiveSection';
@@ -23,44 +24,57 @@ const Picker = ({
   history,
   location,
   selectedOperator,
-  country
+  country,
+  numberLookup
 }) => {
   if (!country) {
     return null;
   }
 
-  const { state } = location;
+  const isNumberLookup = !!numberLookup.altOperators;
 
-  return (
-    <ActiveSection>
-      {state &&
-        state.suggested && (
-          <SuggestedOperator
-            operator={selectedOperator}
-            onAccept={() => history.push('/refill/selectAmount')}
-            onReject={() => history.replace('/refill/selectProvider')}
-          />
-        )}
-      {Object.keys(operators).map(key => (
-        <Grid
-          key={key}
-          title={customLabels[key] || `${key} refill`}
-          providers={operators[key]}
-          onSelect={operator => {
-            setOperator(operator);
-            history.push('/refill/selectAmount');
-          }}
+  const selectOperator = operator => {
+    setOperator(operator);
+    history.push('/refill/selectAmount');
+  };
+
+  if (isNumberLookup) {
+    return (
+      <ActiveSection>
+        <SuggestedOperator
+          operator={numberLookup.operator}
+          onAccept={() => history.push('/refill/selectAmount')}
+          onReject={() => history.replace('/refill/selectProvider')}
         />
-      ))}
-    </ActiveSection>
-  );
+        <Grid
+          title={'Available providers'}
+          providers={numberLookup.altOperators}
+          onSelect={selectOperator}
+        />
+      </ActiveSection>
+    );
+  } else {
+    return (
+      <ActiveSection>
+        {Object.keys(operators).map(key => (
+          <Grid
+            key={key}
+            title={customLabels[key] || `${key} refill`}
+            providers={operators[key]}
+            onSelect={selectOperator}
+          />
+        ))}
+      </ActiveSection>
+    );
+  }
 };
 
 export default connect(
   state => ({
     operators: selectAvailableOperators(state),
     selectedOperator: selectSelectedOperator(state),
-    country: selectCountry(state)
+    country: selectCountry(state),
+    numberLookup: selectNumberLookup(state)
   }),
   {
     setOperator

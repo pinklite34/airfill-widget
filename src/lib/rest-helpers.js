@@ -1,6 +1,6 @@
-import {createAction} from 'redux-actions';
-import {REHYDRATE} from 'redux-persist/constants';
-import {fetch} from './api-client';
+import { createAction } from 'redux-actions';
+import { REHYDRATE } from 'redux-persist/constants';
+import { fetch } from './api-client';
 
 const actionTypeForName = name => {
   name = Array.isArray(name) ? name : name.split('.');
@@ -12,7 +12,7 @@ const actionTypeForName = name => {
 // --- Collection Reducer ---
 // --------------------------
 
-export const createCollectionReducer = (name, clearStateOnLoad=false) => {
+export const createCollectionReducer = (name, clearStateOnLoad = false) => {
   const initialState = {
     isLoading: false,
     error: null,
@@ -20,11 +20,11 @@ export const createCollectionReducer = (name, clearStateOnLoad=false) => {
   };
   const baseType = actionTypeForName(name);
 
-  return (state=initialState, {type, payload}) => {
+  return (state = initialState, { type, payload }) => {
     switch (type) {
       case baseType: {
         if (clearStateOnLoad) {
-          return { ...state, isLoading: true, items: [] }
+          return { ...state, isLoading: true, items: [] };
         } else {
           return { ...state, isLoading: true };
         }
@@ -36,7 +36,11 @@ export const createCollectionReducer = (name, clearStateOnLoad=false) => {
       }
 
       case baseType + '_ERROR': {
-        return { ...state, isLoading: false, error: payload.message || payload };
+        return {
+          ...state,
+          isLoading: false,
+          error: payload.message || payload
+        };
       }
 
       case REHYDRATE: {
@@ -68,9 +72,8 @@ export const createErrorSelector = name => {
 };
 export const createItemSelector = name => {
   const collectionSelector = createCollectionSelector(name);
-  return (state, id) => (
-    collectionSelector(state).items.filter(i => i.id === id)
-  );
+  return (state, id) =>
+    collectionSelector(state).items.filter(i => i.id === id);
 };
 export const createSingleResultSelector = name => {
   const collectionSelector = createCollectionSelector(name);
@@ -99,12 +102,14 @@ export const createLoadAction = options => {
 
   // Create internal actions
   const loadStart = createAction(baseType);
-  const loadSuccess = createAction(baseType + '_SUCCESS',
-    ({response}) => response,
+  const loadSuccess = createAction(
+    baseType + '_SUCCESS',
+    ({ response }) => response,
     payload => payload
   );
-  const loadError = createAction(baseType + '_ERROR',
-    ({response}) => response,
+  const loadError = createAction(
+    baseType + '_ERROR',
+    ({ response }) => response,
     payload => payload
   );
 
@@ -112,7 +117,7 @@ export const createLoadAction = options => {
   const isLoadingSelector = createIsLoadingSelector(name);
 
   // Create final thunk action
-  return (payload={}) => (dispatch, getState) => {
+  return (payload = {}) => (dispatch, getState) => {
     const props = { ...payload }; // avoid mutating original object to prevent nasty side effects
     const isLoading = isLoadingSelector(getState());
 
@@ -125,6 +130,7 @@ export const createLoadAction = options => {
         .then(response => {
           response = responseTransform ? responseTransform(response) : response;
           dispatch(loadSuccess({ props, response }));
+          return response;
         })
         .catch(error => {
           dispatch(loadError({ props, response: error }));
@@ -134,8 +140,7 @@ export const createLoadAction = options => {
           }
 
           return Promise.reject(error);
-        }
-      );
+        });
     }
     return Promise.reject();
   };

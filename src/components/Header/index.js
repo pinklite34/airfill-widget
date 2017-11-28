@@ -2,9 +2,8 @@ import React from 'react';
 import { Switch, Route } from 'react-router';
 import { css } from 'glamor';
 
+import Logo from './Logo';
 import Introduction from './Introduction';
-
-import BitrefillLogo from './logo.svg';
 
 const styles = {
   container: css({
@@ -21,27 +20,8 @@ const styles = {
         padding: 12
       }
     }
-  }),
-  logo: css({
-    cursor: 'pointer',
-    '& + div': {
-      marginTop: 16
-    }
   })
 };
-
-const Logo = () => (
-  <Route
-    render={({ history }) => (
-      <BitrefillLogo
-        fill="#fff"
-        width="104"
-        {...styles.logo}
-        onClick={() => history.push('/refill')}
-      />
-    )}
-  />
-);
 
 const Header = ({ branded }) => (
   <Switch>
@@ -61,7 +41,8 @@ const Header = ({ branded }) => (
           <div {...styles.container}>
             <Logo />
           </div>
-        )}
+        )
+      }
     />
   </Switch>
 );

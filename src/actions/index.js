@@ -33,9 +33,7 @@ export const lookupLocation = () => (dispatch, getState) => {
   });
 };
 
-export const proccessOperatorPackages = response => {
-  const { operator } = response;
-
+const processOperatorPackages = operator => {
   if (operator && operator.packages) {
     // Sort packages by price (asc)
     operator.packages.sort((a, b) => {
@@ -63,16 +61,26 @@ export const proccessOperatorPackages = response => {
     operator.packages.forEach(item => {
       item.btcPrice = Math.ceil(item.satoshiPrice / 100) / 1000000;
     });
-  } else {
-    throw response.message || 'Unknown error';
-  }
 
-  return operator;
+    return operator;
+  } else {
+    return null;
+  }
+};
+
+const transformOperatorResponse = response => {
+  const operator = processOperatorPackages(response.operator);
+
+  if (!operator) {
+    throw response.message || 'Unknown error';
+  } else {
+    return operator;
+  }
 };
 
 const loadOperator = createLoadAction({
   name: 'airfillWidget.operator',
-  responseTransform: proccessOperatorPackages
+  responseTransform: transformOperatorResponse
 });
 
 export const setOperator = operatorSlug => (dispatch, getState) => {
@@ -82,10 +90,20 @@ export const setOperator = operatorSlug => (dispatch, getState) => {
   );
 };
 
+const transformNumberLookupReponse = response => {
+  const { operator, altOperators, country } = response;
+
+  return {
+    operator: processOperatorPackages(operator),
+    altOperators,
+    country: country.alpha2
+  };
+};
+
 const loadNumberLookup = createLoadAction({
-  name: 'airfillWidget.operator',
+  name: 'airfillWidget.numberLookup',
   uri: '/lookup_number',
-  responseTransform: proccessOperatorPackages
+  responseTransform: transformNumberLookupReponse
 });
 
 export const lookupNumber = number => dispatch => {
@@ -96,6 +114,8 @@ export const lookupNumber = number => dispatch => {
   dispatch(setAmount(''));
   return dispatch(loadNumberLookup(options));
 };
+
+export const resetNumberLookup = createAction('RESET_NUMBERLOOKUP');
 
 const postOrder = createLoadAction({
   name: 'airfillWidget.order',
@@ -139,8 +159,9 @@ export const updateOrderStatus = () => (dispatch, getState) => {
   ) {
     dispatch(
       fetchOrder({
-        uri: `/order/${order.result
-          .id}?incoming_btc_address=${encodeURIComponent(
+        uri: `/order/${
+          order.result.id
+        }?incoming_btc_address=${encodeURIComponent(
           order.result.payment.address
         )}`,
         silent: true

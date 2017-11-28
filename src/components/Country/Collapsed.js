@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Downshift from 'downshift';
 import { css } from 'glamor';
 import { connect } from 'react-redux';
-import { setCountry } from '../../actions';
+import { push } from 'react-router-redux';
+import { setCountry, resetNumberLookup } from '../../actions';
 import { selectCountry, selectCountryList } from '../../store';
 
 import { Card } from 'react-toolbox/lib/card';
@@ -77,6 +78,7 @@ class Collapsed extends Component {
   render() {
     const {
       home,
+      goHome,
       country,
       countryList,
       darken,
@@ -94,14 +96,13 @@ class Collapsed extends Component {
       );
     }
 
+    const normalizedInputValue = inputValue.toLowerCase();
     const items = countryList
       .filter(
         country =>
-          country.name.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1
+          country.name.toLowerCase().indexOf(normalizedInputValue) !== -1
       )
       .map((item, index) => ({ ...item, __type: 'country', index }));
-
-    const startOver = () => history.push('/refill');
 
     return (
       <Downshift
@@ -125,14 +126,14 @@ class Collapsed extends Component {
           <div>
             <CollapsedSection
               darken={darken}
-              onClick={home ? openMenu : startOver}
+              onClick={home ? openMenu : goHome}
               type="country"
             >
               {isOpen ? (
                 <div {...css([styles.container, styles.openContainer])}>
                   <Card
                     {...css([styles.country, styles.openCountry])}
-                    onClick={home ? openMenu : startOver}
+                    onClick={home ? openMenu : goHome}
                   >
                     <div {...styles.row}>
                       <div {...styles.flag}>
@@ -177,7 +178,8 @@ export default connect(
     country: selectCountry(state),
     countryList: selectCountryList(state)
   }),
-  {
-    setCountry
-  }
+  dispatch => ({
+    setCountry: country => dispatch(setCountry(country)),
+    goHome: () => dispatch(resetNumberLookup()) && dispatch(push('/refill'))
+  })
 )(Collapsed);
