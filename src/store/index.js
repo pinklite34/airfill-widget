@@ -21,6 +21,7 @@ import order, { selectOrder } from './order';
 import recentNumbers, { selectRecentNumbers } from './recentNumbers';
 import numberLookup, {
   selectNumberLookup,
+  selectIsNumberLookup,
   selectNumberLookupError
 } from './numberLookup';
 
@@ -63,5 +64,6 @@ export {
   selectRecentNumbers,
   // Number lookup
   selectNumberLookup,
+  selectIsNumberLookup,
   selectNumberLookupError
 };

@@ -54,6 +54,12 @@ export default (state = initialState, action) => {
 };
 
 export const selectNumberLookup = state => state.airfillWidget.numberLookup;
+export const selectIsNumberLookup = state => {
+  const numberLookup = selectNumberLookup(state);
+
+  return numberLookup && !!numberLookup.altOperators;
+};
+
 export const selectNumberLookupError = state => {
   const numberLookup = selectNumberLookup(state);
 

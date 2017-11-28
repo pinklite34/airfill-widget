@@ -2,25 +2,32 @@ import React from 'react';
 import { css } from 'glamor';
 
 import { Button } from 'react-toolbox/lib/button';
-import Info from '../../assets/info.svg';
+import Info from '../UI/info.svg';
 
 const styles = {
   container: css({
     backgroundColor: '#fff',
-    margin: -20,
+    margin: -16,
     marginBottom: 20,
     padding: 20,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     boxShadow: '0 1px 2px 0 rgba(0,0,0,.16)',
-    position: 'relative'
+    position: 'relative',
+    '@media(max-width: 460px)': {
+      flexWrap: 'wrap',
+      justifyContent: 'center'
+    }
   }),
   logo: css({
     maxWidth: 150,
     maxHeight: 71,
     flex: '0 0 auto',
-    marginRight: 20
+    marginRight: 20,
+    '@media(max-width: 460px)': {
+      marginBottom: 20
+    }
   }),
   button: css({
     width: 220,
@@ -28,7 +35,12 @@ const styles = {
     marginTop: 8
   }),
   content: css({
-    flex: '0 1 auto'
+    flex: '0 1 auto',
+    '@media(max-width: 460px)': {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
+    }
   }),
   text: css({
     marginTop: 0

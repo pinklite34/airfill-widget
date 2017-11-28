@@ -16,7 +16,7 @@ import SectionTitle from '../UI/SectionTitle';
 
 import Package from './Package';
 import Ranged from './Ranged';
-import Info from '../../assets/info.svg';
+import Info from '../UI/info.svg';
 
 const styles = {
   packages: css({

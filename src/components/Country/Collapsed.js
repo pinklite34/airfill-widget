@@ -4,7 +4,11 @@ import { css } from 'glamor';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { setCountry, resetNumberLookup } from '../../actions';
-import { selectCountry, selectCountryList } from '../../store';
+import {
+  selectCountry,
+  selectCountryList,
+  selectIsNumberLookup
+} from '../../store';
 
 import { Card } from 'react-toolbox/lib/card';
 import CollapsedSection from '../UI/CollapsedSection';
@@ -83,8 +87,13 @@ class Collapsed extends Component {
       countryList,
       darken,
       history,
-      setCountry
+      setCountry,
+      isNumberLookup
     } = this.props;
+
+    if (isNumberLookup) {
+      return null;
+    }
 
     const { inputValue } = this.state;
 
@@ -176,7 +185,8 @@ class Collapsed extends Component {
 export default connect(
   state => ({
     country: selectCountry(state),
-    countryList: selectCountryList(state)
+    countryList: selectCountryList(state),
+    isNumberLookup: selectIsNumberLookup(state)
   }),
   dispatch => ({
     setCountry: country => dispatch(setCountry(country)),

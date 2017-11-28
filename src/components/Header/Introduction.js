@@ -5,7 +5,7 @@ import { selectNumber, selectNumberLookup } from '../../store';
 import { lookupNumber } from '../../actions';
 
 import ComboInput from '../UI/ComboInput';
-import Info from '../../assets/info.svg';
+import Info from '../UI/info.svg';
 
 const styles = {
   container: css({
