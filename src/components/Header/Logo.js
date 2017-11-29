@@ -2,7 +2,6 @@ import React from 'react';
 import { css } from 'glamor';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { resetNumberLookup } from '../../actions';
 
 import BitrefillLogo from './logo.svg';
 
@@ -20,5 +19,5 @@ const Logo = ({ goHome }) => (
 );
 
 export default connect(null, dispatch => ({
-  goHome: () => dispatch(resetNumberLookup()) && dispatch(push('/refill'))
+  goHome: () => dispatch(push('/refill'))
 }))(Logo);

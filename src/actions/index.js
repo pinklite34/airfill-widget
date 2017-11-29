@@ -18,7 +18,12 @@ export const setCountry = createAction('SET_COUNTRY');
 export const setNumber = createAction('SET_NUMBER');
 export const setAmount = createAction('SET_AMOUNT');
 export const setEmail = createAction('SET_EMAIL');
+export const setComboInputFocus = createAction('SET_COMBOINPUT_FOCUS');
 export const updatePaymentStatus = createAction('UPDATE_PAYMENT_STATUS');
+
+const setComboInputOpen = createAction('SET_COMBOINPUT_OPEN');
+export const openComboInput = () => setComboInputOpen(true);
+export const closeComboInput = () => setComboInputOpen(false);
 
 export const loadInventory = createLoadAction({
   name: 'airfillWidget.inventory',

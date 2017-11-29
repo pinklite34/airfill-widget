@@ -18,13 +18,9 @@ const styles = {
 };
 
 class Grid extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      showAll: false
-    };
-  }
+  state = {
+    showAll: this.props.defaultShowAll || false
+  };
 
   showAll = () => this.setState({ showAll: true });
   render() {

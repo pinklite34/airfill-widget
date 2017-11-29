@@ -50,6 +50,7 @@ const Picker = ({
           title={'Available providers'}
           providers={numberLookup.altOperators}
           onSelect={selectOperator}
+          defaultShowAll={true}
         />
       </ActiveSection>
     );

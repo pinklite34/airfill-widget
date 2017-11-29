@@ -8,13 +8,18 @@ import {
   selectCountry,
   selectNumber,
   selectAvailableOperators,
-  selectRecentNumbers
+  selectRecentNumbers,
+  selectComboInputOpen,
+  selectComboInputFocus
 } from '../../../store';
 import {
   setCountry,
   setNumber,
   setOperator,
-  useRecentRefill
+  useRecentRefill,
+  openComboInput,
+  closeComboInput,
+  setComboInputFocus
 } from '../../../actions';
 import {
   isPhoneNumber,
@@ -71,6 +76,27 @@ class ComboInput extends Component {
     )
   };
 
+  focusInput = () => {
+    if (this.input) {
+      this.setState({ inputValue: '' }, () => {
+        this.input.focus();
+        this.props.setComboInputFocus(false);
+      });
+    }
+  };
+
+  componentDidMount() {
+    if (this.props.shouldFocus) {
+      this.focusInput();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.shouldFocus) {
+      this.focusInput();
+    }
+  }
+
   changeValue = (inputValue, currentCaret) => {
     if (isPhoneNumber(inputValue)) {
       const { formattedValue, number, country, caret } = formatNumber(
@@ -110,22 +136,22 @@ class ComboInput extends Component {
     }
   };
 
-  resetCountry = openMenu => () => {
+  resetCountry = () => {
     this.props.setCountry('');
     this.setState({ inputValue: '' });
     this.input.focus();
-    openMenu && openMenu();
+    this.props.openComboInput();
   };
 
   setInputRef = ref => (this.input = ref);
-  onInputKeyDown = openMenu => e => {
+  onInputKeyDown = e => {
     const { selectionStart, selectionEnd } = e.target;
     const selectionRange = selectionEnd - selectionStart;
 
     if (e.keyCode === 8) {
       // Handle backspace
       if (!e.target.value.length) {
-        this.resetCountry(null)();
+        this.resetCountry();
       } else if (isPhoneNumber(e.target.value)) {
         if (!selectionRange) {
           e.preventDefault();
@@ -204,28 +230,26 @@ class ComboInput extends Component {
       }));
   };
 
-  getMatchingItems = () => {
-    const { country } = this.props;
-
-    const normalizedInputValue = this.state.inputValue.toLowerCase();
-
-    return [
-      ...this.getMatchingRecentNumbers(normalizedInputValue),
-      ...(!country ? this.getMatchingCountries(normalizedInputValue) : []),
-      ...(country ? this.getMatchingOperators(normalizedInputValue) : [])
-    ];
-  };
-
   handleSubmit = () => {
     if (isPhoneNumber(this.state.inputValue)) {
       this.props.onSubmit();
     }
   };
 
+  handleStateChange = changes => {
+    if (changes.hasOwnProperty('isOpen')) {
+      if (changes.isOpen) {
+        this.props.openComboInput();
+      } else {
+        this.props.closeComboInput();
+      }
+    }
+  };
+
   render() {
     const { inputValue } = this.state;
 
-    const { country, loading } = this.props;
+    const { country, loading, isOpen, openComboInput } = this.props;
 
     const normalizedInputValue = this.state.inputValue.toLowerCase();
     const countries = country
@@ -257,27 +281,22 @@ class ComboInput extends Component {
         itemToString={itemToString}
         selectedItem={null}
         itemCount={itemCount}
+        isOpen={isOpen}
+        onStateChange={this.handleStateChange}
       >
-        {({
-          getInputProps,
-          getItemProps,
-          inputValue,
-          highlightedIndex,
-          isOpen,
-          openMenu
-        }) => (
+        {({ getInputProps, getItemProps, inputValue, highlightedIndex }) => (
           <div {...styles.container}>
             <InputRow
               getInputProps={getInputProps}
               onChange={this.changeValue}
               country={country && country.alpha2}
-              resetCountry={this.resetCountry(openMenu)}
+              resetCountry={this.resetCountry}
               inputRef={this.setInputRef}
-              onKeyDown={this.onInputKeyDown(openMenu)}
+              onKeyDown={this.onInputKeyDown}
               loading={loading}
               onSubmit={this.handleSubmit}
               submitEnabled={submitEnabled}
-              onFocus={openMenu}
+              onFocus={openComboInput}
             />
             {isOpen && itemCount ? (
               <Dropdown
@@ -299,9 +318,14 @@ export default connect(
     country: selectCountry(state),
     countryList: selectCountryList(state),
     number: selectNumber(state),
-    recentNumbers: selectRecentNumbers(state)
+    recentNumbers: selectRecentNumbers(state),
+    isOpen: selectComboInputOpen(state),
+    shouldFocus: selectComboInputFocus(state)
   }),
   {
+    openComboInput,
+    closeComboInput,
+    setComboInputFocus,
     setCountry,
     setNumber,
     setOperator,

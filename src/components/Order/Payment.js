@@ -26,7 +26,7 @@ import {
   selectPaymentStatus
 } from './../../store';
 
-import { updatePaymentStatus, resetNumberLookup } from '../../actions';
+import { updatePaymentStatus } from '../../actions';
 
 const componentForStatus = status => {
   switch (status) {
@@ -137,6 +137,6 @@ export default connect(
   }),
   dispatch => ({
     updatePaymentStatus: (...args) => dispatch(updatePaymentStatus(...args)),
-    reset: () => dispatch(resetNumberLookup()) && dispatch(push('/refill'))
+    reset: () => dispatch(push('/refill'))
   })
 )(Payment);

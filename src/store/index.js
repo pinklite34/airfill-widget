@@ -5,7 +5,9 @@ import ui, {
   selectAmount,
   selectEmail,
   selectValidEmail,
-  selectCurrentStep
+  selectCurrentStep,
+  selectComboInputOpen,
+  selectComboInputFocus
 } from './ui';
 import paymentStatus, { selectPaymentStatus } from './paymentStatus';
 import inventory, {
@@ -47,6 +49,8 @@ export {
   selectEmail,
   selectValidEmail,
   selectCurrentStep,
+  selectComboInputOpen,
+  selectComboInputFocus,
   // Inventory
   selectCountry,
   selectCountryList,

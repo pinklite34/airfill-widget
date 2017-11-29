@@ -7,7 +7,8 @@ const initialState = {
   number: '',
   operatorId: null,
   amount: 0,
-  email: { value: '', valid: false, error: false }
+  email: { value: '', valid: false, error: false },
+  comboInputOpen: false
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -15,6 +16,14 @@ export default (state = initialState, { type, payload }) => {
     case REHYDRATE: {
       const data = payload.airfillWidget && selectUiState(payload);
       return { ...state, ...data };
+    }
+
+    case 'SET_COMBOINPUT_OPEN': {
+      return { ...state, comboInputOpen: payload };
+    }
+
+    case 'SET_COMBOINPUT_FOCUS': {
+      return { ...state, comboInputFocus: payload };
     }
 
     case 'SET_NUMBER': {
@@ -47,6 +56,10 @@ export default (state = initialState, { type, payload }) => {
 
 export const selectUiState = state => state.airfillWidget.ui;
 export const selectAmount = state => selectUiState(state).amount;
+export const selectComboInputOpen = state =>
+  selectUiState(state).comboInputOpen;
+export const selectComboInputFocus = state =>
+  selectUiState(state).comboInputFocus;
 
 export const selectNumber = state => {
   const number = selectUiState(state).number;

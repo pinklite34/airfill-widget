@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { css } from 'glamor';
 import { selectNumber, selectNumberLookup } from '../../store';
-import { lookupNumber } from '../../actions';
+import { lookupNumber, resetNumberLookup } from '../../actions';
 
 import ComboInput from '../UI/ComboInput';
 import Info from '../UI/info.svg';
@@ -67,6 +67,10 @@ const styles = {
 };
 
 class Introduction extends Component {
+  componentDidMount() {
+    this.props.resetNumberLookup();
+  }
+
   lookupNumber = () => {
     const { lookupNumber, history, number } = this.props;
 
@@ -117,6 +121,7 @@ export default connect(
     numberLookup: selectNumberLookup(state)
   }),
   {
-    lookupNumber
+    lookupNumber,
+    resetNumberLookup
   }
 )(Introduction);
