@@ -125,12 +125,12 @@ describe('selectors', () => {
   });
 
   describe('selectAvailableOperators', () => {
-    it('returns an object with empty Mobile array if country is not found', () => {
+    it('returns an empty object if country is not found', () => {
       const state = {
         airfillWidget: { inventory: { ...baseState.airfillWidget.inventory, selectedCountry: null}}
       };
 
-      const expected = null;
+      const expected = {};
 
       expect(selectAvailableOperators(state)).toEqual(expected);
     });

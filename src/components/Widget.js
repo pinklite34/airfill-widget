@@ -16,7 +16,7 @@ import Header from './Header';
 import Footer from './Footer';
 
 import Country from './Country';
-import Number from './Number';
+import NumberLookup from './NumberLookup';
 import Providers from './Providers';
 import Instructions from './Instructions';
 import Amount from './Amount';
@@ -99,7 +99,7 @@ class AirfillWidget extends Component {
           <Card>
             <Header branded={config.showLogo} />
             <Country />
-            <Number />
+            <NumberLookup />
             <Providers />
             <Amount config={config} />
             <Details config={config} />
