@@ -43,7 +43,7 @@ const Picker = ({
       <ActiveSection>
         <SuggestedOperator
           operator={numberLookup.operator}
-          onAccept={() => history.push('/refill/selectAmount')}
+          onAccept={() => selectOperator(numberLookup.operator.slug)}
           onReject={() => history.replace('/refill/selectProvider')}
         />
         <Grid
