@@ -109,6 +109,7 @@ const NewPayment = ({
   const price = order[valueField[billingCurrency.toLowerCase()]];
   const formattedPrice = price + ' ' + billingCurrencyDisplayName.toUpperCase();
   const canAfford = price <= accountBalance;
+  const displayNumber = !operator.noNumber;
   const widgetRequireAccountBalance = requireAccountBalance;
 
   return (
@@ -121,7 +122,7 @@ const NewPayment = ({
       <dl className="refill-payment-order-info">
         <dt>Package</dt>
         <dd>{order.itemDesc}</dd>
-        <dt>{labelForNumberType(operator && operator.type)}</dt>
+        {displayNumber && <dt>{labelForNumberType(operator && operator.type)}</dt>}
         <dd>{formatDisplayValue(operator && operator.type, number, country)}</dd>
         {showEmailField ? [
           <dt key="0">Email address</dt>,

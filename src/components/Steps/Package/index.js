@@ -210,7 +210,8 @@ class PackageStep extends Component {
       // const isPinBased = operatorResult ? operatorResult.isPinBased : null;
       // const canContinue = (isPinBased || number) && amount && !isLoadingOrder && (showEmailField ? email.valid : true);
       const canContinue =
-        number && amount && !isLoadingOrder && (showEmailField ? email : true);
+        (number || operatorResult.noNumber) && amount && !isLoadingOrder && (showEmailField ? email : true);
+      const showNumberField = operatorResult && !operatorResult.noNumber;
 
       return (
         <Step
@@ -244,7 +245,7 @@ class PackageStep extends Component {
               range={operatorResult.range}
             />}
 
-          {true /*isPinBased === false*/ &&
+          {showNumberField &&
             <PhoneNumberInput
               country={country}
               onChange={this.props.setNumber}
