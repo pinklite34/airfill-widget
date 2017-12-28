@@ -15,6 +15,7 @@ import { client } from './lib/api-client';
 
 import configureStore from './store/configureStore';
 let store;
+let lastKey;
 
 function AirfillWidget(ele, opt) {
   const element = typeof ele === 'string' ? document.querySelector(ele) : ele;
