@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router';
 import { css } from 'glamor';
 
-import { Card } from 'react-toolbox/lib/card';
-import { ProgressBar } from 'react-toolbox/lib/progress_bar';
+import Card from 'material-ui/Card';
+import { CircularProgress } from 'material-ui/Progress';
 
 import { init } from '../actions';
 import { selectInventory } from '../store';
@@ -121,7 +121,7 @@ class AirfillWidget extends Component {
                 margin: 64
               })}
             >
-              <ProgressBar type="circular" />
+              <CircularProgress />
             </div>
           </Card>
         )}

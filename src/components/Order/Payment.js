@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { css } from 'glamor';
 import { push } from 'react-router-redux';
 
-import { ProgressBar } from 'react-toolbox/lib/progress_bar';
+import { CircularProgress } from 'material-ui/Progress';
 
 import PusherSubscription from '../PusherSubscription';
 
@@ -85,7 +85,7 @@ const Payment = ({
   if (!order.result) {
     return (
       <div {...styles.spinner}>
-        <ProgressBar type="circular" />
+        <CircularProgress />
         <div {...styles.spinnerText}>Loading order status...</div>
       </div>
     );

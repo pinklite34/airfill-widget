@@ -1,6 +1,6 @@
 import React from 'react';
 import { css } from 'glamor';
-import { Button } from 'react-toolbox/lib/button';
+import Button from 'material-ui/Button';
 
 const styles = {
   container: css({

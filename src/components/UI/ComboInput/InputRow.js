@@ -1,8 +1,8 @@
 import React from 'react';
 import { css } from 'glamor';
-import { Button } from 'react-toolbox/lib/button';
-import { Card } from 'react-toolbox/lib/card';
-import { ProgressBar } from 'react-toolbox/lib/progress_bar';
+import Button from 'material-ui/Button';
+import Card from 'material-ui/Card';
+import { CircularProgress } from 'material-ui/Progress';
 
 import Flag from '../Flag';
 import Check from '../check.svg';
@@ -12,7 +12,6 @@ const styles = {
     position: 'relative',
     zIndex: 11
   }),
-
   row: css({
     display: 'flex',
     flexDirection: 'row',
@@ -105,7 +104,7 @@ const InputRow = ({
           type="submit"
         >
           {loading ? (
-            <ProgressBar type="circular" className={`${styles.progressBar}`} />
+            <CircularProgress className={`${styles.progressBar}`} />
           ) : (
             <Check />
           )}

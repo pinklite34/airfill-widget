@@ -1,6 +1,6 @@
 import React from 'react';
 import { css } from 'glamor';
-import { Card } from 'react-toolbox/lib/card';
+import Card from 'material-ui/Card';
 
 import More from './more.svg';
 import Select from './select.svg';

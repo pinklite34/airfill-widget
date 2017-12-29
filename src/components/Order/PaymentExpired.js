@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'react-toolbox/lib/button';
+import Button from 'material-ui/Button';
 
 const ExpiredPayment = () => {
   return (

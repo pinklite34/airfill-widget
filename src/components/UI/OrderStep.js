@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { css } from 'glamor';
-import { ProgressBar } from 'react-toolbox/lib/progress_bar';
-
+import { CircularProgress } from 'material-ui/Progress';
 import Check from './check.svg';
 import Error from './error.svg';
 
@@ -30,7 +29,7 @@ const OrderStep = ({children, done, error}) => {
     <h3 {...styles.container}>
       {error ? <Error fill="#E1283C" {...styles.icon} /> :
         done ? <Check fill="#98AE0A" {...styles.icon} /> :
-        <ProgressBar type="circular" className={`${styles.icon}`} />
+        <CircularProgress className={`${styles.icon}`} />
       }
       {children}
     </h3>

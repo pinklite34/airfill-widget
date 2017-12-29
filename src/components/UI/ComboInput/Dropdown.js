@@ -2,7 +2,7 @@ import React from 'react';
 import VirtualList from 'react-tiny-virtual-list';
 
 import { css } from 'glamor';
-import { Card } from 'react-toolbox/lib/card';
+import Card from 'material-ui/Card';
 
 import CountryRow from './CountryRow';
 import ProviderRow from './ProviderRow';

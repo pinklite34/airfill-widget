@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { css } from 'glamor';
-import { Button } from 'react-toolbox/lib/button';
+import Button from 'material-ui/Button';
 import { isPhoneNumber, formatDisplayValue } from '../../lib/number-helpers';
 
 import BitcoinAddress from '../UI/BitcoinAddress';
