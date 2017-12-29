@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { css } from 'glamor';
 import { connect } from 'react-redux';
-import { Button } from 'react-toolbox/lib/button';
 
 import { createOrder, setNumber, setEmail } from '../../actions';
 import { selectNumber, selectEmail, selectAmount } from '../../store';
 import { isValidEmail } from '../../lib/email-validation';
 
-import { Input } from 'react-toolbox/lib/input';
-import { ProgressBar } from 'react-toolbox/lib/progress_bar';
+import Button from 'material-ui/Button';
+import Input from 'material-ui/Input';
+import { CircularProgress } from 'material-ui/Progress';
 import Field from '../UI/Field';
 
 import Error from './error.svg';
@@ -36,6 +36,8 @@ const styles = {
     }
   }),
   button: css({
+    backgroundColor: '#449BF7 !important',
+    color: '#fff !important',
     width: 250,
     marginBottom: 0
   }),
@@ -111,7 +113,7 @@ class TopupDetails extends Component {
           {...styles.field}
         >
           <Input
-            onChange={this.props.setNumber}
+            onChange={e => this.props.setNumber(e.target.value)}
             type="tel"
             value={number}
             className={`${styles.input}`}
@@ -124,9 +126,9 @@ class TopupDetails extends Component {
             {...styles.field}
           >
             <Input
-              onChange={value =>
+              onChange={e =>
                 this.props.setEmail({
-                  value,
+                  value: e.target.value,
                   inFocus: true
                 })}
               onBlur={e =>
@@ -147,7 +149,7 @@ class TopupDetails extends Component {
           className={`${styles.button}`}
         >
           {isLoading ? (
-            <ProgressBar type="circular" className={`${styles.progressBar}`} />
+            <CircularProgress className={`${styles.progressBar}`} />
           ) : (
             'Continue'
           )}
