@@ -7,9 +7,9 @@ import { setAmount, createOrder } from '../../actions';
 import { selectValidAmount } from '../../lib/amount-validation';
 import { getPrice, getDisplayName } from '../../lib/currency-helpers';
 
-import { Card } from 'react-toolbox/lib/card';
-import { RadioGroup, RadioButton } from 'react-toolbox/lib/radio';
-import { ProgressBar } from 'react-toolbox/lib/progress_bar';
+import Card from 'material-ui/Card';
+import Radio, { RadioGroup } from 'material-ui/Radio';
+import { CircularProgress } from 'material-ui/Progress'
 
 import ActiveSection from '../UI/ActiveSection';
 import SectionTitle from '../UI/SectionTitle';
@@ -32,7 +32,7 @@ const styles = {
       '&:last-of-type': {
         borderBottom: '1px solid rgba(0,0,0,0.08)'
       },
-      '& > span': {
+      '& > div': {
         paddingLeft: 16
       }
     }
@@ -94,7 +94,7 @@ class Picker extends Component {
     if (operator.isLoading || !operator.result.packages) {
       return (
         <ActiveSection title="Select amount">
-          <ProgressBar type="circular" />
+          <CircularProgress />
         </ActiveSection>
       );
     }
@@ -120,11 +120,7 @@ class Picker extends Component {
 
         <SectionTitle {...styles.title}>Select amount</SectionTitle>
 
-        <RadioGroup
-          value={String(amount)}
-          onChange={setAmount}
-          className={`${styles.packages} amount-picker`}
-        >
+        <div className={`${styles.packages} amount-picker`}>
           {operator.result.packages.map((pkg, i) => {
             const price = getPrice(pkg, billingCurrency);
             const formattedPrice =
@@ -139,15 +135,18 @@ class Picker extends Component {
                 : `${pkg.value} ${operator.result.currency}`;
 
             return (
-              <RadioButton
-                key={i}
-                disabled={disabled}
-                value={String(pkg.value)}
-                label={<Package name={name} price={formattedPrice} />}
-              />
+              <label>
+                <Radio
+                  checked={amount === pkg.value}
+                  onChange={e => setAmount(pkg.value)}
+                  key={i}
+                  disabled={disabled}
+                />
+                <Package name={name} price={formattedPrice} />
+              </label>
             );
           })}
-        </RadioGroup>
+        </div>
 
         {operator.result.isRanged && (
           <Ranged

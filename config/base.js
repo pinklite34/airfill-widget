@@ -62,7 +62,6 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        include: path.join(__dirname, '/../node_modules/react-toolbox'),
         use: [
           'style-loader',
           {
