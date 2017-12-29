@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from 'glamor';
 
-import { Input } from 'react-toolbox/lib/input';
+import Input from 'material-ui/Input';
 
 import { getDisplayName, satoshiToBTC } from '../../lib/currency-helpers';
 
@@ -93,7 +93,7 @@ const Ranged = ({ amount, range, currency, billingCurrency, onChange }) => {
                 max={max}
                 step={step}
                 value={amount}
-                onChange={onChange}
+                onChange={e => onChange(e.target.value)}
                 onBlur={() =>
                   amount > range.max
                     ? onChange(range.max)
