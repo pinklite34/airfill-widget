@@ -74,7 +74,6 @@
     "react-router-redux": "^5.0.0-alpha.8",
     "react-svg-loader": "^1.1.1",
     "react-tiny-virtual-list": "^2.1.4",
-    "react-toolbox": "^2.0.0-beta.12",
     "redux": "^3.6.0",
     "redux-actions": "^2.0.2",
     "redux-persist": "^4.6.0",
