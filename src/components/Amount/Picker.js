@@ -135,11 +135,10 @@ class Picker extends Component {
                 : `${pkg.value} ${operator.result.currency}`;
 
             return (
-              <label>
+              <label key={pkg.value}>
                 <Radio
                   checked={amount === pkg.value}
                   onChange={e => setAmount(pkg.value)}
-                  key={i}
                   disabled={disabled}
                 />
                 <Package name={name} price={formattedPrice} />
