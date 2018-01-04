@@ -59,10 +59,14 @@ const styles = {
     height: '24px !important'
   }),
   check: css({
-    fill: '#3E8FE4'
+    fill: '#3E8FE4',
+    width: 16,
+    height: 16
   }),
   checkDisabled: css({
-    fill: 'rgb(204, 204, 204)'
+    fill: 'rgb(204, 204, 204)',
+    width: 16,
+    height: 16
   })
 };
 
