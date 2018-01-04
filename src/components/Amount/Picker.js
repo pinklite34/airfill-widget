@@ -25,15 +25,12 @@ const styles = {
     '& > label': {
       display: 'flex',
       alignItems: 'center',
-      padding: '8px 16px',
+      paddingRight: '2px',
       height: 'auto',
       margin: 0,
       borderTop: '1px solid rgba(0,0,0,0.08)',
       '&:last-of-type': {
         borderBottom: '1px solid rgba(0,0,0,0.08)'
-      },
-      '& > div': {
-        paddingLeft: 16
       }
     }
   }),
