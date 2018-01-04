@@ -57,6 +57,12 @@ const styles = {
   progressBar: css({
     width: '24px !important',
     height: '24px !important'
+  }),
+  check: css({
+    fill: '#3E8FE4'
+  }),
+  checkDisabled: css({
+    fill: 'rgb(204, 204, 204)'
   })
 };
 
@@ -106,7 +112,7 @@ const InputRow = ({
           {loading ? (
             <CircularProgress className={`${styles.progressBar}`} />
           ) : (
-            <Check />
+            <Check className={`${submitEnabled ? styles.check : styles.checkDisabled}`}/>
           )}
         </Button>
       </div>
