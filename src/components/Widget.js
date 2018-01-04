@@ -29,7 +29,7 @@ import Details from './Details';
 
 const theme = createMuiTheme({
   palette: {
-    primary: blue,
+    primary: blue
   }
 });
 

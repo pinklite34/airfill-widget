@@ -59,13 +59,14 @@ const styles = {
     marginRight: 16
   }),
   progressBar: css({
-    width: '36px !important',
-    height: '36px !important',
-    padding: 8,
-    '& .theme__path___1xZSU': {
-      stroke: '#fff'
-    }
+    fill: '#fff'
   })
+};
+
+const muiStyles = {
+  primaryColor: {
+    color: '#fff'
+  }
 };
 
 class TopupDetails extends Component {
@@ -150,7 +151,7 @@ class TopupDetails extends Component {
           className={`${styles.button}`}
         >
           {isLoading ? (
-            <CircularProgress className={`${styles.progressBar}`} />
+            <CircularProgress classes={this.props.classes} size={24} className={`${styles.progressBar}`} />
           ) : (
             'Continue'
           )}
@@ -171,4 +172,4 @@ export default connect(
     setNumber,
     setEmail
   }
-)(withStyles()(TopupDetails));
+)(withStyles(muiStyles)(TopupDetails));
