@@ -6,6 +6,9 @@ import { css } from 'glamor';
 
 import Card from 'material-ui/Card';
 import { CircularProgress } from 'material-ui/Progress';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import createMuiTheme from 'material-ui/styles/createMuiTheme';
+import blue from 'material-ui/colors/blue';
 
 import { init } from '../actions';
 import { selectInventory } from '../store';
@@ -22,6 +25,13 @@ import Instructions from './Instructions';
 import Amount from './Amount';
 import Order from './Order';
 import Details from './Details';
+
+
+const theme = createMuiTheme({
+  palette: {
+    primary: blue,
+  }
+});
 
 class AirfillWidget extends Component {
   static propTypes = {
@@ -94,40 +104,42 @@ class AirfillWidget extends Component {
     const hasLoaded = !!this.props.inventory.result;
 
     return (
-      <Root className={this.props.className}>
-        {hasLoaded ? (
-          <Card>
-            <Header branded={config.showLogo} />
-            <Country />
-            <NumberLookup />
-            <Providers />
-            <Amount config={config} />
-            <Details config={config} />
-            <Order config={config} />
-            {config.showInstructions && (
-              <Route
-                path="/refill"
-                exact
-                render={() => <Instructions config={config} />}
-              />
-            )}
-          </Card>
-        ) : (
-          <Card>
-            <div
-              {...css({
-                display: 'flex',
-                justifyContent: 'center',
-                margin: 64
-              })}
-            >
-              <CircularProgress />
-            </div>
-          </Card>
-        )}
+      <MuiThemeProvider theme={theme}>
+        <Root className={this.props.className}>
+          {hasLoaded ? (
+            <Card>
+              <Header branded={config.showLogo} />
+              <Country />
+              <NumberLookup />
+              <Providers />
+              <Amount config={config} />
+              <Details config={config} />
+              <Order config={config} />
+              {config.showInstructions && (
+                <Route
+                  path="/refill"
+                  exact
+                  render={() => <Instructions config={config} />}
+                />
+              )}
+            </Card>
+          ) : (
+            <Card>
+              <div
+                {...css({
+                  display: 'flex',
+                  justifyContent: 'center',
+                  margin: 64
+                })}
+              >
+                <CircularProgress />
+              </div>
+            </Card>
+          )}
 
-        {config.showFooter && <Footer branded={config.showPoweredBy} />}
-      </Root>
+          {config.showFooter && <Footer branded={config.showPoweredBy} />}
+        </Root>
+      </MuiThemeProvider>
     );
   }
 }

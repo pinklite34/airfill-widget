@@ -12,6 +12,7 @@ import { CircularProgress } from 'material-ui/Progress';
 import Field from '../UI/Field';
 
 import Error from './error.svg';
+import withStyles from 'material-ui/styles/withStyles';
 
 const styles = {
   title: css({
@@ -170,4 +171,4 @@ export default connect(
     setNumber,
     setEmail
   }
-)(TopupDetails);
+)(withStyles()(TopupDetails));
