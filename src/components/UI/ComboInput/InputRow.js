@@ -34,7 +34,6 @@ const styles = {
   }),
   flag: css({
     width: 48,
-    padding: 12,
     background: '#F0F6FA',
     display: 'flex',
     alignItems: 'center',

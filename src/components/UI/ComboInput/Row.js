@@ -12,7 +12,6 @@ const styles = {
     background: 'rgba(0,0,0,0.08)'
   }),
   icon: css({
-    padding: 12,
     background: 'rgba(0,0,0,0.04)',
     width: 48,
     display: 'flex',
