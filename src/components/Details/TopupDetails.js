@@ -92,7 +92,7 @@ class TopupDetails extends Component {
 
   isComplete = () =>
     this.props.amount &&
-    this.props.number &&
+    (this.props.number || (this.props.operator.result && this.props.operator.result.noNumber)) &&
     (isValidEmail(this.props.config.orderOptions.email) ||
       this.props.email.valid);
 
@@ -100,7 +100,7 @@ class TopupDetails extends Component {
     const { number, email, operator } = this.props;
     const { error, isLoading } = this.state;
     const showEmail = !isValidEmail(this.props.config.orderOptions.email);
-    const showNumber = !operator.result || !operator.result.isPinBased;
+    const showNumber = !operator.result || !operator.result.noNumber;
 
     return (
       <div {...styles.container}>
@@ -145,7 +145,7 @@ class TopupDetails extends Component {
           </Field>
         )}
         <Button
-          primary
+          primary="true"
           raised
           disabled={!this.isComplete() || isLoading}
           onClick={this.createOrder}
