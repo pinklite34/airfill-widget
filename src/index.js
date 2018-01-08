@@ -12,10 +12,16 @@ import {
 
 import Widget from './components/Widget';
 import { client } from './lib/api-client';
-
 import configureStore from './store/configureStore';
+
+import Pusher from 'pusher-js';
+import { setPusherClient } from 'react-pusher';
+
+setPusherClient(new Pusher('0837b617cfe786c32a91', {
+  encrypted: true
+}));
+
 let store;
-let lastKey;
 
 function AirfillWidget(ele, opt) {
   const element = typeof ele === 'string' ? document.querySelector(ele) : ele;

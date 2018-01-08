@@ -5447,9 +5447,9 @@ punycode@^1.2.4, punycode@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
 
-pusher-js@^3.2.2:
-  version "3.2.4"
-  resolved "https://registry.yarnpkg.com/pusher-js/-/pusher-js-3.2.4.tgz#29dfc5c58ffa576dc71afba07815a3f895a71dc5"
+pusher-js@^4.2.2:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/pusher-js/-/pusher-js-4.2.2.tgz#de391bfb14d221ef96f462304f8a73b95ce9acc5"
   dependencies:
     faye-websocket "0.9.4"
     xmlhttprequest "^1.8.0"
@@ -5579,6 +5579,15 @@ react-popper@^0.7.4:
   dependencies:
     popper.js "^1.12.5"
     prop-types "^15.5.10"
+
+react-pusher@bitrefill/react-pusher-component#master:
+  version "0.1.0"
+  resolved "https://codeload.github.com/bitrefill/react-pusher-component/tar.gz/c0df5c3ce9282985262d75485e17897354c82498"
+  dependencies:
+    prop-types "^15.6.0"
+    pusher-js "^4.2.2"
+    react "^16.2.0"
+    react-dom "^16.2.0"
 
 react-redux@^5.0.4:
   version "5.0.6"
