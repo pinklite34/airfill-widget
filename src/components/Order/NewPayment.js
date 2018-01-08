@@ -90,6 +90,7 @@ const NewPayment = ({
   const price = order[valueField[billingCurrency.toLowerCase()]];
   const formattedPrice = price + ' ' + billingCurrencyDisplayName.toUpperCase();
   const canAfford = price <= accountBalance;
+  const displayNumber = !operator.noNumber;
   const widgetRequireAccountBalance = requireAccountBalance;
 
   return (
@@ -102,7 +103,7 @@ const NewPayment = ({
       <dl {...styles.list}>
         <dt>Package</dt>
         <dd>{order.itemDesc}</dd>
-        <dt>{labelForNumberType(operator && operator.type)}</dt>
+        {displayNumber && <dt>{labelForNumberType(operator && operator.type)}</dt>}
         <dd>
           {formatDisplayValue(operator && operator.type, number, country)}
         </dd>

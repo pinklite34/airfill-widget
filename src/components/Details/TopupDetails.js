@@ -3,7 +3,7 @@ import { css } from 'glamor';
 import { connect } from 'react-redux';
 
 import { createOrder, setNumber, setEmail } from '../../actions';
-import { selectNumber, selectEmail, selectAmount } from '../../store';
+import { selectNumber, selectEmail, selectAmount, selectOperator } from '../../store';
 import { isValidEmail } from '../../lib/email-validation';
 
 import Button from 'material-ui/Button';
@@ -97,9 +97,10 @@ class TopupDetails extends Component {
       this.props.email.valid);
 
   render() {
-    const { number, email } = this.props;
+    const { number, email, operator } = this.props;
     const { error, isLoading } = this.state;
     const showEmail = !isValidEmail(this.props.config.orderOptions.email);
+    const showNumber = !operator.result || !operator.result.isPinBased;
 
     return (
       <div {...styles.container}>
@@ -109,7 +110,7 @@ class TopupDetails extends Component {
             <div>{error.message}</div>
           </div>
         )}
-        <Field
+        {showNumber && <Field
           label="Phone number"
           hint="The phone number to top up"
           {...styles.field}
@@ -120,7 +121,7 @@ class TopupDetails extends Component {
             value={number}
             className={`${styles.input}`}
           />
-        </Field>
+        </Field>}
         {showEmail && (
           <Field
             label="E-mail address"
@@ -165,7 +166,8 @@ export default connect(
   state => ({
     number: selectNumber(state),
     email: selectEmail(state),
-    amount: selectAmount(state)
+    amount: selectAmount(state),
+    operator: selectOperator(state)
   }),
   {
     createOrder,
