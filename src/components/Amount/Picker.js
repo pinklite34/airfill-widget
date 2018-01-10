@@ -8,7 +8,7 @@ import { selectValidAmount } from '../../lib/amount-validation';
 import { getPrice, getDisplayName } from '../../lib/currency-helpers';
 
 import Card from 'material-ui/Card';
-import Radio, { RadioGroup } from 'material-ui/Radio';
+import Radio from 'material-ui/Radio';
 import { CircularProgress } from 'material-ui/Progress'
 
 import ActiveSection from '../UI/ActiveSection';
