@@ -28,7 +28,7 @@ import numberLookup, {
 } from './numberLookup';
 
 // Export the reducer for use within other redux apps
-export const airfillWidget = combineReducers({
+export default combineReducers({
   ui,
   inventory,
   operator,
@@ -39,7 +39,6 @@ export const airfillWidget = combineReducers({
 });
 
 // Keep the same state shape when using the standalone widget
-export default combineReducers({ airfillWidget });
 
 export {
   // UI
