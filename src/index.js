@@ -15,7 +15,7 @@ import { client } from './lib/api-client';
 import configureStore from './store/configureStore';
 
 import Pusher from 'pusher-js';
-import { setPusherClient } from 'react-pusher';
+import { setPusherClient } from '@bitrefill/react-pusher';
 
 // exports
 import airfillWidget from './store';

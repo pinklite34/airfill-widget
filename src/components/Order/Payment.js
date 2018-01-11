@@ -5,7 +5,7 @@ import { push } from 'react-router-redux';
 
 import { CircularProgress } from 'material-ui/Progress';
 
-import PusherSubscription from 'react-pusher';
+import PusherSubscription from '@bitrefill/react-pusher';
 
 import ActiveSection from '../UI/ActiveSection';
 
