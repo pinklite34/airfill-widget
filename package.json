@@ -49,6 +49,7 @@
     "webpack-dev-server": "2.9.7"
   },
   "dependencies": {
+    "@bitrefill/react-pusher": "^0.1.0",
     "core-js": "^2.0.0",
     "css-loader": "^0.28.4",
     "desvg-loader": "^0.1.0",
