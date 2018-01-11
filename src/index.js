@@ -17,6 +17,11 @@ import configureStore from './store/configureStore';
 import Pusher from 'pusher-js';
 import { setPusherClient } from 'react-pusher';
 
+// exports
+import airfillWidget from './store';
+import widgetStoreEnhancer from './store/enhanceStore';
+import { client as restClient } from './lib/rest-helpers';
+
 setPusherClient(new Pusher('0837b617cfe786c32a91', {
   encrypted: true
 }));
@@ -93,3 +98,11 @@ function AirfillWidget(ele, opt) {
 }
 
 window.AirfillWidget = window.BitRefillWidget = AirfillWidget;
+
+export {
+  airfillWidget,
+  widgetStoreEnhancer,
+  restClient
+}
+
+export default Widget;

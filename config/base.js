@@ -10,7 +10,9 @@ module.exports = {
   output: {
     path: path.join(__dirname, '/../dist'),
     filename: 'widget.js',
-    publicPath: publicPath
+    publicPath: publicPath,
+    library: 'airfill-widget',
+    libraryTarget: 'umd'
   },
   devServer: {
     contentBase: './src/',

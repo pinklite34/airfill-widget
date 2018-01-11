@@ -5585,13 +5585,6 @@ react-popper@^0.7.4:
     popper.js "^1.12.5"
     prop-types "^15.5.10"
 
-react-pusher@bitrefill/react-pusher-component#master:
-  version "0.1.0"
-  resolved "https://codeload.github.com/bitrefill/react-pusher-component/tar.gz/c0df5c3ce9282985262d75485e17897354c82498"
-  dependencies:
-    prop-types "^15.6.0"
-    pusher-js "^4.2.2"
-
 react-redux@^5.0.4:
   version "5.0.6"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.6.tgz#23ed3a4f986359d68b5212eaaa681e60d6574946"
