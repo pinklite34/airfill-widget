@@ -37,9 +37,9 @@ const styles = {
     }
   }),
   button: css({
-    backgroundColor: '#449BF7 !important',
     color: '#fff !important',
     width: 250,
+    height: 38,
     marginBottom: 0
   }),
   error: css({
@@ -146,7 +146,7 @@ class TopupDetails extends Component {
           </Field>
         )}
         <Button
-          primary="true"
+          color="primary"
           raised
           disabled={!this.isComplete() || isLoading}
           onClick={this.createOrder}
