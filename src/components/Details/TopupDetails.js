@@ -119,6 +119,7 @@ class TopupDetails extends Component {
             onChange={e => this.props.setNumber(e.target.value)}
             type="tel"
             value={number}
+            fullWidth
             className={`${styles.input}`}
           />
         </Field>}
