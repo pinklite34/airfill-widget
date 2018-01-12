@@ -124,17 +124,15 @@ class AirfillWidget extends Component {
               )}
             </Card>
           ) : (
-            <Card>
-              <div
-                {...css({
-                  display: 'flex',
-                  justifyContent: 'center',
-                  margin: 64
-                })}
-              >
-                <CircularProgress />
-              </div>
-            </Card>
+            <div
+              {...css({
+                display: 'flex',
+                justifyContent: 'center',
+                margin: 64
+              })}
+            >
+              <CircularProgress />
+            </div>
           )}
 
           {config.showFooter && <Footer branded={config.showPoweredBy} />}
