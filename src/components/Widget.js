@@ -1,117 +1,153 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Route } from 'react-router';
+import { css } from 'glamor';
 
-import Container from './UI/Container';
+import Card from 'material-ui/Card';
+import { CircularProgress } from 'material-ui/Progress';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import createMuiTheme from 'material-ui/styles/createMuiTheme';
+import blue from 'material-ui/colors/blue';
 
-import CountryStep from './Steps/Country';
-import OperatorStep from './Steps/Operator';
-import PackageStep from './Steps/Package';
-import OrderStep from './Steps/Order';
+import { init } from '../actions';
+import { selectInventory } from '../store';
 
-import {init, setStep} from '../actions';
-import {selectCurrentStep, selectRecentNumbers} from '../store';
+import Root from './UI/Root';
 
-const steps = [{
-  component: CountryStep
-},{
-  component: OperatorStep
-},{
-  component: PackageStep
-},{
-  component: OrderStep
-}];
+import Header from './Header';
+import Footer from './Footer';
+
+import Country from './Country';
+import NumberLookup from './NumberLookup';
+import Providers from './Providers';
+import Instructions from './Instructions';
+import Amount from './Amount';
+import Order from './Order';
+import Details from './Details';
+
+
+const theme = createMuiTheme({
+  palette: {
+    primary: blue
+  }
+});
 
 class AirfillWidget extends Component {
+  static propTypes = {
+    // User data
+    defaultNumber: PropTypes.string,
+    userAccountBalance: PropTypes.number,
+    userEmail: PropTypes.string,
+
+    // Payment options
+    paymentButtons: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        callback: PropTypes.func.isRequired,
+        requireAccountBalance: PropTypes.bool
+      })
+    ).isRequired,
+    showBTCAddress: PropTypes.bool,
+    billingCurrency: PropTypes.string,
+    requireAccountBalance: PropTypes.bool,
+
+    // Receipt
+    sendEmail: PropTypes.bool,
+    sendSMS: PropTypes.bool,
+
+    // Widget appearance
+    showInstructions: PropTypes.bool,
+    showLogo: PropTypes.bool,
+    showPoweredBy: PropTypes.bool,
+    showFooter: PropTypes.bool,
+
+    // Refill history
+    refillHistory: PropTypes.arrayOf(
+      PropTypes.shape({
+        number: PropTypes.string,
+        operator: PropTypes.string
+      })
+    )
+  };
+
+  static defaultProps = {
+    defaultNumber: '',
+    userAccountBalance: Number.POSITIVE_INFINITY,
+    userEmail: null,
+
+    paymentButtons: [],
+    showBTCAddress: false,
+    billingCurrency: 'XBT',
+    requireAccountBalance: false,
+
+    sendEmail: true,
+    sendSMS: true,
+
+    showInstructions: true,
+    showLogo: true,
+    showPoweredBy: false,
+    showFooter: true,
+
+    refillHistory: []
+  };
+
   componentDidMount() {
     this.props.init({
-      defaultNumber: this.props.defaultNumber
+      defaultNumber: this.props.defaultNumber,
+      email: this.props.orderOptions.email
     });
   }
 
-  renderSteps() {
-    const {
-      currentStep,
-      setStep,
-
-      // Config options
-      paymentButtons,
-      accountBalance=Number.POSITIVE_INFINITY,
-      requireAccountBalance=false,
-      showBTCAddress=this.props.billingCurrency === 'XBT',
-      billingCurrency='XBT',
-      orderOptions={},
-      refillHistory=null,
-      recentNumbers
-    } = this.props;
-
-    const showEmailField = !orderOptions.email || orderOptions.email.indexOf('@') < 1;
-
-    const history = refillHistory
-      ? refillHistory
-      : recentNumbers.length ? recentNumbers : null;
-
-    return steps.map(({component, options}, i) => {
-      const Component = component;
-      const step = i + 1;
-
-      if (currentStep < step) { return null; }
-
-      return <Component
-        key={step}
-        step={step}
-        expanded={currentStep===step}
-        showSummary={currentStep > step}
-        onContinue={()=>setStep(step + 1)}
-        onBack={()=>setStep(step)}
-        onReset={()=>setStep(1)}
-
-        paymentButtons={paymentButtons}
-        showBTCAddress={showBTCAddress}
-        orderOptions={orderOptions}
-        billingCurrency={billingCurrency}
-        accountBalance={accountBalance}
-        requireAccountBalance={requireAccountBalance}
-        showEmailField={showEmailField}
-        refillHistory={history}
-      />;
-    })
-  }
-
-  renderFooter() {
-    if (!this.props.showTerms) { return null; }
-    return (
-      <p className="refill-terms">
-        <a href="https://www.bitrefill.com/terms/" target="_blank" rel="noopener noreferrer">
-          Terms of Service
-        </a> and <a href="https://www.bitrefill.com/privacy/" target="_blank" rel="noopener noreferrer">
-          Privacy Policy
-        </a>
-      </p>
-    )
-  }
-
-  renderIntroduction() {
-    if (!this.props.showIntroduction) { return null; }
-    return (
-      <p className="refill-introduction">With <strong>Bitrefill</strong> you can top up prepaid phones in over 150 countries. It’s fast, cheap and secure.</p>
-    )
-  }
-
   render() {
+    const config = this.props;
+    const hasLoaded = !!this.props.inventory.result;
+
     return (
-      <Container className={this.props.className}>
-        {this.renderSteps()}
-        {this.renderIntroduction()}
-        {this.renderFooter()}
-      </Container>
+      <MuiThemeProvider theme={theme}>
+        <Root className={this.props.className}>
+          {hasLoaded ? (
+            <Card>
+              <Header branded={config.showLogo} />
+              <Country />
+              <NumberLookup />
+              <Providers />
+              <Amount config={config} />
+              <Details config={config} />
+              <Order config={config} />
+              {config.showInstructions && (
+                <Route
+                  path="/refill"
+                  exact
+                  render={() => <Instructions config={config} />}
+                />
+              )}
+            </Card>
+          ) : (
+            <div
+              {...css({
+                display: 'flex',
+                justifyContent: 'center',
+                margin: 64
+              })}
+            >
+              <CircularProgress />
+            </div>
+          )}
+
+          {config.showFooter && <Footer branded={config.showPoweredBy} />}
+        </Root>
+      </MuiThemeProvider>
     );
   }
 }
 
-export default connect(state => ({
-  currentStep: selectCurrentStep(state),
-  recentNumbers: selectRecentNumbers(state)
-}), {
-  init,
-  setStep
-})(AirfillWidget);
+export default connect(
+  state => ({
+    // recentNumbers: selectRecentNumbers(state)
+    inventory: selectInventory(state)
+  }),
+  {
+    init
+  }
+)(AirfillWidget);

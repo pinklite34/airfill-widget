@@ -1,24 +1,29 @@
-import {parse, format} from 'libphonenumber-js';
-import {REHYDRATE} from 'redux-persist/constants';
-import {selectCountry} from './inventory';
+import { parse, format } from 'libphonenumber-js';
+import { REHYDRATE } from 'redux-persist/constants';
+import { selectCountry } from './inventory';
+import { isValidEmail } from '../lib/email-validation';
 
 const initialState = {
-  currentStep: 1,
   number: '',
   operatorId: null,
   amount: 0,
-  email: { value: '', valid: false, error: false }
+  email: { value: '', valid: false, error: false },
+  comboInputOpen: false
 };
 
-export default (state=initialState, {type, payload}) => {
+export default (state = initialState, { type, payload }) => {
   switch (type) {
     case REHYDRATE: {
       const data = payload.airfillWidget && selectUiState(payload);
       return { ...state, ...data };
     }
 
-    case 'SET_STEP': {
-      return { ...state, currentStep: payload };
+    case 'SET_COMBOINPUT_OPEN': {
+      return { ...state, comboInputOpen: payload };
+    }
+
+    case 'SET_COMBOINPUT_FOCUS': {
+      return { ...state, comboInputFocus: payload };
     }
 
     case 'SET_NUMBER': {
@@ -35,7 +40,7 @@ export default (state=initialState, {type, payload}) => {
 
     case 'SET_EMAIL': {
       const { value, inFocus } = payload;
-      const valid = !!value.match(/.+@.+\..+/);
+      const valid = isValidEmail(value);
 
       // Only update error value if inFocus and valid,
       // otherwise hold of the error until blur
@@ -51,7 +56,10 @@ export default (state=initialState, {type, payload}) => {
 
 export const selectUiState = state => state.airfillWidget.ui;
 export const selectAmount = state => selectUiState(state).amount;
-export const selectCurrentStep = state => selectUiState(state).currentStep;
+export const selectComboInputOpen = state =>
+  selectUiState(state).comboInputOpen;
+export const selectComboInputFocus = state =>
+  selectUiState(state).comboInputFocus;
 
 export const selectNumber = state => {
   const number = selectUiState(state).number;
@@ -68,14 +76,15 @@ export const selectNumber = state => {
   try {
     parsedNumber = parse(number, country && country.alpha2);
     if (parsedNumber && parsedNumber.country) {
-      return format(parsedNumber,  'International');
+      return format(parsedNumber, 'International');
     }
   } catch (e) {}
 
   return number;
-}
+};
 
-export const selectEmail = state => {
-  const email = selectUiState(state).email;
-  return email.valid ? email.value : '';
+export const selectEmail = state => selectUiState(state).email;
+export const selectValidEmail = state => {
+  const email = selectEmail(state);
+  return email && email.valid ? email.value : null;
 };

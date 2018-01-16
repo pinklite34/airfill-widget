@@ -4,12 +4,16 @@ import ui, {
   selectNumber,
   selectAmount,
   selectEmail,
-  selectCurrentStep
+  selectValidEmail,
+  selectCurrentStep,
+  selectComboInputOpen,
+  selectComboInputFocus
 } from './ui';
 import paymentStatus, { selectPaymentStatus } from './paymentStatus';
 import inventory, {
   selectCountry,
   selectCountryList,
+  selectCountryCode,
   selectAvailableOperators,
   selectSelectedOperator,
   selectInventory
@@ -17,19 +21,24 @@ import inventory, {
 import operator, { selectOperator } from './operator';
 import order, { selectOrder } from './order';
 import recentNumbers, { selectRecentNumbers } from './recentNumbers';
+import numberLookup, {
+  selectNumberLookup,
+  selectIsNumberLookup,
+  selectNumberLookupError
+} from './numberLookup';
 
 // Export the reducer for use within other redux apps
-export const airfillWidget = combineReducers({
+export default combineReducers({
   ui,
   inventory,
   operator,
   paymentStatus,
   order,
-  recentNumbers
+  recentNumbers,
+  numberLookup
 });
 
 // Keep the same state shape when using the standalone widget
-export default combineReducers({ airfillWidget });
 
 export {
   // UI
@@ -37,10 +46,14 @@ export {
   selectNumber,
   selectAmount,
   selectEmail,
+  selectValidEmail,
   selectCurrentStep,
+  selectComboInputOpen,
+  selectComboInputFocus,
   // Inventory
   selectCountry,
   selectCountryList,
+  selectCountryCode,
   selectAvailableOperators,
   selectSelectedOperator,
   selectInventory,
@@ -51,5 +64,9 @@ export {
   // Order
   selectOrder,
   // Recent numbers
-  selectRecentNumbers
+  selectRecentNumbers,
+  // Number lookup
+  selectNumberLookup,
+  selectIsNumberLookup,
+  selectNumberLookupError
 };

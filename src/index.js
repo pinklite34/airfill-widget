@@ -1,15 +1,39 @@
 /* eslint-disable import/default */
 
 import React from 'react';
-import {render, unmountComponentAtNode} from 'react-dom';
-import {Provider} from 'react-redux';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import createHistory from 'history/createMemoryHistory';
+import {
+  ConnectedRouter,
+  routerReducer,
+  routerMiddleware
+} from 'react-router-redux';
 
 import Widget from './components/Widget';
-import {client} from './lib/api-client';
-
+import { client } from './lib/api-client';
 import configureStore from './store/configureStore';
+
+import Pusher from 'pusher-js';
+import { setPusherClient } from '@bitrefill/react-pusher';
+
+// global module exports
+import airfillWidget from './store';
+import widgetStoreEnhancer from './store/enhanceStore';
+
+export {
+  airfillWidget,
+  widgetStoreEnhancer,
+  client as restClient
+}
+
+export default Widget;
+
+setPusherClient(new Pusher('0837b617cfe786c32a91', {
+  encrypted: true
+}));
+
 let store;
-let lastKey;
 
 function AirfillWidget(ele, opt) {
   const element = typeof ele === 'string' ? document.querySelector(ele) : ele;
@@ -18,10 +42,10 @@ function AirfillWidget(ele, opt) {
     key: null,
 
     // Pass through order options
-    refundAddress: '',          // Used for automatic refunds if there is an error (only for bitcoin integrations)
-    userEmail: '',              // If set we won´t ask for the user email in step 3
-    sendEmail: true,            // Send email receipt (default: true)
-    sendSMS: true,              // Send SMS receipt, operator may send additional messages (default: true, only available for some operators)
+    refundAddress: '', // Used for automatic refunds if there is an error (only for bitcoin integrations)
+    userEmail: '', // If set we won´t ask for the user email in step 3
+    sendEmail: true, // Send email receipt (default: true)
+    sendSMS: true, // Send SMS receipt, operator may send additional messages (default: true, only available for some operators)
 
     ...opt
   };
@@ -31,47 +55,52 @@ function AirfillWidget(ele, opt) {
     options.billingCurrency = 'XBT';
   }
 
-  client.configure({ token: options.key, baseUrl: options.baseUrl || 'https://api.bitrefill.com/widget' });
+  client.configure({
+    token: options.key,
+    baseUrl: options.baseUrl || 'https://api.bitrefill.com/widget'
+  });
 
   const {
     billingCurrency,
     defaultNumber,
-    userEmail,
+    userEmail: email,
     userAccountBalance,
     requireAccountBalance,
     sendEmail,
     sendSMS,
     refundAddress,
     paymentButtons,
-    showIntroduction,
-    showBTCAddress
+    showBTCAddress,
+    showLogo,
+    showInstructions
   } = options;
-  const orderOptions = { email: userEmail, sendEmail, sendSMS, refundAddress };
+  const orderOptions = { email, sendEmail, sendSMS, refundAddress };
 
-  // Needed for the currency switcher on the demo page
-  if (lastKey !== options.key) {
-    lastKey = options.key;
-    store = configureStore();
-    unmountComponentAtNode(element);
-  }
+  const history = createHistory();
+  const middleware = routerMiddleware(history);
 
-  store = store || configureStore();
+  store = store || configureStore(routerReducer, middleware);
+  history.push('/refill');
 
   render(
     <Provider store={store}>
-      <Widget
-        className="refill-widget-root standalone"
-        billingCurrency={billingCurrency}
-        orderOptions={orderOptions}
-        paymentButtons={paymentButtons}
-        showIntroduction={showIntroduction}
-        showTerms={true}
-        showBTCAddress={showBTCAddress}
-        defaultNumber={defaultNumber}
-        accountBalance={userAccountBalance}
-        requireAccountBalance={requireAccountBalance}
-      />
-    </Provider>, element
+      <ConnectedRouter history={history}>
+        <Widget
+          className="refill-widget-root standalone"
+          billingCurrency={billingCurrency}
+          orderOptions={orderOptions}
+          paymentButtons={paymentButtons}
+          showBTCAddress={showBTCAddress}
+          defaultNumber={defaultNumber}
+          accountBalance={userAccountBalance}
+          requireAccountBalance={requireAccountBalance}
+          showInstructions={showInstructions}
+          showLogo={showLogo}
+          showPoweredBy={!showLogo}
+        />
+      </ConnectedRouter>
+    </Provider>,
+    element
   );
 }
 
