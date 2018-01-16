@@ -4,7 +4,7 @@
 
 import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import { airfillWidget } from './index';
+import airfillWidget from './index';
 import enhanceStore from './enhanceStore';
 
 export default function configureStore(routerReducer, middleware) {

@@ -15,7 +15,19 @@ import { client } from './lib/api-client';
 import configureStore from './store/configureStore';
 
 import Pusher from 'pusher-js';
-import { setPusherClient } from 'react-pusher';
+import { setPusherClient } from '@bitrefill/react-pusher';
+
+// global module exports
+import airfillWidget from './store';
+import widgetStoreEnhancer from './store/enhanceStore';
+
+export {
+  airfillWidget,
+  widgetStoreEnhancer,
+  client as restClient
+}
+
+export default Widget;
 
 setPusherClient(new Pusher('0837b617cfe786c32a91', {
   encrypted: true
