@@ -11,7 +11,9 @@
   "scripts": {
     "clean": "rm -rf dist/*",
     "copy": "cp -f ./src/index.html ./dist",
-    "dist": "npm run clean && npm run copy && webpack --env=dist --json > stats.json",
+    "build": "npm run clean && npm run dist && npm run standalone",
+    "dist": "webpack --env=dist --json > stats.json",
+    "standalone": "npm run copy && webpack --env=standalone --json > stats.json",
     "lint": "eslint ./src",
     "release:major": "npm version major && npm publish && git push --follow-tags",
     "release:minor": "npm version minor && npm publish && git push --follow-tags",
