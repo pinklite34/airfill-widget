@@ -6,6 +6,8 @@ const path = require('path');
 const webpack = require('webpack');
 const baseConfig = require('./base');
 
+baseConfig.output.filename = 'widget.js';
+
 const config = Object.assign({}, baseConfig, {
   entry: [
     'webpack-dev-server/client?http://127.0.0.1:' + baseConfig.devServer.port,
