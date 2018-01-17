@@ -21,7 +21,9 @@ const config = Object.assign({}, baseConfig, {
   ],
   externals: {
     'react': 'react',
-    'react-dom': 'react-dom'
+    'react-dom': 'react-dom',
+    'pusher-js': 'pusher-js',
+    'libphonenumber-js': 'libphonenumber-js'
   }
 });
 
