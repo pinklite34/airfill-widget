@@ -2,7 +2,7 @@
   "name": "@bitrefill/airfill-widget",
   "version": "2.0.0",
   "description": "Airfill Embeddable Refill Widget",
-  "main": "dist/widget.js",
+  "main": "dist/index.js",
   "engines": {
     "node": "^8.2.0",
     "yarn": "^1.1.0",

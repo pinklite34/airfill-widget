@@ -7,7 +7,7 @@ const distConfig = require('./dist');
 const config = Object.assign({}, distConfig, {
   output: {
     path: path.join(__dirname, '/../dist'),
-    filename: 'standalone.js',
+    filename: 'widget.js',
     publicPath: '/',
     library: 'airfill-widget',
     libraryTarget: 'umd'
