@@ -20,44 +20,12 @@
     "release:patch": "npm version patch && npm publish && git push --follow-tags",
     "serve": "node server.js --env=dev",
     "serve:dist": "node server.js --env=dist",
-    "start": "node server.js --env=dev",
+    "start": "npm run serve",
     "test": "jest",
-    "test:watch": "npm test -- --watch"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bitrefill/airfill-widget.git"
+    "test:watch": "npm test -- --watch",
+    "webpack-stats": "webpack-bundle-analyzer stats.json"
   },
   "keywords": [],
-  "devDependencies": {
-    "babel-core": "6.24.1",
-    "babel-eslint": "7.2.3",
-    "babel-jest": "20.0.3",
-    "babel-loader": "7.0.0",
-    "babel-preset-react-app": "^3.0.0",
-    "babel-runtime": "6.23.0",
-    "eslint": "3.19.0",
-    "eslint-config-react-app": "^1.0.4",
-    "eslint-loader": "1.7.1",
-    "eslint-plugin-flowtype": "2.33.0",
-    "eslint-plugin-import": "2.2.0",
-    "eslint-plugin-jsx-a11y": "5.0.3",
-    "eslint-plugin-react": "7.0.1",
-    "file-loader": "^0.11.1",
-    "jest": "20.0.3",
-    "json-loader": "^0.5.4",
-    "minimist": "^1.2.0",
-    "null-loader": "^0.1.1",
-    "react-addons-test-utils": "^15.0.0",
-    "react-test-renderer": "15.4.2",
-    "url-loader": "0.5.8",
-    "webpack": "3.10.0",
-    "webpack-dev-server": "2.9.7",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "pusher-js": "^4.2.2",
-    "libphonenumber-js": "^0.4.32"
-  },
   "peerDependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -67,10 +35,7 @@
   "dependencies": {
     "@bitrefill/react-pusher": "^0.1.0",
     "core-js": "^2.0.0",
-    "css-loader": "^0.28.4",
-    "desvg-loader": "^0.1.0",
     "downshift": "^1.15.0",
-    "extract-text-webpack-plugin": "2.1.2",
     "fetch-ponyfill": "^4.1.0",
     "flag-icons": "^1.0.2",
     "glamor": "^2.20.39",
@@ -85,21 +50,40 @@
     "react-redux": "^5.0.4",
     "react-router": "^4.1.2",
     "react-router-redux": "^5.0.0-alpha.8",
-    "react-svg-loader": "^1.1.1",
     "react-tiny-virtual-list": "^2.1.4",
     "redux": "^3.6.0",
     "redux-actions": "^2.0.2",
     "redux-persist": "^4.6.0",
-    "redux-thunk": "^2.2.0",
-    "sass-loader": "^6.0.6",
-    "style-loader": "^0.18.2",
-    "svg-loader": "^0.0.2"
+    "redux-thunk": "^2.2.0"
   },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/bitrefill/airfill-widget/issues"
+  "devDependencies": {
+    "babel-core": "6.24.1",
+    "babel-eslint": "7.2.3",
+    "babel-jest": "20.0.3",
+    "babel-loader": "7.0.0",
+    "babel-preset-react-app": "^3.0.0",
+    "babel-runtime": "6.23.0",
+    "desvg-loader": "^0.1.0",
+    "eslint": "3.19.0",
+    "eslint-config-react-app": "^1.0.4",
+    "eslint-plugin-flowtype": "^2.41.0",
+    "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-jsx-a11y": "5.0.3",
+    "eslint-plugin-react": "7.0.1",
+    "jest": "20.0.3",
+    "minimist": "^1.2.0",
+    "react-addons-test-utils": "^15.0.0",
+    "react-test-renderer": "15.4.2",
+    "svg-loader": "^0.0.2",
+    "url-loader": "^0.6.2",
+    "webpack": "3.10.0",
+    "webpack-bundle-analyzer": "^2.9.2",
+    "webpack-dev-server": "2.9.7",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "pusher-js": "^4.2.2",
+    "libphonenumber-js": "^0.4.32"
   },
-  "homepage": "https://github.com/bitrefill/airfill-widget#readme",
   "jest": {
     "transform": {
       ".(js)": "<rootDir>/node_modules/babel-jest"
@@ -116,5 +100,14 @@
   },
   "eslintConfig": {
     "extends": "react-app"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitrefill/airfill-widget.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bitrefill/airfill-widget/issues"
+  },
+  "homepage": "https://github.com/bitrefill/airfill-widget#readme",
+  "license": "MIT"
 }
