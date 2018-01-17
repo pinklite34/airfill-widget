@@ -11,7 +11,7 @@
   "scripts": {
     "clean": "rm -rf dist/*",
     "copy": "cp -f ./src/index.html ./dist",
-    "build": "npm run clean && npm run dist && npm run standalone",
+    "build": "npm run clean && npm run copy && webpack --env=dist && webpack --env=standalone",
     "dist": "webpack --env=dist --json > stats.json",
     "standalone": "npm run copy && webpack --env=standalone --json > stats.json",
     "lint": "eslint ./src",
