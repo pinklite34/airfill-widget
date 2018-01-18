@@ -23,7 +23,8 @@
     "start": "npm run serve",
     "test": "jest",
     "test:watch": "npm test -- --watch",
-    "webpack-stats": "webpack-bundle-analyzer stats.json"
+    "webpack-stats": "webpack-bundle-analyzer stats.json",
+    "prepublish": "npm build"
   },
   "keywords": [],
   "peerDependencies": {
