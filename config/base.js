@@ -7,7 +7,7 @@ module.exports = {
   devtool: 'none',
   output: {
     path: path.join(__dirname, '/../dist'),
-    filename: 'widget.js',
+    filename: 'index.js',
     publicPath: publicPath,
     library: 'airfill-widget',
     libraryTarget: 'umd'

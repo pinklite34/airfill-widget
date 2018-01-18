@@ -16,7 +16,13 @@ const config = Object.assign({}, baseConfig, {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
-  ]
+  ],
+  externals: {
+    'react': 'react',
+    'react-dom': 'react-dom',
+    'pusher-js': 'pusher-js',
+    'libphonenumber-js': 'libphonenumber-js'
+  }
 });
 
 module.exports = config;

@@ -141,7 +141,7 @@ const NewPayment = ({
                     key={title}
                     onClick={() => callback(order)}
                     disabled={disabled}
-                    primary={i === 0}
+                    color={i === 0 ? 'primary' : 'default'}
                   >
                     {title}
                   </Button>,

@@ -45,7 +45,7 @@ const RefillDelivered = ({ paymentStatus: { deliveryData = {} }, onReset }) => {
           {deliveryData.pinInfo.other}
         </p>
       )}
-      <Button raised onClick={onReset}>
+      <Button raised color="primary" onClick={onReset}>
         Send another refill
       </Button>
     </div>

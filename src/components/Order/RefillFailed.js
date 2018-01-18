@@ -35,7 +35,7 @@ Thanks!`);
     text =
       'We have sent you an automatic refund. Please make sure your details are correct and try again!';
     action = (
-      <Button raised onClick={onReset}>
+      <Button raised color="primary" onClick={onReset}>
         Send another refill
       </Button>
     );
