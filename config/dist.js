@@ -3,6 +3,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 const path = require('path');
 const webpack = require('webpack');
 const baseConfig = require('./base');
+const nodeExternals = require('webpack-node-externals');
 
 const config = Object.assign({}, baseConfig, {
   entry: path.join(__dirname, '../src/index'),
@@ -17,12 +18,7 @@ const config = Object.assign({}, baseConfig, {
     new webpack.optimize.AggressiveMergingPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   ],
-  externals: {
-    'react': 'react',
-    'react-dom': 'react-dom',
-    'pusher-js': 'pusher-js',
-    'libphonenumber-js': 'libphonenumber-js'
-  }
+  externals: [nodeExternals()]
 });
 
 module.exports = config;
