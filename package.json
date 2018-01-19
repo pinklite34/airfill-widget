@@ -24,7 +24,7 @@
     "test": "jest",
     "test:watch": "npm test -- --watch",
     "webpack-stats": "webpack-bundle-analyzer stats.json",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "keywords": [],
   "peerDependencies": {
