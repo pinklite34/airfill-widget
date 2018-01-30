@@ -13,12 +13,14 @@ const styles = {
   button: css({
     backgroundColor: 'transparent !important',
     fontSize: '12px !important',
-    fontWeight: 'bold !important',
+    fontWeight: 'bolder !important',
     color: '#777777 !important',
     margin: '-4px !important'
   }),
   text: css({
-    fontSize: 14,
+    fontSize: 16,
+    color: '#777777 !important',
+    fontWeight: 'bold !important',
     '& strong': {
       paddingBottom: 2,
       borderBottom: '1px solid #CCCCCC'

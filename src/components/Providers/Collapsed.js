@@ -22,10 +22,6 @@ const styles = {
   logo: css({
     maxWidth: 24,
     maxHeight: 18
-  }),
-  content: css({
-    fontWeight: 500,
-    fontSize: 14
   })
 };
 
@@ -40,7 +36,7 @@ const Collapsed = ({ operator, history, darken }) => (
         <div {...styles.icon}>
           <img src={operator.logoImage} alt={operator.name} {...styles.logo} />
         </div>
-        <div {...styles.content}>{operator.name}</div>
+        {operator.name}
       </div>
     )}
   </CollapsedSection>
