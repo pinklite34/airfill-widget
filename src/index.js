@@ -21,10 +21,14 @@ import { setPusherClient } from '@bitrefill/react-pusher';
 import airfillWidget from './store';
 import widgetStoreEnhancer from './store/enhanceStore';
 
+import { selectPaymentStatus, selectOrder } from './store';
+
 export {
   airfillWidget,
   widgetStoreEnhancer,
-  client as restClient
+  client as restClient,
+  selectPaymentStatus,
+  selectOrder
 }
 
 export default Widget;
