@@ -11,8 +11,10 @@ const styles = {
     transition: 'background-color 0.2s ease'
   }),
   button: css({
-    backgroundColor: '#fff !important',
+    backgroundColor: 'transparent !important',
     fontSize: '12px !important',
+    fontWeight: 'bold !important',
+    color: '#777777 !important',
     margin: '-4px !important'
   }),
   text: css({
