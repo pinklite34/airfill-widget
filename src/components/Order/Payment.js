@@ -96,7 +96,6 @@ const Payment = ({
 
   return (
     <ActiveSection>
-      <h2 {...styles.title}>Payment</h2>
       <PusherSubscription
         channel={[orderId, address].join('-')}
         events={['paid', 'confirmed', 'partial', 'failed', 'delivered']}

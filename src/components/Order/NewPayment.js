@@ -16,11 +16,12 @@ const valueField = {
 const styles = {
   list: css({
     display: 'block',
-    margin: '30px 0',
     '> dt': {
       float: 'left',
+      textAlign: 'right',
       width: 120,
-      fontWeight: 700
+      fontWeight: 700,
+      marginRight: '24px'
     },
     '> dd': {
       marginBottom: 8
@@ -67,7 +68,89 @@ const styles = {
   }),
   button: css({
     margin: 8
-  })
+  }),
+  package: css({
+    fontSize: 16,
+    color: '#323232',
+    fontWeight: 'bold'
+  }),
+  payment: css({
+    backgroundColor: '#fff',
+    margin: '0 -16px -16px',
+    '& > div': {
+      display: 'flex',
+      '& > div': {
+        display: 'flex',
+        alignItems: 'center'
+      },
+      '& > div:first-of-type': {
+        justifyContent: 'flex-end',
+        padding: 0,
+        margin: 0,
+        flex: '0 0 96px',
+        fontWeight: 'bold',
+        fontSize: '10px',
+        color: '#777777',
+        minHeight: '50px',
+        textTransform: 'uppercase',
+        paddingRight: '12px',
+        '& > img': {
+          width: '64px',
+          height: 'auto'
+        }
+      },
+      '& > div:last-of-type': {
+        flex: 'auto',
+        fontSize: '20px',
+        color: '#323232',
+        borderBottom: '1px solid rgba(0, 0, 0, 0.08)',
+      }
+    }
+  }),
+  topLabel: css({
+    display: 'block',
+    color: '#777777',
+    fontWeight: 'bold',
+    fontSize: '10px',
+    paddingTop: '16px',
+    marginLeft: '109px'
+  }),
+  label: css({
+    fontWeight: 'bold',
+    fontSize: '12px',
+    color: '#777777'
+  }),
+  changeButton: css({
+
+  }),
+  header: {
+    base: css({
+      display: 'flex',
+      overflow: 'hidden'
+    }),
+    icon: css({
+      flex: '0 80px'
+    }),
+    text: css({
+      margin: 0,
+      flex: 1
+    }),
+    label: css({
+      float: 'left',
+      margin: 0,
+      padding: 0
+    }),
+    orderId: css({
+      float: 'right',
+      lineHeight: '31.5px',
+      color: '#777777',
+      fontSize: '12px'
+    }),
+    details: css({
+      color: '#777777',
+      fontSize: '14px'
+    })
+  }
 };
 
 const labelForNumberType = type =>
@@ -93,78 +176,120 @@ const NewPayment = ({
   const displayNumber = !operator.noNumber;
   const widgetRequireAccountBalance = requireAccountBalance;
 
+  console.log(order);
   return (
     <div>
-      <p>
-        Please double check that your information below is correct before
-        placing the order.
-      </p>
+      <div {...styles.header.base}>
+        <div {...styles.header.icon}>
 
-      <dl {...styles.list}>
-        <dt>Package</dt>
-        <dd>{order.itemDesc}</dd>
-        {displayNumber && <dt>{labelForNumberType(operator && operator.type)}</dt>}
-        <dd>
-          {formatDisplayValue(operator && operator.type, number, country)}
-        </dd>
-        {showEmailField
-          ? [<dt key="0">Email address</dt>, <dd key="1">{order.email}</dd>]
-          : null}
-        <dt>Price</dt>
-        <dd>{formattedPrice}</dd>
-        <dt>Order ID</dt>
-        <dd>{order.orderId}</dd>
-      </dl>
+        </div>
+        <div {...styles.header.text}>
+          <h2 {...styles.header.label}>
+            Payment
+          </h2>
+          <div {...styles.header.orderId}>
+            Order {order.id}
+          </div>
+          <br/>
+          <br/>
+          <div {...styles.header.details}>
+            Confirm the details below to purchase the refill
+          </div>
+        </div>
+      </div>
 
-      <div {...styles.paymentMethods}>
-        {paymentButtons && (
-          <div {...styles.paymentGroup} {...styles.buttonGroup}>
-            {paymentButtons.map(
-              ({ title, requireAccountBalance, lowBalanceText, callback }, i) => {
-                // disabled | canAfford | requireAccountBalance | widgetRequireAccountBalance
-                // true     | false     | undefined (!false)    | true
-                // true     | false     | true                  | true
-                // false    | false     | false                 | true
-                // false    | false     | undefined (!false)    | false
-                // true     | false     | true                  | false
-                // false    | false     | false                 | false
-                // false    | true      | any                   | any
-                const disabled =
-                  !canAfford &&
-                  ((widgetRequireAccountBalance &&
-                    requireAccountBalance !== false) ||
-                    requireAccountBalance);
-                return [
-                  <Button
-                    {...styles.button}
-                    raised
-                    key={title}
-                    onClick={() => callback(order)}
-                    disabled={disabled}
-                    color={i === 0 ? 'primary' : 'default'}
-                  >
-                    {title}
-                  </Button>,
-                  disabled ? (
-                    <small>
-                      {lowBalanceText ||
-                        'Your account balance is too low to use this option'}
-                    </small>
-                  ) : null
-                ];
-              }
+      <br/>
+
+      <div {...styles.payment}>
+        <span {...styles.topLabel}>Refill details</span>
+        <div>
+          <div>
+            <img src={operator.logoImage} alt={operator.name} {...styles.logo} width={24} height={24} />
+          </div>
+          <div>
+            <p>{operator.name}</p>
+            <p {...styles.label}>
+              {formatDisplayValue(operator && operator.type, number, country)}
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <div>
+            <p>Price</p>
+          </div>
+          <div>
+            <p>{formattedPrice}</p>
+          </div>
+        </div>
+
+        {showEmailField && <div>
+          <div>Email address</div>
+          <div>{order.email}</div>
+        </div>}
+
+        <div>
+          <div>
+            <p>Pay with</p>
+          </div>
+          <div>
+            Payment <Button {...styles.changeButton}>Change</Button>
+          </div>
+        </div>
+
+        <div>
+          <div/>
+          <div {...styles.paymentMethods}>
+            {paymentButtons && (
+              <div {...styles.paymentGroup} {...styles.buttonGroup}>
+                {paymentButtons.map(
+                  ({ title, requireAccountBalance, lowBalanceText, callback }, i) => {
+                    // disabled | canAfford | requireAccountBalance | widgetRequireAccountBalance
+                    // true     | false     | undefined (!false)    | true
+                    // true     | false     | true                  | true
+                    // false    | false     | false                 | true
+                    // false    | false     | undefined (!false)    | false
+                    // true     | false     | true                  | false
+                    // false    | false     | false                 | false
+                    // false    | true      | any                   | any
+                    const disabled =
+                      !canAfford &&
+                      ((widgetRequireAccountBalance &&
+                        requireAccountBalance !== false) ||
+                        requireAccountBalance);
+                    return [
+                      <Button
+                        {...styles.button}
+                        raised
+                        key={title}
+                        onClick={() => callback(order)}
+                        disabled={disabled}
+                        color={i === 0 ? 'primary' : 'default'}
+                      >
+                        {title}
+                      </Button>,
+                      disabled ? (
+                        <small>
+                          {lowBalanceText ||
+                            'Your account balance is too low to use this option'}
+                        </small>
+                      ) : null
+                    ];
+                  }
+                )}
+              </div>
+            )}
+            {showBTCAddress && (
+              <div {...styles.paymentGroup}>
+                <p>
+                  Send <i>exactly</i> <strong>{order.btcPrice} BTC</strong> to
+                  address:
+                </p>
+                <BitcoinAddress address={order.payment.address} />
+              </div>
             )}
           </div>
-        )}
-        {showBTCAddress && (
-          <div {...styles.paymentGroup}>
-            <p>
-              Send <i>exactly</i> <strong>{order.btcPrice} BTC</strong> to
-              address:
-            </p>
-            <BitcoinAddress address={order.payment.address} />
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );
