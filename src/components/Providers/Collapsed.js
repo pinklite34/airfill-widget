@@ -17,11 +17,12 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     width: 24,
-    marginRight: 12
+    marginRight: 30,
+    marginLeft: 24
   }),
   logo: css({
-    maxWidth: 24,
-    maxHeight: 18
+    maxWidth: 40,
+    maxHeight: 30
   })
 };
 

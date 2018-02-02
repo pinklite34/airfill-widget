@@ -26,12 +26,13 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     '& svg': {
-      width: 24,
+      width: 26,
       height: 18,
       borderRadius: 1,
       boxShadow: '1px 1px 1px rgba(0,0,0,0.08)'
     },
-    marginRight: 12
+    marginRight: 30,
+    marginLeft: 24
   })
 };
 
