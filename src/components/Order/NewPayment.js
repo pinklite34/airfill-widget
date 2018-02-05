@@ -10,6 +10,7 @@ import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List';
 import { isPhoneNumber, formatDisplayValue } from '../../lib/number-helpers';
 
 import BitcoinAddress from '../UI/BitcoinAddress';
+import Logo from './logo.svg';
 
 const valueField = {
   xbt: 'btcPrice',
@@ -163,7 +164,10 @@ const styles = {
       color: '#777777',
       fontSize: '14px'
     })
-  }
+  },
+  paymentLabel: css({
+    fontSize: '12px !important'
+  })
 };
 
 const labelForNumberType = type =>
@@ -193,19 +197,22 @@ const PaymentMenu = ({ open, anchorEl, onClick }) => {
         <Item
           primary="Bitrefill account balance"
           secondary="No fees, instant delivery"
+          icon={<Logo/>}
         />
         <Item
           primary="Bitcoin Payment"
           secondary="Normal fees, delivery after payment confirmation"
+          icon={<p {...styles.paymentLabel}>BTC</p>}
         />
         <Item
           primary="Litecoin Payment"
-          secondary="Normal fees, delivery after payment"
+          secondary="Normal fees, delivery after payment confirmation"
+          icon={<p {...styles.paymentLabel}>LTC</p>}
         />
         <Item
           primary="Add external wallet"
           secondary="Pay with Coinbase, Xapo, LocalBitcoin..."
-          icon={<AddIcon/>}
+          icon={<AddIcon />}
         />
       </Menu>
     </div>
