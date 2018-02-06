@@ -12,6 +12,7 @@ import { isPhoneNumber, formatDisplayValue } from '../../lib/number-helpers';
 import BitcoinAddress from '../UI/BitcoinAddress';
 import Logo from './logo.svg';
 import OrderHeader from '../UI/OrderHeader';
+import PaymentLayout from './PaymentLayout';
 
 const valueField = {
   xbt: 'btcPrice',
@@ -79,60 +80,6 @@ const styles = {
     fontSize: 16,
     color: '#323232',
     fontWeight: 'bold'
-  }),
-  payment: css({
-    backgroundColor: '#fff',
-    margin: '0 -16px -16px',
-    '& > div': {
-      display: 'flex',
-      '& > div': {
-        display: 'flex',
-        alignItems: 'center'
-      },
-      '& > div:first-of-type': {
-        justifyContent: 'flex-end',
-        padding: 0,
-        margin: 0,
-        flex: '0 0 96px',
-        fontWeight: 'bold',
-        fontSize: '10px',
-        color: '#777777',
-        minHeight: '50px',
-        textTransform: 'uppercase',
-        paddingRight: '12px',
-        '& > img': {
-          width: '64px',
-          height: 'auto'
-        }
-      },
-      '& > div:last-of-type': {
-        flex: 'auto',
-        fontSize: '20px',
-        color: '#323232',
-        borderBottom: '1px solid rgba(0, 0, 0, 0.08)',
-        '& > p': {
-          padding: 0,
-          margin: 0
-        }
-      }
-    }
-  }),
-  providerRow: css({
-    flexDirection: 'column !important',
-    alignItems: 'flex-start !important',
-  }),
-  topLabel: css({
-    display: 'block',
-    color: '#777777',
-    fontWeight: 'bold',
-    fontSize: '10px',
-    paddingTop: '16px',
-    textTransform: 'uppercase'
-  }),
-  label: css({
-    fontWeight: 'bold',
-    fontSize: '12px',
-    color: '#777777'
   }),
   changeButton: css({
     color: '#3e8fe4 !important',
@@ -245,34 +192,7 @@ class NewPayment extends React.Component {
           subtitle="Confirm the details below to purchase your refill"
         />
 
-        <div {...styles.payment}>
-          <div>
-            <div>
-              <img src={operator.logoImage} alt={operator.name} {...styles.logo} width={24} height={24} />
-            </div>
-            <div {...styles.providerRow}>
-              <span {...styles.topLabel}>Refill details</span>
-              <p>{operator.name}</p>
-              <p {...styles.label}>
-                {formatDisplayValue(operator && operator.type, number, country)}
-              </p>
-            </div>
-          </div>
-
-          <div>
-            <div>
-              <p>Price</p>
-            </div>
-            <div>
-              <p>{formattedPrice}</p>
-            </div>
-          </div>
-
-          {showEmailField && <div>
-            <div>Email address</div>
-            <div>{order.email}</div>
-          </div>}
-
+        <PaymentLayout {...this.props}>
           <div>
             <div>
               <p>Pay with</p>
@@ -335,7 +255,7 @@ class NewPayment extends React.Component {
               )}
             </div>
           </div>
-        </div>
+        </PaymentLayout>
       </div>
     );
   }
