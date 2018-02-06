@@ -13,7 +13,7 @@ const styles = {
   grid: css({
     display: 'flex',
     flexWrap: 'wrap',
-    margin: -6
+    width: '100%',
   })
 };
 
