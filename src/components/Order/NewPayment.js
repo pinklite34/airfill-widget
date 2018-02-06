@@ -4,13 +4,14 @@ import React from 'react';
 import { css } from 'glamor';
 import Button from 'material-ui/Button';
 import Menu, { MenuItem } from 'material-ui/Menu';
-import AddIcon from 'material-ui-icons/Add';
 import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List';
 
 import { isPhoneNumber, formatDisplayValue } from '../../lib/number-helpers';
 
 import BitcoinAddress from '../UI/BitcoinAddress';
+import Plus from './plus.svg';
 import Logo from './logo.svg';
+import Info from './info.svg';
 import OrderHeader from '../UI/OrderHeader';
 import PaymentLayout from './PaymentLayout';
 
@@ -117,7 +118,7 @@ const PaymentMenu = ({ open, anchorEl, onClick }) => {
         <Item
           primary="Bitrefill account balance"
           secondary="No fees, instant delivery"
-          icon={<Logo/>}
+          icon={<Logo />}
         />
         <Item
           primary="Bitcoin Payment"
@@ -132,7 +133,7 @@ const PaymentMenu = ({ open, anchorEl, onClick }) => {
         <Item
           primary="Add external wallet"
           secondary="Pay with Coinbase, Xapo, LocalBitcoin..."
-          icon={<AddIcon />}
+          icon={<Plus />}
         />
       </Menu>
     </div>
@@ -190,6 +191,7 @@ class NewPayment extends React.Component {
           order={order}
           title="Payment"
           subtitle="Confirm the details below to purchase your refill"
+          icon={<Info/>}
         />
 
         <PaymentLayout {...this.props}>

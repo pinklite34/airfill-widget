@@ -29,7 +29,7 @@ import {
 import { updatePaymentStatus } from '../../actions';
 
 const componentForStatus = status => {
-  return PaymentDetected;
+  //return PaymentDetected;
   switch (status) {
     case 'paid':
       return PaymentDetected;

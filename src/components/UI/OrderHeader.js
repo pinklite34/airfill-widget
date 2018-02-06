@@ -62,7 +62,7 @@ const OrderHeader = ({ children, order, title, subtitle, icon }) => (
 OrderHeader.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
-  icon: PropTypes.node
+  icon: PropTypes.any
 };
 
 export default OrderHeader;
