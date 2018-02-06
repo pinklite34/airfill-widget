@@ -3,13 +3,36 @@ import React from 'react';
 import OrderStatus from '../UI/OrderStatus';
 import OrderStep from '../UI/OrderStep';
 import Button from 'material-ui/Button';
+import OrderHeader from '../UI/OrderHeader';
+import PaymentLayout from './PaymentLayout';
+import Error from './error.svg';
+import { css } from 'glamor';
+import BottomNavigationAction from 'material-ui/BottomNavigation/BottomNavigationAction';
 
-const RefillFailed = ({
-  order,
-  paymentStatus: { failureData = {} },
-  refundAddress,
-  onReset
-}) => {
+const styles = {
+  textContainer: css({
+    display: 'block !important',
+    lineHeight: '21px',
+    marginRight: '48px',
+  }),
+  info: css({
+    color: '#777777',
+    fontSize: '14px'
+  }),
+  button: css({
+    marginTop: '12px'
+  })
+};
+
+const RefillFailed = props => {
+
+  const {
+    order,
+    paymentStatus: { failureData = {} },
+    refundAddress,
+    onReset
+  } = props;
+
   let mailto =
     'mailto:support@bitrefill.com?subject=' +
     encodeURIComponent(`Failed Order (ID ${order.id})`);
@@ -66,18 +89,25 @@ Thanks!`);
 
   return (
     <div>
-      <OrderStatus>
-        <OrderStep done>Payment complete</OrderStep>
-        <OrderStep done>Refill sent</OrderStep>
-        <OrderStep error>Delivery failed</OrderStep>
-      </OrderStatus>
-      <p>
-        For some reason we failed do deliver your refill. This can happen if you
-        have typed the number incorrectly, if the number is not for a prepaid
-        phone or if the operator you selected was not the right one.
-      </p>
-      <p>{text}</p>
-      {action}
+      <OrderHeader
+        order={order}
+        title="Delivery error"
+        subtitle="The refill could not be delivered to the target account"
+        icon={<Error/>}
+      />
+      <PaymentLayout {...props}>
+        <div>
+          <div/>
+          <div {...styles.textContainer}>
+            <span {...styles.info}>
+              {text}
+            </span>
+            <br/>
+            <br/>
+            {action}
+          </div>
+        </div>
+      </PaymentLayout>
     </div>
   );
 };
