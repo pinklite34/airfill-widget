@@ -64,7 +64,7 @@ export const formatNumber = (countryCode, inputValue, currentCaret) => {
         inputValue.indexOf(formatter.country_metadata[0]) === 0) ||
       (!formatter.country && inputValue.indexOf('+') < 0)
     ) {
-      return formatNumber(countryCode, `+${inputValue}`, currentCaret + 1);
+      return formatNumber(countryCode, `+${inputValue}`, inputValue.length + 1);
     } else {
       return {
         formattedValue: formattedNumber,

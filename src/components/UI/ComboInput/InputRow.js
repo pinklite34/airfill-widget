@@ -79,7 +79,8 @@ const InputRow = ({
   onKeyDown,
   loading,
   onSubmit,
-  submitEnabled
+  submitEnabled,
+  type
 }) => (
   <Card {...styles.container}>
     <form
@@ -99,7 +100,7 @@ const InputRow = ({
               onFocus,
               onChange: e => onChange(e.target.value, e.target.selectionStart),
               ref: inputRef,
-              type: 'text',
+              type: type,
               placeholder: country
                 ? 'Enter phone number or provider'
                 : 'Enter country or phone number',
@@ -115,7 +116,11 @@ const InputRow = ({
           {loading ? (
             <CircularProgress className={`${styles.progressBar}`} />
           ) : (
-            <Check className={`${submitEnabled ? styles.check : styles.checkDisabled}`}/>
+            <Check
+              className={`${
+                submitEnabled ? styles.check : styles.checkDisabled
+              }`}
+            />
           )}
         </Button>
       </div>

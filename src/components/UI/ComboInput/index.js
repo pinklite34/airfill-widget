@@ -108,9 +108,10 @@ class ComboInput extends Component {
       this.props.setCountry(country);
 
       this.props.setNumber(number);
-      this.setState({ inputValue: formattedValue }, () =>
-        this.input.setSelectionRange(caret, caret)
-      );
+      this.setState({ inputValue: formattedValue }, () => {
+        this.input.setSelectionRange(caret, caret);
+        setTimeout(() => this.input.setSelectionRange(caret, caret));
+      });
     } else {
       if (this.props.country && !inputValue) {
         this.props.setNumber('');
@@ -272,7 +273,7 @@ class ComboInput extends Component {
     const itemCount =
       countries.length + operators.length + recentNumbers.length;
 
-    const submitEnabled = isPhoneNumber(this.state.inputValue);
+    const isPhoneNo = isPhoneNumber(this.state.inputValue);
 
     return (
       <Downshift
@@ -295,8 +296,9 @@ class ComboInput extends Component {
               onKeyDown={this.onInputKeyDown}
               loading={loading}
               onSubmit={this.handleSubmit}
-              submitEnabled={submitEnabled}
+              submitEnabled={isPhoneNo}
               onFocus={openComboInput}
+              type={isPhoneNo ? 'tel' : 'text'}
             />
             {isOpen && itemCount ? (
               <Dropdown
