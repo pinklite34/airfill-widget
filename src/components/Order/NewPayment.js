@@ -11,6 +11,7 @@ import { isPhoneNumber, formatDisplayValue } from '../../lib/number-helpers';
 
 import BitcoinAddress from '../UI/BitcoinAddress';
 import Logo from './logo.svg';
+import OrderHeader from '../UI/OrderHeader';
 
 const valueField = {
   xbt: 'btcPrice',
@@ -137,34 +138,6 @@ const styles = {
     color: '#3e8fe4 !important',
     fontWeight: 'bold !important'
   }),
-  header: {
-    base: css({
-      display: 'flex',
-      overflow: 'hidden'
-    }),
-    icon: css({
-      flex: '0 80px'
-    }),
-    text: css({
-      margin: 0,
-      flex: 1
-    }),
-    label: css({
-      float: 'left',
-      margin: 0,
-      padding: 0,
-    }),
-    orderId: css({
-      float: 'right',
-      lineHeight: '31.5px',
-      color: '#777777',
-      fontSize: '12px'
-    }),
-    details: css({
-      color: '#777777',
-      fontSize: '14px'
-    })
-  },
   paymentLabel: css({
     fontSize: '12px !important'
   })
@@ -266,26 +239,11 @@ class NewPayment extends React.Component {
       <div>
         <PaymentMenu {...this.state} onClick={this.menuClick} />
 
-        <div {...styles.header.base}>
-          <div {...styles.header.icon}>
-
-          </div>
-          <div {...styles.header.text}>
-            <h2 {...styles.header.label}>
-              Payment
-            </h2>
-            <div {...styles.header.orderId}>
-              Order {order.id}
-            </div>
-            <br/>
-            <br/>
-            <div {...styles.header.details}>
-              Confirm the details below to purchase the refill
-            </div>
-          </div>
-        </div>
-
-        <br/>
+        <OrderHeader
+          order={order}
+          title="Payment"
+          subtitle="Confirm the details below to purchase your refill"
+        />
 
         <div {...styles.payment}>
           <div>

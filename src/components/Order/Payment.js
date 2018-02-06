@@ -95,7 +95,7 @@ const Payment = ({
   const { orderId, payment: { address } } = order.result;
 
   return (
-    <ActiveSection>
+    <div>
       <PusherSubscription
         channel={[orderId, address].join('-')}
         events={['paid', 'confirmed', 'partial', 'failed', 'delivered']}
@@ -122,7 +122,7 @@ const Payment = ({
         number={number}
         onReset={reset}
       />
-    </ActiveSection>
+    </div>
   );
 };
 
