@@ -5,25 +5,57 @@ import OrderStep from '../UI/OrderStep';
 import OrderHeader from '../UI/OrderHeader';
 import { css } from 'glamor';
 import CircularProgress from 'material-ui/Progress/CircularProgress';
+import Button from 'material-ui/Button';
+import PaymentLayout from './PaymentLayout';
 
 const styles = {
-  container: css({
-    padding: 16
+  textContainer: css({
+    display: 'block !important',
+    lineHeight: '21px',
+    marginRight: '48px',
+  }),
+  info: css({
+    color: '#777777',
+    fontSize: '14px'
+  }),
+  link: css({
+    color: '#3e8fe4',
+    fontSize: '14px',
+    textDecoration: 'underline'
+  }),
+  button: css({
+    marginTop: '12px'
   })
 };
 
-const PaymentDetected = ({ order }) => {
+const PaymentDetected = props => {
   return (
     <div>
       <OrderHeader
-        order={order}
+        order={props.order}
         title="Payment detected"
         subtitle="We're waiting for your payment to be confirmed"
         icon={<CircularProgress/>}
       />
-      <div {...styles.container}>
-
-      </div>
+      <PaymentLayout {...props}>
+        <div>
+          <div/>
+          <div {...styles.textContainer}>
+            <span {...styles.info}>
+              This page will continue to update with more details about your refill.
+              It is safe to leave this page or to buy another refill.
+            </span>
+            <br/>
+            <span {...styles.link}>
+              When will I get my refill?
+            </span>
+            <br/>
+            <Button color="primary" raised {...styles.button}>
+              Buy another refill
+            </Button>
+          </div>
+        </div>
+      </PaymentLayout>
     </div>
   );
 };
