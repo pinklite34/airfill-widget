@@ -15,7 +15,7 @@ const styles = {
         justifyContent: 'flex-end',
         padding: 0,
         margin: 0,
-        flex: '0 0 80px',
+        flex: '0 0 70px',
         fontWeight: 'bold',
         fontSize: '10px',
         color: '#777777',
@@ -61,6 +61,10 @@ const styles = {
   }),
   paymentLabel: css({
     fontSize: '12px !important'
+  }),
+  logo: css({
+    maxWidth: 40,
+    maxHeight: 30
   })
 };
 
@@ -89,7 +93,7 @@ const PaymentLayout = ({
 
       <div>
         <div>
-          <img src={operator.logoImage} alt={operator.name} {...styles.logo} width={24} height={24} />
+          <img src={operator.logoImage} alt={operator.name} {...styles.logo} />
         </div>
         <div {...styles.providerRow}>
           <span {...styles.topLabel}>Refill details</span>

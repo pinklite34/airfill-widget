@@ -17,7 +17,7 @@ const styles = {
     alignItems: 'center',
     width: 24,
     marginRight: 30,
-    marginLeft: 24
+    marginLeft: 14
   })
 };
 

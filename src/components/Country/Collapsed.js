@@ -32,7 +32,7 @@ const styles = {
       boxShadow: '1px 1px 1px rgba(0,0,0,0.08)'
     },
     marginRight: 30,
-    marginLeft: 24
+    marginLeft: 14
   })
 };
 
