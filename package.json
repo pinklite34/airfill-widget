@@ -2,8 +2,9 @@
   "name": "@bitrefill/airfill-widget",
   "version": "2.1.0",
   "description": "Airfill Embeddable Refill Widget",
-  "main": "dist/widget.js",
+  "main": "dist/index.js",
   "engines": {
+    "node": "^8.2.0",
     "yarn": "^1.1.0",
     "npm": "^5.6.0"
   },
@@ -11,7 +12,6 @@
     "clean": "rm -rf dist/*",
     "copy": "cp -f ./src/index.html ./dist",
     "build": "npm run clean && npm run copy && webpack --env=dist && webpack --env=standalone",
-    "dev": "npm run clean && npm run copy && webpack --env=dev -w",
     "dist": "webpack --env=dist --json > stats.json",
     "standalone": "npm run copy && webpack --env=standalone --json > stats.json",
     "lint": "eslint ./src",
