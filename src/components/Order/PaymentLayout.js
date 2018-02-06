@@ -8,7 +8,8 @@ const styles = {
       display: 'flex',
       '& > div': {
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        padding: '16px 0 16px 0'
       },
       '& > div:first-of-type': {
         justifyContent: 'flex-end',
@@ -47,7 +48,6 @@ const styles = {
     color: '#777777',
     fontWeight: 'bold',
     fontSize: '10px',
-    paddingTop: '16px',
     textTransform: 'uppercase'
   }),
   label: css({
