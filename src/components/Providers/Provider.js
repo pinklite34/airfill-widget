@@ -20,7 +20,7 @@ const styles = {
     cursor: 'pointer',
     '@media(max-width: 460px)': {
       flex: '1 0 100%',
-      margin: '0 -12px',
+      margin: '0 -16px',
       flexDirection: 'row !important',
       padding: 16,
       boxShadow: 'none !important',
