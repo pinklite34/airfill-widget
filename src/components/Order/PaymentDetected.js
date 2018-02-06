@@ -35,7 +35,7 @@ const PaymentDetected = props => {
         order={props.order}
         title="Payment detected"
         subtitle="We're waiting for your payment to be confirmed"
-        icon={<CircularProgress/>}
+        icon={<CircularProgress size={32} />}
       />
       <PaymentLayout {...props}>
         <div>

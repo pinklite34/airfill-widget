@@ -11,7 +11,11 @@ const styles = {
     padding: 16
   }),
   icon: css({
-    flex: '0 80px'
+    maxWidth: 32,
+    maxHeight: 32,
+    marginRight: '32px',
+    marginTop: '12px',
+    marginLeft: '12px'
   }),
   text: css({
     margin: 0,
