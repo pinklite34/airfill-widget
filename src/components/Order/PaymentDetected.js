@@ -50,7 +50,7 @@ const PaymentDetected = props => {
               When will I get my refill?
             </span>
             <br/>
-            <Button color="primary" raised {...styles.button}>
+            <Button color="primary" raised {...styles.button} onClick={props.onReset}>
               Buy another refill
             </Button>
           </div>
