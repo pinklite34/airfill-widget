@@ -29,14 +29,20 @@ const styles = {
   paymentMethods: css({
     display: 'flex',
     alignItems: 'center',
-    position: 'relative'
+    position: 'relative',
+
+    '@media(max-width: 640px)': {
+      flexDirection: 'column',
+    }
   }),
   paymentGroup: css({
     flex: 1,
     margin: '0 32px',
 
     '&:first-child': {
-      '&:after, &:before': { display: 'none' }
+      '&:after, &:before': {
+        display: 'none'
+      }
     },
 
     '&:before': {
@@ -53,13 +59,35 @@ const styles = {
       display: 'block',
       position: 'absolute',
       top: '50%',
-      marginLeft: -38,
+      marginLeft: '-45px',
       marginTop: '-1em',
       content: 'or',
       backgroundColor: 'hsl(130,5%,99%)',
-      padding: '0.5em 0 0.6em',
+      padding: '0.5em 0.5em 0.6em',
       lineHeight: 1,
       color: '#999'
+    },
+
+    '@media(max-width: 640px)': {
+      '&:not(:first-child)': {
+        marginTop: '24px',
+        borderTop: 'rgba(0,0,0,0.16) solid 1px',
+
+        '> p': {
+          marginTop: '24px',
+          textAlign: 'center',
+        },
+      },
+
+      '&:before': {
+        display: 'none',
+      },
+
+      '&:after': {
+        left: '50%',
+        top: '60px',
+        marginLeft: '-15px',
+      }
     }
   }),
   buttonGroup: css({
@@ -146,7 +174,7 @@ const NewPayment = ({
                     {title}
                   </Button>,
                   disabled ? (
-                    <small>
+                    <small key='low-balance'>
                       {lowBalanceText ||
                         'Your account balance is too low to use this option'}
                     </small>
