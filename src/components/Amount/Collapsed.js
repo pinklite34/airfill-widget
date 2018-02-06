@@ -3,10 +3,21 @@ import { connect } from 'react-redux';
 import { selectAmount, selectOperator } from '../../store';
 import CollapsedSection from '../UI/CollapsedSection';
 import { css } from 'glamor';
+import Icon from './icon.svg';
 
 const styles = {
   container: css({
-    marginLeft: '78px'
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
+  }),
+  icon: css({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 24,
+    marginRight: 30,
+    marginLeft: 24
   })
 };
 
@@ -16,6 +27,9 @@ const Collapsed = ({ history, amount, operator }) => (
     type="amount"
   >
     <div {...styles.container}>
+      <div {...styles.icon}>
+        <Icon/>
+      </div>
       {amount} {operator.result.currency}
     </div>
   </CollapsedSection>
