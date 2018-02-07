@@ -44,6 +44,7 @@ const styles = {
   providerRow: css({
     flexDirection: 'column !important',
     alignItems: 'flex-start !important',
+    lineHeight: '24px'
   }),
   topLabel: css({
     display: 'block',
