@@ -84,7 +84,8 @@ const styles = {
   }),
   changeButton: css({
     color: '#3e8fe4 !important',
-    fontWeight: 'bold !important'
+    fontWeight: 'bold !important',
+    marginLeft: '12px'
   }),
   paymentLabel: css({
     fontSize: '12px !important'

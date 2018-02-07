@@ -3,6 +3,7 @@ import { css } from 'glamor';
 
 const styles = {
   container: css({
+    fontFamily: '',
     backgroundColor: '#fff',
     '& > div': {
       display: 'flex',
@@ -29,7 +30,8 @@ const styles = {
       },
       '& > div:last-of-type': {
         flex: 'auto',
-        fontSize: '20px',
+        fontSize: '16px',
+        fontWeight: 'bold',
         color: '#323232',
         borderBottom: '1px solid rgba(0, 0, 0, 0.08)',
         '& > p': {
@@ -54,11 +56,6 @@ const styles = {
     fontWeight: 'bold',
     fontSize: '12px',
     color: '#777777'
-  }),
-  changeButton: css({
-    color: '#3e8fe4 !important',
-    fontWeight: 'bold !important',
-    marginLeft: '12px'
   }),
   paymentLabel: css({
     fontSize: '12px !important'
