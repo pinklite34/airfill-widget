@@ -74,7 +74,7 @@ Thanks!`);
       <p>
         For some reason we failed do deliver your refill. This can happen if you
         have typed the number incorrectly, if the number is not for a prepaid
-        phone or if the operator you selected was not the right one.
+        phone or if the service you selected was not the right one.
       </p>
       <p>{text}</p>
       {action}

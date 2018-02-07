@@ -64,11 +64,11 @@ const SuggestedOperator = ({ operator, onAccept, onReject }) => {
         <img src={operator.logoImage} alt={operator.name} {...styles.logo} />
         <div {...styles.content}>
           <p {...styles.text}>
-            We've detected <strong>{operator.name}</strong> as your operator. If
-            this is not correct, please select another operator below.
+            We've detected <strong>{operator.name}</strong> as your service. If
+            this is not correct, please select another service below.
           </p>
           <Button primary raised onClick={onAccept} {...styles.button}>
-            Yes, this is my operator
+            Yes, this is my service
           </Button>
           <Button raised onClick={onReject} {...styles.button}>
             No, it's not correct
@@ -82,8 +82,8 @@ const SuggestedOperator = ({ operator, onAccept, onReject }) => {
         <Info {...styles.icon} />
         <div {...styles.content}>
           <p {...styles.error}>
-            We could not automatically identify your operator. Please select the
-            operator below.
+            We could not automatically identify your service. Please select the
+            service below.
           </p>
         </div>
       </div>
