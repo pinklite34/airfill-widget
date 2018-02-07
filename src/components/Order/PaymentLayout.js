@@ -1,5 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { css } from 'glamor';
+import { selectAmount } from '../../store/ui';
+import { selectOperator } from '../../store/operator';
 
 const styles = {
   container: css({
@@ -75,6 +78,7 @@ const valueField = {
 
 const PaymentLayout = ({
   children,
+  amount,
   operator,
   number,
   country,
@@ -92,11 +96,11 @@ const PaymentLayout = ({
 
       <div>
         <div>
-          <img src={operator.logoImage} alt={operator.name} {...styles.logo} />
+          <img src={operator.result.logoImage} alt={operator.result.name} {...styles.logo} />
         </div>
         <div {...styles.providerRow}>
           <span {...styles.topLabel}>Refill details</span>
-          <p>{operator.name}</p>
+          <p>{`${operator.result.name} ${amount} ${operator.result.currency}`}</p>
           <p {...styles.label}>
             {number}
           </p>
@@ -117,4 +121,7 @@ const PaymentLayout = ({
   );
 };
 
-export default PaymentLayout;
+export default connect(state => ({
+  amount: selectAmount(state),
+  operator: selectOperator(state)
+}))(PaymentLayout);
