@@ -63,8 +63,7 @@ const styles = {
     fontSize: '12px !important'
   }),
   logo: css({
-    maxWidth: 40,
-    maxHeight: 30
+    maxWidth: 48
   })
 };
 
