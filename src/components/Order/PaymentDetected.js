@@ -1,8 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import OrderStatus from '../UI/OrderStatus';
-import OrderStep from '../UI/OrderStep';
-import OrderHeader from '../UI/OrderHeader';
 import { css } from 'glamor';
 import CircularProgress from 'material-ui/Progress/CircularProgress';
 import Button from 'material-ui/Button';

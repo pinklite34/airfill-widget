@@ -1,6 +1,4 @@
 import React from 'react';
-import OrderStatus from '../UI/OrderStatus';
-import OrderStep from '../UI/OrderStep';
 import PaymentLayout from './PaymentLayout';
 import OrderHeader from '../UI/OrderHeader';
 import Confirmed from './confirmed.svg';

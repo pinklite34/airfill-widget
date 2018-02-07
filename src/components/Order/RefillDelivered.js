@@ -1,7 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import OrderStatus from '../UI/OrderStatus';
-import OrderStep from '../UI/OrderStep';
 import Button from 'material-ui/Button';
 import OrderHeader from '../UI/OrderHeader';
 import Confirmed from './confirmed.svg';
