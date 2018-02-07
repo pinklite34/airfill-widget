@@ -96,8 +96,9 @@ const InputRow = ({
         <div {...styles.inputContainer}>
           <input
             {...getInputProps({
-              onKeyDown,
               onFocus,
+              onKeyDown,
+              onKeyUp: e => onChange(e.target.value, e.target.selectionStart),
               onChange: e => onChange(e.target.value, e.target.selectionStart),
               ref: inputRef,
               type: type,
