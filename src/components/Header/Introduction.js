@@ -106,7 +106,7 @@ class Introduction extends Component {
           </div>
         ) : (
             <div {...styles.description}>
-              Enter a phone number to see available services or select an operator
+              Enter a phone number to see available services or select a service
               below for more information
           </div>
           )}

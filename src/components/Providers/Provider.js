@@ -79,7 +79,7 @@ export const ShowAll = ({ onClick, count }) => (
       <More fill="#777777" width="42px" height="42px" />
     </div>
     <div>
-      Show all <strong>{count}</strong> operators
+      Show all <strong>{count}</strong> services
     </div>
     <Select {...styles.select} fill="#777" />
   </Card>
