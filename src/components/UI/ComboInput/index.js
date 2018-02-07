@@ -266,7 +266,7 @@ class ComboInput extends Component {
     );
 
     const sections = [recentNumbers, countries, operators];
-    const titles = ['Recent refills', 'Countries', 'Providers'];
+    const titles = ['Recent refills', 'Countries', 'Operators'];
 
     const items = sectionsToItemList(sections, titles).map((item, index) => ({
       ...item,

@@ -15,7 +15,7 @@ import SuggestedOperator from './SuggestedOperator';
 
 const customLabels = {
   Mobile: 'Mobile phone refill',
-  other: 'Other providers'
+  other: 'Other operators'
 };
 
 const Picker = ({
@@ -47,7 +47,7 @@ const Picker = ({
           onReject={() => history.replace('/refill/selectProvider')}
         />
         <Grid
-          title={'Available providers'}
+          title={'Available operators'}
           providers={numberLookup.altOperators}
           onSelect={selectOperator}
           defaultShowAll={true}

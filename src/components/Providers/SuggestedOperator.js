@@ -83,7 +83,7 @@ const SuggestedOperator = ({ operator, onAccept, onReject }) => {
         <div {...styles.content}>
           <p {...styles.error}>
             We could not automatically identify your operator. Please select the
-            provider below.
+            operator below.
           </p>
         </div>
       </div>
