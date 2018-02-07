@@ -88,11 +88,21 @@ const styles = {
   }),
   paymentLabel: css({
     fontSize: '12px !important'
+  }),
+  divider: css({
+    border: 0,
+    height: 0,
+    borderTop: '1px solid rgba(0, 0, 0, 0.1)',
+    borderBottom: '1px solid rgba(255, 255, 255, 0.3)'
   })
 };
 
 const labelForNumberType = type =>
   isPhoneNumber(type) ? 'Phone number' : 'Account number';
+
+const Divider = () => (
+  <hr {...styles.divider}/>
+);
 
 const PaymentMenu = ({ open, anchorEl, onClick }) => {
 
@@ -120,16 +130,19 @@ const PaymentMenu = ({ open, anchorEl, onClick }) => {
           secondary="No fees, instant delivery"
           icon={<Logo />}
         />
+        <Divider />
         <Item
           primary="Bitcoin Payment"
           secondary="Normal fees, delivery after payment confirmation"
           icon={<p {...styles.paymentLabel}>BTC</p>}
         />
+        <Divider />
         <Item
           primary="Litecoin Payment"
           secondary="Normal fees, delivery after payment confirmation"
           icon={<p {...styles.paymentLabel}>LTC</p>}
         />
+        <Divider />
         <Item
           primary="Add external wallet"
           secondary="Pay with Coinbase, Xapo, LocalBitcoin..."
