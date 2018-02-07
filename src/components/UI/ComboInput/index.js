@@ -148,6 +148,7 @@ class ComboInput extends Component {
   };
 
   setInputRef = ref => (this.input = ref);
+
   onInputKeyDown = e => {
     const { selectionStart, selectionEnd } = e.target;
     const selectionRange = selectionEnd - selectionStart;
