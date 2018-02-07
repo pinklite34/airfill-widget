@@ -96,11 +96,12 @@ const InputRow = ({
           <div {...styles.inputContainer}>
             <input
               {...getInputProps({
-                onKeyDown,
                 onFocus,
+                onKeyDown,
+                onKeyUp: e => onChange(e.target.value, e.target.selectionStart),
                 onChange: e => onChange(e.target.value, e.target.selectionStart),
                 ref: inputRef,
-                type,
+                type: type,
                 placeholder: country
                   ? 'Enter phone number or provider'
                   : 'Enter country or phone number',
@@ -116,50 +117,16 @@ const InputRow = ({
             {loading ? (
               <CircularProgress className={`${styles.progressBar}`} />
             ) : (
-                <Check className={`${submitEnabled ? styles.check : styles.checkDisabled}`} />
+                <Check
+                  className={`${
+                    submitEnabled ? styles.check : styles.checkDisabled
+                    }`}
+                />
               )}
           </Button>
         </div>
-<<<<<<< Updated upstream
-      <div {...styles.inputContainer}>
-        <input
-          {...getInputProps({
-            onFocus,
-            onKeyDown,
-            onKeyUp: e => onChange(e.target.value, e.target.selectionStart),
-            onChange: e => onChange(e.target.value, e.target.selectionStart),
-            ref: inputRef,
-            type: type,
-            placeholder: country
-              ? 'Enter phone number or provider'
-              : 'Enter country or phone number',
-            ...styles.input
-          })}
-        />
-      </div>
-      <Button
-        disabled={loading || !submitEnabled}
-        {...css([styles.button, !submitEnabled && styles.buttonDisabled])}
-        type="submit"
-      >
-        {loading ? (
-          <CircularProgress className={`${styles.progressBar}`} />
-        ) : (
-            <Check
-              className={`${
-                submitEnabled ? styles.check : styles.checkDisabled
-                }`}
-            />
-          )}
-      </Button>
-      </div>
-    </form >
-  </Card >
-);
-=======
-      </form>
-    </Card>
+      </form >
+    </Card >
   );
->>>>>>> Stashed changes
 
 export default InputRow;
