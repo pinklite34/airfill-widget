@@ -10,7 +10,8 @@ const styles = {
       '& > div': {
         display: 'flex',
         alignItems: 'center',
-        padding: '16px 0 16px 0'
+        padding: '14px 0 14px 0',
+        minHeight: '38px'
       },
       '& > div:first-of-type': {
         justifyContent: 'flex-end',
