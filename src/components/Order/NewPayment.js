@@ -24,6 +24,15 @@ const styles = {
     },
     '> dd': {
       marginBottom: 8
+    },
+
+    '@media(max-width: 480px)': {
+      '> dt': {
+        width: 'auto',
+      },
+      '> dd': {
+        textAlign: 'right',
+      }
     }
   }),
   paymentMethods: css({
@@ -31,7 +40,7 @@ const styles = {
     alignItems: 'center',
     position: 'relative',
 
-    '@media(max-width: 640px)': {
+    '@media(max-width: 720px)': {
       flexDirection: 'column',
     }
   }),
@@ -68,7 +77,9 @@ const styles = {
       color: '#999'
     },
 
-    '@media(max-width: 640px)': {
+    '@media(max-width: 720px)': {
+      width: '100%',
+
       '&:not(:first-child)': {
         marginTop: '24px',
         borderTop: 'rgba(0,0,0,0.16) solid 1px',
@@ -76,6 +87,10 @@ const styles = {
         '> p': {
           marginTop: '24px',
           textAlign: 'center',
+        },
+
+        '> *': {
+          width: '100%',
         },
       },
 

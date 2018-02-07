@@ -90,10 +90,10 @@ class Introduction extends Component {
             <div {...styles.subtitle}>Trusted by More Than 500 000 People</div>
           </div>
         ) : (
-          <div {...styles.head}>
-            <h2 {...styles.title}>Top Up Anything With Bitcoin</h2>
-          </div>
-        )}
+            <div {...styles.head}>
+              <h2 {...styles.title}>Top Up Anything With Bitcoin</h2>
+            </div>
+          )}
         <ComboInput
           history={history}
           loading={numberLookup.isLoading}
@@ -105,11 +105,11 @@ class Introduction extends Component {
             <div>{numberLookup.error.message || numberLookup.error}</div>
           </div>
         ) : (
-          <div {...styles.description}>
-            Enter a phone number to see available services or select a provider
-            below for more information
+            <div {...styles.description}>
+              Enter a phone number to see available services or select an operator
+              below for more information
           </div>
-        )}
+          )}
       </div>
     );
   }

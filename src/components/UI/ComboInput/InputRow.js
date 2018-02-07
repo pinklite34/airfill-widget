@@ -82,51 +82,51 @@ const InputRow = ({
   submitEnabled,
   type
 }) => (
-  <Card {...styles.container}>
-    <form
-      onSubmit={e => {
-        e.preventDefault();
-        onSubmit();
-      }}
-    >
-      <div {...styles.row}>
-        <div {...styles.flag} onClick={resetCountry}>
-          <Flag country={country} />
-        </div>
-        <div {...styles.inputContainer}>
-          <input
-            {...getInputProps({
-              onFocus,
-              onKeyDown,
-              onKeyUp: e => onChange(e.target.value, e.target.selectionStart),
-              onChange: e => onChange(e.target.value, e.target.selectionStart),
-              ref: inputRef,
-              type: type,
-              placeholder: country
-                ? 'Enter phone number or provider'
-                : 'Enter country or phone number',
-              ...styles.input
-            })}
-          />
-        </div>
-        <Button
-          disabled={loading || !submitEnabled}
-          {...css([styles.button, !submitEnabled && styles.buttonDisabled])}
-          type="submit"
-        >
-          {loading ? (
-            <CircularProgress className={`${styles.progressBar}`} />
-          ) : (
-            <Check
-              className={`${
-                submitEnabled ? styles.check : styles.checkDisabled
-              }`}
+    <Card {...styles.container}>
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          onSubmit();
+        }}
+      >
+        <div {...styles.row}>
+          <div {...styles.flag} onClick={resetCountry}>
+            <Flag country={country} />
+          </div>
+          <div {...styles.inputContainer}>
+            <input
+              {...getInputProps({
+                onFocus,
+                onKeyDown,
+                onKeyUp: e => onChange(e.target.value, e.target.selectionStart),
+                onChange: e => onChange(e.target.value, e.target.selectionStart),
+                ref: inputRef,
+                type: type,
+                placeholder: country
+                  ? 'Enter phone number or provider'
+                  : 'Enter country or phone number',
+                ...styles.input
+              })}
             />
-          )}
-        </Button>
-      </div>
-    </form>
-  </Card>
-);
+          </div>
+          <Button
+            disabled={loading || !submitEnabled}
+            {...css([styles.button, !submitEnabled && styles.buttonDisabled])}
+            type="submit"
+          >
+            {loading ? (
+              <CircularProgress className={`${styles.progressBar}`} />
+            ) : (
+                <Check
+                  className={`${
+                    submitEnabled ? styles.check : styles.checkDisabled
+                    }`}
+                />
+              )}
+          </Button>
+        </div>
+      </form >
+    </Card >
+  );
 
 export default InputRow;
