@@ -100,29 +100,46 @@ const Divider = () => (
   <hr {...styles.divider}/>
 );
 
-const PaymentMenu = ({ open, anchorEl, paymentButtons, onClick }) => {
+const PaymentMenu = props => {
+  const {
+    open,
+    anchorEl,
+    paymentButtons,
+    onClick
+  } = props;
 
   const Item = props => {
     let {
       title,
       description,
-      icon
+      icon,
+      order,
+      billingCurrency,
+      accountBalance,
+      operator,
+      requireAccountBalance
     } = props;
 
     if (typeof icon === 'string') {
       icon = <img src={icon}/>
     }
 
-    /*const disabled =
+    const price = order[valueField[billingCurrency.toLowerCase()]];
+    const canAfford = price <= accountBalance;
+    const displayNumber = !operator.noNumber;
+    const widgetRequireAccountBalance = requireAccountBalance;
+
+    const disabled =
       !canAfford &&
       ((widgetRequireAccountBalance &&
         requireAccountBalance !== false) ||
         requireAccountBalance);
-*/
+
     return (
       <MenuItem
         open={open}
         onClick={() => onClick(props)}
+        disabled={disabled}
       >
         {icon && <ListItemIcon style={{margin: -6}}>{icon}</ListItemIcon>}
         <ListItemText
@@ -139,9 +156,9 @@ const PaymentMenu = ({ open, anchorEl, paymentButtons, onClick }) => {
         anchorEl={anchorEl}
         open={open}
       >
-        {paymentButtons && paymentButtons.map((props, index) => (
+        {paymentButtons && paymentButtons.map((options, index) => (
           <div key={index}>
-            <Item {...props} />
+            <Item {...options} {...props} />
             {index < paymentButtons.length - 1 && <Divider/>}
           </div>
         ))}
@@ -192,19 +209,16 @@ class NewPayment extends React.Component {
       paymentButtons
     } = this.props;
 
+    const price = order[valueField[billingCurrency.toLowerCase()]];
     const billingCurrencyDisplayName =
       billingCurrency === 'XBT' ? 'BTC' : billingCurrency;
-    const price = order[valueField[billingCurrency.toLowerCase()]];
     const formattedPrice = price + ' ' + billingCurrencyDisplayName.toUpperCase();
-    const canAfford = price <= accountBalance;
-    const displayNumber = !operator.noNumber;
-    const widgetRequireAccountBalance = requireAccountBalance;
 
     const method = this.state.paymentMethod;
 
     return (
       <div>
-        <PaymentMenu {...this.state} paymentButtons={paymentButtons} onClick={this.menuClick} />
+        <PaymentMenu {...this.props} {...this.state} paymentButtons={paymentButtons} onClick={this.menuClick} />
 
         <OrderHeader
           order={order}
