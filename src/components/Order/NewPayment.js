@@ -9,8 +9,6 @@ import List, { ListItem, ListItemText, ListItemIcon } from 'material-ui/List';
 import { isPhoneNumber, formatDisplayValue } from '../../lib/number-helpers';
 
 import BitcoinAddress from '../UI/BitcoinAddress';
-import Plus from './plus.svg';
-import Logo from './logo.svg';
 import Info from './info.svg';
 import OrderHeader from '../UI/OrderHeader';
 import PaymentLayout from './PaymentLayout';
@@ -87,9 +85,6 @@ const styles = {
     fontWeight: 'bold !important',
     marginLeft: '12px'
   }),
-  paymentLabel: css({
-    fontSize: '12px !important'
-  }),
   divider: css({
     border: 0,
     height: 0,
@@ -105,20 +100,38 @@ const Divider = () => (
   <hr {...styles.divider}/>
 );
 
-const PaymentMenu = ({ open, anchorEl, onClick }) => {
+const PaymentMenu = ({ open, anchorEl, paymentButtons, onClick }) => {
 
-  const Item = ({ children, primary, secondary, icon }) => (
-    <MenuItem
-      open={open}
-      onClick={() => onClick(primary)}
-    >
-      {icon && <ListItemIcon style={{margin: -6}}>{icon}</ListItemIcon>}
-      <ListItemText
-        primary={primary}
-        secondary={secondary}
-      />
-    </MenuItem>
-  );
+  const Item = props => {
+    let {
+      title,
+      description,
+      icon
+    } = props;
+
+    if (typeof icon === 'string') {
+      icon = <img src={icon}/>
+    }
+
+    /*const disabled =
+      !canAfford &&
+      ((widgetRequireAccountBalance &&
+        requireAccountBalance !== false) ||
+        requireAccountBalance);
+*/
+    return (
+      <MenuItem
+        open={open}
+        onClick={() => onClick(props)}
+      >
+        {icon && <ListItemIcon style={{margin: -6}}>{icon}</ListItemIcon>}
+        <ListItemText
+          primary={title}
+          secondary={description}
+        />
+      </MenuItem>
+    );
+  };
 
   return (
     <div>
@@ -126,29 +139,12 @@ const PaymentMenu = ({ open, anchorEl, onClick }) => {
         anchorEl={anchorEl}
         open={open}
       >
-        <Item
-          primary="Bitrefill account balance"
-          secondary="No fees, instant delivery"
-          icon={<Logo />}
-        />
-        <Divider />
-        <Item
-          primary="Bitcoin Payment"
-          secondary="Normal fees, delivery after payment confirmation"
-          icon={<p {...styles.paymentLabel}>BTC</p>}
-        />
-        <Divider />
-        <Item
-          primary="Litecoin Payment"
-          secondary="Normal fees, delivery after payment confirmation"
-          icon={<p {...styles.paymentLabel}>LTC</p>}
-        />
-        <Divider />
-        <Item
-          primary="Add external wallet"
-          secondary="Pay with Coinbase, Xapo, LocalBitcoin..."
-          icon={<Plus />}
-        />
+        {paymentButtons && paymentButtons.map((props, index) => (
+          <div key={index}>
+            <Item {...props} />
+            {index < paymentButtons.length - 1 && <Divider/>}
+          </div>
+        ))}
       </Menu>
     </div>
   );
@@ -159,7 +155,13 @@ class NewPayment extends React.Component {
   state = {
     anchorEl: null,
     open: false,
-    paymentMethod: 'Account balance'
+    paymentMethod: {
+      title: 'Unknown',
+      paymentModeOptions: {
+        title: 'Unknown',
+        callback: console.log('unknown')
+      }
+    }
   };
 
   openMenu = (e) => this.setState({
@@ -167,11 +169,12 @@ class NewPayment extends React.Component {
     anchorEl: e
   });
 
-  menuClick = (paymentMethod) => {
+  menuClick = (button) => {
+    console.log("clicked", button);
     this.setState({
       open: false,
       anchorEl: null,
-      paymentMethod
+      paymentMethod: button
     });
   };
 
@@ -197,9 +200,11 @@ class NewPayment extends React.Component {
     const displayNumber = !operator.noNumber;
     const widgetRequireAccountBalance = requireAccountBalance;
 
+    const method = this.state.paymentMethod;
+
     return (
       <div>
-        <PaymentMenu {...this.state} onClick={this.menuClick} />
+        <PaymentMenu {...this.state} paymentButtons={paymentButtons} onClick={this.menuClick} />
 
         <OrderHeader
           order={order}
@@ -214,63 +219,28 @@ class NewPayment extends React.Component {
               <p>Pay with</p>
             </div>
             <div>
-              {this.state.paymentMethod} <Button {...styles.changeButton} onClick={(event) => this.openMenu(event.currentTarget)}>Change</Button>
+              {this.state.paymentMethod.title} <Button {...styles.changeButton} onClick={(event) => this.openMenu(event.currentTarget)}>Change</Button>
             </div>
           </div>
-
           <div>
             <div/>
-            <div {...styles.paymentMethods}>
-              {paymentButtons && (
-                <div {...styles.paymentGroup} {...styles.buttonGroup}>
-                  {paymentButtons.map(
-                    ({ title, requireAccountBalance, lowBalanceText, callback }, i) => {
-                      // disabled | canAfford | requireAccountBalance | widgetRequireAccountBalance
-                      // true     | false     | undefined (!false)    | true
-                      // true     | false     | true                  | true
-                      // false    | false     | false                 | true
-                      // false    | false     | undefined (!false)    | false
-                      // true     | false     | true                  | false
-                      // false    | false     | false                 | false
-                      // false    | true      | any                   | any
-                      const disabled =
-                        !canAfford &&
-                        ((widgetRequireAccountBalance &&
-                          requireAccountBalance !== false) ||
-                          requireAccountBalance);
-                      return [
-                        <Button
-                          {...styles.button}
-                          raised
-                          key={title}
-                          onClick={() => callback(order)}
-                          disabled={disabled}
-                          color={i === 0 ? 'primary' : 'default'}
-                        >
-                          {title}
-                        </Button>,
-                        disabled ? (
-                          <small>
-                            {lowBalanceText ||
-                              'Your account balance is too low to use this option'}
-                          </small>
-                        ) : null
-                      ];
-                    }
-                  )}
-                </div>
-              )}
-              {showBTCAddress && (
-                <div {...styles.paymentGroup}>
-                  <p>
-                    Send <i>exactly</i> <strong>{order.btcPrice} BTC</strong> to
-                    address:
-                  </p>
-                  <BitcoinAddress address={order.payment.address} />
-                </div>
-              )}
+            <div>
+              {this.state.paymentMethod.paymentMode === 'button' &&
+                <Button raised color="primary" onClick={() => method.paymentModeOptions.callback(order)}>
+                  {method.paymentModeOptions.title}
+                </Button>
+              }
             </div>
           </div>
+          {/*showBTCAddress && (
+            <div {...styles.paymentGroup}>
+              <p>
+                Send <i>exactly</i> <strong>{order.btcPrice} BTC</strong> to
+                address:
+              </p>
+              <BitcoinAddress address={order.payment.address} />
+            </div>
+          )*/}
         </PaymentLayout>
       </div>
     );

@@ -30,7 +30,7 @@ const Collapsed = ({ history, amount, operator }) => (
       <div {...styles.icon}>
         <Icon/>
       </div>
-      {amount} {operator.result.currency}
+      {amount} {operator.result && operator.result.currency}
     </div>
   </CollapsedSection>
 );

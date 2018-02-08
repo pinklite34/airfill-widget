@@ -41,13 +41,13 @@ class AirfillWidget extends Component {
     userEmail: PropTypes.string,
 
     // Payment options
-    paymentButtons: PropTypes.arrayOf(
+    /*paymentButtons: PropTypes.arrayOf(
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         callback: PropTypes.func.isRequired,
         requireAccountBalance: PropTypes.bool
       })
-    ).isRequired,
+    ).isRequired,*/
     showBTCAddress: PropTypes.bool,
     billingCurrency: PropTypes.string,
     requireAccountBalance: PropTypes.bool,
