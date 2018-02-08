@@ -141,7 +141,7 @@ const PaymentMenu = props => {
         onClick={() => onClick(props)}
         disabled={disabled}
       >
-        {icon && <ListItemIcon style={{margin: -6}}>{icon}</ListItemIcon>}
+        {icon && <ListItemIcon style={{margin: 0}}>{icon}</ListItemIcon>}
         <ListItemText
           primary={title}
           secondary={description}
