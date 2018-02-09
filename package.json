@@ -66,6 +66,7 @@
     "babel-runtime": "6.23.0",
     "desvg-loader": "^0.1.0",
     "eslint": "3.19.0",
+    "eslint-config-bitrefill": "^1.1.0",
     "eslint-config-react-app": "^1.0.4",
     "eslint-plugin-flowtype": "^2.41.0",
     "eslint-plugin-import": "2.2.0",
