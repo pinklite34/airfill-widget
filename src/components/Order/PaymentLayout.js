@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { css } from 'glamor';
 import { selectAmount } from '../../store/ui';
 import { selectOperator } from '../../store/operator';
+import { clearInterval } from 'timers';
 
 const styles = {
   container: css({
@@ -45,7 +46,7 @@ const styles = {
       }
     }
   }),
-  providerRow: css({
+  cellContainer: css({
     flexDirection: 'column !important',
     alignItems: 'flex-start !important',
     lineHeight: '24px'
@@ -76,50 +77,80 @@ const valueField = {
   usd: 'usdPrice'
 };
 
-const PaymentLayout = ({
-  children,
-  amount,
-  operator,
-  number,
-  country,
-  billingCurrency,
-  order
-}) => {
+class PaymentLayout extends React.Component {
 
-  const billingCurrencyDisplayName =
-    billingCurrency === 'XBT' ? 'BTC' : billingCurrency;
-  const price = order[valueField[billingCurrency.toLowerCase()]];
-  const formattedPrice = price + ' ' + billingCurrencyDisplayName.toUpperCase();
-  const showNumber = !operator.result || !operator.result.noNumber;
+  state = {
+    countdownInterval: null,
+    timeLeft: ''
+  };
 
-  return (
-    <div {...styles.container}>
+  componentDidMount() {
+    this.setState({
+      countdownInterval: setInterval(() => {
+        const now = new Date().getTime();
+        const expiring = this.props.order.expirationTime;
+        let diff = new Date(expiring - now);
 
-      <div>
+        diff = `${diff.getMinutes()}:${diff.getSeconds()}`;
+
+        this.setState({ timeLeft: diff });
+      }, 1000)
+    });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.countdownInterval);
+  }
+
+  render() {
+    const {
+      children,
+      amount,
+      operator,
+      number,
+      country,
+      billingCurrency,
+      order
+    } = this.props;
+
+    const billingCurrencyDisplayName =
+      billingCurrency === 'XBT' ? 'BTC' : billingCurrency;
+    const price = order[valueField[billingCurrency.toLowerCase()]];
+    const formattedPrice = price + ' ' + billingCurrencyDisplayName.toUpperCase();
+    const showNumber = !operator.result || !operator.result.noNumber;
+
+    return (
+      <div {...styles.container}>
+
         <div>
-          <img src={operator.result.logoImage} alt={operator.result.name} {...styles.logo} />
+          <div>
+            <img src={operator.result.logoImage} alt={operator.result.name} {...styles.logo} />
+          </div>
+          <div {...styles.cellContainer}>
+            <span {...styles.topLabel}>Refill details</span>
+            <p>{`${operator.result.name} ${amount} ${operator.result.currency}`}</p>
+            <p {...styles.label}>
+              {showNumber && number}
+            </p>
+          </div>
         </div>
-        <div {...styles.providerRow}>
-          <span {...styles.topLabel}>Refill details</span>
-          <p>{`${operator.result.name} ${amount} ${operator.result.currency}`}</p>
-          <p {...styles.label}>
-            {showNumber && number}
-          </p>
+
+        <div>
+          <div>
+            Price
+          </div>
+          <div {...styles.cellContainer}>
+            <p>{formattedPrice}</p>
+            <p {...styles.label}>
+              Time left: {this.state.timeLeft}
+            </p>
+          </div>
         </div>
+
+        {children}
       </div>
-
-      <div>
-        <div>
-          Price
-        </div>
-        <div>
-          {formattedPrice}
-        </div>
-      </div>
-
-      {children}
-    </div>
-  );
+    );
+  }
 };
 
 export default connect(state => ({
