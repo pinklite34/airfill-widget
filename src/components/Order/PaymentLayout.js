@@ -91,7 +91,11 @@ class PaymentLayout extends React.Component {
         const expiring = this.props.order.expirationTime;
         let diff = new Date(expiring - now);
 
-        diff = `${diff.getMinutes()}:${diff.getSeconds()}`;
+        if (now > expiring) {
+          diff = '00:00';
+        } else {
+          diff = `${diff.getMinutes()}:${diff.getSeconds()}`;
+        }
 
         this.setState({ timeLeft: diff });
       }, 1000)
