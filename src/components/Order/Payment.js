@@ -98,7 +98,7 @@ const Payment = ({
     <div>
       <PusherSubscription
         channel={[orderId, address].join('-')}
-        events={['paid', 'confirmed', 'partial', 'failed', 'delivered']}
+        events={['paid', 'confirmed', 'partial', 'failed', 'delivered', 'expired']}
         onUpdate={(event, data) =>
           updatePaymentStatus({
             status: event,
