@@ -101,6 +101,7 @@ class TopupDetails extends Component {
     const { error, isLoading } = this.state;
     const showEmail = !isValidEmail(this.props.config.orderOptions.email);
     const showNumber = !operator.result || !operator.result.noNumber;
+    const numberLabel = operator.type ? 'phone number' : 'account number';
 
     return (
       <div {...styles.container}>
@@ -111,8 +112,8 @@ class TopupDetails extends Component {
           </div>
         )}
         {showNumber && <Field
-          label="Phone number"
-          hint="The phone number to top up"
+          label={numberLabel}
+          hint={`The ${numberLabel} to top up`}
           {...styles.field}
         >
           <Input
