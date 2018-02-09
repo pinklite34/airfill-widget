@@ -165,7 +165,15 @@ class NewPayment extends React.Component {
   });
 
   menuClick = (button) => {
-    console.log("clicked", button);
+    // if callback is set, then it's an old payment button
+    // keep this for backwards compability
+    if (button.callback) {
+      button.paymentModeOptions = {
+        title: button.title,
+        callback: button.callback
+      };
+    }
+
     this.setState({
       open: false,
       anchorEl: null,
