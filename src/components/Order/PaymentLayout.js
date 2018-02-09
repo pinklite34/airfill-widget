@@ -90,6 +90,7 @@ const PaymentLayout = ({
     billingCurrency === 'XBT' ? 'BTC' : billingCurrency;
   const price = order[valueField[billingCurrency.toLowerCase()]];
   const formattedPrice = price + ' ' + billingCurrencyDisplayName.toUpperCase();
+  const showNumber = !operator.result || !operator.result.noNumber;
 
   return (
     <div {...styles.container}>
@@ -102,7 +103,7 @@ const PaymentLayout = ({
           <span {...styles.topLabel}>Refill details</span>
           <p>{`${operator.result.name} ${amount} ${operator.result.currency}`}</p>
           <p {...styles.label}>
-            {number}
+            {showNumber && number}
           </p>
         </div>
       </div>
