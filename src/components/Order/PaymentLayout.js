@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { css } from 'glamor';
 import { selectAmount } from '../../store/ui';
 import { selectOperator } from '../../store/operator';
-import { clearInterval } from 'timers';
 
 const styles = {
   container: css({
