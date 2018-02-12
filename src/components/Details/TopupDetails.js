@@ -101,7 +101,8 @@ class TopupDetails extends Component {
     const { error, isLoading } = this.state;
     const showEmail = !isValidEmail(this.props.config.orderOptions.email);
     const showNumber = !operator.result || !operator.result.noNumber;
-    const numberLabel = operator.type ? 'account number' : 'phone number';
+    const isAccount = !!operator.type;
+    const numberLabel = isAccount ? 'account number' : 'phone number';
 
     return (
       <div {...styles.container}>
@@ -118,7 +119,7 @@ class TopupDetails extends Component {
         >
           <Input
             onChange={e => this.props.setNumber(e.target.value)}
-            type="tel"
+            type={isAccount ? 'text' : 'tel'}
             value={number}
             fullWidth
             className={`${styles.input}`}
