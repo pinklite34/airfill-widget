@@ -106,7 +106,7 @@ class PaymentLayout extends React.Component {
           let seconds = diff.getSeconds();
 
           if (minutes < 10)
-            minutes = '0' + seconds;
+            minutes = '0' + minutes;
 
           if (seconds < 10)
             seconds = '0' + seconds;
