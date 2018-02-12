@@ -147,17 +147,15 @@ const PaymentMenu = props => {
 
 class NewPayment extends React.Component {
 
-  state = {
-    anchorEl: null,
-    open: false,
-    paymentMethod: {
-      title: 'Unknown',
-      paymentModeOptions: {
-        title: 'Unknown',
-        callback: console.log('unknown')
-      }
-    }
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      anchorEl: null,
+      open: false,
+      paymentMethod: props.paymentButtons[0]
+    };
+  }
 
   openMenu = (e) => this.setState({
     open: true,
