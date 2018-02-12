@@ -10,10 +10,6 @@ const styles = {
     display: 'block !important',
     lineHeight: '21px',
     marginRight: '48px',
-  }),
-  info: css({
-    color: '#777777',
-    fontSize: '14px'
   })
 };
 
@@ -30,9 +26,13 @@ const ExpiredPayment = props => {
         <div>
           <div/>
           <div {...styles.textContainer}>
-            <span {...styles.info}>
-              This order has expired. Please refresh the page to generate a new invoice
-            </span>
+            <Button
+              color="primary"
+              raised
+              onClick={props.onReset}
+            >
+              New order
+            </Button>
           </div>
         </div>
       </PaymentLayout>
