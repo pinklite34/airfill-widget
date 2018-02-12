@@ -130,7 +130,6 @@ class Picker extends Component {
               operator.result.type === 'data'
                 ? pkg.value
                 : `${pkg.value} ${operator.result.currency}`;
-
             return (
               <label key={pkg.value}>
                 <Radio
