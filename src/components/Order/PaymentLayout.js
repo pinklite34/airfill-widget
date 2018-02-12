@@ -102,7 +102,16 @@ class PaymentLayout extends React.Component {
             data: {}
           });
         } else {
-          diff = `${diff.getMinutes()}:${diff.getSeconds()}`;
+          let minutes = diff.getMinutes();
+          let seconds = diff.getSeconds();
+
+          if (minutes < 10)
+            minutes = '0' + seconds;
+
+          if (seconds < 10)
+            seconds = '0' + seconds;
+
+          diff = `${minutes}:${seconds}`;
         }
 
         this.setState({ timeLeft: diff });
