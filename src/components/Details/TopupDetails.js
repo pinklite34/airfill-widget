@@ -101,7 +101,7 @@ class TopupDetails extends Component {
     const { error, isLoading } = this.state;
     const showEmail = !isValidEmail(this.props.config.orderOptions.email);
     const showNumber = !operator.result || !operator.result.noNumber;
-    const numberLabel = operator.type ? 'phone number' : 'account number';
+    const numberLabel = operator.type ? 'account number' : 'phone number';
 
     return (
       <div {...styles.container}>
