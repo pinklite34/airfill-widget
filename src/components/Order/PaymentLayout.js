@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { css } from 'glamor';
 import { selectAmount } from '../../store/ui';
 import { selectOperator } from '../../store/operator';
+import { updatePaymentStatus } from '../../actions/index';
 
 const styles = {
   container: css({
@@ -84,6 +85,8 @@ class PaymentLayout extends React.Component {
   };
 
   componentDidMount() {
+    const { updatePaymentStatus, order } = this.props;
+
     this.setState({
       countdownInterval: setInterval(() => {
         const now = new Date().getTime();
@@ -92,6 +95,12 @@ class PaymentLayout extends React.Component {
 
         if (now > expiring) {
           diff = '00:00';
+
+          updatePaymentStatus({
+            status: 'expired',
+            orderId: order.orderId,
+            data: {}
+          });
         } else {
           diff = `${diff.getMinutes()}:${diff.getSeconds()}`;
         }
@@ -156,7 +165,12 @@ class PaymentLayout extends React.Component {
   }
 };
 
-export default connect(state => ({
-  amount: selectAmount(state),
-  operator: selectOperator(state)
-}))(PaymentLayout);
+export default connect(
+  state => ({
+    amount: selectAmount(state),
+    operator: selectOperator(state)
+  }),
+  dispatch => ({
+    updatePaymentStatus: (...args) => dispatch(updatePaymentStatus(...args))
+  })
+)(PaymentLayout);
