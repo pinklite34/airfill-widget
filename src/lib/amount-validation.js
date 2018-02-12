@@ -25,7 +25,7 @@ const pickAffordablePackage = ({ packages, amount, currency, maxCost }) => {
   const highestAffordablePackage = packages.filter(isAffordable).pop();
 
   if (highestAffordablePackage) {
-    return Number(highestAffordablePackage.value);
+    return String(highestAffordablePackage.value);
   }
 
   // If there are no packages the user can afford, return the amount as is
