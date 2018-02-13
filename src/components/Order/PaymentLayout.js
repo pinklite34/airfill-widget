@@ -83,13 +83,16 @@ class PaymentLayout extends React.Component {
     timeLeft: '15:00',
   }
 
+  get showCountdown() {
+    const { paymentStatus } = this.props;
+
+    return !paymentStatus.status || paymentStatus.status === 'partial';
+  }
+
   componentDidMount() {
     const { updatePaymentStatus, order, paymentStatus } = this.props
 
-    const showCountdown =
-      !paymentStatus.status || paymentStatus.status === 'partial'
-
-    if (showCountdown) {
+    if (this.showCountdown) {
       this.setState({
         countdownInterval: setInterval(() => {
           const now = new Date().getTime()
@@ -164,10 +167,21 @@ class PaymentLayout extends React.Component {
         </div>
 
         <div>
+<<<<<<< HEAD
           <div>Price</div>
           <div {...styles.cellContainer}>
             <p>{formattedPrice}</p>
             <p {...styles.label}>Time left: {this.state.timeLeft}</p>
+=======
+          <div>
+            Price
+          </div>
+          <div {...(this.showCountdown ? styles.cellContainer : {})}>
+            <p>{formattedPrice}</p>
+            {this.showCountdown && <p {...styles.label}>
+              Time left: {this.state.timeLeft}
+            </p>}
+>>>>>>> fix styling on pages where expiration countdown is hidden
           </div>
         </div>
 
