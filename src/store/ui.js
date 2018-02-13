@@ -49,6 +49,8 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, email: { value, valid, error } };
     }
 
+    case 'UPDATE':
+      return { ...state };
     default:
       return state;
   }

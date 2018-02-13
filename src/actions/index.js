@@ -17,6 +17,7 @@ export const setStep = createAction('SET_STEP');
 export const setCountry = createAction('SET_COUNTRY');
 export const setNumber = createAction('SET_NUMBER');
 export const setAmount = createAction('SET_AMOUNT');
+export const trigger = createAction('UPDATE');
 export const setEmail = createAction('SET_EMAIL');
 export const setComboInputFocus = createAction('SET_COMBOINPUT_FOCUS');
 export const updatePaymentStatus = createAction('UPDATE_PAYMENT_STATUS');

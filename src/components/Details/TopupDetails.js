@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { css } from 'glamor';
 import { connect } from 'react-redux';
 
-import { createOrder, setNumber, setEmail } from '../../actions';
+import { createOrder, setNumber, setEmail, trigger } from '../../actions';
 import { selectNumber, selectEmail, selectAmount, selectOperator } from '../../store';
 import { isValidEmail } from '../../lib/email-validation';
 
@@ -81,7 +81,10 @@ class TopupDetails extends Component {
     });
     this.props
       .createOrder(this.props.config.orderOptions)
-      .then(() => this.props.history.push('/refill/payment'))
+      .then(() => {
+        this.props.history.push('/refill/payment')
+        this.props.trigger();
+      })
       .catch(error =>
         this.setState({
           isLoading: false,
@@ -175,6 +178,7 @@ export default connect(
   {
     createOrder,
     setNumber,
-    setEmail
+    setEmail,
+    trigger
   }
 )(withStyles(muiStyles)(TopupDetails));
