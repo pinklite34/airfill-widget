@@ -1,32 +1,32 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { css } from 'glamor';
-import { selectNumber, selectNumberLookup } from '../../store';
-import { lookupNumber, resetNumberLookup } from '../../actions';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { css } from 'glamor'
+import { selectNumber, selectNumberLookup } from '../../store'
+import { lookupNumber, resetNumberLookup } from '../../actions'
 
-import ComboInput from '../UI/ComboInput';
-import Info from '../UI/info.svg';
+import ComboInput from '../UI/ComboInput'
+import Info from '../UI/info.svg'
 
 const styles = {
   container: css({
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
   }),
   head: css({
-    marginBottom: 20
+    marginBottom: 20,
   }),
   title: css({
     margin: 0,
     fontSize: 16,
-    fontWeight: 700
+    fontWeight: 700,
   }),
   subtitle: css({
     fontSize: 12,
     fontWeight: 700,
     color: 'rgba(255, 255, 255, 0.8)',
     width: 260,
-    marginTop: 8
+    marginTop: 8,
   }),
   description: css({
     marginTop: 8,
@@ -35,7 +35,7 @@ const styles = {
     width: '100%',
     maxWidth: 300,
     lineHeight: 1.5,
-    fontWeight: 500
+    fontWeight: 500,
   }),
   error: css({
     display: 'flex',
@@ -55,33 +55,33 @@ const styles = {
     borderRadius: '0 0 2px 2px',
     marginTop: -2,
     position: 'relative',
-    zIndex: -1
+    zIndex: -1,
   }),
   errorIcon: css({
     marginRight: 8,
     fill: '#555555',
     width: 24,
     height: 24,
-    flex: '0 0 auto'
-  })
-};
+    flex: '0 0 auto',
+  }),
+}
 
 class Introduction extends Component {
   componentDidMount() {
-    this.props.resetNumberLookup();
+    this.props.resetNumberLookup()
   }
 
   lookupNumber = () => {
-    const { lookupNumber, history, number } = this.props;
+    const { lookupNumber, history, number } = this.props
 
     lookupNumber(number).then(
       result => history.push('/refill/selectProvider'),
       () => null // No uncaught promise rejections
-    );
-  };
+    )
+  }
 
   render() {
-    const { branded, history, numberLookup } = this.props;
+    const { branded, history, numberLookup } = this.props
     return (
       <div {...styles.container}>
         {branded ? (
@@ -111,17 +111,17 @@ class Introduction extends Component {
           </div>
         )}
       </div>
-    );
+    )
   }
 }
 
 export default connect(
   state => ({
     number: selectNumber(state),
-    numberLookup: selectNumberLookup(state)
+    numberLookup: selectNumberLookup(state),
   }),
   {
     lookupNumber,
-    resetNumberLookup
+    resetNumberLookup,
   }
-)(Introduction);
+)(Introduction)

@@ -1,31 +1,36 @@
-import React, { Component } from 'react';
-import { css } from 'glamor';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import { css } from 'glamor'
+import { connect } from 'react-redux'
 
-import { createOrder, setNumber, setEmail, trigger } from '../../actions';
-import { selectNumber, selectEmail, selectAmount, selectOperator } from '../../store';
-import { isValidEmail } from '../../lib/email-validation';
+import { createOrder, setNumber, setEmail, trigger } from '../../actions'
+import {
+  selectNumber,
+  selectEmail,
+  selectAmount,
+  selectOperator,
+} from '../../store'
+import { isValidEmail } from '../../lib/email-validation'
 
-import Button from 'material-ui/Button';
-import Input from 'material-ui/Input';
-import { CircularProgress } from 'material-ui/Progress';
-import Field from '../UI/Field';
+import Button from 'material-ui/Button'
+import Input from 'material-ui/Input'
+import { CircularProgress } from 'material-ui/Progress'
+import Field from '../UI/Field'
 
-import Error from './error.svg';
-import withStyles from 'material-ui/styles/withStyles';
+import Error from './error.svg'
+import withStyles from 'material-ui/styles/withStyles'
 
 const styles = {
   title: css({
-    margin: 0
+    margin: 0,
   }),
   container: css({
     backgroundColor: '#FAFAFA',
-    padding: '0 16px 16px'
+    padding: '0 16px 16px',
   }),
   field: css({
     flex: '1 0 250px',
     margin: 0,
-    marginBottom: 24
+    marginBottom: 24,
   }),
   input: css({
     maxWidth: 250,
@@ -33,14 +38,14 @@ const styles = {
     backgroundColor: '#fff',
     margin: '4px -8px',
     '& > input': {
-      padding: 8
-    }
+      padding: 8,
+    },
   }),
   button: css({
     color: '#fff !important',
     width: 250,
     height: 38,
-    marginBottom: 0
+    marginBottom: 0,
   }),
   error: css({
     backgroundColor: '#E1283C',
@@ -53,59 +58,60 @@ const styles = {
     alignItems: 'center',
     boxShadow: '0 1px 2px 0 rgba(0,0,0,.16)',
     position: 'relative',
-    zIndex: 10
+    zIndex: 10,
   }),
   icon: css({
-    marginRight: 16
+    marginRight: 16,
   }),
   progressBar: css({
-    fill: '#fff'
-  })
-};
+    fill: '#fff',
+  }),
+}
 
 const muiStyles = {
   primaryColor: {
-    color: '#fff'
-  }
-};
+    color: '#fff',
+  },
+}
 
 class TopupDetails extends Component {
   state = {
     error: null,
-    isLoading: false
-  };
+    isLoading: false,
+  }
 
   createOrder = () => {
     this.setState({
-      isLoading: true
-    });
+      isLoading: true,
+    })
     this.props
       .createOrder(this.props.config.orderOptions)
       .then(() => {
         this.props.history.push('/refill/payment')
-        this.props.trigger();
+        this.props.trigger()
       })
       .catch(error =>
         this.setState({
           isLoading: false,
-          error
+          error,
         })
-      );
-  };
+      )
+  }
 
   isComplete = () =>
     this.props.amount &&
-    (this.props.number || (this.props.operator.result && this.props.operator.result.noNumber)) &&
+    (this.props.number ||
+      (this.props.operator.result && this.props.operator.result.noNumber)) &&
     (isValidEmail(this.props.config.orderOptions.email) ||
-      this.props.email.valid);
+      this.props.email.valid)
 
   render() {
-    const { number, email, operator } = this.props;
-    const { error, isLoading } = this.state;
-    const showEmail = !isValidEmail(this.props.config.orderOptions.email);
-    const showNumber = !operator.result || !operator.result.noNumber;
-    const isAccount = !!operator.type;
-    const numberLabel = isAccount ? 'account number' : 'phone number';
+    const { number, email, operator } = this.props
+    const { error, isLoading } = this.state
+    const showEmail = !isValidEmail(this.props.config.orderOptions.email)
+    const showNumber = !operator.result || !operator.result.noNumber
+    const isAccount = !!operator.type
+    const numberLabel = isAccount ? 'account number' : 'phone number'
 
     return (
       <div {...styles.container}>
@@ -115,19 +121,21 @@ class TopupDetails extends Component {
             <div>{error.message}</div>
           </div>
         )}
-        {showNumber && <Field
-          label={numberLabel}
-          hint={`The ${numberLabel} to top up`}
-          {...styles.field}
-        >
-          <Input
-            onChange={e => this.props.setNumber(e.target.value)}
-            type={isAccount ? 'text' : 'tel'}
-            value={number}
-            fullWidth
-            className={`${styles.input}`}
-          />
-        </Field>}
+        {showNumber && (
+          <Field
+            label={numberLabel}
+            hint={`The ${numberLabel} to top up`}
+            {...styles.field}
+          >
+            <Input
+              onChange={e => this.props.setNumber(e.target.value)}
+              type={isAccount ? 'text' : 'tel'}
+              value={number}
+              fullWidth
+              className={`${styles.input}`}
+            />
+          </Field>
+        )}
         {showEmail && (
           <Field
             label="E-mail address"
@@ -138,13 +146,15 @@ class TopupDetails extends Component {
               onChange={e =>
                 this.props.setEmail({
                   value: e.target.value,
-                  inFocus: true
-                })}
+                  inFocus: true,
+                })
+              }
               onBlur={e =>
                 this.props.setEmail({
                   value: e.target.value,
-                  inFocus: false
-                })}
+                  inFocus: false,
+                })
+              }
               value={email.value}
               className={`${styles.input}`}
             />
@@ -158,13 +168,17 @@ class TopupDetails extends Component {
           className={`${styles.button}`}
         >
           {isLoading ? (
-            <CircularProgress classes={this.props.classes} size={24} className={`${styles.progressBar}`} />
+            <CircularProgress
+              classes={this.props.classes}
+              size={24}
+              className={`${styles.progressBar}`}
+            />
           ) : (
             'Continue'
           )}
         </Button>
       </div>
-    );
+    )
   }
 }
 
@@ -173,12 +187,12 @@ export default connect(
     number: selectNumber(state),
     email: selectEmail(state),
     amount: selectAmount(state),
-    operator: selectOperator(state)
+    operator: selectOperator(state),
   }),
   {
     createOrder,
     setNumber,
     setEmail,
-    trigger
+    trigger,
   }
-)(withStyles(muiStyles)(TopupDetails));
+)(withStyles(muiStyles)(TopupDetails))

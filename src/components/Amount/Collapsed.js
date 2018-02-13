@@ -1,15 +1,15 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { selectAmount, selectOperator } from '../../store';
-import CollapsedSection from '../UI/CollapsedSection';
-import { css } from 'glamor';
-import Icon from './icon.svg';
+import React from 'react'
+import { connect } from 'react-redux'
+import { selectAmount, selectOperator } from '../../store'
+import CollapsedSection from '../UI/CollapsedSection'
+import { css } from 'glamor'
+import Icon from './icon.svg'
 
 const styles = {
   container: css({
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   }),
   icon: css({
     display: 'flex',
@@ -17,9 +17,9 @@ const styles = {
     alignItems: 'center',
     width: 24,
     marginRight: 30,
-    marginLeft: 14
-  })
-};
+    marginLeft: 14,
+  }),
+}
 
 const Collapsed = ({ history, amount, operator }) => (
   <CollapsedSection
@@ -28,14 +28,14 @@ const Collapsed = ({ history, amount, operator }) => (
   >
     <div {...styles.container}>
       <div {...styles.icon}>
-        <Icon/>
+        <Icon />
       </div>
       {amount} {operator.result && operator.result.currency}
     </div>
   </CollapsedSection>
-);
+)
 
 export default connect(state => ({
   amount: selectAmount(state),
-  operator: selectOperator(state)
-}))(Collapsed);
+  operator: selectOperator(state),
+}))(Collapsed)

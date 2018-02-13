@@ -1,8 +1,8 @@
-import React from 'react';
-import PaymentLayout from './PaymentLayout';
-import OrderHeader from '../UI/OrderHeader';
-import Confirmed from './confirmed.svg';
-import { css } from 'glamor';
+import React from 'react'
+import PaymentLayout from './PaymentLayout'
+import OrderHeader from '../UI/OrderHeader'
+import Confirmed from './confirmed.svg'
+import { css } from 'glamor'
 
 const styles = {
   textContainer: css({
@@ -12,9 +12,9 @@ const styles = {
   }),
   info: css({
     color: '#777777',
-    fontSize: '14px'
-  })
-};
+    fontSize: '14px',
+  }),
+}
 
 const PaymentConfirmed = props => {
   return (
@@ -23,11 +23,11 @@ const PaymentConfirmed = props => {
         order={props.order}
         title="Payment confirmed"
         subtitle="Your payment has been confirmed"
-        icon={<Confirmed/>}
+        icon={<Confirmed />}
       />
       <PaymentLayout {...props}>
         <div>
-          <div/>
+          <div />
           <div {...styles.textContainer}>
             <span {...styles.info}>
               The refill should arrive on the target account any minute now.
@@ -35,9 +35,8 @@ const PaymentConfirmed = props => {
           </div>
         </div>
       </PaymentLayout>
-
     </div>
-  );
-};
+  )
+}
 
-export default PaymentConfirmed;
+export default PaymentConfirmed

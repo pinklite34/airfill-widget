@@ -1,5 +1,5 @@
-import React from 'react';
-import { css } from 'glamor';
+import React from 'react'
+import { css } from 'glamor'
 
 const style = css({
   fontSize: 14,
@@ -12,7 +12,7 @@ const style = css({
   maxWidth: 736,
 
   '& a': {
-    '-webkit-text-decoration-skip': 'objects'
+    '-webkit-text-decoration-skip': 'objects',
   },
   /**
    * Remove the outline on focused links when they are also active or hovered
@@ -20,19 +20,19 @@ const style = css({
    */
 
   '& a:active, & a:hover': {
-    outlineWidth: 0
+    outlineWidth: 0,
   },
   /**
    * Add the correct font size in all browsers.
    */
   '& small': {
-    fontSize: '80%'
+    fontSize: '80%',
   },
   /**
    * Remove the border on images inside links in IE 10-.
    */
   '& img': {
-    borderStyle: 'none'
+    borderStyle: 'none',
   },
 
   /**
@@ -42,12 +42,14 @@ const style = css({
    */
 
   'button, html & [type="button"], [type="reset"], [type="submit"]': {
-    WebkitAppearance: 'button'
-  }
-});
+    WebkitAppearance: 'button',
+  },
+})
 
-export default ({ children, className }) => (
-  <div className={className} {...style}>
-    {children}
-  </div>
-);
+export default function Root({ children, className }) {
+  return (
+    <div className={className} {...style}>
+      {children}
+    </div>
+  )
+}

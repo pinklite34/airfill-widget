@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { css } from 'glamor';
-import { connect } from 'react-redux';
-import { setCountry } from '../../actions';
-import { selectCountryCode, selectCountryList } from '../../store';
+import React, { Component } from 'react'
+import { css } from 'glamor'
+import { connect } from 'react-redux'
+import { setCountry } from '../../actions'
+import { selectCountryCode, selectCountryList } from '../../store'
 
 const styles = {
   select: css({
@@ -10,21 +10,21 @@ const styles = {
     width: '100%',
     height: '100%',
     opacity: 0,
-    zIndex: 999
-  })
-};
+    zIndex: 999,
+  }),
+}
 
 class SelectCountry extends Component {
   render() {
-    const { countries, selected, setCountry, onChange } = this.props;
+    const { countries, selected, setCountry, onChange } = this.props
     return (
       <select
         {...styles.select}
         value={selected}
         ref={n => (this.select = n)}
         onChange={event => {
-          setCountry(event.target.value);
-          onChange && onChange(event.target.value);
+          setCountry(event.target.value)
+          onChange && onChange(event.target.value)
         }}
       >
         {countries.map(country => (
@@ -33,16 +33,16 @@ class SelectCountry extends Component {
           </option>
         ))}
       </select>
-    );
+    )
   }
 }
 
 export default connect(
   state => ({
     countries: selectCountryList(state),
-    selected: selectCountryCode(state)
+    selected: selectCountryCode(state),
   }),
   {
-    setCountry
+    setCountry,
   }
-)(SelectCountry);
+)(SelectCountry)

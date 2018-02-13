@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux'
 import ui, {
   selectUiState,
   selectNumber,
@@ -7,25 +7,25 @@ import ui, {
   selectValidEmail,
   selectCurrentStep,
   selectComboInputOpen,
-  selectComboInputFocus
-} from './ui';
-import paymentStatus, { selectPaymentStatus } from './paymentStatus';
+  selectComboInputFocus,
+} from './ui'
+import paymentStatus, { selectPaymentStatus } from './paymentStatus'
 import inventory, {
   selectCountry,
   selectCountryList,
   selectCountryCode,
   selectAvailableOperators,
   selectSelectedOperator,
-  selectInventory
-} from './inventory';
-import operator, { selectOperator } from './operator';
-import order, { selectOrder } from './order';
-import recentNumbers, { selectRecentNumbers } from './recentNumbers';
+  selectInventory,
+} from './inventory'
+import operator, { selectOperator } from './operator'
+import order, { selectOrder } from './order'
+import recentNumbers, { selectRecentNumbers } from './recentNumbers'
 import numberLookup, {
   selectNumberLookup,
   selectIsNumberLookup,
-  selectNumberLookupError
-} from './numberLookup';
+  selectNumberLookupError,
+} from './numberLookup'
 
 // Export the reducer for use within other redux apps
 export default combineReducers({
@@ -35,8 +35,8 @@ export default combineReducers({
   paymentStatus,
   order,
   recentNumbers,
-  numberLookup
-});
+  numberLookup,
+})
 
 // Keep the same state shape when using the standalone widget
 
@@ -68,5 +68,5 @@ export {
   // Number lookup
   selectNumberLookup,
   selectIsNumberLookup,
-  selectNumberLookupError
-};
+  selectNumberLookupError,
+}

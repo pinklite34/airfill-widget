@@ -1,11 +1,10 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import Button from 'material-ui/Button';
-import OrderHeader from '../UI/OrderHeader';
-import PaymentLayout from './PaymentLayout';
-import Error from './error.svg';
-import { css } from 'glamor';
-import BottomNavigationAction from 'material-ui/BottomNavigation/BottomNavigationAction';
+import PropTypes from 'prop-types'
+import React from 'react'
+import Button from 'material-ui/Button'
+import OrderHeader from '../UI/OrderHeader'
+import PaymentLayout from './PaymentLayout'
+import Error from './error.svg'
+import { css } from 'glamor'
 
 const styles = {
   textContainer: css({
@@ -15,54 +14,55 @@ const styles = {
   }),
   info: css({
     color: '#777777',
-    fontSize: '14px'
+    fontSize: '14px',
   }),
   button: css({
-    marginTop: '12px'
-  })
-};
+    marginTop: '12px',
+  }),
+}
 
 const RefillFailed = props => {
-
   const {
     order,
     paymentStatus: { failureData = {} },
     refundAddress,
-    onReset
-  } = props;
+    onReset,
+  } = props
 
   let mailto =
     'mailto:support@bitrefill.com?subject=' +
-    encodeURIComponent(`Failed Order (ID ${order.id})`);
+    encodeURIComponent(`Failed Order (ID ${order.id})`)
 
   if (!refundAddress) {
     mailto +=
       '&body=' +
       encodeURIComponent(`Hello,
-My order (ID ${order.id}) failed to process. I'd like a refund to be sent to <Replace This With Your Refund Address>.
+My order (ID ${
+        order.id
+      }) failed to process. I'd like a refund to be sent to <Replace This With Your Refund Address>.
 
-Thanks!`);
+Thanks!`)
   }
 
-  let text;
-  let action;
+  let text
+  let action
   const needRefund =
     failureData && failureData.needRefund != null
       ? failureData.needRefund
-      : order.needRefund;
+      : order.needRefund
 
   // Order is already refunded / not charged
   if (!refundAddress && (needRefund === false || order.refunded === true)) {
     text =
-      'We have sent you an automatic refund. Please make sure your details are correct and try again!';
+      'We have sent you an automatic refund. Please make sure your details are correct and try again!'
     action = (
       <Button raised color="primary" onClick={onReset}>
         Send another refill
       </Button>
-    );
+    )
   } else if (refundAddress) {
     text =
-      'We have sent you an automatic refund. You should receive it within a few minutes.';
+      'We have sent you an automatic refund. You should receive it within a few minutes.'
     action = (
       <p>
         <a
@@ -70,19 +70,19 @@ Thanks!`);
           target="_blank"
           rel="noopener noreferrer"
         >
-          Click here to see how it's going
+          Click here to see how it&apos;s going
         </a>{' '}
         or <a href={mailto}>contact support@birefill.com</a>.
       </p>
-    );
+    )
   } else {
     text =
-      'Please use the button below to contact our support so that we can send you a refund.';
+      'Please use the button below to contact our support so that we can send you a refund.'
     action = (
       <Button raised href={mailto}>
         Contact Support
       </Button>
-    );
+    )
   }
 
   return (
@@ -91,27 +91,25 @@ Thanks!`);
         order={order}
         title="Delivery error"
         subtitle="The refill could not be delivered to the target account"
-        icon={<Error/>}
+        icon={<Error />}
       />
       <PaymentLayout {...props}>
         <div>
-          <div/>
+          <div />
           <div {...styles.textContainer}>
-            <span {...styles.info}>
-              {text}
-            </span>
-            <br/>
-            <br/>
+            <span {...styles.info}>{text}</span>
+            <br />
+            <br />
             {action}
           </div>
         </div>
       </PaymentLayout>
     </div>
-  );
-};
+  )
+}
 
 RefillFailed.propTypes = {
-  order: PropTypes.object.isRequired
-};
+  order: PropTypes.object.isRequired,
+}
 
-export default RefillFailed;
+export default RefillFailed

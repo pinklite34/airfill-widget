@@ -1,8 +1,8 @@
-import React from 'react';
-import { Switch, Route } from 'react-router';
+import React from 'react'
+import { Switch, Route } from 'react-router'
 
-import Collapsed from './Collapsed';
-import Picker from './Picker';
+import Collapsed from './Collapsed'
+import Picker from './Picker'
 
 const Amounts = ({ config }) => (
   <Switch>
@@ -14,6 +14,6 @@ const Amounts = ({ config }) => (
     />
     <Route component={Collapsed} />
   </Switch>
-);
+)
 
-export default Amounts;
+export default Amounts

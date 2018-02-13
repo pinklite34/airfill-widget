@@ -1,20 +1,20 @@
-import React from 'react';
-import { css } from 'glamor';
+import React from 'react'
+import { css } from 'glamor'
 
-import SectionTitle from './SectionTitle';
+import SectionTitle from './SectionTitle'
 
 const styles = {
   title: css({
-    marginBottom: 0
+    marginBottom: 0,
   }),
   hint: css({
     fontSize: 12,
-    margin: '4px 0 8px'
+    margin: '4px 0 8px',
   }),
   error: css({
-    color: '#D65C5C'
-  })
-};
+    color: '#D65C5C',
+  }),
+}
 
 const Field = ({ label, children, htmlFor, hint, error, ...props }) => (
   <div {...props}>
@@ -27,6 +27,6 @@ const Field = ({ label, children, htmlFor, hint, error, ...props }) => (
     {error && <p {...styles.error}>{error}</p>}
     {!error && hint && <p {...styles.hint}>{hint}</p>}
   </div>
-);
+)
 
-export default Field;
+export default Field

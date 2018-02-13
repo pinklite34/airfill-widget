@@ -1,36 +1,36 @@
-import React from 'react';
-import { css } from 'glamor';
-import Button from 'material-ui/Button';
-import Card from 'material-ui/Card';
-import { CircularProgress } from 'material-ui/Progress';
+import React from 'react'
+import { css } from 'glamor'
+import Button from 'material-ui/Button'
+import Card from 'material-ui/Card'
+import { CircularProgress } from 'material-ui/Progress'
 
-import Flag from '../Flag';
-import Check from '../check.svg';
+import Flag from '../Flag'
+import Check from '../check.svg'
 
 const styles = {
   container: css({
     position: 'relative',
-    zIndex: 11
+    zIndex: 11,
   }),
   row: css({
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'stretch'
+    alignItems: 'stretch',
   }),
   inputContainer: css({
     padding: 12,
-    flex: '1 1 auto'
+    flex: '1 1 auto',
   }),
   input: css({
     width: '100%',
     fontSize: 16,
     border: 0,
     '&:focus': {
-      outline: 'none'
+      outline: 'none',
     },
     '&::placeholder': {
-      color: 'rgba(0,0,0,.26)'
-    }
+      color: 'rgba(0,0,0,.26)',
+    },
   }),
   flag: css({
     width: 48,
@@ -38,7 +38,7 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    cursor: 'pointer'
+    cursor: 'pointer',
   }),
   button: css({
     backgroundColor: '#F0F6FA !important',
@@ -47,27 +47,27 @@ const styles = {
     height: 'auto !important',
     display: 'flex !important',
     '& svg': {
-      marginRight: '0 !important'
-    }
+      marginRight: '0 !important',
+    },
   }),
   buttonDisabled: css({
-    color: '#cccccc !important'
+    color: '#cccccc !important',
   }),
   progressBar: css({
     width: '24px !important',
-    height: '24px !important'
+    height: '24px !important',
   }),
   check: css({
     fill: '#3E8FE4',
     width: 16,
-    height: 16
+    height: 16,
   }),
   checkDisabled: css({
     fill: 'rgb(204, 204, 204)',
     width: 16,
-    height: 16
-  })
-};
+    height: 16,
+  }),
+}
 
 const InputRow = ({
   country,
@@ -79,13 +79,13 @@ const InputRow = ({
   onKeyDown,
   loading,
   onSubmit,
-  submitEnabled
+  submitEnabled,
 }) => (
   <Card {...styles.container}>
     <form
       onSubmit={e => {
-        e.preventDefault();
-        onSubmit();
+        e.preventDefault()
+        onSubmit()
       }}
     >
       <div {...styles.row}>
@@ -103,7 +103,7 @@ const InputRow = ({
               placeholder: country
                 ? 'Enter phone number or provider'
                 : 'Enter country or phone number',
-              ...styles.input
+              ...styles.input,
             })}
           />
         </div>
@@ -115,12 +115,16 @@ const InputRow = ({
           {loading ? (
             <CircularProgress className={`${styles.progressBar}`} />
           ) : (
-            <Check className={`${submitEnabled ? styles.check : styles.checkDisabled}`}/>
+            <Check
+              className={`${
+                submitEnabled ? styles.check : styles.checkDisabled
+              }`}
+            />
           )}
         </Button>
       </div>
     </form>
   </Card>
-);
+)
 
-export default InputRow;
+export default InputRow

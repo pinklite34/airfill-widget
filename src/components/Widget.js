@@ -1,37 +1,36 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Route } from 'react-router';
-import { css } from 'glamor';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { Route } from 'react-router'
+import { css } from 'glamor'
 
-import Card from 'material-ui/Card';
-import { CircularProgress } from 'material-ui/Progress';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import createMuiTheme from 'material-ui/styles/createMuiTheme';
-import blue from 'material-ui/colors/blue';
+import Card from 'material-ui/Card'
+import { CircularProgress } from 'material-ui/Progress'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import createMuiTheme from 'material-ui/styles/createMuiTheme'
+import blue from 'material-ui/colors/blue'
 
-import { init } from '../actions';
-import { selectInventory } from '../store';
+import { init } from '../actions'
+import { selectInventory } from '../store'
 
-import Root from './UI/Root';
+import Root from './UI/Root'
 
-import Header from './Header';
-import Footer from './Footer';
+import Header from './Header'
+import Footer from './Footer'
 
-import Country from './Country';
-import NumberLookup from './NumberLookup';
-import Providers from './Providers';
-import Instructions from './Instructions';
-import Amount from './Amount';
-import Order from './Order';
-import Details from './Details';
-
+import Country from './Country'
+import NumberLookup from './NumberLookup'
+import Providers from './Providers'
+import Instructions from './Instructions'
+import Amount from './Amount'
+import Order from './Order'
+import Details from './Details'
 
 const theme = createMuiTheme({
   palette: {
-    primary: blue
-  }
-});
+    primary: blue,
+  },
+})
 
 class AirfillWidget extends Component {
   static propTypes = {
@@ -41,13 +40,13 @@ class AirfillWidget extends Component {
     userEmail: PropTypes.string,
 
     // Payment options
-    /*paymentButtons: PropTypes.arrayOf(
+    /* paymentButtons: PropTypes.arrayOf(
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         callback: PropTypes.func.isRequired,
         requireAccountBalance: PropTypes.bool
       })
-    ).isRequired,*/
+    ).isRequired, */
     showBTCAddress: PropTypes.bool,
     billingCurrency: PropTypes.string,
     requireAccountBalance: PropTypes.bool,
@@ -66,10 +65,10 @@ class AirfillWidget extends Component {
     refillHistory: PropTypes.arrayOf(
       PropTypes.shape({
         number: PropTypes.string,
-        operator: PropTypes.string
+        operator: PropTypes.string,
       })
-    )
-  };
+    ),
+  }
 
   static defaultProps = {
     defaultNumber: '',
@@ -89,19 +88,19 @@ class AirfillWidget extends Component {
     showPoweredBy: false,
     showFooter: true,
 
-    refillHistory: []
-  };
+    refillHistory: [],
+  }
 
   componentDidMount() {
     this.props.init({
       defaultNumber: this.props.defaultNumber,
-      email: this.props.orderOptions.email
-    });
+      email: this.props.orderOptions.email,
+    })
   }
 
   render() {
-    const config = this.props;
-    const hasLoaded = !!this.props.inventory.result;
+    const config = this.props
+    const hasLoaded = !!this.props.inventory.result
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -128,7 +127,7 @@ class AirfillWidget extends Component {
               {...css({
                 display: 'flex',
                 justifyContent: 'center',
-                margin: 64
+                margin: 64,
               })}
             >
               <CircularProgress />
@@ -138,16 +137,16 @@ class AirfillWidget extends Component {
           {config.showFooter && <Footer branded={config.showPoweredBy} />}
         </Root>
       </MuiThemeProvider>
-    );
+    )
   }
 }
 
 export default connect(
   state => ({
     // recentNumbers: selectRecentNumbers(state)
-    inventory: selectInventory(state)
+    inventory: selectInventory(state),
   }),
   {
-    init
+    init,
   }
-)(AirfillWidget);
+)(AirfillWidget)

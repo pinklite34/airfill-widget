@@ -1,25 +1,24 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { CircularProgress } from 'material-ui/Progress';
-import { css } from 'glamor';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { css } from 'glamor'
 
 const styles = {
   base: css({
     backgroundColor: '#fafafa',
     display: 'flex',
     overflow: 'hidden',
-    padding: 16
+    padding: 16,
   }),
   icon: css({
     maxWidth: 32,
     maxHeight: 32,
     marginRight: '24px',
     marginTop: '12px',
-    marginLeft: '12px'
+    marginLeft: '12px',
   }),
   text: css({
     margin: 0,
-    flex: 1
+    flex: 1,
   }),
   label: css({
     float: 'left',
@@ -30,39 +29,31 @@ const styles = {
     float: 'right',
     lineHeight: '31.5px',
     color: '#777777',
-    fontSize: '12px'
+    fontSize: '12px',
   }),
   details: css({
     color: '#777777',
-    fontSize: '14px'
-  })
-};
+    fontSize: '14px',
+  }),
+}
 
 const OrderHeader = ({ children, order, title, subtitle, icon }) => (
   <div {...styles.base}>
-    <div {...styles.icon}>
-      {icon}
-    </div>
+    <div {...styles.icon}>{icon}</div>
     <div {...styles.text}>
-      <h2 {...styles.label}>
-        {title}
-      </h2>
-      <div {...styles.orderId}>
-        Order {order.id}
-      </div>
-      <br/>
-      <br/>
-      <div {...styles.details}>
-        {subtitle}
-      </div>
+      <h2 {...styles.label}>{title}</h2>
+      <div {...styles.orderId}>Order {order.id}</div>
+      <br />
+      <br />
+      <div {...styles.details}>{subtitle}</div>
     </div>
   </div>
-);
+)
 
 OrderHeader.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
-  icon: PropTypes.any
-};
+  icon: PropTypes.any,
+}
 
-export default OrderHeader;
+export default OrderHeader

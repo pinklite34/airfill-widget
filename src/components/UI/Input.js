@@ -1,5 +1,5 @@
-import React from 'react';
-import { css } from 'glamor';
+import React from 'react'
+import { css } from 'glamor'
 
 const styles = {
   input: css({
@@ -7,9 +7,9 @@ const styles = {
     border: '1px solid #ccc',
     borderRadius: 2,
     padding: 8,
-  })
-};
+  }),
+}
 
-const Input = props => <input {...styles.input} {...props} />;
+const Input = props => <input {...styles.input} {...props} />
 
-export default Input;
+export default Input

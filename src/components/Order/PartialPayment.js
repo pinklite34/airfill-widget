@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from 'prop-types'
+import React from 'react'
 
-import BitcoinAddress from '../UI/BitcoinAddress';
+import BitcoinAddress from '../UI/BitcoinAddress'
 
 const PartialPayment = ({ order, paymentStatus }) => {
-  const paidAmount = Math.round(paymentStatus.paidAmount / 10000) / 10000;
+  const paidAmount = Math.round(paymentStatus.paidAmount / 10000) / 10000
   const remainingAmount =
-    Math.ceil((order.satoshiPrice - paymentStatus.paidAmount) / 10000) / 10000;
+    Math.ceil((order.satoshiPrice - paymentStatus.paidAmount) / 10000) / 10000
 
   return (
     <div>
@@ -21,18 +21,20 @@ const PartialPayment = ({ order, paymentStatus }) => {
       <p>
         Need help? Send us an email at{' '}
         <a
-          href={`mailto:support@bitrefill.com?subject=Partial%20payment&body=Order%20ID:%20${order.orderId}`}
+          href={`mailto:support@bitrefill.com?subject=Partial%20payment&body=Order%20ID:%20${
+            order.orderId
+          }`}
         >
           support@bitrefill.com
         </a>.
       </p>
     </div>
-  );
-};
+  )
+}
 
 PartialPayment.propTypes = {
   order: PropTypes.object.isRequired,
-  paymentStatus: PropTypes.object.isRequired
-};
+  paymentStatus: PropTypes.object.isRequired,
+}
 
-export default PartialPayment;
+export default PartialPayment

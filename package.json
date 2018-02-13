@@ -14,7 +14,7 @@
     "build": "npm run clean && npm run copy && webpack --env=dist && webpack --env=standalone",
     "dist": "webpack --env=dist --json > stats.json",
     "standalone": "npm run copy && webpack --env=standalone --json > stats.json",
-    "lint": "eslint ./src",
+    "lint": "eslint ./src --max-warnings 0 --fix",
     "release:major": "npm version major && npm publish && git push --follow-tags",
     "release:minor": "npm version minor && npm publish && git push --follow-tags",
     "release:patch": "npm version patch && npm publish && git push --follow-tags",
@@ -24,6 +24,7 @@
     "test": "jest",
     "test:watch": "npm test -- --watch",
     "webpack-stats": "webpack-bundle-analyzer stats.json",
+    "precommit": "lint-staged",
     "prepublishOnly": "npm run build"
   },
   "keywords": [],
@@ -67,8 +68,10 @@
     "babel-runtime": "6.23.0",
     "desvg-loader": "^0.1.0",
     "eslint-config-bitrefill": "^1.1.0",
+    "husky": "^0.14.3",
     "jest": "20.0.3",
     "libphonenumber-js": "^0.4.32",
+    "lint-staged": "^6.1.0",
     "minimist": "^1.2.0",
     "pusher-js": "^4.2.2",
     "react": "^16.2.0",
@@ -82,6 +85,26 @@
     "webpack-dev-server": "2.9.7",
     "webpack-node-externals": "^1.6.0"
   },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "bitrefill",
+    "globals": {
+      "btoa": true
+    },
+    "rules": {
+      "react/prop-types": 0
+    }
+  },
+  "lint-staged": {
+    "**/*.js": [
+      "yarn lint",
+      "git add"
+    ]
+  },
   "jest": {
     "transform": {
       ".(js)": "<rootDir>/node_modules/babel-jest"
@@ -90,14 +113,6 @@
       "js",
       "json"
     ]
-  },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
-  },
-  "eslintConfig": {
-    "extends": "bitrefill"
   },
   "repository": {
     "type": "git",

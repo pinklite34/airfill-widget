@@ -1,8 +1,8 @@
-import React from 'react';
-import { css } from 'glamor';
+import React from 'react'
+import { css } from 'glamor'
 
-import Button from 'material-ui/Button';
-import Info from '../UI/info.svg';
+import Button from 'material-ui/Button'
+import Info from '../UI/info.svg'
 
 const styles = {
   container: css({
@@ -17,8 +17,8 @@ const styles = {
     position: 'relative',
     '@media(max-width: 460px)': {
       flexWrap: 'wrap',
-      justifyContent: 'center'
-    }
+      justifyContent: 'center',
+    },
   }),
   logo: css({
     maxWidth: 150,
@@ -26,36 +26,36 @@ const styles = {
     flex: '0 0 auto',
     marginRight: 20,
     '@media(max-width: 460px)': {
-      marginBottom: 20
-    }
+      marginBottom: 20,
+    },
   }),
   button: css({
     width: 220,
     marginRight: 8,
-    marginTop: 8
+    marginTop: 8,
   }),
   content: css({
     flex: '0 1 auto',
     '@media(max-width: 460px)': {
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center'
-    }
+      alignItems: 'center',
+    },
   }),
   text: css({
-    marginTop: 0
+    marginTop: 0,
   }),
   error: css({
-    margin: 0
+    margin: 0,
   }),
   icon: css({
     width: 24,
     height: 24,
     fill: '#555555',
     flex: '0 0 auto',
-    marginRight: 8
-  })
-};
+    marginRight: 8,
+  }),
+}
 
 const SuggestedOperator = ({ operator, onAccept, onReject }) => {
   if (operator) {
@@ -64,18 +64,19 @@ const SuggestedOperator = ({ operator, onAccept, onReject }) => {
         <img src={operator.logoImage} alt={operator.name} {...styles.logo} />
         <div {...styles.content}>
           <p {...styles.text}>
-            We've detected <strong>{operator.name}</strong> as your operator. If
-            this is not correct, please select another operator below.
+            We&apos;ve detected <strong>{operator.name}</strong> as your
+            operator. If this is not correct, please select another operator
+            below.
           </p>
           <Button primary raised onClick={onAccept} {...styles.button}>
             Yes, this is my operator
           </Button>
           <Button raised onClick={onReject} {...styles.button}>
-            No, it's not correct
+            No, it&apos;s not correct
           </Button>
         </div>
       </div>
-    );
+    )
   } else {
     return (
       <div {...styles.container}>
@@ -87,8 +88,8 @@ const SuggestedOperator = ({ operator, onAccept, onReject }) => {
           </p>
         </div>
       </div>
-    );
+    )
   }
-};
+}
 
-export default SuggestedOperator;
+export default SuggestedOperator

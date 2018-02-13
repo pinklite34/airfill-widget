@@ -1,22 +1,22 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { css } from 'glamor';
-import { selectOperator, selectAmount } from '../../store';
-import { setAmount, createOrder } from '../../actions';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { css } from 'glamor'
+import { selectOperator, selectAmount } from '../../store'
+import { setAmount, createOrder } from '../../actions'
 
-import { selectValidAmount } from '../../lib/amount-validation';
-import { getPrice, getDisplayName } from '../../lib/currency-helpers';
+import { selectValidAmount } from '../../lib/amount-validation'
+import { getPrice, getDisplayName } from '../../lib/currency-helpers'
 
-import Card from 'material-ui/Card';
-import Radio from 'material-ui/Radio';
+import Card from 'material-ui/Card'
+import Radio from 'material-ui/Radio'
 import { CircularProgress } from 'material-ui/Progress'
 
-import ActiveSection from '../UI/ActiveSection';
-import SectionTitle from '../UI/SectionTitle';
+import ActiveSection from '../UI/ActiveSection'
+import SectionTitle from '../UI/SectionTitle'
 
-import Package from './Package';
-import Ranged from './Ranged';
-import Info from '../UI/info.svg';
+import Package from './Package'
+import Ranged from './Ranged'
+import Info from '../UI/info.svg'
 
 const styles = {
   packages: css({
@@ -30,13 +30,13 @@ const styles = {
       margin: 0,
       borderTop: '1px solid rgba(0,0,0,0.08)',
       '&:last-of-type': {
-        borderBottom: '1px solid rgba(0,0,0,0.08)'
-      }
-    }
+        borderBottom: '1px solid rgba(0,0,0,0.08)',
+      },
+    },
   }),
   operatorInfoContainer: css({
     fontWeight: 500,
-    marginBottom: 16
+    marginBottom: 16,
   }),
   operatorInfo: css({
     padding: 12,
@@ -46,18 +46,30 @@ const styles = {
     '& svg': {
       marginRight: 8,
       width: 32,
-      height: 32
-    }
+      height: 32,
+    },
   }),
   title: css({
-    marginLeft: 36
-  })
-};
+    marginLeft: 36,
+  }),
+}
 
 class Picker extends Component {
+  componentDidMount() {
+    if (!this.props.operator.isLoading) {
+      this.handleAmountChange(this.props, this.props.amount)
+    }
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (!newProps.operator.isLoading && this.props.operator.isLoading) {
+      this.handleAmountChange(newProps, newProps.amount)
+    }
+  }
+
   handleAmountChange = (props, amount) => {
-    const { setAmount, config, operator } = props;
-    const { packages, isRanged, range, currency } = operator.result;
+    const { setAmount, config, operator } = props
+    const { packages, isRanged, range, currency } = operator.result
 
     if (!amount) {
       setAmount(
@@ -67,40 +79,28 @@ class Picker extends Component {
           maxCost: config.userAccountBalance,
           costConversionRate: isRanged && range.userPriceRate,
           currency,
-          packages
+          packages,
         })
-      );
-    }
-  };
-
-  componentDidMount() {
-    if (!this.props.operator.isLoading) {
-      this.handleAmountChange(this.props, this.props.amount);
-    }
-  }
-
-  componentWillReceiveProps(newProps) {
-    if (!newProps.operator.isLoading && this.props.operator.isLoading) {
-      this.handleAmountChange(newProps, newProps.amount);
+      )
     }
   }
 
   render() {
-    const { amount, operator, setAmount, config } = this.props;
+    const { amount, operator, setAmount, config } = this.props
 
     if (operator.isLoading || !operator.result.packages) {
       return (
         <ActiveSection title="Select amount">
           <CircularProgress />
         </ActiveSection>
-      );
+      )
     }
 
     const {
       userAccountBalance,
       requireAccountBalance,
-      billingCurrency
-    } = config;
+      billingCurrency,
+    } = config
 
     return (
       <ActiveSection>
@@ -119,17 +119,16 @@ class Picker extends Component {
 
         <div className={`${styles.packages} amount-picker`}>
           {operator.result.packages.map((pkg, i) => {
-            const price = getPrice(pkg, billingCurrency);
+            const price = getPrice(pkg, billingCurrency)
             const formattedPrice =
-              price + ' ' + getDisplayName(billingCurrency).toUpperCase();
-            const disabled =
-              requireAccountBalance && price > userAccountBalance;
+              price + ' ' + getDisplayName(billingCurrency).toUpperCase()
+            const disabled = requireAccountBalance && price > userAccountBalance
 
             // Data packages should not have currency in the title
             const name =
               operator.result.type === 'data'
                 ? pkg.value
-                : `${pkg.value} ${operator.result.currency}`;
+                : `${pkg.value} ${operator.result.currency}`
             return (
               <label key={pkg.value}>
                 <Radio
@@ -139,7 +138,7 @@ class Picker extends Component {
                 />
                 <Package name={name} price={formattedPrice} />
               </label>
-            );
+            )
           })}
         </div>
 
@@ -153,17 +152,17 @@ class Picker extends Component {
           />
         )}
       </ActiveSection>
-    );
+    )
   }
 }
 
 export default connect(
   state => ({
     operator: selectOperator(state),
-    amount: selectAmount(state)
+    amount: selectAmount(state),
   }),
   {
     setAmount,
-    createOrder
+    createOrder,
   }
-)(Picker);
+)(Picker)

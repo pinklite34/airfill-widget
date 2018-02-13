@@ -1,5 +1,5 @@
-import React from 'react';
-import Button from 'material-ui/Button';
+import React from 'react'
+import Button from 'material-ui/Button'
 
 const BalanceTooLow = ({ order, history }) => {
   return (
@@ -13,7 +13,7 @@ const BalanceTooLow = ({ order, history }) => {
         Pick another package
       </Button>
     </div>
-  );
-};
+  )
+}
 
-export default BalanceTooLow;
+export default BalanceTooLow

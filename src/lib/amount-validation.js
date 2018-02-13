@@ -1,93 +1,92 @@
-import { getDisplayName } from './currency-helpers';
+import { getDisplayName } from './currency-helpers'
 
 // Handle XBT
 export const getCostForAmount = (conversionRate, amount) =>
-  Number(amount * conversionRate).toFixed(2);
+  Number(amount * conversionRate).toFixed(2)
 
 const pickMiddlePackage = ({ packages }) => {
-  const middle = Math.round((packages.length - 1) * 0.6);
-  const pkg = packages[middle];
-  return pkg ? String(pkg.value) : null;
-};
+  const middle = Math.round((packages.length - 1) * 0.6)
+  const pkg = packages[middle]
+  return pkg ? String(pkg.value) : null
+}
 
 const pickAffordablePackage = ({ packages, amount, currency, maxCost }) => {
-  const costKey = getDisplayName(currency).toLowerCase() + 'Price';
+  const costKey = getDisplayName(currency).toLowerCase() + 'Price'
 
-  const isAffordable = pkg => pkg[costKey] <= maxCost;
+  const isAffordable = pkg => pkg[costKey] <= maxCost
 
   // Make sure user can afford the selected package
-  const selectedPackage = packages.find(pkg => String(pkg.value) === amount);
+  const selectedPackage = packages.find(pkg => String(pkg.value) === amount)
   if (selectedPackage && isAffordable(selectedPackage)) {
-    return amount;
+    return amount
   }
 
   // Otherwise try to pick the highest value package the user can afford
-  const highestAffordablePackage = packages.filter(isAffordable).pop();
+  const highestAffordablePackage = packages.filter(isAffordable).pop()
 
   if (highestAffordablePackage) {
-    return String(highestAffordablePackage.value);
+    return String(highestAffordablePackage.value)
   }
 
   // If there are no packages the user can afford, return the amount as is
-  return amount;
-};
+  return amount
+}
 
 export const selectValidPackage = ({ packages, maxCost, currency, amount }) => {
   // If no amount is selected, pick a package in the middle
-  amount = amount ? String(amount) : pickMiddlePackage({ packages });
+  amount = amount ? String(amount) : pickMiddlePackage({ packages })
 
   // Make sure user can afford the package
-  return pickAffordablePackage({ packages, amount, maxCost, currency });
-};
+  return pickAffordablePackage({ packages, amount, maxCost, currency })
+}
 
 const rangedCostForAmount = (conversionRate, currency, amount) => {
-  let amountCost = amount * conversionRate;
+  let amountCost = amount * conversionRate
   // BTC
   if (currency === 'XBT') {
-    return Math.ceil(amountCost / 100) / 1000000;
+    return Math.ceil(amountCost / 100) / 1000000
   } else {
     // USD or EUR
-    return Number(amountCost.toFixed(2));
+    return Number(amountCost.toFixed(2))
   }
-};
+}
 
 const selectValidRangedAmount = ({
   amount,
   maxCost,
   costConversionRate,
-  currency
+  currency,
 }) => {
   const selectedAmountCost = rangedCostForAmount(
     costConversionRate,
     currency,
     amount
-  );
+  )
 
   if (selectedAmountCost <= maxCost) {
-    return String(amount); // Return amount as is for ranged operators
+    return String(amount) // Return amount as is for ranged operators
   } else {
     if (currency === 'XBT') {
       const amountForMaxCost = Math.floor(
         maxCost * 100000000 / costConversionRate
-      );
-      return String(amountForMaxCost); // Return the maximum amount allowed
+      )
+      return String(amountForMaxCost) // Return the maximum amount allowed
     } else {
-      return String(maxCost / costConversionRate);
+      return String(maxCost / costConversionRate)
     }
   }
-};
+}
 
 export const selectValidAmount = args => {
-  const ranged = args.ranged;
-  const validPackageAmount = selectValidPackage(args);
+  const ranged = args.ranged
+  const validPackageAmount = selectValidPackage(args)
 
   if (ranged) {
     return selectValidRangedAmount({
       ...args,
-      amount: args.amount || validPackageAmount
-    });
+      amount: args.amount || validPackageAmount,
+    })
   } else {
-    return validPackageAmount;
+    return validPackageAmount
   }
-};
-
+}

@@ -1,18 +1,18 @@
-import React from 'react';
-import { css } from 'glamor';
+import React from 'react'
+import { css } from 'glamor'
 
-import Input from 'material-ui/Input';
+import Input from 'material-ui/Input'
 
-import { getDisplayName, satoshiToBTC } from '../../lib/currency-helpers';
+import { getDisplayName, satoshiToBTC } from '../../lib/currency-helpers'
 
-import Package from './Package';
-import SectionTitle from '../UI/SectionTitle';
+import Package from './Package'
+import SectionTitle from '../UI/SectionTitle'
 
-import Settings from './settings.svg';
+import Settings from './settings.svg'
 
 const styles = {
   container: css({
-    marginTop: 16
+    marginTop: 16,
   }),
   row: css({
     display: 'flex',
@@ -22,14 +22,14 @@ const styles = {
     margin: '0 -16px',
     borderTop: '1px solid rgba(0,0,0,0.08)',
     borderBottom: '1px solid rgba(0,0,0,0.08)',
-    padding: '8px 16px'
+    padding: '8px 16px',
   }),
   settings: css({
     flex: '0 0 auto',
     marginRight: 16,
     width: 20,
     height: 20,
-    fill: 'rgba(0,0,0,0.8)'
+    fill: 'rgba(0,0,0,0.8)',
   }),
   input: css({
     display: 'inline-block',
@@ -39,8 +39,8 @@ const styles = {
       fontFamily: 'inherit',
       padding: '0 !important',
       color: '#000',
-      fontWeight: 500
-    }
+      fontWeight: 500,
+    },
   }),
   label: css({
     position: 'relative',
@@ -52,13 +52,13 @@ const styles = {
     backgroundColor: '#FFF',
     textAlign: 'right',
     fontSize: 16,
-    lineHeight: 1
+    lineHeight: 1,
   }),
   cost: css({
-    lineHeight: '20px'
+    lineHeight: '20px',
   }),
   title: css({
-    marginLeft: 36
+    marginLeft: 36,
   }),
   meta: css({
     background: 'rgba(0,0,0,0.1)',
@@ -66,18 +66,18 @@ const styles = {
     fontSize: 12,
     lineHeight: '16px',
     color: '#333',
-    marginLeft: 16
-  })
-};
+    marginLeft: 16,
+  }),
+}
 
 const Ranged = ({ amount, range, currency, billingCurrency, onChange }) => {
-  const min = Math.ceil(range.min);
-  const max = Math.floor(range.max);
-  const step = range.step;
+  const min = Math.ceil(range.min)
+  const max = Math.floor(range.max)
+  const step = range.step
 
-  const cost = amount * range.userPriceRate;
+  const cost = amount * range.userPriceRate
   const displayableCost =
-    billingCurrency === 'XBT' ? satoshiToBTC(cost) : cost.toFixed(2);
+    billingCurrency === 'XBT' ? satoshiToBTC(cost) : cost.toFixed(2)
 
   return (
     <div {...styles.container}>
@@ -97,7 +97,8 @@ const Ranged = ({ amount, range, currency, billingCurrency, onChange }) => {
                 onBlur={() =>
                   amount > range.max
                     ? onChange(range.max)
-                    : amount < range.min ? onChange(range.min) : null}
+                    : amount < range.min ? onChange(range.min) : null
+                }
                 className={`${styles.input}`}
                 id="custom_amount"
               />
@@ -122,7 +123,7 @@ const Ranged = ({ amount, range, currency, billingCurrency, onChange }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Ranged;
+export default Ranged

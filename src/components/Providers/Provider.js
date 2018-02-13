@@ -1,9 +1,9 @@
-import React from 'react';
-import { css } from 'glamor';
-import Card from 'material-ui/Card';
+import React from 'react'
+import { css } from 'glamor'
+import Card from 'material-ui/Card'
 
-import More from './more.svg';
-import Select from './select.svg';
+import More from './more.svg'
+import Select from './select.svg'
 
 const styles = {
   container: css({
@@ -27,12 +27,12 @@ const styles = {
       borderTop: '1px solid rgba(0,0,0,0.08)',
       '&:last-of-type': {
         borderBottom: '1px solid rgba(0,0,0,0.08)',
-        marginBottom: 6
+        marginBottom: 6,
       },
       '&:first-of-type': {
-        marginTop: 6
-      }
-    }
+        marginTop: 6,
+      },
+    },
   }),
   logoWrapper: css({
     height: 42,
@@ -46,8 +46,8 @@ const styles = {
       width: 24,
       height: 18,
       flex: '0 0 auto',
-      marginRight: 12
-    }
+      marginRight: 12,
+    },
   }),
   logo: css({
     maxHeight: 42,
@@ -55,23 +55,23 @@ const styles = {
     display: 'block',
     '@media(max-width: 460px)': {
       maxWidth: 24,
-      maxHeight: 18
-    }
+      maxHeight: 18,
+    },
   }),
   name: css({
     flex: '1 0 auto',
     fontWeight: 500,
     '@media(max-width: 460px)': {
-      textAlign: 'left'
-    }
+      textAlign: 'left',
+    },
   }),
   select: css({
     display: 'none',
     '@media(max-width: 460px)': {
-      display: 'block'
-    }
-  })
-};
+      display: 'block',
+    },
+  }),
+}
 
 export const ShowAll = ({ onClick, count }) => (
   <Card {...styles.container} onClick={onClick}>
@@ -83,16 +83,18 @@ export const ShowAll = ({ onClick, count }) => (
     </div>
     <Select {...styles.select} fill="#777" />
   </Card>
-);
+)
 
 const Provider = ({ data, onSelect }) => (
   <Card {...styles.container} onClick={onSelect}>
     <div {...styles.logoWrapper}>
       <img src={data.logoImage} alt={data.name} {...styles.logo} />
     </div>
-    <div {...styles.name} data-package-slug={data.slug}>{data.name}</div>
+    <div {...styles.name} data-package-slug={data.slug}>
+      {data.name}
+    </div>
     <Select {...styles.select} fill="#777" />
   </Card>
-);
+)
 
-export default Provider;
+export default Provider

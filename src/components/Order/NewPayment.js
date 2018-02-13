@@ -1,23 +1,23 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from 'prop-types'
+import React from 'react'
 
-import { css } from 'glamor';
-import Button from 'material-ui/Button';
-import Menu, { MenuItem } from 'material-ui/Menu';
-import { ListItemText, ListItemIcon } from 'material-ui/List';
+import { css } from 'glamor'
+import Button from 'material-ui/Button'
+import Menu, { MenuItem } from 'material-ui/Menu'
+import { ListItemText, ListItemIcon } from 'material-ui/List'
 
-import BitcoinAddress from '../UI/BitcoinAddress';
-import Info from './info.svg';
-import OrderHeader from '../UI/OrderHeader';
-import PaymentLayout from './PaymentLayout';
+import BitcoinAddress from '../UI/BitcoinAddress'
+import Info from './info.svg'
+import OrderHeader from '../UI/OrderHeader'
+import PaymentLayout from './PaymentLayout'
 
-import QrCode from '../UI/QrCode';
+import QrCode from '../UI/QrCode'
 
 const valueField = {
   xbt: 'btcPrice',
   eur: 'eurPrice',
-  usd: 'usdPrice'
-};
+  usd: 'usdPrice',
+}
 
 const styles = {
   list: css({
@@ -27,66 +27,59 @@ const styles = {
       textAlign: 'right',
       width: 120,
       fontWeight: 700,
-      marginRight: '24px'
+      marginRight: '24px',
     },
     '> dd': {
-      marginBottom: 8
-    }
+      marginBottom: 8,
+    },
   }),
   paymentMethods: css({
     display: 'flex',
     alignItems: 'center',
-    position: 'relative'
+    position: 'relative',
   }),
   buttonGroup: css({
-    margin: -8
+    margin: -8,
   }),
   button: css({
-    margin: 8
+    margin: 8,
   }),
   package: css({
     fontSize: 16,
     color: '#323232',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   }),
   changeButton: css({
     color: '#3e8fe4 !important',
     fontWeight: 'bold !important',
-    marginLeft: '12px'
+    marginLeft: '12px',
   }),
   divider: css({
     border: 0,
     height: 0,
     borderTop: '1px solid rgba(0, 0, 0, 0.1)',
-    borderBottom: '1px solid rgba(255, 255, 255, 0.3)'
+    borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
   }),
   container: css({
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
   }),
   left: css({
-    flex: 1
+    flex: 1,
   }),
   right: css({
     flex: 1,
     marginRight: '12px',
     '& img': {
-      float: 'right'
-    }
-  })
-};
+      float: 'right',
+    },
+  }),
+}
 
-const Divider = () => (
-  <hr {...styles.divider}/>
-);
+const Divider = () => <hr {...styles.divider} />
 
 const PaymentMenu = props => {
-  const {
-    open,
-    anchorEl,
-    paymentButtons,
-    onClick
-  } = props;
+  const { open, anchorEl, paymentButtons, onClick } = props
 
   const Item = props => {
     let {
@@ -96,116 +89,98 @@ const PaymentMenu = props => {
       order,
       billingCurrency,
       accountBalance,
-      operator,
-      requireAccountBalance
-    } = props;
+      requireAccountBalance,
+    } = props
 
     if (typeof icon === 'string') {
-      icon = <img src={icon}/>
+      icon = <img src={icon} />
     }
 
-    const price = order[valueField[billingCurrency.toLowerCase()]];
-    const canAfford = price <= accountBalance;
-    const displayNumber = !operator.noNumber;
-    const widgetRequireAccountBalance = requireAccountBalance;
+    const price = order[valueField[billingCurrency.toLowerCase()]]
+    const canAfford = price <= accountBalance
+    const widgetRequireAccountBalance = requireAccountBalance
 
     const disabled =
       !canAfford &&
-      ((widgetRequireAccountBalance &&
-        requireAccountBalance !== false) ||
-        requireAccountBalance);
+      ((widgetRequireAccountBalance && requireAccountBalance !== false) ||
+        requireAccountBalance)
 
     return (
-      <MenuItem
-        open={open}
-        onClick={() => onClick(props)}
-        disabled={disabled}
-      >
-        {icon && <ListItemIcon style={{margin: 0}}>{icon}</ListItemIcon>}
-        <ListItemText
-          primary={title}
-          secondary={description}
-        />
+      <MenuItem open={open} onClick={() => onClick(props)} disabled={disabled}>
+        {icon && <ListItemIcon style={{ margin: 0 }}>{icon}</ListItemIcon>}
+        <ListItemText primary={title} secondary={description} />
       </MenuItem>
-    );
-  };
+    )
+  }
 
   return (
     <div>
-      <Menu
-        anchorEl={anchorEl}
-        open={open}
-      >
-        {paymentButtons && paymentButtons.map((options, index) => (
-          <div key={index}>
-            <Item {...options} {...props} />
-            {index < paymentButtons.length - 1 && <Divider/>}
-          </div>
-        ))}
+      <Menu anchorEl={anchorEl} open={open}>
+        {paymentButtons &&
+          paymentButtons.map((options, index) => (
+            <div key={index}>
+              <Item {...options} {...props} />
+              {index < paymentButtons.length - 1 && <Divider />}
+            </div>
+          ))}
       </Menu>
     </div>
-  );
+  )
 }
 
 class NewPayment extends React.Component {
-
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       anchorEl: null,
       open: false,
-      paymentMethod: props.paymentButtons[0]
-    };
+      paymentMethod: props.paymentButtons[0],
+    }
   }
 
-  openMenu = (e) => this.setState({
-    open: true,
-    anchorEl: e
-  });
+  openMenu = e =>
+    this.setState({
+      open: true,
+      anchorEl: e,
+    })
 
-  menuClick = (button) => {
+  menuClick = button => {
     // if callback is set, then it's an old payment button
     // keep this for backwards compability
     if (button.callback) {
       button.paymentModeOptions = {
         title: button.title,
-        callback: button.callback
-      };
+        callback: button.callback,
+      }
     }
 
     this.setState({
       open: false,
       anchorEl: null,
-      paymentMethod: button
-    });
-  };
+      paymentMethod: button,
+    })
+  }
 
   render() {
-    const {
-      order,
-      operator,
-      number,
-      country,
-      accountBalance,
-      requireAccountBalance,
-      showEmailField,
-      showBTCAddress,
-      billingCurrency,
-      paymentButtons
-    } = this.props;
+    const { order, paymentButtons } = this.props
 
-    const method = this.state.paymentMethod;
+    const method = this.state.paymentMethod
 
     return (
       <div>
-        <PaymentMenu {...this.props} {...this.state} paymentButtons={paymentButtons} onClick={this.menuClick} />
+        <PaymentMenu
+          {...this.props}
+          {...this.state}
+          paymentButtons={paymentButtons}
+          onClick={this.menuClick}
+        />
 
         <OrderHeader
           order={order}
           title="Payment"
           subtitle="Confirm the details below to purchase your refill"
-          icon={<Info/>}
+          icon={<Info />}
         />
 
         <PaymentLayout {...this.props}>
@@ -214,25 +189,43 @@ class NewPayment extends React.Component {
               <p>Pay with</p>
             </div>
             <div>
-              {this.state.paymentMethod.title} <Button {...styles.changeButton} onClick={(event) => this.openMenu(event.currentTarget)}>Change</Button>
+              {this.state.paymentMethod.title}{' '}
+              <Button
+                {...styles.changeButton}
+                onClick={event => this.openMenu(event.currentTarget)}
+              >
+                Change
+              </Button>
             </div>
           </div>
           <div>
-            <div/>
+            <div />
             <div>
               {method.paymentMode === 'button' && (
-                <Button raised color="primary" onClick={() => method.paymentModeOptions.callback(order)}>
+                <Button
+                  raised
+                  color="primary"
+                  onClick={() => method.paymentModeOptions.callback(order)}
+                >
                   {method.paymentModeOptions.title}
                 </Button>
               )}
               {method.paymentMode === 'btc' && (
                 <div {...styles.container}>
                   <div {...styles.left}>
-                    Send <i>exactly</i> <strong>{order.btcPrice} BTC</strong> to this address:
+                    Send <i>exactly</i> <strong>{order.btcPrice} BTC</strong> to
+                    this address:
                     <BitcoinAddress address={order.payment.address} />
-                    <br/>
-                    <br/>
-                    <Button {...styles.bottomButton} raised color="primary" onClick={() => window.location.href = order.payment.BIP21}>
+                    <br />
+                    <br />
+                    <Button
+                      {...styles.bottomButton}
+                      raised
+                      color="primary"
+                      onClick={() =>
+                        (window.location.href = order.payment.BIP21)
+                      }
+                    >
                       Open wallet
                     </Button>
                   </div>
@@ -245,14 +238,14 @@ class NewPayment extends React.Component {
           </div>
         </PaymentLayout>
       </div>
-    );
+    )
   }
 }
 
 NewPayment.propTypes = {
   order: PropTypes.object.isRequired,
   showBTCAddress: PropTypes.bool.isRequired,
-  paymentButtons: PropTypes.array
-};
+  paymentButtons: PropTypes.array,
+}
 
-export default NewPayment;
+export default NewPayment

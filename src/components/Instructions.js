@@ -1,5 +1,5 @@
-import React from 'react';
-import { css } from 'glamor';
+import React from 'react'
+import { css } from 'glamor'
 
 const styles = {
   container: css({
@@ -7,7 +7,7 @@ const styles = {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
-    padding: '20px'
+    padding: '20px',
   }),
   instruction: css({
     display: 'flex',
@@ -17,16 +17,16 @@ const styles = {
     lineHeight: 1.4,
     fontSize: 14,
     '& + &': {
-      marginTop: 20
+      marginTop: 20,
     },
     '@media(min-width: 620px)': {
       flexDirection: 'column',
       textAlign: 'center',
       flex: '0 0 180px',
       '& + &': {
-        marginTop: 0
-      }
-    }
+        marginTop: 0,
+      },
+    },
   }),
   badge: css({
     width: 40,
@@ -42,20 +42,20 @@ const styles = {
     alignItems: 'center',
     marginRight: 20,
     '@media(min-width: 620px)': {
-      marginRight: 0
-    }
+      marginRight: 0,
+    },
   }),
   title: css({
     color: '#2079D6',
     margin: 0,
     '@media(min-width: 620px)': {
-      margin: '8px 0'
-    }
+      margin: '8px 0',
+    },
   }),
   content: css({
-    flex: '1 1 auto'
-  })
-};
+    flex: '1 1 auto',
+  }),
+}
 
 const Instruction = ({ number, title, children }) => (
   <div {...styles.instruction}>
@@ -65,7 +65,7 @@ const Instruction = ({ number, title, children }) => (
       <div>{children}</div>
     </div>
   </div>
-);
+)
 
 const Instructions = () => (
   <div {...styles.container}>
@@ -79,6 +79,6 @@ const Instructions = () => (
       We send your refill the second we receive your payment
     </Instruction>
   </div>
-);
+)
 
-export default Instructions;
+export default Instructions

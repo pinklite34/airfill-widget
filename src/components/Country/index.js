@@ -1,6 +1,6 @@
-import React from 'react';
-import { Switch, Route } from 'react-router';
-import Collapsed from './Collapsed';
+import React from 'react'
+import { Switch, Route } from 'react-router'
+import Collapsed from './Collapsed'
 
 const Country = () => (
   <Switch>
@@ -16,6 +16,6 @@ const Country = () => (
     />
     <Route render={props => <Collapsed darken={2} {...props} />} />
   </Switch>
-);
+)
 
-export default Country;
+export default Country

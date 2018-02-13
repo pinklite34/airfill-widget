@@ -1,9 +1,10 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import { css } from 'glamor';
-import CircularProgress from 'material-ui/Progress/CircularProgress';
-import Button from 'material-ui/Button';
-import PaymentLayout from './PaymentLayout';
+import PropTypes from 'prop-types'
+import React from 'react'
+import { css } from 'glamor'
+import CircularProgress from 'material-ui/Progress/CircularProgress'
+import Button from 'material-ui/Button'
+import PaymentLayout from './PaymentLayout'
+import OrderHeader from './OrderHeader'
 
 const styles = {
   textContainer: css({
@@ -13,17 +14,17 @@ const styles = {
   }),
   info: css({
     color: '#777777',
-    fontSize: '14px'
+    fontSize: '14px',
   }),
   link: css({
     color: '#3e8fe4',
     fontSize: '14px',
-    textDecoration: 'underline'
+    textDecoration: 'underline',
   }),
   button: css({
-    marginTop: '12px'
-  })
-};
+    marginTop: '12px',
+  }),
+}
 
 const PaymentDetected = props => {
   return (
@@ -36,29 +37,32 @@ const PaymentDetected = props => {
       />
       <PaymentLayout {...props}>
         <div>
-          <div/>
+          <div />
           <div {...styles.textContainer}>
             <span {...styles.info}>
-              This page will continue to update with more details about your refill.
-              It is safe to leave this page or to buy another refill.
+              This page will continue to update with more details about your
+              refill. It is safe to leave this page or to buy another refill.
             </span>
-            <br/>
-            <span {...styles.link}>
-              When will I get my refill?
-            </span>
-            <br/>
-            <Button color="primary" raised {...styles.button} onClick={props.onReset}>
+            <br />
+            <span {...styles.link}>When will I get my refill?</span>
+            <br />
+            <Button
+              color="primary"
+              raised
+              {...styles.button}
+              onClick={props.onReset}
+            >
               Buy another refill
             </Button>
           </div>
         </div>
       </PaymentLayout>
     </div>
-  );
-};
+  )
+}
 
 PaymentDetected.propTypes = {
-  order: PropTypes.object.isRequired
-};
+  order: PropTypes.object.isRequired,
+}
 
-export default PaymentDetected;
+export default PaymentDetected

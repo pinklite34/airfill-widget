@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import Button from 'material-ui/Button';
-import OrderHeader from '../UI/OrderHeader';
-import Confirmed from './confirmed.svg';
-import { css } from 'glamor';
-import PaymentLayout from './PaymentLayout';
+import PropTypes from 'prop-types'
+import React from 'react'
+import Button from 'material-ui/Button'
+import OrderHeader from '../UI/OrderHeader'
+import Confirmed from './confirmed.svg'
+import { css } from 'glamor'
+import PaymentLayout from './PaymentLayout'
 
 const styles = {
   textContainer: css({
@@ -14,17 +14,17 @@ const styles = {
   }),
   info: css({
     color: '#777777',
-    fontSize: '14px'
+    fontSize: '14px',
   }),
   link: css({
     color: '#3e8fe4',
     fontSize: '14px',
-    textDecoration: 'underline'
+    textDecoration: 'underline',
   }),
   button: css({
-    marginTop: '12px'
-  })
-};
+    marginTop: '12px',
+  }),
+}
 
 const RefillDelivered = props => {
   return (
@@ -38,29 +38,33 @@ const RefillDelivered = props => {
 
       <PaymentLayout {...props}>
         <div>
-          <div/>
+          <div />
           <div {...styles.textContainer}>
             <span {...styles.info}>
-              The refill has delivered and credited to the balance of the target device.
+              The refill has delivered and credited to the balance of the target
+              device.
             </span>
-            <br/>
-            <span {...styles.link}>
-              Can't see your refill?
-            </span>
-            <br/>
-            <Button color="primary" raised {...styles.button} onClick={props.onReset}>
+            <br />
+            <span {...styles.link}>Can&apos;t see your refill?</span>
+            <br />
+            <Button
+              color="primary"
+              raised
+              {...styles.button}
+              onClick={props.onReset}
+            >
               Buy another refill
             </Button>
           </div>
         </div>
       </PaymentLayout>
     </div>
-  );
-};
+  )
+}
 
 RefillDelivered.propTypes = {
   paymentStatus: PropTypes.object.isRequired,
-  onReset: PropTypes.func.isRequired
-};
+  onReset: PropTypes.func.isRequired,
+}
 
-export default RefillDelivered;
+export default RefillDelivered

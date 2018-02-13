@@ -1,1 +1,1 @@
-export const isValidEmail = email => !!email.match(/.+@.+\..+/);
+export const isValidEmail = email => !!email.match(/.+@.+\..+/)
