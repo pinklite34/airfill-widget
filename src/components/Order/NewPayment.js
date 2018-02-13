@@ -133,7 +133,6 @@ class NewPayment extends React.Component {
     super(props)
 
     this.state = {
-      anchorEl: null,
       open: false,
       paymentMethod: props.paymentButtons[0],
     }
@@ -157,7 +156,6 @@ class NewPayment extends React.Component {
 
     this.setState({
       open: false,
-      anchorEl: null,
       paymentMethod: button,
     })
   }
