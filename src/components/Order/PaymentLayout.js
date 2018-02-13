@@ -84,40 +84,47 @@ class PaymentLayout extends React.Component {
   }
 
   componentDidMount() {
-    const { updatePaymentStatus, order } = this.props
+    const { updatePaymentStatus, order, paymentStatus } = this.props
 
-    this.setState({
-      countdownInterval: setInterval(() => {
-        const now = new Date().getTime()
-        const expiring = this.props.order.expirationTime
-        let diff = new Date(expiring - now)
+    const showCountdown =
+      !paymentStatus.status || paymentStatus.status === 'partial'
 
-        if (now > expiring || this.props.order.expired) {
-          diff = '00:00'
+    if (showCountdown) {
+      this.setState({
+        countdownInterval: setInterval(() => {
+          const now = new Date().getTime()
+          const expiring = this.props.order.expirationTime
+          let diff = new Date(expiring - now)
 
-          updatePaymentStatus({
-            status: 'expired',
-            orderId: order.orderId,
-            data: {},
-          })
-        } else {
-          let minutes = diff.getMinutes()
-          let seconds = diff.getSeconds()
+          if (now > expiring || this.props.order.expired) {
+            diff = '00:00'
 
-          if (minutes < 10) minutes = '0' + minutes
+            updatePaymentStatus({
+              status: 'expired',
+              orderId: order.orderId,
+              data: {},
+            })
+          } else {
+            let minutes = diff.getMinutes()
+            let seconds = diff.getSeconds()
 
-          if (seconds < 10) seconds = '0' + seconds
+            if (minutes < 10) minutes = '0' + minutes
 
-          diff = `${minutes}:${seconds}`
-        }
+            if (seconds < 10) seconds = '0' + seconds
 
-        this.setState({ timeLeft: diff })
-      }, 1000),
-    })
+            diff = `${minutes}:${seconds}`
+          }
+
+          this.setState({ timeLeft: diff })
+        }, 1000),
+      })
+    }
   }
 
   componentWillUnmount() {
-    clearInterval(this.state.countdownInterval)
+    const { countdownInterval } = this.state
+
+    if (countdownInterval) clearInterval(this.state.countdownInterval)
   }
 
   render() {
