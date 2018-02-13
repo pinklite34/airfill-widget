@@ -237,7 +237,7 @@ class NewPayment extends React.Component {
                     </Button>
                   </div>
                   <div {...styles.right}>
-                    <QrCode value={order.payment.address} size={150} />
+                    <QrCode value={order.payment.BIP21} size={150} />
                   </div>
                 </div>
               )}
