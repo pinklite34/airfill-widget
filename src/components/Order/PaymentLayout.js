@@ -80,7 +80,7 @@ const valueField = {
 class PaymentLayout extends React.Component {
   state = {
     countdownInterval: null,
-    timeLeft: '',
+    timeLeft: '15:00',
   }
 
   componentDidMount() {
