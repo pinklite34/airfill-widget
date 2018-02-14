@@ -45,7 +45,14 @@ const RefillDelivered = props => {
               device.
             </span>
             <br />
-            <span {...styles.link}>Can&apos;t see your refill?</span>
+            <a
+              {...styles.link}
+              href="https://www.bitrefill.com/faq/#my-topup-did-not-arrive"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Can&apos;t see your refill?
+            </a>
             <br />
             <Button
               color="primary"
