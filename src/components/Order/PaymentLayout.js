@@ -83,14 +83,8 @@ class PaymentLayout extends React.Component {
     timeLeft: '15:00',
   }
 
-  get showCountdown() {
-    const { paymentStatus } = this.props
-
-    return !paymentStatus.status || paymentStatus.status === 'partial'
-  }
-
   componentDidMount() {
-    const { updatePaymentStatus, order, paymentStatus } = this.props
+    const { updatePaymentStatus, order } = this.props
 
     if (this.showCountdown) {
       this.setState({
@@ -128,6 +122,12 @@ class PaymentLayout extends React.Component {
     const { countdownInterval } = this.state
 
     if (countdownInterval) clearInterval(this.state.countdownInterval)
+  }
+
+  get showCountdown() {
+    const { paymentStatus } = this.props
+
+    return !paymentStatus.status || paymentStatus.status === 'partial'
   }
 
   render() {
