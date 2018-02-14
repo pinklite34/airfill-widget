@@ -4,7 +4,7 @@ import { css } from 'glamor'
 import CircularProgress from 'material-ui/Progress/CircularProgress'
 import Button from 'material-ui/Button'
 import PaymentLayout from './PaymentLayout'
-import OrderHeader from './OrderHeader'
+import OrderHeader from '../UI/OrderHeader'
 
 const styles = {
   textContainer: css({
