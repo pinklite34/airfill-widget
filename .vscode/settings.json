@@ -4,5 +4,6 @@
   "eslint.packageManager": "yarn",
   "editor.formatOnSave": false,
   "javascript.validate.enable": false,
-  "javascript.format.enable": false
+  "javascript.format.enable": false,
+  "editor.tabSize": 2
 }
