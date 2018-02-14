@@ -138,10 +138,9 @@ class NewPayment extends React.Component {
     }
   }
 
-  openMenu = e =>
+  openMenu = () =>
     this.setState({
       open: true,
-      anchorEl: e,
     })
 
   menuClick = button => {
@@ -170,6 +169,7 @@ class NewPayment extends React.Component {
         <PaymentMenu
           {...this.props}
           {...this.state}
+          anchorEl={this.anchorEl}
           paymentButtons={paymentButtons}
           onClick={this.menuClick}
         />
@@ -187,10 +187,12 @@ class NewPayment extends React.Component {
               <p>Pay with</p>
             </div>
             <div>
-              {this.state.paymentMethod.title}{' '}
+              <p ref={e => (this.anchorEl = e)}>
+                {this.state.paymentMethod.title}
+              </p>
               <Button
                 {...styles.changeButton}
-                onClick={event => this.openMenu(event.currentTarget)}
+                onClick={event => this.openMenu()}
               >
                 Change
               </Button>
