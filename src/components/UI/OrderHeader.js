@@ -27,6 +27,7 @@ const styles = {
   }),
   orderId: css({
     float: 'right',
+    marginRight: '12px',
     lineHeight: '31.5px',
     color: '#777777',
     fontSize: '12px',
