@@ -65,7 +65,7 @@ const styles = {
     flexDirection: 'row',
   }),
   left: css({
-    flex: 1,
+    flex: '0 0 70%',
   }),
   right: css({
     flex: 1,
