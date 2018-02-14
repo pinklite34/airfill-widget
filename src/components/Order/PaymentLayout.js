@@ -36,7 +36,6 @@ const styles = {
       '& > div:last-of-type': {
         flex: 'auto',
         fontSize: '16px',
-        fontWeight: 'bold',
         color: '#323232',
         borderBottom: '1px solid rgba(0, 0, 0, 0.08)',
         '& > p': {
@@ -45,6 +44,9 @@ const styles = {
         },
       },
     },
+  }),
+  infoContainer: css({
+    fontWeight: 'bold',
   }),
   cellContainer: css({
     flexDirection: 'column !important',
@@ -157,7 +159,7 @@ class PaymentLayout extends React.Component {
               {...styles.logo}
             />
           </div>
-          <div {...styles.cellContainer}>
+          <div {...styles.cellContainer} {...styles.infoContainer}>
             <span {...styles.topLabel}>Refill details</span>
             <p>{`${operator.result.name} ${amount} ${
               operator.result.currency
@@ -168,7 +170,10 @@ class PaymentLayout extends React.Component {
 
         <div>
           <div>Price</div>
-          <div {...(this.showCountdown ? styles.cellContainer : {})}>
+          <div
+            {...(this.showCountdown ? styles.cellContainer : {})}
+            {...styles.infoContainer}
+          >
             <p>{formattedPrice}</p>
             {this.showCountdown && (
               <p {...styles.label}>Time left: {this.state.timeLeft}</p>
