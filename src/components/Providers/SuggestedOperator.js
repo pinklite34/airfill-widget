@@ -68,7 +68,7 @@ const SuggestedOperator = ({ operator, onAccept, onReject }) => {
             operator. If this is not correct, please select another operator
             below.
           </p>
-          <Button primary raised onClick={onAccept} {...styles.button}>
+          <Button color="primary" raised onClick={onAccept} {...styles.button}>
             Yes, this is my operator
           </Button>
           <Button raised onClick={onReject} {...styles.button}>
