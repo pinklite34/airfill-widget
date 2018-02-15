@@ -17,9 +17,9 @@ const styles = {
   icon: css({
     width: 24,
     height: 24,
-    margin: '-3px 0',
+    marginRight: 30,
+    marginLeft: 14,
     fill: '#3e8fe4',
-    marginRight: 12,
     flex: '0 0 auto',
   }),
   text: css({
