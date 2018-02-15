@@ -66,12 +66,21 @@ const styles = {
   }),
   left: css({
     flex: '0 0 70%',
+    '@media(max-width: 420px)': {
+      paddingRight: '2px',
+    },
   }),
   right: css({
     flex: 1,
     marginRight: '12px',
     '& img': {
       float: 'right',
+    },
+    '@media(max-width: 420px)': {
+      '& img': {
+        width: '75px',
+        height: '75px',
+      },
     },
   }),
 }
