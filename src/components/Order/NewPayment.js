@@ -66,7 +66,7 @@ const styles = {
   }),
   left: css({
     flex: '0 0 70%',
-    '@media(max-width: 420px)': {
+    '@media(max-width: 460px)': {
       paddingRight: '2px',
     },
   }),
@@ -76,7 +76,7 @@ const styles = {
     '& img': {
       float: 'right',
     },
-    '@media(max-width: 420px)': {
+    '@media(max-width: 460px)': {
       '& img': {
         width: '75px',
         height: '75px',
