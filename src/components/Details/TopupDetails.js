@@ -85,7 +85,10 @@ class TopupDetails extends Component {
       isLoading: true,
     });
     this.props
-      .createOrder(this.props.config.orderOptions)
+      .createOrder({
+        ...this.props.config.orderOptions,
+        requiresBitcoinAddress: true,
+      })
       .then(() => {
         this.props.history.push('/refill/payment');
         this.props.trigger();
