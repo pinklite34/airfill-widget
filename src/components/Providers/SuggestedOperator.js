@@ -30,7 +30,7 @@ const styles = {
     },
   }),
   button: css({
-    width: 220,
+    width: 230,
     marginRight: 8,
     marginTop: 8,
   }),
