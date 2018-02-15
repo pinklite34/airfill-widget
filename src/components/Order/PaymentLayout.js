@@ -1,9 +1,9 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { css } from 'glamor'
-import { selectAmount } from '../../store/ui'
-import { selectOperator } from '../../store/operator'
-import { updatePaymentStatus } from '../../actions/index'
+import React from 'react';
+import { connect } from 'react-redux';
+import { css } from 'glamor';
+import { selectAmount } from '../../store/ui';
+import { selectOperator } from '../../store/operator';
+import { updatePaymentStatus } from '../../actions/index';
 
 const styles = {
   container: css({
@@ -71,65 +71,65 @@ const styles = {
   logo: css({
     maxWidth: 48,
   }),
-}
+};
 
 const valueField = {
   xbt: 'btcPrice',
   eur: 'eurPrice',
   usd: 'usdPrice',
-}
+};
 
 class PaymentLayout extends React.Component {
   state = {
     countdownInterval: null,
     timeLeft: '15:00',
-  }
+  };
 
   componentDidMount() {
-    const { updatePaymentStatus, order } = this.props
+    const { updatePaymentStatus, order } = this.props;
 
     if (this.showCountdown) {
       this.setState({
         countdownInterval: setInterval(() => {
-          const now = new Date().getTime()
-          const expiring = this.props.order.expirationTime
-          let diff = new Date(expiring - now)
+          const now = new Date().getTime();
+          const expiring = this.props.order.expirationTime;
+          let diff = new Date(expiring - now);
 
           if (now > expiring || this.props.order.expired) {
-            diff = '00:00'
+            diff = '00:00';
 
             updatePaymentStatus({
               status: 'expired',
               orderId: order.orderId,
               data: {},
-            })
+            });
           } else {
-            let minutes = diff.getMinutes()
-            let seconds = diff.getSeconds()
+            let minutes = diff.getMinutes();
+            let seconds = diff.getSeconds();
 
-            if (minutes < 10) minutes = '0' + minutes
+            if (minutes < 10) minutes = '0' + minutes;
 
-            if (seconds < 10) seconds = '0' + seconds
+            if (seconds < 10) seconds = '0' + seconds;
 
-            diff = `${minutes}:${seconds}`
+            diff = `${minutes}:${seconds}`;
           }
 
-          this.setState({ timeLeft: diff })
+          this.setState({ timeLeft: diff });
         }, 1000),
-      })
+      });
     }
   }
 
   componentWillUnmount() {
-    const { countdownInterval } = this.state
+    const { countdownInterval } = this.state;
 
-    if (countdownInterval) clearInterval(this.state.countdownInterval)
+    if (countdownInterval) clearInterval(this.state.countdownInterval);
   }
 
   get showCountdown() {
-    const { paymentStatus } = this.props
+    const { paymentStatus } = this.props;
 
-    return !paymentStatus.status || paymentStatus.status === 'partial'
+    return !paymentStatus.status || paymentStatus.status === 'partial';
   }
 
   render() {
@@ -140,14 +140,14 @@ class PaymentLayout extends React.Component {
       number,
       billingCurrency,
       order,
-    } = this.props
+    } = this.props;
 
     const billingCurrencyDisplayName =
-      billingCurrency === 'XBT' ? 'BTC' : billingCurrency
-    const price = order[valueField[billingCurrency.toLowerCase()]]
+      billingCurrency === 'XBT' ? 'BTC' : billingCurrency;
+    const price = order[valueField[billingCurrency.toLowerCase()]];
     const formattedPrice =
-      price + ' ' + billingCurrencyDisplayName.toUpperCase()
-    const showNumber = !operator.result || !operator.result.noNumber
+      price + ' ' + billingCurrencyDisplayName.toUpperCase();
+    const showNumber = !operator.result || !operator.result.noNumber;
 
     return (
       <div {...styles.container}>
@@ -183,7 +183,7 @@ class PaymentLayout extends React.Component {
 
         {children}
       </div>
-    )
+    );
   }
 }
 
@@ -195,4 +195,4 @@ export default connect(
   dispatch => ({
     updatePaymentStatus: (...args) => dispatch(updatePaymentStatus(...args)),
   })
-)(PaymentLayout)
+)(PaymentLayout);

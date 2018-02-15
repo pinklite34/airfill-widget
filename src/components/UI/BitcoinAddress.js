@@ -1,6 +1,6 @@
-import React from 'react'
-import TextField from 'material-ui/TextField'
-import { css } from 'glamor'
+import React from 'react';
+import TextField from 'material-ui/TextField';
+import { css } from 'glamor';
 
 const style = css({
   border: '1px solid rgba(0,0,0,0.16)',
@@ -9,7 +9,7 @@ const style = css({
   borderRadius: 2,
   padding: 8,
   fontSize: 16,
-})
+});
 
 const BitcoinAddress = ({ address }) => (
   <TextField
@@ -20,6 +20,6 @@ const BitcoinAddress = ({ address }) => (
     value={address}
     size="44"
   />
-)
+);
 
-export default BitcoinAddress
+export default BitcoinAddress;

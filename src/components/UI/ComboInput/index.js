@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { css } from 'glamor'
-import Downshift from 'downshift'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { css } from 'glamor';
+import Downshift from 'downshift';
 
 import {
   selectCountryList,
@@ -11,7 +11,7 @@ import {
   selectRecentNumbers,
   selectComboInputOpen,
   selectComboInputFocus,
-} from '../../../store'
+} from '../../../store';
 import {
   setCountry,
   setNumber,
@@ -20,20 +20,20 @@ import {
   openComboInput,
   closeComboInput,
   setComboInputFocus,
-} from '../../../actions'
+} from '../../../actions';
 import {
   isPhoneNumber,
   removeNextDigit,
   removePreviousDigit,
   formatNumber,
-} from '../../../lib/number-input-helpers'
+} from '../../../lib/number-input-helpers';
 import {
   sectionsToItemList,
   virtualIndexToItemIndex,
-} from '../../../lib/comboinput-helpers'
+} from '../../../lib/comboinput-helpers';
 
-import Dropdown from './Dropdown'
-import InputRow from './InputRow'
+import Dropdown from './Dropdown';
+import InputRow from './InputRow';
 
 const styles = {
   container: css({
@@ -43,30 +43,30 @@ const styles = {
     color: '#444',
     overflow: 'visible',
   }),
-}
+};
 
 const itemToString = item => {
   if (!item) {
-    return null
+    return null;
   }
 
   // Country
   if (item.__type === 'country') {
-    return item.name
+    return item.name;
   }
 
-  return item
-}
+  return item;
+};
 
 const getInitialInputValue = (country, number) => {
-  const result = formatNumber(country, number, number.length)
+  const result = formatNumber(country, number, number.length);
 
   if (result && result.formattedValue) {
-    return result.formattedValue
+    return result.formattedValue;
   } else {
-    return ''
+    return '';
   }
-}
+};
 
 class ComboInput extends Component {
   state = {
@@ -74,93 +74,93 @@ class ComboInput extends Component {
       this.props.country && this.props.country.alpha2,
       this.props.number
     ),
-  }
+  };
 
   componentDidMount() {
     if (this.props.shouldFocus) {
-      this.focusInput()
+      this.focusInput();
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.shouldFocus) {
-      this.focusInput()
+      this.focusInput();
     }
   }
 
   onInputKeyDown = e => {
-    const { selectionStart, selectionEnd } = e.target
-    const selectionRange = selectionEnd - selectionStart
+    const { selectionStart, selectionEnd } = e.target;
+    const selectionRange = selectionEnd - selectionStart;
 
     if (e.keyCode === 8) {
       // Handle backspace
       if (!e.target.value.length) {
-        this.resetCountry()
+        this.resetCountry();
       } else if (isPhoneNumber(e.target.value)) {
         if (!selectionRange) {
-          e.preventDefault()
+          e.preventDefault();
           this.changeValue(
             removePreviousDigit(e.target.value, selectionStart),
             selectionStart - 1
-          )
+          );
         }
       }
     } else if (e.keyCode === 46) {
       // Delete key
       if (!selectionRange) {
-        e.preventDefault()
+        e.preventDefault();
         this.changeValue(
           removeNextDigit(e.target.value, selectionStart),
           selectionStart
-        )
+        );
       }
     } else if (e.keyCode === 13) {
-      this.handleSubmit()
+      this.handleSubmit();
     }
-  }
+  };
 
   handleSelect = item => {
     if (item.__type === 'country') {
-      this.props.setCountry(item.alpha2)
+      this.props.setCountry(item.alpha2);
       this.setState({
         inputValue: this.props.number || '',
-      })
+      });
     } else if (item.__type === 'provider') {
-      this.props.setOperator(item.slug)
-      this.props.history.push('/refill/selectAmount')
+      this.props.setOperator(item.slug);
+      this.props.history.push('/refill/selectAmount');
     } else if (item.__type === 'history') {
-      this.props.useRecentRefill(item)
-      this.props.history.push('/refill/selectAmount')
+      this.props.useRecentRefill(item);
+      this.props.history.push('/refill/selectAmount');
     }
-  }
+  };
 
   handleSubmit = () => {
     if (isPhoneNumber(this.state.inputValue)) {
-      this.props.onSubmit()
+      this.props.onSubmit();
     }
-  }
+  };
 
   handleStateChange = changes => {
     if (changes.hasOwnProperty('isOpen')) {
       if (changes.isOpen) {
-        this.props.openComboInput()
+        this.props.openComboInput();
       } else {
-        this.props.closeComboInput()
+        this.props.closeComboInput();
       }
     }
-  }
+  };
 
-  setInputRef = ref => (this.input = ref)
+  setInputRef = ref => (this.input = ref);
 
   getMatchingCountries = value => {
-    const { countryList } = this.props
+    const { countryList } = this.props;
     return countryList
       .filter(country => country.name.toLowerCase().indexOf(value) > -1)
-      .map(item => ({ ...item, __type: 'country', key: item.alpha2 }))
-  }
+      .map(item => ({ ...item, __type: 'country', key: item.alpha2 }));
+  };
 
   getMatchingOperators = value => {
-    const { operators } = this.props
+    const { operators } = this.props;
     return Object.keys(operators)
       .reduce(
         (matches, type) =>
@@ -171,29 +171,29 @@ class ComboInput extends Component {
           ),
         []
       )
-      .map(item => ({ ...item, __type: 'provider', key: item.slug }))
-  }
+      .map(item => ({ ...item, __type: 'provider', key: item.slug }));
+  };
 
   getMatchingRecentNumbers = (value, countryCode) => {
-    const { recentNumbers, countryList } = this.props
+    const { recentNumbers, countryList } = this.props;
     const country = countryCode
       ? countryList.find(country => country.alpha2 === countryCode)
-      : null
+      : null;
 
     return recentNumbers
       .filter(recentNumber => {
         if (!country && !value) {
           // No filtering enabled, show everything
-          return true
+          return true;
         } else if (country && !country.operators[recentNumber.operator]) {
           // Don't show recent refills of other countries but the selected one
-          return false
+          return false;
         } else if (recentNumber.number.indexOf(value) > -1) {
           // Show recent refills with matching phone number
-          return true
+          return true;
         } else {
           // Don't show anything else
-          return false
+          return false;
         }
       })
       .filter(
@@ -204,17 +204,17 @@ class ComboInput extends Component {
         ...item,
         __type: 'history',
         key: `${item.operator}-${item.number}`,
-      }))
-  }
+      }));
+  };
 
   focusInput = () => {
     if (this.input) {
       this.setState({ inputValue: '' }, () => {
-        this.input.focus()
-        this.props.setComboInputFocus(false)
-      })
+        this.input.focus();
+        this.props.setComboInputFocus(false);
+      });
     }
-  }
+  };
 
   changeValue = (inputValue, currentCaret) => {
     if (isPhoneNumber(inputValue)) {
@@ -222,57 +222,58 @@ class ComboInput extends Component {
         this.props.country && this.props.country.alpha2,
         inputValue,
         currentCaret
-      )
+      );
 
-      this.props.setCountry(country)
+      this.props.setCountry(country);
 
-      this.props.setNumber(number)
+      this.props.setNumber(number);
       this.setState({ inputValue: formattedValue }, () =>
         this.input.setSelectionRange(caret, caret)
-      )
+      );
     } else {
       if (this.props.country && !inputValue) {
-        this.props.setNumber('')
+        this.props.setNumber('');
       }
       this.setState(state => ({
         inputValue,
-      }))
+      }));
     }
-  }
+  };
 
   resetCountry = () => {
-    this.props.setCountry('')
-    this.setState({ inputValue: '' })
-    this.input.focus()
-    this.props.openComboInput()
-  }
+    this.props.setCountry('');
+    this.setState({ inputValue: '' });
+    this.input.focus();
+    this.props.openComboInput();
+  };
 
   render() {
-    const { inputValue } = this.state
+    const { inputValue } = this.state;
 
-    const { country, loading, isOpen, openComboInput } = this.props
+    const { country, loading, isOpen, openComboInput } = this.props;
 
-    const normalizedInputValue = this.state.inputValue.toLowerCase()
+    const normalizedInputValue = this.state.inputValue.toLowerCase();
     const countries = country
       ? []
-      : this.getMatchingCountries(normalizedInputValue)
-    const operators = this.getMatchingOperators(normalizedInputValue)
+      : this.getMatchingCountries(normalizedInputValue);
+    const operators = this.getMatchingOperators(normalizedInputValue);
     const recentNumbers = this.getMatchingRecentNumbers(
       normalizedInputValue,
       country && country.alpha2
-    )
+    );
 
-    const sections = [recentNumbers, countries, operators]
-    const titles = ['Recent refills', 'Countries', 'Providers']
+    const sections = [recentNumbers, countries, operators];
+    const titles = ['Recent refills', 'Countries', 'Providers'];
 
     const items = sectionsToItemList(sections, titles).map((item, index) => ({
       ...item,
       index: virtualIndexToItemIndex(sections, index),
-    }))
+    }));
 
-    const itemCount = countries.length + operators.length + recentNumbers.length
+    const itemCount =
+      countries.length + operators.length + recentNumbers.length;
 
-    const submitEnabled = isPhoneNumber(this.state.inputValue)
+    const submitEnabled = isPhoneNumber(this.state.inputValue);
 
     return (
       <Downshift
@@ -308,7 +309,7 @@ class ComboInput extends Component {
           </div>
         )}
       </Downshift>
-    )
+    );
   }
 }
 
@@ -331,4 +332,4 @@ export default connect(
     setOperator,
     useRecentRefill,
   }
-)(ComboInput)
+)(ComboInput);

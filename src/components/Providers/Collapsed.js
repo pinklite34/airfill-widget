@@ -1,10 +1,10 @@
-import React from 'react'
-import { css } from 'glamor'
-import { withRouter } from 'react-router'
-import { connect } from 'react-redux'
-import { selectSelectedOperator } from '../../store'
+import React from 'react';
+import { css } from 'glamor';
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import { selectSelectedOperator } from '../../store';
 
-import CollapsedSection from '../UI/CollapsedSection'
+import CollapsedSection from '../UI/CollapsedSection';
 
 const styles = {
   container: css({
@@ -24,7 +24,7 @@ const styles = {
     maxWidth: 40,
     maxHeight: 30,
   }),
-}
+};
 
 const Collapsed = ({ operator, history, darken }) => (
   <CollapsedSection
@@ -41,10 +41,10 @@ const Collapsed = ({ operator, history, darken }) => (
       </div>
     )}
   </CollapsedSection>
-)
+);
 
 export default withRouter(
   connect(state => ({
     operator: selectSelectedOperator(state),
   }))(Collapsed)
-)
+);

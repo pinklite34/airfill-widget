@@ -1,13 +1,13 @@
-import React from 'react'
-import VirtualList from 'react-tiny-virtual-list'
+import React from 'react';
+import VirtualList from 'react-tiny-virtual-list';
 
-import { css } from 'glamor'
-import Card from 'material-ui/Card'
+import { css } from 'glamor';
+import Card from 'material-ui/Card';
 
-import CountryRow from './CountryRow'
-import ProviderRow from './ProviderRow'
-import HistoryRow from './HistoryRow'
-import SectionTitle from '../SectionTitle'
+import CountryRow from './CountryRow';
+import ProviderRow from './ProviderRow';
+import HistoryRow from './HistoryRow';
+import SectionTitle from '../SectionTitle';
 
 const styles = {
   container: css({
@@ -33,26 +33,26 @@ const styles = {
       borderTop: '0',
     },
   }),
-}
+};
 
 const rowComponents = {
   country: CountryRow,
   provider: ProviderRow,
   history: HistoryRow,
   sectionTitle: function SectionTitle({ item, style }) {
-    return <div style={style}>{item.title}</div>
+    return <div style={style}>{item.title}</div>;
   },
-}
+};
 
 const Dropdown = ({ getItemProps, items, highlightedIndex }) => {
-  const itemCount = items.length
+  const itemCount = items.length;
   const height =
     itemCount < 6
       ? items.reduce(
           (height, item) => height + (item.__type === 'sectionTitle' ? 24 : 44),
           0
         )
-      : 264
+      : 264;
 
   return (
     <div {...styles.container}>
@@ -66,7 +66,7 @@ const Dropdown = ({ getItemProps, items, highlightedIndex }) => {
             itemSize={i => (items[i].__type === 'sectionTitle' ? 24 : 44)}
             itemCount={itemCount}
             renderItem={({ index, style }) => {
-              const item = items[index]
+              const item = items[index];
 
               if (item.__type === 'sectionTitle') {
                 return (
@@ -77,9 +77,9 @@ const Dropdown = ({ getItemProps, items, highlightedIndex }) => {
                   >
                     {item.title}
                   </SectionTitle>
-                )
+                );
               } else {
-                const Row = rowComponents[item.__type]
+                const Row = rowComponents[item.__type];
 
                 return (
                   <Row
@@ -92,14 +92,14 @@ const Dropdown = ({ getItemProps, items, highlightedIndex }) => {
                     isActive={item.index === highlightedIndex}
                     item={item}
                   />
-                )
+                );
               }
             }}
           />
         </div>
       </Card>
     </div>
-  )
-}
+  );
+};
 
-export default Dropdown
+export default Dropdown;

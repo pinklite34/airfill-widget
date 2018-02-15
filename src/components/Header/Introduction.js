@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { css } from 'glamor'
-import { selectNumber, selectNumberLookup } from '../../store'
-import { lookupNumber, resetNumberLookup } from '../../actions'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { css } from 'glamor';
+import { selectNumber, selectNumberLookup } from '../../store';
+import { lookupNumber, resetNumberLookup } from '../../actions';
 
-import ComboInput from '../UI/ComboInput'
-import Info from '../UI/info.svg'
+import ComboInput from '../UI/ComboInput';
+import Info from '../UI/info.svg';
 
 const styles = {
   container: css({
@@ -64,24 +64,24 @@ const styles = {
     height: 24,
     flex: '0 0 auto',
   }),
-}
+};
 
 class Introduction extends Component {
   componentDidMount() {
-    this.props.resetNumberLookup()
+    this.props.resetNumberLookup();
   }
 
   lookupNumber = () => {
-    const { lookupNumber, history, number } = this.props
+    const { lookupNumber, history, number } = this.props;
 
     lookupNumber(number).then(
       result => history.push('/refill/selectProvider'),
       () => null // No uncaught promise rejections
-    )
-  }
+    );
+  };
 
   render() {
-    const { branded, history, numberLookup } = this.props
+    const { branded, history, numberLookup } = this.props;
     return (
       <div {...styles.container}>
         {branded ? (
@@ -111,7 +111,7 @@ class Introduction extends Component {
           </div>
         )}
       </div>
-    )
+    );
   }
 }
 
@@ -124,4 +124,4 @@ export default connect(
     lookupNumber,
     resetNumberLookup,
   }
-)(Introduction)
+)(Introduction);

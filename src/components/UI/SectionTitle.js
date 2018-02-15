@@ -1,5 +1,5 @@
-import React from 'react'
-import { css } from 'glamor'
+import React from 'react';
+import { css } from 'glamor';
 
 const style = css({
   fontSize: 10,
@@ -7,12 +7,12 @@ const style = css({
   textTransform: 'uppercase',
   marginBottom: 8,
   color: '#777',
-})
+});
 
 const SectionTitle = ({ children, ...props }) => (
   <div {...style} {...props}>
     {children}
   </div>
-)
+);
 
-export default SectionTitle
+export default SectionTitle;

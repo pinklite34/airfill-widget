@@ -1,5 +1,5 @@
-import React from 'react'
-import { css } from 'glamor'
+import React from 'react';
+import { css } from 'glamor';
 
 const styles = {
   container: css({
@@ -55,7 +55,7 @@ const styles = {
   content: css({
     flex: '1 1 auto',
   }),
-}
+};
 
 const Instruction = ({ number, title, children }) => (
   <div {...styles.instruction}>
@@ -65,7 +65,7 @@ const Instruction = ({ number, title, children }) => (
       <div>{children}</div>
     </div>
   </div>
-)
+);
 
 const Instructions = () => (
   <div {...styles.container}>
@@ -79,6 +79,6 @@ const Instructions = () => (
       We send your refill the second we receive your payment
     </Instruction>
   </div>
-)
+);
 
-export default Instructions
+export default Instructions;

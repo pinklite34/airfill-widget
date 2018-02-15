@@ -1,6 +1,6 @@
-import React from 'react'
-import { css } from 'glamor'
-import Button from 'material-ui/Button'
+import React from 'react';
+import { css } from 'glamor';
+import Button from 'material-ui/Button';
 
 const styles = {
   container: css({
@@ -27,7 +27,7 @@ const styles = {
     },
     flex: '1 0 auto',
   }),
-}
+};
 
 const background = [
   css({
@@ -42,7 +42,7 @@ const background = [
   css({
     backgroundColor: '#CDCDCD',
   }),
-]
+];
 
 const Collapsed = ({ onClick, type, hideButton, children, darken = 0 }) => (
   <div {...styles.container} {...background[darken]}>
@@ -53,6 +53,6 @@ const Collapsed = ({ onClick, type, hideButton, children, darken = 0 }) => (
       </Button>
     )}
   </div>
-)
+);
 
-export default Collapsed
+export default Collapsed;

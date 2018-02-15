@@ -1,9 +1,9 @@
-import React from 'react'
-import { Switch, Route } from 'react-router'
-import { css } from 'glamor'
+import React from 'react';
+import { Switch, Route } from 'react-router';
+import { css } from 'glamor';
 
-import Logo from './Logo'
-import Introduction from './Introduction'
+import Logo from './Logo';
+import Introduction from './Introduction';
 
 const styles = {
   container: css({
@@ -21,7 +21,7 @@ const styles = {
       },
     },
   }),
-}
+};
 
 const Header = ({ branded }) => (
   <Switch>
@@ -45,6 +45,6 @@ const Header = ({ branded }) => (
       }
     />
   </Switch>
-)
+);
 
-export default Header
+export default Header;

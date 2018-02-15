@@ -1,25 +1,25 @@
 /* eslint-disable import/default */
 
-import React from 'react'
-import { render } from 'react-dom'
-import { Provider } from 'react-redux'
-import createHistory from 'history/createMemoryHistory'
+import React from 'react';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import createHistory from 'history/createMemoryHistory';
 import {
   ConnectedRouter,
   routerReducer,
   routerMiddleware,
-} from 'react-router-redux'
+} from 'react-router-redux';
 
-import Widget from './components/Widget'
-import { client } from './lib/api-client'
-import configureStore from './store/configureStore'
+import Widget from './components/Widget';
+import { client } from './lib/api-client';
+import configureStore from './store/configureStore';
 
-import Pusher from 'pusher-js'
-import { setPusherClient } from '@bitrefill/react-pusher'
+import Pusher from 'pusher-js';
+import { setPusherClient } from '@bitrefill/react-pusher';
 
 // global module exports
-import widgetStoreEnhancer from './store/enhanceStore'
-import airfillWidget, { selectPaymentStatus, selectOrder } from './store'
+import widgetStoreEnhancer from './store/enhanceStore';
+import airfillWidget, { selectPaymentStatus, selectOrder } from './store';
 
 export {
   airfillWidget,
@@ -27,20 +27,20 @@ export {
   client as restClient,
   selectPaymentStatus,
   selectOrder,
-}
+};
 
-export default Widget
+export default Widget;
 
 setPusherClient(
   new Pusher('0837b617cfe786c32a91', {
     encrypted: true,
   })
-)
+);
 
-let store
+let store;
 
 function AirfillWidget(ele, opt) {
-  const element = typeof ele === 'string' ? document.querySelector(ele) : ele
+  const element = typeof ele === 'string' ? document.querySelector(ele) : ele;
   const options = {
     // Airfill Widget API key
     key: null,
@@ -52,17 +52,17 @@ function AirfillWidget(ele, opt) {
     sendSMS: true, // Send SMS receipt, operator may send additional messages (default: true, only available for some operators)
 
     ...opt,
-  }
+  };
 
   // Alias BTC -> XBT as we use XBT internally
   if (options.billingCurrency === 'BTC') {
-    options.billingCurrency = 'XBT'
+    options.billingCurrency = 'XBT';
   }
 
   client.configure({
     token: options.key,
     baseUrl: options.baseUrl || 'https://api.bitrefill.com/widget',
-  })
+  });
 
   const {
     billingCurrency,
@@ -77,22 +77,22 @@ function AirfillWidget(ele, opt) {
     showBTCAddress,
     showLogo,
     showInstructions,
-  } = options
-  const orderOptions = { email, sendEmail, sendSMS, refundAddress }
+  } = options;
+  const orderOptions = { email, sendEmail, sendSMS, refundAddress };
 
   if (
     !paymentButtons ||
     !Array.isArray(paymentButtons) ||
     paymentButtons.length === 0
   ) {
-    throw new Error('opts.paymentButtons must be an array and cannot be empty')
+    throw new Error('opts.paymentButtons must be an array and cannot be empty');
   }
 
-  const history = createHistory()
-  const middleware = routerMiddleware(history)
+  const history = createHistory();
+  const middleware = routerMiddleware(history);
 
-  store = store || configureStore(routerReducer, middleware)
-  history.push('/refill')
+  store = store || configureStore(routerReducer, middleware);
+  history.push('/refill');
 
   render(
     <Provider store={store}>
@@ -113,7 +113,7 @@ function AirfillWidget(ele, opt) {
       </ConnectedRouter>
     </Provider>,
     element
-  )
+  );
 }
 
-window.AirfillWidget = window.BitRefillWidget = AirfillWidget
+window.AirfillWidget = window.BitRefillWidget = AirfillWidget;

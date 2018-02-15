@@ -1,7 +1,7 @@
-import React from 'react'
-import { css } from 'glamor'
+import React from 'react';
+import { css } from 'glamor';
 
-import SectionTitle from './SectionTitle'
+import SectionTitle from './SectionTitle';
 
 const styles = {
   title: css({
@@ -14,7 +14,7 @@ const styles = {
   error: css({
     color: '#D65C5C',
   }),
-}
+};
 
 const Field = ({ label, children, htmlFor, hint, error, ...props }) => (
   <div {...props}>
@@ -27,6 +27,6 @@ const Field = ({ label, children, htmlFor, hint, error, ...props }) => (
     {error && <p {...styles.error}>{error}</p>}
     {!error && hint && <p {...styles.hint}>{hint}</p>}
   </div>
-)
+);
 
-export default Field
+export default Field;

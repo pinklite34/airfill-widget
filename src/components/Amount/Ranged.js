@@ -1,14 +1,14 @@
-import React from 'react'
-import { css } from 'glamor'
+import React from 'react';
+import { css } from 'glamor';
 
-import Input from 'material-ui/Input'
+import Input from 'material-ui/Input';
 
-import { getDisplayName, satoshiToBTC } from '../../lib/currency-helpers'
+import { getDisplayName, satoshiToBTC } from '../../lib/currency-helpers';
 
-import Package from './Package'
-import SectionTitle from '../UI/SectionTitle'
+import Package from './Package';
+import SectionTitle from '../UI/SectionTitle';
 
-import Settings from './settings.svg'
+import Settings from './settings.svg';
 
 const styles = {
   container: css({
@@ -68,16 +68,16 @@ const styles = {
     color: '#333',
     marginLeft: 16,
   }),
-}
+};
 
 const Ranged = ({ amount, range, currency, billingCurrency, onChange }) => {
-  const min = Math.ceil(range.min)
-  const max = Math.floor(range.max)
-  const step = range.step
+  const min = Math.ceil(range.min);
+  const max = Math.floor(range.max);
+  const step = range.step;
 
-  const cost = amount * range.userPriceRate
+  const cost = amount * range.userPriceRate;
   const displayableCost =
-    billingCurrency === 'XBT' ? satoshiToBTC(cost) : cost.toFixed(2)
+    billingCurrency === 'XBT' ? satoshiToBTC(cost) : cost.toFixed(2);
 
   return (
     <div {...styles.container}>
@@ -123,7 +123,7 @@ const Ranged = ({ amount, range, currency, billingCurrency, onChange }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Ranged
+export default Ranged;

@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { css } from 'glamor'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { css } from 'glamor';
 
 const styles = {
   base: css({
@@ -36,7 +36,7 @@ const styles = {
     color: '#777777',
     fontSize: '14px',
   }),
-}
+};
 
 const OrderHeader = ({ children, order, title, subtitle, icon }) => (
   <div {...styles.base}>
@@ -49,12 +49,12 @@ const OrderHeader = ({ children, order, title, subtitle, icon }) => (
       <div {...styles.details}>{subtitle}</div>
     </div>
   </div>
-)
+);
 
 OrderHeader.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
   icon: PropTypes.any,
-}
+};
 
-export default OrderHeader
+export default OrderHeader;

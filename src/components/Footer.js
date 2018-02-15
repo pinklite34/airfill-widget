@@ -1,5 +1,5 @@
-import React from 'react'
-import { css } from 'glamor'
+import React from 'react';
+import { css } from 'glamor';
 
 const styles = {
   container: css({
@@ -28,7 +28,7 @@ const styles = {
     display: 'block',
     marginLeft: 12,
   }),
-}
+};
 
 const Footer = ({ branded }) => (
   <div {...css(styles.container, branded && styles.branded)}>
@@ -60,6 +60,6 @@ const Footer = ({ branded }) => (
       </ul>
     </div>
   </div>
-)
+);
 
-export default Footer
+export default Footer;

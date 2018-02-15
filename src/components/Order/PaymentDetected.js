@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import { css } from 'glamor'
-import CircularProgress from 'material-ui/Progress/CircularProgress'
-import Button from 'material-ui/Button'
-import PaymentLayout from './PaymentLayout'
-import OrderHeader from '../UI/OrderHeader'
+import PropTypes from 'prop-types';
+import React from 'react';
+import { css } from 'glamor';
+import CircularProgress from 'material-ui/Progress/CircularProgress';
+import Button from 'material-ui/Button';
+import PaymentLayout from './PaymentLayout';
+import OrderHeader from '../UI/OrderHeader';
 
 const styles = {
   textContainer: css({
@@ -24,7 +24,7 @@ const styles = {
   button: css({
     marginTop: '12px',
   }),
-}
+};
 
 const PaymentDetected = props => {
   return (
@@ -58,11 +58,11 @@ const PaymentDetected = props => {
         </div>
       </PaymentLayout>
     </div>
-  )
-}
+  );
+};
 
 PaymentDetected.propTypes = {
   order: PropTypes.object.isRequired,
-}
+};
 
-export default PaymentDetected
+export default PaymentDetected;

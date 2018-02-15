@@ -1,5 +1,5 @@
-import React from 'react'
-import { css } from 'glamor'
+import React from 'react';
+import { css } from 'glamor';
 
 const style = css({
   fontSize: 14,
@@ -44,12 +44,12 @@ const style = css({
   'button, html & [type="button"], [type="reset"], [type="submit"]': {
     WebkitAppearance: 'button',
   },
-})
+});
 
 export default function Root({ children, className }) {
   return (
     <div className={className} {...style}>
       {children}
     </div>
-  )
+  );
 }

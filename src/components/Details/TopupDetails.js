@@ -1,23 +1,23 @@
-import React, { Component } from 'react'
-import { css } from 'glamor'
-import { connect } from 'react-redux'
+import React, { Component } from 'react';
+import { css } from 'glamor';
+import { connect } from 'react-redux';
 
-import { createOrder, setNumber, setEmail, trigger } from '../../actions'
+import { createOrder, setNumber, setEmail, trigger } from '../../actions';
 import {
   selectNumber,
   selectEmail,
   selectAmount,
   selectOperator,
-} from '../../store'
-import { isValidEmail } from '../../lib/email-validation'
+} from '../../store';
+import { isValidEmail } from '../../lib/email-validation';
 
-import Button from 'material-ui/Button'
-import Input from 'material-ui/Input'
-import { CircularProgress } from 'material-ui/Progress'
-import Field from '../UI/Field'
+import Button from 'material-ui/Button';
+import Input from 'material-ui/Input';
+import { CircularProgress } from 'material-ui/Progress';
+import Field from '../UI/Field';
 
-import Error from './error.svg'
-import withStyles from 'material-ui/styles/withStyles'
+import Error from './error.svg';
+import withStyles from 'material-ui/styles/withStyles';
 
 const styles = {
   title: css({
@@ -66,52 +66,52 @@ const styles = {
   progressBar: css({
     fill: '#fff',
   }),
-}
+};
 
 const muiStyles = {
   primaryColor: {
     color: '#fff',
   },
-}
+};
 
 class TopupDetails extends Component {
   state = {
     error: null,
     isLoading: false,
-  }
+  };
 
   createOrder = () => {
     this.setState({
       isLoading: true,
-    })
+    });
     this.props
       .createOrder(this.props.config.orderOptions)
       .then(() => {
-        this.props.history.push('/refill/payment')
-        this.props.trigger()
+        this.props.history.push('/refill/payment');
+        this.props.trigger();
       })
       .catch(error =>
         this.setState({
           isLoading: false,
           error,
         })
-      )
-  }
+      );
+  };
 
   isComplete = () =>
     this.props.amount &&
     (this.props.number ||
       (this.props.operator.result && this.props.operator.result.noNumber)) &&
     (isValidEmail(this.props.config.orderOptions.email) ||
-      this.props.email.valid)
+      this.props.email.valid);
 
   render() {
-    const { number, email, operator } = this.props
-    const { error, isLoading } = this.state
-    const showEmail = !isValidEmail(this.props.config.orderOptions.email)
-    const showNumber = !operator.result || !operator.result.noNumber
-    const isAccount = !!operator.type
-    const numberLabel = isAccount ? 'account number' : 'phone number'
+    const { number, email, operator } = this.props;
+    const { error, isLoading } = this.state;
+    const showEmail = !isValidEmail(this.props.config.orderOptions.email);
+    const showNumber = !operator.result || !operator.result.noNumber;
+    const isAccount = !!operator.type;
+    const numberLabel = isAccount ? 'account number' : 'phone number';
 
     return (
       <div {...styles.container}>
@@ -178,7 +178,7 @@ class TopupDetails extends Component {
           )}
         </Button>
       </div>
-    )
+    );
   }
 }
 
@@ -195,4 +195,4 @@ export default connect(
     setEmail,
     trigger,
   }
-)(withStyles(muiStyles)(TopupDetails))
+)(withStyles(muiStyles)(TopupDetails));

@@ -2133,9 +2133,9 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-config-bitrefill@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-bitrefill/-/eslint-config-bitrefill-1.1.0.tgz#390080126907a9ed770ee1bdf52bb421598a6043"
+eslint-config-bitrefill@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-bitrefill/-/eslint-config-bitrefill-1.1.1.tgz#dfe3ec613d8764fb0d60f5e21b639f3ce07ba418"
   dependencies:
     babel-eslint "^8.0.1"
     eslint "^4.8.0"

@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import { css } from 'glamor'
+import React, { Component } from 'react';
+import { css } from 'glamor';
 
-import SectionTitle from '../UI/SectionTitle'
-import Provider, { ShowAll } from './Provider'
+import SectionTitle from '../UI/SectionTitle';
+import Provider, { ShowAll } from './Provider';
 
 const styles = {
   container: css({
@@ -15,21 +15,21 @@ const styles = {
     flexWrap: 'wrap',
     margin: -6,
   }),
-}
+};
 
 class Grid extends Component {
   state = {
     showAll: this.props.defaultShowAll || false,
-  }
+  };
 
-  showAll = () => this.setState({ showAll: true })
+  showAll = () => this.setState({ showAll: true });
   render() {
-    const { providers, title, onSelect } = this.props
+    const { providers, title, onSelect } = this.props;
 
-    const { showAll } = this.state
+    const { showAll } = this.state;
 
     const visibleProviders =
-      showAll || providers.length <= 5 ? providers : providers.slice(0, 4)
+      showAll || providers.length <= 5 ? providers : providers.slice(0, 4);
 
     return (
       <div {...styles.container}>
@@ -47,8 +47,8 @@ class Grid extends Component {
           )}
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default Grid
+export default Grid;

@@ -1,22 +1,22 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { css } from 'glamor'
-import { selectOperator, selectAmount } from '../../store'
-import { setAmount, createOrder } from '../../actions'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { css } from 'glamor';
+import { selectOperator, selectAmount } from '../../store';
+import { setAmount, createOrder } from '../../actions';
 
-import { selectValidAmount } from '../../lib/amount-validation'
-import { getPrice, getDisplayName } from '../../lib/currency-helpers'
+import { selectValidAmount } from '../../lib/amount-validation';
+import { getPrice, getDisplayName } from '../../lib/currency-helpers';
 
-import Card from 'material-ui/Card'
-import Radio from 'material-ui/Radio'
-import { CircularProgress } from 'material-ui/Progress'
+import Card from 'material-ui/Card';
+import Radio from 'material-ui/Radio';
+import { CircularProgress } from 'material-ui/Progress';
 
-import ActiveSection from '../UI/ActiveSection'
-import SectionTitle from '../UI/SectionTitle'
+import ActiveSection from '../UI/ActiveSection';
+import SectionTitle from '../UI/SectionTitle';
 
-import Package from './Package'
-import Ranged from './Ranged'
-import Info from '../UI/info.svg'
+import Package from './Package';
+import Ranged from './Ranged';
+import Info from '../UI/info.svg';
 
 const styles = {
   packages: css({
@@ -52,24 +52,24 @@ const styles = {
   title: css({
     marginLeft: 36,
   }),
-}
+};
 
 class Picker extends Component {
   componentDidMount() {
     if (!this.props.operator.isLoading) {
-      this.handleAmountChange(this.props, this.props.amount)
+      this.handleAmountChange(this.props, this.props.amount);
     }
   }
 
   componentWillReceiveProps(newProps) {
     if (!newProps.operator.isLoading && this.props.operator.isLoading) {
-      this.handleAmountChange(newProps, newProps.amount)
+      this.handleAmountChange(newProps, newProps.amount);
     }
   }
 
   handleAmountChange = (props, amount) => {
-    const { setAmount, config, operator } = props
-    const { packages, isRanged, range, currency } = operator.result
+    const { setAmount, config, operator } = props;
+    const { packages, isRanged, range, currency } = operator.result;
 
     if (!amount) {
       setAmount(
@@ -81,26 +81,26 @@ class Picker extends Component {
           currency,
           packages,
         })
-      )
+      );
     }
-  }
+  };
 
   render() {
-    const { amount, operator, setAmount, config } = this.props
+    const { amount, operator, setAmount, config } = this.props;
 
     if (operator.isLoading || !operator.result.packages) {
       return (
         <ActiveSection title="Select amount">
           <CircularProgress />
         </ActiveSection>
-      )
+      );
     }
 
     const {
       userAccountBalance,
       requireAccountBalance,
       billingCurrency,
-    } = config
+    } = config;
 
     return (
       <ActiveSection>
@@ -119,16 +119,17 @@ class Picker extends Component {
 
         <div className={`${styles.packages} amount-picker`}>
           {operator.result.packages.map((pkg, i) => {
-            const price = getPrice(pkg, billingCurrency)
+            const price = getPrice(pkg, billingCurrency);
             const formattedPrice =
-              price + ' ' + getDisplayName(billingCurrency).toUpperCase()
-            const disabled = requireAccountBalance && price > userAccountBalance
+              price + ' ' + getDisplayName(billingCurrency).toUpperCase();
+            const disabled =
+              requireAccountBalance && price > userAccountBalance;
 
             // Data packages should not have currency in the title
             const name =
               operator.result.type === 'data'
                 ? pkg.value
-                : `${pkg.value} ${operator.result.currency}`
+                : `${pkg.value} ${operator.result.currency}`;
             return (
               <label key={pkg.value}>
                 <Radio
@@ -138,7 +139,7 @@ class Picker extends Component {
                 />
                 <Package name={name} price={formattedPrice} />
               </label>
-            )
+            );
           })}
         </div>
 
@@ -152,7 +153,7 @@ class Picker extends Component {
           />
         )}
       </ActiveSection>
-    )
+    );
   }
 }
 
@@ -165,4 +166,4 @@ export default connect(
     setAmount,
     createOrder,
   }
-)(Picker)
+)(Picker);

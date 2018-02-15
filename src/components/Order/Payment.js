@@ -1,20 +1,20 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { css } from 'glamor'
-import { push } from 'react-router-redux'
+import React from 'react';
+import { connect } from 'react-redux';
+import { css } from 'glamor';
+import { push } from 'react-router-redux';
 
-import { CircularProgress } from 'material-ui/Progress'
+import { CircularProgress } from 'material-ui/Progress';
 
-import PusherSubscription from '@bitrefill/react-pusher'
+import PusherSubscription from '@bitrefill/react-pusher';
 
-import NewPayment from './NewPayment'
-import PaymentDetected from './PaymentDetected'
-import PaymentConfirmed from './PaymentConfirmed'
-import PartialPayment from './PartialPayment'
-import ExpiredPayment from './PaymentExpired'
-import RefillFailed from './RefillFailed'
-import RefillDelivered from './RefillDelivered'
-import BalanceTooLow from './BalanceTooLow'
+import NewPayment from './NewPayment';
+import PaymentDetected from './PaymentDetected';
+import PaymentConfirmed from './PaymentConfirmed';
+import PartialPayment from './PartialPayment';
+import ExpiredPayment from './PaymentExpired';
+import RefillFailed from './RefillFailed';
+import RefillDelivered from './RefillDelivered';
+import BalanceTooLow from './BalanceTooLow';
 
 import {
   selectOrder,
@@ -22,30 +22,30 @@ import {
   selectNumber,
   selectCountry,
   selectPaymentStatus,
-} from './../../store'
+} from './../../store';
 
-import { updatePaymentStatus } from '../../actions'
+import { updatePaymentStatus } from '../../actions';
 
 const componentForStatus = status => {
   switch (status) {
     case 'paid':
-      return PaymentDetected
+      return PaymentDetected;
     case 'confirmed':
-      return PaymentConfirmed
+      return PaymentConfirmed;
     case 'partial':
-      return PartialPayment
+      return PartialPayment;
     case 'expired':
-      return ExpiredPayment
+      return ExpiredPayment;
     case 'failed':
-      return RefillFailed
+      return RefillFailed;
     case 'delivered':
-      return RefillDelivered
+      return RefillDelivered;
     case 'balance-too-low':
-      return BalanceTooLow
+      return BalanceTooLow;
     default:
-      return NewPayment
+      return NewPayment;
   }
-}
+};
 
 const styles = {
   title: css({
@@ -60,7 +60,7 @@ const styles = {
   spinnerText: css({
     marginTop: 16,
   }),
-}
+};
 
 const Payment = ({
   history,
@@ -86,11 +86,11 @@ const Payment = ({
         <CircularProgress />
         <div {...styles.spinnerText}>Loading order status...</div>
       </div>
-    )
+    );
   }
 
-  const PaymentComponent = componentForStatus(paymentStatus.status)
-  const { orderId, payment: { address } } = order.result
+  const PaymentComponent = componentForStatus(paymentStatus.status);
+  const { orderId, payment: { address } } = order.result;
 
   return (
     <div>
@@ -128,8 +128,8 @@ const Payment = ({
         onReset={reset}
       />
     </div>
-  )
-}
+  );
+};
 
 export default connect(
   state => ({
@@ -143,4 +143,4 @@ export default connect(
     updatePaymentStatus: (...args) => dispatch(updatePaymentStatus(...args)),
     reset: () => dispatch(push('/refill')),
   })
-)(Payment)
+)(Payment);

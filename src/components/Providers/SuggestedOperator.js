@@ -1,8 +1,8 @@
-import React from 'react'
-import { css } from 'glamor'
+import React from 'react';
+import { css } from 'glamor';
 
-import Button from 'material-ui/Button'
-import Info from '../UI/info.svg'
+import Button from 'material-ui/Button';
+import Info from '../UI/info.svg';
 
 const styles = {
   container: css({
@@ -55,7 +55,7 @@ const styles = {
     flex: '0 0 auto',
     marginRight: 8,
   }),
-}
+};
 
 const SuggestedOperator = ({ operator, onAccept, onReject }) => {
   if (operator) {
@@ -76,7 +76,7 @@ const SuggestedOperator = ({ operator, onAccept, onReject }) => {
           </Button>
         </div>
       </div>
-    )
+    );
   } else {
     return (
       <div {...styles.container}>
@@ -88,8 +88,8 @@ const SuggestedOperator = ({ operator, onAccept, onReject }) => {
           </p>
         </div>
       </div>
-    )
+    );
   }
-}
+};
 
-export default SuggestedOperator
+export default SuggestedOperator;

@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import Button from 'material-ui/Button'
-import OrderHeader from '../UI/OrderHeader'
-import Confirmed from './confirmed.svg'
-import { css } from 'glamor'
-import PaymentLayout from './PaymentLayout'
+import PropTypes from 'prop-types';
+import React from 'react';
+import Button from 'material-ui/Button';
+import OrderHeader from '../UI/OrderHeader';
+import Confirmed from './confirmed.svg';
+import { css } from 'glamor';
+import PaymentLayout from './PaymentLayout';
 
 const styles = {
   textContainer: css({
@@ -24,7 +24,7 @@ const styles = {
   button: css({
     marginTop: '12px',
   }),
-}
+};
 
 const RefillDelivered = props => {
   return (
@@ -66,12 +66,12 @@ const RefillDelivered = props => {
         </div>
       </PaymentLayout>
     </div>
-  )
-}
+  );
+};
 
 RefillDelivered.propTypes = {
   paymentStatus: PropTypes.object.isRequired,
   onReset: PropTypes.func.isRequired,
-}
+};
 
-export default RefillDelivered
+export default RefillDelivered;

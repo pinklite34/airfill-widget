@@ -1,11 +1,11 @@
-import React from 'react'
-import { css } from 'glamor'
-import Button from 'material-ui/Button'
-import Card from 'material-ui/Card'
-import { CircularProgress } from 'material-ui/Progress'
+import React from 'react';
+import { css } from 'glamor';
+import Button from 'material-ui/Button';
+import Card from 'material-ui/Card';
+import { CircularProgress } from 'material-ui/Progress';
 
-import Flag from '../Flag'
-import Check from '../check.svg'
+import Flag from '../Flag';
+import Check from '../check.svg';
 
 const styles = {
   container: css({
@@ -67,7 +67,7 @@ const styles = {
     width: 16,
     height: 16,
   }),
-}
+};
 
 const InputRow = ({
   country,
@@ -84,8 +84,8 @@ const InputRow = ({
   <Card {...styles.container}>
     <form
       onSubmit={e => {
-        e.preventDefault()
-        onSubmit()
+        e.preventDefault();
+        onSubmit();
       }}
     >
       <div {...styles.row}>
@@ -125,6 +125,6 @@ const InputRow = ({
       </div>
     </form>
   </Card>
-)
+);
 
-export default InputRow
+export default InputRow;

@@ -1,5 +1,5 @@
-import React from 'react'
-import { css } from 'glamor'
+import React from 'react';
+import { css } from 'glamor';
 
 const styles = {
   container: css({
@@ -22,13 +22,13 @@ const styles = {
     fontSize: 16,
     padding: 12,
   }),
-}
+};
 
 const Row = ({ itemProps, isActive, icon, content }) => (
   <div {...itemProps} {...css([styles.container, isActive && styles.active])}>
     <div {...styles.icon}>{icon}</div>
     <div {...styles.content}>{content}</div>
   </div>
-)
+);
 
-export default Row
+export default Row;

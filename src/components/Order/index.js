@@ -1,6 +1,6 @@
-import React from 'react'
-import { Switch, Route } from 'react-router'
-import Payment from './Payment'
+import React from 'react';
+import { Switch, Route } from 'react-router';
+import Payment from './Payment';
 
 const Order = ({ config }) => (
   <Switch>
@@ -12,6 +12,6 @@ const Order = ({ config }) => (
       render={props => <Payment {...props} {...config} />}
     />
   </Switch>
-)
+);
 
-export default Order
+export default Order;

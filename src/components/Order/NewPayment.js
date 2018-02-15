@@ -1,23 +1,23 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import { css } from 'glamor'
-import Button from 'material-ui/Button'
-import Menu, { MenuItem } from 'material-ui/Menu'
-import { ListItemText, ListItemIcon } from 'material-ui/List'
+import { css } from 'glamor';
+import Button from 'material-ui/Button';
+import Menu, { MenuItem } from 'material-ui/Menu';
+import { ListItemText, ListItemIcon } from 'material-ui/List';
 
-import BitcoinAddress from '../UI/BitcoinAddress'
-import Info from './info.svg'
-import OrderHeader from '../UI/OrderHeader'
-import PaymentLayout from './PaymentLayout'
+import BitcoinAddress from '../UI/BitcoinAddress';
+import Info from './info.svg';
+import OrderHeader from '../UI/OrderHeader';
+import PaymentLayout from './PaymentLayout';
 
-import QrCode from '../UI/QrCode'
+import QrCode from '../UI/QrCode';
 
 const valueField = {
   xbt: 'btcPrice',
   eur: 'eurPrice',
   usd: 'usdPrice',
-}
+};
 
 const styles = {
   list: css({
@@ -83,12 +83,12 @@ const styles = {
       },
     },
   }),
-}
+};
 
-const Divider = () => <hr {...styles.divider} />
+const Divider = () => <hr {...styles.divider} />;
 
 const PaymentMenu = props => {
-  const { open, anchorEl, paymentButtons, onClick } = props
+  const { open, anchorEl, paymentButtons, onClick } = props;
 
   const Item = props => {
     let {
@@ -99,28 +99,28 @@ const PaymentMenu = props => {
       billingCurrency,
       accountBalance,
       requireAccountBalance,
-    } = props
+    } = props;
 
     if (typeof icon === 'string') {
-      icon = <img src={icon} />
+      icon = <img src={icon} />;
     }
 
-    const price = order[valueField[billingCurrency.toLowerCase()]]
-    const canAfford = price <= accountBalance
-    const widgetRequireAccountBalance = requireAccountBalance
+    const price = order[valueField[billingCurrency.toLowerCase()]];
+    const canAfford = price <= accountBalance;
+    const widgetRequireAccountBalance = requireAccountBalance;
 
     const disabled =
       !canAfford &&
       ((widgetRequireAccountBalance && requireAccountBalance !== false) ||
-        requireAccountBalance)
+        requireAccountBalance);
 
     return (
       <MenuItem open={open} onClick={() => onClick(props)} disabled={disabled}>
         {icon && <ListItemIcon style={{ margin: 0 }}>{icon}</ListItemIcon>}
         <ListItemText primary={title} secondary={description} />
       </MenuItem>
-    )
-  }
+    );
+  };
 
   return (
     <div>
@@ -134,23 +134,23 @@ const PaymentMenu = props => {
           ))}
       </Menu>
     </div>
-  )
-}
+  );
+};
 
 class NewPayment extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       open: false,
       paymentMethod: props.paymentButtons[0],
-    }
+    };
   }
 
   openMenu = () =>
     this.setState({
       open: true,
-    })
+    });
 
   menuClick = button => {
     // if callback is set, then it's an old payment button
@@ -159,19 +159,19 @@ class NewPayment extends React.Component {
       button.paymentModeOptions = {
         title: button.title,
         callback: button.callback,
-      }
+      };
     }
 
     this.setState({
       open: false,
       paymentMethod: button,
-    })
-  }
+    });
+  };
 
   render() {
-    const { order, paymentButtons } = this.props
+    const { order, paymentButtons } = this.props;
 
-    const method = this.state.paymentMethod
+    const method = this.state.paymentMethod;
 
     return (
       <div>
@@ -247,7 +247,7 @@ class NewPayment extends React.Component {
           </div>
         </PaymentLayout>
       </div>
-    )
+    );
   }
 }
 
@@ -255,6 +255,6 @@ NewPayment.propTypes = {
   order: PropTypes.object.isRequired,
   showBTCAddress: PropTypes.bool.isRequired,
   paymentButtons: PropTypes.array,
-}
+};
 
-export default NewPayment
+export default NewPayment;

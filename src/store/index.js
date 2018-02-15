@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
 import ui, {
   selectUiState,
   selectNumber,
@@ -8,8 +8,8 @@ import ui, {
   selectCurrentStep,
   selectComboInputOpen,
   selectComboInputFocus,
-} from './ui'
-import paymentStatus, { selectPaymentStatus } from './paymentStatus'
+} from './ui';
+import paymentStatus, { selectPaymentStatus } from './paymentStatus';
 import inventory, {
   selectCountry,
   selectCountryList,
@@ -17,15 +17,15 @@ import inventory, {
   selectAvailableOperators,
   selectSelectedOperator,
   selectInventory,
-} from './inventory'
-import operator, { selectOperator } from './operator'
-import order, { selectOrder } from './order'
-import recentNumbers, { selectRecentNumbers } from './recentNumbers'
+} from './inventory';
+import operator, { selectOperator } from './operator';
+import order, { selectOrder } from './order';
+import recentNumbers, { selectRecentNumbers } from './recentNumbers';
 import numberLookup, {
   selectNumberLookup,
   selectIsNumberLookup,
   selectNumberLookupError,
-} from './numberLookup'
+} from './numberLookup';
 
 // Export the reducer for use within other redux apps
 export default combineReducers({
@@ -36,7 +36,7 @@ export default combineReducers({
   order,
   recentNumbers,
   numberLookup,
-})
+});
 
 // Keep the same state shape when using the standalone widget
 
@@ -69,4 +69,4 @@ export {
   selectNumberLookup,
   selectIsNumberLookup,
   selectNumberLookupError,
-}
+};

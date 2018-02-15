@@ -1,11 +1,11 @@
-import React from 'react'
-import { css } from 'glamor'
-import { connect } from 'react-redux'
-import { selectNumber, selectIsNumberLookup } from '../../store'
-import { openComboInput, setComboInputFocus, setNumber } from '../../actions'
+import React from 'react';
+import { css } from 'glamor';
+import { connect } from 'react-redux';
+import { selectNumber, selectIsNumberLookup } from '../../store';
+import { openComboInput, setComboInputFocus, setNumber } from '../../actions';
 
-import Phone from '../UI/phone.svg'
-import CollapsedSection from '../UI/CollapsedSection'
+import Phone from '../UI/phone.svg';
+import CollapsedSection from '../UI/CollapsedSection';
 
 const styles = {
   container: css({
@@ -25,7 +25,7 @@ const styles = {
   text: css({
     fontWeight: 500,
   }),
-}
+};
 
 const Collapsed = ({
   darken,
@@ -37,15 +37,15 @@ const Collapsed = ({
   history,
 }) => {
   if (!isNumberLookup) {
-    return null
+    return null;
   }
 
   const changeNumber = () => {
-    setNumber('')
-    setComboInputFocus(true)
-    openComboInput()
-    history.push('/refill')
-  }
+    setNumber('');
+    setComboInputFocus(true);
+    openComboInput();
+    history.push('/refill');
+  };
 
   return (
     <CollapsedSection darken={darken} onClick={changeNumber} type="number">
@@ -54,8 +54,8 @@ const Collapsed = ({
         <div {...styles.text}>{number}</div>
       </div>
     </CollapsedSection>
-  )
-}
+  );
+};
 
 export default connect(
   state => ({
@@ -67,4 +67,4 @@ export default connect(
     setComboInputFocus,
     setNumber,
   }
-)(Collapsed)
+)(Collapsed);

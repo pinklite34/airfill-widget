@@ -1,9 +1,9 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { selectAmount, selectOperator } from '../../store'
-import CollapsedSection from '../UI/CollapsedSection'
-import { css } from 'glamor'
-import Icon from './icon.svg'
+import React from 'react';
+import { connect } from 'react-redux';
+import { selectAmount, selectOperator } from '../../store';
+import CollapsedSection from '../UI/CollapsedSection';
+import { css } from 'glamor';
+import Icon from './icon.svg';
 
 const styles = {
   container: css({
@@ -19,7 +19,7 @@ const styles = {
     marginRight: 30,
     marginLeft: 14,
   }),
-}
+};
 
 const Collapsed = ({ history, amount, operator }) => (
   <CollapsedSection
@@ -33,9 +33,9 @@ const Collapsed = ({ history, amount, operator }) => (
       {amount} {operator.result && operator.result.currency}
     </div>
   </CollapsedSection>
-)
+);
 
 export default connect(state => ({
   amount: selectAmount(state),
   operator: selectOperator(state),
-}))(Collapsed)
+}))(Collapsed);

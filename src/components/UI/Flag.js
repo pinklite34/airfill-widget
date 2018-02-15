@@ -1,7 +1,7 @@
-import React from 'react'
-import { css } from 'glamor'
-import flags from '../flags'
-import defaultFlag from 'flag-icons/flags/flags-iso/flat/24/_unknown.png'
+import React from 'react';
+import { css } from 'glamor';
+import flags from '../flags';
+import defaultFlag from 'flag-icons/flags/flags-iso/flat/24/_unknown.png';
 
 const styles = {
   image: css({
@@ -9,7 +9,7 @@ const styles = {
     width: 24,
     height: 24,
   }),
-}
+};
 
 const Flag = ({ country }) => (
   <img
@@ -17,6 +17,6 @@ const Flag = ({ country }) => (
     alt={country}
     {...styles.image}
   />
-)
+);
 
-export default Flag
+export default Flag;

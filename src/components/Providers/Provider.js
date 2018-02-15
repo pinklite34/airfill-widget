@@ -1,9 +1,9 @@
-import React from 'react'
-import { css } from 'glamor'
-import Card from 'material-ui/Card'
+import React from 'react';
+import { css } from 'glamor';
+import Card from 'material-ui/Card';
 
-import More from './more.svg'
-import Select from './select.svg'
+import More from './more.svg';
+import Select from './select.svg';
 
 const styles = {
   container: css({
@@ -71,7 +71,7 @@ const styles = {
       display: 'block',
     },
   }),
-}
+};
 
 export const ShowAll = ({ onClick, count }) => (
   <Card {...styles.container} onClick={onClick}>
@@ -83,7 +83,7 @@ export const ShowAll = ({ onClick, count }) => (
     </div>
     <Select {...styles.select} fill="#777" />
   </Card>
-)
+);
 
 const Provider = ({ data, onSelect }) => (
   <Card {...styles.container} onClick={onSelect}>
@@ -95,6 +95,6 @@ const Provider = ({ data, onSelect }) => (
     </div>
     <Select {...styles.select} fill="#777" />
   </Card>
-)
+);
 
-export default Provider
+export default Provider;

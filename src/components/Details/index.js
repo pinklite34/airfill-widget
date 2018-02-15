@@ -1,7 +1,7 @@
-import React from 'react'
-import { Switch, Route } from 'react-router'
+import React from 'react';
+import { Switch, Route } from 'react-router';
 
-import TopupDetails from './TopupDetails'
+import TopupDetails from './TopupDetails';
 
 const Details = ({ config }) => (
   <Switch>
@@ -12,6 +12,6 @@ const Details = ({ config }) => (
       render={props => <TopupDetails config={config} {...props} />}
     />
   </Switch>
-)
+);
 
-export default Details
+export default Details;

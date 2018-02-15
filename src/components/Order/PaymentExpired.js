@@ -1,9 +1,9 @@
-import React from 'react'
-import Button from 'material-ui/Button'
-import OrderHeader from '../UI/OrderHeader'
-import Error from './error.svg'
-import PaymentLayout from './PaymentLayout'
-import { css } from 'glamor'
+import React from 'react';
+import Button from 'material-ui/Button';
+import OrderHeader from '../UI/OrderHeader';
+import Error from './error.svg';
+import PaymentLayout from './PaymentLayout';
+import { css } from 'glamor';
 
 const styles = {
   textContainer: css({
@@ -11,7 +11,7 @@ const styles = {
     lineHeight: '21px',
     marginRight: '48px',
   }),
-}
+};
 
 const ExpiredPayment = props => {
   return (
@@ -33,7 +33,7 @@ const ExpiredPayment = props => {
         </div>
       </PaymentLayout>
     </div>
-  )
-}
+  );
+};
 
-export default ExpiredPayment
+export default ExpiredPayment;

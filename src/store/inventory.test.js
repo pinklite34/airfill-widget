@@ -3,34 +3,34 @@ import reducer, {
   selectCountry,
   selectAvailableOperators,
   selectSelectedOperator,
-} from './inventory'
+} from './inventory';
 
 describe('reducer', () => {
-  const state = {}
+  const state = {};
 
   it('returns state for unknown actions', () => {
     const action = {
       type: 'UNKNOWN_ACTION',
-    }
+    };
 
-    expect(reducer(state, action)).toEqual(state)
-  })
+    expect(reducer(state, action)).toEqual(state);
+  });
 
   it('handles SET_COUNTRY action', () => {
-    const country = 'SE'
+    const country = 'SE';
 
     const action = {
       type: 'SET_COUNTRY',
       payload: country,
-    }
+    };
 
     const expected = {
       ...state,
       selectedCountry: country,
-    }
+    };
 
-    expect(reducer(state, action)).toEqual(expected)
-  })
+    expect(reducer(state, action)).toEqual(expected);
+  });
 
   it('handles LOAD_OPERATOR action', () => {
     const action = {
@@ -38,15 +38,15 @@ describe('reducer', () => {
       payload: {
         operatorSlug: 'operator',
       },
-    }
+    };
 
     const expected = {
       ...state,
       selectedOperator: action.payload.operatorSlug,
-    }
+    };
 
-    expect(reducer(state, action)).toEqual(expected)
-  })
+    expect(reducer(state, action)).toEqual(expected);
+  });
 
   it('handles LOAD_OPERATOR_SUCCESS action', () => {
     const action = {
@@ -54,18 +54,18 @@ describe('reducer', () => {
       payload: {
         slug: 'slug',
       },
-    }
+    };
 
     const expected = {
       ...state,
       selectedOperator: action.payload.slug,
-    }
+    };
 
-    expect(reducer(state, action)).toEqual(expected)
-  })
-})
+    expect(reducer(state, action)).toEqual(expected);
+  });
+});
 
-describe('selectInventory', () => {})
+describe('selectInventory', () => {});
 // export const selectInventory = createSingleResultSelector('airfillWidget.inventory');
 
 describe('selectors', () => {
@@ -73,7 +73,7 @@ describe('selectors', () => {
     alpha2: 'SE',
     name: 'Sweden',
     slug: 'sweden',
-  }
+  };
   const germany = {
     alpha2: 'DE',
     name: 'Germany',
@@ -89,7 +89,7 @@ describe('selectors', () => {
         type: 'VOIP',
       },
     },
-  }
+  };
 
   const baseState = {
     airfillWidget: {
@@ -99,13 +99,13 @@ describe('selectors', () => {
         selectedOperator: 'viber',
       },
     },
-  }
+  };
 
   describe('selectCountryList', () => {
     it('returns an alphabetically sorted array of countries', () => {
-      expect(selectCountryList(baseState)).toEqual([germany, sweden])
-    })
-  })
+      expect(selectCountryList(baseState)).toEqual([germany, sweden]);
+    });
+  });
 
   describe('selectCountry', () => {
     it('returns null if no country was selected', () => {
@@ -116,14 +116,14 @@ describe('selectors', () => {
             selectedCountry: null,
           },
         },
-      }
-      expect(selectCountry(state)).toEqual(null)
-    })
+      };
+      expect(selectCountry(state)).toEqual(null);
+    });
 
     it('returns the selected country', () => {
-      expect(selectCountry(baseState)).toEqual(germany)
-    })
-  })
+      expect(selectCountry(baseState)).toEqual(germany);
+    });
+  });
 
   describe('selectAvailableOperators', () => {
     it('returns an empty object if country is not found', () => {
@@ -134,21 +134,21 @@ describe('selectors', () => {
             selectedCountry: null,
           },
         },
-      }
+      };
 
-      const expected = {}
+      const expected = {};
 
-      expect(selectAvailableOperators(state)).toEqual(expected)
-    })
+      expect(selectAvailableOperators(state)).toEqual(expected);
+    });
 
     it('returns an object with operators grouped by type', () => {
       const groupedOperators = {
         Mobile: [germany.operators['atg-mobile-germany']],
         VOIP: [germany.operators['viber']],
-      }
+      };
 
-      expect(selectAvailableOperators(baseState)).toEqual(groupedOperators)
-    })
+      expect(selectAvailableOperators(baseState)).toEqual(groupedOperators);
+    });
 
     it('returns an object with operators sorted by popularity', () => {
       const operators = {
@@ -166,7 +166,7 @@ describe('selectors', () => {
             popularity: 55,
           },
         },
-      }
+      };
 
       const state = {
         airfillWidget: {
@@ -185,7 +185,7 @@ describe('selectors', () => {
             ],
           },
         },
-      }
+      };
 
       const sortedOperators = {
         Mobile: [
@@ -193,11 +193,11 @@ describe('selectors', () => {
           operators['e-plus-germany'],
           germany.operators['atg-mobile-germany'],
         ],
-      }
+      };
 
-      expect(selectAvailableOperators(state)).toEqual(sortedOperators)
-    })
-  })
+      expect(selectAvailableOperators(state)).toEqual(sortedOperators);
+    });
+  });
 
   describe('selectSelectedOperator', () => {
     it('returns null if no operator is selected', () => {
@@ -208,10 +208,10 @@ describe('selectors', () => {
             selectedOperator: null,
           },
         },
-      }
+      };
 
-      expect(selectSelectedOperator(state)).toEqual(null)
-    })
+      expect(selectSelectedOperator(state)).toEqual(null);
+    });
 
     it('returns null if no country is selected', () => {
       const state = {
@@ -221,10 +221,10 @@ describe('selectors', () => {
             selectedCountry: null,
           },
         },
-      }
+      };
 
-      expect(selectSelectedOperator(state)).toEqual(null)
-    })
+      expect(selectSelectedOperator(state)).toEqual(null);
+    });
 
     it("returns null if operator is not in the country's operators", () => {
       const state = {
@@ -234,15 +234,15 @@ describe('selectors', () => {
             selectedOperator: 'notexisting',
           },
         },
-      }
+      };
 
-      expect(selectSelectedOperator(state)).toEqual(null)
-    })
+      expect(selectSelectedOperator(state)).toEqual(null);
+    });
 
     it('returns selected operator', () => {
       expect(selectSelectedOperator(baseState)).toEqual(
         germany.operators['viber']
-      )
-    })
-  })
-})
+      );
+    });
+  });
+});

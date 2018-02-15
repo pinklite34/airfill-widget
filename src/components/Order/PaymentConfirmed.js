@@ -1,8 +1,8 @@
-import React from 'react'
-import PaymentLayout from './PaymentLayout'
-import OrderHeader from '../UI/OrderHeader'
-import Confirmed from './confirmed.svg'
-import { css } from 'glamor'
+import React from 'react';
+import PaymentLayout from './PaymentLayout';
+import OrderHeader from '../UI/OrderHeader';
+import Confirmed from './confirmed.svg';
+import { css } from 'glamor';
 
 const styles = {
   textContainer: css({
@@ -14,7 +14,7 @@ const styles = {
     color: '#777777',
     fontSize: '14px',
   }),
-}
+};
 
 const PaymentConfirmed = props => {
   return (
@@ -36,7 +36,7 @@ const PaymentConfirmed = props => {
         </div>
       </PaymentLayout>
     </div>
-  )
-}
+  );
+};
 
-export default PaymentConfirmed
+export default PaymentConfirmed;

@@ -1,12 +1,12 @@
-import React from 'react'
-import { css } from 'glamor'
-import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
-import { openComboInput, setComboInputFocus, setCountry } from '../../actions'
-import { selectCountry, selectIsNumberLookup } from '../../store'
+import React from 'react';
+import { css } from 'glamor';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
+import { openComboInput, setComboInputFocus, setCountry } from '../../actions';
+import { selectCountry, selectIsNumberLookup } from '../../store';
 
-import CollapsedSection from '../UI/CollapsedSection'
-import Flag from '../UI/Flag'
+import CollapsedSection from '../UI/CollapsedSection';
+import Flag from '../UI/Flag';
 
 const styles = {
   container: css({
@@ -34,7 +34,7 @@ const styles = {
     marginRight: 30,
     marginLeft: 14,
   }),
-}
+};
 
 const Collapsed = ({
   home,
@@ -47,7 +47,7 @@ const Collapsed = ({
   history,
 }) => {
   if (isNumberLookup) {
-    return null
+    return null;
   }
 
   if (!country) {
@@ -55,15 +55,15 @@ const Collapsed = ({
       <CollapsedSection hideButton darken={darken} type="country">
         Select a country above to see available providers.
       </CollapsedSection>
-    )
+    );
   }
 
   const openMenu = () => {
-    setCountry('')
-    openComboInput()
-    setComboInputFocus(true)
-    !home && history.push('/refill')
-  }
+    setCountry('');
+    openComboInput();
+    setComboInputFocus(true);
+    !home && history.push('/refill');
+  };
 
   return (
     <CollapsedSection darken={darken} onClick={openMenu} type="country">
@@ -76,8 +76,8 @@ const Collapsed = ({
         </div>
       </div>
     </CollapsedSection>
-  )
-}
+  );
+};
 
 export default connect(
   state => ({
@@ -90,4 +90,4 @@ export default connect(
     push,
     setCountry,
   }
-)(Collapsed)
+)(Collapsed);

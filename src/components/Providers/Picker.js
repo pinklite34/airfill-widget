@@ -1,22 +1,22 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React from 'react';
+import { connect } from 'react-redux';
 
-import { setOperator } from '../../actions'
+import { setOperator } from '../../actions';
 import {
   selectAvailableOperators,
   selectSelectedOperator,
   selectCountry,
   selectNumberLookup,
-} from '../../store'
+} from '../../store';
 
-import ActiveSection from '../UI/ActiveSection'
-import Grid from './Grid'
-import SuggestedOperator from './SuggestedOperator'
+import ActiveSection from '../UI/ActiveSection';
+import Grid from './Grid';
+import SuggestedOperator from './SuggestedOperator';
 
 const customLabels = {
   Mobile: 'Mobile phone refill',
   other: 'Other providers',
-}
+};
 
 const Picker = ({
   operators,
@@ -28,15 +28,15 @@ const Picker = ({
   numberLookup,
 }) => {
   if (!country) {
-    return null
+    return null;
   }
 
-  const isNumberLookup = !!numberLookup.altOperators
+  const isNumberLookup = !!numberLookup.altOperators;
 
   const selectOperator = operator => {
-    setOperator(operator)
-    history.push('/refill/selectAmount')
-  }
+    setOperator(operator);
+    history.push('/refill/selectAmount');
+  };
 
   if (isNumberLookup) {
     return (
@@ -53,7 +53,7 @@ const Picker = ({
           defaultShowAll={true}
         />
       </ActiveSection>
-    )
+    );
   } else {
     return (
       <ActiveSection>
@@ -66,9 +66,9 @@ const Picker = ({
           />
         ))}
       </ActiveSection>
-    )
+    );
   }
-}
+};
 
 export default connect(
   state => ({
@@ -80,4 +80,4 @@ export default connect(
   {
     setOperator,
   }
-)(Picker)
+)(Picker);
