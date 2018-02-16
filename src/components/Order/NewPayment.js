@@ -196,7 +196,12 @@ class NewPayment extends React.Component {
               <p>Pay with</p>
             </div>
             <div>
-              <p ref={e => (this.anchorEl = e)}>
+              <p
+                ref={e => (this.anchorEl = e)}
+                style={{
+                  fontWeight: 'bold',
+                }}
+              >
                 {this.state.paymentMethod.title}
               </p>
               <Button
