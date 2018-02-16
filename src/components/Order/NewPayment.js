@@ -190,7 +190,8 @@ class NewPayment extends React.Component {
       v => method.paymentMode === v
     );
 
-    console.log(order);
+    const price = order.payment.altcoinPrice || order.btcPrice;
+    const unit = order.payment.altcoinCode || 'BTC';
 
     return (
       <div>
@@ -246,7 +247,7 @@ class NewPayment extends React.Component {
               {isDirect && (
                 <div {...styles.container}>
                   <div {...styles.left}>
-                    Send <i>exactly</i> <strong>{order.btcPrice} BTC</strong> to
+                    Send <i>exactly</i> <strong>{price + ' ' + unit}</strong> to
                     this address:
                     <BitcoinAddress address={order.payment.address} />
                     <br />
