@@ -144,8 +144,6 @@ class NewPayment extends React.Component {
   constructor(props) {
     super(props);
 
-    props.paymentButtons[0].paymentModeOptions = {};
-
     this.state = {
       open: false,
       paymentMethod: props.paymentButtons[0],
