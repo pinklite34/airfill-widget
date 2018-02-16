@@ -80,6 +80,7 @@ const InputRow = ({
   loading,
   onSubmit,
   submitEnabled,
+  type,
 }) => (
   <Card {...styles.container}>
     <form
@@ -95,11 +96,12 @@ const InputRow = ({
         <div {...styles.inputContainer}>
           <input
             {...getInputProps({
-              onKeyDown,
               onFocus,
+              onKeyDown,
+              onKeyUp: e => onChange(e.target.value, e.target.selectionStart),
               onChange: e => onChange(e.target.value, e.target.selectionStart),
               ref: inputRef,
-              type: 'text',
+              type: type,
               placeholder: country
                 ? 'Enter phone number or provider'
                 : 'Enter country or phone number',

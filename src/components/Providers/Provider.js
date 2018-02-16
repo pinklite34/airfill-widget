@@ -20,7 +20,7 @@ const styles = {
     cursor: 'pointer',
     '@media(max-width: 460px)': {
       flex: '1 0 100%',
-      margin: '0 -12px',
+      margin: '0 -16px',
       flexDirection: 'row !important',
       padding: 16,
       boxShadow: 'none !important',
@@ -79,7 +79,7 @@ export const ShowAll = ({ onClick, count }) => (
       <More fill="#777777" width="42px" height="42px" />
     </div>
     <div>
-      Show all <strong>{count}</strong> providers
+      Show all <strong>{count}</strong> services
     </div>
     <Select {...styles.select} fill="#777" />
   </Card>

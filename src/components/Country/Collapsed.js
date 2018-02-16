@@ -53,7 +53,7 @@ const Collapsed = ({
   if (!country) {
     return (
       <CollapsedSection hideButton darken={darken} type="country">
-        Select a country above to see available providers.
+        Select a country above to see available services.
       </CollapsedSection>
     );
   }

@@ -47,7 +47,7 @@ const Picker = ({
           onReject={() => history.replace('/refill/selectProvider')}
         />
         <Grid
-          title={'Available providers'}
+          title={'Available operators'}
           providers={numberLookup.altOperators}
           onSelect={selectOperator}
           defaultShowAll={true}

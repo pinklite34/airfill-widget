@@ -9,6 +9,7 @@ import {
   selectAmount,
   selectOperator,
 } from '../../store';
+
 import { isValidEmail } from '../../lib/email-validation';
 
 import Button from 'material-ui/Button';

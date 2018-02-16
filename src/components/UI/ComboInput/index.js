@@ -88,6 +88,12 @@ class ComboInput extends Component {
     }
   }
 
+  componentDidUpdate() {
+    if (isPhoneNumber(this.state.inputValue)) {
+      this.input.setSelectionRange(this.state.caret, this.state.caret);
+    }
+  }
+
   onInputKeyDown = e => {
     const { selectionStart, selectionEnd } = e.target;
     const selectionRange = selectionEnd - selectionStart;
@@ -207,6 +213,35 @@ class ComboInput extends Component {
       }));
   };
 
+  resetCountry = () => {
+    this.props.setCountry('');
+    this.setState({ inputValue: '' });
+    this.input.focus();
+    this.props.openComboInput();
+  };
+
+  changeValue = (inputValue, currentCaret) => {
+    if (isPhoneNumber(inputValue)) {
+      const { formattedValue, number, country, caret } = formatNumber(
+        this.props.country && this.props.country.alpha2,
+        inputValue,
+        currentCaret
+      );
+
+      this.props.setCountry(country);
+      this.props.setNumber(number);
+
+      this.setState({ inputValue: formattedValue, caret });
+    } else {
+      if (this.props.country && !inputValue) {
+        this.props.setNumber('');
+      }
+      this.setState(state => ({
+        inputValue,
+      }));
+    }
+  };
+
   focusInput = () => {
     if (this.input) {
       this.setState({ inputValue: '' }, () => {
@@ -263,7 +298,7 @@ class ComboInput extends Component {
     );
 
     const sections = [recentNumbers, countries, operators];
-    const titles = ['Recent refills', 'Countries', 'Providers'];
+    const titles = ['Recent refills', 'Countries', 'Services'];
 
     const items = sectionsToItemList(sections, titles).map((item, index) => ({
       ...item,
@@ -273,7 +308,9 @@ class ComboInput extends Component {
     const itemCount =
       countries.length + operators.length + recentNumbers.length;
 
-    const submitEnabled = isPhoneNumber(this.state.inputValue);
+    const isPhoneNo = isPhoneNumber(this.state.inputValue);
+    const shouldDefaultToTel =
+      isPhoneNo || (country != null && !this.state.inputValue);
 
     return (
       <Downshift
@@ -296,8 +333,9 @@ class ComboInput extends Component {
               onKeyDown={this.onInputKeyDown}
               loading={loading}
               onSubmit={this.handleSubmit}
-              submitEnabled={submitEnabled}
+              submitEnabled={isPhoneNo}
               onFocus={openComboInput}
+              type={shouldDefaultToTel ? 'tel' : 'text'}
             />
             {isOpen && itemCount ? (
               <Dropdown

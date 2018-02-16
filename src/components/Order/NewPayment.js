@@ -35,6 +35,15 @@ const styles = {
     '> dd': {
       marginBottom: 8,
     },
+
+    '@media(max-width: 480px)': {
+      '> dt': {
+        width: 'auto',
+      },
+      '> dd': {
+        textAlign: 'right',
+      },
+    },
   }),
   paymentMethods: css({
     display: 'flex',
@@ -66,6 +75,10 @@ const styles = {
   container: css({
     display: 'flex',
     flexDirection: 'row',
+
+    '@media(max-width: 720px)': {
+      flexDirection: 'column',
+    },
   }),
   left: css({
     flex: '0 0 70%',
