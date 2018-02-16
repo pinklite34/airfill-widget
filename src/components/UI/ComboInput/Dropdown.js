@@ -23,7 +23,6 @@ const styles = {
   }),
   content: css({
     maxHeight: 264,
-    overflow: 'scroll !important',
   }),
   sectionTitle: css({
     paddingLeft: 60,
