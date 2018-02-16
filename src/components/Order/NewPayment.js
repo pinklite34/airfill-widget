@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import { connect } from 'react-redux';
+import { createOrder } from '../../actions';
+
 import { css } from 'glamor';
 import Button from 'material-ui/Button';
 import Menu, { MenuItem } from 'material-ui/Menu';
@@ -141,6 +144,8 @@ class NewPayment extends React.Component {
   constructor(props) {
     super(props);
 
+    props.paymentButtons[0].paymentModeOptions = {};
+
     this.state = {
       open: false,
       paymentMethod: props.paymentButtons[0],
@@ -166,12 +171,26 @@ class NewPayment extends React.Component {
       open: false,
       paymentMethod: button,
     });
+
+    this.props
+      .createOrder({
+        paymentMethod: button.paymentMode,
+      })
+      .then(() => console.log('order recreated'))
+      .catch(err => console.warn(err));
   };
 
   render() {
     const { order, paymentButtons } = this.props;
 
     const method = this.state.paymentMethod;
+
+    // decide if the current payment method is a direct coin payment
+    const isDirect = ['bitcoin', 'litecoin', 'lightning', 'dash'].some(
+      v => method.paymentMode === v
+    );
+
+    console.log(order);
 
     return (
       <div>
@@ -215,7 +234,7 @@ class NewPayment extends React.Component {
           <div>
             <div />
             <div>
-              {method.paymentMode === 'button' && (
+              {!isDirect && (
                 <Button
                   raised
                   color="primary"
@@ -224,7 +243,7 @@ class NewPayment extends React.Component {
                   {method.paymentModeOptions.title}
                 </Button>
               )}
-              {method.paymentMode === 'btc' && (
+              {isDirect && (
                 <div {...styles.container}>
                   <div {...styles.left}>
                     Send <i>exactly</i> <strong>{order.btcPrice} BTC</strong> to
@@ -262,4 +281,6 @@ NewPayment.propTypes = {
   paymentButtons: PropTypes.array,
 };
 
-export default NewPayment;
+export default connect(state => {}, {
+  createOrder,
+})(NewPayment);
