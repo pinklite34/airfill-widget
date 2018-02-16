@@ -190,8 +190,13 @@ class NewPayment extends React.Component {
       v => method.paymentMode === v
     );
 
-    const price = order.payment.altcoinPrice || order.btcPrice;
-    const unit = order.payment.altcoinCode || 'BTC';
+    let price = order.payment.altcoinPrice || order.btcPrice;
+    let unit = order.payment.altcoinCode || 'BTC';
+
+    if (method.paymentMethod === 'lightning') {
+      price = order.payment.bitsPrice;
+      unit = 'bits';
+    }
 
     return (
       <div>
