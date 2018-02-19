@@ -92,10 +92,11 @@ const styles = {
     '& img': {
       float: 'right',
     },
-    '@media(max-width: 460px)': {
+    '@media(max-width: 720px)': {
       '& img': {
-        width: '75px',
-        height: '75px',
+        marginTop: '24px',
+        float: 'left',
+        width: '70%',
       },
     },
   }),
