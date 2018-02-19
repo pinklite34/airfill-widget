@@ -100,8 +100,8 @@ class AirfillWidget extends Component {
   }
 
   componentDidCatch(err, info) {
-    console.error(err)
-    console.error(info)
+    console.error('widget', err)
+    console.error('widget', info)
   }
 
   render() {
