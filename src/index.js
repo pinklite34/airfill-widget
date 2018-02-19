@@ -33,7 +33,7 @@ export {
 
 export default Widget;
 
-setPusherClient((window && window.Pusher) || new Pusher('0837b617cfe786c32a91', {
+setPusherClient(new Pusher('0837b617cfe786c32a91', {
   encrypted: true
 }));
 
