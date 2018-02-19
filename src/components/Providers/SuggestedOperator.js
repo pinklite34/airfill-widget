@@ -64,8 +64,9 @@ const SuggestedOperator = ({ operator, onAccept, onReject }) => {
         <img src={operator.logoImage} alt={operator.name} {...styles.logo} />
         <div {...styles.content}>
           <p {...styles.text}>
-            {`We've detected <strong>{operator.name}</strong> as your service. If
-            this is not correct, please select another service below.`}
+            We&apos;ve detected <strong>{operator.name}</strong> as your
+            service. If this is not correct, please select another service
+            below.
           </p>
           <Button color="primary" raised onClick={onAccept} {...styles.button}>
             Yes, this is my service
