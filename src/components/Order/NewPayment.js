@@ -183,11 +183,18 @@ class NewPayment extends React.Component {
       paymentMethod: button,
     });
 
+    let options = {
+      ...this.props.orderOptions,
+      paymentMethod: button.paymentMode,
+    };
+
+    if (button.paymentMode === 'lightning') {
+      options.lightningEnabled = true;
+      options.mainnetLightning = true;
+    }
+
     this.props
-      .createOrder({
-        ...this.props.orderOptions,
-        paymentMethod: button.paymentMode,
-      })
+      .createOrder(options)
       .then(() => console.log('order recreated'))
       .catch(err => console.warn(err));
   };
