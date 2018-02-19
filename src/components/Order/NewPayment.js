@@ -105,7 +105,7 @@ const styles = {
 const Divider = () => <hr {...styles.divider} />;
 
 const PaymentMenu = props => {
-  const { open, anchorEl, paymentButtons, onClick } = props;
+  const { open, anchorEl, paymentButtons, onClick, onClose } = props;
 
   const Item = props => {
     let {
@@ -141,7 +141,7 @@ const PaymentMenu = props => {
 
   return (
     <div>
-      <Menu anchorEl={anchorEl} open={open}>
+      <Menu anchorEl={anchorEl} open={open} onClose={() => onClose()}>
         {paymentButtons &&
           paymentButtons.map((options, index) => (
             <div key={index}>
@@ -167,6 +167,11 @@ class NewPayment extends React.Component {
   openMenu = () =>
     this.setState({
       open: true,
+    });
+
+  closeMenu = () =>
+    this.setState({
+      open: false,
     });
 
   menuClick = button => {
@@ -226,6 +231,7 @@ class NewPayment extends React.Component {
           anchorEl={this.anchorEl}
           paymentButtons={paymentButtons}
           onClick={this.menuClick}
+          onClose={this.closeMenu}
         />
 
         <OrderHeader
