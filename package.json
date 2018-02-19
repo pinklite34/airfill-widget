@@ -1,6 +1,6 @@
 {
   "name": "@bitrefill/airfill-widget",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "Airfill Embeddable Refill Widget",
   "main": "dist/index.js",
   "engines": {
