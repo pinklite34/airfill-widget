@@ -83,7 +83,7 @@ const styles = {
   left: css({
     flex: '0 0 70%',
     '@media(max-width: 460px)': {
-      paddingRight: '2px',
+      paddingRight: '48px',
     },
   }),
   right: css({
