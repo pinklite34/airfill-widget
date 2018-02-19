@@ -34,7 +34,7 @@
     "react-dom": "^16.2.0"
   },
   "dependencies": {
-    "@bitrefill/react-pusher": "^0.1.2",
+    "@bitrefill/react-pusher": "^0.1.4",
     "core-js": "^2.0.0",
     "downshift": "^1.15.0",
     "fetch-ponyfill": "^4.1.0",
