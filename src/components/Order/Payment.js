@@ -70,7 +70,7 @@ const Payment = ({
   paymentButtons = null,
   showBTCAddress = true,
   billingCurrency = 'XBT',
-
+  orderOptions,
   order,
   operator,
   number,
@@ -115,6 +115,7 @@ const Payment = ({
       <PaymentComponent
         history={history}
         order={order.result}
+        orderOptions={orderOptions}
         operator={operator.result}
         country={country}
         accountBalance={accountBalance}

@@ -185,6 +185,7 @@ class NewPayment extends React.Component {
 
     this.props
       .createOrder({
+        ...this.props.orderOptions,
         paymentMethod: button.paymentMode,
       })
       .then(() => console.log('order recreated'))
@@ -298,6 +299,6 @@ NewPayment.propTypes = {
   paymentButtons: PropTypes.array,
 };
 
-export default connect(state => {}, {
+export default connect(state => ({}), {
   createOrder,
 })(NewPayment);
