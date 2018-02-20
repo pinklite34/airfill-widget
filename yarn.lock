@@ -2,11 +2,12 @@
 # yarn lockfile v1
 
 
-"@bitrefill/react-pusher@^0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@bitrefill/react-pusher/-/react-pusher-0.1.7.tgz#4f0e313777bc126dbbe78279dbcfe86c018a06d2"
+"@bitrefill/react-pusher@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@bitrefill/react-pusher/-/react-pusher-1.0.0.tgz#84ff093c7ada3963a94ab1f19e6cf3e56b407524"
   dependencies:
     prop-types "^15.6.0"
+    pusher-js "^4.2.2"
     react "^16.2.0"
 
 "@kossnocorp/desvg@^0.1.1":
