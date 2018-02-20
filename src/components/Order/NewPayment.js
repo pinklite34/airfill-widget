@@ -105,7 +105,7 @@ const styles = {
 const Divider = () => <hr {...styles.divider} />;
 
 const PaymentMenu = props => {
-  const { open, anchorEl, paymentButtons, onClick, onClose } = props;
+  const { open, anchorEl, paymentButtons, selected, onClick, onClose } = props;
 
   const Item = props => {
     let {
@@ -116,6 +116,7 @@ const PaymentMenu = props => {
       billingCurrency,
       accountBalance,
       requireAccountBalance,
+      selected,
     } = props;
 
     if (typeof icon === 'string') {
@@ -132,7 +133,12 @@ const PaymentMenu = props => {
         requireAccountBalance);
 
     return (
-      <MenuItem open={open} onClick={() => onClick(props)} disabled={disabled}>
+      <MenuItem
+        open={open}
+        onClick={() => onClick(props)}
+        disabled={disabled}
+        selected={selected}
+      >
         {icon && <ListItemIcon style={{ margin: 0 }}>{icon}</ListItemIcon>}
         <ListItemText primary={title} secondary={description} />
       </MenuItem>
@@ -145,7 +151,11 @@ const PaymentMenu = props => {
         {paymentButtons &&
           paymentButtons.map((options, index) => (
             <div key={index}>
-              <Item {...options} {...props} />
+              <Item
+                {...options}
+                {...props}
+                selected={selected === options.paymentMode}
+              />
               {index < paymentButtons.length - 1 && <Divider />}
             </div>
           ))}
@@ -234,6 +244,7 @@ class NewPayment extends React.Component {
           paymentButtons={paymentButtons}
           onClick={this.menuClick}
           onClose={this.closeMenu}
+          selected={method.paymentMode}
         />
 
         <OrderHeader
