@@ -3,6 +3,7 @@ import Menu, { MenuItem } from 'material-ui/Menu';
 import { ListItemText, ListItemIcon } from 'material-ui/List';
 import { css } from 'glamor';
 import { withStyles } from 'material-ui/styles';
+import classNames from 'classnames';
 
 const valueField = {
   xbt: 'btcPrice',
@@ -11,8 +12,12 @@ const valueField = {
 };
 
 const muiStyles = {
-  menu: {
+  selectedItem: {
     backgroundColor: '#f8f8f8 !important',
+  },
+  item: {
+    paddingTop: '20px',
+    paddingBottom: '20px',
   },
   primaryText: {
     fontWeight: 'bold',
@@ -60,7 +65,7 @@ const Item = props => {
 
   return (
     <MenuItem
-      className={selected ? classes.menu : ''}
+      className={classNames(classes.item, { [classes.selectedItem]: selected })}
       open={open}
       onClick={() => onClick(props)}
       disabled={disabled}

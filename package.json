@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@bitrefill/react-pusher": "^0.1.0",
+    "classnames": "^2.2.5",
     "core-js": "^2.0.0",
     "downshift": "^1.15.0",
     "fetch-ponyfill": "^4.1.0",
