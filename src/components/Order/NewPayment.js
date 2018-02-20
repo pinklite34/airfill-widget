@@ -252,13 +252,11 @@ class NewPayment extends React.Component {
                 style={{
                   fontWeight: 'bold',
                 }}
+                onClick={() => this.openMenu()}
               >
                 {this.state.paymentMethod.title}
               </p>
-              <Button
-                {...styles.changeButton}
-                onClick={event => this.openMenu()}
-              >
+              <Button {...styles.changeButton} onClick={() => this.openMenu()}>
                 Change
               </Button>
             </div>
