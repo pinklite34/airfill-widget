@@ -6,8 +6,6 @@ import { createOrder } from '../../actions';
 
 import { css } from 'glamor';
 import Button from 'material-ui/Button';
-import Menu, { MenuItem } from 'material-ui/Menu';
-import { ListItemText, ListItemIcon } from 'material-ui/List';
 
 import BitcoinAddress from '../UI/BitcoinAddress';
 import Info from './info.svg';
@@ -16,11 +14,7 @@ import PaymentLayout from './PaymentLayout';
 
 import QrCode from '../UI/QrCode';
 
-const valueField = {
-  xbt: 'btcPrice',
-  eur: 'eurPrice',
-  usd: 'usdPrice',
-};
+import PaymentMenu from './PaymentMenu';
 
 const styles = {
   list: css({
@@ -66,12 +60,6 @@ const styles = {
     fontWeight: 'bold !important',
     marginLeft: '12px',
   }),
-  divider: css({
-    border: 0,
-    height: 0,
-    borderTop: '1px solid rgba(0, 0, 0, 0.1)',
-    borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
-  }),
   container: css({
     display: 'flex',
     flexDirection: 'row',
@@ -100,68 +88,6 @@ const styles = {
       },
     },
   }),
-};
-
-const Divider = () => <hr {...styles.divider} />;
-
-const PaymentMenu = props => {
-  const { open, anchorEl, paymentButtons, selected, onClick, onClose } = props;
-
-  const Item = props => {
-    let {
-      title,
-      description,
-      icon,
-      order,
-      billingCurrency,
-      accountBalance,
-      requireAccountBalance,
-      selected,
-    } = props;
-
-    if (typeof icon === 'string') {
-      icon = <img src={icon} />;
-    }
-
-    const price = order[valueField[billingCurrency.toLowerCase()]];
-    const canAfford = price <= accountBalance;
-    const widgetRequireAccountBalance = requireAccountBalance;
-
-    const disabled =
-      !canAfford &&
-      ((widgetRequireAccountBalance && requireAccountBalance !== false) ||
-        requireAccountBalance);
-
-    return (
-      <MenuItem
-        open={open}
-        onClick={() => onClick(props)}
-        disabled={disabled}
-        selected={selected}
-      >
-        {icon && <ListItemIcon style={{ margin: 0 }}>{icon}</ListItemIcon>}
-        <ListItemText primary={title} secondary={description} />
-      </MenuItem>
-    );
-  };
-
-  return (
-    <div>
-      <Menu anchorEl={anchorEl} open={open} onClose={() => onClose()}>
-        {paymentButtons &&
-          paymentButtons.map((options, index) => (
-            <div key={index}>
-              <Item
-                {...options}
-                {...props}
-                selected={selected === options.paymentMode}
-              />
-              {index < paymentButtons.length - 1 && <Divider />}
-            </div>
-          ))}
-      </Menu>
-    </div>
-  );
 };
 
 class NewPayment extends React.Component {
@@ -244,7 +170,6 @@ class NewPayment extends React.Component {
           paymentButtons={paymentButtons}
           onClick={this.menuClick}
           onClose={this.closeMenu}
-          selected={method.paymentMode}
         />
 
         <OrderHeader
