@@ -217,6 +217,8 @@ class NewPayment extends React.Component {
 
     let price = order.payment.altcoinPrice || order.btcPrice;
     let unit = order.payment.altcoinCode || 'BTC';
+    const uri =
+      method.paymentMode + ':' + order.payment.address + '?amount=' + price;
 
     if (method.paymentMethod === 'lightning') {
       price = order.payment.bitsPrice;
@@ -285,15 +287,13 @@ class NewPayment extends React.Component {
                       {...styles.bottomButton}
                       raised
                       color="primary"
-                      onClick={() =>
-                        (window.location.href = order.payment.BIP21)
-                      }
+                      onClick={() => (window.location.href = uri)}
                     >
                       Open wallet
                     </Button>
                   </div>
                   <div {...styles.right}>
-                    <QrCode value={order.payment.BIP21} size={150} />
+                    <QrCode value={uri} size={150} />
                   </div>
                 </div>
               )}
