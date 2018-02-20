@@ -31,6 +31,12 @@ const styles = {
     borderTop: '1px solid #f0f0f0',
     margin: 0,
   }),
+  icon: css({
+    margin: 0,
+    marginRight: '0 !important',
+    width: '24px',
+    height: '24px',
+  }),
 };
 
 const Divider = () => <hr {...styles.divider} />;
@@ -70,7 +76,7 @@ const Item = props => {
       onClick={() => onClick(props)}
       disabled={disabled}
     >
-      {icon && <ListItemIcon style={{ margin: 0 }}>{icon}</ListItemIcon>}
+      {icon && <ListItemIcon {...styles.icon}>{icon}</ListItemIcon>}
       <ListItemText
         classes={{
           primary: classes.primaryText,
