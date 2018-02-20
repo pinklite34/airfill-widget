@@ -6,6 +6,7 @@ const style = css({
   fontWeight: 700,
   textTransform: 'uppercase',
   marginBottom: 8,
+  marginLeft: 8,
   color: '#777',
 });
 
