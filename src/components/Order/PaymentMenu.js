@@ -14,6 +14,9 @@ const muiStyles = {
   menu: {
     backgroundColor: '#f8f8f8 !important',
   },
+  primaryText: {
+    fontWeight: 'bold',
+  },
 };
 
 const styles = {
@@ -63,7 +66,13 @@ const Item = props => {
       disabled={disabled}
     >
       {icon && <ListItemIcon style={{ margin: 0 }}>{icon}</ListItemIcon>}
-      <ListItemText primary={title} secondary={description} />
+      <ListItemText
+        classes={{
+          primary: classes.primaryText,
+        }}
+        primary={title}
+        secondary={description}
+      />
     </MenuItem>
   );
 };
