@@ -57,6 +57,7 @@ const Item = props => {
     accountBalance,
     requireAccountBalance,
     selected,
+    noIcons,
   } = props;
 
   if (typeof icon === 'string') {
@@ -72,6 +73,8 @@ const Item = props => {
     ((widgetRequireAccountBalance && requireAccountBalance !== false) ||
       requireAccountBalance);
 
+  const className = noIcons ? styles.icon : {};
+
   return (
     <MenuItem
       className={classNames(classes.item, { [classes.selectedItem]: selected })}
@@ -79,7 +82,7 @@ const Item = props => {
       onClick={() => onClick(props)}
       disabled={disabled}
     >
-      <div {...styles.icon}>{icon}</div>
+      <div {...className}>{icon}</div>
 
       <div {...styles.content}>
         <ListItemText
@@ -108,6 +111,8 @@ class PaymentMenu extends React.Component {
     const { open, anchorEl, paymentButtons, onClose } = this.props;
     const { selectedIndex } = this.state;
 
+    const noIcons = paymentButtons && paymentButtons.some(btn => !!btn.icon);
+
     return (
       <Menu anchorEl={anchorEl} open={open} onClose={() => onClose()}>
         {paymentButtons &&
@@ -116,6 +121,7 @@ class PaymentMenu extends React.Component {
               <Item
                 {...options}
                 {...this.props}
+                noIcons={noIcons}
                 onClick={data => this.onClick(data, index)}
                 selected={selectedIndex === index}
               />
