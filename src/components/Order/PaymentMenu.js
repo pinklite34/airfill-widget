@@ -1,6 +1,6 @@
 import React from 'react';
 import Menu, { MenuItem } from 'material-ui/Menu';
-import { ListItemText, ListItemIcon } from 'material-ui/List';
+import { ListItemText } from 'material-ui/List';
 import { css } from 'glamor';
 import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
@@ -18,6 +18,7 @@ const muiStyles = {
   item: {
     paddingTop: '20px',
     paddingBottom: '20px',
+    display: 'flex',
   },
   primaryText: {
     fontWeight: 'bold',
@@ -32,10 +33,12 @@ const styles = {
     margin: 0,
   }),
   icon: css({
-    margin: 0,
-    marginRight: '0 !important',
-    width: '24px',
-    height: '24px',
+    flex: '0 0 48px',
+    textAlign: 'center',
+    marginLeft: '-12px',
+  }),
+  content: css({
+    flex: 'auto',
   }),
 };
 
@@ -76,14 +79,17 @@ const Item = props => {
       onClick={() => onClick(props)}
       disabled={disabled}
     >
-      {icon && <ListItemIcon {...styles.icon}>{icon}</ListItemIcon>}
-      <ListItemText
-        classes={{
-          primary: classes.primaryText,
-        }}
-        primary={title}
-        secondary={description}
-      />
+      <div {...styles.icon}>{icon}</div>
+
+      <div {...styles.content}>
+        <ListItemText
+          classes={{
+            primary: classes.primaryText,
+          }}
+          primary={title}
+          secondary={description}
+        />
+      </div>
     </MenuItem>
   );
 };
