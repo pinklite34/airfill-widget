@@ -51,7 +51,7 @@ const styles = {
   cellContainer: css({
     flexDirection: 'column !important',
     alignItems: 'flex-start !important',
-    lineHeight: '24px',
+    lineHeight: '20px',
   }),
   topLabel: css({
     display: 'block',
