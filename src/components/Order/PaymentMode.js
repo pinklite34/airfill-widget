@@ -142,7 +142,7 @@ class NewPayment extends React.Component {
   };
 
   render() {
-    const { order, paymentButtons, title, subtitle } = this.props;
+    const { order, paymentButtons, paymentStatus } = this.props;
 
     const method = this.state.paymentMethod;
 
@@ -160,6 +160,12 @@ class NewPayment extends React.Component {
       price = order.payment.bitsPrice;
       unit = 'bits';
     }
+
+    const isPartial = paymentStatus.status === 'partial';
+    const title = isPartial ? 'Partial payment detected' : 'Payment';
+    const subtitle = isPartial
+      ? 'Send the remainder to purchase your refill'
+      : 'Confirm the details below to purchase your refill';
 
     return (
       <div>

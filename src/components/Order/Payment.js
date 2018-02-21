@@ -25,28 +25,12 @@ import {
 
 import { updatePaymentStatus } from '../../actions';
 
-const NewPayment = (
-  <PaymentMode
-    title="Payment"
-    subtitle="Confirm the details below to purchase your refill"
-  />
-);
-
-const PartialPayment = (
-  <PaymentMode
-    title="Partial Payment"
-    subtitle="Your payment is partially paid"
-  />
-);
-
 const componentForStatus = status => {
   switch (status) {
     case 'paid':
       return PaymentDetected;
     case 'confirmed':
       return PaymentConfirmed;
-    case 'partial':
-      return PartialPayment;
     case 'expired':
       return ExpiredPayment;
     case 'failed':
@@ -55,8 +39,9 @@ const componentForStatus = status => {
       return RefillDelivered;
     case 'balance-too-low':
       return BalanceTooLow;
+    case 'partial':
     default:
-      return NewPayment;
+      return PaymentMode;
   }
 };
 
