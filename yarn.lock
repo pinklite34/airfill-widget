@@ -54,9 +54,9 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@bitrefill/react-pusher@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@bitrefill/react-pusher/-/react-pusher-0.1.0.tgz#138f1184323663f5ce15ffbb9f0c51899bbbe793"
+"@bitrefill/react-pusher@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@bitrefill/react-pusher/-/react-pusher-0.1.7.tgz#4f0e313777bc126dbbe78279dbcfe86c018a06d2"
   dependencies:
     prop-types "^15.6.0"
     react "^16.2.0"

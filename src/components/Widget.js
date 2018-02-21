@@ -98,6 +98,11 @@ class AirfillWidget extends Component {
     });
   }
 
+  componentDidCatch(err, info) {
+    console.error('widget', err);
+    console.error('widget', info);
+  }
+
   render() {
     const config = this.props;
     const hasLoaded = !!this.props.inventory.result;

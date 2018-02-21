@@ -32,9 +32,10 @@ export {
 export default Widget;
 
 setPusherClient(
-  new Pusher('0837b617cfe786c32a91', {
-    encrypted: true,
-  })
+  () =>
+    new Pusher('0837b617cfe786c32a91', {
+      encrypted: true,
+    })
 );
 
 let store;
