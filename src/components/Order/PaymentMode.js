@@ -156,8 +156,11 @@ class NewPayment extends React.Component {
     const uri =
       method.paymentMode + ':' + order.payment.address + '?amount=' + price;
 
+    if (order.partialPayment) {
+      price = Math.ceil(order.remainingAmount / 10000) / 10000;
+    }
+
     if (method.paymentMethod === 'lightning') {
-      price = order.payment.bitsPrice;
       unit = 'bits';
     }
 
@@ -166,6 +169,8 @@ class NewPayment extends React.Component {
     const subtitle = isPartial
       ? 'Send the remainder to purchase your refill'
       : 'Confirm the details below to purchase your refill';
+
+    console.log(order);
 
     return (
       <div>
