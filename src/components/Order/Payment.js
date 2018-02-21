@@ -7,10 +7,9 @@ import { CircularProgress } from 'material-ui/Progress';
 
 import PusherSubscription from '@bitrefill/react-pusher';
 
-import NewPayment from './NewPayment';
+import PaymentMode from './PaymentMode';
 import PaymentDetected from './PaymentDetected';
 import PaymentConfirmed from './PaymentConfirmed';
-import PartialPayment from './PartialPayment';
 import ExpiredPayment from './PaymentExpired';
 import RefillFailed from './RefillFailed';
 import RefillDelivered from './RefillDelivered';
@@ -25,6 +24,20 @@ import {
 } from './../../store';
 
 import { updatePaymentStatus } from '../../actions';
+
+const NewPayment = (
+  <PaymentMode
+    title="Payment"
+    subtitle="Confirm the details below to purchase your refill"
+  />
+);
+
+const PartialPayment = (
+  <PaymentMode
+    title="Partial Payment"
+    subtitle="Your payment is partially paid"
+  />
+);
 
 const componentForStatus = status => {
   switch (status) {

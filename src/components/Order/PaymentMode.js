@@ -142,7 +142,7 @@ class NewPayment extends React.Component {
   };
 
   render() {
-    const { order, paymentButtons } = this.props;
+    const { order, paymentButtons, title, subtitle } = this.props;
 
     const method = this.state.paymentMethod;
 
@@ -174,8 +174,8 @@ class NewPayment extends React.Component {
 
         <OrderHeader
           order={order}
-          title="Payment"
-          subtitle="Confirm the details below to purchase your refill"
+          title={title}
+          subtitle={subtitle}
           icon={<Info />}
         />
 
