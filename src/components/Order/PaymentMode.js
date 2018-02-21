@@ -153,8 +153,10 @@ class NewPayment extends React.Component {
 
     let price = order.payment.altcoinPrice || order.btcPrice;
     let unit = order.payment.altcoinCode || 'BTC';
-    const uri =
-      method.paymentMode + ':' + order.payment.address + '?amount=' + price;
+
+    const prefix =
+      method.paymentMode === 'bcash' ? 'bitcoincash' : method.paymentMode;
+    const uri = prefix + ':' + order.payment.address + '?amount=' + price;
 
     if (order.partialPayment) {
       price = Math.ceil(order.remainingAmount / 10000) / 10000;
