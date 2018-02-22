@@ -166,8 +166,9 @@ class NewPayment extends React.Component {
       price = Math.ceil(order.remainingAmount / 10000) / 10000;
     }
 
-    if (method.paymentMethod === 'lightning') {
+    if (method.paymentMode === 'lightning') {
       unit = 'bits';
+      price *= 1000000;
     }
 
     const isPartial = paymentStatus.status === 'partial';
