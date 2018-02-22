@@ -6,6 +6,7 @@ import { createOrder } from '../../actions';
 
 import { css } from 'glamor';
 import Button from 'material-ui/Button';
+import { CircularProgress } from 'material-ui/Progress';
 
 import BitcoinAddress from '../UI/BitcoinAddress';
 import Info from './info.svg';
@@ -97,6 +98,7 @@ class NewPayment extends React.Component {
     this.state = {
       open: false,
       paymentMethod: props.paymentButtons[0],
+      isLoading: false,
     };
   }
 
@@ -123,6 +125,7 @@ class NewPayment extends React.Component {
     this.setState({
       open: false,
       paymentMethod: button,
+      isLoading: true,
     });
 
     let options = {
@@ -137,14 +140,15 @@ class NewPayment extends React.Component {
 
     this.props
       .createOrder(options)
-      .then(() => console.log('order recreated'))
+      .then(() => this.setState({ isLoading: false }))
       .catch(err => console.warn(err));
   };
 
   render() {
     const { order, paymentButtons, paymentStatus } = this.props;
+    const { isLoading, paymentMethod } = this.state;
 
-    const method = this.state.paymentMethod;
+    const method = paymentMethod;
 
     // decide if the current payment method is a direct coin payment
     const isDirect = ['bitcoin', 'litecoin', 'lightning', 'dash'].some(
@@ -172,7 +176,10 @@ class NewPayment extends React.Component {
       ? 'Send the remainder to purchase your refill'
       : 'Confirm the details below to purchase your refill';
 
-    console.log(order);
+    // console.log('partial', isPartial);
+    // console.log(order);
+    console.log(this.props);
+    console.log(this.state.isLoading);
 
     return (
       <div>
@@ -205,7 +212,11 @@ class NewPayment extends React.Component {
                 }}
                 onClick={() => this.openMenu()}
               >
-                {this.state.paymentMethod.title}
+                {isLoading ? (
+                  <CircularProgress />
+                ) : (
+                  this.state.paymentMethod.title
+                )}
               </p>
               <Button {...styles.changeButton} onClick={() => this.openMenu()}>
                 Change
@@ -215,7 +226,7 @@ class NewPayment extends React.Component {
           <div>
             <div />
             <div>
-              {!isDirect && (
+              {isLoading ? null : !isDirect ? (
                 <Button
                   raised
                   color="primary"
@@ -223,8 +234,7 @@ class NewPayment extends React.Component {
                 >
                   {method.paymentModeOptions.title}
                 </Button>
-              )}
-              {isDirect && (
+              ) : (
                 <div {...styles.container}>
                   <div {...styles.left}>
                     Send <i>exactly</i> <strong>{price + ' ' + unit}</strong> to
