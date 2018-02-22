@@ -158,13 +158,13 @@ class NewPayment extends React.Component {
     let price = order.payment.altcoinPrice || order.btcPrice;
     let unit = order.payment.altcoinCode || 'BTC';
 
-    const prefix =
-      method.paymentMode === 'bcash' ? 'bitcoincash' : method.paymentMode;
-    const uri = prefix + ':' + order.payment.address + '?amount=' + price;
-
     if (order.partialPayment) {
       price = Math.ceil(order.remainingAmount / 10000) / 10000;
     }
+
+    const prefix =
+      method.paymentMode === 'bcash' ? 'bitcoincash' : method.paymentMode;
+    const uri = prefix + ':' + order.payment.address + '?amount=' + price;
 
     if (method.paymentMode === 'lightning') {
       unit = 'bits';
@@ -179,8 +179,8 @@ class NewPayment extends React.Component {
 
     // console.log('partial', isPartial);
     // console.log(order);
-    console.log(this.props);
-    console.log(this.state.isLoading);
+    // console.log(this.props);
+    // console.log(this.state.isLoading);
 
     return (
       <div>
