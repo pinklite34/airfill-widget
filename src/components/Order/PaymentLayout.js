@@ -27,7 +27,7 @@ const styles = {
         color: '#777777',
         minHeight: '50px',
         textTransform: 'uppercase',
-        paddingRight: '16px',
+        paddingRight: '12px',
         '& > img': {
           width: '64px',
           height: 'auto',
