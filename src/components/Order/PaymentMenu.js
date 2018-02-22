@@ -4,12 +4,7 @@ import { ListItemText } from 'material-ui/List';
 import { css } from 'glamor';
 import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
-
-const valueField = {
-  xbt: 'btcPrice',
-  eur: 'eurPrice',
-  usd: 'usdPrice',
-};
+import { canAfford } from '../../lib/currency-helpers';
 
 const muiStyles = {
   selectedItem: {
@@ -52,34 +47,15 @@ const Item = props => {
     onClick,
     classes,
     icon,
-    order,
-    billingCurrency,
-    accountBalance,
-    requireAccountBalance,
     selected,
     noIcons,
-    paymentMode,
   } = props;
 
   if (typeof icon === 'string') {
     icon = <img src={icon} />;
   }
 
-  const price = order[valueField[billingCurrency.toLowerCase()]];
-  const canAfford = price <= accountBalance;
-  const widgetRequireAccountBalance = requireAccountBalance;
-
-  // decide if the current payment method is a direct coin payment
-  const isDirect = ['bitcoin', 'litecoin', 'lightning', 'dash'].some(
-    v => paymentMode === v
-  );
-
-  const disabled =
-    !isDirect &&
-    (!canAfford &&
-      ((widgetRequireAccountBalance && requireAccountBalance !== false) ||
-        requireAccountBalance));
-
+  const disabled = !canAfford(props);
   const className = noIcons ? styles.icon : {};
 
   return (
