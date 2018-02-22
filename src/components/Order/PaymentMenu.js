@@ -58,6 +58,7 @@ const Item = props => {
     requireAccountBalance,
     selected,
     noIcons,
+    paymentMode,
   } = props;
 
   if (typeof icon === 'string') {
@@ -68,10 +69,16 @@ const Item = props => {
   const canAfford = price <= accountBalance;
   const widgetRequireAccountBalance = requireAccountBalance;
 
+  // decide if the current payment method is a direct coin payment
+  const isDirect = ['bitcoin', 'litecoin', 'lightning', 'dash'].some(
+    v => paymentMode === v
+  );
+
   const disabled =
-    !canAfford &&
-    ((widgetRequireAccountBalance && requireAccountBalance !== false) ||
-      requireAccountBalance);
+    !isDirect &&
+    (!canAfford &&
+      ((widgetRequireAccountBalance && requireAccountBalance !== false) ||
+        requireAccountBalance));
 
   const className = noIcons ? styles.icon : {};
 
