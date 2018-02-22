@@ -17,6 +17,8 @@ import QrCode from '../UI/QrCode';
 
 import PaymentMenu from './PaymentMenu';
 
+import { canAfford } from '../../lib/currency-helpers';
+
 const styles = {
   list: css({
     display: 'block',
@@ -95,9 +97,17 @@ class NewPayment extends React.Component {
   constructor(props) {
     super(props);
 
+    // pick first affordable payment method
+    const method = props.paymentButtons.find(btn =>
+      canAfford({
+        ...props,
+        paymentMode: btn.paymentMode,
+      })
+    );
+
     this.state = {
       open: false,
-      paymentMethod: props.paymentButtons[0],
+      paymentMethod: method,
       isLoading: false,
     };
   }
