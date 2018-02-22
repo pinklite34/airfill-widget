@@ -1,10 +1,11 @@
 import React from 'react';
 import { css } from 'glamor';
 
+css.insert("@import url('https://fonts.googleapis.com/css?family=Roboto');");
+
 const style = css({
   fontSize: 14,
-  fontFamily:
-    '"Museo Sans Rounded", -apple-system, ".SFNSText-Regular", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !important',
+  fontFamily: '"Roboto", sans-serif !important',
   color: '#444',
   boxSizing: 'border-box',
   padding: 0,

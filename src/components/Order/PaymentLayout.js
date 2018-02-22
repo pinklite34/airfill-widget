@@ -123,7 +123,7 @@ class PaymentLayout extends React.Component {
   componentWillUnmount() {
     const { countdownInterval } = this.state;
 
-    if (countdownInterval) clearInterval(this.state.countdownInterval);
+    if (countdownInterval) clearInterval(countdownInterval);
   }
 
   get showCountdown() {
