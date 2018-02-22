@@ -165,11 +165,13 @@ class NewPayment extends React.Component {
       v => method.paymentMode === v
     );
 
+    const basePrice = order.payment.altBasePrice || order.payment.satoshiPrice;
     let price = order.payment.altcoinPrice || order.btcPrice;
     let unit = order.payment.altcoinCode || 'BTC';
 
     if (order.partialPayment) {
-      price = Math.ceil(order.remainingAmount / 10000) / 10000;
+      price = basePrice - order.paidAmount;
+      price = Math.ceil(price / 10000) / 10000;
     }
 
     const prefix =
@@ -186,11 +188,6 @@ class NewPayment extends React.Component {
     const subtitle = isPartial
       ? 'Send the remainder to purchase your refill'
       : 'Confirm the details below to purchase your refill';
-
-    // console.log('partial', isPartial);
-    // console.log(order);
-    // console.log(this.props);
-    // console.log(this.state.isLoading);
 
     return (
       <div>
