@@ -142,12 +142,20 @@ class PaymentLayout extends React.Component {
       order,
     } = this.props;
 
-    const billingCurrencyDisplayName =
-      billingCurrency === 'XBT' ? 'BTC' : billingCurrency;
-    const price = order[valueField[billingCurrency.toLowerCase()]];
-    const formattedPrice =
-      price + ' ' + billingCurrencyDisplayName.toUpperCase();
     const showNumber = !operator.result || !operator.result.noNumber;
+
+    const billingCurrencyDisplayName = order.payment.altcoinCode || 'BTC';
+
+    const price = order[valueField[billingCurrency.toLowerCase()]];
+    const coinPrice = order.payment.altcoinPrice || order.btcPrice;
+    let formattedPrice =
+      coinPrice + ' ' + billingCurrencyDisplayName.toUpperCase();
+
+    const displayCurrency = billingCurrency === 'XBT' ? 'BTC' : billingCurrency;
+
+    if (displayCurrency !== billingCurrencyDisplayName) {
+      formattedPrice += ` (${price} ${displayCurrency})`;
+    }
 
     return (
       <div {...styles.container}>
