@@ -86,11 +86,11 @@ class PaymentLayout extends React.Component {
   };
 
   componentDidMount() {
-    const { updatePaymentStatus, order } = this.props;
-
     if (this.showCountdown) {
       this.setState({
         countdownInterval: setInterval(() => {
+          const { updatePaymentStatus, order } = this.props;
+
           const now = new Date().getTime();
           const expiring = order.expirationTime;
           let diff = new Date(expiring - now);
