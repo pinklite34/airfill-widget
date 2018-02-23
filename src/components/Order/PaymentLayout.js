@@ -92,10 +92,10 @@ class PaymentLayout extends React.Component {
       this.setState({
         countdownInterval: setInterval(() => {
           const now = new Date().getTime();
-          const expiring = this.props.order.expirationTime;
+          const expiring = order.expirationTime;
           let diff = new Date(expiring - now);
 
-          if (now > expiring || this.props.order.expired) {
+          if (now > expiring || order.expired) {
             diff = '00:00';
 
             updatePaymentStatus({
@@ -141,6 +141,12 @@ class PaymentLayout extends React.Component {
       billingCurrency,
       order,
     } = this.props;
+
+    console.log('new order');
+    console.log(order);
+    console.log('payment status');
+    console.log(this.props.paymentStatus);
+    console.log();
 
     const showNumber = !operator.result || !operator.result.noNumber;
 
