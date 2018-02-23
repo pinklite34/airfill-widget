@@ -12,9 +12,9 @@ const styles = {
   icon: css({
     maxWidth: 32,
     maxHeight: 32,
-    marginRight: '24px',
-    marginTop: '12px',
-    marginLeft: '12px',
+    marginRight: '26px',
+    marginTop: '8px',
+    marginLeft: '10px',
   }),
   text: css({
     margin: 0,
