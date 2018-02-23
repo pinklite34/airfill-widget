@@ -142,12 +142,6 @@ class PaymentLayout extends React.Component {
       order,
     } = this.props;
 
-    console.log('new order');
-    console.log(order);
-    console.log('payment status');
-    console.log(this.props.paymentStatus);
-    console.log();
-
     const showNumber = !operator.result || !operator.result.noNumber;
 
     const billingCurrencyDisplayName = order.payment.altcoinCode || 'BTC';
