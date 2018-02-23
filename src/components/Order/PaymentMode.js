@@ -169,8 +169,8 @@ class NewPayment extends React.Component {
     let price = order.payment.altcoinPrice || order.btcPrice;
     let unit = order.payment.altcoinCode || 'BTC';
 
-    if (order.partialPayment) {
-      price = basePrice - order.paidAmount;
+    if (paymentStatus.status === 'partial') {
+      price = basePrice - paymentStatus.paidAmount;
       price = Math.ceil(price / 10000) / 10000;
     }
 
