@@ -19,6 +19,7 @@ const BitcoinAddress = ({ address }) => (
     readOnly
     value={address}
     size="44"
+    onClick={e => e.target.select()}
   />
 );
 
