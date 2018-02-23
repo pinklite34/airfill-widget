@@ -220,11 +220,7 @@ class NewPayment extends React.Component {
                 }}
                 onClick={() => this.openMenu()}
               >
-                {isLoading ? (
-                  <CircularProgress />
-                ) : (
-                  this.state.paymentMethod.title
-                )}
+                {this.state.paymentMethod.title}
               </p>
               <Button {...styles.changeButton} onClick={() => this.openMenu()}>
                 Change
@@ -234,7 +230,9 @@ class NewPayment extends React.Component {
           <div>
             <div />
             <div>
-              {isLoading ? null : !isDirect ? (
+              {isLoading ? (
+                <CircularProgress />
+              ) : !isDirect ? (
                 <Button
                   raised
                   color="primary"
