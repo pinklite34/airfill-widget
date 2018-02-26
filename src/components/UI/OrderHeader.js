@@ -31,10 +31,15 @@ const styles = {
     lineHeight: '31.5px',
     color: '#777777',
     fontSize: '12px',
+    '@media(max-width: 420px)': {
+      float: 'left',
+      width: '100%',
+    },
   }),
   details: css({
     color: '#777777',
     fontSize: '14px',
+    float: 'left',
   }),
 };
 

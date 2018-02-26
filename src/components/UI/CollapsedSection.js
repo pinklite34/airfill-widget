@@ -23,7 +23,7 @@ const styles = {
       paddingBottom: 2,
       borderBottom: '1px solid #CCCCCC',
     },
-    flex: '1 0 auto',
+    flex: '1 1 auto',
   }),
 };
 
