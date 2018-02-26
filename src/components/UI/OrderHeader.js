@@ -31,7 +31,7 @@ const styles = {
     lineHeight: '31.5px',
     color: '#777777',
     fontSize: '12px',
-    '@media(max-width: 420px)': {
+    '@media(max-width: 460px)': {
       float: 'left',
       width: '100%',
     },

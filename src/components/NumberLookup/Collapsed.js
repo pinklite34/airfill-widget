@@ -21,6 +21,10 @@ const styles = {
     marginLeft: 14,
     fill: '#3e8fe4',
     flex: '0 0 auto',
+    '@media(max-width: 460px)': {
+      marginRight: 14,
+      marginLeft: 0,
+    },
   }),
   text: css({
     fontWeight: 500,

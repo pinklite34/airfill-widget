@@ -19,6 +19,10 @@ const styles = {
     width: 24,
     marginRight: 30,
     marginLeft: 14,
+    '@media(max-width: 460px)': {
+      marginRight: 14,
+      marginLeft: 0,
+    },
   }),
   logo: css({
     maxWidth: 40,

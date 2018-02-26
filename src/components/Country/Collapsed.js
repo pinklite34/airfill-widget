@@ -33,6 +33,10 @@ const styles = {
     },
     marginRight: 30,
     marginLeft: 14,
+    '@media(max-width: 460px)': {
+      marginRight: 14,
+      marginLeft: 0,
+    },
   }),
 };
 
