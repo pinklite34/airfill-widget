@@ -80,6 +80,7 @@ const InputRow = ({
   loading,
   onSubmit,
   submitEnabled,
+  countryOnly,
   type,
 }) => (
   <Card {...styles.container}>
@@ -102,9 +103,11 @@ const InputRow = ({
               onChange: e => onChange(e.target.value, e.target.selectionStart),
               ref: inputRef,
               type: type,
-              placeholder: country
-                ? 'Enter phone number or provider'
-                : 'Enter country or phone number',
+              placeholder: countryOnly
+                ? 'Enter country'
+                : country
+                  ? 'Enter phone number or provider'
+                  : 'Enter country or phone number',
               ...styles.input,
             })}
           />

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Media from 'react-media';
 import { css } from 'glamor';
 import { selectNumber, selectNumberLookup } from '../../store';
 import { lookupNumber, resetNumberLookup } from '../../actions';
@@ -83,34 +84,41 @@ class Introduction extends Component {
   render() {
     const { branded, history, numberLookup } = this.props;
     return (
-      <div {...styles.container}>
-        {branded ? (
-          <div {...styles.head}>
-            <h2 {...styles.title}>Send Global Top Ups With Bitcoin</h2>
-            <div {...styles.subtitle}>Trusted by More Than 500 000 People</div>
-          </div>
-        ) : (
-          <div {...styles.head}>
-            <h2 {...styles.title}>Top Up Anything With Bitcoin</h2>
+      <Media query="(-moz-touch-enabled: 1), (pointer: coarse)">
+        {mobile => (
+          <div {...styles.container}>
+            {branded ? (
+              <div {...styles.head}>
+                <h2 {...styles.title}>Send Global Top Ups With Bitcoin</h2>
+                <div {...styles.subtitle}>
+                  Trusted by More Than 500 000 People
+                </div>
+              </div>
+            ) : (
+              <div {...styles.head}>
+                <h2 {...styles.title}>Top Up Anything With Bitcoin</h2>
+              </div>
+            )}
+            <ComboInput
+              countryOnly={mobile}
+              history={history}
+              loading={numberLookup.isLoading}
+              onSubmit={this.lookupNumber}
+            />
+            {numberLookup.error ? (
+              <div {...styles.error}>
+                <Info {...styles.errorIcon} />
+                <div>{numberLookup.error.message || numberLookup.error}</div>
+              </div>
+            ) : (
+              <div {...styles.description}>
+                Enter a phone number to see available services or select a
+                service below for more information
+              </div>
+            )}
           </div>
         )}
-        <ComboInput
-          history={history}
-          loading={numberLookup.isLoading}
-          onSubmit={this.lookupNumber}
-        />
-        {numberLookup.error ? (
-          <div {...styles.error}>
-            <Info {...styles.errorIcon} />
-            <div>{numberLookup.error.message || numberLookup.error}</div>
-          </div>
-        ) : (
-          <div {...styles.description}>
-            Enter a phone number to see available services or select a service
-            below for more information
-          </div>
-        )}
-      </div>
+      </Media>
     );
   }
 }

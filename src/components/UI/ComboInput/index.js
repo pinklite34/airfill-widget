@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import { css } from 'glamor';
 import Downshift from 'downshift';
 
@@ -68,7 +70,40 @@ const getInitialInputValue = (country, number) => {
   }
 };
 
+const countryShape = PropTypes.shape({
+  alpha2: PropTypes.string,
+  name: PropTypes.string,
+  operators: PropTypes.object,
+});
+
 class ComboInput extends Component {
+  static propTypes = {
+    closeComboInput: PropTypes.func.isRequired,
+    country: countryShape,
+    countryOnly: PropTypes.bool,
+    countryList: PropTypes.arrayOf(countryShape).isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
+    number: PropTypes.string,
+    onSubmit: PropTypes.func.isRequired,
+    openComboInput: PropTypes.func.isRequired,
+    loading: PropTypes.bool,
+    isOpen: PropTypes.bool,
+    recentNumbers: PropTypes.arrayOf(
+      PropTypes.shape({
+        number: PropTypes.string,
+        operator: PropTypes.string,
+      })
+    ),
+    setComboInputFocus: PropTypes.func.isRequired,
+    setCountry: PropTypes.func.isRequired,
+    setNumber: PropTypes.func.isRequired,
+    setOperator: PropTypes.func.isRequired,
+    shouldFocus: PropTypes.bool,
+    useRecentRefill: PropTypes.func.isRequired,
+  };
+
   state = {
     inputValue: getInitialInputValue(
       this.props.country && this.props.country.alpha2,
@@ -77,20 +112,17 @@ class ComboInput extends Component {
   };
 
   componentDidMount() {
-    if (this.props.shouldFocus) {
-      this.focusInput();
-    }
+    if (this.props.shouldFocus) this.focusInput();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.shouldFocus) {
-      this.focusInput();
-    }
+    if (nextProps.shouldFocus) this.focusInput();
   }
 
   componentDidUpdate() {
     if (isPhoneNumber(this.state.inputValue)) {
-      this.input.setSelectionRange(this.state.caret, this.state.caret);
+      this.input &&
+        this.input.setSelectionRange(this.state.caret, this.state.caret);
     }
   }
 
@@ -141,9 +173,7 @@ class ComboInput extends Component {
   };
 
   handleSubmit = () => {
-    if (isPhoneNumber(this.state.inputValue)) {
-      this.props.onSubmit();
-    }
+    if (isPhoneNumber(this.state.inputValue)) this.props.onSubmit();
   };
 
   handleStateChange = changes => {
@@ -262,8 +292,9 @@ class ComboInput extends Component {
       this.props.setCountry(country);
 
       this.props.setNumber(number);
-      this.setState({ inputValue: formattedValue }, () =>
-        this.input.setSelectionRange(caret, caret)
+      this.setState(
+        { inputValue: formattedValue },
+        () => this.input && this.input.setSelectionRange(caret, caret)
       );
     } else {
       if (this.props.country && !inputValue) {
@@ -285,7 +316,17 @@ class ComboInput extends Component {
   render() {
     const { inputValue } = this.state;
 
-    const { country, loading, isOpen, openComboInput } = this.props;
+    const {
+      countryOnly,
+      country,
+      loading,
+      isOpen,
+      openComboInput,
+    } = this.props;
+
+    if (countryOnly && country && country.alpha2) {
+      return <Redirect to="/refill/selectProvider" />;
+    }
 
     const normalizedInputValue = this.state.inputValue.toLowerCase();
     const countries = country
@@ -297,8 +338,13 @@ class ComboInput extends Component {
       country && country.alpha2
     );
 
-    const sections = [recentNumbers, countries, operators];
-    const titles = ['Recent refills', 'Countries', 'Services'];
+    const sections = countryOnly
+      ? [recentNumbers, countries]
+      : [recentNumbers, countries, operators];
+
+    const titles = countryOnly
+      ? ['Recent refills', 'Countries']
+      : ['Recent refills', 'Countries', 'Services'];
 
     const items = sectionsToItemList(sections, titles).map((item, index) => ({
       ...item,
@@ -310,7 +356,8 @@ class ComboInput extends Component {
 
     const isPhoneNo = isPhoneNumber(this.state.inputValue);
     const shouldDefaultToTel =
-      isPhoneNo || (country != null && !this.state.inputValue);
+      !countryOnly &&
+      (isPhoneNo || (country != null && !this.state.inputValue));
 
     return (
       <Downshift
@@ -336,6 +383,7 @@ class ComboInput extends Component {
               submitEnabled={isPhoneNo}
               onFocus={openComboInput}
               type={shouldDefaultToTel ? 'tel' : 'text'}
+              countryOnly={countryOnly}
             />
             {isOpen && itemCount ? (
               <Dropdown
