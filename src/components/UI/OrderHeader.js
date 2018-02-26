@@ -23,30 +23,30 @@ const styles = {
   text: css({
     margin: 0,
     flex: 1,
+    flexDirection: 'column',
+  }),
+  textHeader: css({
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    width: '100%',
   }),
   label: css({
-    fontSize: '18px',
-    fontWeight: '500',
-    float: 'left',
     margin: 0,
     padding: 0,
   }),
   orderId: css({
-    float: 'right',
     marginRight: '12px',
     lineHeight: '31.5px',
     color: '#777777',
     fontSize: '12px',
     '@media(max-width: 460px)': {
-      float: 'left',
       width: '100%',
     },
   }),
-  subtitle: css({
+  details: css({
     color: '#777777',
     fontSize: '14px',
-    float: 'left',
-    marginTop: '28px',
   }),
 };
 
@@ -54,9 +54,11 @@ const OrderHeader = ({ children, order, title, subtitle, icon }) => (
   <div {...styles.base}>
     <div {...styles.icon}>{icon}</div>
     <div {...styles.text}>
-      <div {...styles.label}>{title}</div>
-      <div {...styles.orderId}>Order {order.id}</div>
-      <div {...styles.subtitle}>{subtitle}</div>
+      <div {...styles.textHeader}>
+        <h2 {...styles.label}>{title}</h2>
+        <div {...styles.orderId}>Order {order.id}</div>
+      </div>
+      <div {...styles.details}>{subtitle}</div>
     </div>
   </div>
 );
