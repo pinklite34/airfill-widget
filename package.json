@@ -1,6 +1,6 @@
 {
   "name": "@bitrefill/airfill-widget",
-  "version": "3.0.0-beta.14",
+  "version": "3.0.0-beta.15",
   "description": "Airfill Embeddable Refill Widget",
   "main": "dist/index.js",
   "engines": {
@@ -34,7 +34,7 @@
     "react-dom": "^16.2.0"
   },
   "dependencies": {
-    "@bitrefill/react-pusher": "^1.0.0",
+    "@bitrefill/react-pusher": "^1.0.1",
     "classnames": "^2.2.5",
     "core-js": "^2.0.0",
     "downshift": "^1.15.0",
