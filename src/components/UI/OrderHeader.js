@@ -44,7 +44,7 @@ const styles = {
       width: '100%',
     },
   }),
-  details: css({
+  subtitle: css({
     color: '#777777',
     fontSize: '14px',
   }),
@@ -58,7 +58,7 @@ const OrderHeader = ({ children, order, title, subtitle, icon }) => (
         <h2 {...styles.label}>{title}</h2>
         <div {...styles.orderId}>Order {order.id}</div>
       </div>
-      <div {...styles.details}>{subtitle}</div>
+      <div {...styles.subtitle}>{subtitle}</div>
     </div>
   </div>
 );
