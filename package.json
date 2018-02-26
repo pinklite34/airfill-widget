@@ -30,12 +30,11 @@
   "keywords": [],
   "peerDependencies": {
     "libphonenumber-js": "^0.4.32",
-    "pusher-js": "^4.2.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
   "dependencies": {
-    "@bitrefill/react-pusher": "^0.1.7",
+    "@bitrefill/react-pusher": "^1.0.0",
     "classnames": "^2.2.5",
     "core-js": "^2.0.0",
     "downshift": "^1.15.0",
@@ -83,7 +82,6 @@
     "libphonenumber-js": "^0.4.32",
     "lint-staged": "^6.1.0",
     "minimist": "^1.2.0",
-    "pusher-js": "^4.2.2",
     "react": "^16.2.0",
     "react-addons-test-utils": "^15.0.0",
     "react-dom": "^16.2.0",
