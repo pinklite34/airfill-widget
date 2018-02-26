@@ -19,18 +19,24 @@ const styles = {
       },
       '& > div:first-of-type': {
         justifyContent: 'flex-end',
-        padding: 0,
         margin: 0,
-        flex: '0 0 72px',
+        flex: '0 0 68px',
         fontWeight: 'bold',
         fontSize: '10px',
         color: '#777777',
         minHeight: '50px',
         textTransform: 'uppercase',
-        paddingRight: '12px',
+        textAlign: 'end',
+        padding: '0 14px 0 4px',
         '& > img': {
           width: '64px',
           height: 'auto',
+        },
+        '@media(max-width: 460px)': {
+          flexBasis: '44px',
+          '& > img': {
+            width: '24px',
+          },
         },
       },
       '& > div:last-of-type': {

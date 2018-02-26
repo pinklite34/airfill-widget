@@ -15,6 +15,10 @@ const styles = {
     marginRight: '26px',
     marginTop: '8px',
     marginLeft: '10px',
+    '@media(max-width: 460px)': {
+      marginLeft: 0,
+      marginRight: '14px',
+    },
   }),
   text: css({
     margin: 0,

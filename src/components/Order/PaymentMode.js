@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import { createOrder } from '../../actions';
@@ -80,6 +80,7 @@ const styles = {
   right: css({
     flex: 1,
     marginRight: '12px',
+    marginLeft: '-12px',
     '& img': {
       float: 'right',
     },
@@ -209,9 +210,7 @@ class NewPayment extends React.Component {
 
         <PaymentLayout {...this.props}>
           <div>
-            <div>
-              <p>Pay with</p>
-            </div>
+            <div>Pay with</div>
             <div>
               <p
                 ref={e => (this.anchorEl = e)}
