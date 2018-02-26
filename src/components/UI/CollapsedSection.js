@@ -18,7 +18,7 @@ const styles = {
   text: css({
     fontSize: 16,
     color: '#777777 !important',
-    fontWeight: 'bold !important',
+    fontWeight: '500 !important',
     '& strong': {
       paddingBottom: 2,
       borderBottom: '1px solid #CCCCCC',
