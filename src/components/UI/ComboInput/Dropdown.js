@@ -43,14 +43,14 @@ const rowComponents = {
   },
 };
 
+const getRowHeight = item =>
+  item.__type === 'history' ? 68 : item.__type === 'sectionTitle' ? 24 : 44;
+
 const Dropdown = ({ getItemProps, items, highlightedIndex }) => {
   const itemCount = items.length;
   const height =
     itemCount < 6
-      ? items.reduce(
-          (height, item) => height + (item.__type === 'sectionTitle' ? 24 : 44),
-          0
-        )
+      ? items.reduce((height, item) => height + getRowHeight(item), 0)
       : 264;
 
   return (
@@ -62,7 +62,7 @@ const Dropdown = ({ getItemProps, items, highlightedIndex }) => {
             height={height}
             scrollToAlignment="auto"
             scrollToIndex={highlightedIndex || undefined}
-            itemSize={i => (items[i].__type === 'sectionTitle' ? 24 : 44)}
+            itemSize={i => getRowHeight(items[i])}
             itemCount={itemCount}
             renderItem={({ index, style }) => {
               const item = items[index];

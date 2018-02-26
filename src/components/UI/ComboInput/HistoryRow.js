@@ -27,7 +27,9 @@ const HistoryRow = ({ item, countryList, ...props }) => {
         }
         content={
           <span>
-            {operator.name} <strong>{item.number}</strong>
+            {operator.name}
+            <br />
+            <strong>{item.number}</strong>
           </span>
         }
       />
