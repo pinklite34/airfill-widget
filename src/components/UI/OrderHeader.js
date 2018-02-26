@@ -34,6 +34,8 @@ const styles = {
   label: css({
     margin: 0,
     padding: 0,
+    fontSize: '18px',
+    fontWeight: '500',
   }),
   orderId: css({
     marginRight: '12px',
@@ -55,7 +57,7 @@ const OrderHeader = ({ children, order, title, subtitle, icon }) => (
     <div {...styles.icon}>{icon}</div>
     <div {...styles.text}>
       <div {...styles.textHeader}>
-        <h2 {...styles.label}>{title}</h2>
+        <div {...styles.label}>{title}</div>
         <div {...styles.orderId}>Order {order.id}</div>
       </div>
       <div {...styles.subtitle}>{subtitle}</div>
