@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
 import { setOperator } from '../../actions';
@@ -18,57 +18,61 @@ const customLabels = {
   other: 'Other providers',
 };
 
-const Picker = ({
-  operators,
-  setOperator,
-  history,
-  location,
-  selectedOperator,
-  country,
-  numberLookup,
-}) => {
-  if (!country) {
-    return null;
-  }
-
-  const isNumberLookup = !!numberLookup.altOperators;
-
-  const selectOperator = operator => {
-    setOperator(operator);
-    history.push('/refill/selectAmount');
+class Picker extends PureComponent {
+  state = {
+    showSuggestedOperator: true,
   };
 
-  if (isNumberLookup) {
-    return (
-      <ActiveSection>
-        <SuggestedOperator
-          operator={numberLookup.operator}
-          onAccept={() => selectOperator(numberLookup.operator.slug)}
-          onReject={() => history.replace('/refill/selectProvider')}
-        />
-        <Grid
-          title={'Available operators'}
-          providers={numberLookup.altOperators}
-          onSelect={selectOperator}
-          defaultShowAll={true}
-        />
-      </ActiveSection>
+  onSelectSuggestedOperator = () =>
+    this.props.selectOperator(this.props.numberLookup.operator.slug);
+
+  onRejectSuggestedOperator = () =>
+    this.setState({ showSuggestedOperator: false }, () =>
+      this.props.history.replace('/refill/selectProvider')
     );
-  } else {
-    return (
-      <ActiveSection>
-        {Object.keys(operators).map(key => (
+
+  onSelectOperator = operator => {
+    this.props.setOperator(operator);
+    this.props.history.push('/refill/selectAmount');
+  };
+
+  render() {
+    const { operators, country, numberLookup } = this.props;
+    const { showSuggestedOperator } = this.state;
+    const isNumberLookup = !!numberLookup.altOperators;
+
+    return country ? (
+      isNumberLookup ? (
+        <ActiveSection>
+          {showSuggestedOperator ? (
+            <SuggestedOperator
+              operator={numberLookup.operator}
+              onAccept={this.onSelectSuggestedOperator}
+              onReject={this.onRejectSuggestedOperator}
+            />
+          ) : null}
           <Grid
-            key={key}
-            title={customLabels[key] || `${key} refill`}
-            providers={operators[key]}
-            onSelect={selectOperator}
+            title={'Available operators'}
+            providers={numberLookup.altOperators}
+            onSelect={this.onSelectOperator}
+            defaultShowAll={true}
           />
-        ))}
-      </ActiveSection>
-    );
+        </ActiveSection>
+      ) : (
+        <ActiveSection>
+          {Object.keys(operators).map(key => (
+            <Grid
+              key={key}
+              title={customLabels[key] || `${key} refill`}
+              providers={operators[key]}
+              onSelect={this.onSelectOperator}
+            />
+          ))}
+        </ActiveSection>
+      )
+    ) : null;
   }
-};
+}
 
 export default connect(
   state => ({
