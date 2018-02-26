@@ -26,7 +26,7 @@ const styles = {
       float: 'left',
       textAlign: 'right',
       width: 120,
-      fontWeight: 700,
+      fontWeight: 500,
       marginRight: '24px',
     },
     '> dd': {
@@ -56,11 +56,11 @@ const styles = {
   package: css({
     fontSize: 16,
     color: '#323232',
-    fontWeight: 'bold',
+    fontWeight: '500',
   }),
   changeButton: css({
     color: '#3e8fe4 !important',
-    fontWeight: 'bold !important',
+    fontWeight: '500 !important',
     marginLeft: '12px',
   }),
   container: css({
@@ -214,9 +214,7 @@ class NewPayment extends React.Component {
             <div>
               <p
                 ref={e => (this.anchorEl = e)}
-                style={{
-                  fontWeight: 'bold',
-                }}
+                style={{ fontWeight: '500' }}
                 onClick={() => this.openMenu()}
               >
                 {this.state.paymentMethod.title}

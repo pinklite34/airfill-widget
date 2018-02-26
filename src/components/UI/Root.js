@@ -1,7 +1,9 @@
 import React from 'react';
 import { css } from 'glamor';
 
-css.insert("@import url('https://fonts.googleapis.com/css?family=Roboto');");
+css.insert(
+  "@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');"
+);
 
 const style = css({
   fontSize: 14,

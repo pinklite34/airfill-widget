@@ -52,7 +52,7 @@ const styles = {
     },
   }),
   infoContainer: css({
-    fontWeight: 'bold',
+    fontWeight: '500',
   }),
   cellContainer: css({
     flexDirection: 'column !important',
@@ -62,12 +62,12 @@ const styles = {
   topLabel: css({
     display: 'block',
     color: '#777777',
-    fontWeight: 'bold',
+    fontWeight: '500',
     fontSize: '10px',
     textTransform: 'uppercase',
   }),
   label: css({
-    fontWeight: 'bold',
+    fontWeight: '500',
     fontSize: '12px',
     color: '#777777',
   }),

@@ -16,7 +16,7 @@ const muiStyles = {
     display: 'flex',
   },
   primaryText: {
-    fontWeight: 'bold',
+    fontWeight: '500',
   },
 };
 
