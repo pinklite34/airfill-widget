@@ -17,6 +17,7 @@ const muiStyles = {
   },
   primaryText: {
     fontWeight: '500',
+    fontFamily: '"Roboto", sans-serif',
   },
 };
 

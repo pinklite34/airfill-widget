@@ -21,7 +21,7 @@ const styles = {
         justifyContent: 'flex-end',
         margin: 0,
         flex: '0 0 68px',
-        fontWeight: 'bold',
+        fontWeight: '500',
         fontSize: '10px',
         color: '#777777',
         minHeight: '50px',

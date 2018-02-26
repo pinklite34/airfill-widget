@@ -25,6 +25,8 @@ const styles = {
     flex: 1,
   }),
   label: css({
+    fontSize: '18px',
+    fontWeight: '500',
     float: 'left',
     margin: 0,
     padding: 0,
@@ -40,10 +42,11 @@ const styles = {
       width: '100%',
     },
   }),
-  details: css({
+  subtitle: css({
     color: '#777777',
     fontSize: '14px',
     float: 'left',
+    marginTop: '28px',
   }),
 };
 
@@ -51,11 +54,9 @@ const OrderHeader = ({ children, order, title, subtitle, icon }) => (
   <div {...styles.base}>
     <div {...styles.icon}>{icon}</div>
     <div {...styles.text}>
-      <h2 {...styles.label}>{title}</h2>
+      <div {...styles.label}>{title}</div>
       <div {...styles.orderId}>Order {order.id}</div>
-      <br />
-      <br />
-      <div {...styles.details}>{subtitle}</div>
+      <div {...styles.subtitle}>{subtitle}</div>
     </div>
   </div>
 );
