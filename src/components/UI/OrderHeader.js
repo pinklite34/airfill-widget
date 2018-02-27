@@ -58,7 +58,7 @@ const OrderHeader = ({ children, order, title, subtitle, icon }) => (
     <div {...styles.text}>
       <div {...styles.textHeader}>
         <div {...styles.label}>{title}</div>
-        <div {...styles.orderId}>Order {order.id}</div>
+        <div {...styles.orderId}>Order ID {order.id}</div>
       </div>
       <div {...styles.subtitle}>{subtitle}</div>
     </div>
