@@ -41,8 +41,8 @@ const RefillDelivered = props => {
           <div />
           <div {...styles.textContainer}>
             <span {...styles.info}>
-              The refill has delivered and credited to the balance of the target
-              device.
+              The refill has been delivered and credited to the balance of the
+              target device.
             </span>
             <br />
             <a
