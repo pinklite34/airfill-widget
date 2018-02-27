@@ -7,19 +7,19 @@ import Provider, { ShowAll } from './Provider';
 const styles = {
   container: css({
     '& + &': {
-      marginTop: 20
-    }
+      marginTop: 20,
+    },
   }),
   grid: css({
     display: 'flex',
     flexWrap: 'wrap',
     width: '100%',
-  })
+  }),
 };
 
 class Grid extends Component {
   state = {
-    showAll: this.props.defaultShowAll || false
+    showAll: this.props.defaultShowAll || false,
   };
 
   showAll = () => this.setState({ showAll: true });

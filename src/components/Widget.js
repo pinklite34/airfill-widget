@@ -26,11 +26,10 @@ import Amount from './Amount';
 import Order from './Order';
 import Details from './Details';
 
-
 const theme = createMuiTheme({
   palette: {
-    primary: blue
-  }
+    primary: blue,
+  },
 });
 
 class AirfillWidget extends Component {
@@ -41,13 +40,13 @@ class AirfillWidget extends Component {
     userEmail: PropTypes.string,
 
     // Payment options
-    paymentButtons: PropTypes.arrayOf(
+    /* paymentButtons: PropTypes.arrayOf(
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         callback: PropTypes.func.isRequired,
         requireAccountBalance: PropTypes.bool
       })
-    ).isRequired,
+    ).isRequired, */
     showBTCAddress: PropTypes.bool,
     billingCurrency: PropTypes.string,
     requireAccountBalance: PropTypes.bool,
@@ -66,9 +65,9 @@ class AirfillWidget extends Component {
     refillHistory: PropTypes.arrayOf(
       PropTypes.shape({
         number: PropTypes.string,
-        operator: PropTypes.string
+        operator: PropTypes.string,
       })
-    )
+    ),
   };
 
   static defaultProps = {
@@ -89,19 +88,19 @@ class AirfillWidget extends Component {
     showPoweredBy: false,
     showFooter: true,
 
-    refillHistory: []
+    refillHistory: [],
   };
 
   componentDidMount() {
     this.props.init({
       defaultNumber: this.props.defaultNumber,
-      email: this.props.orderOptions.email
+      email: this.props.orderOptions.email,
     });
   }
 
   componentDidCatch(err, info) {
-    console.error('widget', err)
-    console.error('widget', info)
+    console.error('widget', err);
+    console.error('widget', info);
   }
 
   render() {
@@ -133,7 +132,7 @@ class AirfillWidget extends Component {
               {...css({
                 display: 'flex',
                 justifyContent: 'center',
-                margin: 64
+                margin: 64,
               })}
             >
               <CircularProgress />
@@ -150,9 +149,9 @@ class AirfillWidget extends Component {
 export default connect(
   state => ({
     // recentNumbers: selectRecentNumbers(state)
-    inventory: selectInventory(state)
+    inventory: selectInventory(state),
   }),
   {
-    init
+    init,
   }
 )(AirfillWidget);

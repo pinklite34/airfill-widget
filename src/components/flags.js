@@ -159,5 +159,5 @@ export default {
   VG: require('flag-icons/flags/flags-iso/flat/24/VG.png'),
   YE: require('flag-icons/flags/flags-iso/flat/24/YE.png'),
   ZM: require('flag-icons/flags/flags-iso/flat/24/ZM.png'),
-  ZW: require('flag-icons/flags/flags-iso/flat/24/ZW.png')
+  ZW: require('flag-icons/flags/flags-iso/flat/24/ZW.png'),
 };

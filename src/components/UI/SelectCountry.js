@@ -10,8 +10,8 @@ const styles = {
     width: '100%',
     height: '100%',
     opacity: 0,
-    zIndex: 999
-  })
+    zIndex: 999,
+  }),
 };
 
 class SelectCountry extends Component {
@@ -40,9 +40,9 @@ class SelectCountry extends Component {
 export default connect(
   state => ({
     countries: selectCountryList(state),
-    selected: selectCountryCode(state)
+    selected: selectCountryCode(state),
   }),
   {
-    setCountry
+    setCountry,
   }
 )(SelectCountry);

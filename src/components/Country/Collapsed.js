@@ -12,30 +12,32 @@ const styles = {
   container: css({
     position: 'relative',
     width: '100%',
-    maxWidth: 350
+    maxWidth: 350,
   }),
   country: css({
     display: 'flex',
     alignItems: 'center',
     cursor: 'pointer',
     position: 'relative',
-    zIndex: 9
+    zIndex: 9,
   }),
   flag: css({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     '& svg': {
-      width: 24,
+      width: 26,
       height: 18,
       borderRadius: 1,
-      boxShadow: '1px 1px 1px rgba(0,0,0,0.08)'
+      boxShadow: '1px 1px 1px rgba(0,0,0,0.08)',
     },
-    marginRight: 12
+    marginRight: 30,
+    marginLeft: 14,
+    '@media(max-width: 460px)': {
+      marginRight: 14,
+      marginLeft: 0,
+    },
   }),
-  countryName: css({
-    fontWeight: 500
-  })
 };
 
 const Collapsed = ({
@@ -46,7 +48,7 @@ const Collapsed = ({
   openComboInput,
   setComboInputFocus,
   setCountry,
-  history
+  history,
 }) => {
   if (isNumberLookup) {
     return null;
@@ -74,7 +76,7 @@ const Collapsed = ({
           <div {...styles.flag}>
             <Flag country={country.alpha2} />
           </div>
-          <div {...styles.countryName}>{country.name}</div>
+          {country.name}
         </div>
       </div>
     </CollapsedSection>
@@ -84,12 +86,12 @@ const Collapsed = ({
 export default connect(
   state => ({
     country: selectCountry(state),
-    isNumberLookup: selectIsNumberLookup(state)
+    isNumberLookup: selectIsNumberLookup(state),
   }),
   {
     openComboInput,
     setComboInputFocus,
     push,
-    setCountry
+    setCountry,
   }
 )(Collapsed);

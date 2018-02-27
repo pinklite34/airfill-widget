@@ -1,12 +1,12 @@
 import {
   itemIndexToVirtualIndex,
-  virtualIndexToItemIndex
+  virtualIndexToItemIndex,
 } from './comboinput-helpers';
 
 const sections = [
   ['a', 'b', 'c', 'd'],
   ['A', 'B', 'C', 'D'],
-  ['I', 'II', 'III', 'IV']
+  ['I', 'II', 'III', 'IV'],
 ];
 
 describe('itemIndexToVirtualIndex', () => {
@@ -16,7 +16,7 @@ describe('itemIndexToVirtualIndex', () => {
     'Header 2',
     ...sections[1],
     'Header 3',
-    ...sections[2]
+    ...sections[2],
   ];
 
   it('should return header for first element', () => {
@@ -52,7 +52,7 @@ describe('itemIndexToVirtualIndex', () => {
     'Header 2',
     ...sections[1],
     'Header 3',
-    ...sections[2]
+    ...sections[2],
   ];
 
   it('should return header for first element', () => {
@@ -76,7 +76,7 @@ describe('itemIndexToVirtualIndex', () => {
     ...sections[0],
     ...[],
     'Header 3',
-    ...sections[2]
+    ...sections[2],
   ];
 
   it('should return header for first element', () => {
@@ -97,11 +97,7 @@ describe('itemIndexToVirtualIndex', () => {
 });
 
 describe('virtualIndexToItemIndex', () => {
-  const items = [
-    ...sections[0],
-    ...sections[1],
-    ...sections[2]
-  ];
+  const items = [...sections[0], ...sections[1], ...sections[2]];
 
   it('should return first element for index 0', () => {
     expect(items[virtualIndexToItemIndex(sections, 0)]).toBe(sections[0][0]);
@@ -137,13 +133,9 @@ describe('virtualIndexToItemIndex', () => {
 
   it('should return last element for any index that is too high', () => {
     expect(items[virtualIndexToItemIndex(sections, 27)]).toBe(sections[2][3]);
-  })
+  });
 
-  const items2 = [
-    ...sections[0],
-    ...[],
-    ...sections[2]
-  ];
+  const items2 = [...sections[0], ...[], ...sections[2]];
 
   it('should return first element for index 0', () => {
     expect(items2[virtualIndexToItemIndex(sections, 0)]).toBe(sections[0][0]);

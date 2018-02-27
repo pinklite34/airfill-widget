@@ -50,12 +50,12 @@ export const formatNumber = (countryCode, inputValue, currentCaret) => {
     // Strip everything but digits and +
     const { value, caret } = parse(inputValue, currentCaret, isPhoneNumberChar);
 
-    const formatter = new asYouType(countryCode);
+    const formatter = new asYouType(countryCode) // eslint-disable-line
     const formattedNumber = formatter.input(value);
 
     const { caret: nextCaret } = format(value, caret, () => ({
       text: formattedNumber,
-      template: formatter.template
+      template: formatter.template,
     }));
 
     if (
@@ -70,7 +70,7 @@ export const formatNumber = (countryCode, inputValue, currentCaret) => {
         formattedValue: formattedNumber,
         number: value,
         country: formatter.country,
-        caret: nextCaret
+        caret: nextCaret,
       };
     }
   } else {

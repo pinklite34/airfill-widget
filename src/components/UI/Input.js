@@ -7,7 +7,7 @@ const styles = {
     border: '1px solid #ccc',
     borderRadius: 2,
     padding: 8,
-  })
+  }),
 };
 
 const Input = props => <input {...styles.input} {...props} />;

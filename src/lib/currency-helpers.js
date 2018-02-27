@@ -11,3 +11,20 @@ export const getPrice = (pkg, currency) => pkg[getPriceKey(currency)];
 
 // Convert Satoshi to Bitcoins
 export const satoshiToBTC = amount => Math.ceil(amount / 100) / 1000000;
+
+const supportedCoins = ['bitcoin', 'litecoin', 'lightning', 'dash'];
+
+// If we can afford the selected payment method
+export const canAfford = ({
+  order,
+  accountBalance,
+  billingCurrency,
+  paymentMode,
+  requiresAccountBalance,
+}) => {
+  const isDirect = supportedCoins.some(v => v === paymentMode);
+  const price = order[getPriceKey(billingCurrency)];
+  const canAfford = price <= accountBalance;
+
+  return !requiresAccountBalance && (isDirect || canAfford);
+};

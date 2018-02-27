@@ -2,7 +2,7 @@ const errorMessages = {
   'Number is not valid':
     'It seems like the number you entered is invalid. Please make sure all digits were entered correctly.',
   'Country not supported':
-    "Unfortunately we currently don't support phone numbers from the country you entered."
+    "Unfortunately we currently don't support phone numbers from the country you entered.",
 };
 
 const initialState = {
@@ -11,7 +11,7 @@ const initialState = {
   number: null,
   country: null,
   operator: null,
-  altOperators: null
+  altOperators: null,
 };
 
 export default (state = initialState, action) => {
@@ -21,7 +21,7 @@ export default (state = initialState, action) => {
         ...state,
         number:
           action.payload && action.payload.query && action.payload.query.number,
-        isLoading: true
+        isLoading: true,
       };
 
     case 'LOAD_NUMBERLOOKUP_ERROR': {
@@ -31,7 +31,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        error: errorMessages[message] || message
+        error: errorMessages[message] || message,
       };
     }
 
@@ -42,7 +42,7 @@ export default (state = initialState, action) => {
         error: null,
         country: action.payload.country,
         operator: action.payload.operator,
-        altOperators: action.payload.altOperators
+        altOperators: action.payload.altOperators,
       };
 
     case 'RESET_NUMBERLOOKUP':

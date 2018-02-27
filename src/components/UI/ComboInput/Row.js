@@ -6,22 +6,22 @@ const styles = {
     borderTop: '1px solid rgba(0,0,0,0.08)',
     display: 'flex',
     alignItems: 'stretch',
-    cursor: 'pointer'
+    cursor: 'pointer',
   }),
   active: css({
-    background: 'rgba(0,0,0,0.08)'
+    background: 'rgba(0,0,0,0.08)',
   }),
   icon: css({
     background: 'rgba(0,0,0,0.04)',
     width: 48,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   }),
   content: css({
     fontSize: 16,
-    padding: 12
-  })
+    padding: 12,
+  }),
 };
 
 const Row = ({ itemProps, isActive, icon, content }) => (

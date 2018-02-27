@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import { css } from 'glamor';
 import Downshift from 'downshift';
 
@@ -10,7 +12,7 @@ import {
   selectAvailableOperators,
   selectRecentNumbers,
   selectComboInputOpen,
-  selectComboInputFocus
+  selectComboInputFocus,
 } from '../../../store';
 import {
   setCountry,
@@ -19,17 +21,17 @@ import {
   useRecentRefill,
   openComboInput,
   closeComboInput,
-  setComboInputFocus
+  setComboInputFocus,
 } from '../../../actions';
 import {
   isPhoneNumber,
   removeNextDigit,
   removePreviousDigit,
-  formatNumber
+  formatNumber,
 } from '../../../lib/number-input-helpers';
 import {
   sectionsToItemList,
-  virtualIndexToItemIndex
+  virtualIndexToItemIndex,
 } from '../../../lib/comboinput-helpers';
 
 import Dropdown from './Dropdown';
@@ -41,8 +43,8 @@ const styles = {
     width: '100%',
     maxWidth: '400px',
     color: '#444',
-    overflow: 'visible'
-  })
+    overflow: 'visible',
+  }),
 };
 
 const itemToString = item => {
@@ -68,86 +70,61 @@ const getInitialInputValue = (country, number) => {
   }
 };
 
+const countryShape = PropTypes.shape({
+  alpha2: PropTypes.string,
+  name: PropTypes.string,
+  operators: PropTypes.object,
+});
+
 class ComboInput extends Component {
+  static propTypes = {
+    closeComboInput: PropTypes.func.isRequired,
+    country: countryShape,
+    countryOnly: PropTypes.bool,
+    countryList: PropTypes.arrayOf(countryShape).isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
+    number: PropTypes.string,
+    onSubmit: PropTypes.func.isRequired,
+    openComboInput: PropTypes.func.isRequired,
+    loading: PropTypes.bool,
+    isOpen: PropTypes.bool,
+    recentNumbers: PropTypes.arrayOf(
+      PropTypes.shape({
+        number: PropTypes.string,
+        operator: PropTypes.string,
+      })
+    ),
+    setComboInputFocus: PropTypes.func.isRequired,
+    setCountry: PropTypes.func.isRequired,
+    setNumber: PropTypes.func.isRequired,
+    setOperator: PropTypes.func.isRequired,
+    shouldFocus: PropTypes.bool,
+    useRecentRefill: PropTypes.func.isRequired,
+  };
+
   state = {
     inputValue: getInitialInputValue(
       this.props.country && this.props.country.alpha2,
       this.props.number
-    )
-  };
-
-  focusInput = () => {
-    if (this.input) {
-      this.setState({ inputValue: '' }, () => {
-        this.input.focus();
-        this.props.setComboInputFocus(false);
-      });
-    }
+    ),
   };
 
   componentDidMount() {
-    if (this.props.shouldFocus) {
-      this.focusInput();
-    }
+    if (this.props.shouldFocus) this.focusInput();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.shouldFocus) {
-      this.focusInput();
-    }
+    if (nextProps.shouldFocus) this.focusInput();
   }
 
   componentDidUpdate() {
     if (isPhoneNumber(this.state.inputValue)) {
-      this.input.setSelectionRange(this.state.caret, this.state.caret);
+      this.input &&
+        this.input.setSelectionRange(this.state.caret, this.state.caret);
     }
   }
-
-  changeValue = (inputValue, currentCaret) => {
-    if (isPhoneNumber(inputValue)) {
-      const { formattedValue, number, country, caret } = formatNumber(
-        this.props.country && this.props.country.alpha2,
-        inputValue,
-        currentCaret
-      );
-
-      this.props.setCountry(country);
-      this.props.setNumber(number);
-
-      this.setState({ inputValue: formattedValue, caret });
-    } else {
-      if (this.props.country && !inputValue) {
-        this.props.setNumber('');
-      }
-      this.setState(state => ({
-        inputValue
-      }));
-    }
-  };
-
-  handleSelect = item => {
-    if (item.__type === 'country') {
-      this.props.setCountry(item.alpha2);
-      this.setState({
-        inputValue: this.props.number || ''
-      });
-    } else if (item.__type === 'provider') {
-      this.props.setOperator(item.slug);
-      this.props.history.push('/refill/selectAmount');
-    } else if (item.__type === 'history') {
-      this.props.useRecentRefill(item);
-      this.props.history.push('/refill/selectAmount');
-    }
-  };
-
-  resetCountry = () => {
-    this.props.setCountry('');
-    this.setState({ inputValue: '' });
-    this.input.focus();
-    this.props.openComboInput();
-  };
-
-  setInputRef = ref => (this.input = ref);
 
   onInputKeyDown = e => {
     const { selectionStart, selectionEnd } = e.target;
@@ -179,6 +156,37 @@ class ComboInput extends Component {
       this.handleSubmit();
     }
   };
+
+  handleSelect = item => {
+    if (item.__type === 'country') {
+      this.props.setCountry(item.alpha2);
+      this.setState({
+        inputValue: this.props.number || '',
+      });
+    } else if (item.__type === 'provider') {
+      this.props.setOperator(item.slug);
+      this.props.history.push('/refill/selectAmount');
+    } else if (item.__type === 'history') {
+      this.props.useRecentRefill(item);
+      this.props.history.push('/refill/selectAmount');
+    }
+  };
+
+  handleSubmit = () => {
+    if (isPhoneNumber(this.state.inputValue)) this.props.onSubmit();
+  };
+
+  handleStateChange = changes => {
+    if (changes.hasOwnProperty('isOpen')) {
+      if (changes.isOpen) {
+        this.props.openComboInput();
+      } else {
+        this.props.closeComboInput();
+      }
+    }
+  };
+
+  setInputRef = ref => (this.input = ref);
 
   getMatchingCountries = value => {
     const { countryList } = this.props;
@@ -231,30 +239,94 @@ class ComboInput extends Component {
       .map(item => ({
         ...item,
         __type: 'history',
-        key: `${item.operator}-${item.number}`
+        key: `${item.operator}-${item.number}`,
       }));
   };
 
-  handleSubmit = () => {
-    if (isPhoneNumber(this.state.inputValue)) {
-      this.props.onSubmit();
+  resetCountry = () => {
+    this.props.setCountry('');
+    this.setState({ inputValue: '' });
+    this.input.focus();
+    this.props.openComboInput();
+  };
+
+  changeValue = (inputValue, currentCaret) => {
+    if (isPhoneNumber(inputValue)) {
+      const { formattedValue, number, country, caret } = formatNumber(
+        this.props.country && this.props.country.alpha2,
+        inputValue,
+        currentCaret
+      );
+
+      this.props.setCountry(country);
+      this.props.setNumber(number);
+
+      this.setState({ inputValue: formattedValue, caret });
+    } else {
+      if (this.props.country && !inputValue) {
+        this.props.setNumber('');
+      }
+      this.setState(state => ({
+        inputValue,
+      }));
     }
   };
 
-  handleStateChange = changes => {
-    if (changes.hasOwnProperty('isOpen')) {
-      if (changes.isOpen) {
-        this.props.openComboInput();
-      } else {
-        this.props.closeComboInput();
-      }
+  focusInput = () => {
+    if (this.input) {
+      this.setState({ inputValue: '' }, () => {
+        this.input.focus();
+        this.props.setComboInputFocus(false);
+      });
     }
+  };
+
+  changeValue = (inputValue, currentCaret) => {
+    if (isPhoneNumber(inputValue)) {
+      const { formattedValue, number, country, caret } = formatNumber(
+        this.props.country && this.props.country.alpha2,
+        inputValue,
+        currentCaret
+      );
+
+      this.props.setCountry(country);
+
+      this.props.setNumber(number);
+      this.setState(
+        { inputValue: formattedValue },
+        () => this.input && this.input.setSelectionRange(caret, caret)
+      );
+    } else {
+      if (this.props.country && !inputValue) {
+        this.props.setNumber('');
+      }
+      this.setState(state => ({
+        inputValue,
+      }));
+    }
+  };
+
+  resetCountry = () => {
+    this.props.setCountry('');
+    this.setState({ inputValue: '' });
+    this.input.focus();
+    this.props.openComboInput();
   };
 
   render() {
     const { inputValue } = this.state;
 
-    const { country, loading, isOpen, openComboInput } = this.props;
+    const {
+      countryOnly,
+      country,
+      loading,
+      isOpen,
+      openComboInput,
+    } = this.props;
+
+    if (countryOnly && country && country.alpha2) {
+      return <Redirect to="/refill/selectProvider" />;
+    }
 
     const normalizedInputValue = this.state.inputValue.toLowerCase();
     const countries = country
@@ -266,19 +338,26 @@ class ComboInput extends Component {
       country && country.alpha2
     );
 
-    const sections = [recentNumbers, countries, operators];
-    const titles = ['Recent refills', 'Countries', 'Services'];
+    const sections = countryOnly
+      ? [recentNumbers, countries]
+      : [recentNumbers, countries, operators];
+
+    const titles = countryOnly
+      ? ['Recent refills', 'Countries']
+      : ['Recent refills', 'Countries', 'Services'];
 
     const items = sectionsToItemList(sections, titles).map((item, index) => ({
       ...item,
-      index: virtualIndexToItemIndex(sections, index)
+      index: virtualIndexToItemIndex(sections, index),
     }));
 
     const itemCount =
       countries.length + operators.length + recentNumbers.length;
 
     const isPhoneNo = isPhoneNumber(this.state.inputValue);
-    const shouldDefaultToTel = isPhoneNo || (country != null && !this.state.inputValue);
+    const shouldDefaultToTel =
+      !countryOnly &&
+      (isPhoneNo || (country != null && !this.state.inputValue));
 
     return (
       <Downshift
@@ -304,6 +383,7 @@ class ComboInput extends Component {
               submitEnabled={isPhoneNo}
               onFocus={openComboInput}
               type={shouldDefaultToTel ? 'tel' : 'text'}
+              countryOnly={countryOnly}
             />
             {isOpen && itemCount ? (
               <Dropdown
@@ -327,7 +407,7 @@ export default connect(
     number: selectNumber(state),
     recentNumbers: selectRecentNumbers(state),
     isOpen: selectComboInputOpen(state),
-    shouldFocus: selectComboInputFocus(state)
+    shouldFocus: selectComboInputFocus(state),
   }),
   {
     openComboInput,
@@ -336,6 +416,6 @@ export default connect(
     setCountry,
     setNumber,
     setOperator,
-    useRecentRefill
+    useRecentRefill,
   }
 )(ComboInput);

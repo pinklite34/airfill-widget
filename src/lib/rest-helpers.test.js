@@ -6,16 +6,16 @@ import {
   createErrorSelector,
   createItemSelector,
   createSingleResultSelector,
-  createLoadAction
+  createLoadAction,
 } from './rest-helpers';
 
 jest.mock('./api-client', () => {
   return {
-    fetch: jest.fn()
+    fetch: jest.fn(),
   };
 });
 
-import {fetch} from './api-client';
+import { fetch } from './api-client' // eslint-disable-line
 
 // // --------------------------
 // // --- Collection Reducer ---
@@ -25,12 +25,12 @@ describe('createCollectionReducer', () => {
   const state = {
     isLoading: false,
     error: null,
-    items: []
+    items: [],
   };
 
   const loadingState = {
     ...state,
-    isLoading: true
+    isLoading: true,
   };
 
   const reducer = createCollectionReducer('collection');
@@ -49,14 +49,11 @@ describe('createCollectionReducer', () => {
   it('handles LOAD_COLLECTION_SUCCESS', () => {
     const action = {
       type: 'LOAD_COLLECTION_SUCCESS',
-      payload: [
-        { id: 1 },
-        { id: 2 }
-      ]
+      payload: [{ id: 1 }, { id: 2 }],
     };
     const expected = {
       ...state,
-      items: action.payload
+      items: action.payload,
     };
 
     expect(reducer(loadingState, action)).toEqual(expected);
@@ -65,11 +62,11 @@ describe('createCollectionReducer', () => {
   it('handles LOAD_COLLECTION_SUCCESS with non-array payload', () => {
     const action = {
       type: 'LOAD_COLLECTION_SUCCESS',
-      payload: { id: 1 }
+      payload: { id: 1 },
     };
     const expected = {
       ...state,
-      items: [action.payload]
+      items: [action.payload],
     };
 
     expect(reducer(loadingState, action)).toEqual(expected);
@@ -79,13 +76,13 @@ describe('createCollectionReducer', () => {
     const action = {
       type: 'LOAD_COLLECTION_ERROR',
       payload: {
-        message: 'error message'
-      }
+        message: 'error message',
+      },
     };
 
     const expected = {
       ...state,
-      error: action.payload.message
+      error: action.payload.message,
     };
 
     expect(reducer(loadingState, action)).toEqual(expected);
@@ -94,12 +91,12 @@ describe('createCollectionReducer', () => {
   it('handles LOAD_COLLECTION_ERROR with error message as payload', () => {
     const action = {
       type: 'LOAD_COLLECTION_ERROR',
-      payload: 'error message'
+      payload: 'error message',
     };
 
     const expected = {
       ...state,
-      error: action.payload
+      error: action.payload,
     };
 
     expect(reducer(loadingState, action)).toEqual(expected);
@@ -109,8 +106,8 @@ describe('createCollectionReducer', () => {
     const action = {
       type: REHYDRATE,
       payload: {
-        collection: loadingState
-      }
+        collection: loadingState,
+      },
     };
     const expected = state;
 
@@ -127,27 +124,21 @@ describe('colletion selectors', () => {
     nested: {
       state: {
         works: {
-          well: true
-        }
+          well: true,
+        },
       },
       collection: {
         isLoading: false,
         error: 'Msg',
-        items: [
-          { id: 'abc' },
-          { id: 'def' }
-        ]
-      }
+        items: [{ id: 'abc' }, { id: 'def' }],
+      },
     },
     shallow: false,
     collection: {
       isLoading: true,
       error: null,
-      items: [
-        { id: 1 },
-        { id: 2 }
-      ]
-    }
+      items: [{ id: 1 }, { id: 2 }],
+    },
   };
 
   describe('createCollectionSelector', () => {
@@ -194,12 +185,14 @@ describe('colletion selectors', () => {
   describe('createItemSelector', () => {
     it('returns item with provided id from the collection', () => {
       const selector = createItemSelector('collection');
-      expect(selector(state, 1)).toEqual([state.collection.items[0]])
+      expect(selector(state, 1)).toEqual([state.collection.items[0]]);
     });
 
     it('works with nested collections', () => {
       const selector = createItemSelector(['nested', 'collection']);
-      expect(selector(state, 'def')).toEqual([state.nested.collection.items[1]]);
+      expect(selector(state, 'def')).toEqual([
+        state.nested.collection.items[1],
+      ]);
     });
 
     it('returns an empty array if no match was found', () => {
@@ -214,7 +207,7 @@ describe('colletion selectors', () => {
       const expected = {
         isLoading: state.collection.isLoading,
         error: state.collection.error,
-        result: state.collection.items[0]
+        result: state.collection.items[0],
       };
 
       expect(selector(state)).toEqual(expected);
@@ -225,11 +218,11 @@ describe('colletion selectors', () => {
       const expected = {
         isLoading: state.nested.collection.isLoading,
         error: state.nested.collection.error,
-        result: state.nested.collection.items[0]
+        result: state.nested.collection.items[0],
       };
 
       expect(selector(state)).toEqual(expected);
-    })
+    });
   });
 });
 
@@ -242,8 +235,8 @@ describe('createLoadAction', () => {
     collection: {
       isLoading: false,
       error: null,
-      items: []
-    }
+      items: [],
+    },
   };
 
   const dispatch = jest.fn();
@@ -255,12 +248,12 @@ describe('createLoadAction', () => {
     dispatch.mockClear();
   });
 
-  const uri = 'path'
+  const uri = 'path';
   const actionCreator = createLoadAction({ name: 'collection', uri });
 
   it('returns an action creator', () => {
     const response = { id: 1 };
-    fetch.mockReturnValueOnce(Promise.resolve(response))
+    fetch.mockReturnValueOnce(Promise.resolve(response));
     const props = { body: '', query: {} };
 
     expect(typeof actionCreator).toBe('function');
@@ -271,15 +264,15 @@ describe('createLoadAction', () => {
       expect(dispatch).toHaveBeenCalledTimes(2);
       expect(dispatch).toHaveBeenCalledWith({
         type: 'LOAD_COLLECTION',
-        payload: { ...props, uri }
+        payload: { ...props, uri },
       });
       expect(dispatch).toHaveBeenCalledWith({
         type: 'LOAD_COLLECTION_SUCCESS',
         payload: response,
         meta: {
           props: { ...props, uri },
-          response
-        }
+          response,
+        },
       });
 
       expect(getState).toHaveBeenCalled();
@@ -297,15 +290,15 @@ describe('createLoadAction', () => {
       expect(dispatch).toHaveBeenCalledTimes(2);
       expect(dispatch).toHaveBeenCalledWith({
         type: 'LOAD_COLLECTION',
-        payload: { ...props, uri }
+        payload: { ...props, uri },
       });
       expect(dispatch).toHaveBeenCalledWith({
         type: 'LOAD_COLLECTION_ERROR',
         payload: error,
         meta: {
           props: { ...props, uri },
-          response: error
-        }
+          response: error,
+        },
       });
 
       expect(getState).toHaveBeenCalled();
@@ -317,7 +310,7 @@ describe('createLoadAction', () => {
     const actionCreatorWithTransform = createLoadAction({
       name: 'collection',
       uri,
-      responseTransform
+      responseTransform,
     });
 
     const response = { data: ['item'] };
@@ -331,8 +324,8 @@ describe('createLoadAction', () => {
         payload: response.data,
         meta: {
           props: { ...props, uri },
-          response: response.data
-        }
+          response: response.data,
+        },
       });
       expect(responseTransform).toHaveBeenCalledWith(response);
     });
@@ -345,32 +338,34 @@ describe('createLoadAction', () => {
 
     const customError = payload => ({
       type: 'CUSTOM_ERROR',
-      payload
+      payload,
     });
     const errorHandler = jest.fn(customError);
 
     const actionCreatorWithErrorHandler = createLoadAction({
       name: 'collection',
       uri,
-      errorHandler
+      errorHandler,
     });
 
     fetch.mockReturnValueOnce(Promise.reject(error));
     const props = { body: '', query: {} };
 
-    return actionCreatorWithErrorHandler(props)(dispatch, getState).catch(() => {
-      expect(dispatch).toHaveBeenCalledWith({
-        type: 'LOAD_COLLECTION_ERROR',
-        error: true,
-        payload: error,
-        meta: {
-          props: { ...props, uri },
-          response: error
-        }
-      })
+    return actionCreatorWithErrorHandler(props)(dispatch, getState).catch(
+      () => {
+        expect(dispatch).toHaveBeenCalledWith({
+          type: 'LOAD_COLLECTION_ERROR',
+          error: true,
+          payload: error,
+          meta: {
+            props: { ...props, uri },
+            response: error,
+          },
+        });
 
-      expect(errorHandler).toHaveBeenCalled();
-      expect(dispatch).toHaveBeenCalledWith(customError(errMsg));
-    });
+        expect(errorHandler).toHaveBeenCalled();
+        expect(dispatch).toHaveBeenCalledWith(customError(errMsg));
+      }
+    );
   });
 });

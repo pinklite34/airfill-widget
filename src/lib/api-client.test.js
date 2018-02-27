@@ -1,19 +1,22 @@
+import { encodeQueryString, createClient } from './api-client';
+
 // Mock fetch so we can make sure it's called correctly
 jest.mock('fetch-ponyfill', () => {
-  const mockFetch = jest.fn(() => Promise.resolve({
-    status: 200,
-    json: () => Promise.resolve()
-  }));
+  const mockFetch = jest.fn(() =>
+    Promise.resolve({
+      status: 200,
+      json: () => Promise.resolve(),
+    })
+  );
   return () => ({
-    fetch: mockFetch
+    fetch: mockFetch,
   });
 });
 
 // Retrieve fetch mock so we can use it in assertions
-import ponyFetch from 'fetch-ponyfill';
-const { fetch } = ponyFetch();
+import ponyFetch from 'fetch-ponyfill' // eslint-disable-line
 
-import { encodeQueryString, createClient } from './api-client';
+const { fetch } = ponyFetch();
 
 describe('encodeQueryString', () => {
   it('should return an URI-encoded version of supplied object', () => {
@@ -34,7 +37,7 @@ describe('encodeQueryString', () => {
   it('should work with multiple keys', () => {
     const query = {
       first: 'data',
-      second: 'works'
+      second: 'works',
     };
     const expected = '?first=data&second=works';
 
@@ -49,7 +52,7 @@ describe('createClient', () => {
   beforeEach(() => {
     c.configure({
       baseUrl,
-      token: null
+      token: null,
     });
     fetch.mockClear();
   });
@@ -85,7 +88,7 @@ describe('createClient', () => {
       const queryString = '?test=data';
       const uri = 'test';
       expect(createHref(uri, query)).toEqual(baseUrl + uri + queryString);
-    })
+    });
   });
 
   describe('configure', () => {
@@ -101,9 +104,9 @@ describe('createClient', () => {
   describe('fetch', () => {
     const defaultOptions = {
       headers: {
-        'Accept': 'application/json'
+        Accept: 'application/json',
       },
-      method: 'get'
+      method: 'get',
     };
 
     const uri = 'my_uri';
@@ -116,15 +119,15 @@ describe('createClient', () => {
     it('merges in provided headers', () => {
       const options = {
         headers: {
-          'TestHeader': true
-        }
+          TestHeader: true,
+        },
       };
       const expectedOptions = {
         headers: {
           ...defaultOptions.headers,
-          ...options.headers
+          ...options.headers,
         },
-        ...defaultOptions
+        ...defaultOptions,
       };
 
       c.fetch(uri, {});
@@ -134,16 +137,17 @@ describe('createClient', () => {
     it('adds auth header if username and password is provided', () => {
       const options = {
         username: 'testing',
-        password: 'pass'
+        password: 'pass',
       };
 
       const expected = {
         ...defaultOptions,
         ...options,
         headers: {
-          Authorization: 'Basic ' + btoa(options.username + ':' + options.password),
-          ...defaultOptions.headers
-        }
+          Authorization:
+            'Basic ' + btoa(options.username + ':' + options.password),
+          ...defaultOptions.headers,
+        },
       };
 
       c.fetch(uri, options);
@@ -153,14 +157,14 @@ describe('createClient', () => {
     it('adds querystring to url', () => {
       const options = {
         query: {
-          test: 'data'
-        }
+          test: 'data',
+        },
       };
       const querystring = '?test=data';
 
       const expected = {
         ...options,
-        ...defaultOptions
+        ...defaultOptions,
       };
 
       c.fetch(uri, options);
@@ -169,12 +173,12 @@ describe('createClient', () => {
 
     it('uses provided method', () => {
       const options = {
-        method: 'PUT'
+        method: 'PUT',
       };
 
       const expected = {
         ...defaultOptions,
-        ...options
+        ...options,
       };
 
       c.fetch(uri, options);
@@ -183,7 +187,7 @@ describe('createClient', () => {
 
     it('assumes post if we provide body', () => {
       const options = {
-        body: 'data'
+        body: 'data',
       };
 
       const expected = {
@@ -191,9 +195,9 @@ describe('createClient', () => {
         ...options,
         headers: {
           ...defaultOptions.headers,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        method: 'post'
+        method: 'post',
       };
 
       c.fetch(uri, options);
@@ -206,8 +210,8 @@ describe('createClient', () => {
         ...defaultOptions,
         headers: {
           ...defaultOptions.headers,
-          Authorization: 'Token ' + token
-        }
+          Authorization: 'Token ' + token,
+        },
       };
 
       c.configure({ token });

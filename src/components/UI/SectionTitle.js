@@ -6,7 +6,8 @@ const style = css({
   fontWeight: 700,
   textTransform: 'uppercase',
   marginBottom: 8,
-  color: '#777'
+  marginLeft: 8,
+  color: '#777',
 });
 
 const SectionTitle = ({ children, ...props }) => (

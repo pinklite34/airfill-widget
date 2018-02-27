@@ -40,7 +40,9 @@ export const formatDefaultValue = (type, number, country) => {
   if (isPhoneNumber(type)) {
     return formatNumber(type, number, country) || `${countryCode} `;
   } else if (number) {
-    return String(number).replace(countryCode, '').trim();
+    return String(number)
+      .replace(countryCode, '')
+      .trim();
   }
   return '';
 };
@@ -50,7 +52,9 @@ export const formatDisplayValue = (type, number, country) => {
 
   return isPhoneNumber(type) && number
     ? formatNumber(type, number, country)
-    : String(number).replace(countryCode, '').trim();
+    : String(number)
+        .replace(countryCode, '')
+        .trim();
 };
 
 export const parseNumber = (number, country) => {

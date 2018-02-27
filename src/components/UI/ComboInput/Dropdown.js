@@ -15,41 +15,42 @@ const styles = {
     zIndex: 10,
     width: '100%',
     marginTop: -4,
-    textAlign: 'left'
+    textAlign: 'left',
   }),
   containerCard: css({
     borderRadius: '0 0 4px 4px !important',
-    paddingTop: 4
+    paddingTop: 4,
   }),
   content: css({
     maxHeight: 264,
-    overflow: 'scroll !important'
   }),
   sectionTitle: css({
     paddingLeft: 60,
     paddingTop: 6,
     borderTop: '1px solid rgba(0,0,0,0.08)',
     '&:first-of-type': {
-      borderTop: '0'
-    }
-  })
+      borderTop: '0',
+    },
+  }),
 };
 
 const rowComponents = {
   country: CountryRow,
   provider: ProviderRow,
   history: HistoryRow,
-  sectionTitle: ({ item, style }) => <div style={style}>{item.title}</div>
+  sectionTitle: function SectionTitle({ item, style }) {
+    return <div style={style}>{item.title}</div>;
+  },
 };
+
+const getRowHeight = item =>
+  item.__type === 'history' ? 68 : item.__type === 'sectionTitle' ? 24 : 44;
 
 const Dropdown = ({ getItemProps, items, highlightedIndex }) => {
   const itemCount = items.length;
   const height =
     itemCount < 6
-      ? items.reduce(
-          (height, item) => height + (item.__type === 'sectionTitle' ? 24 : 44),
-          0
-        )
+      ? items.reduce((height, item) => height + getRowHeight(item), 0)
       : 264;
 
   return (
@@ -61,7 +62,7 @@ const Dropdown = ({ getItemProps, items, highlightedIndex }) => {
             height={height}
             scrollToAlignment="auto"
             scrollToIndex={highlightedIndex || undefined}
-            itemSize={i => (items[i].__type === 'sectionTitle' ? 24 : 44)}
+            itemSize={i => getRowHeight(items[i])}
             itemCount={itemCount}
             renderItem={({ index, style }) => {
               const item = items[index];
@@ -85,7 +86,7 @@ const Dropdown = ({ getItemProps, items, highlightedIndex }) => {
                     itemProps={getItemProps({
                       style,
                       index: item.index,
-                      item
+                      item,
                     })}
                     isActive={item.index === highlightedIndex}
                     item={item}

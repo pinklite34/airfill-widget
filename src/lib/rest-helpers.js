@@ -16,7 +16,7 @@ export const createCollectionReducer = (name, clearStateOnLoad = false) => {
   const initialState = {
     isLoading: false,
     error: null,
-    items: []
+    items: [],
   };
   const baseType = actionTypeForName(name);
 
@@ -39,7 +39,7 @@ export const createCollectionReducer = (name, clearStateOnLoad = false) => {
         return {
           ...state,
           isLoading: false,
-          error: payload.message || payload
+          error: payload.message || payload,
         };
       }
 
@@ -83,7 +83,7 @@ export const createSingleResultSelector = name => {
     return {
       isLoading: lookup.isLoading,
       error: lookup.error,
-      result: lookup.items[0]
+      result: lookup.items[0],
     };
   };
 };
@@ -142,6 +142,6 @@ export const createLoadAction = options => {
           return Promise.reject(error);
         });
     }
-    return Promise.reject();
+    return Promise.reject() // eslint-disable-line
   };
 };

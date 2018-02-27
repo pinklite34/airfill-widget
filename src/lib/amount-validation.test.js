@@ -6,28 +6,28 @@ const props = {
     {
       value: 10,
       btcPrice: 0.01,
-      usdPrice: 15
+      usdPrice: 15,
     },
     {
       value: 20,
       btcPrice: 0.02,
-      usdPrice: 30
+      usdPrice: 30,
     },
     {
       value: 30,
       btcPrice: 0.03,
-      usdPrice: 45
+      usdPrice: 45,
     },
     {
       value: 40,
       btcPrice: 0.04,
-      usdPrice: 60
-    }
+      usdPrice: 60,
+    },
   ],
   currency: 'XBT',
   maxCost: Number.POSITIVE_INFINITY,
   costConversionRate: 100000, // btc per "currency" in satoshi
-  ranged: false
+  ranged: false,
 };
 
 describe('selectValidAmount', () => {
@@ -40,7 +40,7 @@ describe('selectValidAmount', () => {
     expect(
       selectValidAmount({
         ...props,
-        amount: 20
+        amount: 20,
       })
     ).toEqual('20');
   });
@@ -51,7 +51,7 @@ describe('selectValidAmount', () => {
         ...props,
         amount: null,
         maxCost: 0.025,
-        ranged: false
+        ranged: false,
       })
     ).toEqual('20');
     expect(
@@ -59,7 +59,7 @@ describe('selectValidAmount', () => {
         ...props,
         amount: null,
         maxCost: 0.025,
-        ranged: true
+        ranged: true,
       })
     ).toEqual('20');
   });
@@ -71,7 +71,7 @@ describe('selectValidAmount', () => {
         ...props,
         amount: 21,
         maxCost: 0.025,
-        ranged: true
+        ranged: true,
       })
     ).toEqual('21');
 
@@ -81,7 +81,7 @@ describe('selectValidAmount', () => {
         ...props,
         amount: 21,
         maxCost: 0.023,
-        ranged: true
+        ranged: true,
       })
     ).toEqual('21');
 
@@ -91,7 +91,7 @@ describe('selectValidAmount', () => {
         ...props,
         amount: 25,
         maxCost: 0.021,
-        ranged: true
+        ranged: true,
       })
     ).toEqual('21');
   });
@@ -103,7 +103,7 @@ describe('selectValidAmount', () => {
         ...props,
         amount: null,
         maxCost: 0.0001,
-        ranged: false
+        ranged: false,
       })
     ).toEqual('30');
 
@@ -113,7 +113,7 @@ describe('selectValidAmount', () => {
         ...props,
         amount: 10,
         maxCost: 0.001,
-        ranged: false
+        ranged: false,
       })
     ).toEqual('10');
   });
@@ -127,7 +127,7 @@ describe('selectValidAmount', () => {
         maxCost: 25,
         costConversionRate: 1.5,
         currency: 'USD',
-        ranged: true
+        ranged: true,
       })
     ).toEqual('10');
 
@@ -139,7 +139,7 @@ describe('selectValidAmount', () => {
         maxCost: 15,
         costConversionRate: 1.5,
         currency: 'USD',
-        ranged: true
+        ranged: true,
       })
     ).toEqual('10');
 
@@ -151,7 +151,7 @@ describe('selectValidAmount', () => {
         maxCost: 15,
         costConversionRate: 1.5,
         currency: 'USD',
-        ranged: true
+        ranged: true,
       })
     ).toEqual('10');
   });

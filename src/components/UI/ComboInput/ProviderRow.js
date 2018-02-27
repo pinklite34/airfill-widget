@@ -6,8 +6,8 @@ const styles = {
   icon: css({
     maxWidth: 24,
     maxHeight: 18,
-    display: 'block'
-  })
+    display: 'block',
+  }),
 };
 
 const ProviderRow = ({ item, ...props }) => {

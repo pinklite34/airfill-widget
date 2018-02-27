@@ -7,12 +7,9 @@ import { CircularProgress } from 'material-ui/Progress';
 
 import PusherSubscription from '@bitrefill/react-pusher';
 
-import ActiveSection from '../UI/ActiveSection';
-
-import NewPayment from './NewPayment';
+import PaymentMode from './PaymentMode';
 import PaymentDetected from './PaymentDetected';
 import PaymentConfirmed from './PaymentConfirmed';
-import PartialPayment from './PartialPayment';
 import ExpiredPayment from './PaymentExpired';
 import RefillFailed from './RefillFailed';
 import RefillDelivered from './RefillDelivered';
@@ -23,7 +20,7 @@ import {
   selectOperator,
   selectNumber,
   selectCountry,
-  selectPaymentStatus
+  selectPaymentStatus,
 } from './../../store';
 
 import { updatePaymentStatus } from '../../actions';
@@ -34,8 +31,6 @@ const componentForStatus = status => {
       return PaymentDetected;
     case 'confirmed':
       return PaymentConfirmed;
-    case 'partial':
-      return PartialPayment;
     case 'expired':
       return ExpiredPayment;
     case 'failed':
@@ -44,24 +39,25 @@ const componentForStatus = status => {
       return RefillDelivered;
     case 'balance-too-low':
       return BalanceTooLow;
+    case 'partial':
     default:
-      return NewPayment;
+      return PaymentMode;
   }
 };
 
 const styles = {
   title: css({
-    margin: 0
+    margin: 0,
   }),
   spinner: css({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    margin: 64
+    margin: 64,
   }),
   spinnerText: css({
-    marginTop: 16
-  })
+    marginTop: 16,
+  }),
 };
 
 const Payment = ({
@@ -72,7 +68,7 @@ const Payment = ({
   paymentButtons = null,
   showBTCAddress = true,
   billingCurrency = 'XBT',
-
+  orderOptions,
   order,
   operator,
   number,
@@ -80,7 +76,7 @@ const Payment = ({
   paymentStatus,
 
   updatePaymentStatus,
-  reset
+  reset,
 }) => {
   if (!order.result) {
     return (
@@ -95,22 +91,29 @@ const Payment = ({
   const { orderId, payment: { address } } = order.result;
 
   return (
-    <ActiveSection>
-      <h2 {...styles.title}>Payment</h2>
+    <div>
       <PusherSubscription
         channel={[orderId, address].join('-')}
-        events={['paid', 'confirmed', 'partial', 'failed', 'delivered']}
+        events={[
+          'paid',
+          'confirmed',
+          'partial',
+          'failed',
+          'delivered',
+          'expired',
+        ]}
         onUpdate={(event, data) =>
           updatePaymentStatus({
             status: event,
             orderId,
-            data
+            data,
           })
         }
       />
       <PaymentComponent
         history={history}
         order={order.result}
+        orderOptions={orderOptions}
         operator={operator.result}
         country={country}
         accountBalance={accountBalance}
@@ -123,7 +126,7 @@ const Payment = ({
         number={number}
         onReset={reset}
       />
-    </ActiveSection>
+    </div>
   );
 };
 
@@ -133,10 +136,10 @@ export default connect(
     operator: selectOperator(state),
     country: selectCountry(state),
     paymentStatus: selectPaymentStatus(state),
-    number: selectNumber(state)
+    number: selectNumber(state),
   }),
   dispatch => ({
     updatePaymentStatus: (...args) => dispatch(updatePaymentStatus(...args)),
-    reset: () => dispatch(push('/refill'))
+    reset: () => dispatch(push('/refill')),
   })
 )(Payment);

@@ -7,7 +7,7 @@ import createHistory from 'history/createMemoryHistory';
 import {
   ConnectedRouter,
   routerReducer,
-  routerMiddleware
+  routerMiddleware,
 } from 'react-router-redux';
 
 import Widget from './components/Widget';
@@ -17,18 +17,16 @@ import configureStore from './store/configureStore';
 import { setPusherClient } from '@bitrefill/react-pusher';
 
 // global module exports
-import airfillWidget from './store';
 import widgetStoreEnhancer from './store/enhanceStore';
-
-import { selectPaymentStatus, selectOrder } from './store';
+import airfillWidget, { selectPaymentStatus, selectOrder } from './store';
 
 export {
   airfillWidget,
   widgetStoreEnhancer,
   client as restClient,
   selectPaymentStatus,
-  selectOrder
-}
+  selectOrder,
+};
 
 export default Widget;
 
@@ -48,7 +46,7 @@ function AirfillWidget(ele, opt) {
     sendEmail: true, // Send email receipt (default: true)
     sendSMS: true, // Send SMS receipt, operator may send additional messages (default: true, only available for some operators)
 
-    ...opt
+    ...opt,
   };
 
   // Alias BTC -> XBT as we use XBT internally
@@ -58,7 +56,7 @@ function AirfillWidget(ele, opt) {
 
   client.configure({
     token: options.key,
-    baseUrl: options.baseUrl || 'https://api.bitrefill.com/widget'
+    baseUrl: options.baseUrl || 'https://api.bitrefill.com/widget',
   });
 
   const {
@@ -73,9 +71,17 @@ function AirfillWidget(ele, opt) {
     paymentButtons,
     showBTCAddress,
     showLogo,
-    showInstructions
+    showInstructions,
   } = options;
   const orderOptions = { email, sendEmail, sendSMS, refundAddress };
+
+  if (
+    !paymentButtons ||
+    !Array.isArray(paymentButtons) ||
+    paymentButtons.length === 0
+  ) {
+    throw new Error('opts.paymentButtons must be an array and cannot be empty');
+  }
 
   const history = createHistory();
   const middleware = routerMiddleware(history);

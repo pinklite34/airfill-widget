@@ -10,7 +10,7 @@ import {
   selectValidEmail,
   selectOrder,
   selectCountry,
-  selectOperator
+  selectOperator,
 } from '../store';
 
 export const setStep = createAction('SET_STEP');
@@ -28,7 +28,7 @@ export const closeComboInput = () => setComboInputOpen(false);
 
 export const loadInventory = createLoadAction({
   name: 'airfillWidget.inventory',
-  uri: '/inventory'
+  uri: '/inventory',
 });
 
 export const lookupLocation = () => (dispatch, getState) => {
@@ -86,7 +86,7 @@ const transformOperatorResponse = response => {
 
 const loadOperator = createLoadAction({
   name: 'airfillWidget.operator',
-  responseTransform: transformOperatorResponse
+  responseTransform: transformOperatorResponse,
 });
 
 export const setOperator = operatorSlug => (dispatch, getState) => {
@@ -102,19 +102,19 @@ const transformNumberLookupReponse = response => {
   return {
     operator: processOperatorPackages(operator),
     altOperators,
-    country: country.alpha2
+    country: country.alpha2,
   };
 };
 
 const loadNumberLookup = createLoadAction({
   name: 'airfillWidget.numberLookup',
   uri: '/lookup_number',
-  responseTransform: transformNumberLookupReponse
+  responseTransform: transformNumberLookupReponse,
 });
 
 export const lookupNumber = number => dispatch => {
   const options = {
-    query: { number }
+    query: { number },
   };
 
   dispatch(setAmount(''));
@@ -125,7 +125,7 @@ export const resetNumberLookup = createAction('RESET_NUMBERLOOKUP');
 
 const postOrder = createLoadAction({
   name: 'airfillWidget.order',
-  uri: '/order'
+  uri: '/order',
 });
 
 export const createOrder = orderOptions => (dispatch, getState) => {
@@ -142,12 +142,12 @@ export const createOrder = orderOptions => (dispatch, getState) => {
       operatorSlug: operator.result.slug,
       valuePackage: amount,
       number,
-      email
-    }
+      email,
+    },
   };
 
   if (order.isLoading || operator.isLoading) {
-    return Promise.reject();
+    return Promise.reject() // eslint-disable-line
   }
 
   return dispatch(postOrder(options));
@@ -170,7 +170,7 @@ export const updateOrderStatus = () => (dispatch, getState) => {
         }?incoming_btc_address=${encodeURIComponent(
           order.result.payment.address
         )}`,
-        silent: true
+        silent: true,
       })
     );
   }

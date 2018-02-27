@@ -6,8 +6,8 @@ export const sectionsToItemList = (sections, titles) =>
           {
             __type: 'sectionTitle',
             title: titles[index],
-            key: `section-${index}`
-          }
+            key: `section-${index}`,
+          },
         ],
         section
       );

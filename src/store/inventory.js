@@ -1,6 +1,6 @@
 import {
   createCollectionReducer,
-  createSingleResultSelector
+  createSingleResultSelector,
 } from '../lib/rest-helpers';
 
 const sortBy = (field, reverse, primer) => {
@@ -22,20 +22,20 @@ export default (state, action) => {
     case 'SET_COUNTRY': {
       return {
         ...state,
-        selectedCountry: action.payload
+        selectedCountry: action.payload,
       };
     }
     case 'LOAD_OPERATOR': {
       return {
         ...state,
-        selectedOperator: action.payload.operatorSlug
+        selectedOperator: action.payload.operatorSlug,
       };
     }
     case 'LOAD_OPERATOR_SUCCESS': {
       return {
         ...state,
         selectedOperator: action.payload.slug,
-        selectedCountry: action.payload.countryCode
+        selectedCountry: action.payload.countryCode,
       };
     }
 
@@ -80,7 +80,7 @@ export const selectAvailableOperators = state => {
   }
 
   return operators
-    .sort(sortBy('stats', true, (stats) => stats ? stats.popularity : -1))
+    .sort(sortBy('stats', true, stats => (stats ? stats.popularity : -1)))
     .reduce((mem, operator) => {
       const type = operator.type || 'Mobile';
       mem[type] = mem[type] || [];

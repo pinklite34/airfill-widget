@@ -5,8 +5,8 @@ import SectionTitle from './SectionTitle';
 const styles = {
   container: css({
     backgroundColor: '#FAFAFA',
-    padding: 16
-  })
+    padding: 16,
+  }),
 };
 
 const ActiveSection = ({ title, children, ...props }) => (

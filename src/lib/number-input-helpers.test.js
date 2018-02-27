@@ -6,7 +6,7 @@ describe('formatNumber', () => {
       formattedValue: '+0',
       number: '+0',
       country: undefined,
-      caret: 2
+      caret: 2,
     });
   });
   it('Does not insert + for local numbers', () => {
@@ -14,7 +14,7 @@ describe('formatNumber', () => {
       formattedValue: '0',
       number: '0',
       country: 'DE',
-      caret: 1
+      caret: 1,
     });
   });
 });

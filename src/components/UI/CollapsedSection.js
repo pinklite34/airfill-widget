@@ -8,39 +8,41 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    transition: 'background-color 0.2s ease'
+    transition: 'background-color 0.2s ease',
   }),
   button: css({
     backgroundColor: '#fff !important',
     fontSize: '12px !important',
-    margin: '-4px !important'
+    margin: '-4px !important',
   }),
   text: css({
-    fontSize: 14,
+    fontSize: 16,
+    color: '#777777 !important',
+    fontWeight: '500 !important',
     '& strong': {
       paddingBottom: 2,
-      borderBottom: '1px solid #CCCCCC'
+      borderBottom: '1px solid #CCCCCC',
     },
-    flex: '1 0 auto'
-  })
+    flex: '1 1 auto',
+  }),
 };
 
 const background = [
   css({
-    backgroundColor: '#EEEEEE'
+    backgroundColor: '#EEEEEE',
   }),
   css({
-    backgroundColor: '#E3E3E3'
+    backgroundColor: '#E3E3E3',
   }),
   css({
-    backgroundColor: '#D8D8D8'
+    backgroundColor: '#D8D8D8',
   }),
   css({
-    backgroundColor: '#CDCDCD'
-  })
-]
+    backgroundColor: '#CDCDCD',
+  }),
+];
 
-const Collapsed = ({ onClick, type, hideButton, children, darken=0 }) => (
+const Collapsed = ({ onClick, type, hideButton, children, darken = 0 }) => (
   <div {...styles.container} {...background[darken]}>
     <div {...styles.text}>{children}</div>
     {hideButton ? null : (

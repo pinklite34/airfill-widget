@@ -9,7 +9,7 @@ import { getPrice, getDisplayName } from '../../lib/currency-helpers';
 
 import Card from 'material-ui/Card';
 import Radio from 'material-ui/Radio';
-import { CircularProgress } from 'material-ui/Progress'
+import { CircularProgress } from 'material-ui/Progress';
 
 import ActiveSection from '../UI/ActiveSection';
 import SectionTitle from '../UI/SectionTitle';
@@ -30,13 +30,13 @@ const styles = {
       margin: 0,
       borderTop: '1px solid rgba(0,0,0,0.08)',
       '&:last-of-type': {
-        borderBottom: '1px solid rgba(0,0,0,0.08)'
-      }
-    }
+        borderBottom: '1px solid rgba(0,0,0,0.08)',
+      },
+    },
   }),
   operatorInfoContainer: css({
     fontWeight: 500,
-    marginBottom: 16
+    marginBottom: 16,
   }),
   operatorInfo: css({
     padding: 12,
@@ -46,15 +46,27 @@ const styles = {
     '& svg': {
       marginRight: 8,
       width: 32,
-      height: 32
-    }
+      height: 32,
+    },
   }),
   title: css({
-    marginLeft: 36
-  })
+    marginLeft: 36,
+  }),
 };
 
 class Picker extends Component {
+  componentDidMount() {
+    if (!this.props.operator.isLoading) {
+      this.handleAmountChange(this.props, this.props.amount);
+    }
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (!newProps.operator.isLoading && this.props.operator.isLoading) {
+      this.handleAmountChange(newProps, newProps.amount);
+    }
+  }
+
   handleAmountChange = (props, amount) => {
     const { setAmount, config, operator } = props;
     const { packages, isRanged, range, currency } = operator.result;
@@ -67,23 +79,11 @@ class Picker extends Component {
           maxCost: config.userAccountBalance,
           costConversionRate: isRanged && range.userPriceRate,
           currency,
-          packages
+          packages,
         })
       );
     }
   };
-
-  componentDidMount() {
-    if (!this.props.operator.isLoading) {
-      this.handleAmountChange(this.props, this.props.amount);
-    }
-  }
-
-  componentWillReceiveProps(newProps) {
-    if (!newProps.operator.isLoading && this.props.operator.isLoading) {
-      this.handleAmountChange(newProps, newProps.amount);
-    }
-  }
 
   render() {
     const { amount, operator, setAmount, config } = this.props;
@@ -99,7 +99,7 @@ class Picker extends Component {
     const {
       userAccountBalance,
       requireAccountBalance,
-      billingCurrency
+      billingCurrency,
     } = config;
 
     return (
@@ -130,7 +130,6 @@ class Picker extends Component {
               operator.result.type === 'data'
                 ? pkg.value
                 : `${pkg.value} ${operator.result.currency}`;
-
             return (
               <label key={pkg.value}>
                 <Radio
@@ -161,10 +160,10 @@ class Picker extends Component {
 export default connect(
   state => ({
     operator: selectOperator(state),
-    amount: selectAmount(state)
+    amount: selectAmount(state),
   }),
   {
     setAmount,
-    createOrder
+    createOrder,
   }
 )(Picker);

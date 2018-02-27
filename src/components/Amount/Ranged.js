@@ -12,7 +12,7 @@ import Settings from './settings.svg';
 
 const styles = {
   container: css({
-    marginTop: 16
+    marginTop: 16,
   }),
   row: css({
     display: 'flex',
@@ -22,14 +22,14 @@ const styles = {
     margin: '0 -16px',
     borderTop: '1px solid rgba(0,0,0,0.08)',
     borderBottom: '1px solid rgba(0,0,0,0.08)',
-    padding: '8px 16px'
+    padding: '8px 16px',
   }),
   settings: css({
     flex: '0 0 auto',
     marginRight: 16,
     width: 20,
     height: 20,
-    fill: 'rgba(0,0,0,0.8)'
+    fill: 'rgba(0,0,0,0.8)',
   }),
   input: css({
     display: 'inline-block',
@@ -39,8 +39,8 @@ const styles = {
       fontFamily: 'inherit',
       padding: '0 !important',
       color: '#000',
-      fontWeight: 500
-    }
+      fontWeight: 500,
+    },
   }),
   label: css({
     position: 'relative',
@@ -52,13 +52,13 @@ const styles = {
     backgroundColor: '#FFF',
     textAlign: 'right',
     fontSize: 16,
-    lineHeight: 1
+    lineHeight: 1,
   }),
   cost: css({
-    lineHeight: '20px'
+    lineHeight: '20px',
   }),
   title: css({
-    marginLeft: 36
+    marginLeft: 36,
   }),
   meta: css({
     background: 'rgba(0,0,0,0.1)',
@@ -66,8 +66,8 @@ const styles = {
     fontSize: 12,
     lineHeight: '16px',
     color: '#333',
-    marginLeft: 16
-  })
+    marginLeft: 16,
+  }),
 };
 
 const Ranged = ({ amount, range, currency, billingCurrency, onChange }) => {
@@ -97,7 +97,8 @@ const Ranged = ({ amount, range, currency, billingCurrency, onChange }) => {
                 onBlur={() =>
                   amount > range.max
                     ? onChange(range.max)
-                    : amount < range.min ? onChange(range.min) : null}
+                    : amount < range.min ? onChange(range.min) : null
+                }
                 className={`${styles.input}`}
                 id="custom_amount"
               />

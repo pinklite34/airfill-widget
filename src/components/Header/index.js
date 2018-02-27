@@ -17,10 +17,10 @@ const styles = {
     position: 'relative',
     '@media(max-width: 400px)': {
       '&': {
-        padding: 12
-      }
-    }
-  })
+        padding: 12,
+      },
+    },
+  }),
 };
 
 const Header = ({ branded }) => (

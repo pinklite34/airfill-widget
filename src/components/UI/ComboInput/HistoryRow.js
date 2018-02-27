@@ -9,8 +9,8 @@ const styles = {
   icon: css({
     maxWidth: 24,
     maxHeight: 18,
-    display: 'block'
-  })
+    display: 'block',
+  }),
 };
 
 const HistoryRow = ({ item, countryList, ...props }) => {
@@ -22,8 +22,16 @@ const HistoryRow = ({ item, countryList, ...props }) => {
     return (
       <Row
         {...props}
-        icon={<img src={operator.logoImage} alt={operator.name} {...styles.icon} />}
-        content={<span>{operator.name} <strong>{item.number}</strong></span>}
+        icon={
+          <img src={operator.logoImage} alt={operator.name} {...styles.icon} />
+        }
+        content={
+          <span>
+            {operator.name}
+            <br />
+            <strong>{item.number}</strong>
+          </span>
+        }
       />
     );
   } else {
@@ -32,5 +40,5 @@ const HistoryRow = ({ item, countryList, ...props }) => {
 };
 
 export default connect(state => ({
-  countryList: selectCountryList(state)
+  countryList: selectCountryList(state),
 }))(HistoryRow);

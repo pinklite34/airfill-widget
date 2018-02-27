@@ -3,16 +3,16 @@ import {
   formatNumber,
   formatDefaultValue,
   formatDisplayValue,
-  parseNumber
+  parseNumber,
 } from './number-helpers.js';
 
 const SE = {
   alpha2: 'SE',
-  countryCallingCodes: ['+46']
+  countryCallingCodes: ['+46'],
 };
 const XX = {
   alpha2: 'XX',
-  countryCallingCodes: ['+99']
+  countryCallingCodes: ['+99'],
 };
 
 describe('isPhoneNumber', () => {

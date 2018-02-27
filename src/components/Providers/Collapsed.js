@@ -10,23 +10,24 @@ const styles = {
   container: css({
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   }),
   icon: css({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     width: 24,
-    marginRight: 12
+    marginRight: 30,
+    marginLeft: 14,
+    '@media(max-width: 460px)': {
+      marginRight: 14,
+      marginLeft: 0,
+    },
   }),
   logo: css({
-    maxWidth: 24,
-    maxHeight: 18
+    maxWidth: 40,
+    maxHeight: 30,
   }),
-  content: css({
-    fontWeight: 500,
-    fontSize: 14
-  })
 };
 
 const Collapsed = ({ operator, history, darken }) => (
@@ -40,7 +41,7 @@ const Collapsed = ({ operator, history, darken }) => (
         <div {...styles.icon}>
           <img src={operator.logoImage} alt={operator.name} {...styles.logo} />
         </div>
-        <div {...styles.content}>{operator.name}</div>
+        {operator.name}
       </div>
     )}
   </CollapsedSection>
@@ -48,6 +49,6 @@ const Collapsed = ({ operator, history, darken }) => (
 
 export default withRouter(
   connect(state => ({
-    operator: selectSelectedOperator(state)
+    operator: selectSelectedOperator(state),
   }))(Collapsed)
 );

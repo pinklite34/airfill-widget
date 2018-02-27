@@ -8,7 +8,7 @@ const initialState = {
   operatorId: null,
   amount: 0,
   email: { value: '', valid: false, error: false },
-  comboInputOpen: false
+  comboInputOpen: false,
 };
 
 export default (state = initialState, { type, payload }) => {

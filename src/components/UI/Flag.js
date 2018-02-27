@@ -7,8 +7,8 @@ const styles = {
   image: css({
     margin: '-3px 0',
     width: 24,
-    height: 24
-  })
+    height: 24,
+  }),
 };
 
 const Flag = ({ country }) => (

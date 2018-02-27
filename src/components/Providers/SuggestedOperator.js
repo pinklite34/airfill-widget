@@ -17,8 +17,8 @@ const styles = {
     position: 'relative',
     '@media(max-width: 460px)': {
       flexWrap: 'wrap',
-      justifyContent: 'center'
-    }
+      justifyContent: 'center',
+    },
   }),
   logo: css({
     maxWidth: 150,
@@ -26,35 +26,35 @@ const styles = {
     flex: '0 0 auto',
     marginRight: 20,
     '@media(max-width: 460px)': {
-      marginBottom: 20
-    }
+      marginBottom: 20,
+    },
   }),
   button: css({
-    width: 220,
+    width: 230,
     marginRight: 8,
-    marginTop: 8
+    marginTop: 8,
   }),
   content: css({
     flex: '0 1 auto',
     '@media(max-width: 460px)': {
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center'
-    }
+      alignItems: 'center',
+    },
   }),
   text: css({
-    marginTop: 0
+    marginTop: 0,
   }),
   error: css({
-    margin: 0
+    margin: 0,
   }),
   icon: css({
     width: 24,
     height: 24,
     fill: '#555555',
     flex: '0 0 auto',
-    marginRight: 8
-  })
+    marginRight: 8,
+  }),
 };
 
 const SuggestedOperator = ({ operator, onAccept, onReject }) => {
@@ -64,14 +64,15 @@ const SuggestedOperator = ({ operator, onAccept, onReject }) => {
         <img src={operator.logoImage} alt={operator.name} {...styles.logo} />
         <div {...styles.content}>
           <p {...styles.text}>
-            We've detected <strong>{operator.name}</strong> as your service. If
-            this is not correct, please select another service below.
+            We&apos;ve detected <strong>{operator.name}</strong> as your
+            service. If this is not correct, please select another service
+            below.
           </p>
-          <Button primary raised onClick={onAccept} {...styles.button}>
+          <Button color="primary" raised onClick={onAccept} {...styles.button}>
             Yes, this is my service
           </Button>
           <Button raised onClick={onReject} {...styles.button}>
-            No, it's not correct
+            No, it&apos;s not correct
           </Button>
         </div>
       </div>

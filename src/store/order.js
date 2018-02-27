@@ -1,6 +1,6 @@
 import {
   createCollectionReducer,
-  createSingleResultSelector
+  createSingleResultSelector,
 } from '../lib/rest-helpers';
 
 export default createCollectionReducer('airfillWidget.order');

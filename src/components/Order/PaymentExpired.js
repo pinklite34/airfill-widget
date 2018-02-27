@@ -1,23 +1,37 @@
 import React from 'react';
 import Button from 'material-ui/Button';
+import OrderHeader from '../UI/OrderHeader';
+import Error from './error.svg';
+import PaymentLayout from './PaymentLayout';
+import { css } from 'glamor';
 
-const ExpiredPayment = () => {
+const styles = {
+  textContainer: css({
+    display: 'block !important',
+    lineHeight: '21px',
+    marginRight: '48px',
+  }),
+};
+
+const ExpiredPayment = props => {
   return (
     <div>
-      <h3>Order expired</h3>
-      <p>
-        This order has expired. Please refresh the page to generate a new
-        invoice.
-      </p>
-      <Button raised onClick={window.location.reload}>
-        Refresh page
-      </Button>
-      <p>
-        Need help? Send us an email at{' '}
-        <a href="mailto:support@bitrefill.com?subject=Invoice_expired">
-          support@bitrefill.com
-        </a>.
-      </p>
+      <OrderHeader
+        order={props.order}
+        title="Order expired"
+        subtitle="This order has expired"
+        icon={<Error />}
+      />
+      <PaymentLayout {...props}>
+        <div>
+          <div />
+          <div {...styles.textContainer}>
+            <Button color="primary" raised onClick={props.onReset}>
+              New order
+            </Button>
+          </div>
+        </div>
+      </PaymentLayout>
     </div>
   );
 };

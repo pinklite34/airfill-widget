@@ -9,9 +9,9 @@ const styles = {
   logo: css({
     cursor: 'pointer',
     '& + div': {
-      marginTop: 16
-    }
-  })
+      marginTop: 16,
+    },
+  }),
 };
 
 const Logo = ({ goHome }) => (
@@ -19,5 +19,5 @@ const Logo = ({ goHome }) => (
 );
 
 export default connect(null, dispatch => ({
-  goHome: () => dispatch(push('/refill'))
+  goHome: () => dispatch(push('/refill')),
 }))(Logo);

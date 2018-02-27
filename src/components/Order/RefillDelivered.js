@@ -1,60 +1,77 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import OrderStatus from '../UI/OrderStatus';
-import OrderStep from '../UI/OrderStep';
 import Button from 'material-ui/Button';
+import OrderHeader from '../UI/OrderHeader';
+import Confirmed from './confirmed.svg';
+import { css } from 'glamor';
+import PaymentLayout from './PaymentLayout';
 
-const RefillDelivered = ({ paymentStatus: { deliveryData = {} }, onReset }) => {
+const styles = {
+  textContainer: css({
+    display: 'block !important',
+    lineHeight: '21px',
+    marginRight: '48px',
+  }),
+  info: css({
+    color: '#777777',
+    fontSize: '14px',
+  }),
+  link: css({
+    color: '#3e8fe4',
+    fontSize: '14px',
+    textDecoration: 'underline',
+  }),
+  button: css({
+    marginTop: '12px',
+  }),
+};
+
+const RefillDelivered = props => {
   return (
     <div>
-      <OrderStatus>
-        <OrderStep done>Payment complete</OrderStep>
-        <OrderStep done>Refill sent</OrderStep>
-        <OrderStep done>Refill Delivered</OrderStep>
-      </OrderStatus>
+      <OrderHeader
+        order={props.order}
+        title="Refill delivered"
+        subtitle="The refill delivery has been confirmed by the operator"
+        icon={<Confirmed />}
+      />
 
-      <p>
-        {deliveryData.pinInfo ? (
-          'You should receive an email with instructions any minute now. They are also displayed below. Thanks for using Bitrefill!'
-        ) : (
-          'You should have received the topup on the target phone. Thanks for using Bitrefill!'
-        )}
-      </p>
-
-      {deliveryData.pinInfo &&
-      deliveryData.pinInfo.pin && (
-        <p>
-          <strong>Refill PIN</strong>
-          <br />
-          {deliveryData.pinInfo.pin}
-        </p>
-      )}
-      {deliveryData.pinInfo &&
-      deliveryData.pinInfo.instructions && (
-        <p>
-          <strong>Instructions</strong>
-          <br />
-          {deliveryData.pinInfo.instructions}
-        </p>
-      )}
-      {deliveryData.pinInfo &&
-      deliveryData.pinInfo.other && (
-        <p>
-          <strong>Other Info</strong>
-          <br />
-          {deliveryData.pinInfo.other}
-        </p>
-      )}
-      <Button raised color="primary" onClick={onReset}>
-        Send another refill
-      </Button>
+      <PaymentLayout {...props}>
+        <div>
+          <div />
+          <div {...styles.textContainer}>
+            <span {...styles.info}>
+              The refill has delivered and credited to the balance of the target
+              device.
+            </span>
+            <br />
+            <a
+              {...styles.link}
+              href="https://www.bitrefill.com/faq/#my-topup-did-not-arrive"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Can&apos;t see your refill?
+            </a>
+            <br />
+            <Button
+              color="primary"
+              raised
+              {...styles.button}
+              onClick={props.onReset}
+            >
+              Buy another refill
+            </Button>
+          </div>
+        </div>
+      </PaymentLayout>
     </div>
   );
 };
 
 RefillDelivered.propTypes = {
   paymentStatus: PropTypes.object.isRequired,
-  onReset: PropTypes.func.isRequired
+  onReset: PropTypes.func.isRequired,
 };
 
 export default RefillDelivered;

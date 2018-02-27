@@ -9,25 +9,25 @@ const styles = {
     fontSize: 12,
     color: '#999',
     '& strong': {
-      color: '#777'
+      color: '#777',
     },
     '& a': {
-      color: '#999'
-    }
+      color: '#999',
+    },
   }),
   branded: css({
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   }),
   linkList: css({
     display: 'flex',
     listStyleType: 'none',
     margin: 0,
-    padding: 0
+    padding: 0,
   }),
   link: css({
     display: 'block',
-    marginLeft: 12
-  })
+    marginLeft: 12,
+  }),
 };
 
 const Footer = ({ branded }) => (

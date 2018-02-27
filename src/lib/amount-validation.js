@@ -55,7 +55,7 @@ const selectValidRangedAmount = ({
   amount,
   maxCost,
   costConversionRate,
-  currency
+  currency,
 }) => {
   const selectedAmountCost = rangedCostForAmount(
     costConversionRate,
@@ -84,10 +84,9 @@ export const selectValidAmount = args => {
   if (ranged) {
     return selectValidRangedAmount({
       ...args,
-      amount: args.amount || validPackageAmount
+      amount: args.amount || validPackageAmount,
     });
   } else {
     return validPackageAmount;
   }
 };
-

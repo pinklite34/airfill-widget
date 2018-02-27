@@ -5,15 +5,15 @@ import SectionTitle from './SectionTitle';
 
 const styles = {
   title: css({
-    marginBottom: 0
+    marginBottom: 0,
   }),
   hint: css({
     fontSize: 12,
-    margin: '4px 0 8px'
+    margin: '4px 0 8px',
   }),
   error: css({
-    color: '#D65C5C'
-  })
+    color: '#D65C5C',
+  }),
 };
 
 const Field = ({ label, children, htmlFor, hint, error, ...props }) => (

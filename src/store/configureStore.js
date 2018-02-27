@@ -11,7 +11,7 @@ export default function configureStore(routerReducer, middleware) {
   const store = createStore(
     combineReducers({
       airfillWidget,
-      router: routerReducer
+      router: routerReducer,
     }),
     compose(
       applyMiddleware(thunk, middleware),
