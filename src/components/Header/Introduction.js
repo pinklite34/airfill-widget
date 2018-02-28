@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Media from 'react-media';
 import { css } from 'glamor';
 import { selectNumber, selectNumberLookup } from '../../store';
 import { lookupNumber, resetNumberLookup } from '../../actions';
@@ -67,7 +67,11 @@ const styles = {
   }),
 };
 
-class Introduction extends Component {
+class Introduction extends PureComponent {
+  static propTypes = {
+    isMobile: PropTypes.bool,
+  };
+
   componentDidMount() {
     this.props.resetNumberLookup();
   }
@@ -82,43 +86,38 @@ class Introduction extends Component {
   };
 
   render() {
-    const { branded, history, numberLookup } = this.props;
+    const { isMobile, branded, history, numberLookup } = this.props;
     return (
-      <Media query="(-moz-touch-enabled: 1), (pointer: coarse)">
-        {mobile => (
-          <div {...styles.container}>
-            {branded ? (
-              <div {...styles.head}>
-                <h2 {...styles.title}>Send Global Top Ups With Bitcoin</h2>
-                <div {...styles.subtitle}>
-                  Trusted by More Than 500 000 People
-                </div>
-              </div>
-            ) : (
-              <div {...styles.head}>
-                <h2 {...styles.title}>Top Up Anything With Bitcoin</h2>
-              </div>
-            )}
-            <ComboInput
-              countryOnly={mobile}
-              history={history}
-              loading={numberLookup.isLoading}
-              onSubmit={this.lookupNumber}
-            />
-            {numberLookup.error ? (
-              <div {...styles.error}>
-                <Info {...styles.errorIcon} />
-                <div>{numberLookup.error.message || numberLookup.error}</div>
-              </div>
-            ) : (
-              <div {...styles.description}>
-                Enter a phone number to see available services or select a
-                service below for more information
-              </div>
-            )}
+      <div {...styles.container}>
+        {branded ? (
+          <div {...styles.head}>
+            <h2 {...styles.title}>Send Global Top Ups With Bitcoin</h2>
+            <div {...styles.subtitle}>Trusted by More Than 500 000 People</div>
+          </div>
+        ) : (
+          <div {...styles.head}>
+            <h2 {...styles.title}>Top Up Anything With Bitcoin</h2>
           </div>
         )}
-      </Media>
+        <ComboInput
+          countryOnly={isMobile}
+          history={history}
+          loading={numberLookup.isLoading}
+          onSubmit={this.lookupNumber}
+        />
+        {numberLookup.error ? (
+          <div {...styles.error}>
+            <Info {...styles.errorIcon} />
+            <div>{numberLookup.error.message || numberLookup.error}</div>
+          </div>
+        ) : (
+          <div {...styles.description}>
+            {`Enter ${
+              isMobile ? 'your country' : 'a phone number'
+            } to see available services or select a service below for more information`}
+          </div>
+        )}
+      </div>
     );
   }
 }

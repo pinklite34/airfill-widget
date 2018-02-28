@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
@@ -76,7 +76,7 @@ const countryShape = PropTypes.shape({
   operators: PropTypes.object,
 });
 
-class ComboInput extends Component {
+class ComboInput extends PureComponent {
   static propTypes = {
     closeComboInput: PropTypes.func.isRequired,
     country: countryShape,
@@ -105,10 +105,12 @@ class ComboInput extends Component {
   };
 
   state = {
-    inputValue: getInitialInputValue(
-      this.props.country && this.props.country.alpha2,
-      this.props.number
-    ),
+    inputValue: this.props.countryOnly
+      ? ''
+      : getInitialInputValue(
+          this.props.country && this.props.country.alpha2,
+          this.props.number
+        ),
   };
 
   componentDidMount() {
@@ -241,35 +243,6 @@ class ComboInput extends Component {
         __type: 'history',
         key: `${item.operator}-${item.number}`,
       }));
-  };
-
-  resetCountry = () => {
-    this.props.setCountry('');
-    this.setState({ inputValue: '' });
-    this.input.focus();
-    this.props.openComboInput();
-  };
-
-  changeValue = (inputValue, currentCaret) => {
-    if (isPhoneNumber(inputValue)) {
-      const { formattedValue, number, country, caret } = formatNumber(
-        this.props.country && this.props.country.alpha2,
-        inputValue,
-        currentCaret
-      );
-
-      this.props.setCountry(country);
-      this.props.setNumber(number);
-
-      this.setState({ inputValue: formattedValue, caret });
-    } else {
-      if (this.props.country && !inputValue) {
-        this.props.setNumber('');
-      }
-      this.setState(state => ({
-        inputValue,
-      }));
-    }
   };
 
   focusInput = () => {

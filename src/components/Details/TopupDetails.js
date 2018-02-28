@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { css } from 'glamor';
 import { connect } from 'react-redux';
 
@@ -75,7 +75,7 @@ const muiStyles = {
   },
 };
 
-class TopupDetails extends Component {
+class TopupDetails extends PureComponent {
   state = {
     error: null,
     isLoading: false,

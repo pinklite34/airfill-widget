@@ -30,7 +30,9 @@ export {
 
 export default Widget;
 
-setPusherClient('0837b617cfe786c32a91');
+if (process.env.NODE_ENV === 'production') {
+  setPusherClient('0837b617cfe786c32a91');
+}
 
 let store;
 

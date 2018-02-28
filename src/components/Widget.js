@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import Media from 'react-media';
 import { connect } from 'react-redux';
 import { Route } from 'react-router';
 import { css } from 'glamor';
@@ -32,7 +33,7 @@ const theme = createMuiTheme({
   },
 });
 
-class AirfillWidget extends Component {
+class AirfillWidget extends PureComponent {
   static propTypes = {
     // User data
     defaultNumber: PropTypes.string,
@@ -60,6 +61,7 @@ class AirfillWidget extends Component {
     showLogo: PropTypes.bool,
     showPoweredBy: PropTypes.bool,
     showFooter: PropTypes.bool,
+    isMobile: PropTypes.bool,
 
     // Refill history
     refillHistory: PropTypes.arrayOf(
@@ -91,11 +93,15 @@ class AirfillWidget extends Component {
     refillHistory: [],
   };
 
-  componentDidMount() {
-    this.props.init({
-      defaultNumber: this.props.defaultNumber,
-      email: this.props.orderOptions.email,
-    });
+  componentWillMount() {
+    const { isMobile, init, defaultNumber, orderOptions } = this.props;
+
+    if (!isMobile) {
+      init({
+        defaultNumber: defaultNumber,
+        email: orderOptions.email,
+      });
+    }
   }
 
   componentDidCatch(err, info) {
@@ -104,26 +110,35 @@ class AirfillWidget extends Component {
   }
 
   render() {
-    const config = this.props;
-    const hasLoaded = !!this.props.inventory.result;
+    const {
+      className,
+      showLogo,
+      showInstructions,
+      showFooter,
+      showPoweredBy,
+      inventory,
+      isMobile,
+    } = this.props;
+
+    const hasLoaded = !!inventory.result;
 
     return (
       <MuiThemeProvider theme={theme}>
-        <Root className={this.props.className}>
+        <Root className={className}>
           {hasLoaded ? (
             <Card>
-              <Header branded={config.showLogo} />
+              <Header isMobile={isMobile} branded={showLogo} />
               <Country />
               <NumberLookup />
               <Providers />
-              <Amount config={config} />
-              <Details config={config} />
-              <Order config={config} />
-              {config.showInstructions && (
+              <Amount config={this.props} />
+              <Details config={this.props} />
+              <Order config={this.props} />
+              {showInstructions && (
                 <Route
                   path="/refill"
                   exact
-                  render={() => <Instructions config={config} />}
+                  render={() => <Instructions config={this.props} />}
                 />
               )}
             </Card>
@@ -139,11 +154,19 @@ class AirfillWidget extends Component {
             </div>
           )}
 
-          {config.showFooter && <Footer branded={config.showPoweredBy} />}
+          {showFooter && <Footer branded={showPoweredBy} />}
         </Root>
       </MuiThemeProvider>
     );
   }
+}
+
+function AirfillWidgetWrapper(props) {
+  return (
+    <Media query="(-moz-touch-enabled: 1), (pointer: coarse)">
+      {isMobile => <AirfillWidget isMobile={isMobile} {...props} />}
+    </Media>
+  );
 }
 
 export default connect(
@@ -154,4 +177,4 @@ export default connect(
   {
     init,
   }
-)(AirfillWidget);
+)(AirfillWidgetWrapper);
