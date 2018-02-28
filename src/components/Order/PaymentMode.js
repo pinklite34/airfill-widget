@@ -251,7 +251,7 @@ class NewPayment extends React.Component {
                       color="primary"
                       onClick={() => (window.location.href = uri)}
                     >
-                      Open wallet
+                      Open in Wallet
                     </Button>
                   </div>
                   <div {...styles.right}>
