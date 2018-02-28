@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { css } from 'glamor';
 import { connect } from 'react-redux';
 import { setCountry } from '../../actions';
@@ -14,7 +14,7 @@ const styles = {
   }),
 };
 
-class SelectCountry extends Component {
+class SelectCountry extends PureComponent {
   render() {
     const { countries, selected, setCountry, onChange } = this.props;
     return (

@@ -23,7 +23,7 @@ const styles = {
   }),
 };
 
-const Header = ({ branded }) => (
+const Header = ({ branded, isMobile }) => (
   <Switch>
     <Route
       path="/refill"
@@ -31,7 +31,7 @@ const Header = ({ branded }) => (
       render={props => (
         <div {...styles.container}>
           {branded && <Logo />}
-          <Introduction branded={branded} {...props} />
+          <Introduction isMobile={isMobile} branded={branded} {...props} />
         </div>
       )}
     />

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { css } from 'glamor';
 import { selectOperator, selectAmount } from '../../store';
@@ -54,7 +54,7 @@ const styles = {
   }),
 };
 
-class Picker extends Component {
+class Picker extends PureComponent {
   componentDidMount() {
     if (!this.props.operator.isLoading) {
       this.handleAmountChange(this.props, this.props.amount);

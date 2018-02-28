@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { css } from 'glamor';
 
 import SectionTitle from '../UI/SectionTitle';
@@ -17,7 +17,7 @@ const styles = {
   }),
 };
 
-class Grid extends Component {
+class Grid extends PureComponent {
   state = {
     showAll: this.props.defaultShowAll || false,
   };
