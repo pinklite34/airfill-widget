@@ -1,7 +1,6 @@
 import React from 'react';
 import { css } from 'glamor';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 import { openComboInput, setComboInputFocus, setCountry } from '../../actions';
 import { selectCountry, selectIsNumberLookup } from '../../store';
 
@@ -50,18 +49,6 @@ const Collapsed = ({
   setCountry,
   history,
 }) => {
-  if (isNumberLookup) {
-    return null;
-  }
-
-  if (!country) {
-    return (
-      <CollapsedSection hideButton darken={darken} type="country">
-        Select a country above to see available services.
-      </CollapsedSection>
-    );
-  }
-
   const openMenu = () => {
     setCountry('');
     openComboInput();
@@ -69,7 +56,7 @@ const Collapsed = ({
     !home && history.push('/refill');
   };
 
-  return (
+  return isNumberLookup ? null : country && country.alpha2 ? (
     <CollapsedSection darken={darken} onClick={openMenu} type="country">
       <div {...styles.container}>
         <div {...styles.country} onClick={openMenu}>
@@ -79,6 +66,10 @@ const Collapsed = ({
           {country.name}
         </div>
       </div>
+    </CollapsedSection>
+  ) : (
+    <CollapsedSection hideButton darken={darken} type="country">
+      Select a country above to see available services.
     </CollapsedSection>
   );
 };
@@ -91,7 +82,6 @@ export default connect(
   {
     openComboInput,
     setComboInputFocus,
-    push,
     setCountry,
   }
 )(Collapsed);
