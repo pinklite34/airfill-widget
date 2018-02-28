@@ -10,18 +10,18 @@ module.exports = {
     filename: 'index.js',
     publicPath: publicPath,
     library: 'airfill-widget',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
   },
   devServer: {
     contentBase: './src/',
     historyApiFallback: true,
     port: defaultPort,
     publicPath: publicPath,
-    noInfo: false
+    noInfo: false,
   },
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
-    alias: {}
+    alias: {},
   },
   module: {
     loaders: [
@@ -30,17 +30,17 @@ module.exports = {
         loader: 'babel-loader',
         include: [
           path.join(__dirname, '/../src'),
-          path.join(__dirname, '/../test')
-        ]
+          path.join(__dirname, '/../test'),
+        ],
       },
       {
         test: /\.(png|jpg|gif|woff|woff2)$/,
-        loader: 'url-loader'
+        loader: 'url-loader',
       },
       {
         test: /\.svg$/,
-        use: ['desvg-loader/react', 'svg-loader']
-      }
-    ]
-  }
+        use: ['desvg-loader/react', 'svg-loader'],
+      },
+    ],
+  },
 };

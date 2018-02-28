@@ -1,7 +1,6 @@
 'use strict';
 
 const path = require('path');
-const webpack = require('webpack');
 const distConfig = require('./dist');
 
 const config = Object.assign({}, distConfig, {
@@ -10,11 +9,9 @@ const config = Object.assign({}, distConfig, {
     filename: 'widget.js',
     publicPath: '/',
     library: 'airfill-widget',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
   },
-  externals: {
-
-  }
+  externals: {},
 });
 
 module.exports = config;

@@ -8,13 +8,11 @@ baseConfig.output.filename = 'widget.js';
 const config = Object.assign({}, baseConfig, {
   entry: [
     'webpack-dev-server/client?http://127.0.0.1:' + baseConfig.devServer.port,
-    './src/index'
+    './src/index',
   ],
   cache: true,
   devtool: 'cheap-module-source-map',
-  plugins: [
-    new webpack.NoEmitOnErrorsPlugin()
-  ]
+  plugins: [new webpack.NoEmitOnErrorsPlugin()],
 });
 
 module.exports = config;

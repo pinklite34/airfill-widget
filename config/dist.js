@@ -11,14 +11,14 @@ const config = Object.assign({}, baseConfig, {
   devtool: 'sourcemap',
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"'
+      'process.env.NODE_ENV': '"production"',
     }),
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
   ],
-  externals: [nodeExternals()]
+  externals: [nodeExternals()],
 });
 
 module.exports = config;
