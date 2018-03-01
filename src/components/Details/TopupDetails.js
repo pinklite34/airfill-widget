@@ -88,7 +88,7 @@ class TopupDetails extends PureComponent {
     this.props
       .createOrder({
         ...this.props.config.orderOptions,
-        paymentMethod: 'bitcoin',
+        paymentMethod: 'balance',
       })
       .then(() => {
         this.props.history.push('/refill/payment');
