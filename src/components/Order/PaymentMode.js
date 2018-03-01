@@ -17,7 +17,7 @@ import QrCode from '../UI/QrCode';
 
 import PaymentMenu from './PaymentMenu';
 
-import { canAfford } from '../../lib/currency-helpers';
+import { canAfford, isDirectPayment } from '../../lib/currency-helpers';
 
 const styles = {
   list: css({
@@ -189,9 +189,7 @@ class NewPayment extends React.Component {
     const method = paymentMethod;
 
     // decide if the current payment method is a direct coin payment
-    const isDirect = ['bitcoin', 'litecoin', 'lightning', 'dash'].some(
-      v => method.paymentMode === v
-    );
+    const isDirect = isDirectPayment(method.paymentMode);
 
     const basePrice = order.payment.altBasePrice || order.payment.satoshiPrice;
     let price = order.payment.altcoinPrice || order.btcPrice;
