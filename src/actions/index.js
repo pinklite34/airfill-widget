@@ -192,11 +192,13 @@ const prefillNumber = number => (dispatch, getState) => {
   }
 };
 
-export const init = options => (dispatch, getState) => {
+export const init = ({ defaultNumber, shouldLookupLocation = true }) => (
+  dispatch,
+  getState
+) => {
   const inventoryPromise = dispatch(loadInventory());
   dispatch(updateOrderStatus());
 
-  const { defaultNumber } = options;
   const state = getState();
 
   const number = selectNumber(state);
@@ -206,7 +208,7 @@ export const init = options => (dispatch, getState) => {
     inventoryPromise.then(() => {
       dispatch(prefillNumber(defaultNumber));
     });
-  } else if (!number) {
+  } else if (shouldLookupLocation && !number) {
     dispatch(lookupLocation());
   }
 };

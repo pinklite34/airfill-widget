@@ -94,14 +94,12 @@ class AirfillWidget extends PureComponent {
   };
 
   componentWillMount() {
-    const { isMobile, init, defaultNumber, orderOptions } = this.props;
+    const { isMobile, init, defaultNumber } = this.props;
 
-    if (!isMobile) {
-      init({
-        defaultNumber: defaultNumber,
-        email: orderOptions.email,
-      });
-    }
+    init({
+      defaultNumber: defaultNumber,
+      shouldLookupLocation: !isMobile,
+    });
   }
 
   componentDidCatch(err, info) {
