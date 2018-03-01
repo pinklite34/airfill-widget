@@ -110,7 +110,24 @@ class NewPayment extends React.Component {
       open: false,
       paymentMethod: method,
       isLoading: false,
+      order: props.order,
+      orders: {},
     };
+  }
+
+  // cache the order
+  componentWillReceiveProps(newProps) {
+    if (newProps.order.id !== this.props.order.id) {
+      this.setState(prevState => {
+        const orders = prevState.orders;
+        orders[this.state.paymentMethod.paymentMode] = newProps.order;
+
+        return {
+          order: newProps.order,
+          orders,
+        };
+      });
+    }
   }
 
   openMenu = () =>
@@ -139,6 +156,16 @@ class NewPayment extends React.Component {
       isLoading: true,
     });
 
+    // If we already have a cached order for this method, use it
+    if (button.paymentMode in this.state.orders) {
+      this.setState({
+        order: this.state.orders[button.paymentMode],
+        isLoading: false,
+      });
+
+      return;
+    }
+
     let options = {
       ...this.props.orderOptions,
       paymentMethod: button.paymentMode,
@@ -156,8 +183,8 @@ class NewPayment extends React.Component {
   };
 
   render() {
-    const { order, paymentButtons, paymentStatus } = this.props;
-    const { isLoading, paymentMethod } = this.state;
+    const { paymentButtons, paymentStatus } = this.props;
+    const { order, isLoading, paymentMethod } = this.state;
 
     const method = paymentMethod;
 

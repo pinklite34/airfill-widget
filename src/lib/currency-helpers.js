@@ -12,7 +12,8 @@ export const getPrice = (pkg, currency) => pkg[getPriceKey(currency)];
 // Convert Satoshi to Bitcoins
 export const satoshiToBTC = amount => Math.ceil(amount / 100) / 1000000;
 
-const supportedCoins = ['bitcoin', 'litecoin', 'lightning', 'dash'];
+// All altcoins that requires a watched address from the server
+export const supportedCoins = ['bitcoin', 'litecoin', 'lightning', 'dash'];
 
 // If we can afford the selected payment method
 export const canAfford = ({
