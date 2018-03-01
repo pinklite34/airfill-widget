@@ -103,6 +103,7 @@ class NewPayment extends React.Component {
       canAfford({
         ...props,
         paymentMode: btn.paymentMode,
+        requireAccountBalance: btn.requireAccountBalance,
       })
     );
 

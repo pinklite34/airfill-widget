@@ -20,11 +20,11 @@ export const canAfford = ({
   accountBalance,
   billingCurrency,
   paymentMode,
-  requiresAccountBalance,
+  requireAccountBalance,
 }) => {
   const isDirect = supportedCoins.some(v => v === paymentMode);
   const price = order[getPriceKey(billingCurrency)];
   const canAfford = price <= accountBalance;
 
-  return !requiresAccountBalance && (isDirect || canAfford);
+  return !requireAccountBalance && (isDirect || canAfford);
 };

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Button from 'material-ui/Button';
 import OrderHeader from '../UI/OrderHeader';
 import PaymentLayout from './PaymentLayout';
 import Error from './error.svg';

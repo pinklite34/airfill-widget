@@ -103,8 +103,8 @@ class PaymentMenu extends React.Component {
           paymentButtons.map((options, index) => (
             <React.Fragment key={index}>
               <Item
-                {...options}
                 {...this.props}
+                {...options}
                 noIcons={noIcons}
                 onClick={data => this.onClick(data, index)}
                 selected={selectedIndex === index}
