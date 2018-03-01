@@ -72,8 +72,8 @@
     to-fast-properties "^2.0.0"
 
 "@bitrefill/react-pusher@^1.0.1":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@bitrefill/react-pusher/-/react-pusher-1.2.0.tgz#83a59192e2c9217766012958622d52656f8a0db9"
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@bitrefill/react-pusher/-/react-pusher-1.2.1.tgz#206b79bd8b0115ba144023fca0e10dfaadc9efa4"
   dependencies:
     prop-types "^15.6.0"
     pusher-js "^4.2.2"
