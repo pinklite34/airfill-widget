@@ -93,7 +93,6 @@ const Payment = ({
   return (
     <div>
       <PusherSubscription
-        onError={({ err, info }) => console.error('pusher', err, info)}
         channel={[orderId, address].join('-')}
         events={[
           'paid',
@@ -110,24 +109,23 @@ const Payment = ({
             data,
           })
         }
-      >
-        <PaymentComponent
-          history={history}
-          order={order.result}
-          orderOptions={orderOptions}
-          operator={operator.result}
-          country={country}
-          accountBalance={accountBalance}
-          requireAccountBalance={requireAccountBalance}
-          paymentButtons={paymentButtons}
-          paymentStatus={paymentStatus}
-          showBTCAddress={showBTCAddress}
-          refundAddress={refundAddress}
-          billingCurrency={billingCurrency}
-          number={number}
-          onReset={reset}
-        />
-      </PusherSubscription>
+      />
+      <PaymentComponent
+        history={history}
+        order={order.result}
+        orderOptions={orderOptions}
+        operator={operator.result}
+        country={country}
+        accountBalance={accountBalance}
+        requireAccountBalance={requireAccountBalance}
+        paymentButtons={paymentButtons}
+        paymentStatus={paymentStatus}
+        showBTCAddress={showBTCAddress}
+        refundAddress={refundAddress}
+        billingCurrency={billingCurrency}
+        number={number}
+        onReset={reset}
+      />
     </div>
   );
 };
