@@ -186,9 +186,9 @@ class PaymentMode extends React.Component {
       .catch(err => console.warn(err));
   };
 
-  copy = text => {
-    this.setState({ addressTooltip: true });
-    setTimeout(() => this.setState({ addressTooltip: false }), 2000);
+  copy = (text, field) => {
+    this.setState({ [field]: true });
+    setTimeout(() => this.setState({ [field]: false }), 2000);
     setClipboardText(text);
   };
 
@@ -276,15 +276,17 @@ class PaymentMode extends React.Component {
                 <div {...styles.container}>
                   <div {...styles.left}>
                     Send <i>exactly</i>
-                    <Tooltip>
-                      <strong onClick={() => this.copy(price)}>
-                        {price + ' ' + unit}
+                    <Tooltip open={this.state.amountTooltip} title="Copied!">
+                      <strong onClick={() => this.copy(price, 'amountTooltip')}>
+                        {` ${price} ${unit} `}
                       </strong>
                     </Tooltip>
                     to this address:
                     <Tooltip open={this.state.addressTooltip} title="Copied!">
                       <BitcoinAddress
-                        onClick={() => this.copy(order.payment.address)}
+                        onClick={() =>
+                          this.copy(order.payment.address, 'addressTooltip')
+                        }
                         address={order.payment.address}
                       />
                     </Tooltip>
