@@ -94,7 +94,7 @@ const styles = {
   }),
 };
 
-class NewPayment extends React.Component {
+class PaymentMode extends React.Component {
   constructor(props) {
     super(props);
 
@@ -292,7 +292,7 @@ class NewPayment extends React.Component {
   }
 }
 
-NewPayment.propTypes = {
+PaymentMode.propTypes = {
   order: PropTypes.object.isRequired,
   showBTCAddress: PropTypes.bool.isRequired,
   paymentButtons: PropTypes.array,
@@ -300,4 +300,4 @@ NewPayment.propTypes = {
 
 export default connect(state => ({}), {
   createOrder,
-})(NewPayment);
+})(PaymentMode);
