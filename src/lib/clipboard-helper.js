@@ -4,6 +4,10 @@ export default text => {
   element.textContent = text;
   document.body.appendChild(element);
   element.select();
-  document.execCommand('copy');
+
+  try {
+    document.execCommand('copy');
+  } catch (e) {}
+
   document.body.removeChild(element);
 };
