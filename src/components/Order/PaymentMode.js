@@ -7,6 +7,7 @@ import { createOrder } from '../../actions';
 import { css } from 'glamor';
 import Button from 'material-ui/Button';
 import { CircularProgress } from 'material-ui/Progress';
+import Tooltip from 'material-ui/Tooltip';
 
 import BitcoinAddress from '../UI/BitcoinAddress';
 import Info from './info.svg';
@@ -18,6 +19,7 @@ import QrCode from '../UI/QrCode';
 import PaymentMenu from './PaymentMenu';
 
 import { canAfford, isDirectPayment } from '../../lib/currency-helpers';
+import setClipboardText from '../../lib/clipboard-helper';
 
 const styles = {
   list: css({
@@ -112,6 +114,8 @@ class PaymentMode extends React.Component {
       isLoading: false,
       order: props.order,
       orders: {},
+      addressTooltip: false,
+      amountTooltip: false,
     };
   }
 
@@ -180,6 +184,12 @@ class PaymentMode extends React.Component {
       .createOrder(options)
       .then(() => this.setState({ isLoading: false }))
       .catch(err => console.warn(err));
+  };
+
+  copy = text => {
+    this.setState({ addressTooltip: true });
+    setTimeout(() => this.setState({ addressTooltip: false }), 2000);
+    setClipboardText(text);
   };
 
   render() {
@@ -265,9 +275,19 @@ class PaymentMode extends React.Component {
               ) : (
                 <div {...styles.container}>
                   <div {...styles.left}>
-                    Send <i>exactly</i> <strong>{price + ' ' + unit}</strong> to
-                    this address:
-                    <BitcoinAddress address={order.payment.address} />
+                    Send <i>exactly</i>
+                    <Tooltip>
+                      <strong onClick={() => this.copy(price)}>
+                        {price + ' ' + unit}
+                      </strong>
+                    </Tooltip>
+                    to this address:
+                    <Tooltip open={this.state.addressTooltip} title="Copied!">
+                      <BitcoinAddress
+                        onClick={() => this.copy(order.payment.address)}
+                        address={order.payment.address}
+                      />
+                    </Tooltip>
                     <br />
                     <br />
                     <Button
