@@ -87,8 +87,8 @@ const styles = {
     '@media(max-width: 720px)': {
       '& img': {
         marginTop: '24px',
+        marginLeft: '12px',
         float: 'left',
-        width: '70%',
       },
     },
   }),
