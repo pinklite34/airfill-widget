@@ -113,8 +113,6 @@ class PaymentMode extends React.Component {
       })
     );
 
-    console.log('affordable', method.paymentMode);
-
     this.state = {
       open: false,
       paymentMethod: method,

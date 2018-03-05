@@ -93,8 +93,6 @@ class TopupDetails extends PureComponent {
       })
     );
 
-    console.log('initial payment mode', method.paymentMode);
-
     this.setState({
       isLoading: true,
     });
