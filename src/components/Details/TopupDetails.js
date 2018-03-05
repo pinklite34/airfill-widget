@@ -19,6 +19,7 @@ import Field from '../UI/Field';
 
 import Error from './error.svg';
 import withStyles from 'material-ui/styles/withStyles';
+import { canAfford } from '../../lib/currency-helpers';
 
 const styles = {
   title: css({
@@ -82,13 +83,25 @@ class TopupDetails extends PureComponent {
   };
 
   createOrder = () => {
+    const method = this.props.config.paymentButtons.find(btn =>
+      canAfford({
+        amount: this.props.amount,
+        accountBalance: this.props.config.accountBalance,
+        packages: this.props.operator.result.packages,
+        paymentMode: btn.paymentMode,
+        requireAccountBalance: btn.requireAccountBalance,
+      })
+    );
+
+    console.log('initial payment mode', method.paymentMode);
+
     this.setState({
       isLoading: true,
     });
     this.props
       .createOrder({
         ...this.props.config.orderOptions,
-        paymentMethod: 'balance',
+        paymentMethod: method.paymentMode,
       })
       .then(() => {
         this.props.history.push('/refill/payment');

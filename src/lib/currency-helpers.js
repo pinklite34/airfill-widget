@@ -15,21 +15,28 @@ export const satoshiToBTC = amount => Math.ceil(amount / 100) / 1000000;
 // All altcoins that requires a watched address from the server
 const supportedCoins = ['bitcoin', 'litecoin', 'lightning', 'dash'];
 
-export const isDirectPayment = method => {
-  return supportedCoins.some(x => x === method);
-};
+export const isDirectPayment = method => supportedCoins.some(x => x === method);
 
 // If we can afford the selected payment method
 export const canAfford = ({
-  order,
+  packages,
+  amount,
+  btcPrice,
   accountBalance,
-  billingCurrency,
   paymentMode,
   requiresAccountBalance,
 }) => {
+  // payment independent of account balance
   const isDirect = isDirectPayment(paymentMode);
-  const price = order[getPriceKey(billingCurrency)];
-  const canAfford = price <= accountBalance;
+
+  if (!btcPrice) {
+    // get selected package from amount picked
+    const pkg = packages.find(x => x.value == amount); // eslint-disable-line
+
+    btcPrice = pkg.btcPrice; // eslint-disable-line
+  }
+
+  const canAfford = btcPrice <= accountBalance;
 
   return !requiresAccountBalance && (isDirect || canAfford);
 };

@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createOrder } from '../../actions';
 
+import { selectAmount } from '../../store';
+
 import { css } from 'glamor';
 import Button from 'material-ui/Button';
 import { CircularProgress } from 'material-ui/Progress';
@@ -101,10 +103,15 @@ class NewPayment extends React.Component {
     // pick first affordable payment method
     const method = props.paymentButtons.find(btn =>
       canAfford({
-        ...props,
+        amount: props.amount,
+        btcPrice: Number(props.order.btcPrice),
+        accountBalance: props.accountBalance,
         paymentMode: btn.paymentMode,
+        requireAccountBalance: btn.requireAccountBalance,
       })
     );
+
+    console.log('affordable', method.paymentMode);
 
     this.state = {
       open: false,
@@ -298,6 +305,11 @@ NewPayment.propTypes = {
   paymentButtons: PropTypes.array,
 };
 
-export default connect(state => ({}), {
-  createOrder,
-})(NewPayment);
+export default connect(
+  state => ({
+    amount: selectAmount(state),
+  }),
+  {
+    createOrder,
+  }
+)(NewPayment);
