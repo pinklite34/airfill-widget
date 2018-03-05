@@ -9,6 +9,7 @@ import { selectAmount } from '../../store';
 import { css } from 'glamor';
 import Button from 'material-ui/Button';
 import { CircularProgress } from 'material-ui/Progress';
+import Tooltip from 'material-ui/Tooltip';
 
 import BitcoinAddress from '../UI/BitcoinAddress';
 import Info from './info.svg';
@@ -20,6 +21,7 @@ import QrCode from '../UI/QrCode';
 import PaymentMenu from './PaymentMenu';
 
 import { canAfford, isDirectPayment } from '../../lib/currency-helpers';
+import setClipboardText from '../../lib/clipboard-helper';
 
 const styles = {
   list: css({
@@ -89,14 +91,14 @@ const styles = {
     '@media(max-width: 720px)': {
       '& img': {
         marginTop: '24px',
+        marginLeft: '12px',
         float: 'left',
-        width: '70%',
       },
     },
   }),
 };
 
-class NewPayment extends React.Component {
+class PaymentMode extends React.Component {
   constructor(props) {
     super(props);
 
@@ -119,6 +121,8 @@ class NewPayment extends React.Component {
       isLoading: false,
       order: props.order,
       orders: {},
+      addressTooltip: false,
+      amountTooltip: false,
     };
   }
 
@@ -187,6 +191,12 @@ class NewPayment extends React.Component {
       .createOrder(options)
       .then(() => this.setState({ isLoading: false }))
       .catch(err => console.warn(err));
+  };
+
+  copy = (text, field) => {
+    this.setState({ [field]: true });
+    setTimeout(() => this.setState({ [field]: false }), 2000);
+    setClipboardText(text);
   };
 
   render() {
@@ -272,9 +282,21 @@ class NewPayment extends React.Component {
               ) : (
                 <div {...styles.container}>
                   <div {...styles.left}>
-                    Send <i>exactly</i> <strong>{price + ' ' + unit}</strong> to
-                    this address:
-                    <BitcoinAddress address={order.payment.address} />
+                    Send <i>exactly</i>
+                    <Tooltip open={this.state.amountTooltip} title="Copied!">
+                      <strong onClick={() => this.copy(price, 'amountTooltip')}>
+                        {` ${price} ${unit} `}
+                      </strong>
+                    </Tooltip>
+                    to this address:
+                    <Tooltip open={this.state.addressTooltip} title="Copied!">
+                      <BitcoinAddress
+                        onClick={() =>
+                          this.copy(order.payment.address, 'addressTooltip')
+                        }
+                        address={order.payment.address}
+                      />
+                    </Tooltip>
                     <br />
                     <br />
                     <Button
@@ -299,7 +321,7 @@ class NewPayment extends React.Component {
   }
 }
 
-NewPayment.propTypes = {
+PaymentMode.propTypes = {
   order: PropTypes.object.isRequired,
   showBTCAddress: PropTypes.bool.isRequired,
   paymentButtons: PropTypes.array,
@@ -312,4 +334,4 @@ export default connect(
   {
     createOrder,
   }
-)(NewPayment);
+)(PaymentMode);

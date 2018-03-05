@@ -19,6 +19,9 @@ const muiStyles = {
     fontWeight: '500',
     fontFamily: '"Roboto", sans-serif',
   },
+  menu: {
+    width: '348px',
+  },
 };
 
 const styles = {
@@ -92,13 +95,20 @@ class PaymentMenu extends React.Component {
   };
 
   render() {
-    const { open, anchorEl, paymentButtons, onClose } = this.props;
+    const { open, anchorEl, paymentButtons, onClose, classes } = this.props;
     const { selectedIndex } = this.state;
 
     const noIcons = paymentButtons && paymentButtons.some(btn => !!btn.icon);
 
     return (
-      <Menu anchorEl={anchorEl} open={open} onClose={() => onClose()}>
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={() => onClose()}
+        classes={{
+          paper: classes.menu,
+        }}
+      >
         {paymentButtons &&
           paymentButtons.map((options, index) => (
             <React.Fragment key={index}>

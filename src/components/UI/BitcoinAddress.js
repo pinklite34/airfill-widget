@@ -11,15 +11,15 @@ const style = css({
   fontSize: 16,
 });
 
-const BitcoinAddress = ({ address }) => (
+const BitcoinAddress = ({ address, ...props }) => (
   <TextField
+    {...props}
     fullWidth
     {...style}
     type="text"
     readOnly
     value={address}
     size="44"
-    onClick={e => e.target.select()}
   />
 );
 

@@ -4,6 +4,8 @@ import { css } from 'glamor';
 import { selectAmount } from '../../store/ui';
 import { selectOperator } from '../../store/operator';
 import { updatePaymentStatus } from '../../actions/index';
+import Tooltip from 'material-ui/Tooltip';
+import setClipboardText from '../../lib/clipboard-helper';
 
 const styles = {
   container: css({
@@ -77,6 +79,9 @@ const styles = {
   logo: css({
     maxWidth: 48,
   }),
+  amount: css({
+    margin: 0,
+  }),
 };
 
 const valueField = {
@@ -89,6 +94,7 @@ class PaymentLayout extends React.Component {
   state = {
     countdownInterval: null,
     timeLeft: '15:00',
+    tooltip: false,
   };
 
   componentDidMount() {
@@ -137,6 +143,12 @@ class PaymentLayout extends React.Component {
 
     return !paymentStatus.status || paymentStatus.status === 'partial';
   }
+
+  copy = text => {
+    this.setState({ tooltip: true });
+    setTimeout(() => this.setState({ tooltip: false }), 2000);
+    setClipboardText(text);
+  };
 
   render() {
     const {
@@ -188,7 +200,15 @@ class PaymentLayout extends React.Component {
             {...(this.showCountdown ? styles.cellContainer : {})}
             {...styles.infoContainer}
           >
-            <p>{formattedPrice}</p>
+            <Tooltip
+              open={this.state.tooltip}
+              title="Copied!"
+              placement="right-end"
+            >
+              <p {...styles.amount} onClick={() => this.copy(formattedPrice)}>
+                {formattedPrice}
+              </p>
+            </Tooltip>
             {this.showCountdown && (
               <p {...styles.label}>Time left: {this.state.timeLeft}</p>
             )}
