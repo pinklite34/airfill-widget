@@ -198,7 +198,13 @@ class PaymentMode extends React.Component {
   };
 
   render() {
-    const { paymentButtons, paymentStatus } = this.props;
+    const {
+      paymentButtons,
+      amount,
+      accountBalance,
+      paymentStatus,
+    } = this.props;
+
     const { order, isLoading, paymentMethod } = this.state;
 
     const method = paymentMethod;
@@ -239,6 +245,11 @@ class PaymentMode extends React.Component {
           paymentButtons={paymentButtons}
           onClick={this.menuClick}
           onClose={this.closeMenu}
+          affordProps={{
+            amount,
+            btcPrice: Number(order.btcPrice),
+            accountBalance,
+          }}
         />
 
         <OrderHeader

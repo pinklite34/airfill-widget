@@ -53,13 +53,20 @@ const Item = props => {
     icon,
     selected,
     noIcons,
+    affordProps,
+    requireAccountBalance,
+    paymentMode,
   } = props;
 
   if (typeof icon === 'string') {
     icon = <img src={icon} />;
   }
 
-  const disabled = !canAfford(props);
+  const disabled = !canAfford({
+    ...affordProps,
+    requireAccountBalance,
+    paymentMode,
+  });
   const className = noIcons ? styles.icon : {};
 
   return (
@@ -95,7 +102,15 @@ class PaymentMenu extends React.Component {
   };
 
   render() {
-    const { open, anchorEl, paymentButtons, onClose, classes } = this.props;
+    const {
+      open,
+      anchorEl,
+      paymentButtons,
+      onClose,
+      classes,
+      affordProps,
+    } = this.props;
+
     const { selectedIndex } = this.state;
 
     const noIcons = paymentButtons && paymentButtons.some(btn => !!btn.icon);
@@ -115,6 +130,7 @@ class PaymentMenu extends React.Component {
               <Item
                 {...options}
                 {...this.props}
+                affordProps={affordProps}
                 noIcons={noIcons}
                 onClick={data => this.onClick(data, index)}
                 selected={selectedIndex === index}
