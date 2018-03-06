@@ -23,8 +23,10 @@ class Picker extends PureComponent {
     showSuggestedOperator: true,
   };
 
-  onSelectSuggestedOperator = () =>
-    this.props.selectOperator(this.props.numberLookup.operator.slug);
+  onSelectSuggestedOperator = () => {
+    this.props.setOperator(this.props.numberLookup.operator.slug);
+    this.props.history.push('/refill/selectAmount');
+  };
 
   onRejectSuggestedOperator = () =>
     this.setState({ showSuggestedOperator: false }, () =>
