@@ -23,6 +23,9 @@ export default (state = {}, { type, payload }) => {
       if (status === 'delivered') {
         nextState[orderId].deliveryData = data;
       }
+      if (status === 'payment_error') {
+        nextState[orderId].message = data.message;
+      }
 
       return nextState;
     }
