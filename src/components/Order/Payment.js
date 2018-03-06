@@ -144,6 +144,6 @@ export default connect(
   }),
   dispatch => ({
     updatePaymentStatus: (...args) => dispatch(updatePaymentStatus(...args)),
-    reset: () => dispatch(push('/refill')),
+    reset: () => dispatch(push('/refill/selectAmount')),
   })
 )(Payment);

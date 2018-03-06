@@ -19,6 +19,9 @@ const muiStyles = {
     fontWeight: '500',
     fontFamily: '"Roboto", sans-serif',
   },
+  menu: {
+    width: '348px',
+  },
 };
 
 const styles = {
@@ -50,13 +53,20 @@ const Item = props => {
     icon,
     selected,
     noIcons,
+    affordProps,
+    requireAccountBalance,
+    paymentMode,
   } = props;
 
   if (typeof icon === 'string') {
     icon = <img src={icon} />;
   }
 
-  const disabled = !canAfford(props);
+  const disabled = !canAfford({
+    ...affordProps,
+    requireAccountBalance,
+    paymentMode,
+  });
   const className = noIcons ? styles.icon : {};
 
   return (
@@ -92,19 +102,35 @@ class PaymentMenu extends React.Component {
   };
 
   render() {
-    const { open, anchorEl, paymentButtons, onClose } = this.props;
+    const {
+      open,
+      anchorEl,
+      paymentButtons,
+      onClose,
+      classes,
+      affordProps,
+    } = this.props;
+
     const { selectedIndex } = this.state;
 
     const noIcons = paymentButtons && paymentButtons.some(btn => !!btn.icon);
 
     return (
-      <Menu anchorEl={anchorEl} open={open} onClose={() => onClose()}>
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={() => onClose()}
+        classes={{
+          paper: classes.menu,
+        }}
+      >
         {paymentButtons &&
           paymentButtons.map((options, index) => (
             <React.Fragment key={index}>
               <Item
-                {...this.props}
                 {...options}
+                {...this.props}
+                affordProps={affordProps}
                 noIcons={noIcons}
                 onClick={data => this.onClick(data, index)}
                 selected={selectedIndex === index}

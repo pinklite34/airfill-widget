@@ -4,9 +4,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createOrder } from '../../actions';
 
+import { selectAmount } from '../../store';
+
 import { css } from 'glamor';
 import Button from 'material-ui/Button';
 import { CircularProgress } from 'material-ui/Progress';
+import Tooltip from 'material-ui/Tooltip';
 
 import BitcoinAddress from '../UI/BitcoinAddress';
 import Info from './info.svg';
@@ -17,7 +20,8 @@ import QrCode from '../UI/QrCode';
 
 import PaymentMenu from './PaymentMenu';
 
-import { canAfford } from '../../lib/currency-helpers';
+import { canAfford, isDirectPayment } from '../../lib/currency-helpers';
+import setClipboardText from '../../lib/clipboard-helper';
 
 const styles = {
   list: css({
@@ -87,21 +91,23 @@ const styles = {
     '@media(max-width: 720px)': {
       '& img': {
         marginTop: '24px',
+        marginLeft: '12px',
         float: 'left',
-        width: '70%',
       },
     },
   }),
 };
 
-class NewPayment extends React.Component {
+class PaymentMode extends React.Component {
   constructor(props) {
     super(props);
 
     // pick first affordable payment method
     const method = props.paymentButtons.find(btn =>
       canAfford({
-        ...props,
+        amount: props.amount,
+        btcPrice: Number(props.order.btcPrice),
+        accountBalance: props.accountBalance,
         paymentMode: btn.paymentMode,
         requireAccountBalance: btn.requireAccountBalance,
       })
@@ -111,7 +117,26 @@ class NewPayment extends React.Component {
       open: false,
       paymentMethod: method,
       isLoading: false,
+      order: props.order,
+      orders: {},
+      addressTooltip: false,
+      amountTooltip: false,
     };
+  }
+
+  // cache the order
+  componentWillReceiveProps(newProps) {
+    if (newProps.order.id !== this.props.order.id) {
+      this.setState(prevState => {
+        const orders = prevState.orders;
+        orders[this.state.paymentMethod.paymentMode] = newProps.order;
+
+        return {
+          order: newProps.order,
+          orders,
+        };
+      });
+    }
   }
 
   openMenu = () =>
@@ -140,6 +165,16 @@ class NewPayment extends React.Component {
       isLoading: true,
     });
 
+    // If we already have a cached order for this method, use it
+    if (button.paymentMode in this.state.orders) {
+      this.setState({
+        order: this.state.orders[button.paymentMode],
+        isLoading: false,
+      });
+
+      return;
+    }
+
     let options = {
       ...this.props.orderOptions,
       paymentMethod: button.paymentMode,
@@ -156,16 +191,26 @@ class NewPayment extends React.Component {
       .catch(err => console.warn(err));
   };
 
+  copy = (text, field) => {
+    this.setState({ [field]: true });
+    setTimeout(() => this.setState({ [field]: false }), 2000);
+    setClipboardText(text);
+  };
+
   render() {
-    const { order, paymentButtons, paymentStatus } = this.props;
-    const { isLoading, paymentMethod } = this.state;
+    const {
+      paymentButtons,
+      amount,
+      accountBalance,
+      paymentStatus,
+    } = this.props;
+
+    const { order, isLoading, paymentMethod } = this.state;
 
     const method = paymentMethod;
 
     // decide if the current payment method is a direct coin payment
-    const isDirect = ['bitcoin', 'litecoin', 'lightning', 'dash'].some(
-      v => method.paymentMode === v
-    );
+    const isDirect = isDirectPayment(method.paymentMode);
 
     const basePrice = order.payment.altBasePrice || order.payment.satoshiPrice;
     let price = order.payment.altcoinPrice || order.btcPrice;
@@ -200,6 +245,11 @@ class NewPayment extends React.Component {
           paymentButtons={paymentButtons}
           onClick={this.menuClick}
           onClose={this.closeMenu}
+          affordProps={{
+            amount,
+            btcPrice: Number(order.btcPrice),
+            accountBalance,
+          }}
         />
 
         <OrderHeader
@@ -241,9 +291,21 @@ class NewPayment extends React.Component {
               ) : (
                 <div {...styles.container}>
                   <div {...styles.left}>
-                    Send <i>exactly</i> <strong>{price + ' ' + unit}</strong> to
-                    this address:
-                    <BitcoinAddress address={order.payment.address} />
+                    Send <i>exactly</i>
+                    <Tooltip open={this.state.amountTooltip} title="Copied!">
+                      <strong onClick={() => this.copy(price, 'amountTooltip')}>
+                        {` ${price} ${unit} `}
+                      </strong>
+                    </Tooltip>
+                    to this address:
+                    <Tooltip open={this.state.addressTooltip} title="Copied!">
+                      <BitcoinAddress
+                        onClick={() =>
+                          this.copy(order.payment.address, 'addressTooltip')
+                        }
+                        address={order.payment.address}
+                      />
+                    </Tooltip>
                     <br />
                     <br />
                     <Button
@@ -268,12 +330,17 @@ class NewPayment extends React.Component {
   }
 }
 
-NewPayment.propTypes = {
+PaymentMode.propTypes = {
   order: PropTypes.object.isRequired,
   showBTCAddress: PropTypes.bool.isRequired,
   paymentButtons: PropTypes.array,
 };
 
-export default connect(state => ({}), {
-  createOrder,
-})(NewPayment);
+export default connect(
+  state => ({
+    amount: selectAmount(state),
+  }),
+  {
+    createOrder,
+  }
+)(PaymentMode);

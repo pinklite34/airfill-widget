@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { css } from 'glamor';
+import Tooltip from 'material-ui/Tooltip';
+import setClipboardText from '../../lib/clipboard-helper';
 
 const styles = {
   base: css({
@@ -52,18 +54,39 @@ const styles = {
   }),
 };
 
-const OrderHeader = ({ children, order, title, subtitle, icon }) => (
-  <div {...styles.base}>
-    <div {...styles.icon}>{icon}</div>
-    <div {...styles.text}>
-      <div {...styles.textHeader}>
-        <div {...styles.label}>{title}</div>
-        <div {...styles.orderId}>Order ID {order.id}</div>
+class OrderHeader extends React.Component {
+  state = {
+    open: false,
+  };
+
+  copy = () => {
+    this.setState({ open: true });
+    setTimeout(() => this.setState({ open: false }), 2000);
+
+    setClipboardText(this.props.order.id);
+  };
+
+  render() {
+    const { order, title, subtitle, icon } = this.props;
+
+    return (
+      <div {...styles.base}>
+        <div {...styles.icon}>{icon}</div>
+        <div {...styles.text}>
+          <div {...styles.textHeader}>
+            <div {...styles.label}>{title}</div>
+            <Tooltip open={this.state.open} title="Copied!">
+              <div {...styles.orderId} onClick={this.copy}>
+                Order ID {order.id}
+              </div>
+            </Tooltip>
+          </div>
+          <div {...styles.subtitle}>{subtitle}</div>
+        </div>
       </div>
-      <div {...styles.subtitle}>{subtitle}</div>
-    </div>
-  </div>
-);
+    );
+  }
+}
 
 OrderHeader.propTypes = {
   title: PropTypes.string.isRequired,
