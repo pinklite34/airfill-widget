@@ -62,8 +62,6 @@ const Item = props => {
     icon = <img src={icon} />;
   }
 
-  console.log(paymentMode, requireAccountBalance);
-
   const disabled = !canAfford({
     ...affordProps,
     requireAccountBalance,

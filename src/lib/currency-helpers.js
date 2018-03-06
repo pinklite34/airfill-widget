@@ -38,8 +38,5 @@ export const canAfford = ({
 
   const canAfford = btcPrice <= accountBalance;
 
-  console.log(paymentMode, !requireAccountBalance, isDirect, canAfford);
-  console.log();
-
   return !requireAccountBalance || isDirect || canAfford;
 };
