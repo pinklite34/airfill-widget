@@ -62,6 +62,8 @@ const Item = props => {
     icon = <img src={icon} />;
   }
 
+  console.log(paymentMode, requireAccountBalance);
+
   const disabled = !canAfford({
     ...affordProps,
     requireAccountBalance,
@@ -128,8 +130,8 @@ class PaymentMenu extends React.Component {
           paymentButtons.map((options, index) => (
             <React.Fragment key={index}>
               <Item
-                {...options}
                 {...this.props}
+                {...options}
                 affordProps={affordProps}
                 noIcons={noIcons}
                 onClick={data => this.onClick(data, index)}

@@ -24,7 +24,7 @@ export const canAfford = ({
   btcPrice,
   accountBalance,
   paymentMode,
-  requiresAccountBalance,
+  requireAccountBalance,
 }) => {
   // payment independent of account balance
   const isDirect = isDirectPayment(paymentMode);
@@ -38,5 +38,5 @@ export const canAfford = ({
 
   const canAfford = btcPrice <= accountBalance;
 
-  return !requiresAccountBalance && (isDirect || canAfford);
+  return !requireAccountBalance || isDirect || canAfford;
 };
