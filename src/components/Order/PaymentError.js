@@ -28,7 +28,7 @@ const PaymentError = props => {
       <OrderHeader
         order={order}
         title="Payment error"
-        subtitle="The payment could not be made"
+        subtitle="The payment could not be completed"
         icon={<Error />}
       />
       <PaymentLayout {...props}>
