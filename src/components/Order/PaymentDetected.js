@@ -26,40 +26,54 @@ const styles = {
   }),
 };
 
-const PaymentDetected = props => {
-  return (
-    <div>
-      <OrderHeader
-        order={props.order}
-        title="Payment detected"
-        subtitle="We're waiting for your payment to be confirmed"
-        icon={<CircularProgress size={32} />}
-      />
-      <PaymentLayout {...props}>
-        <div>
-          <div />
-          <div {...styles.textContainer}>
-            <span {...styles.info}>
-              This page will continue to update with more details about your
-              refill. It is safe to leave this page or to buy another refill.
-            </span>
-            <br />
-            <span {...styles.link}>When will I get my refill?</span>
-            <br />
-            <Button
-              color="primary"
-              raised
-              {...styles.button}
-              onClick={props.onReset}
+const PaymentDetected = props => (
+  <div>
+    <OrderHeader
+      order={props.order}
+      title="Payment detected"
+      subtitle="We're waiting for your payment to be confirmed"
+      icon={<CircularProgress size={32} />}
+    />
+    <PaymentLayout {...props}>
+      <div>
+        <div />
+        <div {...styles.textContainer}>
+          <span {...styles.info}>
+            This page will continue to update with more details about your
+            refill. It is safe to leave this page or to buy another refill.
+          </span>
+          <br />
+          {props.order.paymentMethod === 'bitcoin' ? (
+            <span
+              {...styles.link}
+              onClick={() =>
+                window.open(
+                  `https://transactioncheck.bitrefill.com/lookup/${
+                    props.order.payment.address
+                  }`,
+                  '_blank'
+                )
+              }
             >
-              Buy another refill
-            </Button>
-          </div>
+              Click here to see how it&#39;s going
+            </span>
+          ) : (
+            <span {...styles.link}>When will I get my refill?</span>
+          )}
+          <br />
+          <Button
+            color="primary"
+            raised
+            {...styles.button}
+            onClick={props.onReset}
+          >
+            Buy another refill
+          </Button>
         </div>
-      </PaymentLayout>
-    </div>
-  );
-};
+      </div>
+    </PaymentLayout>
+  </div>
+);
 
 PaymentDetected.propTypes = {
   order: PropTypes.object.isRequired,
