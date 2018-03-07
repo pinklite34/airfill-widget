@@ -86,6 +86,7 @@ class TopupDetails extends PureComponent {
     const method = this.props.config.paymentButtons.find(btn =>
       canAfford({
         amount: this.props.amount,
+        packages: this.props.operator.result.packages,
         accountBalance: this.props.config.accountBalance,
         paymentMode: btn.paymentMode,
         requireAccountBalance: btn.requireAccountBalance,

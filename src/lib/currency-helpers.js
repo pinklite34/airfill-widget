@@ -21,6 +21,7 @@ export const isDirectPayment = method => supportedCoins.some(x => x === method);
 export const canAfford = ({
   amount,
   btcPrice,
+  packages,
   accountBalance,
   paymentMode,
   requireAccountBalance,
@@ -29,8 +30,15 @@ export const canAfford = ({
   // payment independent of account balance
   const isDirect = isDirectPayment(paymentMode);
 
-  btcPrice =
-    btcPrice || amount * (operator.range.customerSatoshiPriceRate / 100000000);
+  if (!btcPrice) {
+    // we don't have the bitcoin price, but we have the custom range
+    if (operator.range) {
+      btcPrice = amount * (operator.range.customerSatoshiPriceRate / 100000000);
+    } else {
+      // we don't have anythimg, find the correct btcPrice from packages
+      btcPrice = packages.find(x => x.value == amount).btcPrice; // eslint-disable-line
+    }
+  }
 
   const canAfford = btcPrice <= accountBalance;
 
