@@ -14,6 +14,7 @@ import ExpiredPayment from './PaymentExpired';
 import RefillFailed from './RefillFailed';
 import RefillDelivered from './RefillDelivered';
 import BalanceTooLow from './BalanceTooLow';
+import PaymentError from './PaymentError';
 
 import {
   selectOrder,
@@ -35,6 +36,8 @@ const componentForStatus = status => {
       return ExpiredPayment;
     case 'failed':
       return RefillFailed;
+    case 'payment_error':
+      return PaymentError;
     case 'delivered':
       return RefillDelivered;
     case 'balance-too-low':
@@ -101,6 +104,7 @@ const Payment = ({
           'failed',
           'delivered',
           'expired',
+          'payment_error',
         ]}
         onUpdate={(event, data) =>
           updatePaymentStatus({
