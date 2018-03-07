@@ -87,9 +87,9 @@ class TopupDetails extends PureComponent {
       canAfford({
         amount: this.props.amount,
         accountBalance: this.props.config.accountBalance,
-        packages: this.props.operator.result.packages,
         paymentMode: btn.paymentMode,
         requireAccountBalance: btn.requireAccountBalance,
+        operator: this.props.operator.result,
       })
     );
 

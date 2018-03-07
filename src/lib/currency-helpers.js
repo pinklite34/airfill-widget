@@ -19,22 +19,18 @@ export const isDirectPayment = method => supportedCoins.some(x => x === method);
 
 // If we can afford the selected payment method
 export const canAfford = ({
-  packages,
   amount,
   btcPrice,
   accountBalance,
   paymentMode,
   requireAccountBalance,
+  operator,
 }) => {
   // payment independent of account balance
   const isDirect = isDirectPayment(paymentMode);
 
-  if (!btcPrice) {
-    // get selected package from amount picked
-    const pkg = packages.find(x => x.value == amount); // eslint-disable-line
-
-    btcPrice = pkg.btcPrice; // eslint-disable-line
-  }
+  btcPrice =
+    btcPrice || amount * (operator.range.customerSatoshiPriceRate / 100000000);
 
   const canAfford = btcPrice <= accountBalance;
 
