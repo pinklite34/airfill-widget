@@ -39,8 +39,13 @@ const PaymentDetected = props => (
         <div />
         <div {...styles.textContainer}>
           <span {...styles.info}>
-            This page will continue to update with more details about your
-            refill. It is safe to leave this page or to buy another refill.
+            <p>
+              We will send your refill as soon as the transaction is completed.
+              This can be slow if the network is very busy, but usually it only
+              takes a few minutes!
+            </p>
+            This page will update with additional details when we have confirmed
+            your payment.
           </span>
           <br />
           {props.order.paymentMethod === 'bitcoin' ? (
