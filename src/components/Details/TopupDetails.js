@@ -8,6 +8,7 @@ import {
   selectEmail,
   selectAmount,
   selectOperator,
+  selectPaymentMethod,
 } from '../../store';
 
 import { isValidEmail } from '../../lib/email-validation';
@@ -83,7 +84,8 @@ class TopupDetails extends PureComponent {
   };
 
   createOrder = () => {
-    const method = this.props.config.paymentButtons.find(btn =>
+    // pick all affordable payment methods
+    const methods = this.props.config.paymentButtons.filter(btn =>
       canAfford({
         amount: this.props.amount,
         packages: this.props.operator.result.packages,
@@ -93,6 +95,11 @@ class TopupDetails extends PureComponent {
         operator: this.props.operator.result,
       })
     );
+
+    // pick last used or first
+    const method =
+      methods.find(btn => btn.paymentMode === this.props.paymentMethod) ||
+      methods[0];
 
     this.setState({
       isLoading: true,
@@ -204,6 +211,7 @@ export default connect(
     email: selectEmail(state),
     amount: selectAmount(state),
     operator: selectOperator(state),
+    paymentMethod: selectPaymentMethod(state),
   }),
   {
     createOrder,
