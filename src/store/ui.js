@@ -9,6 +9,7 @@ const initialState = {
   amount: 0,
   email: { value: '', valid: false, error: false },
   comboInputOpen: false,
+  paymentMethod: null,
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -38,6 +39,10 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, amount: payload };
     }
 
+    case 'SET_PAYMENT_METHOD': {
+      return { ...state, paymentMethod: payload };
+    }
+
     case 'SET_EMAIL': {
       const { value, inFocus } = payload;
       const valid = isValidEmail(value);
@@ -62,6 +67,8 @@ export const selectComboInputOpen = state =>
   selectUiState(state).comboInputOpen;
 export const selectComboInputFocus = state =>
   selectUiState(state).comboInputFocus;
+
+export const selectPaymentMethod = state => selectUiState(state).paymentMethod;
 
 export const selectNumber = state => {
   const number = selectUiState(state).number;
