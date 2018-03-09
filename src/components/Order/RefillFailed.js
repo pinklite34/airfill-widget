@@ -56,7 +56,7 @@ Thanks!`);
     text =
       'We have sent you an automatic refund. Please make sure your details are correct and try again!';
     action = (
-      <Button raised color="primary" onClick={onReset}>
+      <Button variant="raised" color="primary" onClick={onReset}>
         Send another refill
       </Button>
     );
@@ -79,7 +79,7 @@ Thanks!`);
     text =
       'Please use the button below to contact our support so that we can send you a refund.';
     action = (
-      <Button raised href={mailto}>
+      <Button variant="raised" href={mailto}>
         Contact Support
       </Button>
     );

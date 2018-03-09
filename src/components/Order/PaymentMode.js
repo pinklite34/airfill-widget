@@ -282,7 +282,7 @@ class PaymentMode extends React.Component {
                 <CircularProgress />
               ) : !isDirect ? (
                 <Button
-                  raised
+                  variant="raised"
                   color="primary"
                   onClick={() => method.paymentModeOptions.callback(order)}
                 >
@@ -310,7 +310,7 @@ class PaymentMode extends React.Component {
                     <br />
                     <Button
                       {...styles.bottomButton}
-                      raised
+                      variant="raised"
                       color="primary"
                       onClick={() => (window.location.href = uri)}
                     >

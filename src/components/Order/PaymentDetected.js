@@ -68,7 +68,7 @@ const PaymentDetected = props => (
           <br />
           <Button
             color="primary"
-            raised
+            variant="raised"
             {...styles.button}
             onClick={props.onReset}
           >
