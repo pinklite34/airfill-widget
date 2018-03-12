@@ -1,6 +1,7 @@
 import React from 'react';
 import { css } from 'glamor';
 import Row from './Row';
+import { operatorProp, rowProps } from '../../../lib/prop-types';
 
 const styles = {
   icon: css({
@@ -10,7 +11,7 @@ const styles = {
   }),
 };
 
-const ProviderRow = ({ item, ...props }) => {
+export default function ProviderRow({ item, ...props }) {
   return (
     <Row
       {...props}
@@ -18,6 +19,9 @@ const ProviderRow = ({ item, ...props }) => {
       content={item.name}
     />
   );
-};
+}
 
-export default ProviderRow;
+ProviderRow.propTypes = {
+  item: operatorProp,
+  ...rowProps,
+};

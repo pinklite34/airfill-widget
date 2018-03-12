@@ -10,15 +10,30 @@ import {
 } from '../../store';
 
 import ActiveSection from '../UI/ActiveSection';
-import Grid from './Grid';
-import SuggestedOperator from './SuggestedOperator';
+import ProviderGrid from './ProviderGrid';
+import ProviderSuggested from './ProviderSuggested';
+import {
+  numberLookupProp,
+  historyProp,
+  operatorsProp,
+  countryProp,
+  fnProp,
+} from '../../lib/prop-types';
 
 const customLabels = {
   Mobile: 'Mobile phone refill',
   other: 'Other providers',
 };
 
-class Picker extends PureComponent {
+class ProviderPicker extends PureComponent {
+  static propTypes = {
+    numberLookup: numberLookupProp,
+    history: historyProp,
+    setOperator: fnProp,
+    operators: operatorsProp,
+    country: countryProp,
+  };
+
   state = {
     showSuggestedOperator: true,
   };
@@ -47,13 +62,13 @@ class Picker extends PureComponent {
       isNumberLookup ? (
         <ActiveSection>
           {showSuggestedOperator ? (
-            <SuggestedOperator
+            <ProviderSuggested
               operator={numberLookup.operator}
               onAccept={this.onSelectSuggestedOperator}
               onReject={this.onRejectSuggestedOperator}
             />
           ) : null}
-          <Grid
+          <ProviderGrid
             title={'Available operators'}
             providers={numberLookup.altOperators}
             onSelect={this.onSelectOperator}
@@ -63,7 +78,7 @@ class Picker extends PureComponent {
       ) : (
         <ActiveSection>
           {Object.keys(operators).map(key => (
-            <Grid
+            <ProviderGrid
               key={key}
               title={customLabels[key] || `${key} refill`}
               providers={operators[key]}
@@ -86,4 +101,4 @@ export default connect(
   {
     setOperator,
   }
-)(Picker);
+)(ProviderPicker);

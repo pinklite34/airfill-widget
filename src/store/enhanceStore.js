@@ -9,7 +9,8 @@ export default function enhanceStore(store) {
       store.dispatch(updateOrderStatus());
     }
   );
-  if (typeof window !== 'undefined' && window.localStorage) {
+
+  if (window && window.localStorage && window.localStorage.removeItem) {
     window.localStorage.removeItem('reduxPersist:airfillWidget');
   }
 }

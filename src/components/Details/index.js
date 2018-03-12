@@ -1,17 +1,23 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 
-import TopupDetails from './TopupDetails';
+import { configProp } from '../../lib/prop-types';
 
-const Details = ({ config }) => (
-  <Switch>
-    <Route path="/refill" exact />
-    <Route path="/refill/selectProvider" />
-    <Route
-      path="/refill/selectAmount"
-      render={props => <TopupDetails config={config} {...props} />}
-    />
-  </Switch>
-);
+import DetailsTopup from './DetailsTopup';
 
-export default Details;
+export default function DetailsRoutes({ config }) {
+  return (
+    <Switch>
+      <Route path="/refill" exact />
+      <Route path="/refill/selectProvider" />
+      <Route
+        path="/refill/selectAmount"
+        render={props => <DetailsTopup config={config} {...props} />}
+      />
+    </Switch>
+  );
+}
+
+DetailsRoutes.propTypes = {
+  config: configProp,
+};

@@ -3,6 +3,7 @@ import { css } from 'glamor';
 
 import Button from 'material-ui/Button';
 import Info from '../UI/info.svg';
+import { operatorProp, fnProp } from '../../lib/prop-types';
 
 const styles = {
   container: css({
@@ -57,39 +58,38 @@ const styles = {
   }),
 };
 
-const SuggestedOperator = ({ operator, onAccept, onReject }) => {
-  if (operator) {
-    return (
-      <div {...styles.container}>
-        <img src={operator.logoImage} alt={operator.name} {...styles.logo} />
-        <div {...styles.content}>
-          <p {...styles.text}>
-            We&apos;ve detected <strong>{operator.name}</strong> as your
-            service. If this is not correct, please select another service
-            below.
-          </p>
-          <Button color="primary" raised onClick={onAccept} {...styles.button}>
-            Yes, this is my service
-          </Button>
-          <Button raised onClick={onReject} {...styles.button}>
-            No, it&apos;s not correct
-          </Button>
-        </div>
+export default function ProviderSuggested({ operator, onAccept, onReject }) {
+  return operator ? (
+    <div {...styles.container}>
+      <img src={operator.logoImage} alt={operator.name} {...styles.logo} />
+      <div {...styles.content}>
+        <p {...styles.text}>
+          We&apos;ve detected <strong>{operator.name}</strong> as your service.
+          If this is not correct, please select another service below.
+        </p>
+        <Button color="primary" raised onClick={onAccept} {...styles.button}>
+          Yes, this is my service
+        </Button>
+        <Button raised onClick={onReject} {...styles.button}>
+          No, it&apos;s not correct
+        </Button>
       </div>
-    );
-  } else {
-    return (
-      <div {...styles.container}>
-        <Info {...styles.icon} />
-        <div {...styles.content}>
-          <p {...styles.error}>
-            We could not automatically identify your service. Please select the
-            service below.
-          </p>
-        </div>
+    </div>
+  ) : (
+    <div {...styles.container}>
+      <Info {...styles.icon} />
+      <div {...styles.content}>
+        <p {...styles.error}>
+          We could not automatically identify your service. Please select the
+          service below.
+        </p>
       </div>
-    );
-  }
-};
+    </div>
+  );
+}
 
-export default SuggestedOperator;
+ProviderSuggested.propTypes = {
+  operator: operatorProp,
+  onAccept: fnProp,
+  onReject: fnProp,
+};

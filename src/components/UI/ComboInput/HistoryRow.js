@@ -4,6 +4,7 @@ import { css } from 'glamor';
 
 import { selectCountryList } from '../../../store';
 import Row from './Row';
+import { operatorProp, countriesProp, rowProps } from '../../../lib/prop-types';
 
 const styles = {
   icon: css({
@@ -13,7 +14,7 @@ const styles = {
   }),
 };
 
-const HistoryRow = ({ item, countryList, ...props }) => {
+function HistoryRow({ item, countryList, ...props }) {
   const country = countryList.find(c => !!c.operators[item.operator]);
 
   if (country) {
@@ -37,6 +38,12 @@ const HistoryRow = ({ item, countryList, ...props }) => {
   } else {
     return null;
   }
+}
+
+HistoryRow.propTypes = {
+  item: operatorProp,
+  countryList: countriesProp,
+  ...rowProps,
 };
 
 export default connect(state => ({

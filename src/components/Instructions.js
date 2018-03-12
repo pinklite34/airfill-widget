@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { css } from 'glamor';
 
 const styles = {
@@ -57,28 +58,36 @@ const styles = {
   }),
 };
 
-const Instruction = ({ number, title, children }) => (
-  <div {...styles.instruction}>
-    <div {...styles.badge}>{number}</div>
-    <div {...styles.content}>
-      <h3 {...styles.title}>{title}</h3>
-      <div>{children}</div>
+function Instruction({ number, title, children }) {
+  return (
+    <div {...styles.instruction}>
+      <div {...styles.badge}>{number}</div>
+      <div {...styles.content}>
+        <h3 {...styles.title}>{title}</h3>
+        <div>{children}</div>
+      </div>
     </div>
-  </div>
-);
+  );
+}
 
-const Instructions = () => (
-  <div {...styles.container}>
-    <Instruction number={1} title="Find a service">
-      Select a country or enter a phone number to see available services
-    </Instruction>
-    <Instruction number={2} title="Pick package &amp; pay">
-      Select your desired refill amount and pay with a single click
-    </Instruction>
-    <Instruction number={3} title="Instant refill delivery">
-      We send your refill the second we receive your payment
-    </Instruction>
-  </div>
-);
+Instruction.propTypes = {
+  number: PropTypes.number,
+  title: PropTypes.node,
+  children: PropTypes.node,
+};
 
-export default Instructions;
+export default function Instructions() {
+  return (
+    <div {...styles.container}>
+      <Instruction number={1} title="Find a service">
+        Select a country or enter a phone number to see available services
+      </Instruction>
+      <Instruction number={2} title="Pick package &amp; pay">
+        Select your desired refill amount and pay with a single click
+      </Instruction>
+      <Instruction number={3} title="Instant refill delivery">
+        We send your refill the second we receive your payment
+      </Instruction>
+    </div>
+  );
+}

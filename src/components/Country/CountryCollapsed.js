@@ -1,10 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { css } from 'glamor';
 import { connect } from 'react-redux';
+
 import { openComboInput, setComboInputFocus, setCountry } from '../../actions';
 import { selectCountry, selectIsNumberLookup } from '../../store';
+import {
+  historyProp,
+  countryProp,
+  darkenProp,
+  fnProp,
+} from '../../lib/prop-types';
 
-import CollapsedSection from '../UI/CollapsedSection';
+import Collapsed from '../UI/Collapsed';
 import Flag from '../UI/Flag';
 
 const styles = {
@@ -39,7 +47,7 @@ const styles = {
   }),
 };
 
-const Collapsed = ({
+function CountryCollapsed({
   home,
   country,
   darken,
@@ -48,7 +56,7 @@ const Collapsed = ({
   setComboInputFocus,
   setCountry,
   history,
-}) => {
+}) {
   const openMenu = () => {
     setCountry('');
     openComboInput();
@@ -57,7 +65,7 @@ const Collapsed = ({
   };
 
   return isNumberLookup ? null : country && country.alpha2 ? (
-    <CollapsedSection darken={darken} onClick={openMenu} type="country">
+    <Collapsed darken={darken} onClick={openMenu} type="country">
       <div {...styles.container}>
         <div {...styles.country} onClick={openMenu}>
           <div {...styles.flag}>
@@ -66,12 +74,23 @@ const Collapsed = ({
           {country.name}
         </div>
       </div>
-    </CollapsedSection>
+    </Collapsed>
   ) : (
-    <CollapsedSection hideButton darken={darken} type="country">
-      Select a country above to see available services.
-    </CollapsedSection>
+    <Collapsed hideButton darken={darken} type="country">
+      {'Select a country above to see available services.'}
+    </Collapsed>
   );
+}
+
+CountryCollapsed.propTypes = {
+  home: PropTypes.bool,
+  country: countryProp,
+  darken: darkenProp,
+  isNumberLookup: PropTypes.bool,
+  openComboInput: fnProp,
+  setComboInputFocus: fnProp,
+  setCountry: fnProp,
+  history: historyProp,
 };
 
 export default connect(
@@ -84,4 +103,4 @@ export default connect(
     setComboInputFocus,
     setCountry,
   }
-)(Collapsed);
+)(CountryCollapsed);

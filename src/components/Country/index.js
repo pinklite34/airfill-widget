@@ -1,21 +1,21 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
-import Collapsed from './Collapsed';
+import CountryCollapsed from './CountryCollapsed';
 
-const Country = () => (
-  <Switch>
-    <Route
-      path="/refill"
-      exact
-      render={props => <Collapsed home {...props} />}
-    />
-    <Route path="/refill/selectProvider" component={Collapsed} />
-    <Route
-      path="/refill/selectAmount"
-      render={props => <Collapsed darken={1} {...props} />}
-    />
-    <Route render={props => <Collapsed darken={2} {...props} />} />
-  </Switch>
-);
-
-export default Country;
+export default function CountryRoutes() {
+  return (
+    <Switch>
+      <Route
+        path="/refill"
+        exact
+        render={props => <CountryCollapsed home {...props} />}
+      />
+      <Route path="/refill/selectProvider" component={CountryCollapsed} />
+      <Route
+        path="/refill/selectAmount"
+        render={props => <CountryCollapsed darken={1} {...props} />}
+      />
+      <Route render={props => <CountryCollapsed darken={2} {...props} />} />
+    </Switch>
+  );
+}

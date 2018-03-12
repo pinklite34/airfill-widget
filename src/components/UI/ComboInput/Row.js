@@ -1,5 +1,6 @@
 import React from 'react';
 import { css } from 'glamor';
+import { rowProps } from '../../../lib/prop-types';
 
 const styles = {
   container: css({
@@ -24,11 +25,16 @@ const styles = {
   }),
 };
 
-const Row = ({ itemProps, isActive, icon, content }) => (
-  <div {...itemProps} {...css([styles.container, isActive && styles.active])}>
-    <div {...styles.icon}>{icon}</div>
-    <div {...styles.content}>{content}</div>
-  </div>
-);
+export default function Row({ operatorProps, isActive, icon, content }) {
+  return (
+    <div
+      {...operatorProps}
+      {...css([styles.container, isActive && styles.active])}
+    >
+      <div {...styles.icon}>{icon}</div>
+      <div {...styles.content}>{content}</div>
+    </div>
+  );
+}
 
-export default Row;
+Row.propTypes = rowProps;

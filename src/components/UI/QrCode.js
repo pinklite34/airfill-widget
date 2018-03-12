@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import QRious from 'qrious';
 
-class QrCode extends React.Component {
+class QrCode extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -26,6 +27,8 @@ class QrCode extends React.Component {
   }
 }
 
-QrCode.propTypes = {};
+QrCode.propTypes = {
+  mime: PropTypes.string,
+};
 
 export default QrCode;

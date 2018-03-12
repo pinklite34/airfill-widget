@@ -1,9 +1,11 @@
 import React from 'react';
+import { css } from 'glamor';
 import Button from 'material-ui/Button';
+
+import { orderProp, fnProp } from '../../lib/prop-types';
 import OrderHeader from '../UI/OrderHeader';
 import Error from './error.svg';
 import PaymentLayout from './PaymentLayout';
-import { css } from 'glamor';
 
 const styles = {
   textContainer: css({
@@ -13,7 +15,7 @@ const styles = {
   }),
 };
 
-const ExpiredPayment = props => {
+export default function PaymentExpired(props) {
   return (
     <div>
       <OrderHeader
@@ -34,6 +36,9 @@ const ExpiredPayment = props => {
       </PaymentLayout>
     </div>
   );
-};
+}
 
-export default ExpiredPayment;
+PaymentExpired.propTypes = {
+  order: orderProp,
+  onReset: fnProp,
+};

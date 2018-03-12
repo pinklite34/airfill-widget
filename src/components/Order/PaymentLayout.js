@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { css } from 'glamor';
+
+import Tooltip from 'material-ui/Tooltip';
+import {
+  paymentStatusProp,
+  orderProp,
+  amountProp,
+  operatorResultProp,
+  currencyProp,
+  fnProp,
+  numberProp,
+} from '../../lib/prop-types';
 import { selectAmount } from '../../store/ui';
 import { selectOperator } from '../../store/operator';
 import { updatePaymentStatus } from '../../actions/index';
-import Tooltip from 'material-ui/Tooltip';
 import setClipboardText from '../../lib/clipboard-helper';
 
 const styles = {
@@ -90,7 +101,18 @@ const valueField = {
   usd: 'usdPrice',
 };
 
-class PaymentLayout extends React.Component {
+class PaymentLayout extends PureComponent {
+  static propTypes = {
+    order: orderProp,
+    updatePaymentStatus: fnProp,
+    children: PropTypes.node.isRequired,
+    amount: amountProp,
+    operator: operatorResultProp,
+    number: numberProp,
+    billingCurrency: currencyProp,
+    paymentStatus: paymentStatusProp,
+  };
+
   state = {
     countdownInterval: null,
     timeLeft: '15:00',
