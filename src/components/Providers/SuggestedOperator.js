@@ -68,15 +68,10 @@ const SuggestedOperator = ({ operator, onAccept, onReject }) => {
             service. If this is not correct, please select another service
             below.
           </p>
-          <Button
-            color="primary"
-            variant="raised"
-            onClick={onAccept}
-            {...styles.button}
-          >
+          <Button color="primary" raised onClick={onAccept} {...styles.button}>
             Yes, this is my service
           </Button>
-          <Button variant="raised" onClick={onReject} {...styles.button}>
+          <Button raised onClick={onReject} {...styles.button}>
             No, it&apos;s not correct
           </Button>
         </div>

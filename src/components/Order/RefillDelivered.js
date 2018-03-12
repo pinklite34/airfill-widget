@@ -56,7 +56,7 @@ const RefillDelivered = props => {
             <br />
             <Button
               color="primary"
-              variant="raised"
+              raised
               {...styles.button}
               onClick={props.onReset}
             >

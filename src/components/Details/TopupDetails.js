@@ -178,7 +178,7 @@ class TopupDetails extends PureComponent {
         )}
         <Button
           color="primary"
-          variant="raised"
+          raised
           disabled={!this.isComplete() || isLoading}
           onClick={this.createOrder}
           className={`${styles.button}`}

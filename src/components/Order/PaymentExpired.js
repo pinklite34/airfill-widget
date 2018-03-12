@@ -26,7 +26,7 @@ const ExpiredPayment = props => {
         <div>
           <div />
           <div {...styles.textContainer}>
-            <Button color="primary" variant="raised" onClick={props.onReset}>
+            <Button color="primary" raised onClick={props.onReset}>
               New order
             </Button>
           </div>
