@@ -1,6 +1,6 @@
 {
   "name": "@bitrefill/airfill-widget",
-  "version": "3.0.15",
+  "version": "3.0.14",
   "description": "Airfill Embeddable Refill Widget",
   "main": "dist/index.js",
   "engines": {
@@ -70,6 +70,7 @@
     "husky": "^0.14.3",
     "jest": "20.0.3",
     "lint-staged": "^7.0.0",
+    "libphonenumber-js": "^0.4.32",
     "minimist": "^1.2.0",
     "react-addons-test-utils": "^15.0.0",
     "react-test-renderer": "16.2.0",
