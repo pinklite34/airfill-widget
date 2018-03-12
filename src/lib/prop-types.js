@@ -26,6 +26,9 @@ export const paymentModeProp = PropTypes.oneOf([
   'button',
   'lightning',
   'dash',
+  'balance',
+  'coinbase',
+  'localbitcoins',
 ]);
 
 export const darkenProp = PropTypes.oneOf([0, 1, 2]);
