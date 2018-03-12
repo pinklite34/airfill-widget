@@ -70,31 +70,36 @@ export const createClient = (conf = {}) => {
         throw response;
       })
       .catch(error => {
-        return error
-          .json()
-          .then(json => {
-            error.json = json;
-            if (json.error) {
-              return json.error.message;
-            }
-            if (json.message) {
-              return json.message;
-            }
+        if (typeof error && error.json === 'function') {
+          return error
+            .json()
+            .then(json => {
+              error.json = json;
 
-            throw Error('No error information in JSON response');
-          })
-          .catch(() => {
-            if (error.statusText) {
-              return error.statusText;
-            } else {
-              return 'Server returned status code ' + error.status;
-            }
-          })
-          .then(message => {
-            const err = new Error(message);
-            err.response = error;
-            throw err;
-          });
+              if (json.error) {
+                return json.error.message;
+              }
+              if (json.message) {
+                return json.message;
+              }
+
+              throw Error('No error information in JSON response');
+            })
+            .catch(() => {
+              if (error.statusText) {
+                return error.statusText;
+              } else {
+                return 'Server returned status code ' + error.status;
+              }
+            })
+            .then(message => {
+              const err = new Error(message);
+              err.response = error;
+              throw err;
+            });
+        } else {
+          console.error(error.message || error);
+        }
       });
   };
 

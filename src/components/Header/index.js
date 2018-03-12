@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router';
 import { css } from 'glamor';
 
-import Logo from './Logo';
-import Introduction from './Introduction';
+import HeaderLogo from './HeaderLogo';
+import HeaderIntroduction from './HeaderIntroduction';
 
 const styles = {
   container: css({
@@ -23,28 +24,37 @@ const styles = {
   }),
 };
 
-const Header = ({ branded, isMobile }) => (
-  <Switch>
-    <Route
-      path="/refill"
-      exact
-      render={props => (
-        <div {...styles.container}>
-          {branded && <Logo />}
-          <Introduction isMobile={isMobile} branded={branded} {...props} />
-        </div>
-      )}
-    />
-    <Route
-      render={props =>
-        branded && (
+export default function Header({ branded, isMobile }) {
+  return (
+    <Switch>
+      <Route
+        path="/refill"
+        exact
+        render={props => (
           <div {...styles.container}>
-            <Logo />
+            {branded && <HeaderLogo />}
+            <HeaderIntroduction
+              isMobile={isMobile}
+              branded={branded}
+              {...props}
+            />
           </div>
-        )
-      }
-    />
-  </Switch>
-);
+        )}
+      />
+      <Route
+        render={props =>
+          branded && (
+            <div {...styles.container}>
+              <HeaderLogo />
+            </div>
+          )
+        }
+      />
+    </Switch>
+  );
+}
 
-export default Header;
+Header.propTypes = {
+  branded: PropTypes.bool,
+  isMobile: PropTypes.bool,
+};

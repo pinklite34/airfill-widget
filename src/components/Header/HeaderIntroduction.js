@@ -2,8 +2,15 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { css } from 'glamor';
+
 import { selectNumber, selectNumberLookup } from '../../store';
 import { lookupNumber, resetNumberLookup } from '../../actions';
+import {
+  historyProp,
+  fnProp,
+  numberProp,
+  numberLookupProp,
+} from '../../lib/prop-types';
 
 import ComboInput from '../UI/ComboInput';
 import Info from '../UI/info.svg';
@@ -67,9 +74,15 @@ const styles = {
   }),
 };
 
-class Introduction extends PureComponent {
+class HeaderIntroduction extends PureComponent {
   static propTypes = {
     isMobile: PropTypes.bool,
+    resetNumberLookup: fnProp,
+    lookupNumber: fnProp,
+    numberLookup: numberLookupProp,
+    history: historyProp,
+    number: numberProp,
+    branded: PropTypes.bool,
   };
 
   componentDidMount() {
@@ -131,4 +144,4 @@ export default connect(
     lookupNumber,
     resetNumberLookup,
   }
-)(Introduction);
+)(HeaderIntroduction);

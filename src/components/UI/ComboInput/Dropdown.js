@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import VirtualList from 'react-tiny-virtual-list';
 
 import { css } from 'glamor';
@@ -8,6 +9,7 @@ import CountryRow from './CountryRow';
 import ProviderRow from './ProviderRow';
 import HistoryRow from './HistoryRow';
 import SectionTitle from '../SectionTitle';
+import { operatorProp, fnProp } from '../../../lib/prop-types';
 
 const styles = {
   container: css({
@@ -34,19 +36,26 @@ const styles = {
   }),
 };
 
+function SectionTitleRow({ item, style }) {
+  return <div style={style}>{item.title}</div>;
+}
+
+SectionTitleRow.propTypes = {
+  item: operatorProp,
+  style: PropTypes.object,
+};
+
 const rowComponents = {
   country: CountryRow,
   provider: ProviderRow,
   history: HistoryRow,
-  sectionTitle: function SectionTitle({ item, style }) {
-    return <div style={style}>{item.title}</div>;
-  },
+  sectionTitle: SectionTitleRow,
 };
 
 const getRowHeight = item =>
   item.__type === 'history' ? 68 : item.__type === 'sectionTitle' ? 24 : 44;
 
-const Dropdown = ({ getItemProps, items, highlightedIndex }) => {
+export default function Dropdown({ getItemProps, items, highlightedIndex }) {
   const itemCount = items.length;
   const height =
     itemCount < 6
@@ -83,7 +92,7 @@ const Dropdown = ({ getItemProps, items, highlightedIndex }) => {
                 return (
                   <Row
                     key={item.key}
-                    itemProps={getItemProps({
+                    operatorProps={getItemProps({
                       style,
                       index: item.index,
                       item,
@@ -99,6 +108,10 @@ const Dropdown = ({ getItemProps, items, highlightedIndex }) => {
       </Card>
     </div>
   );
-};
+}
 
-export default Dropdown;
+Dropdown.propTypes = {
+  getItemProps: fnProp,
+  items: PropTypes.arrayOf(operatorProp),
+  highlightedIndex: PropTypes.number,
+};

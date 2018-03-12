@@ -1,9 +1,16 @@
 import React from 'react';
+
 import Row from './Row';
 import Flag from '../Flag';
+import { countryProp, rowProps } from '../../../lib/prop-types';
 
-const CountryRow = ({ item, ...props }) => (
-  <Row {...props} icon={<Flag country={item.alpha2} />} content={item.name} />
-);
+export default function CountryRow({ item, ...props }) {
+  return (
+    <Row {...props} icon={<Flag country={item.alpha2} />} content={item.name} />
+  );
+}
 
-export default CountryRow;
+CountryRow.propTypes = {
+  item: countryProp,
+  ...rowProps,
+};

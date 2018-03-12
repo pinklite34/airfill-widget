@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
@@ -22,6 +22,14 @@ import PaymentMenu from './PaymentMenu';
 
 import { canAfford, isDirectPayment } from '../../lib/currency-helpers';
 import setClipboardText from '../../lib/clipboard-helper';
+import {
+  orderProp,
+  paymentsProp,
+  orderOptionsProp,
+  amountProp,
+  paymentStatusProp,
+  fnProp,
+} from '../../lib/prop-types';
 
 const styles = {
   list: css({
@@ -98,7 +106,18 @@ const styles = {
   }),
 };
 
-class PaymentMode extends React.Component {
+class PaymentMode extends PureComponent {
+  static propTypes = {
+    order: orderProp,
+    showBTCAddress: PropTypes.bool,
+    paymentButtons: paymentsProp,
+    amount: amountProp,
+    accountBalance: amountProp,
+    orderOptions: orderOptionsProp,
+    paymentStatus: paymentStatusProp,
+    createOrder: fnProp,
+  };
+
   constructor(props) {
     super(props);
 
@@ -329,12 +348,6 @@ class PaymentMode extends React.Component {
     );
   }
 }
-
-PaymentMode.propTypes = {
-  order: PropTypes.object.isRequired,
-  showBTCAddress: PropTypes.bool.isRequired,
-  paymentButtons: PropTypes.array,
-};
 
 export default connect(
   state => ({

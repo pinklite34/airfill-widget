@@ -1,6 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { css } from 'glamor';
 import Button from 'material-ui/Button';
+
+import { darkenProp } from '../../lib/prop-types';
 
 const styles = {
   container: css({
@@ -42,15 +45,29 @@ const background = [
   }),
 ];
 
-const Collapsed = ({ onClick, type, hideButton, children, darken = 0 }) => (
-  <div {...styles.container} {...background[darken]}>
-    <div {...styles.text}>{children}</div>
-    {hideButton ? null : (
-      <Button {...styles.button} onClick={onClick}>
-        Change {type}
-      </Button>
-    )}
-  </div>
-);
+export default function Collapsed({
+  onClick,
+  type,
+  hideButton,
+  children,
+  darken = 0,
+}) {
+  return (
+    <div {...styles.container} {...background[darken]}>
+      <div {...styles.text}>{children}</div>
+      {hideButton ? null : (
+        <Button {...styles.button} onClick={onClick}>
+          Change {type}
+        </Button>
+      )}
+    </div>
+  );
+}
 
-export default Collapsed;
+Collapsed.propTypes = {
+  onClick: PropTypes.func,
+  type: PropTypes.string,
+  hideButton: PropTypes.bool,
+  children: PropTypes.node,
+  darken: darkenProp,
+};

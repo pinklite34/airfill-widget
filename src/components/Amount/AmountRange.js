@@ -4,8 +4,14 @@ import { css } from 'glamor';
 import Input from 'material-ui/Input';
 
 import { getDisplayName, satoshiToBTC } from '../../lib/currency-helpers';
+import {
+  rangeProp,
+  currencyProp,
+  amountProp,
+  fnProp,
+} from '../../lib/prop-types';
 
-import Package from './Package';
+import AmountPackage from './AmountPackage';
 import SectionTitle from '../UI/SectionTitle';
 
 import Settings from './settings.svg';
@@ -70,7 +76,13 @@ const styles = {
   }),
 };
 
-const Ranged = ({ amount, range, currency, billingCurrency, onChange }) => {
+export default function AmountRange({
+  amount,
+  range,
+  currency,
+  billingCurrency,
+  onChange,
+}) {
   const min = Math.ceil(range.min);
   const max = Math.floor(range.max);
   const step = range.step;
@@ -84,7 +96,7 @@ const Ranged = ({ amount, range, currency, billingCurrency, onChange }) => {
       <SectionTitle {...styles.title}>...or select custom amount</SectionTitle>
       <div {...styles.row}>
         <Settings {...styles.settings} />
-        <Package
+        <AmountPackage
           name={
             <div>
               <Input
@@ -109,7 +121,8 @@ const Ranged = ({ amount, range, currency, billingCurrency, onChange }) => {
           }
           price={
             <span {...styles.cost}>
-              {displayableCost} {getDisplayName(billingCurrency)}
+              {displayableCost > 0 ? displayableCost : '0'}{' '}
+              {getDisplayName(billingCurrency)}
             </span>
           }
         />
@@ -124,6 +137,12 @@ const Ranged = ({ amount, range, currency, billingCurrency, onChange }) => {
       </div>
     </div>
   );
-};
+}
 
-export default Ranged;
+AmountRange.propTypes = {
+  amount: amountProp,
+  range: rangeProp,
+  currency: currencyProp,
+  billingCurrency: currencyProp,
+  onChange: fnProp,
+};

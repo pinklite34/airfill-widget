@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { css } from 'glamor';
 import { connect } from 'react-redux';
 
@@ -10,16 +11,25 @@ import {
   selectOperator,
 } from '../../store';
 
+import { canAfford } from '../../lib/currency-helpers';
+import {
+  historyProp,
+  configProp,
+  operatorResultProp,
+  fnProp,
+  emailProp,
+  numberProp,
+  amountProp,
+} from '../../lib/prop-types';
 import { isValidEmail } from '../../lib/email-validation';
 
 import Button from 'material-ui/Button';
 import Input from 'material-ui/Input';
 import { CircularProgress } from 'material-ui/Progress';
-import Field from '../UI/Field';
-
-import Error from './error.svg';
 import withStyles from 'material-ui/styles/withStyles';
-import { canAfford } from '../../lib/currency-helpers';
+
+import Field from '../UI/Field';
+import Error from './error.svg';
 
 const styles = {
   title: css({
@@ -76,18 +86,41 @@ const muiStyles = {
   },
 };
 
-class TopupDetails extends PureComponent {
+class DetailsTopup extends PureComponent {
+  static propTypes = {
+    config: configProp,
+    amount: amountProp,
+    createOrder: fnProp,
+    operator: operatorResultProp,
+    history: historyProp,
+    trigger: fnProp,
+    setNumber: fnProp,
+    setEmail: fnProp,
+    classes: PropTypes.object,
+    number: numberProp,
+    email: emailProp,
+  };
+
   state = {
     error: null,
     isLoading: false,
   };
 
   createOrder = () => {
-    const method = this.props.config.paymentButtons.find(btn =>
+    const {
+      config,
+      amount,
+      createOrder,
+      operator,
+      history,
+      trigger,
+    } = this.props;
+
+    const method = config.paymentButtons.find(btn =>
       canAfford({
-        amount: this.props.amount,
-        packages: this.props.operator.result.packages,
-        accountBalance: this.props.config.accountBalance,
+        amount: amount,
+        accountBalance: config.accountBalance,
+        packages: operator.result.packages,
         paymentMode: btn.paymentMode,
         requireAccountBalance: btn.requireAccountBalance,
         operator: this.props.operator.result,
@@ -97,34 +130,39 @@ class TopupDetails extends PureComponent {
     this.setState({
       isLoading: true,
     });
-    this.props
-      .createOrder({
-        ...this.props.config.orderOptions,
-        paymentMethod: method.paymentMode,
-      })
+    createOrder({
+      ...config.orderOptions,
+      paymentMethod: method.paymentMode,
+    })
       .then(() => {
-        this.props.history.push('/refill/payment');
-        this.props.trigger();
+        history.push('/refill/payment');
+        trigger();
       })
-      .catch(error =>
-        this.setState({
-          isLoading: false,
-          error,
-        })
-      );
+      .catch(error => this.setState({ isLoading: false, error }));
   };
 
-  isComplete = () =>
-    this.props.amount &&
-    (this.props.number ||
-      (this.props.operator.result && this.props.operator.result.noNumber)) &&
-    (isValidEmail(this.props.config.orderOptions.email) ||
-      this.props.email.valid);
+  isComplete = () => {
+    const { amount, number, operator, config, email } = this.props;
+    return (
+      amount &&
+      (number || (operator.result && operator.result.noNumber)) &&
+      (isValidEmail(config.orderOptions.email) || email.valid)
+    );
+  };
 
   render() {
-    const { number, email, operator } = this.props;
+    const {
+      config,
+      setNumber,
+      setEmail,
+      classes,
+      number,
+      email,
+      operator,
+    } = this.props;
     const { error, isLoading } = this.state;
-    const showEmail = !isValidEmail(this.props.config.orderOptions.email);
+
+    const showEmail = !isValidEmail(config.orderOptions.email);
     const showNumber = !operator.result || !operator.result.noNumber;
     const isAccount = !!operator.type;
     const numberLabel = isAccount ? 'account number' : 'phone number';
@@ -144,7 +182,7 @@ class TopupDetails extends PureComponent {
             {...styles.field}
           >
             <Input
-              onChange={e => this.props.setNumber(e.target.value)}
+              onChange={e => setNumber(e.target.value)}
               type={isAccount ? 'text' : 'tel'}
               value={number}
               fullWidth
@@ -160,13 +198,13 @@ class TopupDetails extends PureComponent {
           >
             <Input
               onChange={e =>
-                this.props.setEmail({
+                setEmail({
                   value: e.target.value,
                   inFocus: true,
                 })
               }
               onBlur={e =>
-                this.props.setEmail({
+                setEmail({
                   value: e.target.value,
                   inFocus: false,
                 })
@@ -185,7 +223,7 @@ class TopupDetails extends PureComponent {
         >
           {isLoading ? (
             <CircularProgress
-              classes={this.props.classes}
+              classes={classes}
               size={24}
               className={`${styles.progressBar}`}
             />
@@ -211,4 +249,4 @@ export default connect(
     setEmail,
     trigger,
   }
-)(withStyles(muiStyles)(TopupDetails));
+)(withStyles(muiStyles)(DetailsTopup));

@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { PureComponent, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import { ListItemText } from 'material-ui/List';
 import { css } from 'glamor';
 import { withStyles } from 'material-ui/styles';
-import classNames from 'classnames';
+
 import { canAfford } from '../../lib/currency-helpers';
+import {
+  elementProp,
+  paymentsProp,
+  affordProps,
+  paymentProps,
+  fnProp,
+} from '../../lib/prop-types';
 
 const muiStyles = {
   selectedItem: {
@@ -41,9 +49,11 @@ const styles = {
   }),
 };
 
-const Divider = () => <hr {...styles.divider} />;
+function Divider() {
+  return <hr {...styles.divider} />;
+}
 
-const Item = props => {
+function Item(props) {
   let {
     title,
     description,
@@ -71,7 +81,7 @@ const Item = props => {
 
   return (
     <MenuItem
-      className={classNames(classes.item, { [classes.selectedItem]: selected })}
+      className={`${classes.item} ${selected && classes.selectedItem}`}
       open={open}
       onClick={() => onClick(props)}
       disabled={disabled}
@@ -89,14 +99,33 @@ const Item = props => {
       </div>
     </MenuItem>
   );
+}
+
+Item.propTypes = {
+  open: PropTypes.bool,
+  onClick: fnProp,
+  classes: PropTypes.object,
+  selected: PropTypes.bool,
+  noIcons: PropTypes.bool,
+  affordProps: affordProps,
+  ...paymentProps,
 };
 
-class PaymentMenu extends React.Component {
+class PaymentMenu extends PureComponent {
+  static propTypes = {
+    onClick: fnProp,
+    open: PropTypes.bool,
+    anchorEl: elementProp,
+    paymentButtons: paymentsProp,
+    onClose: fnProp,
+    classes: PropTypes.object,
+    affordProps: affordProps,
+  };
   state = {
     selectedIndex: 0,
   };
 
-  onClick = (data, index) => {
+  onClick = index => data => {
     this.setState({ selectedIndex: index });
     this.props.onClick(data);
   };
@@ -119,24 +148,24 @@ class PaymentMenu extends React.Component {
       <Menu
         anchorEl={anchorEl}
         open={open}
-        onClose={() => onClose()}
+        onClose={onClose}
         classes={{
           paper: classes.menu,
         }}
       >
         {paymentButtons &&
-          paymentButtons.map((options, index) => (
-            <React.Fragment key={index}>
+          paymentButtons.map((paymentButton, index) => (
+            <Fragment key={index}>
               <Item
                 {...this.props}
-                {...options}
+                {...paymentButton}
                 affordProps={affordProps}
                 noIcons={noIcons}
-                onClick={data => this.onClick(data, index)}
+                onClick={this.onClick(index)}
                 selected={selectedIndex === index}
               />
               {index < paymentButtons.length - 1 && <Divider />}
-            </React.Fragment>
+            </Fragment>
           ))}
       </Menu>
     );

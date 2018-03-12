@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { css } from 'glamor';
 
 css.insert(
@@ -56,3 +57,8 @@ export default function Root({ children, className }) {
     </div>
   );
 }
+
+Root.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.node.isRequired,
+};

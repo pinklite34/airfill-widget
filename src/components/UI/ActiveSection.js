@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { css } from 'glamor';
 import SectionTitle from './SectionTitle';
 
@@ -9,11 +10,16 @@ const styles = {
   }),
 };
 
-const ActiveSection = ({ title, children, ...props }) => (
-  <div {...styles.container} {...props}>
-    {title && <SectionTitle>{title}</SectionTitle>}
-    {children}
-  </div>
-);
+export default function ActiveSection({ title, children, ...props }) {
+  return (
+    <div {...styles.container} {...props}>
+      {title && <SectionTitle>{title}</SectionTitle>}
+      {children}
+    </div>
+  );
+}
 
-export default ActiveSection;
+ActiveSection.propTypes = {
+  title: PropTypes.node,
+  children: PropTypes.node,
+};

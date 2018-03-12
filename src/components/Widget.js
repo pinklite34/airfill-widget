@@ -5,20 +5,19 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router';
 import { css } from 'glamor';
 
+import { init } from '../actions';
+import { configProps, inventoryProp, fnProp } from '../lib/prop-types';
+import { selectInventory } from '../store';
+
 import Card from 'material-ui/Card';
 import { CircularProgress } from 'material-ui/Progress';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import createMuiTheme from 'material-ui/styles/createMuiTheme';
 import blue from 'material-ui/colors/blue';
 
-import { init } from '../actions';
-import { selectInventory } from '../store';
-
 import Root from './UI/Root';
-
 import Header from './Header';
 import Footer from './Footer';
-
 import Country from './Country';
 import NumberLookup from './NumberLookup';
 import Providers from './Providers';
@@ -35,49 +34,16 @@ const theme = createMuiTheme({
 
 class AirfillWidget extends PureComponent {
   static propTypes = {
-    // User data
-    defaultNumber: PropTypes.string,
-    userAccountBalance: PropTypes.number,
-    userEmail: PropTypes.string,
-
-    // Payment options
-    /* paymentButtons: PropTypes.arrayOf(
-      PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        callback: PropTypes.func.isRequired,
-        requireAccountBalance: PropTypes.bool
-      })
-    ).isRequired, */
-    showBTCAddress: PropTypes.bool,
-    billingCurrency: PropTypes.string,
-    requireAccountBalance: PropTypes.bool,
-
-    // Receipt
-    sendEmail: PropTypes.bool,
-    sendSMS: PropTypes.bool,
-
-    // Widget appearance
-    showInstructions: PropTypes.bool,
-    showLogo: PropTypes.bool,
-    showPoweredBy: PropTypes.bool,
-    showFooter: PropTypes.bool,
-    isMobile: PropTypes.bool,
-
-    // Refill history
-    refillHistory: PropTypes.arrayOf(
-      PropTypes.shape({
-        number: PropTypes.string,
-        operator: PropTypes.string,
-      })
-    ),
+    init: fnProp,
+    inventory: inventoryProp,
+    className: PropTypes.string,
+    ...configProps,
   };
 
   static defaultProps = {
     defaultNumber: '',
-    userAccountBalance: Number.POSITIVE_INFINITY,
     userEmail: null,
 
-    paymentButtons: [],
     showBTCAddress: false,
     billingCurrency: 'XBT',
     requireAccountBalance: false,

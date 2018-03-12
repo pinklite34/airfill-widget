@@ -1,7 +1,9 @@
 import React from 'react';
 import Button from 'material-ui/Button';
 
-const BalanceTooLow = ({ order, history }) => {
+import { historyProp, orderProp } from '../../lib/prop-types';
+
+export default function BalanceTooLow({ order, history }) {
   return (
     <div>
       <h3>Insufficient funds</h3>
@@ -14,6 +16,9 @@ const BalanceTooLow = ({ order, history }) => {
       </Button>
     </div>
   );
-};
+}
 
-export default BalanceTooLow;
+BalanceTooLow.propTypes = {
+  history: historyProp,
+  order: orderProp,
+};

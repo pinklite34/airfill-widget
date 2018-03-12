@@ -75,6 +75,9 @@ const processOperatorPackages = operator => {
 };
 
 const transformOperatorResponse = response => {
+  if (!response || !response.operator) {
+    throw new Error('No operator response');
+  }
   const operator = processOperatorPackages(response.operator);
 
   if (!operator) {

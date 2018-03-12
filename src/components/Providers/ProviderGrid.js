@@ -19,7 +19,7 @@ const styles = {
   }),
 };
 
-export default class ProvidersGrid extends PureComponent {
+export default class ProviderGrid extends PureComponent {
   static propTypes = {
     defaultShowAll: PropTypes.bool,
     providers: providersProp,

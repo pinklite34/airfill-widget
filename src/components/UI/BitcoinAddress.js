@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 import { css } from 'glamor';
 
@@ -11,16 +12,20 @@ const style = css({
   fontSize: 16,
 });
 
-const BitcoinAddress = ({ address, ...props }) => (
-  <TextField
-    {...props}
-    fullWidth
-    {...style}
-    type="text"
-    readOnly
-    value={address}
-    size="44"
-  />
-);
+export default function BitcoinAddress({ address, ...props }) {
+  return (
+    <TextField
+      {...props}
+      fullWidth
+      {...style}
+      type="text"
+      readOnly
+      value={address}
+      size="44"
+    />
+  );
+}
 
-export default BitcoinAddress;
+BitcoinAddress.propTypes = {
+  address: PropTypes.string,
+};

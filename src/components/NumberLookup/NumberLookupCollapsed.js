@@ -1,11 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { css } from 'glamor';
 import { connect } from 'react-redux';
+
 import { selectNumber, selectIsNumberLookup } from '../../store';
 import { openComboInput, setComboInputFocus, setNumber } from '../../actions';
+import {
+  darkenProp,
+  historyProp,
+  fnProp,
+  numberProp,
+} from '../../lib/prop-types';
 
 import Phone from '../UI/phone.svg';
-import CollapsedSection from '../UI/CollapsedSection';
+import Collapsed from '../UI/Collapsed';
 
 const styles = {
   container: css({
@@ -31,7 +39,7 @@ const styles = {
   }),
 };
 
-const Collapsed = ({
+function NumberLookupCollapsed({
   darken,
   number,
   isNumberLookup,
@@ -39,11 +47,7 @@ const Collapsed = ({
   setNumber,
   setComboInputFocus,
   history,
-}) => {
-  if (!isNumberLookup) {
-    return null;
-  }
-
+}) {
   const changeNumber = () => {
     setNumber('');
     setComboInputFocus(true);
@@ -51,14 +55,24 @@ const Collapsed = ({
     history.push('/refill');
   };
 
-  return (
-    <CollapsedSection darken={darken} onClick={changeNumber} type="number">
+  return isNumberLookup ? (
+    <Collapsed darken={darken} onClick={changeNumber} type="number">
       <div {...styles.container}>
         <Phone {...styles.icon} />
         <div {...styles.text}>{number}</div>
       </div>
-    </CollapsedSection>
-  );
+    </Collapsed>
+  ) : null;
+}
+
+NumberLookupCollapsed.propTypes = {
+  darken: darkenProp,
+  number: numberProp,
+  isNumberLookup: PropTypes.bool,
+  openComboInput: fnProp,
+  setNumber: fnProp,
+  setComboInputFocus: fnProp,
+  history: historyProp,
 };
 
 export default connect(
@@ -71,4 +85,4 @@ export default connect(
     setComboInputFocus,
     setNumber,
   }
-)(Collapsed);
+)(NumberLookupCollapsed);
