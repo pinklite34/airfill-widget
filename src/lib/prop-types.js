@@ -106,6 +106,7 @@ export const countryProp = PropTypes.shape({
 export const countriesProp = PropTypes.arrayOf(countryProp);
 
 export const paymentStatusProp = PropTypes.shape({
+  message: PropTypes.string,
   status: PropTypes.string,
   failureData: PropTypes.object,
 });
