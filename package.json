@@ -30,7 +30,6 @@
   },
   "keywords": [],
   "peerDependencies": {
-    "libphonenumber-js": "^0.4.32",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
