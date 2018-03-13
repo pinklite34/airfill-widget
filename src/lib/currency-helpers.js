@@ -42,7 +42,7 @@ export const canAfford = ({
 
   let canAfford = btcPrice <= accountBalance;
 
-  if (btcPrice <= 0.001 && paymentMode === 'localbitcoins') return false;
+  if (btcPrice < 0.001 && paymentMode === 'localbitcoins') return false;
 
   return !requireAccountBalance || isDirect || canAfford;
 };
