@@ -164,7 +164,7 @@ class DetailsTopup extends PureComponent {
 
     const showEmail = !isValidEmail(config.orderOptions.email);
     const showNumber = !operator.result || !operator.result.noNumber;
-    const isAccount = !!operator.type;
+    const isAccount = operator.result && !!operator.result.type;
     const numberLabel = isAccount ? 'account number' : 'phone number';
 
     return (
