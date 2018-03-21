@@ -199,11 +199,6 @@ class PaymentMode extends PureComponent {
       paymentMethod: button.paymentMode,
     };
 
-    if (button.paymentMode === 'lightning') {
-      options.lightningEnabled = true;
-      options.mainnetLightning = true;
-    }
-
     this.props
       .createOrder(options)
       .then(() => this.setState({ isLoading: false }))
@@ -246,6 +241,11 @@ class PaymentMode extends PureComponent {
 
     if (method.paymentMode === 'lightning') {
       unit = 'bits';
+      price *= 1000000;
+    }
+
+    if (method.paymentMode === 'lightning-ltc') {
+      unit = 'lites';
       price *= 1000000;
     }
 
