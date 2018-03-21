@@ -242,21 +242,25 @@ class PaymentMode extends PureComponent {
     let prefix =
       method.paymentMode === 'bcash' ? 'bitcoincash' : method.paymentMode;
 
-    if (method.paymentMode === 'lightning') {
-      prefix = 'lightning';
-      unit = 'bits';
-      price = order.payment.bitsPrice;
-    } else if (method.paymentMode === 'lightning-ltc') {
-      // prefix is not always the same as paymentMode
-      prefix = 'lightning';
-      unit = 'lites';
-      price = order.payment.litesPrice;
-    }
+    let paymentAddress;
+    let uri;
 
-    const uri =
-      isLightningPayment(method.paymentMode) === true
-        ? `${prefix}:${order.payment.address}`
-        : `${prefix}:${order.payment.address}?amount=${price}`;
+    if (isLightningPayment(method.paymentMode)) {
+      prefix = 'lightning';
+      if (method.paymentMode === 'lightning') {
+        unit = 'bits';
+        price = order.payment.bitsPrice;
+      } else if (method.paymentMode === 'lightning-ltc') {
+        // prefix is not always the same as paymentMode
+        unit = 'lites';
+        price = order.payment.litesPrice;
+      }
+      uri = `${prefix}:${order.payment.lightningInvoice}`;
+      paymentAddress = order.payment.lightningInvoice;
+    } else {
+      uri = `${prefix}:${order.payment.address}?amount=${price}`;
+      paymentAddress = order.payment.address;
+    }
 
     const isPartial = paymentStatus.status === 'partial';
     const title = isPartial ? 'Partial payment detected' : 'Payment';
@@ -329,9 +333,9 @@ class PaymentMode extends PureComponent {
                     <Tooltip open={this.state.addressTooltip} title="Copied!">
                       <BitcoinAddress
                         onClick={() =>
-                          this.copy(order.payment.address, 'addressTooltip')
+                          this.copy(paymentAddress, 'addressTooltip')
                         }
-                        address={order.payment.address}
+                        address={paymentAddress}
                       />
                     </Tooltip>
                     <br />
