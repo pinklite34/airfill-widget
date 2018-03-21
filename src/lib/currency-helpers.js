@@ -13,9 +13,20 @@ export const getPrice = (pkg, currency) => pkg[getPriceKey(currency)];
 export const satoshiToBTC = amount => Math.ceil(amount / 100) / 1000000;
 
 // All altcoins that requires a watched address from the server
-const supportedCoins = ['bitcoin', 'litecoin', 'lightning', 'dash'];
+const supportedCoins = [
+  'bitcoin',
+  'litecoin',
+  'lightning',
+  'lightning-ltc',
+  'dash',
+];
+
+const lightningCoins = ['lightning', 'lightning-ltc'];
 
 export const isDirectPayment = method => supportedCoins.some(x => x === method);
+
+export const isLightningPayment = method =>
+  lightningCoins.some(x => x === method);
 
 // If we can afford the selected payment method
 export const canAfford = ({

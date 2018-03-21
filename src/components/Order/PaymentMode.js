@@ -20,7 +20,11 @@ import QrCode from '../UI/QrCode';
 
 import PaymentMenu from './PaymentMenu';
 
-import { canAfford, isDirectPayment } from '../../lib/currency-helpers';
+import {
+  canAfford,
+  isDirectPayment,
+  isLightningPayment,
+} from '../../lib/currency-helpers';
 import setClipboardText from '../../lib/clipboard-helper';
 import {
   orderProp,
@@ -235,19 +239,24 @@ class PaymentMode extends PureComponent {
       price = Math.ceil(price / 10000) / 10000;
     }
 
-    const prefix =
+    let prefix =
       method.paymentMode === 'bcash' ? 'bitcoincash' : method.paymentMode;
-    const uri = prefix + ':' + order.payment.address + '?amount=' + price;
 
     if (method.paymentMode === 'lightning') {
+      prefix = 'lightning';
       unit = 'bits';
-      price *= 1000000;
+      price = order.payment.bitsPrice;
+    } else if (method.paymentMode === 'lightning-ltc') {
+      // prefix is not always the same as paymentMode
+      prefix = 'lightning';
+      unit = 'lites';
+      price = order.payment.litesPrice;
     }
 
-    if (method.paymentMode === 'lightning-ltc') {
-      unit = 'lites';
-      price *= 1000000;
-    }
+    const uri =
+      isLightningPayment(method.paymentMode) === true
+        ? `${prefix}:${order.payment.address}`
+        : `${prefix}:${order.payment.address}?amount=${price}`;
 
     const isPartial = paymentStatus.status === 'partial';
     const title = isPartial ? 'Partial payment detected' : 'Payment';

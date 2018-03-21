@@ -184,12 +184,22 @@ class PaymentLayout extends PureComponent {
 
     const showNumber = !operator.result || !operator.result.noNumber;
 
-    const billingCurrencyDisplayName = order.payment.altcoinCode || 'BTC';
+    let billingCurrencyDisplayName = (
+      order.payment.altcoinCode || 'BTC'
+    ).toUpperCase();
 
     const price = order[valueField[billingCurrency.toLowerCase()]];
-    const coinPrice = order.payment.altcoinPrice || order.btcPrice;
-    let formattedPrice =
-      coinPrice + ' ' + billingCurrencyDisplayName.toUpperCase();
+    let coinPrice = order.payment.altcoinPrice || order.btcPrice;
+
+    if (billingCurrencyDisplayName === 'LNBC') {
+      coinPrice = order.payment.bitsPrice;
+      billingCurrencyDisplayName = 'bits';
+    } else if (billingCurrencyDisplayName === 'LNLTC') {
+      coinPrice = order.payment.litesPrice;
+      billingCurrencyDisplayName = 'lites';
+    }
+
+    let formattedPrice = coinPrice + ' ' + billingCurrencyDisplayName;
 
     const displayCurrency = billingCurrency === 'XBT' ? 'BTC' : billingCurrency;
 

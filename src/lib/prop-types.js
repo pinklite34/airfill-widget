@@ -18,13 +18,21 @@ export const inputTypeProp = PropTypes.oneOf(['text', 'tel']);
 
 export const currencyProp = PropTypes.string;
 
-export const coinCurrencyProp = PropTypes.oneOf(['BTC', 'XBT', 'LTC', 'DASH']);
+export const coinCurrencyProp = PropTypes.oneOf([
+  'BTC',
+  'XBT',
+  'LTC',
+  'DASH',
+  'LNBC',
+  'LNLTC',
+]);
 
 export const paymentModeProp = PropTypes.oneOf([
   'bitcoin',
   'litecoin',
   'button',
   'lightning',
+  'lightning-ltc',
   'dash',
   'balance',
   'coinbase',

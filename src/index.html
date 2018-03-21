@@ -272,6 +272,20 @@
               }
             },
             {
+              title: 'Lightning LTC Payment',
+              description: 'Low fees, delivery after payment sent usually instant',
+              icon: null,
+              requireAccountBalance: false,
+              paymentMode: 'lightning-ltc',
+              paymentModeOptions: {
+                title: 'Send Payment',
+                callback: function (order) {
+                  console.info(order);
+                  confirm('Order ID:' + order.orderId + '\n\nSee console for order details');
+                }
+              }
+            },
+            {
               title: 'Other payment',
               description: 'Another payment method',
               icon: null,
