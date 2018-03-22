@@ -129,7 +129,7 @@ class PaymentLayout extends PureComponent {
           const expiring = order.expirationTime;
           let diff = new Date(expiring - now);
 
-          if (order.expired) {
+          if (now > expiring || order.expired) {
             diff = '00:00';
 
             updatePaymentStatus({
