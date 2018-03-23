@@ -245,6 +245,13 @@ class PaymentMode extends PureComponent {
     let paymentAddress;
     let uri;
 
+    let PaymentInstructions = ({ children }) => (
+      <div>
+        Send <i>exactly</i>
+        {children} to this address:
+      </div>
+    );
+
     if (isLightningPayment(method.paymentMode)) {
       prefix = 'lightning';
       if (method.paymentMode === 'lightning') {
@@ -257,6 +264,12 @@ class PaymentMode extends PureComponent {
       }
       uri = `${prefix}:${order.payment.lightningInvoice}`;
       paymentAddress = order.payment.lightningInvoice;
+      PaymentInstructions = ({ children }) => (
+        <div>
+          Copy the invoice below and pay
+          {children}
+        </div>
+      );
     } else {
       uri = `${prefix}:${order.payment.address}?amount=${price}`;
       paymentAddress = order.payment.address;
@@ -323,13 +336,15 @@ class PaymentMode extends PureComponent {
               ) : (
                 <div {...styles.container}>
                   <div {...styles.left}>
-                    Send <i>exactly</i>
-                    <Tooltip open={this.state.amountTooltip} title="Copied!">
-                      <strong onClick={() => this.copy(price, 'amountTooltip')}>
-                        {` ${price} ${unit} `}
-                      </strong>
-                    </Tooltip>
-                    to this address:
+                    <PaymentInstructions>
+                      <Tooltip open={this.state.amountTooltip} title="Copied!">
+                        <strong
+                          onClick={() => this.copy(price, 'amountTooltip')}
+                        >
+                          {` ${price} ${unit} `}
+                        </strong>
+                      </Tooltip>
+                    </PaymentInstructions>
                     <Tooltip open={this.state.addressTooltip} title="Copied!">
                       <BitcoinAddress
                         onClick={() =>
