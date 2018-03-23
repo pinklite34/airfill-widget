@@ -81,6 +81,7 @@ const styles = {
   }),
   container: css({
     display: 'flex',
+    width: '100%',
     flexDirection: 'row',
 
     '@media(max-width: 720px)': {
@@ -94,17 +95,16 @@ const styles = {
     },
   }),
   right: css({
-    flex: 1,
-    marginRight: '12px',
-    marginLeft: '-12px',
+    flex: '0 0 28%',
+    marginLeft: 'auto',
     '& img': {
-      float: 'right',
+      width: '90%',
     },
     '@media(max-width: 720px)': {
+      marginLeft: 0,
       '& img': {
-        marginTop: '24px',
-        marginLeft: '12px',
-        float: 'left',
+        paddingTop: '24px',
+        width: '50%',
       },
     },
   }),
@@ -365,7 +365,7 @@ class PaymentMode extends PureComponent {
                     </Button>
                   </div>
                   <div {...styles.right}>
-                    <QrCode value={uri} size={150} />
+                    <QrCode value={uri} size={200} />
                   </div>
                 </div>
               )}
