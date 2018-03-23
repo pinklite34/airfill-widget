@@ -28,7 +28,7 @@ const muiStyles = {
     fontFamily: '"Roboto", sans-serif',
   },
   menu: {
-    width: '348px',
+    width: '396px',
   },
 };
 
