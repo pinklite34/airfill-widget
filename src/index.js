@@ -78,14 +78,6 @@ function AirfillWidget(ele, opt) {
   } = options;
   const orderOptions = { email, sendEmail, sendSMS, refundAddress };
 
-  if (
-    !paymentButtons ||
-    !Array.isArray(paymentButtons) ||
-    paymentButtons.length === 0
-  ) {
-    throw new Error('opts.paymentButtons must be an array and cannot be empty');
-  }
-
   const history = createHistory();
   const middleware = routerMiddleware(history);
 
