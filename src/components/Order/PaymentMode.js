@@ -20,7 +20,11 @@ import QrCode from '../UI/QrCode';
 
 import PaymentMenu from './PaymentMenu';
 
-import { canAfford, isDirectPayment } from '../../lib/currency-helpers';
+import {
+  canAfford,
+  isDirectPayment,
+  isLightningPayment,
+} from '../../lib/currency-helpers';
 import setClipboardText from '../../lib/clipboard-helper';
 import {
   orderProp,
@@ -77,6 +81,7 @@ const styles = {
   }),
   container: css({
     display: 'flex',
+    width: '100%',
     flexDirection: 'row',
 
     '@media(max-width: 720px)': {
@@ -90,17 +95,16 @@ const styles = {
     },
   }),
   right: css({
-    flex: 1,
-    marginRight: '12px',
-    marginLeft: '-12px',
+    flex: '0 0 28%',
+    marginLeft: 'auto',
     '& img': {
-      float: 'right',
+      width: '90%',
     },
     '@media(max-width: 720px)': {
+      marginLeft: 0,
       '& img': {
-        marginTop: '24px',
-        marginLeft: '12px',
-        float: 'left',
+        paddingTop: '24px',
+        width: '50%',
       },
     },
   }),
@@ -199,11 +203,6 @@ class PaymentMode extends PureComponent {
       paymentMethod: button.paymentMode,
     };
 
-    if (button.paymentMode === 'lightning') {
-      options.lightningEnabled = true;
-      options.mainnetLightning = true;
-    }
-
     this.props
       .createOrder(options)
       .then(() => this.setState({ isLoading: false }))
@@ -240,13 +239,40 @@ class PaymentMode extends PureComponent {
       price = Math.ceil(price / 10000) / 10000;
     }
 
-    const prefix =
+    let prefix =
       method.paymentMode === 'bcash' ? 'bitcoincash' : method.paymentMode;
-    const uri = prefix + ':' + order.payment.address + '?amount=' + price;
 
-    if (method.paymentMode === 'lightning') {
-      unit = 'bits';
-      price *= 1000000;
+    let paymentAddress;
+    let uri;
+
+    let PaymentInstructions = ({ children }) => (
+      <div>
+        Send <i>exactly</i>
+        {children} to this address:
+      </div>
+    );
+
+    if (isLightningPayment(method.paymentMode)) {
+      prefix = 'lightning';
+      if (method.paymentMode === 'lightning') {
+        unit = 'bits';
+        price = order.payment.bitsPrice;
+      } else if (method.paymentMode === 'lightning-ltc') {
+        // prefix is not always the same as paymentMode
+        unit = 'lites';
+        price = order.payment.litesPrice;
+      }
+      uri = `${prefix}:${order.payment.lightningInvoice}`;
+      paymentAddress = order.payment.lightningInvoice;
+      PaymentInstructions = ({ children }) => (
+        <div>
+          Copy the invoice below and pay
+          {children}
+        </div>
+      );
+    } else {
+      uri = `${prefix}:${order.payment.address}?amount=${price}`;
+      paymentAddress = order.payment.address;
     }
 
     const isPartial = paymentStatus.status === 'partial';
@@ -310,19 +336,21 @@ class PaymentMode extends PureComponent {
               ) : (
                 <div {...styles.container}>
                   <div {...styles.left}>
-                    Send <i>exactly</i>
-                    <Tooltip open={this.state.amountTooltip} title="Copied!">
-                      <strong onClick={() => this.copy(price, 'amountTooltip')}>
-                        {` ${price} ${unit} `}
-                      </strong>
-                    </Tooltip>
-                    to this address:
+                    <PaymentInstructions>
+                      <Tooltip open={this.state.amountTooltip} title="Copied!">
+                        <strong
+                          onClick={() => this.copy(price, 'amountTooltip')}
+                        >
+                          {` ${price} ${unit} `}
+                        </strong>
+                      </Tooltip>
+                    </PaymentInstructions>
                     <Tooltip open={this.state.addressTooltip} title="Copied!">
                       <BitcoinAddress
                         onClick={() =>
-                          this.copy(order.payment.address, 'addressTooltip')
+                          this.copy(paymentAddress, 'addressTooltip')
                         }
-                        address={order.payment.address}
+                        address={paymentAddress}
                       />
                     </Tooltip>
                     <br />
@@ -337,7 +365,7 @@ class PaymentMode extends PureComponent {
                     </Button>
                   </div>
                   <div {...styles.right}>
-                    <QrCode value={uri} size={150} />
+                    <QrCode value={uri} size={200} />
                   </div>
                 </div>
               )}
