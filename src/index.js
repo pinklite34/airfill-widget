@@ -48,6 +48,7 @@ function AirfillWidget(ele, opt) {
     userEmail: '', // If set we won´t ask for the user email in step 3
     sendEmail: true, // Send email receipt (default: true)
     sendSMS: true, // Send SMS receipt, operator may send additional messages (default: true, only available for some operators)
+    keepDefaultPayments: true, // Keep Bitrefill payment methods
 
     ...opt,
   };
