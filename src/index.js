@@ -69,6 +69,7 @@ function AirfillWidget(ele, opt) {
     userEmail: email,
     userAccountBalance,
     requireAccountBalance,
+    keepDefaultPayments,
     sendEmail,
     sendSMS,
     refundAddress,
@@ -104,6 +105,7 @@ function AirfillWidget(ele, opt) {
           showInstructions={showInstructions}
           showLogo={showLogo}
           showPoweredBy={!showLogo}
+          keepDefaultPayments={keepDefaultPayments}
         />
       </ConnectedRouter>
     </Provider>,
