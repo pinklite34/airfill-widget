@@ -25,6 +25,7 @@ import Instructions from './Instructions';
 import Amount from './Amount';
 import Order from './Order';
 import Details from './Details';
+import getMethods from '../payment-methods';
 
 const theme = createMuiTheme({
   palette: {
@@ -58,6 +59,12 @@ class AirfillWidget extends PureComponent {
 
     refillHistory: [],
   };
+
+  constructor(props) {
+    super(props);
+
+    props.paymentButtons.push(...getMethods(props));
+  }
 
   componentWillMount() {
     const { isMobile, init, defaultNumber } = this.props;
