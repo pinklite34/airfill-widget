@@ -84,6 +84,10 @@ function AirfillWidget(ele, opt) {
   store = store || configureStore(routerReducer, middleware);
   history.push('/refill');
 
+  if (paymentButtons && !Array.isArray(paymentButtons)) {
+    console.error('paymentButtons has to be an array');
+  }
+
   render(
     <Provider store={store}>
       <ConnectedRouter history={history}>
