@@ -61,6 +61,11 @@ const Description = withStyles(styles)(({ text, subtext, classes }) => (
   </span>
 ));
 
+Description.propTypes = {
+  text: PropTypes.string.isRequired,
+  subtext: PropTypes.string,
+};
+
 export default ({ currency, dispatch, ...props }) => [
   {
     title: 'Bitcoin Transaction',
