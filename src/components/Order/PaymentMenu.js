@@ -47,11 +47,25 @@ const styles = {
   content: css({
     flex: 'auto',
   }),
+  imageIcon: css({
+    maxWidth: '32px',
+    maxHeight: '32px',
+  }),
 };
 
 function Divider() {
   return <hr {...styles.divider} />;
 }
+
+const ImageIcon = ({ src }) => (
+  <div>
+    <img {...styles.imageIcon} src={src} />
+  </div>
+);
+
+ImageIcon.propTypes = {
+  src: PropTypes.string.isRequired,
+};
 
 function Item(props) {
   let {
@@ -69,7 +83,7 @@ function Item(props) {
   } = props;
 
   if (typeof icon === 'string') {
-    icon = <img src={icon} />;
+    icon = <ImageIcon src={icon} />;
   }
 
   const disabled = !canAfford({
