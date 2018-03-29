@@ -103,6 +103,12 @@
           <td>See the payment button options below</td>
         </tr>
         <tr>
+          <td>keepDefaultPayments</td>
+          <td>boolean</td>
+          <td>no</td>
+          <td>Include default payment methods</td>
+        </tr>
+        <tr>
           <td>defaultNumber</td>
           <td>string</td>
           <td>no</td>
@@ -194,6 +200,23 @@
           <td>The button title as displayed in the widget</td>
         </tr>
         <tr>
+          <td><strong>description</strong></td>
+          <td><strong>string</strong></td>
+          <td><strong>yes</strong></td>
+          <td>The button subtitle as displayed in the widget</td>
+        </tr>
+        <tr>
+          <td><strong>paymentModeOptions</strong></td>
+          <td><strong>object</strong></td>
+          <td><strong>yes</strong></td>
+          <td>
+            <pre><code>{
+  callback: function(order) { },
+  title: 'Button title'
+}</code></pre>
+          </td>
+        </tr>
+        <tr>
           <td><strong>callback</strong></td>
           <td><strong>function</strong></td>
           <td><strong>yes</strong></td>
@@ -230,11 +253,10 @@
           billingCurrency: currency.value,
           paymentButtons: [
             {
-              title: 'Bitcoin Payment',
-              description: 'Normal fees, delivery after payment confirmation',
+              title: 'Custom Payment',
+              description: 'Description',
               icon: null,
               requireAccountBalance: false,
-              paymentMode: 'bitcoin',
               paymentModeOptions: {
                 title: 'Send Payment',
                 callback: function (order) {
@@ -243,40 +265,13 @@
                 }
               }
             },
-            {
-              title: 'Litecoin Payment',
-              description: 'Normal fees, delivery after payment confirmation',
-              icon: null,
-              requireAccountBalance: false,
-              paymentMode: 'litecoin',
-              paymentModeOptions: {
-                title: 'Send Payment',
-                callback: function (order) {
-                  console.info(order);
-                  confirm('Order ID:' + order.orderId + '\n\nSee console for order details');
-                }
-              }
-            },
-            {
-              title: 'Other payment',
-              description: 'Another payment method',
-              icon: null,
-              requireAccountBalance: true,
-              paymentMode: 'button',
-              paymentModeOptions: {
-                title: 'Send Payment',
-                callback: function (order) {
-                  console.info(order);
-                  confirm('Order ID:' + order.orderId + '\n\nSee console for order details');
-                }
-              }
-            }
           ],
           sendEmail: true,
           userEmail: collectEmail.checked ? '' : 'test@testing.com',
           showInstructions: instructions.checked,
           showBTCAddress: btc.checked,
-          showLogo: showLogo.checked
+          showLogo: showLogo.checked,
+          keepDefaultPayment: true
         });
       }
 

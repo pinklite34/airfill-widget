@@ -2,10 +2,16 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { css } from 'glamor';
 import { selectOperator, selectAmount } from '../../store';
-import { setAmount, createOrder } from '../../actions';
+import { setAmount } from '../../actions';
 
 import { selectValidAmount } from '../../lib/amount-validation';
 import { getPrice, getDisplayName } from '../../lib/currency-helpers';
+import {
+  configProp,
+  operatorResultProp,
+  amountProp,
+  fnProp,
+} from '../../lib/prop-types';
 
 import Card from 'material-ui/Card';
 import Radio from 'material-ui/Radio';
@@ -14,8 +20,8 @@ import { CircularProgress } from 'material-ui/Progress';
 import ActiveSection from '../UI/ActiveSection';
 import SectionTitle from '../UI/SectionTitle';
 
-import Package from './Package';
-import Ranged from './Ranged';
+import AmountPackage from './AmountPackage';
+import AmountRange from './AmountRange';
 import Info from '../UI/info.svg';
 
 const styles = {
@@ -54,24 +60,31 @@ const styles = {
   }),
 };
 
-class Picker extends PureComponent {
+class AmountPicker extends PureComponent {
+  static propTypes = {
+    config: configProp,
+    operator: operatorResultProp,
+    amount: amountProp,
+    setAmount: fnProp,
+  };
+
   componentDidMount() {
     if (!this.props.operator.isLoading) {
-      this.handleAmountChange(this.props, this.props.amount);
+      this.onAmountChange(this.props);
     }
   }
 
   componentWillReceiveProps(newProps) {
     if (!newProps.operator.isLoading && this.props.operator.isLoading) {
-      this.handleAmountChange(newProps, newProps.amount);
+      this.onAmountChange(newProps);
     }
   }
 
-  handleAmountChange = (props, amount) => {
-    const { setAmount, config, operator } = props;
-    const { packages, isRanged, range, currency } = operator.result;
+  onAmountChange = ({ setAmount, config, operator }) => {
+    const { packages, isRanged, range, currency, amount } =
+      operator.result || {};
 
-    if (!amount) {
+    if (packages && !amount) {
       setAmount(
         selectValidAmount({
           amount,
@@ -85,24 +98,48 @@ class Picker extends PureComponent {
     }
   };
 
-  render() {
+  renderPackage = (pkg, i) => {
     const { amount, operator, setAmount, config } = this.props;
-
-    if (operator.isLoading || !operator.result.packages) {
-      return (
-        <ActiveSection title="Select amount">
-          <CircularProgress />
-        </ActiveSection>
-      );
-    }
-
     const {
       userAccountBalance,
       requireAccountBalance,
       billingCurrency,
     } = config;
 
+    const price = getPrice(pkg, billingCurrency);
+    const formattedBillingCurrency = getDisplayName(
+      billingCurrency
+    ).toUpperCase();
+
     return (
+      <label key={pkg.value}>
+        <Radio
+          checked={amount === pkg.value}
+          onChange={e => setAmount(pkg.value)}
+          disabled={requireAccountBalance && price > userAccountBalance}
+        />
+        <AmountPackage
+          name={
+            operator.result.type === 'data'
+              ? pkg.value
+              : `${pkg.value} ${operator.result.currency}`
+          }
+          price={`${price} ${formattedBillingCurrency}`}
+        />
+      </label>
+    );
+  };
+
+  render() {
+    const { amount, operator, setAmount, config } = this.props;
+    const { billingCurrency } = config;
+
+    return operator.isLoading ||
+      !(operator.result && operator.result.packages) ? (
+      <ActiveSection title="Select amount">
+        <CircularProgress />
+      </ActiveSection>
+    ) : (
       <ActiveSection>
         {operator.result.extraInfo && (
           <Card className={`${styles.operatorInfoContainer}`}>
@@ -115,36 +152,14 @@ class Picker extends PureComponent {
           </Card>
         )}
 
-        <SectionTitle {...styles.title}>Select amount</SectionTitle>
+        <SectionTitle {...styles.title}>{'Select amount'}</SectionTitle>
 
         <div className={`${styles.packages} amount-picker`}>
-          {operator.result.packages.map((pkg, i) => {
-            const price = getPrice(pkg, billingCurrency);
-            const formattedPrice =
-              price + ' ' + getDisplayName(billingCurrency).toUpperCase();
-            const disabled =
-              requireAccountBalance && price > userAccountBalance;
-
-            // Data packages should not have currency in the title
-            const name =
-              operator.result.type === 'data'
-                ? pkg.value
-                : `${pkg.value} ${operator.result.currency}`;
-            return (
-              <label key={pkg.value}>
-                <Radio
-                  checked={amount === pkg.value}
-                  onChange={e => setAmount(pkg.value)}
-                  disabled={disabled}
-                />
-                <Package name={name} price={formattedPrice} />
-              </label>
-            );
-          })}
+          {operator.result.packages.map(this.renderPackage)}
         </div>
 
         {operator.result.isRanged && (
-          <Ranged
+          <AmountRange
             amount={amount}
             range={operator.result.range}
             currency={operator.result.currency}
@@ -164,6 +179,5 @@ export default connect(
   }),
   {
     setAmount,
-    createOrder,
   }
-)(Picker);
+)(AmountPicker);

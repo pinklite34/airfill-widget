@@ -10,6 +10,6 @@ const styles = {
   }),
 };
 
-const Input = props => <input {...styles.input} {...props} />;
-
-export default Input;
+export default function Input(props) {
+  return <input {...styles.input} {...props} />;
+}

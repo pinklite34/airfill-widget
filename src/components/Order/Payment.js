@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { css } from 'glamor';
 import { push } from 'react-router-redux';
@@ -25,6 +26,19 @@ import {
 } from './../../store';
 
 import { updatePaymentStatus } from '../../actions';
+import {
+  historyProp,
+  currencyProp,
+  operatorResultProp,
+  countryProp,
+  orderOptionsProp,
+  orderResultProp,
+  paymentStatusProp,
+  fnProp,
+  amountProp,
+  numberProp,
+  paymentsProp,
+} from '../../lib/prop-types';
 
 const componentForStatus = status => {
   switch (status) {
@@ -63,7 +77,7 @@ const styles = {
   }),
 };
 
-const Payment = ({
+function Payment({
   history,
   accountBalance = Number.POSITIVE_INFINITY,
   requireAccountBalance = false,
@@ -77,10 +91,9 @@ const Payment = ({
   number,
   country,
   paymentStatus,
-
   updatePaymentStatus,
   reset,
-}) => {
+}) {
   if (!order.result) {
     return (
       <div {...styles.spinner}>
@@ -132,6 +145,24 @@ const Payment = ({
       />
     </div>
   );
+}
+
+Payment.propTypes = {
+  history: historyProp,
+  accountBalance: amountProp,
+  requireAccountBalance: PropTypes.bool,
+  refundAddress: PropTypes.string,
+  paymentButtons: paymentsProp,
+  showBTCAddress: PropTypes.bool,
+  billingCurrency: currencyProp,
+  orderOptions: orderOptionsProp,
+  order: orderResultProp,
+  operator: operatorResultProp,
+  number: numberProp,
+  country: countryProp,
+  paymentStatus: paymentStatusProp,
+  updatePaymentStatus: fnProp,
+  reset: fnProp,
 };
 
 export default connect(

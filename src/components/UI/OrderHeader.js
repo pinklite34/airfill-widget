@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { css } from 'glamor';
 import Tooltip from 'material-ui/Tooltip';
 import setClipboardText from '../../lib/clipboard-helper';
+import { orderProp } from '../../lib/prop-types';
 
 const styles = {
   base: css({
@@ -54,7 +55,7 @@ const styles = {
   }),
 };
 
-class OrderHeader extends React.Component {
+class OrderHeader extends PureComponent {
   state = {
     open: false,
   };
@@ -89,9 +90,10 @@ class OrderHeader extends React.Component {
 }
 
 OrderHeader.propTypes = {
-  title: PropTypes.string.isRequired,
-  subtitle: PropTypes.string.isRequired,
-  icon: PropTypes.any,
+  title: PropTypes.node.isRequired,
+  subtitle: PropTypes.node.isRequired,
+  icon: PropTypes.node,
+  order: orderProp,
 };
 
 export default OrderHeader;

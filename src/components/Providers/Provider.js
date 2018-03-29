@@ -1,9 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { css } from 'glamor';
 import Card from 'material-ui/Card';
 
 import More from './more.svg';
 import Select from './select.svg';
+import { operatorProp, fnProp } from '../../lib/prop-types';
 
 const styles = {
   container: css({
@@ -73,28 +75,40 @@ const styles = {
   }),
 };
 
-export const ShowAll = ({ onClick, count }) => (
-  <Card {...styles.container} onClick={onClick}>
-    <div {...styles.logoWrapper}>
-      <More fill="#777777" width="42px" height="42px" />
-    </div>
-    <div>
-      Show all <strong>{count}</strong> services
-    </div>
-    <Select {...styles.select} fill="#777" />
-  </Card>
-);
+export function ShowAll({ onClick, count }) {
+  return (
+    <Card {...styles.container} onClick={onClick}>
+      <div {...styles.logoWrapper}>
+        <More fill="#777777" width="42px" height="42px" />
+      </div>
+      <div>
+        Show all <strong>{count}</strong> services
+      </div>
+      <Select {...styles.select} fill="#777" />
+    </Card>
+  );
+}
 
-const Provider = ({ data, onSelect }) => (
-  <Card {...styles.container} onClick={onSelect}>
-    <div {...styles.logoWrapper}>
-      <img src={data.logoImage} alt={data.name} {...styles.logo} />
-    </div>
-    <div {...styles.name} data-package-slug={data.slug}>
-      {data.name}
-    </div>
-    <Select {...styles.select} fill="#777" />
-  </Card>
-);
+ShowAll.propTypes = {
+  onClick: fnProp,
+  count: PropTypes.node,
+};
 
-export default Provider;
+export default function Provider({ data, onSelect }) {
+  return (
+    <Card {...styles.container} onClick={onSelect}>
+      <div {...styles.logoWrapper}>
+        <img src={data.logoImage} alt={data.name} {...styles.logo} />
+      </div>
+      <div {...styles.name} data-package-slug={data.slug}>
+        {data.name}
+      </div>
+      <Select {...styles.select} fill="#777" />
+    </Card>
+  );
+}
+
+Provider.propTypes = {
+  data: operatorProp,
+  onSelect: fnProp,
+};

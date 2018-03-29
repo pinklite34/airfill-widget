@@ -1,19 +1,25 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 
-import Collapsed from './Collapsed';
-import Picker from './Picker';
+import { configProp } from '../../lib/prop-types';
 
-const Amounts = ({ config }) => (
-  <Switch>
-    <Route path="/refill" exact />
-    <Route path="/refill/selectProvider" />
-    <Route
-      path="/refill/selectAmount"
-      render={props => <Picker config={config} {...props} />}
-    />
-    <Route component={Collapsed} />
-  </Switch>
-);
+import AmountCollapsed from './AmountCollapsed';
+import AmountPicker from './AmountPicker';
 
-export default Amounts;
+export default function AmountRoutes({ config }) {
+  return (
+    <Switch>
+      <Route path="/refill" exact />
+      <Route path="/refill/selectProvider" />
+      <Route
+        path="/refill/selectAmount"
+        render={props => <AmountPicker config={config} {...props} />}
+      />
+      <Route component={AmountCollapsed} />
+    </Switch>
+  );
+}
+
+AmountRoutes.propTypes = {
+  config: configProp,
+};

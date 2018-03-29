@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { css } from 'glamor';
 
 const styles = {
@@ -30,36 +31,40 @@ const styles = {
   }),
 };
 
-const Footer = ({ branded }) => (
-  <div {...css(styles.container, branded && styles.branded)}>
-    {branded && (
+export default function Footer({ branded }) {
+  return (
+    <div {...css(styles.container, branded && styles.branded)}>
+      {branded && (
+        <div>
+          Powered by <strong>bitrefill</strong>
+        </div>
+      )}
       <div>
-        Powered by <strong>bitrefill</strong>
+        <ul {...styles.linkList}>
+          <li {...styles.link}>
+            <a
+              href="https://www.bitrefill.com/privacy/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Privacy Policy
+            </a>
+          </li>
+          <li {...styles.link}>
+            <a
+              href="https://www.bitrefill.com/terms/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Terms of Service
+            </a>
+          </li>
+        </ul>
       </div>
-    )}
-    <div>
-      <ul {...styles.linkList}>
-        <li {...styles.link}>
-          <a
-            href="https://www.bitrefill.com/privacy/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Privacy Policy
-          </a>
-        </li>
-        <li {...styles.link}>
-          <a
-            href="https://www.bitrefill.com/terms/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Terms of Service
-          </a>
-        </li>
-      </ul>
     </div>
-  </div>
-);
+  );
+}
 
-export default Footer;
+Footer.propTypes = {
+  branded: PropTypes.bool,
+};

@@ -1,10 +1,12 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
+import { css } from 'glamor';
 import Button from 'material-ui/Button';
+
 import OrderHeader from '../UI/OrderHeader';
 import PaymentLayout from './PaymentLayout';
 import Error from './error.svg';
-import { css } from 'glamor';
+import { orderProp, paymentStatusProp, fnProp } from '../../lib/prop-types';
 
 const styles = {
   textContainer: css({
@@ -21,7 +23,7 @@ const styles = {
   }),
 };
 
-const RefillFailed = props => {
+export default function RefillFailed(props) {
   const {
     order,
     paymentStatus: { failureData = {} },
@@ -106,10 +108,11 @@ Thanks!`);
       </PaymentLayout>
     </div>
   );
-};
+}
 
 RefillFailed.propTypes = {
-  order: PropTypes.object.isRequired,
+  order: orderProp,
+  paymentStatus: paymentStatusProp,
+  refundAddress: PropTypes.string,
+  onReset: fnProp,
 };
-
-export default RefillFailed;

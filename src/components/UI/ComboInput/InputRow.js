@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { css } from 'glamor';
 import Button from 'material-ui/Button';
 import Card from 'material-ui/Card';
@@ -6,6 +7,7 @@ import { CircularProgress } from 'material-ui/Progress';
 
 import Flag from '../Flag';
 import Check from '../check.svg';
+import { inputTypeProp, fnProp } from '../../../lib/prop-types';
 
 const styles = {
   container: css({
@@ -69,7 +71,7 @@ const styles = {
   }),
 };
 
-const InputRow = ({
+export default function InputRow({
   country,
   getInputProps,
   onChange,
@@ -82,54 +84,70 @@ const InputRow = ({
   submitEnabled,
   countryOnly,
   type,
-}) => (
-  <Card {...styles.container}>
-    <form
-      onSubmit={e => {
-        e.preventDefault();
-        onSubmit();
-      }}
-    >
-      <div {...styles.row}>
-        <div {...styles.flag} onClick={resetCountry}>
-          <Flag country={country} />
-        </div>
-        <div {...styles.inputContainer}>
-          <input
-            {...getInputProps({
-              onFocus,
-              onKeyDown,
-              onKeyUp: e => onChange(e.target.value, e.target.selectionStart),
-              onChange: e => onChange(e.target.value, e.target.selectionStart),
-              ref: inputRef,
-              type: type,
-              placeholder: countryOnly
-                ? 'Enter country'
-                : country
-                  ? 'Enter phone number or provider'
-                  : 'Enter country or phone number',
-              ...styles.input,
-            })}
-          />
-        </div>
-        <Button
-          disabled={loading || !submitEnabled}
-          {...css([styles.button, !submitEnabled && styles.buttonDisabled])}
-          type="submit"
-        >
-          {loading ? (
-            <CircularProgress className={`${styles.progressBar}`} />
-          ) : (
-            <Check
-              className={`${
-                submitEnabled ? styles.check : styles.checkDisabled
-              }`}
+}) {
+  return (
+    <Card {...styles.container}>
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          onSubmit();
+        }}
+      >
+        <div {...styles.row}>
+          <div {...styles.flag} onClick={resetCountry}>
+            <Flag country={country} />
+          </div>
+          <div {...styles.inputContainer}>
+            <input
+              {...getInputProps({
+                onFocus,
+                onKeyDown,
+                onKeyUp: e => onChange(e.target.value, e.target.selectionStart),
+                onChange: e =>
+                  onChange(e.target.value, e.target.selectionStart),
+                ref: inputRef,
+                type: type,
+                placeholder: countryOnly
+                  ? 'Enter country'
+                  : country
+                    ? 'Enter phone number or provider'
+                    : 'Enter country or phone number',
+                ...styles.input,
+              })}
             />
-          )}
-        </Button>
-      </div>
-    </form>
-  </Card>
-);
+          </div>
+          <Button
+            disabled={loading || !submitEnabled}
+            {...css([styles.button, !submitEnabled && styles.buttonDisabled])}
+            type="submit"
+          >
+            {loading ? (
+              <CircularProgress className={`${styles.progressBar}`} />
+            ) : (
+              <Check
+                className={`${
+                  submitEnabled ? styles.check : styles.checkDisabled
+                }`}
+              />
+            )}
+          </Button>
+        </div>
+      </form>
+    </Card>
+  );
+}
 
-export default InputRow;
+InputRow.propTypes = {
+  country: PropTypes.string,
+  getInputProps: fnProp,
+  onChange: fnProp,
+  resetCountry: fnProp,
+  inputRef: fnProp,
+  onFocus: fnProp,
+  onKeyDown: fnProp,
+  loading: PropTypes.bool,
+  onSubmit: fnProp,
+  submitEnabled: PropTypes.bool,
+  countryOnly: PropTypes.bool,
+  type: inputTypeProp,
+};

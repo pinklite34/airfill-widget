@@ -1,9 +1,13 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Media from 'react-media';
 import { connect } from 'react-redux';
 import { Route } from 'react-router';
 import { css } from 'glamor';
+
+import { init } from '../actions';
+import { configProps, inventoryProp, fnProp } from '../lib/prop-types';
+import { selectInventory } from '../store';
 
 import Card from 'material-ui/Card';
 import { CircularProgress } from 'material-ui/Progress';
@@ -11,14 +15,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import createMuiTheme from 'material-ui/styles/createMuiTheme';
 import blue from 'material-ui/colors/blue';
 
-import { init } from '../actions';
-import { selectInventory } from '../store';
-
 import Root from './UI/Root';
-
 import Header from './Header';
 import Footer from './Footer';
-
 import Country from './Country';
 import NumberLookup from './NumberLookup';
 import Providers from './Providers';
@@ -26,6 +25,7 @@ import Instructions from './Instructions';
 import Amount from './Amount';
 import Order from './Order';
 import Details from './Details';
+import getMethods from '../payment-methods';
 
 const theme = createMuiTheme({
   palette: {
@@ -33,51 +33,18 @@ const theme = createMuiTheme({
   },
 });
 
-class AirfillWidget extends PureComponent {
+class AirfillWidget extends Component {
   static propTypes = {
-    // User data
-    defaultNumber: PropTypes.string,
-    userAccountBalance: PropTypes.number,
-    userEmail: PropTypes.string,
-
-    // Payment options
-    /* paymentButtons: PropTypes.arrayOf(
-      PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        callback: PropTypes.func.isRequired,
-        requireAccountBalance: PropTypes.bool
-      })
-    ).isRequired, */
-    showBTCAddress: PropTypes.bool,
-    billingCurrency: PropTypes.string,
-    requireAccountBalance: PropTypes.bool,
-
-    // Receipt
-    sendEmail: PropTypes.bool,
-    sendSMS: PropTypes.bool,
-
-    // Widget appearance
-    showInstructions: PropTypes.bool,
-    showLogo: PropTypes.bool,
-    showPoweredBy: PropTypes.bool,
-    showFooter: PropTypes.bool,
-    isMobile: PropTypes.bool,
-
-    // Refill history
-    refillHistory: PropTypes.arrayOf(
-      PropTypes.shape({
-        number: PropTypes.string,
-        operator: PropTypes.string,
-      })
-    ),
+    init: fnProp,
+    inventory: inventoryProp,
+    className: PropTypes.string,
+    ...configProps,
   };
 
   static defaultProps = {
     defaultNumber: '',
-    userAccountBalance: Number.POSITIVE_INFINITY,
     userEmail: null,
 
-    paymentButtons: [],
     showBTCAddress: false,
     billingCurrency: 'XBT',
     requireAccountBalance: false,
@@ -92,6 +59,20 @@ class AirfillWidget extends PureComponent {
 
     refillHistory: [],
   };
+
+  constructor(props) {
+    super(props);
+
+    const { paymentButtons } = props;
+
+    if (props.keepDefaultPayments) {
+      paymentButtons.push(...getMethods(props));
+    }
+
+    this.state = {
+      paymentButtons,
+    };
+  }
 
   componentWillMount() {
     const { isMobile, init, defaultNumber } = this.props;
@@ -118,6 +99,11 @@ class AirfillWidget extends PureComponent {
       isMobile,
     } = this.props;
 
+    const config = {
+      ...this.props,
+      ...this.state,
+    };
+
     const hasLoaded = !!inventory.result;
 
     return (
@@ -129,14 +115,14 @@ class AirfillWidget extends PureComponent {
               <Country />
               <NumberLookup />
               <Providers />
-              <Amount config={this.props} />
-              <Details config={this.props} />
-              <Order config={this.props} />
+              <Amount config={config} />
+              <Details config={config} />
+              <Order config={config} />
               {showInstructions && (
                 <Route
                   path="/refill"
                   exact
-                  render={() => <Instructions config={this.props} />}
+                  render={() => <Instructions config={config} />}
                 />
               )}
             </Card>

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { css } from 'glamor';
 
 const style = css({
@@ -10,10 +11,14 @@ const style = css({
   color: '#777',
 });
 
-const SectionTitle = ({ children, ...props }) => (
-  <div {...style} {...props}>
-    {children}
-  </div>
-);
+export default function SectionTitle({ children, ...props }) {
+  return (
+    <div {...style} {...props}>
+      {children}
+    </div>
+  );
+}
 
-export default SectionTitle;
+SectionTitle.propTypes = {
+  children: PropTypes.node,
+};

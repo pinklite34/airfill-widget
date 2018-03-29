@@ -20,12 +20,15 @@ import { setPusherClient } from '@bitrefill/react-pusher';
 import widgetStoreEnhancer from './store/enhanceStore';
 import airfillWidget, { selectPaymentStatus, selectOrder } from './store';
 
+import { useRecentRefill } from './actions';
+
 export {
   airfillWidget,
   widgetStoreEnhancer,
   client as restClient,
   selectPaymentStatus,
   selectOrder,
+  useRecentRefill,
 };
 
 export default Widget;
@@ -45,6 +48,7 @@ function AirfillWidget(ele, opt) {
     userEmail: '', // If set we won´t ask for the user email in step 3
     sendEmail: true, // Send email receipt (default: true)
     sendSMS: true, // Send SMS receipt, operator may send additional messages (default: true, only available for some operators)
+    keepDefaultPayments: true, // Keep Bitrefill payment methods
 
     ...opt,
   };
@@ -65,6 +69,7 @@ function AirfillWidget(ele, opt) {
     userEmail: email,
     userAccountBalance,
     requireAccountBalance,
+    keepDefaultPayments,
     sendEmail,
     sendSMS,
     refundAddress,
@@ -75,19 +80,19 @@ function AirfillWidget(ele, opt) {
   } = options;
   const orderOptions = { email, sendEmail, sendSMS, refundAddress };
 
-  if (
-    !paymentButtons ||
-    !Array.isArray(paymentButtons) ||
-    paymentButtons.length === 0
-  ) {
-    throw new Error('opts.paymentButtons must be an array and cannot be empty');
-  }
-
   const history = createHistory();
   const middleware = routerMiddleware(history);
 
   store = store || configureStore(routerReducer, middleware);
   history.push('/refill');
+
+  if (paymentButtons && !Array.isArray(paymentButtons)) {
+    console.error('paymentButtons has to be an array');
+  } else if (paymentButtons) {
+    paymentButtons.forEach(element => {
+      element.paymentMode = 'balance';
+    });
+  }
 
   render(
     <Provider store={store}>
@@ -104,6 +109,7 @@ function AirfillWidget(ele, opt) {
           showInstructions={showInstructions}
           showLogo={showLogo}
           showPoweredBy={!showLogo}
+          keepDefaultPayments={keepDefaultPayments}
         />
       </ConnectedRouter>
     </Provider>,

@@ -1,9 +1,11 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import { css } from 'glamor';
+
 import Button from 'material-ui/Button';
+
+import { paymentStatusProp, orderProp, fnProp } from '../../lib/prop-types';
 import OrderHeader from '../UI/OrderHeader';
 import Confirmed from './confirmed.svg';
-import { css } from 'glamor';
 import PaymentLayout from './PaymentLayout';
 
 const styles = {
@@ -26,7 +28,7 @@ const styles = {
   }),
 };
 
-const RefillDelivered = props => {
+export default function RefillDelivered(props) {
   return (
     <div>
       <OrderHeader
@@ -67,11 +69,10 @@ const RefillDelivered = props => {
       </PaymentLayout>
     </div>
   );
-};
+}
 
 RefillDelivered.propTypes = {
-  paymentStatus: PropTypes.object.isRequired,
-  onReset: PropTypes.func.isRequired,
+  paymentStatus: paymentStatusProp,
+  order: orderProp,
+  onReset: fnProp,
 };
-
-export default RefillDelivered;

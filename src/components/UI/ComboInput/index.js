@@ -36,6 +36,15 @@ import {
 
 import Dropdown from './Dropdown';
 import InputRow from './InputRow';
+import {
+  historyProp,
+  countriesProp,
+  countryProp,
+  recentNumbersProp,
+  operatorsProp,
+  fnProp,
+  numberProp,
+} from '../../../lib/prop-types';
 
 const styles = {
   container: css({
@@ -70,38 +79,26 @@ const getInitialInputValue = (country, number) => {
   }
 };
 
-const countryShape = PropTypes.shape({
-  alpha2: PropTypes.string,
-  name: PropTypes.string,
-  operators: PropTypes.object,
-});
-
 class ComboInput extends PureComponent {
   static propTypes = {
-    closeComboInput: PropTypes.func.isRequired,
-    country: countryShape,
+    closeComboInput: fnProp,
+    country: countryProp,
     countryOnly: PropTypes.bool,
-    countryList: PropTypes.arrayOf(countryShape).isRequired,
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
-    number: PropTypes.string,
-    onSubmit: PropTypes.func.isRequired,
-    openComboInput: PropTypes.func.isRequired,
+    countryList: countriesProp,
+    history: historyProp,
+    operators: operatorsProp,
+    number: numberProp,
+    onSubmit: fnProp,
+    openComboInput: fnProp,
     loading: PropTypes.bool,
     isOpen: PropTypes.bool,
-    recentNumbers: PropTypes.arrayOf(
-      PropTypes.shape({
-        number: PropTypes.string,
-        operator: PropTypes.string,
-      })
-    ),
-    setComboInputFocus: PropTypes.func.isRequired,
-    setCountry: PropTypes.func.isRequired,
-    setNumber: PropTypes.func.isRequired,
-    setOperator: PropTypes.func.isRequired,
+    recentNumbers: recentNumbersProp,
+    setComboInputFocus: fnProp,
+    setCountry: fnProp,
+    setNumber: fnProp,
+    setOperator: fnProp,
     shouldFocus: PropTypes.bool,
-    useRecentRefill: PropTypes.func.isRequired,
+    useRecentRefill: fnProp,
   };
 
   state = {

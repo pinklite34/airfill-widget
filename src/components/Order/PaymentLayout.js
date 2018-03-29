@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { css } from 'glamor';
+
+import Tooltip from 'material-ui/Tooltip';
+import {
+  paymentStatusProp,
+  orderProp,
+  amountProp,
+  operatorResultProp,
+  currencyProp,
+  fnProp,
+  numberProp,
+} from '../../lib/prop-types';
 import { selectAmount } from '../../store/ui';
 import { selectOperator } from '../../store/operator';
 import { updatePaymentStatus } from '../../actions/index';
-import Tooltip from 'material-ui/Tooltip';
 import setClipboardText from '../../lib/clipboard-helper';
 
 const styles = {
@@ -90,7 +101,18 @@ const valueField = {
   usd: 'usdPrice',
 };
 
-class PaymentLayout extends React.Component {
+class PaymentLayout extends PureComponent {
+  static propTypes = {
+    order: orderProp,
+    updatePaymentStatus: fnProp,
+    children: PropTypes.node.isRequired,
+    amount: amountProp,
+    operator: operatorResultProp,
+    number: numberProp,
+    billingCurrency: currencyProp,
+    paymentStatus: paymentStatusProp,
+  };
+
   state = {
     countdownInterval: null,
     timeLeft: '15:00',
@@ -107,7 +129,7 @@ class PaymentLayout extends React.Component {
           const expiring = order.expirationTime;
           let diff = new Date(expiring - now);
 
-          if (now > expiring || order.expired) {
+          if (!order.paid && (now > expiring || order.expired)) {
             diff = '00:00';
 
             updatePaymentStatus({
@@ -162,12 +184,22 @@ class PaymentLayout extends React.Component {
 
     const showNumber = !operator.result || !operator.result.noNumber;
 
-    const billingCurrencyDisplayName = order.payment.altcoinCode || 'BTC';
+    let billingCurrencyDisplayName = (
+      order.payment.altcoinCode || 'BTC'
+    ).toUpperCase();
 
     const price = order[valueField[billingCurrency.toLowerCase()]];
-    const coinPrice = order.payment.altcoinPrice || order.btcPrice;
-    let formattedPrice =
-      coinPrice + ' ' + billingCurrencyDisplayName.toUpperCase();
+    let coinPrice = order.payment.altcoinPrice || order.btcPrice;
+
+    if (billingCurrencyDisplayName === 'LNBC') {
+      coinPrice = order.payment.bitsPrice;
+      billingCurrencyDisplayName = 'bits';
+    } else if (billingCurrencyDisplayName === 'LNLTC') {
+      coinPrice = order.payment.litesPrice;
+      billingCurrencyDisplayName = 'lites';
+    }
+
+    let formattedPrice = coinPrice + ' ' + billingCurrencyDisplayName;
 
     const displayCurrency = billingCurrency === 'XBT' ? 'BTC' : billingCurrency;
 

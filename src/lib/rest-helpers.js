@@ -142,6 +142,6 @@ export const createLoadAction = options => {
           return Promise.reject(error);
         });
     }
-    return Promise.reject() // eslint-disable-line
+    return Promise.resolve();
   };
 };

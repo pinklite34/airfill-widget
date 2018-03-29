@@ -1,8 +1,11 @@
 import React from 'react';
+import { css } from 'glamor';
+
+import { orderProp } from '../../lib/prop-types';
+
 import PaymentLayout from './PaymentLayout';
 import OrderHeader from '../UI/OrderHeader';
 import Confirmed from './confirmed.svg';
-import { css } from 'glamor';
 
 const styles = {
   textContainer: css({
@@ -16,7 +19,7 @@ const styles = {
   }),
 };
 
-const PaymentConfirmed = props => {
+export default function PaymentConfirmed(props) {
   return (
     <div>
       <OrderHeader
@@ -37,6 +40,8 @@ const PaymentConfirmed = props => {
       </PaymentLayout>
     </div>
   );
-};
+}
 
-export default PaymentConfirmed;
+PaymentConfirmed.propTypes = {
+  order: orderProp,
+};
