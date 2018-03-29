@@ -9,6 +9,7 @@ import {
   selectEmail,
   selectAmount,
   selectOperator,
+  selectPaymentMethod,
 } from '../../store';
 
 import { canAfford } from '../../lib/currency-helpers';
@@ -99,6 +100,7 @@ class DetailsTopup extends PureComponent {
     classes: PropTypes.object,
     number: numberProp,
     email: emailProp,
+    paymentMethod: PropTypes.string,
   };
 
   state = {
@@ -108,24 +110,30 @@ class DetailsTopup extends PureComponent {
 
   createOrder = () => {
     const {
-      config,
       amount,
-      createOrder,
+      config,
       operator,
+      createOrder,
       history,
+      paymentMethod,
       trigger,
     } = this.props;
 
-    const method = config.paymentButtons.find(btn =>
+    // pick all affordable payment methods
+    const methods = config.paymentButtons.filter(btn =>
       canAfford({
         amount: amount,
         accountBalance: config.accountBalance,
         packages: operator.result.packages,
         paymentMode: btn.paymentMode,
         requireAccountBalance: btn.requireAccountBalance,
-        operator: this.props.operator.result,
+        operator: operator.result,
       })
     );
+
+    // pick last used or first
+    const method =
+      methods.find(btn => btn.paymentMode === paymentMethod) || methods[0];
 
     this.setState({
       isLoading: true,
@@ -242,6 +250,7 @@ export default connect(
     email: selectEmail(state),
     amount: selectAmount(state),
     operator: selectOperator(state),
+    paymentMethod: selectPaymentMethod(state),
   }),
   {
     createOrder,

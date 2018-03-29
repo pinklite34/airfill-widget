@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { createOrder } from '../../actions';
+import { createOrder, setPaymentMethod } from '../../actions';
 
-import { selectAmount } from '../../store';
+import { selectAmount, selectPaymentMethod } from '../../store';
 
 import { css } from 'glamor';
 import Button from 'material-ui/Button';
@@ -120,13 +120,15 @@ class PaymentMode extends PureComponent {
     orderOptions: orderOptionsProp,
     paymentStatus: paymentStatusProp,
     createOrder: fnProp,
+    paymentMethod: PropTypes.string,
+    setPaymentMethod: PropTypes.func.isRequired,
   };
 
   constructor(props) {
     super(props);
 
     // pick first affordable payment method
-    const method = props.paymentButtons.find(btn =>
+    const methods = props.paymentButtons.filter(btn =>
       canAfford({
         amount: props.amount,
         btcPrice: Number(props.order.btcPrice),
@@ -135,6 +137,10 @@ class PaymentMode extends PureComponent {
         requireAccountBalance: btn.requireAccountBalance,
       })
     );
+
+    const method =
+      methods.find(btn => btn.paymentMode === this.props.paymentMethod) ||
+      methods[0];
 
     this.state = {
       open: false,
@@ -205,7 +211,10 @@ class PaymentMode extends PureComponent {
 
     this.props
       .createOrder(options)
-      .then(() => this.setState({ isLoading: false }))
+      .then(() => {
+        this.setState({ isLoading: false });
+        this.props.setPaymentMethod(button.paymentMode);
+      })
       .catch(err => console.warn(err));
   };
 
@@ -380,8 +389,10 @@ class PaymentMode extends PureComponent {
 export default connect(
   state => ({
     amount: selectAmount(state),
+    paymentMethod: selectPaymentMethod(state),
   }),
   {
     createOrder,
+    setPaymentMethod,
   }
 )(PaymentMode);

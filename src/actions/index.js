@@ -21,6 +21,7 @@ export const trigger = createAction('UPDATE');
 export const setEmail = createAction('SET_EMAIL');
 export const setComboInputFocus = createAction('SET_COMBOINPUT_FOCUS');
 export const updatePaymentStatus = createAction('UPDATE_PAYMENT_STATUS');
+export const setPaymentMethod = createAction('SET_PAYMENT_METHOD');
 
 const setComboInputOpen = createAction('SET_COMBOINPUT_OPEN');
 export const openComboInput = () => setComboInputOpen(true);
