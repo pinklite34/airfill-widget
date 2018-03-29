@@ -57,11 +57,7 @@ function Divider() {
   return <hr {...styles.divider} />;
 }
 
-const ImageIcon = ({ src }) => (
-  <div>
-    <img {...styles.imageIcon} src={src} />
-  </div>
-);
+const ImageIcon = ({ src }) => <img {...styles.imageIcon} src={src} />;
 
 ImageIcon.propTypes = {
   src: PropTypes.string.isRequired,
