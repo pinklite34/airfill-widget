@@ -109,32 +109,40 @@ class DetailsTopup extends PureComponent {
   };
 
   createOrder = () => {
+    const {
+      amount,
+      config,
+      operator,
+      createOrder,
+      history,
+      paymentMethod,
+    } = this.props;
+
     // pick all affordable payment methods
-    const methods = this.props.config.paymentButtons.filter(btn =>
+    const methods = config.paymentButtons.filter(btn =>
       canAfford({
-        amount: this.props.amount,
-        accountBalance: this.props.config.accountBalance,
-        packages: this.props.operator.result.packages,
+        amount: amount,
+        accountBalance: config.accountBalance,
+        packages: operator.result.packages,
         paymentMode: btn.paymentMode,
         requireAccountBalance: btn.requireAccountBalance,
-        operator: this.props.operator.result,
+        operator: operator.result,
       })
     );
 
     // pick last used or first
     const method =
-      methods.find(btn => btn.paymentMode === this.props.paymentMethod) ||
-      methods[0];
+      methods.find(btn => btn.paymentMode === paymentMethod) || methods[0];
 
     this.setState({
       isLoading: true,
     });
     createOrder({
-      ...this.props.config.orderOptions,
+      ...config.orderOptions,
       paymentMethod: method.paymentMode,
     })
       .then(() => {
-        this.props.history.push('/refill/payment');
+        history.push('/refill/payment');
         trigger();
       })
       .catch(error => this.setState({ isLoading: false, error }));
