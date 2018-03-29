@@ -3,26 +3,23 @@ import Coinbase from './coinbase.svg';
 import LocalBitcoins from './localbitcoins.png';
 
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { css } from 'glamor';
 
 import Pusher from 'pusher-js';
 
 const styles = {
-  textIcon: {
+  textIcon: css({
     fontSize: '12px !important',
-  },
-  subtitle: {
+  }),
+  subtitle: css({
     fontSize: '12px !important',
-  },
+  }),
 };
 
-const TextIcon = withStyles(styles)(({ children, classes }) => (
-  <p className={classes.textIcon}>{children}</p>
-));
+const TextIcon = ({ children }) => <p {...styles.textIcon}>{children}</p>;
 
 TextIcon.propTypes = {
   children: PropTypes.string.isRequired,
-  classes: PropTypes.object.isRequired,
 };
 
 const openWindow = (method, order) => {
@@ -53,13 +50,13 @@ const openWindow = (method, order) => {
   );
 };
 
-const Description = withStyles(styles)(({ text, subtext, classes }) => (
+const Description = ({ text, subtext }) => (
   <span>
     {text}
     <br />
-    <span className={classes.subtitle}>{subtext}</span>
+    <span {...styles.subtitle}>{subtext}</span>
   </span>
-));
+);
 
 Description.propTypes = {
   text: PropTypes.string.isRequired,
