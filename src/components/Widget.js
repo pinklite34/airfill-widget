@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Media from 'react-media';
 import { connect } from 'react-redux';
@@ -25,6 +25,7 @@ import Instructions from './Instructions';
 import Amount from './Amount';
 import Order from './Order';
 import Details from './Details';
+import getMethods from '../payment-methods';
 
 const theme = createMuiTheme({
   palette: {
@@ -32,7 +33,7 @@ const theme = createMuiTheme({
   },
 });
 
-class AirfillWidget extends PureComponent {
+class AirfillWidget extends Component {
   static propTypes = {
     init: fnProp,
     inventory: inventoryProp,
@@ -59,6 +60,20 @@ class AirfillWidget extends PureComponent {
     refillHistory: [],
   };
 
+  constructor(props) {
+    super(props);
+
+    const { paymentButtons } = props;
+
+    if (props.keepDefaultPayments) {
+      paymentButtons.push(...getMethods(props));
+    }
+
+    this.state = {
+      paymentButtons,
+    };
+  }
+
   componentWillMount() {
     const { isMobile, init, defaultNumber } = this.props;
 
@@ -84,6 +99,11 @@ class AirfillWidget extends PureComponent {
       isMobile,
     } = this.props;
 
+    const config = {
+      ...this.props,
+      ...this.state,
+    };
+
     const hasLoaded = !!inventory.result;
 
     return (
@@ -95,14 +115,14 @@ class AirfillWidget extends PureComponent {
               <Country />
               <NumberLookup />
               <Providers />
-              <Amount config={this.props} />
-              <Details config={this.props} />
-              <Order config={this.props} />
+              <Amount config={config} />
+              <Details config={config} />
+              <Order config={config} />
               {showInstructions && (
                 <Route
                   path="/refill"
                   exact
-                  render={() => <Instructions config={this.props} />}
+                  render={() => <Instructions config={config} />}
                 />
               )}
             </Card>

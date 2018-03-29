@@ -127,7 +127,7 @@ export const paymentProps = {
   altcoinCode: coinCurrencyProp,
   altcoinPrice: amountProp,
   title: PropTypes.string,
-  description: PropTypes.string,
+  description: PropTypes.any,
   icon: PropTypes.node,
   requireAccountBalance: PropTypes.bool,
   paymentMode: paymentModeProp,
