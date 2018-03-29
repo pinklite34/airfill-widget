@@ -103,6 +103,12 @@
           <td>See the payment button options below</td>
         </tr>
         <tr>
+          <td>keepDefaultPayments</td>
+          <td>boolean</td>
+          <td>no</td>
+          <td>Include default payment methods</td>
+        </tr>
+        <tr>
           <td>defaultNumber</td>
           <td>string</td>
           <td>no</td>
@@ -248,7 +254,8 @@
           userEmail: collectEmail.checked ? '' : 'test@testing.com',
           showInstructions: instructions.checked,
           showBTCAddress: btc.checked,
-          showLogo: showLogo.checked
+          showLogo: showLogo.checked,
+          keepDefaultPayment: true
         });
       }
 
