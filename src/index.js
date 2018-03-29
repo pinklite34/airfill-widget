@@ -88,6 +88,10 @@ function AirfillWidget(ele, opt) {
 
   if (paymentButtons && !Array.isArray(paymentButtons)) {
     console.error('paymentButtons has to be an array');
+  } else if (paymentButtons) {
+    paymentButtons.forEach(element => {
+      element.paymentMode = 'balance';
+    });
   }
 
   render(

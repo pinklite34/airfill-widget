@@ -235,12 +235,11 @@
           key: keys[currency.value],
           billingCurrency: currency.value,
           paymentButtons: [
-            /*{
-              title: 'Bitcoin Payment',
-              description: 'Normal fees, delivery after payment confirmation',
+            {
+              title: 'Custom Payment',
+              description: 'Description',
               icon: null,
               requireAccountBalance: false,
-              paymentMode: 'bitcoin',
               paymentModeOptions: {
                 title: 'Send Payment',
                 callback: function (order) {
@@ -248,7 +247,7 @@
                   confirm('Order ID:' + order.orderId + '\n\nSee console for order details');
                 }
               }
-            },*/
+            },
           ],
           sendEmail: true,
           userEmail: collectEmail.checked ? '' : 'test@testing.com',
