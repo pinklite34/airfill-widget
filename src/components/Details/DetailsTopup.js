@@ -116,6 +116,7 @@ class DetailsTopup extends PureComponent {
       createOrder,
       history,
       paymentMethod,
+      trigger,
     } = this.props;
 
     // pick all affordable payment methods
