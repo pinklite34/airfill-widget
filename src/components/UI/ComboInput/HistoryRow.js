@@ -20,6 +20,8 @@ function HistoryRow({ item, countryList, ...props }) {
   if (country) {
     const operator = country.operators[item.operator];
 
+    const hasNumber = item.number && item.number !== '+';
+
     return (
       <Row
         {...props}
@@ -30,7 +32,7 @@ function HistoryRow({ item, countryList, ...props }) {
           <span>
             {operator.name}
             <br />
-            <strong>{item.number}</strong>
+            <strong>{hasNumber && item.number}</strong>
           </span>
         }
       />
