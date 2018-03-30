@@ -20,7 +20,9 @@ function HistoryRow({ item, countryList, ...props }) {
   if (country) {
     const operator = country.operators[item.operator];
 
-    const hasNumber = item.number && item.number !== '+';
+    const hasNumber = !operator.isPinBased;
+
+    console.log(item, operator, props);
 
     return (
       <Row
@@ -31,7 +33,7 @@ function HistoryRow({ item, countryList, ...props }) {
         content={
           <span>
             {operator.name}
-            <br />
+            {hasNumber && <br />}
             <strong>{hasNumber && item.number}</strong>
           </span>
         }
