@@ -20,6 +20,7 @@ const styles = {
     alignItems: 'center',
   }),
   content: css({
+    marginLeft: 6,
     fontSize: 16,
     padding: 12,
   }),
