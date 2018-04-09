@@ -79,6 +79,13 @@ export default ({ currency, dispatch, ...props }) => [
     paymentMode: 'litecoin',
   },
   {
+    title: 'Dogecoin Transaction',
+    description: 'Delivery after one confirmation',
+    icon: <TextIcon>DOGE</TextIcon>,
+    requireAccountBalance: false,
+    paymentMode: 'dogecoin',
+  },
+  {
     title: 'Dash Transaction',
     description: 'InstantSend',
     icon: <TextIcon>DASH</TextIcon>,
