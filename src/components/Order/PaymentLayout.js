@@ -113,30 +113,27 @@ class PaymentLayout extends PureComponent {
     paymentStatus: paymentStatusProp,
   };
 
-  state = {
-    countdownInterval: null,
-    timeLeft: '15:00',
-    tooltip: false,
-    invoiceTime: null,
-  };
+  constructor() {
+    super();
+
+    this.state = {
+      countdownInterval: null,
+      timeLeft: '15:00',
+      tooltip: false,
+      invoiceTime: 15 * 60 * 1000,
+    };
+  }
 
   componentDidMount() {
     if (this.showCountdown) {
-      if (this.state.invoiceTime === null) {
-        this.setState({
-          invoiceTime: this.props.order.invoiceTime,
-        });
-      }
-
       this.setState({
         countdownInterval: setInterval(() => {
           const { updatePaymentStatus, order } = this.props;
           const { invoiceTime } = this.state;
 
-          const expiring = order.expirationTime;
-          let diff = new Date(expiring - invoiceTime);
+          let diff = new Date(invoiceTime);
 
-          if (!order.paid && (invoiceTime > expiring || order.expired)) {
+          if (!order.paid && (invoiceTime < 0 || order.expired)) {
             diff = '00:00';
 
             updatePaymentStatus({
@@ -155,7 +152,7 @@ class PaymentLayout extends PureComponent {
             diff = `${minutes}:${seconds}`;
           }
 
-          this.setState({ timeLeft: diff, invoiceTime: invoiceTime + 1000 });
+          this.setState({ timeLeft: diff, invoiceTime: invoiceTime - 1000 });
         }, 1000),
       });
     }
