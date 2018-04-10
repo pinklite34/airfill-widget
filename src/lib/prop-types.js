@@ -23,6 +23,7 @@ export const coinCurrencyProp = PropTypes.oneOf([
   'XBT',
   'LTC',
   'DASH',
+  'DOGE',
   'LNBC',
   'LNLTC',
 ]);
@@ -31,6 +32,7 @@ export const paymentModeProp = PropTypes.oneOf([
   'dashboard',
   'bitcoin',
   'litecoin',
+  'dogecoin',
   'button',
   'lightning',
   'lightning-ltc',
