@@ -28,13 +28,13 @@ export const coinCurrencyProp = PropTypes.oneOf([
 ]);
 
 export const paymentModeProp = PropTypes.oneOf([
+  'dashboard',
   'bitcoin',
   'litecoin',
   'button',
   'lightning',
   'lightning-ltc',
   'dash',
-  'balance',
   'coinbase',
   'localbitcoins',
 ]);
