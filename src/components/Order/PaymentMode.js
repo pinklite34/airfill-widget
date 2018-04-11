@@ -158,7 +158,9 @@ class PaymentMode extends PureComponent {
       paymentMethod: method,
       isLoading: false,
       order: props.order,
-      orders: {},
+      orders: {
+        [method.paymentMode]: props.order,
+      },
       addressTooltip: false,
       amountTooltip: false,
     };
