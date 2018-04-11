@@ -108,6 +108,17 @@ const styles = {
       },
     },
   }),
+  partialWarning: css({
+    borderRadius: 4,
+    padding: 12,
+    background: '#ffdfdf',
+    marginBottom: 24,
+  }),
+  help: css({
+    textDecoration: 'none',
+    color: '#3e8fe4',
+    padding: 12,
+  }),
 };
 
 class PaymentMode extends PureComponent {
@@ -243,9 +254,14 @@ class PaymentMode extends PureComponent {
     let price = order.payment.altcoinPrice || order.btcPrice;
     let unit = order.payment.altcoinCode || 'BTC';
 
+    let paid;
+    let remaining;
+
     if (paymentStatus.status === 'partial') {
-      price = basePrice - paymentStatus.paidAmount;
-      price = Math.ceil(price / 10000) / 10000;
+      paid = paymentStatus.paidAmount;
+      paid = Math.ceil(paid / 10000) / 10000;
+      remaining = basePrice - paymentStatus.paidAmount;
+      remaining = Math.ceil(remaining / 10000) / 10000;
     }
 
     let prefix =
@@ -280,7 +296,7 @@ class PaymentMode extends PureComponent {
         </div>
       );
     } else {
-      uri = `${prefix}:${order.payment.address}?amount=${price}`;
+      uri = `${prefix}:${order.payment.address}?amount=${remaining || price}`;
       paymentAddress = order.payment.address;
     }
 
@@ -350,7 +366,7 @@ class PaymentMode extends PureComponent {
                         <strong
                           onClick={() => this.copy(price, 'amountTooltip')}
                         >
-                          {` ${price} ${unit} `}
+                          {` ${remaining || price} ${unit} `}
                         </strong>
                       </Tooltip>
                     </PaymentInstructions>
@@ -364,6 +380,17 @@ class PaymentMode extends PureComponent {
                     </Tooltip>
                     <br />
                     <br />
+                    {isPartial && (
+                      <div {...styles.partialWarning}>
+                        We have received a partial payment from you.
+                        <br /> You paid <strong>{paid + ' ' + unit}</strong>,
+                        but the invoice was for{' '}
+                        <strong>{price + ' ' + unit}</strong>.
+                        <br />
+                        Please send the remaining{' '}
+                        <strong>{remaining + ' ' + unit}</strong>
+                      </div>
+                    )}
                     <Button
                       {...styles.bottomButton}
                       raised
@@ -372,6 +399,17 @@ class PaymentMode extends PureComponent {
                     >
                       Open in Wallet
                     </Button>
+                    {isPartial && (
+                      <a
+                        href={`https://www.bitrefill.com/support/${
+                          order.orderId
+                        }/${order.payment.address}`}
+                        target="_blank"
+                        {...styles.help}
+                      >
+                        Need help?
+                      </a>
+                    )}
                   </div>
                   <div {...styles.right}>
                     <QrCode value={uri} size={200} />
