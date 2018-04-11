@@ -114,6 +114,11 @@ const styles = {
     background: '#ffdfdf',
     marginBottom: 24,
   }),
+  help: css({
+    textDecoration: 'none',
+    color: '#3e8fe4',
+    padding: 12,
+  }),
 };
 
 class PaymentMode extends PureComponent {
@@ -394,6 +399,17 @@ class PaymentMode extends PureComponent {
                     >
                       Open in Wallet
                     </Button>
+                    {isPartial && (
+                      <a
+                        href={`https://www.bitrefill.com/support/${
+                          order.orderId
+                        }/${order.payment.address}`}
+                        target="_blank"
+                        {...styles.help}
+                      >
+                        Need help?
+                      </a>
+                    )}
                   </div>
                   <div {...styles.right}>
                     <QrCode value={uri} size={200} />
