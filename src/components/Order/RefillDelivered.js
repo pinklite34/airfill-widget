@@ -31,6 +31,12 @@ const styles = {
 export default function RefillDelivered(props) {
   const { paymentStatus } = props;
 
+  /* paymentStatus.pinInfo = {
+    pin: 'pin',
+    instructions: 'instructions',
+    other: 'other',
+  }; */
+
   const pinInfo = paymentStatus.pinInfo;
 
   return (
