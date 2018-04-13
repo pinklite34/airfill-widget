@@ -42,7 +42,7 @@
     "glamor": "^2.20.39",
     "history": "^4.7.2",
     "input-format": "^0.2.1",
-    "libphonenumber-js": "^0.4.32",
+    "libphonenumber-js": "^1.1.7",
     "material-ui": "^1.0.0-beta.27",
     "prop-types": "^15.5.8",
     "qrious": "^4.0.2",

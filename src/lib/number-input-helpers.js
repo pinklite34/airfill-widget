@@ -1,4 +1,4 @@
-import { asYouType } from 'libphonenumber-js';
+import { AsYouType } from 'libphonenumber-js';
 import { parse, format } from 'input-format';
 
 const SINGLE_PHONENUMBER_CHAR = /(\d|\+)/;
@@ -50,7 +50,7 @@ export const formatNumber = (countryCode, inputValue, currentCaret) => {
     // Strip everything but digits and +
     const { value, caret } = parse(inputValue, currentCaret, isPhoneNumberChar);
 
-    const formatter = new asYouType(countryCode) // eslint-disable-line
+    const formatter = new AsYouType(countryCode) // eslint-disable-line
     const formattedNumber = formatter.input(value);
 
     const { caret: nextCaret } = format(value, caret, () => ({
@@ -61,7 +61,7 @@ export const formatNumber = (countryCode, inputValue, currentCaret) => {
     if (
       (formatter.country &&
         formatter.chosen_format == null &&
-        inputValue.indexOf(formatter.country_metadata[0]) === 0) ||
+        inputValue.indexOf(formatter.metadata[0]) === 0) ||
       (!formatter.country && inputValue.indexOf('+') < 0)
     ) {
       return formatNumber(countryCode, `+${inputValue}`, inputValue.length + 1);
