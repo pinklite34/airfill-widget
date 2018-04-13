@@ -44,7 +44,11 @@ export default function RefillDelivered(props) {
       <OrderHeader
         order={props.order}
         title="Refill delivered"
-        subtitle="The refill delivery has been confirmed by the operator"
+        subtitle={
+          pinInfo
+            ? 'See below for instructions on applying your voucher code'
+            : 'The refill delivery has been confirmed by the operator'
+        }
         icon={<Confirmed />}
       />
 
