@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { css } from 'glamor';
 
 import Button from 'material-ui/Button';
@@ -29,6 +29,10 @@ const styles = {
 };
 
 export default function RefillDelivered(props) {
+  const { paymentStatus } = props;
+
+  const pinInfo = paymentStatus.pinInfo;
+
   return (
     <div>
       <OrderHeader
@@ -39,6 +43,26 @@ export default function RefillDelivered(props) {
       />
 
       <PaymentLayout {...props}>
+        {pinInfo && (
+          <Fragment>
+            {pinInfo.pin && (
+              <div>
+                <div>PIN</div>
+                <div>{pinInfo.pin}</div>
+              </div>
+            )}
+            {(pinInfo.instructions || pinInfo.other) && (
+              <div>
+                <div />
+                <div>
+                  {pinInfo.instructions}
+                  <br />
+                  {pinInfo.other}
+                </div>
+              </div>
+            )}
+          </Fragment>
+        )}
         <div>
           <div />
           <div {...styles.textContainer}>
