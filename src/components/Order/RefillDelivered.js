@@ -37,7 +37,8 @@ export default function RefillDelivered(props) {
     other: 'other',
   }; */
 
-  const pinInfo = paymentStatus.pinInfo;
+  const pinInfo =
+    paymentStatus.deliveryData && paymentStatus.deliveryData.pinInfo;
 
   return (
     <div>
