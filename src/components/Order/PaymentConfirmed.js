@@ -5,7 +5,8 @@ import { orderProp } from '../../lib/prop-types';
 
 import PaymentLayout from './PaymentLayout';
 import OrderHeader from '../UI/OrderHeader';
-import Confirmed from './confirmed.svg';
+
+import { CircularProgress } from 'material-ui/Progress';
 
 const styles = {
   textContainer: css({
@@ -24,9 +25,9 @@ export default function PaymentConfirmed(props) {
     <div>
       <OrderHeader
         order={props.order}
-        title="Payment confirmed"
-        subtitle="Your payment has been confirmed"
-        icon={<Confirmed />}
+        title="Refill sent!"
+        subtitle="Waiting for delivery confirmation"
+        icon={<CircularProgress size={32} />}
       />
       <PaymentLayout {...props}>
         <div>
