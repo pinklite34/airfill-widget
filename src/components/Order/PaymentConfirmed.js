@@ -5,7 +5,6 @@ import { orderProp } from '../../lib/prop-types';
 
 import PaymentLayout from './PaymentLayout';
 import OrderHeader from '../UI/OrderHeader';
-import Confirmed from './confirmed.svg';
 
 import { CircularProgress } from 'material-ui/Progress';
 
