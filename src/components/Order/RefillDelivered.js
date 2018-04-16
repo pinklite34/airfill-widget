@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { css } from 'glamor';
 
 import Button from 'material-ui/Button';
@@ -29,24 +29,61 @@ const styles = {
 };
 
 export default function RefillDelivered(props) {
+  const { paymentStatus } = props;
+
+  /* paymentStatus.pinInfo = {
+    pin: 'pin',
+    instructions: 'instructions',
+    other: 'other',
+  }; */
+
+  const pinInfo =
+    paymentStatus.deliveryData && paymentStatus.deliveryData.pinInfo;
+
   return (
     <div>
       <OrderHeader
         order={props.order}
         title="Refill delivered"
-        subtitle="The refill delivery has been confirmed by the operator"
+        subtitle={
+          pinInfo
+            ? 'See below for instructions on applying your voucher code'
+            : 'The refill delivery has been confirmed by the operator'
+        }
         icon={<Confirmed />}
       />
 
       <PaymentLayout {...props}>
+        {pinInfo && (
+          <Fragment>
+            {pinInfo.pin && (
+              <div>
+                <div>PIN</div>
+                <div>{pinInfo.pin}</div>
+              </div>
+            )}
+            {(pinInfo.instructions || pinInfo.other) && (
+              <div>
+                <div />
+                <div>
+                  {pinInfo.instructions}
+                  <br />
+                  {pinInfo.other}
+                </div>
+              </div>
+            )}
+          </Fragment>
+        )}
         <div>
           <div />
           <div {...styles.textContainer}>
-            <span {...styles.info}>
-              The refill has been delivered and credited to the balance of the
-              target device.
-            </span>
-            <br />
+            {!pinInfo && (
+              <span {...styles.info}>
+                The refill has been delivered and credited to the balance of the
+                target device.
+                <br />
+              </span>
+            )}
             <a
               {...styles.link}
               href="https://www.bitrefill.com/faq/#my-topup-did-not-arrive"
