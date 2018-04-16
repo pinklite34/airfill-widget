@@ -22,8 +22,6 @@ function HistoryRow({ item, countryList, ...props }) {
 
     const hasNumber = !operator.isPinBased;
 
-    console.log(item, operator, props);
-
     return (
       <Row
         {...props}
