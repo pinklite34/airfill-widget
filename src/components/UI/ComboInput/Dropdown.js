@@ -9,7 +9,10 @@ import CountryRow from './CountryRow';
 import ProviderRow from './ProviderRow';
 import HistoryRow from './HistoryRow';
 import SectionTitle from '../SectionTitle';
-import { operatorProp, fnProp } from '../../../lib/prop-types';
+import { operatorProp, fnProp, countriesProp } from '../../../lib/prop-types';
+
+import { connect } from 'react-redux';
+import { selectCountryList } from '../../../store';
 
 const styles = {
   container: css({
@@ -52,14 +55,28 @@ const rowComponents = {
   sectionTitle: SectionTitleRow,
 };
 
-const getRowHeight = item =>
-  item.__type === 'history' ? 68 : item.__type === 'sectionTitle' ? 24 : 44;
+const getRowHeight = (item, countryList) => {
+  switch (item.__type) {
+    case 'history':
+      const country = countryList.find(c => !!c.operators[item.operator]);
+      const operator = country.operators[item.operator];
+      const hasNumber = !operator.isPinBased;
+      return hasNumber ? 68 : 46;
+    case 'sectionTitle':
+      return 24;
+    default:
+      return 44;
+  }
+};
 
-export default function Dropdown({ getItemProps, items, highlightedIndex }) {
+const Dropdown = ({ getItemProps, countryList, items, highlightedIndex }) => {
   const itemCount = items.length;
   const height =
     itemCount < 6
-      ? items.reduce((height, item) => height + getRowHeight(item), 0)
+      ? items.reduce(
+          (height, item) => height + getRowHeight(item, countryList),
+          0
+        )
       : 264;
 
   return (
@@ -71,7 +88,7 @@ export default function Dropdown({ getItemProps, items, highlightedIndex }) {
             height={height}
             scrollToAlignment="auto"
             scrollToIndex={highlightedIndex || undefined}
-            itemSize={i => getRowHeight(items[i])}
+            itemSize={i => getRowHeight(items[i], countryList)}
             itemCount={itemCount}
             renderItem={({ index, style }) => {
               const item = items[index];
@@ -108,10 +125,15 @@ export default function Dropdown({ getItemProps, items, highlightedIndex }) {
       </Card>
     </div>
   );
-}
+};
 
 Dropdown.propTypes = {
   getItemProps: fnProp,
+  countryList: countriesProp,
   items: PropTypes.arrayOf(operatorProp),
   highlightedIndex: PropTypes.number,
 };
+
+export default connect(state => ({
+  countryList: selectCountryList(state),
+}))(Dropdown);
