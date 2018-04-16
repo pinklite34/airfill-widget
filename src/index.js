@@ -20,14 +20,10 @@ import { setPusherClient } from '@bitrefill/react-pusher';
 import widgetStoreEnhancer from './store/enhanceStore';
 import airfillWidget from './store';
 
-import Flag from './components/UI/Flag';
-
 export { airfillWidget, widgetStoreEnhancer, client as restClient };
 
 export * from './store';
 export * from './actions';
-
-export { Flag };
 
 export default Widget;
 
