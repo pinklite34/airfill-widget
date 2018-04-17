@@ -55,6 +55,9 @@ export const canAfford = ({
   let canAfford = btcPrice <= accountBalance;
 
   if (btcPrice < 0.001 && paymentMode === 'localbitcoins') return false;
+  if (btcPrice > 0.04294967 && paymentMode === 'lightning') return false;
+  // below may change at some point to a higher amount
+  // if (ltcPrice >  0.04294967 && paymentMode === 'lightning-ltc') return false;
 
   return !requireAccountBalance || isDirect || canAfford;
 };

@@ -94,14 +94,24 @@ export default ({ currency, dispatch, ...props }) => [
   },
   {
     title: 'Lightning BTC Payment',
-    description: 'Low fees, delivery after payment sent usually instant',
+    description: (
+      <Description
+        text="Low fees, delivery after payment sent usually instant"
+        subtext="Max 0.0429 BTC"
+      />
+    ),
     icon: <TextIcon>BTCL</TextIcon>,
     requireAccountBalance: false,
     paymentMode: 'lightning',
   },
   {
     title: 'Lightning LTC Payment',
-    description: 'Low fees, delivery after payment sent usually instant',
+    description: (
+      <Description
+        text="Low fees, delivery after payment sent usually instant"
+        subtext="Max 0.0429 LTC"
+      />
+    ),
     icon: <TextIcon>LTCL</TextIcon>,
     requireAccountBalance: false,
     paymentMode: 'lightning-ltc',
