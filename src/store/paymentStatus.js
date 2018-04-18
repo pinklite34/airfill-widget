@@ -1,4 +1,4 @@
-import { REHYDRATE } from 'redux-persist/constants';
+import { REHYDRATE } from 'redux-persist';
 import { selectOrder } from './order';
 
 export default (state = {}, { type, payload }) => {

@@ -1,5 +1,5 @@
 import { createAction } from 'redux-actions';
-import { REHYDRATE } from 'redux-persist/constants';
+import { REHYDRATE } from 'redux-persist';
 import { fetch } from './api-client';
 
 const actionTypeForName = name => {
