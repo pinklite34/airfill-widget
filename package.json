@@ -76,7 +76,7 @@
     "url-loader": "^1.0.1",
     "webpack": "3.10.0",
     "webpack-bundle-analyzer": "^2.11.1",
-    "webpack-dev-server": "2.9.7",
+    "webpack-dev-server": "2.11.2",
     "webpack-node-externals": "^1.7.2"
   },
   "babel": {
