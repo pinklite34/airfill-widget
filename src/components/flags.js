@@ -160,4 +160,7 @@ export default {
   YE: require('flag-icons/flags/flags-iso/flat/24/YE.png'),
   ZM: require('flag-icons/flags/flags-iso/flat/24/ZM.png'),
   ZW: require('flag-icons/flags/flags-iso/flat/24/ZW.png'),
+  KM: require('flag-icons/flags/flags-iso/flat/24/KM.png'),
+  IE: require('flag-icons/flags/flags-iso/flat/24/IE.png'),
+  KR: require('flag-icons/flags/flags-iso/flat/24/KR.png'),
 };
