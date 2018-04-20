@@ -21,6 +21,10 @@ const styles = {
   button: css({
     marginTop: '12px',
   }),
+  link: css({
+    textDecoration: 'none',
+    color: '#3e8fe4',
+  }),
 };
 
 export default function RefillFailed(props) {
@@ -103,6 +107,18 @@ Thanks!`);
             <br />
             <br />
             {action}
+            <br />
+            <br />
+            <a
+              {...styles.link}
+              href={`https://www.bitrefill.com/support/${order.orderId}/${
+                order.payment.address
+              }`}
+              target="_blank"
+              {...styles.help}
+            >
+              Click here for more information
+            </a>
           </div>
         </div>
       </PaymentLayout>
