@@ -5,11 +5,13 @@ import { selectAvailableOperators } from '../../store';
 import { setOperator } from '../../actions';
 
 const OperatorList = ({ children, operators, setOperator }) =>
-  Object.keys(operators).map(type =>
-    operators[type].map(operator =>
-      children({ operator, select: () => setOperator(operator) })
-    )
-  );
+  children({
+    operators: Object.keys(operators).reduce(
+      (acc, val) => acc.concat(operators[val]),
+      []
+    ),
+    setOperator,
+  });
 
 OperatorList.propTypes = {
   children: PropTypes.func.isRequired,
