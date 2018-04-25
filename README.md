@@ -39,7 +39,19 @@ $ yarn build dist
 $ yarn serve:dist
 ```
 
-# Components
+# Usage in React
+
+## Widget
+
+```javascript
+import Widget from '@bitrefill/airfill-widget';
+
+render() {
+  return <Widget/>;
+}
+```
+
+## Components
 
 ```javascript
 import {
@@ -71,6 +83,6 @@ render() {
         {({ number, setNumber, recentNumbers }) => <p>{number}</p>}
       </PhoneNumber>
     </div>
-  )
+  );
 }
 
