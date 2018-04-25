@@ -38,3 +38,21 @@ $ yarn build dist
 ```sh
 $ yarn serve:dist
 ```
+
+# Components
+
+#### OperatorList
+
+```javascript
+import { OperatorList } from '@bitrefill/airfill-widget';
+....
+<OperatorList filter={["DTH", "VOIP"]}>
+  {({ operators, setOperator }) =>
+    operators.map(operator => (
+      <p onClick={() => setOperator(operator)}>
+        {operator.name}
+      </p>
+    )
+  )}
+</OperatorList>
+```
