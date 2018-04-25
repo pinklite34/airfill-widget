@@ -5,10 +5,10 @@ import { countryProp } from '../../lib/prop-types';
 import { selectCountry } from '../../store';
 import { setCountry } from '../../actions';
 
-const Country = ({ children, country, setCountry }) =>
+const CurrentCountry = ({ children, country, setCountry }) =>
   children({ country, setCountry });
 
-Country.propTypes = {
+CurrentCountry.propTypes = {
   children: PropTypes.func.isRequired,
   country: countryProp.isRequired,
 };
@@ -20,4 +20,4 @@ export default connect(
   {
     setCountry,
   }
-)(Country);
+)(CurrentCountry);
