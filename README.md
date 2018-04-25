@@ -56,3 +56,13 @@ import { OperatorList } from '@bitrefill/airfill-widget';
   )}
 </OperatorList>
 ```
+
+#### Country
+
+```javascript
+import { Country } from '@bitrefill/airfill-widget';
+....
+<Country>
+  {({country}) => <p>Current country is {country.name}</p>}
+</Country>
+```
