@@ -66,3 +66,13 @@ import { Country } from '@bitrefill/airfill-widget';
   {({country}) => <p>Current country is {country.name}</p>}
 </Country>
 ```
+
+#### CountryList
+
+```javascript
+import { CountryList } from '@bitrefill/airfill-widget';
+....
+<CountryList>
+  {countryList => countryList.map(country => <p>{country.name}</p>)}
+</CountryList>
+```
