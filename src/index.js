@@ -25,6 +25,8 @@ export { airfillWidget, widgetStoreEnhancer, client as restClient };
 export * from './store';
 export * from './actions';
 
+export * from './components/shared';
+
 export default Widget;
 
 setPusherClient('0837b617cfe786c32a91');
