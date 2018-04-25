@@ -7,7 +7,13 @@ import { setOperator } from '../../actions';
 const OperatorList = ({ children, operators, setOperator }) =>
   children({
     operators: Object.keys(operators).reduce(
-      (acc, val) => acc.concat(operators[val]),
+      (acc, type) =>
+        acc.concat(
+          operators[type].map(operator => ({
+            ...operator,
+            type,
+          }))
+        ),
       []
     ),
     setOperator,
