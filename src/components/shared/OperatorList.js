@@ -14,7 +14,11 @@ const OperatorList = ({ children, filter, operators, setOperator }) =>
 
         return !filter || filter.indexOf(key) > -1;
       })
-      .reduce((acc, type) => acc.concat(operators[type]), []),
+      .reduce(
+        (acc, type) =>
+          acc.concat(operators[type].map(operator => ({ ...operator, type }))),
+        []
+      ),
     setOperator,
   });
 
