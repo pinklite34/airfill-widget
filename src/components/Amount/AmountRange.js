@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'react-emotion';
 import { css } from 'glamor';
 
 import Input from 'material-ui/Input';
@@ -14,8 +15,6 @@ import {
 import AmountPackage from './AmountPackage';
 import SectionTitle from '../UI/SectionTitle';
 
-import Settings from './settings.svg';
-
 const styles = {
   container: css({
     marginTop: 16,
@@ -29,13 +28,6 @@ const styles = {
     borderTop: '1px solid rgba(0,0,0,0.08)',
     borderBottom: '1px solid rgba(0,0,0,0.08)',
     padding: '8px 16px',
-  }),
-  settings: css({
-    flex: '0 0 auto',
-    marginRight: 16,
-    width: 20,
-    height: 20,
-    fill: 'rgba(0,0,0,0.8)',
   }),
   input: css({
     display: 'inline-block',
@@ -76,6 +68,10 @@ const styles = {
   }),
 };
 
+const RangeContainer = styled('div')`
+  margin-left: 32px;
+`;
+
 export default function AmountRange({
   amount,
   range,
@@ -95,37 +91,39 @@ export default function AmountRange({
     <div {...styles.container}>
       <SectionTitle {...styles.title}>...or select custom amount</SectionTitle>
       <div {...styles.row}>
-        <Settings {...styles.settings} />
-        <AmountPackage
-          name={
-            <div>
-              <Input
-                type="number"
-                min={min}
-                max={max}
-                step={step}
-                value={amount}
-                onChange={e => onChange(e.target.value)}
-                onBlur={() =>
-                  amount > range.max
-                    ? onChange(range.max)
-                    : amount < range.min ? onChange(range.min) : null
-                }
-                className={`${styles.input}`}
-                id="custom_amount"
-              />
-              <label {...styles.label} htmlFor="custom_amount">
-                {currency}
-              </label>
-            </div>
-          }
-          price={
-            <span {...styles.cost}>
-              {displayableCost > 0 ? displayableCost : '0'}{' '}
-              {getDisplayName(billingCurrency)}
-            </span>
-          }
-        />
+        <RangeContainer>
+          <AmountPackage
+            name={
+              <div>
+                <Input
+                  type="number"
+                  min={min}
+                  max={max}
+                  step={step}
+                  value={amount}
+                  onChange={e => onChange(e.target.value)}
+                  onBlur={() =>
+                    amount > range.max
+                      ? onChange(range.max)
+                      : amount < range.min ? onChange(range.min) : null
+                  }
+                  className={`${styles.input}`}
+                  id="custom_amount"
+                />
+                <label {...styles.label} htmlFor="custom_amount">
+                  {currency}
+                </label>
+              </div>
+            }
+            price={
+              <span {...styles.cost}>
+                {displayableCost > 0 ? displayableCost : '0'}{' '}
+                {getDisplayName(billingCurrency)}
+              </span>
+            }
+          />
+        </RangeContainer>
+
         <div {...styles.meta}>
           <div>
             <strong>Min:</strong> {range.min} {getDisplayName(currency)}
