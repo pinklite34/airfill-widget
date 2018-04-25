@@ -28,6 +28,8 @@ export { airfillWidget, widgetStoreEnhancer, client as restClient };
 export * from './store';
 export * from './actions';
 
+export * from './components/shared';
+
 export default Widget;
 
 let store;
