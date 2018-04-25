@@ -1,4 +1,4 @@
-import { REHYDRATE } from 'redux-persist/constants';
+import { REHYDRATE } from 'redux-persist';
 
 export const selectRecentNumbers = state =>
   state.airfillWidget && state.airfillWidget.recentNumbers;

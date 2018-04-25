@@ -24,7 +24,7 @@ module.exports = {
     alias: {},
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.(js|jsx)$/,
         loader: 'babel-loader',
