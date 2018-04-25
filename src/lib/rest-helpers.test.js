@@ -1,4 +1,4 @@
-import { REHYDRATE } from 'redux-persist';
+import { REHYDRATE } from 'redux-persist/constants';
 import {
   createCollectionReducer,
   createCollectionSelector,

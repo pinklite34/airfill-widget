@@ -1,5 +1,5 @@
 import { parse, format } from 'libphonenumber-js';
-import { REHYDRATE } from 'redux-persist';
+import { REHYDRATE } from 'redux-persist/constants';
 import { selectCountry } from './inventory';
 import { isValidEmail } from '../lib/email-validation';
 
