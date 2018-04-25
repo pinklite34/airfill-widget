@@ -41,38 +41,36 @@ $ yarn serve:dist
 
 # Components
 
-#### OperatorList
-
 ```javascript
-import { OperatorList } from '@bitrefill/airfill-widget';
-....
-<OperatorList filter={["DTH", "VOIP"]}>
-  {({ operators, setOperator }) =>
-    operators.map(operator => (
-      <p onClick={() => setOperator(operator)}>
-        {operator.name}
-      </p>
-    )
-  )}
-</OperatorList>
-```
+import {
+  OperatorList
+  Country,
+  CountryList,
+  PhoneNumber,
+} from '@bitrefill/airfill-widget';
 
-#### Country
+render() {
+  return (
+    <div>
+      <OperatorList filter={["DTH", "VOIP"]}>
+        {({ operators, setOperator }) =>
+          operators.map(operator => (
+            <p onClick={() => setOperator(operator)}>
+              {operator.name}
+            </p>
+          )
+        )}
+      </OperatorList>
+      <Country>
+        {({country}) => <p>Current country is {country.name}</p>}
+      </Country>
+      <CountryList>
+        {countryList => countryList.map(country => <p>{country.name}</p>)}
+      </CountryList>
+      <PhoneNumber>
+        {({ number, setNumber, recentNumbers }) => <p>{number}</p>}
+      </PhoneNumber>
+    </div>
+  )
+}
 
-```javascript
-import { Country } from '@bitrefill/airfill-widget';
-....
-<Country>
-  {({country}) => <p>Current country is {country.name}</p>}
-</Country>
-```
-
-#### CountryList
-
-```javascript
-import { CountryList } from '@bitrefill/airfill-widget';
-....
-<CountryList>
-  {countryList => countryList.map(country => <p>{country.name}</p>)}
-</CountryList>
-```
