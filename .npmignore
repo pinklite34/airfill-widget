@@ -1,6 +1,8 @@
 config/
 src/
 .editorconfig
+*.js
+dist/index.html
 dist/.gitkeep
 .vscode/
 stats.json
