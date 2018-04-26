@@ -2,5 +2,8 @@ config/
 src/
 .editorconfig
 *.js
-!dist/widget.js
+dist/index.html
+dist/.gitkeep
+.vscode/
+stats.json
 circle.yml
