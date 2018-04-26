@@ -22,11 +22,10 @@ import Widget from './components/Widget';
 // global module exports
 import widgetStoreEnhancer from './store/enhanceStore';
 import airfillWidget from './store';
-import withWidget from './components/shared';
 
 export { airfillWidget, widgetStoreEnhancer, client as restClient };
 
-export { withWidget };
+export { default as withWidget } from './components/withWidget';
 export default Widget;
 
 let store;
