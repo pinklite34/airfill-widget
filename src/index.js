@@ -19,14 +19,11 @@ import { setPusherClient } from '@bitrefill/react-pusher';
 // global module exports
 import widgetStoreEnhancer from './store/enhanceStore';
 import airfillWidget from './store';
+import withWidget from './components/shared';
 
 export { airfillWidget, widgetStoreEnhancer, client as restClient };
 
-export * from './store';
-export * from './actions';
-
-export * from './components/shared';
-
+export { withWidget };
 export default Widget;
 
 setPusherClient('0837b617cfe786c32a91');
