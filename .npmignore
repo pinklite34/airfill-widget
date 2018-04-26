@@ -7,3 +7,4 @@ dist/.gitkeep
 .vscode/
 stats.json
 circle.yml
+yarn.*
