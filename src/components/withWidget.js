@@ -6,14 +6,14 @@ import {
   selectAvailableOperators,
   selectNumber,
   selectRecentNumbers,
-} from '../../store';
+} from '../store';
 
 import {
   setCountry,
   setOperator,
   setNumber,
   useRecentRefill,
-} from '../../actions';
+} from '../actions';
 
 export default function withWidget(Component) {
   return connect(
