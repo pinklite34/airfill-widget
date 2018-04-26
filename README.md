@@ -54,35 +54,14 @@ render() {
 ## Components
 
 ```javascript
-import {
-  OperatorList
-  Country,
-  CountryList,
-  PhoneNumber,
-} from '@bitrefill/airfill-widget';
+import { withWidget } from '@bitrefill/airfill-widget';
 
-render() {
-  return (
-    <div>
-      <OperatorList filter={["DTH", "VOIP"]}>
-        {({ operators, setOperator }) =>
-          operators.map(operator => (
-            <p onClick={() => setOperator(operator)}>
-              {operator.name}
-            </p>
-          )
-        )}
-      </OperatorList>
-      <Country>
-        {({country}) => <p>Current country is {country.name}</p>}
-      </Country>
-      <CountryList>
-        {countryList => countryList.map(country => <p>{country.name}</p>)}
-      </CountryList>
-      <PhoneNumber>
-        {({ number, setNumber, recentNumbers }) => <p>{number}</p>}
-      </PhoneNumber>
-    </div>
-  );
-}
+const WidgetState = ({ operators, countryList }) => (
+  <div>
+    {operators.map(op => <p key={op.name}>{op.name}</p>)}
+    {countryList.map(c => <p key={c.name}>{c.name}</p>)}
+  </div>
+);
 
+export default withWidget(WidgetState);
+```
