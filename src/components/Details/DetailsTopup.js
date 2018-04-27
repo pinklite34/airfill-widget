@@ -10,6 +10,7 @@ import {
   selectAmount,
   selectOperator,
   selectPaymentMethod,
+  selectCountry,
 } from '../../store';
 
 import { canAfford } from '../../lib/currency-helpers';
@@ -21,8 +22,11 @@ import {
   emailProp,
   numberProp,
   amountProp,
+  countryProp,
 } from '../../lib/prop-types';
 import { isValidEmail } from '../../lib/email-validation';
+
+import { isValidForCountry } from '../../lib/number-helpers';
 
 import Button from 'material-ui/Button';
 import Input from 'material-ui/Input';
@@ -101,6 +105,7 @@ class DetailsTopup extends PureComponent {
     number: numberProp,
     email: emailProp,
     paymentMethod: PropTypes.string,
+    country: countryProp,
   };
 
   state = {
@@ -109,12 +114,22 @@ class DetailsTopup extends PureComponent {
   };
 
   sendOrder = method => {
-    const { config, createOrder, history, amount } = this.props;
+    const {
+      config,
+      createOrder,
+      history,
+      amount,
+      number,
+      country,
+    } = this.props;
 
     let error;
 
+    // no package or custom amount selected
     if (isNaN(amount)) {
       error = 'Package not selected';
+    } else if (!isValidForCountry(number, country)) {
+      error = 'Number does not match country';
     }
 
     this.setState({
@@ -261,6 +276,7 @@ export default connect(
     amount: selectAmount(state),
     operator: selectOperator(state),
     paymentMethod: selectPaymentMethod(state),
+    country: selectCountry(state),
   }),
   {
     createOrder,

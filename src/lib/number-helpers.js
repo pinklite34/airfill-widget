@@ -82,3 +82,9 @@ export const parseNumber = (number, country) => {
   // Number is not valid
   return null;
 };
+
+// if number matches country
+export const isValidForCountry = (number, country) => {
+  const parsed = parse(number);
+  return parsed && country && parsed.country === country.alpha2;
+};
