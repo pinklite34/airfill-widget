@@ -260,10 +260,20 @@ class PaymentMode extends PureComponent {
     let remaining;
 
     if (paymentStatus.status === 'partial') {
-      paid = paymentStatus.paidAmount;
-      paid = Math.ceil(paid / 10000) / 10000;
-      remaining = basePrice - paymentStatus.paidAmount;
-      remaining = Math.ceil(remaining / 10000) / 10000;
+      if (method.paymentMode === 'ethereum') {
+        // convert from Szabo to ETH
+        paid = paymentStatus.paidAmount;
+        paid = Math.floor(paid) / 1000000;
+        remaining = basePrice - paymentStatus.paidAmount;
+        remaining = Math.floor(remaining) / 1000000;
+      } else {
+        // bitcoin and bitcoin based altcoins
+        // convert from baseAmount to BTC/LTC
+        paid = paymentStatus.paidAmount;
+        paid = Math.floor(paid / 10000) / 10000;
+        remaining = basePrice - paymentStatus.paidAmount;
+        remaining = Math.floor(remaining / 10000) / 10000;
+      }
     }
 
     let prefix =
@@ -289,17 +299,20 @@ class PaymentMode extends PureComponent {
         unit = 'lites';
         price = order.payment.litesPrice;
       }
-      uri = `${prefix}:${order.payment.lightningInvoice}`;
       paymentAddress = order.payment.lightningInvoice;
+      uri = `${prefix}:${paymentAddress}`;
       PaymentInstructions = ({ children }) => (
         <div>
           Copy the invoice below and pay
           {children}
         </div>
       );
+    } else if (method.paymentMode === 'ethereum') {
+      paymentAddress = order.payment.altcoinAddress;
+      uri = `${prefix}:${paymentAddress}?amount=${remaining || price}`;
     } else {
-      uri = `${prefix}:${order.payment.address}?amount=${remaining || price}`;
       paymentAddress = order.payment.address;
+      uri = `${prefix}:${paymentAddress}?amount=${remaining || price}`;
     }
 
     const isPartial = paymentStatus.status === 'partial';

@@ -13,8 +13,7 @@ import {
   fnProp,
   numberProp,
 } from '../../lib/prop-types';
-import { selectAmount } from '../../store/ui';
-import { selectOperator } from '../../store/operator';
+import { selectOperator, selectAmount, selectNumber } from '../../store';
 import { updatePaymentStatus } from '../../actions/index';
 import setClipboardText from '../../lib/clipboard-helper';
 
@@ -184,9 +183,11 @@ class PaymentLayout extends PureComponent {
       number,
       billingCurrency,
       order,
+      paymentStatus,
     } = this.props;
 
     const showNumber = !operator.result || !operator.result.noNumber;
+    const isDelivered = paymentStatus.status !== 'delivered';
 
     let billingCurrencyDisplayName = (
       order.payment.altcoinCode || 'BTC'
@@ -231,22 +232,32 @@ class PaymentLayout extends PureComponent {
         </div>
 
         <div>
-          <div>Price</div>
+          <div>{!isDelivered && 'Price'}</div>
           <div
             {...(this.showCountdown ? styles.cellContainer : {})}
             {...styles.infoContainer}
           >
-            <Tooltip
-              open={this.state.tooltip}
-              title="Copied!"
-              placement="right-end"
-            >
-              <p {...styles.amount} onClick={() => this.copy(formattedPrice)}>
-                {formattedPrice}
+            {isDelivered ? (
+              <p {...styles.amount}>
+                Delivered{' '}
+                {operator.result && operator.result.slug === 'reddit-gold'
+                  ? 'Reddit Gold'
+                  : formattedPrice}
+                {showNumber && ' to ' + number}
               </p>
-            </Tooltip>
+            ) : (
+              <Tooltip
+                open={this.state.tooltip}
+                title="Copied!"
+                placement="right-end"
+              >
+                <p {...styles.amount} onClick={() => this.copy(formattedPrice)}>
+                  {formattedPrice}
+                </p>
+              </Tooltip>
+            )}
             {this.showCountdown && (
-              <p {...styles.label}>Time left: {this.state.timeLeft}</p>
+              <p {...styles.label}>Expiring in {this.state.timeLeft}</p>
             )}
           </div>
         </div>
@@ -261,6 +272,7 @@ export default connect(
   state => ({
     amount: selectAmount(state),
     operator: selectOperator(state),
+    number: selectNumber(state),
   }),
   dispatch => ({
     updatePaymentStatus: (...args) => dispatch(updatePaymentStatus(...args)),

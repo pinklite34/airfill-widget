@@ -16,10 +16,11 @@ export const satoshiToBTC = amount => Math.ceil(amount / 100) / 1000000;
 const supportedCoins = [
   'bitcoin',
   'litecoin',
+  'ethereum',
+  'dash',
   'dogecoin',
   'lightning',
   'lightning-ltc',
-  'dash',
 ];
 
 const lightningCoins = ['lightning', 'lightning-ltc'];
