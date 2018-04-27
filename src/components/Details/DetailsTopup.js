@@ -108,16 +108,37 @@ class DetailsTopup extends PureComponent {
     isLoading: false,
   };
 
+  sendOrder = method => {
+    const { config, createOrder, history, amount } = this.props;
+
+    let error;
+
+    if (isNaN(amount)) {
+      error = 'Package not selected';
+    }
+
+    this.setState({
+      isLoading: !error,
+      error,
+    });
+
+    if (error) {
+      return;
+    }
+
+    createOrder({
+      ...config.orderOptions,
+      paymentMethod: method.paymentMode,
+    })
+      .then(() => {
+        history.push('/refill/payment');
+        trigger();
+      })
+      .catch(error => this.setState({ isLoading: false, error }));
+  };
+
   createOrder = () => {
-    const {
-      amount,
-      config,
-      operator,
-      createOrder,
-      history,
-      paymentMethod,
-      trigger,
-    } = this.props;
+    const { amount, config, operator, paymentMethod } = this.props;
 
     // pick all affordable payment methods
     const methods = config.paymentButtons.filter(btn =>
@@ -135,18 +156,7 @@ class DetailsTopup extends PureComponent {
     const method =
       methods.find(btn => btn.paymentMode === paymentMethod) || methods[0];
 
-    this.setState({
-      isLoading: true,
-    });
-    createOrder({
-      ...config.orderOptions,
-      paymentMethod: method.paymentMode,
-    })
-      .then(() => {
-        history.push('/refill/payment');
-        trigger();
-      })
-      .catch(error => this.setState({ isLoading: false, error }));
+    this.sendOrder(method);
   };
 
   isComplete = () => {
@@ -180,7 +190,7 @@ class DetailsTopup extends PureComponent {
         {error && (
           <div {...styles.error}>
             <Error fill="#fff" {...styles.icon} />
-            <div>{error.message}</div>
+            <div>{error.message || error}</div>
           </div>
         )}
         {showNumber && (
