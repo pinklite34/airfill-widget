@@ -141,13 +141,13 @@ class DetailsTopup extends PureComponent {
     // no package or custom amount selected
     // amount might be string (like reddit gold)
     if (amount === 'NaN' || (typeof amount !== 'string' && isNaN(amount))) {
-      error = 'Package not selected';
+      error = 'Amount not selected';
     } else if (
       this.showNumber &&
       !this.isAccount &&
       !isValidForCountry(number, country)
     ) {
-      error = 'Number does not match country';
+      error = 'Phone number does not match country';
     }
 
     this.setState({
