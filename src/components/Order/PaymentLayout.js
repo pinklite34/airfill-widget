@@ -257,7 +257,7 @@ class PaymentLayout extends PureComponent {
               </Tooltip>
             )}
             {this.showCountdown && (
-              <p {...styles.label}>Time left: {this.state.timeLeft}</p>
+              <p {...styles.label}>Expiring in {this.state.timeLeft}</p>
             )}
           </div>
         </div>
