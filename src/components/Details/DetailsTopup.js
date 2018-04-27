@@ -133,6 +133,7 @@ class DetailsTopup extends PureComponent {
       amount,
       number,
       country,
+      trigger,
     } = this.props;
 
     let error;
