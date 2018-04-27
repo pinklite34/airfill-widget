@@ -89,6 +89,14 @@ function Item(props) {
   });
   const className = noIcons ? styles.icon : {};
 
+  if (typeof description === 'function') {
+    description = description(!disabled);
+
+    if (typeof description !== 'string') {
+      throw new Error('description function must return a string');
+    }
+  }
+
   return (
     <MenuItem
       className={`${classes.item} ${selected && classes.selectedItem}`}
