@@ -10,6 +10,7 @@ import {
   selectAmount,
   selectOperator,
   selectPaymentMethod,
+  selectCountry,
 } from '../../store';
 
 import { canAfford } from '../../lib/currency-helpers';
@@ -21,8 +22,11 @@ import {
   emailProp,
   numberProp,
   amountProp,
+  countryProp,
 } from '../../lib/prop-types';
 import { isValidEmail } from '../../lib/email-validation';
+
+import { isValidForCountry } from '../../lib/number-helpers';
 
 import Button from 'material-ui/Button';
 import Input from 'material-ui/Input';
@@ -101,6 +105,7 @@ class DetailsTopup extends PureComponent {
     number: numberProp,
     email: emailProp,
     paymentMethod: PropTypes.string,
+    country: countryProp,
   };
 
   state = {
@@ -108,16 +113,65 @@ class DetailsTopup extends PureComponent {
     isLoading: false,
   };
 
-  createOrder = () => {
+  // if we should show number input at all
+  get showNumber() {
+    const { operator } = this.props;
+    return !operator.result || !operator.result.noNumber;
+  }
+
+  // if we need account number instead of phone number
+  get isAccount() {
+    const { operator } = this.props;
+    return operator.result && !!operator.result.type;
+  }
+
+  sendOrder = method => {
     const {
-      amount,
       config,
-      operator,
       createOrder,
       history,
-      paymentMethod,
+      amount,
+      number,
+      country,
       trigger,
     } = this.props;
+
+    let error;
+
+    // no package or custom amount selected
+    // amount might be string (like reddit gold)
+    if (amount === 'NaN' || (typeof amount !== 'string' && isNaN(amount))) {
+      error = 'Amount not selected';
+    } else if (
+      this.showNumber &&
+      !this.isAccount &&
+      !isValidForCountry(number, country)
+    ) {
+      error = 'Phone number does not match country';
+    }
+
+    this.setState({
+      isLoading: !error,
+      error,
+    });
+
+    if (error) {
+      return;
+    }
+
+    createOrder({
+      ...config.orderOptions,
+      paymentMethod: method.paymentMode,
+    })
+      .then(() => {
+        history.push('/refill/payment');
+        trigger();
+      })
+      .catch(error => this.setState({ isLoading: false, error }));
+  };
+
+  createOrder = () => {
+    const { amount, config, operator, paymentMethod } = this.props;
 
     // pick all affordable payment methods
     const methods = config.paymentButtons.filter(btn =>
@@ -135,18 +189,7 @@ class DetailsTopup extends PureComponent {
     const method =
       methods.find(btn => btn.paymentMode === paymentMethod) || methods[0];
 
-    this.setState({
-      isLoading: true,
-    });
-    createOrder({
-      ...config.orderOptions,
-      paymentMethod: method.paymentMode,
-    })
-      .then(() => {
-        history.push('/refill/payment');
-        trigger();
-      })
-      .catch(error => this.setState({ isLoading: false, error }));
+    this.sendOrder(method);
   };
 
   isComplete = () => {
@@ -159,31 +202,21 @@ class DetailsTopup extends PureComponent {
   };
 
   render() {
-    const {
-      config,
-      setNumber,
-      setEmail,
-      classes,
-      number,
-      email,
-      operator,
-    } = this.props;
+    const { config, setNumber, setEmail, classes, number, email } = this.props;
     const { error, isLoading } = this.state;
 
     const showEmail = !isValidEmail(config.orderOptions.email);
-    const showNumber = !operator.result || !operator.result.noNumber;
-    const isAccount = operator.result && !!operator.result.type;
-    const numberLabel = isAccount ? 'account number' : 'phone number';
+    const numberLabel = this.isAccount ? 'account number' : 'phone number';
 
     return (
       <div {...styles.container}>
         {error && (
           <div {...styles.error}>
             <Error fill="#fff" {...styles.icon} />
-            <div>{error.message}</div>
+            <div>{error.message || error}</div>
           </div>
         )}
-        {showNumber && (
+        {this.showNumber && (
           <Field
             label={numberLabel}
             hint={`The ${numberLabel} to top up`}
@@ -191,7 +224,7 @@ class DetailsTopup extends PureComponent {
           >
             <Input
               onChange={e => setNumber(e.target.value)}
-              type={isAccount ? 'text' : 'tel'}
+              type={this.isAccount ? 'text' : 'tel'}
               value={number}
               fullWidth
               className={`${styles.input}`}
@@ -251,6 +284,7 @@ export default connect(
     amount: selectAmount(state),
     operator: selectOperator(state),
     paymentMethod: selectPaymentMethod(state),
+    country: selectCountry(state),
   }),
   {
     createOrder,
