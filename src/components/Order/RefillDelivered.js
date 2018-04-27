@@ -77,13 +77,6 @@ export default function RefillDelivered(props) {
         <div>
           <div />
           <div {...styles.textContainer}>
-            {!pinInfo && (
-              <span {...styles.info}>
-                The refill has been delivered and credited to the balance of the
-                target device.
-                <br />
-              </span>
-            )}
             <a
               {...styles.link}
               href="https://www.bitrefill.com/faq/#my-topup-did-not-arrive"
