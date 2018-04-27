@@ -201,12 +201,24 @@ class DetailsTopup extends PureComponent {
     );
   };
 
+  getNumberLabel = () => {
+    const { operator } = this.props;
+
+    if (operator.result && operator.result.slug === 'reddit-gold') {
+      return 'Reddit username or post link';
+    }
+
+    return this.isAccount
+      ? 'The account number to top up'
+      : 'The phone number to top up';
+  };
+
   render() {
     const { config, setNumber, setEmail, classes, number, email } = this.props;
     const { error, isLoading } = this.state;
 
     const showEmail = !isValidEmail(config.orderOptions.email);
-    const numberLabel = this.isAccount ? 'account number' : 'phone number';
+    const numberLabel = this.getNumberLabel();
 
     return (
       <div {...styles.container}>
@@ -217,11 +229,7 @@ class DetailsTopup extends PureComponent {
           </div>
         )}
         {this.showNumber && (
-          <Field
-            label={numberLabel}
-            hint={`The ${numberLabel} to top up`}
-            {...styles.field}
-          >
+          <Field label={numberLabel} hint={numberLabel} {...styles.field}>
             <Input
               onChange={e => setNumber(e.target.value)}
               type={this.isAccount ? 'text' : 'tel'}
