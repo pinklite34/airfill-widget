@@ -125,6 +125,49 @@ class DetailsTopup extends PureComponent {
     return operator.result && !!operator.result.type;
   }
 
+  getNumberLabel = () => {
+    const { operator } = this.props;
+
+    if (operator.result && operator.result.slug === 'reddit-gold') {
+      return 'Reddit username or post link';
+    }
+
+    return this.isAccount
+      ? 'The account number to top up'
+      : 'The phone number to top up';
+  };
+
+  isComplete = () => {
+    const { amount, number, operator, config, email } = this.props;
+    return (
+      amount &&
+      (number || (operator.result && operator.result.noNumber)) &&
+      (isValidEmail(config.orderOptions.email) || email.valid)
+    );
+  };
+
+  createOrder = () => {
+    const { amount, config, operator, paymentMethod } = this.props;
+
+    // pick all affordable payment methods
+    const methods = config.paymentButtons.filter(btn =>
+      canAfford({
+        amount: amount,
+        accountBalance: config.accountBalance,
+        packages: operator.result.packages,
+        paymentMode: btn.paymentMode,
+        requireAccountBalance: btn.requireAccountBalance,
+        operator: operator.result,
+      })
+    );
+
+    // pick last used or first
+    const method =
+      methods.find(btn => btn.paymentMode === paymentMethod) || methods[0];
+
+    this.sendOrder(method);
+  };
+
   sendOrder = method => {
     const {
       config,
@@ -168,49 +211,6 @@ class DetailsTopup extends PureComponent {
         trigger();
       })
       .catch(error => this.setState({ isLoading: false, error }));
-  };
-
-  createOrder = () => {
-    const { amount, config, operator, paymentMethod } = this.props;
-
-    // pick all affordable payment methods
-    const methods = config.paymentButtons.filter(btn =>
-      canAfford({
-        amount: amount,
-        accountBalance: config.accountBalance,
-        packages: operator.result.packages,
-        paymentMode: btn.paymentMode,
-        requireAccountBalance: btn.requireAccountBalance,
-        operator: operator.result,
-      })
-    );
-
-    // pick last used or first
-    const method =
-      methods.find(btn => btn.paymentMode === paymentMethod) || methods[0];
-
-    this.sendOrder(method);
-  };
-
-  isComplete = () => {
-    const { amount, number, operator, config, email } = this.props;
-    return (
-      amount &&
-      (number || (operator.result && operator.result.noNumber)) &&
-      (isValidEmail(config.orderOptions.email) || email.valid)
-    );
-  };
-
-  getNumberLabel = () => {
-    const { operator } = this.props;
-
-    if (operator.result && operator.result.slug === 'reddit-gold') {
-      return 'Reddit username or post link';
-    }
-
-    return this.isAccount
-      ? 'The account number to top up'
-      : 'The phone number to top up';
   };
 
   render() {
