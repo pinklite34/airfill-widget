@@ -113,6 +113,18 @@ class DetailsTopup extends PureComponent {
     isLoading: false,
   };
 
+  // if we should show number input at all
+  get showNumber() {
+    const { operator } = this.props;
+    return !operator.result || !operator.result.noNumber;
+  }
+
+  // if we need account number instead of phone number
+  get isAccount() {
+    const { operator } = this.props;
+    return operator.result && !!operator.result.type;
+  }
+
   sendOrder = method => {
     const {
       config,
@@ -128,7 +140,11 @@ class DetailsTopup extends PureComponent {
     // no package or custom amount selected
     if (isNaN(amount)) {
       error = 'Package not selected';
-    } else if (!isValidForCountry(number, country)) {
+    } else if (
+      this.showNumber &&
+      !this.isAccount &&
+      !isValidForCountry(number, country)
+    ) {
       error = 'Number does not match country';
     }
 
@@ -184,21 +200,11 @@ class DetailsTopup extends PureComponent {
   };
 
   render() {
-    const {
-      config,
-      setNumber,
-      setEmail,
-      classes,
-      number,
-      email,
-      operator,
-    } = this.props;
+    const { config, setNumber, setEmail, classes, number, email } = this.props;
     const { error, isLoading } = this.state;
 
     const showEmail = !isValidEmail(config.orderOptions.email);
-    const showNumber = !operator.result || !operator.result.noNumber;
-    const isAccount = operator.result && !!operator.result.type;
-    const numberLabel = isAccount ? 'account number' : 'phone number';
+    const numberLabel = this.isAccount ? 'account number' : 'phone number';
 
     return (
       <div {...styles.container}>
@@ -208,7 +214,7 @@ class DetailsTopup extends PureComponent {
             <div>{error.message || error}</div>
           </div>
         )}
-        {showNumber && (
+        {this.showNumber && (
           <Field
             label={numberLabel}
             hint={`The ${numberLabel} to top up`}
@@ -216,7 +222,7 @@ class DetailsTopup extends PureComponent {
           >
             <Input
               onChange={e => setNumber(e.target.value)}
-              type={isAccount ? 'text' : 'tel'}
+              type={this.isAccount ? 'text' : 'tel'}
               value={number}
               fullWidth
               className={`${styles.input}`}
