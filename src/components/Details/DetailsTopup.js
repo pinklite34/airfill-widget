@@ -138,7 +138,8 @@ class DetailsTopup extends PureComponent {
     let error;
 
     // no package or custom amount selected
-    if (isNaN(amount)) {
+    // amount might be string (like reddit gold)
+    if (typeof amount !== 'string' && isNaN(amount)) {
       error = 'Package not selected';
     } else if (
       this.showNumber &&
