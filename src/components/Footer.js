@@ -45,8 +45,7 @@ export default function Footer({ branded }) {
             <a
               href="https://www.bitrefill.com/privacy/"
               target="_blank"
-              rel="noopener noreferrer"
-            >
+              rel="noopener noreferrer">
               Privacy Policy
             </a>
           </li>
@@ -54,8 +53,7 @@ export default function Footer({ branded }) {
             <a
               href="https://www.bitrefill.com/terms/"
               target="_blank"
-              rel="noopener noreferrer"
-            >
+              rel="noopener noreferrer">
               Terms of Service
             </a>
           </li>

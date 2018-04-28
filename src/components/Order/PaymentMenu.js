@@ -102,8 +102,7 @@ function Item(props) {
       className={`${classes.item} ${selected && classes.selectedItem}`}
       open={open}
       onClick={() => onClick(props)}
-      disabled={disabled}
-    >
+      disabled={disabled}>
       <div {...className}>{icon}</div>
 
       <div {...styles.content}>
@@ -169,8 +168,7 @@ class PaymentMenu extends PureComponent {
         onClose={onClose}
         classes={{
           paper: classes.menu,
-        }}
-      >
+        }}>
         {paymentButtons &&
           paymentButtons.map((paymentButton, index) => (
             <Fragment key={index}>

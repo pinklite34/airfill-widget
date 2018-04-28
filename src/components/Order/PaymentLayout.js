@@ -235,8 +235,7 @@ class PaymentLayout extends PureComponent {
           <div>{!isDelivered && 'Price'}</div>
           <div
             {...(this.showCountdown ? styles.cellContainer : {})}
-            {...styles.infoContainer}
-          >
+            {...styles.infoContainer}>
             {isDelivered ? (
               <p {...styles.amount}>
                 Delivered{' '}
@@ -249,8 +248,7 @@ class PaymentLayout extends PureComponent {
               <Tooltip
                 open={this.state.tooltip}
                 title="Copied!"
-                placement="right-end"
-              >
+                placement="right-end">
                 <p {...styles.amount} onClick={() => this.copy(formattedPrice)}>
                   {formattedPrice}
                 </p>

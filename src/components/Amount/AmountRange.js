@@ -105,7 +105,9 @@ export default function AmountRange({
                   onBlur={() =>
                     amount > range.max
                       ? onChange(range.max)
-                      : amount < range.min ? onChange(range.min) : null
+                      : amount < range.min
+                        ? onChange(range.min)
+                        : null
                   }
                   className={`${styles.input}`}
                   id="custom_amount"

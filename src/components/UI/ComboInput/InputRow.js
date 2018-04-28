@@ -91,8 +91,7 @@ export default function InputRow({
         onSubmit={e => {
           e.preventDefault();
           onSubmit();
-        }}
-      >
+        }}>
         <div {...styles.row}>
           <div {...styles.flag} onClick={resetCountry}>
             <Flag country={country} />
@@ -119,8 +118,7 @@ export default function InputRow({
           <Button
             disabled={loading || !submitEnabled}
             {...css([styles.button, !submitEnabled && styles.buttonDisabled])}
-            type="submit"
-          >
+            type="submit">
             {loading ? (
               <CircularProgress className={`${styles.progressBar}`} />
             ) : (

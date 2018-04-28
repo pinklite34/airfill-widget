@@ -104,7 +104,10 @@ function Payment({
   }
 
   const PaymentComponent = componentForStatus(paymentStatus.status);
-  const { orderId, payment: { address } } = order.result;
+  const {
+    orderId,
+    payment: { address },
+  } = order.result;
 
   return (
     <div>

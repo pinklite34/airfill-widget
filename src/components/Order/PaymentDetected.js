@@ -61,8 +61,7 @@ export default function PaymentDetected(props) {
                     }`,
                     '_blank'
                   )
-                }
-              >
+                }>
                 Click here to see how it&#39;s going
               </span>
             ) : (
@@ -73,8 +72,7 @@ export default function PaymentDetected(props) {
               color="primary"
               raised
               {...styles.button}
-              onClick={props.onReset}
-            >
+              onClick={props.onReset}>
               Buy another refill
             </Button>
           </div>

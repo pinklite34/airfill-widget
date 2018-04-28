@@ -81,8 +81,7 @@ export default function RefillDelivered(props) {
               {...styles.link}
               href="https://www.bitrefill.com/faq/#my-topup-did-not-arrive"
               target="_blank"
-              rel="noopener noreferrer"
-            >
+              rel="noopener noreferrer">
               Can&apos;t see your refill?
             </a>
             <br />
@@ -90,8 +89,7 @@ export default function RefillDelivered(props) {
               color="primary"
               raised
               {...styles.button}
-              onClick={props.onReset}
-            >
+              onClick={props.onReset}>
               Buy another refill
             </Button>
           </div>
