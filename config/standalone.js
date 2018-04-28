@@ -10,6 +10,7 @@ const config = Object.assign({}, distConfig, {
     publicPath: '/',
     library: 'airfill-widget',
     libraryTarget: 'umd',
+    chunkFilename: '[name].bundle.js',
   },
   externals: {},
 });
