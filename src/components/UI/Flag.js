@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { css } from 'glamor';
-import defaultFlag from 'flag-icons/flags/flags-iso/flat/24/_unknown.png';
-
-import flags from '../flags';
+import defaultFlag from '../../unknown-flag.png';
 
 const styles = {
   image: css({
@@ -13,16 +11,31 @@ const styles = {
   }),
 };
 
-export default function Flag({ country }) {
-  return (
-    <img
-      src={(country && flags[country]) || defaultFlag}
-      alt={country}
-      {...styles.image}
-    />
-  );
-}
+export default class Flag extends Component {
+  static propTypes = {
+    country: PropTypes.string,
+  };
 
-Flag.propTypes = {
-  country: PropTypes.string,
-};
+  state = {
+    flags: {},
+  };
+
+  componentWillMount = () => {
+    import(/* webpackChunkName: "flags" */ '../flags').then(flags =>
+      this.setState({ flags: flags.default })
+    );
+  };
+
+  render() {
+    const { country } = this.props;
+    const { flags } = this.state;
+
+    return (
+      <img
+        src={(country && flags[country]) || defaultFlag}
+        alt={country}
+        {...styles.image}
+      />
+    );
+  }
+}

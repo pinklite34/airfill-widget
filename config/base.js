@@ -11,6 +11,7 @@ module.exports = {
     publicPath: publicPath,
     library: 'airfill-widget',
     libraryTarget: 'umd',
+    chunkFilename: '[name].bundle.js',
   },
   devServer: {
     contentBase: './src/',

@@ -14,8 +14,6 @@ import Widget from './components/Widget';
 import { client } from './lib/api-client';
 import configureStore from './store/configureStore';
 
-import { setPusherClient } from '@bitrefill/react-pusher';
-
 // global module exports
 import widgetStoreEnhancer from './store/enhanceStore';
 import airfillWidget from './store';
@@ -26,8 +24,6 @@ export * from './store';
 export * from './actions';
 
 export default Widget;
-
-setPusherClient('0837b617cfe786c32a91');
 
 let store;
 
