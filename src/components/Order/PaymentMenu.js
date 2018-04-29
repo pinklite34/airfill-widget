@@ -23,10 +23,6 @@ const muiStyles = {
     paddingBottom: '20px',
     display: 'flex',
   },
-  primaryText: {
-    fontWeight: '500',
-    fontFamily: '"Roboto", sans-serif',
-  },
   menu: {
     width: '396px',
   },
@@ -106,13 +102,7 @@ function Item(props) {
       <div {...className}>{icon}</div>
 
       <div {...styles.content}>
-        <ListItemText
-          classes={{
-            primary: classes.primaryText,
-          }}
-          primary={title}
-          secondary={description}
-        />
+        <ListItemText primary={title} secondary={description} />
       </div>
     </MenuItem>
   );
