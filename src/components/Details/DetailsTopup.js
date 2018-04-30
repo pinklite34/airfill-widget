@@ -142,7 +142,10 @@ class DetailsTopup extends PureComponent {
     return (
       amount &&
       (number || (operator.result && operator.result.noNumber)) &&
-      (isValidEmail(config.orderOptions.email) || email.valid)
+      ((config.orderOptions &&
+        config.orderOptions.email &&
+        isValidEmail(config.orderOptions.email)) ||
+        email.valid)
     );
   };
 
@@ -217,7 +220,10 @@ class DetailsTopup extends PureComponent {
     const { config, setNumber, setEmail, classes, number, email } = this.props;
     const { error, isLoading } = this.state;
 
-    const showEmail = !isValidEmail(config.orderOptions.email);
+    const showEmail =
+      !config.orderOptions ||
+      !config.orderOptions.email ||
+      !isValidEmail(config.orderOptions.email);
     const numberLabel = this.getNumberLabel();
 
     return (
