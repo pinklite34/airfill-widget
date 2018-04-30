@@ -6,6 +6,7 @@ import {
   selectAvailableOperators,
   selectNumber,
   selectRecentNumbers,
+  selectNumberLookup,
 } from '../store';
 
 import {
@@ -13,6 +14,8 @@ import {
   setOperator,
   setNumber,
   useRecentRefill,
+  lookupNumber,
+  resetNumberLookup,
 } from '../actions';
 
 export default function withWidget(Component) {
@@ -32,12 +35,15 @@ export default function withWidget(Component) {
       })(),
       number: selectNumber(state),
       recentNumbers: selectRecentNumbers(state),
+      numberLookup: selectNumberLookup(state),
     }),
     {
       setCountry,
       setOperator,
       setNumber,
       useRecentRefill,
+      lookupNumber,
+      resetNumberLookup,
     }
   )(Component);
 }
