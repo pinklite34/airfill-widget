@@ -2337,9 +2337,9 @@ domexception@^1.0.0:
   dependencies:
     webidl-conversions "^4.0.2"
 
-downshift@^1.31.7:
-  version "1.31.7"
-  resolved "https://registry.yarnpkg.com/downshift/-/downshift-1.31.7.tgz#65cad48fa6e4add9d6fd82cc9b9b5120e74d4604"
+downshift@^1.31.12:
+  version "1.31.12"
+  resolved "https://registry.yarnpkg.com/downshift/-/downshift-1.31.12.tgz#78be425583234f18774fc37643eba17a776a91db"
 
 duplexer@^0.1.1:
   version "0.1.1"
@@ -2963,9 +2963,9 @@ fbjs@^0.8.1, fbjs@^0.8.16:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.9"
 
-fetch-ponyfill@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/fetch-ponyfill/-/fetch-ponyfill-6.0.1.tgz#b0081b6aebec905e66e91ad2aca42c2b2e5ecc78"
+fetch-ponyfill@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/fetch-ponyfill/-/fetch-ponyfill-6.0.2.tgz#bc2d92afd0140e39518beccd2fd0682ab4491cb6"
   dependencies:
     node-fetch "~2.1.0"
 
@@ -4676,17 +4676,29 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+<<<<<<< HEAD
 libphonenumber-js@^1.2.15:
   version "1.2.15"
   resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.2.15.tgz#f4c5ee85cd0a5438b3f1906bb0467f33975768f3"
+=======
+libphonenumber-js@^1.1.11:
+  version "1.1.11"
+  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.1.11.tgz#50114422db389d1d3086f4e9d6c2d8ada657944c"
+>>>>>>> update non breaking deps
   dependencies:
     minimist "^1.2.0"
     semver-compare "^1.0.0"
     xml2js "^0.4.17"
 
+<<<<<<< HEAD
 lint-staged@^7.2.0:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-7.2.0.tgz#bdf4bb7f2f37fe689acfaec9999db288a5b26888"
+=======
+lint-staged@^7.0.5:
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-7.0.5.tgz#1ed04c4bb2013579a3d4df4dfe0f2ea1cd988fad"
+>>>>>>> update non breaking deps
   dependencies:
     app-root-path "^2.0.1"
     chalk "^2.3.1"
@@ -5754,7 +5766,11 @@ pretty-format@^23.0.1:
     ansi-regex "^3.0.0"
     ansi-styles "^3.2.0"
 
+<<<<<<< HEAD
 private@^0.1.6, private@^0.1.7, private@^0.1.8:
+=======
+private@^0.1.6, private@^0.1.7, private@^0.1.8, private@~0.1.5:
+>>>>>>> update non breaking deps
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/private/-/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"
 
@@ -7523,9 +7539,15 @@ webpack-bundle-analyzer@^2.13.1:
     opener "^1.4.3"
     ws "^4.0.0"
 
+<<<<<<< HEAD
 webpack-cli@^3.0.8:
   version "3.0.8"
   resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-3.0.8.tgz#90eddcf04a4bfc31aa8c0edc4c76785bc4f1ccd9"
+=======
+webpack-cli@^2.0.15:
+  version "2.0.15"
+  resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-2.0.15.tgz#7532066556b03bd3292285ac08537e28844616c2"
+>>>>>>> update non breaking deps
   dependencies:
     chalk "^2.4.1"
     cross-spawn "^6.0.5"
