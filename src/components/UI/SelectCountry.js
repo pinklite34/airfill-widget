@@ -26,8 +26,7 @@ function SelectCountry({ countries, selected, setCountry, onChange }) {
       onChange={event => {
         setCountry(event.target.value);
         onChange && onChange(event.target.value);
-      }}
-    >
+      }}>
       {countries.map(country => (
         <option value={country.alpha2} key={country.alpha2}>
           {country.name}

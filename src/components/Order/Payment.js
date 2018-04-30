@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { css } from 'glamor';
 import { push } from 'react-router-redux';
-
 import { CircularProgress } from 'material-ui/Progress';
 
-import PusherSubscription from '@bitrefill/react-pusher';
+import { PUSHER_API_KEY } from '../../constants';
 
+import Pusher from '../Pusher';
 import PaymentMode from './PaymentMode';
 import PaymentDetected from './PaymentDetected';
 import PaymentConfirmed from './PaymentConfirmed';
@@ -104,11 +104,15 @@ function Payment({
   }
 
   const PaymentComponent = componentForStatus(paymentStatus.status);
-  const { orderId, payment: { address } } = order.result;
+  const {
+    orderId,
+    payment: { address },
+  } = order.result;
 
   return (
     <div>
-      <PusherSubscription
+      <Pusher
+        apiKey={PUSHER_API_KEY}
         channel={[orderId, address].join('-')}
         events={[
           'paid',

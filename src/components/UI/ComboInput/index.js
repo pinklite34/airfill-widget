@@ -337,8 +337,7 @@ class ComboInput extends PureComponent {
         selectedItem={null}
         itemCount={itemCount}
         isOpen={isOpen}
-        onStateChange={this.handleStateChange}
-      >
+        onStateChange={this.handleStateChange}>
         {({ getInputProps, getItemProps, inputValue, highlightedIndex }) => (
           <div {...styles.container}>
             <InputRow

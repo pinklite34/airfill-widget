@@ -351,8 +351,7 @@ class PaymentMode extends PureComponent {
               <p
                 ref={e => (this.anchorEl = e)}
                 style={{ fontWeight: '500' }}
-                onClick={() => this.openMenu()}
-              >
+                onClick={() => this.openMenu()}>
                 {this.state.paymentMethod.title}
               </p>
               <Button {...styles.changeButton} onClick={() => this.openMenu()}>
@@ -369,8 +368,7 @@ class PaymentMode extends PureComponent {
                 <Button
                   raised
                   color="primary"
-                  onClick={() => method.paymentModeOptions.callback(order)}
-                >
+                  onClick={() => method.paymentModeOptions.callback(order)}>
                   {method.paymentModeOptions.title}
                 </Button>
               ) : (
@@ -379,8 +377,7 @@ class PaymentMode extends PureComponent {
                     <PaymentInstructions>
                       <Tooltip open={this.state.amountTooltip} title="Copied!">
                         <strong
-                          onClick={() => this.copy(price, 'amountTooltip')}
-                        >
+                          onClick={() => this.copy(price, 'amountTooltip')}>
                           {` ${remaining || price} ${unit} `}
                         </strong>
                       </Tooltip>
@@ -406,22 +403,23 @@ class PaymentMode extends PureComponent {
                         <strong>{remaining + ' ' + unit}</strong>
                       </div>
                     )}
-                    <Button
-                      {...styles.bottomButton}
-                      raised
-                      color="primary"
-                      onClick={() => (window.location.href = uri)}
-                    >
-                      Open in Wallet
-                    </Button>
+                    {window &&
+                      window.BITREFILL__PLATFORM !== 'ios' && (
+                        <Button
+                          {...styles.bottomButton}
+                          raised
+                          color="primary"
+                          onClick={() => (window.location.href = uri)}>
+                          {'Open in Wallet'}
+                        </Button>
+                      )}
                     {isPartial && (
                       <a
                         href={`https://www.bitrefill.com/support/${
                           order.orderId
                         }/${order.payment.address}`}
                         target="_blank"
-                        {...styles.help}
-                      >
+                        {...styles.help}>
                         Need help?
                       </a>
                     )}

@@ -23,10 +23,6 @@ const muiStyles = {
     paddingBottom: '20px',
     display: 'flex',
   },
-  primaryText: {
-    fontWeight: '500',
-    fontFamily: '"Roboto", sans-serif',
-  },
   menu: {
     width: '396px',
   },
@@ -102,18 +98,11 @@ function Item(props) {
       className={`${classes.item} ${selected && classes.selectedItem}`}
       open={open}
       onClick={() => onClick(props)}
-      disabled={disabled}
-    >
+      disabled={disabled}>
       <div {...className}>{icon}</div>
 
       <div {...styles.content}>
-        <ListItemText
-          classes={{
-            primary: classes.primaryText,
-          }}
-          primary={title}
-          secondary={description}
-        />
+        <ListItemText primary={title} secondary={description} />
       </div>
     </MenuItem>
   );
@@ -169,8 +158,7 @@ class PaymentMenu extends PureComponent {
         onClose={onClose}
         classes={{
           paper: classes.menu,
-        }}
-      >
+        }}>
         {paymentButtons &&
           paymentButtons.map((paymentButton, index) => (
             <Fragment key={index}>

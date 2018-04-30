@@ -132,8 +132,7 @@ class AirfillWidget extends Component {
                 display: 'flex',
                 justifyContent: 'center',
                 margin: 64,
-              })}
-            >
+              })}>
               <CircularProgress />
             </div>
           )}

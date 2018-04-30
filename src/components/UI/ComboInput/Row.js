@@ -30,8 +30,7 @@ export default function Row({ operatorProps, isActive, icon, content }) {
   return (
     <div
       {...operatorProps}
-      {...css([styles.container, isActive && styles.active])}
-    >
+      {...css([styles.container, isActive && styles.active])}>
       <div {...styles.icon}>{icon}</div>
       <div {...styles.content}>{content}</div>
     </div>

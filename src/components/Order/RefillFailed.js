@@ -74,8 +74,7 @@ Thanks!`);
         <a
           href={`https://live.blockcypher.com/btc/address/${refundAddress}/`}
           target="_blank"
-          rel="noopener noreferrer"
-        >
+          rel="noopener noreferrer">
           Click here to see how it&apos;s going
         </a>{' '}
         or <a href={mailto}>contact support@birefill.com</a>.
@@ -115,8 +114,7 @@ Thanks!`);
                 order.payment.address
               }`}
               target="_blank"
-              {...styles.help}
-            >
+              {...styles.help}>
               Click here for more information
             </a>
           </div>

@@ -36,8 +36,7 @@ function AmountCollapsed({ history, amount, operator }) {
   return (
     <Collapsed
       onClick={() => history.push('/refill/selectAmount')}
-      type="amount"
-    >
+      type="amount">
       <div {...styles.container}>
         <div {...styles.icon}>
           <Icon />

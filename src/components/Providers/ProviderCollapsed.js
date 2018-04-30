@@ -36,8 +36,7 @@ function ProviderCollapsed({ operator, history, darken }) {
     <Collapsed
       darken={darken}
       onClick={() => history.push('/refill/selectProvider')}
-      type="provider"
-    >
+      type="provider">
       {operator && (
         <div {...styles.container}>
           <div {...styles.icon}>

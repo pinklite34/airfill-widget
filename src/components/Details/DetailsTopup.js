@@ -243,8 +243,7 @@ class DetailsTopup extends PureComponent {
           <Field
             label="E-mail address"
             hint="The email address will receive order status updates"
-            {...styles.field}
-          >
+            {...styles.field}>
             <Input
               onChange={e =>
                 setEmail({
@@ -268,8 +267,7 @@ class DetailsTopup extends PureComponent {
           raised
           disabled={!this.isComplete() || isLoading}
           onClick={this.createOrder}
-          className={`${styles.button}`}
-        >
+          className={`${styles.button}`}>
           {isLoading ? (
             <CircularProgress
               classes={classes}

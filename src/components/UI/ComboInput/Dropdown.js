@@ -98,8 +98,7 @@ const Dropdown = ({ getItemProps, countryList, items, highlightedIndex }) => {
                   <SectionTitle
                     key={item.key}
                     style={style}
-                    {...styles.sectionTitle}
-                  >
+                    {...styles.sectionTitle}>
                     {item.title}
                   </SectionTitle>
                 );

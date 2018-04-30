@@ -6,7 +6,10 @@ import Error from './error.svg';
 import { orderProp, paymentStatusProp } from '../../lib/prop-types';
 
 const PaymentError = props => {
-  const { order, paymentStatus: { message = '' } } = props;
+  const {
+    order,
+    paymentStatus: { message = '' },
+  } = props;
 
   return (
     <div>
