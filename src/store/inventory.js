@@ -56,10 +56,10 @@ export const selectCountryList = state => {
     return [];
   }
 
-  const countries = toArray(inventory);
+  const countries = toArray(inventory).sort(sortBy('name'));
   const remaining = getMissingCountries(countries);
 
-  return [...countries, ...remaining].sort(sortBy('name'));
+  return [...countries, ...remaining];
 };
 
 export const selectCountry = state => {
@@ -69,10 +69,10 @@ export const selectCountry = state => {
   if (inventory && selected) {
     // inventory contains selected country
     if (selected in inventory) {
-      return inventory[selected];
+      return inventory.result[selected];
     } else {
       // inventory does not contain the country, grab it from missing countries
-      return getMissingCountries(toArray(inventory)).find(
+      return getMissingCountries(toArray(inventory).sort(sortBy('name'))).find(
         x => x.alpha2 === selected
       );
     }

@@ -13,16 +13,18 @@ const styles = {
   `,
 };
 
-export default function Flag({ country }) {
-  return (
-    <img
-      src={flags[country] || defaultFlag}
-      alt={country}
-      className={styles.image}
-    />
-  );
-}
+const Flag = ({ country }) => {
+  let flag;
+
+  try {
+    flag = require('flag-icons/flags/flags-iso/flat/24/' + country + '.png');
+  } catch (ex) {}
+
+  return <img src={flag || defaultFlag} alt={country} {...styles.image} />;
+};
 
 Flag.propTypes = {
   country: PropTypes.string,
 };
+
+export default Flag;
