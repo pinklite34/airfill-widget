@@ -94,6 +94,11 @@ const loadOperator = createLoadAction({
 });
 
 export const setOperator = operatorSlug => (dispatch, getState) => {
+  // prevent acccident if we do setOperator(operator)
+  if (typeof operatorSlug === 'object') {
+    operatorSlug = operatorSlug.slug;
+  }
+
   dispatch(setAmount(''));
   return dispatch(
     loadOperator({ operatorSlug, uri: `/inventory/${operatorSlug}` })
