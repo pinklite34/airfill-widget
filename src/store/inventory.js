@@ -3,6 +3,8 @@ import {
   createSingleResultSelector,
 } from '../lib/rest-helpers';
 
+import { getMissingCountries } from '../lib/countries';
+
 const sortBy = (field, reverse, primer) => {
   const key = x => (primer ? primer(x[field]) : x[field]);
   return (a, b) => {
@@ -53,13 +55,27 @@ export const selectCountryList = state => {
   if (!inventory) {
     return [];
   }
-  return toArray(inventory).sort(sortBy('name'));
+
+  const countries = toArray(inventory).sort(sortBy('name'));
+  const remaining = getMissingCountries(countries);
+
+  return [...countries, ...remaining];
 };
 
 export const selectCountry = state => {
-  const inventory = selectInventory(state);
-  if (inventory.result && state.airfillWidget.inventory.selectedCountry) {
-    return inventory.result[state.airfillWidget.inventory.selectedCountry];
+  const inventory = selectInventory(state).result;
+  const selected = state.airfillWidget.inventory.selectedCountry;
+
+  if (inventory && selected) {
+    // inventory contains selected country
+    if (selected in inventory) {
+      return inventory.result[selected];
+    } else {
+      // inventory does not contain the country, grab it from missing countries
+      return getMissingCountries(toArray(inventory).sort(sortBy('name'))).find(
+        x => x.alpha2 === selected
+      );
+    }
   }
   return null;
 };
