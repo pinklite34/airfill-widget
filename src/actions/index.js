@@ -196,7 +196,7 @@ const prefillNumber = number => (dispatch, getState) => {
   }
 };
 
-export const init = ({ defaultNumber, shouldLookupLocation = true }) => (
+export const init = ({ defaultNumber, shouldLookupLocation = true } = {}) => (
   dispatch,
   getState
 ) => {
