@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'glamor';
+import { css } from 'react-emotion';
 
 import { PUSHER_API_KEY } from './constants';
 
@@ -11,12 +11,12 @@ const baseUrl =
   process.env.NODE_ENV === 'development' ? '/api' : 'https://api.bitrefill.com';
 
 const styles = {
-  textIcon: css({
-    fontSize: '12px !important',
-  }),
-  subtitle: css({
-    fontSize: '12px !important',
-  }),
+  textIcon: css`
+    font-size: 12px !important;
+  `,
+  subtitle: css`
+    font-size: 12px !important;
+  `,
 };
 
 function openWindow(method, order) {
@@ -48,7 +48,7 @@ function openWindow(method, order) {
 }
 
 function PaymentMethodTextIcon({ children }) {
-  return <p {...styles.textIcon}>{children}</p>;
+  return <p className={styles.textIcon}>{children}</p>;
 }
 
 PaymentMethodTextIcon.propTypes = {
@@ -60,7 +60,7 @@ function PaymentMethodDescription({ text, subtext }) {
     <span>
       {text}
       <br />
-      <span {...styles.subtitle}>{subtext}</span>
+      <span className={styles.subtitle}>{subtext}</span>
     </span>
   );
 }
