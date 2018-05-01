@@ -1,6 +1,9 @@
 import worldCountries from '../countries.json';
 import { getCountryCallingCode } from 'libphonenumber-js';
 
+const selectInternational = countryList =>
+  countryList.find(x => x.name === 'International');
+
 // returns missing countries (no providers)
 export const getMissingCountries = countryList =>
   worldCountries
@@ -15,7 +18,7 @@ export const getMissingCountries = countryList =>
       return {
         ...country,
         countryCallingCodes: [code],
-        operators: {},
+        operators: selectInternational(countryList).operators,
         slug: country.name.toLowerCase().replace(' ', ''),
       };
     });
