@@ -47,7 +47,7 @@ $ yarn serve:dist
 import Widget from '@bitrefill/airfill-widget';
 
 render() {
-  return <Widget/>;
+  return <Widget />;
 }
 ```
 
@@ -64,4 +64,17 @@ const WidgetState = ({ operators, countryList }) => (
 );
 
 export default withWidget(WidgetState);
+```
+
+## Initialize widget before render
+
+```javascript
+import { initializeWidget } from '@bitrefill/airfill-widget';
+import { connect } from 'react-redux';
+
+const Component = ({ initializeWidget }) => {
+  initializeWidget(apiKey || 'key');
+}
+
+export default connect(null, { initializeWidget })(Component);
 ```
