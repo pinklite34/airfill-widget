@@ -69,7 +69,7 @@ export const selectCountry = state => {
   if (inventory && selected) {
     // inventory contains selected country
     if (selected in inventory) {
-      return inventory.result[selected];
+      return inventory[selected];
     } else {
       // inventory does not contain the country, grab it from missing countries
       return getMissingCountries(toArray(inventory).sort(sortBy('name'))).find(
