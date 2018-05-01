@@ -6,11 +6,19 @@ import SectionTitle from './SectionTitle';
 
 const styles = {
   title: css`
+<<<<<<< HEAD
     margin-bottom: 0px;
   `,
   hint: css`
     font-size: 12px;
     margin: -12px 0 8px;
+=======
+    margin-bottom: 0;
+  `,
+  hint: css`
+    font-size: 12px;
+    margin: 4px 0 8px;
+>>>>>>> field and flag components use emotion
   `,
   error: css`
     color: #d65c5c;
