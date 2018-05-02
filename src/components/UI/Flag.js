@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { css } from 'glamor';
+import flags from './flags';
 
 import defaultFlag from '../../unknown-flag.png';
 
@@ -12,15 +13,9 @@ const styles = {
   }),
 };
 
-const Flag = ({ country }) => {
-  let flag;
-
-  try {
-    flag = require('flag-icons/flags/flags-iso/flat/24/' + country + '.png');
-  } catch (ex) {}
-
-  return <img src={flag || defaultFlag} alt={country} {...styles.image} />;
-};
+const Flag = ({ country }) => (
+  <img src={flags[country] || defaultFlag} alt={country} {...styles.image} />
+);
 
 Flag.propTypes = {
   country: PropTypes.string,
