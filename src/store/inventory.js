@@ -56,10 +56,10 @@ export const selectCountryList = state => {
     return [];
   }
 
-  const countries = toArray(inventory).sort(sortBy('name'));
+  const countries = toArray(inventory);
   const remaining = getMissingCountries(countries);
 
-  return [...countries, ...remaining];
+  return [...countries, ...remaining].sort(sortBy('name'));
 };
 
 export const selectCountry = state => {
