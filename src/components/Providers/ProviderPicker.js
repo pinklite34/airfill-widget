@@ -20,9 +20,27 @@ import {
   fnProp,
 } from '../../lib/prop-types';
 
-const customLabels = {
-  Mobile: 'Mobile phone refill',
-  other: 'Other providers',
+const getDisplayText = key => {
+  const lower = key ? key.toLowerCase() : null;
+
+  switch (lower) {
+    case 'pin':
+      return 'Phone refill vouchers / PINs';
+    case 'voucher':
+      return 'Vouchers';
+    case 'dth':
+      return 'Digital Television (DTH)';
+    case 'data':
+      return 'Data bundles';
+    case 'sms':
+      return 'SMS bundles';
+    case 'other':
+      return 'Other products';
+    case null:
+      return 'Prepaid phones';
+    default:
+      return key + ' Refill';
+  }
 };
 
 class ProviderPicker extends PureComponent {
@@ -80,7 +98,7 @@ class ProviderPicker extends PureComponent {
           {Object.keys(operators).map(key => (
             <ProviderGrid
               key={key}
-              title={customLabels[key] || `${key} refill`}
+              title={getDisplayText(key)}
               providers={operators[key]}
               onSelect={this.onSelectOperator}
             />
