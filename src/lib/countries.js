@@ -23,6 +23,7 @@ export const getMissingCountries = countryList => {
         countryCallingCodes: [code],
         operators,
         slug: country.name.toLowerCase().replace(' ', ''),
+        virtual: true,
       };
     });
 };

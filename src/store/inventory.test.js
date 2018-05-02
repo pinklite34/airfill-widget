@@ -103,7 +103,9 @@ describe('selectors', () => {
 
   describe('selectCountryList', () => {
     it('returns an alphabetically sorted array of countries', () => {
-      expect(selectCountryList(baseState)).toEqual([germany, sweden]);
+      expect(
+        selectCountryList(baseState).filter(country => !country.virtual)
+      ).toEqual([germany, sweden]);
     });
   });
 
