@@ -86,7 +86,7 @@ describe('selectors', () => {
       viber: {
         name: 'Viber',
         slug: 'viber',
-        type: 'VOIP',
+        type: 'voip',
       },
     },
   };
@@ -103,7 +103,9 @@ describe('selectors', () => {
 
   describe('selectCountryList', () => {
     it('returns an alphabetically sorted array of countries', () => {
-      expect(selectCountryList(baseState)).toEqual([germany, sweden]);
+      expect(
+        selectCountryList(baseState).filter(country => !country.virtual)
+      ).toEqual([germany, sweden]);
     });
   });
 
@@ -143,8 +145,8 @@ describe('selectors', () => {
 
     it('returns an object with operators grouped by type', () => {
       const groupedOperators = {
-        Mobile: [germany.operators['atg-mobile-germany']],
-        VOIP: [germany.operators['viber']],
+        mobile: [germany.operators['atg-mobile-germany']],
+        voip: [germany.operators['viber']],
       };
 
       expect(selectAvailableOperators(baseState)).toEqual(groupedOperators);
@@ -188,7 +190,7 @@ describe('selectors', () => {
       };
 
       const sortedOperators = {
-        Mobile: [
+        mobile: [
           operators['o2-germany'],
           operators['e-plus-germany'],
           germany.operators['atg-mobile-germany'],
