@@ -98,7 +98,7 @@ export const selectAvailableOperators = state => {
   return operators
     .sort(sortBy('stats', true, stats => (stats ? stats.popularity : -1)))
     .reduce((mem, operator) => {
-      const type = operator.type || 'Mobile';
+      const type = operator.type ? operator.type.toLowerCase() : 'mobile';
       mem[type] = mem[type] || [];
       mem[type].push(operator);
       return mem;
