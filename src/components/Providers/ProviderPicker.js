@@ -20,6 +20,8 @@ import {
   fnProp,
 } from '../../lib/prop-types';
 
+const displayOrder = [null, 'pin'];
+
 const getDisplayText = key => {
   const lower = key ? key.toLowerCase() : null;
 
@@ -95,14 +97,22 @@ class ProviderPicker extends PureComponent {
         </ActiveSection>
       ) : (
         <ActiveSection>
-          {Object.keys(operators).map(key => (
-            <ProviderGrid
-              key={key}
-              title={getDisplayText(key)}
-              providers={operators[key]}
-              onSelect={this.onSelectOperator}
-            />
-          ))}
+          {Object.keys(operators)
+            .sort((a, b) => {
+              if (a.toLowerCase() === 'other') {
+                return 1;
+              }
+
+              return displayOrder.indexOf(a) - displayOrder.indexOf(b);
+            })
+            .map(key => (
+              <ProviderGrid
+                key={key}
+                title={getDisplayText(key)}
+                providers={operators[key]}
+                onSelect={this.onSelectOperator}
+              />
+            ))}
         </ActiveSection>
       )
     ) : null;
