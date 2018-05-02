@@ -72,7 +72,7 @@ export const selectCountry = state => {
       return inventory[selected];
     } else {
       // inventory does not contain the country, grab it from missing countries
-      return getMissingCountries(toArray(inventory).sort(sortBy('name'))).find(
+      return getMissingCountries(toArray(inventory)).find(
         x => x.alpha2 === selected
       );
     }
