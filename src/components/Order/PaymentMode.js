@@ -12,7 +12,6 @@ import { CircularProgress } from 'material-ui/Progress';
 import Tooltip from 'material-ui/Tooltip';
 
 import BitcoinAddress from '../UI/BitcoinAddress';
-import Info from './info.svg';
 import OrderHeader from '../UI/OrderHeader';
 import PaymentLayout from './PaymentLayout';
 
@@ -337,12 +336,7 @@ class PaymentMode extends PureComponent {
           }}
         />
 
-        <OrderHeader
-          order={order}
-          title={title}
-          subtitle={subtitle}
-          icon={<Info />}
-        />
+        <OrderHeader order={order} title={title} subtitle={subtitle} />
 
         <PaymentLayout {...this.props}>
           <div>
