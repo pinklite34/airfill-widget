@@ -7,6 +7,7 @@ baseConfig.output.filename = 'widget.js';
 
 const config = Object.assign({}, baseConfig, {
   entry: './src/index',
+  mode: 'development',
   cache: true,
   devtool: 'cheap-module-source-map',
   plugins: [new webpack.NoEmitOnErrorsPlugin()],
