@@ -13,7 +13,7 @@ export default function PaymentMethod({ config }) {
       <Route path="/refill/selectReceipent" />
       <Route
         path="/refill/selectPayment"
-        render={props => <PaymentPicker {...props} {...config} />}
+        render={props => <PaymentPicker {...props} config={config} />}
       />
       <Route component={PaymentCollapsed} />
     </Switch>

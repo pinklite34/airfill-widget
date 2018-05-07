@@ -10,11 +10,9 @@ import {
   selectEmail,
   selectAmount,
   selectOperator,
-  selectPaymentMethod,
   selectCountry,
 } from '../../store';
 
-import { canAfford } from '../../lib/currency-helpers';
 import {
   historyProp,
   configProp,
@@ -109,7 +107,7 @@ class Receipent extends PureComponent {
     classes: PropTypes.object,
     number: numberProp,
     email: emailProp,
-    paymentMethod: PropTypes.string,
+    paymentMethod: PropTypes.object,
     country: countryProp,
   };
 
@@ -151,38 +149,8 @@ class Receipent extends PureComponent {
     );
   };
 
-  createOrder = () => {
-    const { amount, config, operator, paymentMethod } = this.props;
-
-    // pick all affordable payment methods
-    const methods = config.paymentButtons.filter(btn =>
-      canAfford({
-        amount: amount,
-        accountBalance: config.accountBalance,
-        packages: operator.result.packages,
-        paymentMode: btn.paymentMode,
-        requireAccountBalance: btn.requireAccountBalance,
-        operator: operator.result,
-      })
-    );
-
-    // pick last used or first
-    const method =
-      methods.find(btn => btn.paymentMode === paymentMethod) || methods[0];
-
-    this.sendOrder(method);
-  };
-
-  sendOrder = method => {
-    const {
-      config,
-      createOrder,
-      history,
-      amount,
-      number,
-      country,
-      trigger,
-    } = this.props;
+  continue = () => {
+    const { history, amount, number, country } = this.props;
 
     let error;
 
@@ -207,15 +175,7 @@ class Receipent extends PureComponent {
       return;
     }
 
-    createOrder({
-      ...config.orderOptions,
-      paymentMethod: method.paymentMode,
-    })
-      .then(() => {
-        history.push('/refill/selectPayment');
-        trigger();
-      })
-      .catch(error => this.setState({ isLoading: false, error }));
+    history.push('/refill/selectPayment');
   };
 
   render() {
@@ -273,7 +233,7 @@ class Receipent extends PureComponent {
           color="primary"
           raised
           disabled={!this.isComplete() || isLoading}
-          onClick={this.createOrder}
+          onClick={this.continue}
           className={`${styles.button}`}>
           {isLoading ? (
             <CircularProgress
@@ -296,7 +256,6 @@ export default connect(
     email: selectEmail(state),
     amount: selectAmount(state),
     operator: selectOperator(state),
-    paymentMethod: selectPaymentMethod(state),
     country: selectCountry(state),
   }),
   {
