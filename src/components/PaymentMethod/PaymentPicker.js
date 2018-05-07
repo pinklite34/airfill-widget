@@ -5,6 +5,7 @@ import { withRouter } from 'react-router';
 import { historyProp } from '../../lib/prop-types';
 
 import PaymentItem from './PaymentItem';
+import Button from 'material-ui/Button';
 
 const Container = styled('div')`
   padding: 24px;
@@ -16,17 +17,42 @@ const MethodContainer = styled('div')`
   overflow-y: scroll;
 `;
 
-const PaymentMethod = ({ history, paymentButtons }) => (
-  <Container>
-    <button onClick={() => history.push('/refill/payment')}>final step</button>
+class PaymentMethod extends React.Component {
+  state = {
+    method: null,
+  };
 
-    <MethodContainer>
-      {paymentButtons.map(method => (
-        <PaymentItem key={method.title} {...method} />
-      ))}
-    </MethodContainer>
-  </Container>
-);
+  select = method =>
+    this.setState({
+      method,
+    });
+
+  render() {
+    const { history, paymentButtons } = this.props;
+
+    return (
+      <Container>
+        <MethodContainer>
+          {paymentButtons.map(method => (
+            <PaymentItem
+              key={method.title}
+              {...method}
+              onClick={() => this.select(method)}
+              selected={method === this.state.method}
+            />
+          ))}
+        </MethodContainer>
+
+        <Button
+          color="primary"
+          raised
+          onClick={() => history.push('/refill/payment')}>
+          Continue
+        </Button>
+      </Container>
+    );
+  }
+}
 
 PaymentMethod.propTypes = {
   history: historyProp,

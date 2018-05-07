@@ -6,8 +6,10 @@ const Container = styled('div')`
   width: 100%;
   height: 72px;
 
+  background-color: ${props => (props.selected ? '#d8d8d8' : '#fff')};
+
   &:hover {
-    background-color: #fafafa;
+    background-color: ${props => (props.selected ? '#d8d8d8' : '#fafafa')};
   }
 
   display: flex;
@@ -39,8 +41,8 @@ const Title = styled('span')`
 
 const Description = styled('span')``;
 
-const PaymentItem = ({ icon, title, description }) => (
-  <Container>
+const PaymentItem = ({ icon, title, description, onClick, selected }) => (
+  <Container onClick={onClick} selected={selected}>
     <Icon>{icon}</Icon>
     <TextContainer>
       <Title>{title}</Title>
@@ -53,6 +55,8 @@ PaymentItem.propTypes = {
   icon: PropTypes.any,
   title: PropTypes.string.isRequired,
   description: PropTypes.any.isRequired,
+  onClick: PropTypes.func,
+  selected: PropTypes.bool,
 };
 
 export default PaymentItem;
