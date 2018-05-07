@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import { compose } from 'recompose';
 import { css } from 'glamor';
 import { selectOperator, selectAmount } from '../../store';
 import { setAmount } from '../../actions';
@@ -11,6 +13,7 @@ import {
   operatorResultProp,
   amountProp,
   fnProp,
+  historyProp,
 } from '../../lib/prop-types';
 
 import Card from 'material-ui/Card';
@@ -23,6 +26,7 @@ import SectionTitle from '../UI/SectionTitle';
 import AmountPackage from './AmountPackage';
 import AmountRange from './AmountRange';
 import Info from '../UI/info.svg';
+import { Button } from 'material-ui';
 
 const styles = {
   packages: css({
@@ -66,6 +70,7 @@ class AmountPicker extends PureComponent {
     operator: operatorResultProp,
     amount: amountProp,
     setAmount: fnProp,
+    history: historyProp,
   };
 
   componentDidMount() {
@@ -131,7 +136,7 @@ class AmountPicker extends PureComponent {
   };
 
   render() {
-    const { amount, operator, setAmount, config } = this.props;
+    const { amount, operator, setAmount, config, history } = this.props;
     const { billingCurrency } = config;
 
     return operator.isLoading ||
@@ -167,17 +172,26 @@ class AmountPicker extends PureComponent {
             onChange={setAmount}
           />
         )}
+        <Button
+          color="primary"
+          raised
+          onClick={() => history.push('/refill/selectReceipent')}>
+          Continue
+        </Button>
       </ActiveSection>
     );
   }
 }
 
-export default connect(
-  state => ({
-    operator: selectOperator(state),
-    amount: selectAmount(state),
-  }),
-  {
-    setAmount,
-  }
+export default compose(
+  withRouter,
+  connect(
+    state => ({
+      operator: selectOperator(state),
+      amount: selectAmount(state),
+    }),
+    {
+      setAmount,
+    }
+  )
 )(AmountPicker);

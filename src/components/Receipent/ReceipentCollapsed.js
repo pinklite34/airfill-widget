@@ -40,13 +40,7 @@ function ReceipentCollapsed({ operator, history, darken }) {
       type="provider">
       {operator && (
         <div {...styles.container}>
-          <div {...styles.icon}>
-            <img
-              src={operator.logoImage}
-              alt={operator.name}
-              {...styles.logo}
-            />
-          </div>
+          <div {...styles.icon} />
           {'Receipent Collapsed'}
         </div>
       )}

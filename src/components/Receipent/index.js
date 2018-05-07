@@ -12,7 +12,7 @@ export default function Receipent({ config }) {
       <Route path="/refill/selectAmount" />
       <Route
         path="/refill/selectReceipent"
-        render={props => <ReceipentPicker {...props} {...config} />}
+        render={props => <ReceipentPicker {...props} config={config} />}
       />
       <Route component={ReceipentCollapsed} />
     </Switch>
