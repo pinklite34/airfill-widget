@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'react-emotion';
+import { compose } from 'recompose';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { historyProp } from '../../lib/prop-types';
 
 import PaymentItem from './PaymentItem';
 import Button from 'material-ui/Button';
+import { selectPaymentMethod } from '../../store';
+import { setPaymentMethod } from '../../actions';
 
 const Container = styled('div')`
   padding: 24px;
@@ -18,17 +22,10 @@ const MethodContainer = styled('div')`
 `;
 
 class PaymentMethod extends React.Component {
-  state = {
-    method: null,
-  };
-
-  select = method =>
-    this.setState({
-      method,
-    });
+  select = method => this.props.setPaymentMethod(method);
 
   render() {
-    const { history, paymentButtons } = this.props;
+    const { history, paymentButtons, selectedMethod } = this.props;
 
     return (
       <Container>
@@ -38,7 +35,7 @@ class PaymentMethod extends React.Component {
               key={method.title}
               {...method}
               onClick={() => this.select(method)}
-              selected={method === this.state.method}
+              selected={method === selectedMethod}
             />
           ))}
         </MethodContainer>
@@ -57,6 +54,18 @@ class PaymentMethod extends React.Component {
 PaymentMethod.propTypes = {
   history: historyProp,
   paymentButtons: PropTypes.array.isRequired,
+  selectedMethod: PropTypes.object,
+  setPaymentMethod: PropTypes.func.isRequired,
 };
 
-export default withRouter(PaymentMethod);
+export default compose(
+  withRouter,
+  connect(
+    state => ({
+      selectedMethod: selectPaymentMethod(state),
+    }),
+    {
+      setPaymentMethod,
+    }
+  )
+)(PaymentMethod);

@@ -27,6 +27,11 @@ export default (state, action) => {
         selectedCountry: action.payload,
       };
     }
+    case 'SET_PAYMENT_METHOD':
+      return {
+        ...state,
+        selectedMethod: action.payload,
+      };
     case 'LOAD_OPERATOR': {
       return {
         ...state,
@@ -115,3 +120,5 @@ export const selectSelectedOperator = state => {
 
   return null;
 };
+
+export const selectPaymentMethod = state => console.log(state);
