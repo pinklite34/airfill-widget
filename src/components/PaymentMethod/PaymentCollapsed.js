@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { css } from 'glamor';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 
 import Collapsed from '../UI/Collapsed';
-import { selectSelectedOperator } from '../../store';
+import { selectSelectedOperator, selectPaymentMethod } from '../../store';
 import { historyProp, darkenProp, operatorProp } from '../../lib/prop-types';
 
 const styles = {
@@ -31,7 +32,7 @@ const styles = {
   }),
 };
 
-function PaymentCollapsed({ operator, history, darken }) {
+function PaymentCollapsed({ operator, history, darken, selectedMethod }) {
   return (
     <Collapsed
       darken={darken}
@@ -46,7 +47,7 @@ function PaymentCollapsed({ operator, history, darken }) {
               {...styles.logo}
             />
           </div>
-          {'Payment Collapsed'}
+          {selectedMethod.title}
         </div>
       )}
     </Collapsed>
@@ -57,10 +58,12 @@ PaymentCollapsed.propTypes = {
   operator: operatorProp,
   history: historyProp,
   darken: darkenProp,
+  selectedMethod: PropTypes.object.isRequired,
 };
 
 export default withRouter(
   connect(state => ({
     operator: selectSelectedOperator(state),
+    selectedMethod: selectPaymentMethod(state),
   }))(PaymentCollapsed)
 );

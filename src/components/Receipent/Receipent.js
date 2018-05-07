@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'react-emotion';
 import { css } from 'glamor';
 import { connect } from 'react-redux';
 
@@ -84,6 +85,10 @@ const styles = {
     fill: '#fff',
   }),
 };
+
+const Content = styled('div')`
+  padding: 16px;
+`;
 
 const muiStyles = {
   primaryColor: {
@@ -228,40 +233,42 @@ class Receipent extends PureComponent {
             <div>{error.message || error}</div>
           </div>
         )}
-        {this.showNumber && (
-          <Field label={numberLabel} hint={numberLabel} {...styles.field}>
-            <Input
-              onChange={e => setNumber(e.target.value)}
-              type={this.isAccount ? 'text' : 'tel'}
-              value={number}
-              fullWidth
-              className={`${styles.input}`}
-            />
-          </Field>
-        )}
-        {showEmail && (
-          <Field
-            label="E-mail address"
-            hint="The email address will receive order status updates"
-            {...styles.field}>
-            <Input
-              onChange={e =>
-                setEmail({
-                  value: e.target.value,
-                  inFocus: true,
-                })
-              }
-              onBlur={e =>
-                setEmail({
-                  value: e.target.value,
-                  inFocus: false,
-                })
-              }
-              value={email.value}
-              className={`${styles.input}`}
-            />
-          </Field>
-        )}
+        <Content>
+          {this.showNumber && (
+            <Field label={numberLabel} hint={numberLabel} {...styles.field}>
+              <Input
+                onChange={e => setNumber(e.target.value)}
+                type={this.isAccount ? 'text' : 'tel'}
+                value={number}
+                fullWidth
+                className={`${styles.input}`}
+              />
+            </Field>
+          )}
+          {showEmail && (
+            <Field
+              label="E-mail address"
+              hint="The email address will receive order status updates"
+              {...styles.field}>
+              <Input
+                onChange={e =>
+                  setEmail({
+                    value: e.target.value,
+                    inFocus: true,
+                  })
+                }
+                onBlur={e =>
+                  setEmail({
+                    value: e.target.value,
+                    inFocus: false,
+                  })
+                }
+                value={email.value}
+                className={`${styles.input}`}
+              />
+            </Field>
+          )}
+        </Content>
         <Button
           color="primary"
           raised
