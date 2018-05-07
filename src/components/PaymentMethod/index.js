@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 import PaymentCollapsed from './PaymentCollapsed';
-import PaymentMethodPicker from './PaymentMethod';
+import PaymentPicker from './PaymentPicker';
 import { configProp } from '../../lib/prop-types';
 
 export default function PaymentMethod({ config }) {
@@ -13,7 +13,7 @@ export default function PaymentMethod({ config }) {
       <Route path="/refill/selectReceipent" />
       <Route
         path="/refill/selectPayment"
-        render={props => <PaymentMethodPicker {...props} {...config} />}
+        render={props => <PaymentPicker {...props} {...config} />}
       />
       <Route component={PaymentCollapsed} />
     </Switch>
