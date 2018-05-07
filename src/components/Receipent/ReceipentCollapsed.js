@@ -5,8 +5,13 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 
 import Collapsed from '../UI/Collapsed';
-import { selectSelectedOperator } from '../../store';
-import { historyProp, darkenProp, operatorProp } from '../../lib/prop-types';
+import { selectSelectedOperator, selectNumber } from '../../store';
+import {
+  historyProp,
+  darkenProp,
+  operatorProp,
+  numberProp,
+} from '../../lib/prop-types';
 
 const styles = {
   container: css({
@@ -32,16 +37,16 @@ const styles = {
   }),
 };
 
-function ReceipentCollapsed({ operator, history, darken }) {
+function ReceipentCollapsed({ operator, history, number, darken }) {
   return (
     <Collapsed
       darken={darken}
       onClick={() => history.push('/refill/selectReceipent')}
-      type="provider">
+      type="receipent">
       {operator && (
         <div {...styles.container}>
           <div {...styles.icon} />
-          {'Receipent Collapsed'}
+          {number}
         </div>
       )}
     </Collapsed>
@@ -52,11 +57,13 @@ ReceipentCollapsed.propTypes = {
   operator: operatorProp,
   history: historyProp,
   darken: darkenProp,
+  number: numberProp,
 };
 
 export default compose(
   withRouter,
   connect(state => ({
     operator: selectSelectedOperator(state),
+    number: selectNumber(state),
   }))
 )(ReceipentCollapsed);
