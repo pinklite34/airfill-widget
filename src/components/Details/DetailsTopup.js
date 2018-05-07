@@ -207,7 +207,7 @@ class DetailsTopup extends PureComponent {
       paymentMethod: method.paymentMode,
     })
       .then(() => {
-        history.push('/refill/payment');
+        history.push('/refill/selectReceipent');
         trigger();
       })
       .catch(error => this.setState({ isLoading: false, error }));

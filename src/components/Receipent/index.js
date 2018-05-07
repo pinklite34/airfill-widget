@@ -1,25 +1,24 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
-
-import Payment from './Payment';
+import ReceipentCollapsed from './ReceipentCollapsed';
+import ReceipentPicker from './Receipent';
 import { configProp } from '../../lib/prop-types';
 
-export default function Order({ config }) {
+export default function Receipent({ config }) {
   return (
     <Switch>
       <Route path="/refill" exact />
       <Route path="/refill/selectProvider" />
       <Route path="/refill/selectAmount" />
-      <Route path="/refill/selectReceipent" />
-      <Route path="/refill/selectPayment" />
       <Route
-        path="/refill/payment"
-        render={props => <Payment {...props} {...config} />}
+        path="/refill/selectReceipent"
+        render={props => <ReceipentPicker {...props} {...config} />}
       />
+      <Route component={ReceipentCollapsed} />
     </Switch>
   );
 }
 
-Order.propTypes = {
+Receipent.propTypes = {
   config: configProp,
 };

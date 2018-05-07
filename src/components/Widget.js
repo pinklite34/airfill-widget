@@ -25,6 +25,8 @@ import Instructions from './Instructions';
 import Amount from './Amount';
 import Order from './Order';
 import Details from './Details';
+import Receipent from './Receipent';
+import Payment from './PaymentMethod';
 import getMethods from '../payment-methods';
 
 const theme = createMuiTheme({
@@ -117,6 +119,8 @@ class AirfillWidget extends Component {
               <Providers />
               <Amount config={config} />
               <Details config={config} />
+              <Receipent config={config} />
+              <Payment config={config} />
               <Order config={config} />
               {showInstructions && (
                 <Route
