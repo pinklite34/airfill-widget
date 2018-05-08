@@ -88,11 +88,10 @@ export default function getPaymentMethods({ currency, dispatch, ...props }) {
     },
     {
       title: 'Ether Transaction',
-      description: 'Currently offline', // 'Delivery after one confirmation',
+      description: 'Delivery after one confirmation',
       icon: <PaymentMethodTextIcon>{'ETH'}</PaymentMethodTextIcon>,
       requireAccountBalance: false,
       paymentMode: 'ethereum',
-      disabled: true,
     },
     {
       title: 'Dogecoin Transaction',
