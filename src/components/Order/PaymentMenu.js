@@ -72,17 +72,19 @@ function Item(props) {
     affordProps,
     requireAccountBalance,
     paymentMode,
+    disabled,
   } = props;
 
   if (typeof icon === 'string') {
     icon = <ImageIcon src={icon} />;
   }
 
-  const disabled = !canAfford({
-    ...affordProps,
-    requireAccountBalance,
-    paymentMode,
-  });
+  disabled =
+    !canAfford({
+      ...affordProps,
+      requireAccountBalance,
+      paymentMode,
+    }) || disabled;
   const className = noIcons ? styles.icon : {};
 
   if (typeof description === 'function') {
