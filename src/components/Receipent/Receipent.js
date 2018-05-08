@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'react-emotion';
-import { css } from 'glamor';
+import styled, { css } from 'react-emotion';
 import { connect } from 'react-redux';
 
 import { createOrder, setNumber, setEmail, trigger } from '../../actions';
@@ -29,70 +28,57 @@ import { isValidForCountry } from '../../lib/number-helpers';
 
 import Button from 'material-ui/Button';
 import Input from 'material-ui/Input';
-import { CircularProgress } from 'material-ui/Progress';
-import withStyles from 'material-ui/styles/withStyles';
 
 import Field from '../UI/Field';
-import Error from './error.svg';
+import ErrorIcon from './error.svg';
 
 const styles = {
-  title: css({
-    margin: 0,
-  }),
-  container: css({
-    backgroundColor: '#FAFAFA',
-    padding: '0 16px 16px',
-  }),
-  field: css({
-    flex: '1 0 250px',
-    margin: 0,
-    marginBottom: 24,
-  }),
-  input: css({
-    maxWidth: 250,
-    padding: '0 !important',
-    backgroundColor: '#fff',
-    margin: '4px -8px',
-    '& > input': {
-      padding: 8,
+  field: css`
+    flex: 1 0 250px;
+    margin: 0;
+    margin-bottom: 24;
+  `,
+  input: css`
+    max-width: 250;
+    padding: 0 !important;
+    background-color: #fff;
+    margin: 4px -8px;
+    & > input: {
+      padding: 8;
     },
-  }),
-  button: css({
-    color: '#fff !important',
-    width: 250,
-    height: 38,
-    marginBottom: 0,
-  }),
-  error: css({
-    backgroundColor: '#E1283C',
-    margin: '0 -16px 16px',
-    padding: 16,
-    color: '#fff',
-    fontWeight: 700,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    boxShadow: '0 1px 2px 0 rgba(0,0,0,.16)',
-    position: 'relative',
-    zIndex: 10,
-  }),
-  icon: css({
-    marginRight: 16,
-  }),
-  progressBar: css({
-    fill: '#fff',
-  }),
+  `,
+  button: css`
+    width: 250;
+    height: 38;
+    margin-bottom: 0;
+  `,
+  icon: css`
+    margin-right: 16;
+  `,
 };
+
+const Container = styled('div')`
+  background-color: #fafafa;
+  padding: 0 16px 16px;
+`;
 
 const Content = styled('div')`
   padding: 16px;
 `;
 
-const muiStyles = {
-  primaryColor: {
-    color: '#fff',
-  },
-};
+const Error = styled('div')`
+  background-color: #e1283c;
+  margin: 0 -16px 16px;
+  padding: 16;
+  color: #fff;
+  font-weight: 700;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+  position: relative;
+  z-index: 10;
+`;
 
 class Receipent extends PureComponent {
   static propTypes = {
@@ -179,29 +165,32 @@ class Receipent extends PureComponent {
   };
 
   render() {
-    const { config, setNumber, setEmail, classes, number, email } = this.props;
+    const { config, setNumber, setEmail, number, email } = this.props;
     const { error, isLoading } = this.state;
 
     const showEmail = !isValidEmail(config.orderOptions.email);
     const numberLabel = this.getNumberLabel();
 
     return (
-      <div {...styles.container}>
+      <Container>
         {error && (
-          <div {...styles.error}>
-            <Error fill="#fff" {...styles.icon} />
+          <Error>
+            <ErrorIcon fill="#fff" className={styles.icon} />
             <div>{error.message || error}</div>
-          </div>
+          </Error>
         )}
         <Content>
           {this.showNumber && (
-            <Field label={numberLabel} hint={numberLabel} {...styles.field}>
+            <Field
+              label={numberLabel}
+              hint={numberLabel}
+              className={styles.field}>
               <Input
                 onChange={e => setNumber(e.target.value)}
                 type={this.isAccount ? 'text' : 'tel'}
                 value={number}
                 fullWidth
-                className={`${styles.input}`}
+                className={styles.input}
               />
             </Field>
           )}
@@ -209,7 +198,7 @@ class Receipent extends PureComponent {
             <Field
               label="E-mail address"
               hint="The email address will receive order status updates"
-              {...styles.field}>
+              className={styles.field}>
               <Input
                 onChange={e =>
                   setEmail({
@@ -224,7 +213,7 @@ class Receipent extends PureComponent {
                   })
                 }
                 value={email.value}
-                className={`${styles.input}`}
+                className={styles.input}
               />
             </Field>
           )}
@@ -234,18 +223,10 @@ class Receipent extends PureComponent {
           raised
           disabled={!this.isComplete() || isLoading}
           onClick={this.continue}
-          className={`${styles.button}`}>
-          {isLoading ? (
-            <CircularProgress
-              classes={classes}
-              size={24}
-              className={`${styles.progressBar}`}
-            />
-          ) : (
-            'Continue'
-          )}
+          className={styles.button}>
+          Continue
         </Button>
-      </div>
+      </Container>
     );
   }
 }
@@ -264,4 +245,4 @@ export default connect(
     setEmail,
     trigger,
   }
-)(withStyles(muiStyles)(Receipent));
+)(Receipent);
