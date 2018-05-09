@@ -42,9 +42,9 @@ const styles = {
     max-width: 250;
     padding: 0 !important;
     background-color: #fff;
-    margin: 4px -8px;
+    margin-bottom: 24px;
     & > input: {
-      padding: 8;
+      padding: 8px;
     },
   `,
   button: css`
@@ -63,7 +63,7 @@ const Container = styled('div')`
 `;
 
 const Content = styled('div')`
-  padding: 16px;
+  padding-top: 16px;
 `;
 
 const Error = styled('div')`
@@ -99,7 +99,6 @@ class Receipent extends PureComponent {
 
   state = {
     error: null,
-    isLoading: false,
   };
 
   // if we should show number input at all
@@ -135,8 +134,8 @@ class Receipent extends PureComponent {
     );
   };
 
-  continue = () => {
-    const { history, amount, number, country } = this.props;
+  validate = () => {
+    const { amount, number, country } = this.props;
 
     let error;
 
@@ -153,20 +152,23 @@ class Receipent extends PureComponent {
     }
 
     this.setState({
-      isLoading: !error,
       error,
     });
 
-    if (error) {
-      return;
-    }
+    return !error;
+  };
 
-    history.push('/refill/selectPayment');
+  continue = () => {
+    const { history } = this.props;
+
+    if (this.validate()) {
+      history.push('/refill/selectPayment');
+    }
   };
 
   render() {
-    const { config, setNumber, setEmail, number, email } = this.props;
-    const { error, isLoading } = this.state;
+    const { config, setEmail, number, email, setNumber } = this.props;
+    const { error } = this.state;
 
     const showEmail = !isValidEmail(config.orderOptions.email);
     const numberLabel = this.getNumberLabel();
@@ -181,15 +183,11 @@ class Receipent extends PureComponent {
         )}
         <Content>
           {this.showNumber && (
-            <Field
-              label={numberLabel}
-              hint={numberLabel}
-              className={styles.field}>
+            <Field label={numberLabel} className={styles.field}>
               <Input
                 onChange={e => setNumber(e.target.value)}
                 type={this.isAccount ? 'text' : 'tel'}
                 value={number}
-                fullWidth
                 className={styles.input}
               />
             </Field>
@@ -221,7 +219,7 @@ class Receipent extends PureComponent {
         <Button
           color="primary"
           raised
-          disabled={!this.isComplete() || isLoading}
+          disabled={!this.isComplete()}
           onClick={this.continue}
           className={styles.button}>
           Continue
