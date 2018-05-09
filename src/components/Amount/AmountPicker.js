@@ -6,6 +6,8 @@ import { css } from 'glamor';
 import { selectOperator, selectAmount } from '../../store';
 import { setAmount } from '../../actions';
 
+import { isValidEmail } from '../../lib/email-validation';
+
 import { selectValidAmount } from '../../lib/amount-validation';
 import { getPrice, getDisplayName } from '../../lib/currency-helpers';
 import {
@@ -103,6 +105,19 @@ class AmountPicker extends PureComponent {
     }
   };
 
+  next = () => {
+    const { history, operator, config } = this.props;
+
+    const showEmail = !isValidEmail(config.orderOptions.email);
+    const showNumber = !operator.result || !operator.result.noNumber;
+
+    if (showEmail || showNumber) {
+      history.push('/refill/selectReceipent');
+    } else {
+      history.push('/refill/selectPayment');
+    }
+  };
+
   renderPackage = (pkg, i) => {
     const { amount, operator, setAmount, config } = this.props;
     const {
@@ -136,7 +151,7 @@ class AmountPicker extends PureComponent {
   };
 
   render() {
-    const { amount, operator, setAmount, config, history } = this.props;
+    const { amount, operator, setAmount, config } = this.props;
     const { billingCurrency } = config;
 
     return operator.isLoading ||
@@ -172,10 +187,7 @@ class AmountPicker extends PureComponent {
             onChange={setAmount}
           />
         )}
-        <Button
-          color="primary"
-          raised
-          onClick={() => history.push('/refill/selectReceipent')}>
+        <Button color="primary" raised onClick={this.next}>
           Continue
         </Button>
       </ActiveSection>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router';
+import { Switch, Route } from 'react-router';
 import { connect } from 'react-redux';
 
 import ReceipentCollapsed from './ReceipentCollapsed';
@@ -19,14 +19,11 @@ function Receipent({ config, operator }) {
       <Route path="/refill" exact />
       <Route path="/refill/selectProvider" />
       <Route path="/refill/selectAmount" />
-      {show && (
-        <Route
-          path="/refill/selectReceipent"
-          render={props => <ReceipentPicker {...props} config={config} />}
-        />
-      )}
+      <Route
+        path="/refill/selectReceipent"
+        render={props => <ReceipentPicker {...props} config={config} />}
+      />
       {show && <Route component={ReceipentCollapsed} />}
-      {!show && <Redirect to="/refill/selectPayment" />}
     </Switch>
   );
 }

@@ -4,7 +4,7 @@ import styled from 'react-emotion';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { historyProp, configProp } from '../../lib/prop-types';
+import { historyProp, configProp, amountProp } from '../../lib/prop-types';
 import { CircularProgress } from 'material-ui/Progress';
 
 import PaymentItem from './PaymentItem';
@@ -25,6 +25,8 @@ import {
   trigger,
 } from '../../actions';
 
+import { canAfford } from '../../lib/currency-helpers';
+
 const Container = styled('div')``;
 
 const MethodContainer = styled('div')`
@@ -44,6 +46,27 @@ class PaymentMethod extends React.Component {
   state = {
     isLoading: false,
   };
+
+  constructor(props) {
+    super(props);
+
+    // pick first affordable payment method
+    /* const methods = props.config.paymentButtons.filter(btn =>
+      canAfford({
+        amount: props.amount,
+        btcPrice: Number(props.order.btcPrice),
+        accountBalance: props.accountBalance,
+        paymentMode: btn.paymentMode,
+        requireAccountBalance: btn.requireAccountBalance,
+      })
+    );
+
+    console.log('first affordable', methods[0]);
+
+    this.select(methods[0]); */
+
+    console.log(props);
+  }
 
   select = method => this.props.setPaymentMethod(method);
 
@@ -118,6 +141,7 @@ PaymentMethod.propTypes = {
   config: configProp,
   createOrder: PropTypes.func.isRequired,
   trigger: PropTypes.func.isRequired,
+  amount: amountProp,
 };
 
 export default compose(
