@@ -25,14 +25,15 @@ import {
   trigger,
 } from '../../actions';
 
-const Container = styled('div')`
-  padding: 24px;
-`;
+const Container = styled('div')``;
 
 const MethodContainer = styled('div')`
-  max-height: ${72 * 4}px;
+  @media (min-width: 460px) {
+    max-height: ${72 * 4}px;
+    overflow-y: scroll;
+  }
+
   width: 100%;
-  overflow-y: scroll;
 `;
 
 class PaymentMethod extends React.Component {
