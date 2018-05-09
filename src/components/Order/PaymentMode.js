@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import styled, { css as emotionCss } from 'react-emotion';
 
 import { connect } from 'react-redux';
 import { createOrder, setPaymentMethod } from '../../actions';
@@ -114,7 +115,15 @@ const styles = {
     color: '#3e8fe4',
     padding: 12,
   }),
+  paymentIcon: emotionCss`
+    width: 24px;
+    height: 24px;
+  `,
 };
+
+const PaymentIconContainer = styled('div')`
+  padding: 6px;
+`;
 
 class PaymentMode extends PureComponent {
   static propTypes = {
@@ -241,7 +250,11 @@ class PaymentMode extends PureComponent {
 
         <PaymentLayout {...this.props}>
           <div>
-            <div>Pay with</div>
+            <div>
+              <PaymentIconContainer>
+                <img src={paymentMethod.icon} className={styles.paymentIcon} />
+              </PaymentIconContainer>
+            </div>
             <div>
               <p>{paymentMethod.title}</p>
             </div>
