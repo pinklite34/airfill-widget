@@ -36,6 +36,10 @@ const MethodContainer = styled('div')`
   width: 100%;
 `;
 
+const ButtonContainer = styled('div')`
+  padding: 24px;
+`;
+
 class PaymentMethod extends React.Component {
   state = {
     isLoading: false,
@@ -84,21 +88,23 @@ class PaymentMethod extends React.Component {
           ))}
         </MethodContainer>
 
-        <Button
-          color="primary"
-          raised
-          disabled={isLoading}
-          onClick={this.createOrder}>
-          {isLoading ? (
-            <CircularProgress
-              // classes={classes}
-              size={24}
-              // className={`${styles.progressBar}`}
-            />
-          ) : (
-            'Continue'
-          )}
-        </Button>
+        <ButtonContainer>
+          <Button
+            color="primary"
+            raised
+            disabled={isLoading}
+            onClick={this.createOrder}>
+            {isLoading ? (
+              <CircularProgress
+                // classes={classes}
+                size={24}
+                // className={`${styles.progressBar}`}
+              />
+            ) : (
+              'Continue'
+            )}
+          </Button>
+        </ButtonContainer>
       </Container>
     );
   }
