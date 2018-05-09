@@ -19,6 +19,11 @@ const Container = styled('div')`
   text-decoration: none;
   box-sizing: border-box;
   text-align: left;
+
+  * {
+    ${props => (props.disabled ? 'color: gray !important' : '')};
+    ${props => (props.disabled ? 'filter: grayscale(100%)' : '')};
+  }
 `;
 
 const styles = {
@@ -61,12 +66,13 @@ const PaymentItem = ({
   notice,
   onClick,
   selected,
+  disabled,
 }) => {
   if (typeof icon === 'string') {
     icon = <img src={icon} className={styles.icon} />;
   }
   return (
-    <Container onClick={onClick} selected={selected}>
+    <Container onClick={onClick} selected={selected} disabled={disabled}>
       <IconContainer>{icon}</IconContainer>
       <TextContainer>
         <Title>{title}</Title>
@@ -84,6 +90,7 @@ PaymentItem.propTypes = {
   notice: PropTypes.string,
   onClick: PropTypes.func,
   selected: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 export default PaymentItem;

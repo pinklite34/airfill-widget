@@ -67,21 +67,20 @@ class PaymentMethod extends React.Component {
     this.select(methods[0]); */
     console.log(props);
 
-    props.config.paymentButtons.forEach(btn => {
-      const afford = canAfford({
-        mode: btn.paymentMode,
-        accountBalance: props.config.accountBalance,
-        amount: props.amount,
-        billingCurrency: props.config.billingCurrency,
-        operator: props.operator.result,
-      });
-      console.log(btn.title, afford);
-    });
-
     this.state = {
       isLoading: false,
     };
   }
+
+  canAfford = btn =>
+    canAfford({
+      mode: btn.paymentMode,
+      accountBalance: this.props.config.accountBalance,
+      amount: this.props.amount,
+      billingCurrency: this.props.config.billingCurrency,
+      operator: this.props.operator.result,
+      requireAccountBalance: btn.requireAccountBalance,
+    });
 
   select = method => this.props.setPaymentMethod(method);
 
@@ -116,14 +115,19 @@ class PaymentMethod extends React.Component {
     return (
       <Container>
         <MethodContainer>
-          {config.paymentButtons.map(method => (
-            <PaymentItem
-              key={method.title}
-              {...method}
-              onClick={() => this.select(method)}
-              selected={method === selectedMethod}
-            />
-          ))}
+          {config.paymentButtons.map(method => {
+            const affordable = this.canAfford(method);
+
+            return (
+              <PaymentItem
+                key={method.title}
+                {...method}
+                onClick={() => affordable && this.select(method)}
+                selected={method === selectedMethod}
+                disabled={!affordable}
+              />
+            );
+          })}
         </MethodContainer>
 
         <ButtonContainer>
