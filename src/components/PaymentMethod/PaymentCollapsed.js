@@ -26,13 +26,14 @@ const styles = {
       marginLeft: 0,
     },
   }),
-  logo: css({
-    maxWidth: 40,
-    maxHeight: 30,
-  }),
 };
 
 function PaymentCollapsed({ operator, history, darken, selectedMethod }) {
+  let icon = selectedMethod.icon;
+  if (typeof icon === 'string') {
+    icon = <img src={icon} />;
+  }
+
   return (
     <Collapsed
       darken={darken}
@@ -40,13 +41,7 @@ function PaymentCollapsed({ operator, history, darken, selectedMethod }) {
       type="provider">
       {operator && (
         <div {...styles.container}>
-          <div {...styles.icon}>
-            <img
-              src={operator.logoImage}
-              alt={operator.name}
-              {...styles.logo}
-            />
-          </div>
+          <div {...styles.icon}>{icon}</div>
           {selectedMethod.title}
         </div>
       )}

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'react-emotion';
+import styled, { css } from 'react-emotion';
 
 const Container = styled('div')`
   width: 100%;
@@ -21,12 +21,17 @@ const Container = styled('div')`
   text-align: left;
 `;
 
-const Icon = styled('div')`
-  max-width: 32px;
-  max-height: 32px;
-  min-width: 32px;
+const styles = {
+  icon: css`
+    max-width: 24px;
+  `,
+};
+
+const IconContainer = styled('div')`
+  width: 32px;
+
   display: inline-block;
-  padding: 6px;
+  padding: 12px;
 `;
 
 const TextContainer = styled('div')`
@@ -39,17 +44,24 @@ const Title = styled('span')`
   font-weight: 700;
 `;
 
-const Description = styled('span')``;
+const Description = styled('span')`
+  color: #777777;
+`;
 
-const PaymentItem = ({ icon, title, description, onClick, selected }) => (
-  <Container onClick={onClick} selected={selected}>
-    <Icon>{icon}</Icon>
-    <TextContainer>
-      <Title>{title}</Title>
-      <Description>{description}</Description>
-    </TextContainer>
-  </Container>
-);
+const PaymentItem = ({ icon, title, description, onClick, selected }) => {
+  if (typeof icon === 'string') {
+    icon = <img src={icon} className={styles.icon} />;
+  }
+  return (
+    <Container onClick={onClick} selected={selected}>
+      <IconContainer>{icon}</IconContainer>
+      <TextContainer>
+        <Title>{title}</Title>
+        <Description>{description}</Description>
+      </TextContainer>
+    </Container>
+  );
+};
 
 PaymentItem.propTypes = {
   icon: PropTypes.any,

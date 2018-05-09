@@ -4,8 +4,15 @@ import { css } from 'glamor';
 
 import { PUSHER_API_KEY } from './constants';
 
-import Coinbase from './coinbase.svg';
-import LocalBitcoins from './localbitcoins.png';
+import {
+  BitcoinIcon,
+  LitecoinIcon,
+  DogecoinIcon,
+  DashIcon,
+  LocalBitcoinsIcon,
+  CoinbaseIcon,
+  EthereumIcon,
+} from './assets';
 
 const baseUrl =
   process.env.NODE_ENV === 'development' ? '/api' : 'https://api.bitrefill.com';
@@ -75,35 +82,35 @@ export default function getPaymentMethods({ currency, dispatch, ...props }) {
     {
       title: 'Bitcoin Transaction',
       description: 'Delivery after one confirmation',
-      icon: <PaymentMethodTextIcon>{'BTC'}</PaymentMethodTextIcon>,
+      icon: BitcoinIcon,
       requireAccountBalance: false,
       paymentMode: 'bitcoin',
     },
     {
       title: 'Litecoin Transaction',
       description: 'Delivery after one confirmation',
-      icon: <PaymentMethodTextIcon>{'LTC'}</PaymentMethodTextIcon>,
+      icon: LitecoinIcon,
       requireAccountBalance: false,
       paymentMode: 'litecoin',
     },
     {
       title: 'Ether Transaction',
       description: 'Delivery after one confirmation',
-      icon: <PaymentMethodTextIcon>{'ETH'}</PaymentMethodTextIcon>,
+      icon: EthereumIcon,
       requireAccountBalance: false,
       paymentMode: 'ethereum',
     },
     {
       title: 'Dogecoin Transaction',
       description: 'Delivery after one confirmation',
-      icon: <PaymentMethodTextIcon>{'DOGE'}</PaymentMethodTextIcon>,
+      icon: DogecoinIcon,
       requireAccountBalance: false,
       paymentMode: 'dogecoin',
     },
     {
       title: 'Dash Transaction',
       description: 'InstantSend',
-      icon: <PaymentMethodTextIcon>{'DASH'}</PaymentMethodTextIcon>,
+      icon: DashIcon,
       requireAccountBalance: false,
       paymentMode: 'dash',
     },
@@ -115,7 +122,7 @@ export default function getPaymentMethods({ currency, dispatch, ...props }) {
           subtext="Max 0.0429 BTC"
         />
       ),
-      icon: <PaymentMethodTextIcon>{'BTCL'}</PaymentMethodTextIcon>,
+      icon: BitcoinIcon,
       requireAccountBalance: false,
       paymentMode: 'lightning',
     },
@@ -127,14 +134,14 @@ export default function getPaymentMethods({ currency, dispatch, ...props }) {
           subtext="Max 0.0429 LTC"
         />
       ),
-      icon: <PaymentMethodTextIcon>{'LTCL'}</PaymentMethodTextIcon>,
+      icon: LitecoinIcon,
       requireAccountBalance: false,
       paymentMode: 'lightning-ltc',
     },
     {
       title: 'Coinbase',
       description: 'Pay with your Coinbase account',
-      icon: <Coinbase />,
+      icon: CoinbaseIcon,
       requireAccountBalance: false,
       paymentMode: 'coinbase',
       paymentModeOptions: {
@@ -150,7 +157,7 @@ export default function getPaymentMethods({ currency, dispatch, ...props }) {
           subtext="Minimum 0.001 BTC"
         />
       ),
-      icon: <img src={LocalBitcoins} />,
+      icon: LocalBitcoinsIcon,
       requireAccountBalance: false,
       paymentMode: 'localbitcoins',
       paymentModeOptions: {
