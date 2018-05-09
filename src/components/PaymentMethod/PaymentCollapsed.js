@@ -41,7 +41,7 @@ function PaymentCollapsed({ operator, history, darken, selectedMethod }) {
       type="provider">
       {operator && (
         <div {...styles.container}>
-          <div {...styles.icon}>{icon}</div>
+          <img src={selectedMethod.icon} {...styles.icon} />
           {selectedMethod.title}
         </div>
       )}
