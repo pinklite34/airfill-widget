@@ -51,12 +51,14 @@ const Title = styled('span')`
 const Description = styled('span')`
   color: #777777;
   font-size: 12px;
+  padding-top: 4px;
 `;
 
 const Notice = styled('span')`
   color: #777777;
   font-size: 12px;
   font-weight: 700;
+  padding-top: 4px;
 `;
 
 const PaymentItem = ({
@@ -71,6 +73,11 @@ const PaymentItem = ({
   if (typeof icon === 'string') {
     icon = <img src={icon} className={styles.icon} />;
   }
+
+  if (typeof description === 'function') {
+    description = description(!disabled); // description(enabled);
+  }
+
   return (
     <Container onClick={onClick} selected={selected} disabled={disabled}>
       <IconContainer>{icon}</IconContainer>
