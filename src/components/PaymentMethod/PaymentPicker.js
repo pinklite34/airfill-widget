@@ -48,6 +48,9 @@ const styles = {
     width: 250px;
     margin: 24px;
   `,
+  progress: css`
+    color: #fff !important;
+  `,
 };
 
 class PaymentMethod extends React.Component {
@@ -126,11 +129,7 @@ class PaymentMethod extends React.Component {
           className={styles.button}
           onClick={this.createOrder}>
           {isLoading ? (
-            <CircularProgress
-              // classes={classes}
-              size={24}
-              // className={`${styles.progressBar}`}
-            />
+            <CircularProgress size={24} className={styles.progress} />
           ) : (
             'Continue'
           )}
