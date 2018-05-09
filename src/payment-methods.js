@@ -51,6 +51,14 @@ export default function getPaymentMethods({ currency, dispatch, ...props }) {
       paymentMode: 'bitcoin',
     },
     {
+      title: 'Lightning BTC Payment',
+      description: 'Low fees, delivery after payment sent usually instant',
+      notice: 'Max 0.0429 BTC',
+      icon: BitcoinIcon,
+      requireAccountBalance: false,
+      paymentMode: 'lightning',
+    },
+    {
       title: 'Litecoin Transaction',
       description: 'Delivery after one confirmation',
       icon: LitecoinIcon,
@@ -77,22 +85,6 @@ export default function getPaymentMethods({ currency, dispatch, ...props }) {
       icon: DashIcon,
       requireAccountBalance: false,
       paymentMode: 'dash',
-    },
-    {
-      title: 'Lightning BTC Payment',
-      description: 'Low fees, delivery after payment sent usually instant',
-      notice: 'Max 0.0429 BTC',
-      icon: BitcoinIcon,
-      requireAccountBalance: false,
-      paymentMode: 'lightning',
-    },
-    {
-      title: 'Lightning LTC Payment',
-      description: 'Low fees, delivery after payment sent usually instant',
-      notice: 'Max 0.0429 LTC',
-      icon: LitecoinIcon,
-      requireAccountBalance: false,
-      paymentMode: 'lightning-ltc',
     },
     {
       title: 'Coinbase',
