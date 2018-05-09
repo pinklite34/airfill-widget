@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'react-emotion';
+import styled, { css } from 'react-emotion';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -43,30 +43,18 @@ const MethodContainer = styled('div')`
   width: 100%;
 `;
 
-const ButtonContainer = styled('div')`
-  padding: 24px;
-`;
+const styles = {
+  button: css`
+    width: 250px;
+    margin: 24px;
+  `,
+};
 
 class PaymentMethod extends React.Component {
   constructor(props) {
     super(props);
 
-    // pick first affordable payment method
-    /* const methods = props.config.paymentButtons.filter(btn =>
-      canAfford({
-        amount: props.amount,
-        btcPrice: Number(props.order.btcPrice),
-        accountBalance: props.accountBalance,
-        paymentMode: btn.paymentMode,
-        requireAccountBalance: btn.requireAccountBalance,
-      })
-    );
-
-    console.log('first affordable', methods[0]);
-
-    this.select(methods[0]); */
     this.select(null);
-    console.log(props);
 
     this.state = {
       isLoading: false,
@@ -131,23 +119,22 @@ class PaymentMethod extends React.Component {
           })}
         </MethodContainer>
 
-        <ButtonContainer>
-          <Button
-            color="primary"
-            raised
-            disabled={isLoading || !selectedMethod}
-            onClick={this.createOrder}>
-            {isLoading ? (
-              <CircularProgress
-                // classes={classes}
-                size={24}
-                // className={`${styles.progressBar}`}
-              />
-            ) : (
-              'Continue'
-            )}
-          </Button>
-        </ButtonContainer>
+        <Button
+          color="primary"
+          raised
+          disabled={isLoading || !selectedMethod}
+          className={styles.button}
+          onClick={this.createOrder}>
+          {isLoading ? (
+            <CircularProgress
+              // classes={classes}
+              size={24}
+              // className={`${styles.progressBar}`}
+            />
+          ) : (
+            'Continue'
+          )}
+        </Button>
       </Container>
     );
   }
