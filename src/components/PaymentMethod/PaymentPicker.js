@@ -4,7 +4,12 @@ import styled from 'react-emotion';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { historyProp, configProp, amountProp } from '../../lib/prop-types';
+import {
+  historyProp,
+  configProp,
+  amountProp,
+  operatorProp,
+} from '../../lib/prop-types';
 import { CircularProgress } from 'material-ui/Progress';
 
 import PaymentItem from './PaymentItem';
@@ -43,10 +48,6 @@ const ButtonContainer = styled('div')`
 `;
 
 class PaymentMethod extends React.Component {
-  state = {
-    isLoading: false,
-  };
-
   constructor(props) {
     super(props);
 
@@ -64,8 +65,22 @@ class PaymentMethod extends React.Component {
     console.log('first affordable', methods[0]);
 
     this.select(methods[0]); */
-
     console.log(props);
+
+    props.config.paymentButtons.forEach(btn => {
+      const afford = canAfford({
+        mode: btn.paymentMode,
+        accountBalance: props.config.accountBalance,
+        amount: props.amount,
+        billingCurrency: props.config.billingCurrency,
+        operator: props.operator.result,
+      });
+      console.log(btn.title, afford);
+    });
+
+    this.state = {
+      isLoading: false,
+    };
   }
 
   select = method => this.props.setPaymentMethod(method);
@@ -142,6 +157,7 @@ PaymentMethod.propTypes = {
   createOrder: PropTypes.func.isRequired,
   trigger: PropTypes.func.isRequired,
   amount: amountProp,
+  operator: operatorProp,
 };
 
 export default compose(

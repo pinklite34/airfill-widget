@@ -30,35 +30,56 @@ export const isDirectPayment = method => supportedCoins.some(x => x === method);
 export const isLightningPayment = method =>
   lightningCoins.some(x => x === method);
 
-// If we can afford the selected payment method
 export const canAfford = ({
-  amount,
-  btcPrice,
-  packages,
-  accountBalance,
-  paymentMode,
-  requireAccountBalance,
-  operator,
-}) => {
-  // payment independent of account balance
-  const isDirect = isDirectPayment(paymentMode);
+  // user account balance (in user currency)
+  accountBalance = Number.POSITIVE_INFINITY,
 
-  if (!btcPrice) {
-    // we don't have the bitcoin price, but we have the custom range
-    if (operator.range) {
-      btcPrice = amount * (operator.range.customerSatoshiPriceRate / 100000000);
-    } else {
-      // we don't have anythimg, find the correct btcPrice from packages
-      btcPrice = packages.find(x => x.value == amount).btcPrice; // eslint-disable-line
-    }
+  // require account balance to use this method?
+  requireAccountBalance,
+
+  // user billing currency
+  billingCurrency,
+
+  // selected operator
+  operator,
+
+  // picked amount (package amount or ranged)
+  amount,
+
+  // payment mode
+  mode,
+}) => {
+  if (isDirectPayment(mode) || !requireAccountBalance) {
+    return true;
   }
 
-  let canAfford = btcPrice <= accountBalance;
+  // if account balance is NaN, it's loading
+  if (isNaN(accountBalance)) {
+    return false;
+  }
 
-  if (btcPrice < 0.001 && paymentMode === 'localbitcoins') return false;
-  if (btcPrice > 0.04294967 && paymentMode === 'lightning') return false;
-  // below may change at some point to a higher amount
-  // if (ltcPrice >  0.04294967 && paymentMode === 'lightning-ltc') return false;
+  // if (btcPrice < 0.001 && paymentMode === 'localbitcoins') return false;
+  // if (btcPrice > 0.04294967 && paymentMode === 'lightning') return false;
 
-  return !requireAccountBalance || isDirect || canAfford;
+  let price = 0;
+
+  // operator has range, take picked amount (like 100 INR) and
+  // multiply by userPriceRate, which will get price in user currency (like 1.59 USD for 100 INR)
+  if (operator.range) {
+    let rate = operator.range.userPriceRate;
+    if (billingCurrency === 'XBT') {
+      rate /= 100000000;
+    }
+
+    price = amount * rate;
+  } else {
+    // no range, only static packages. find matching with picked amount
+    // amount is set as string, and value is number, therefor no ===
+    /* eslint-disable */
+    const pkg = operator.packages.find(x => x.value == amount);
+    price = getPrice(pkg, billingCurrency);
+  }
+
+  console.log(price, accountBalance);
+  return price <= accountBalance;
 };
