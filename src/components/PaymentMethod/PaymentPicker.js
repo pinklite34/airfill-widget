@@ -65,6 +65,7 @@ class PaymentMethod extends React.Component {
     console.log('first affordable', methods[0]);
 
     this.select(methods[0]); */
+    this.select(null);
     console.log(props);
 
     this.state = {
@@ -134,7 +135,7 @@ class PaymentMethod extends React.Component {
           <Button
             color="primary"
             raised
-            disabled={isLoading}
+            disabled={isLoading || !selectedMethod}
             onClick={this.createOrder}>
             {isLoading ? (
               <CircularProgress
