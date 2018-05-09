@@ -46,9 +46,23 @@ const Title = styled('span')`
 
 const Description = styled('span')`
   color: #777777;
+  font-size: 12px;
 `;
 
-const PaymentItem = ({ icon, title, description, onClick, selected }) => {
+const Notice = styled('span')`
+  color: #777777;
+  font-size: 12px;
+  font-weight: 700;
+`;
+
+const PaymentItem = ({
+  icon,
+  title,
+  description,
+  notice,
+  onClick,
+  selected,
+}) => {
   if (typeof icon === 'string') {
     icon = <img src={icon} className={styles.icon} />;
   }
@@ -58,6 +72,7 @@ const PaymentItem = ({ icon, title, description, onClick, selected }) => {
       <TextContainer>
         <Title>{title}</Title>
         <Description>{description}</Description>
+        {notice && <Notice>{notice}</Notice>}
       </TextContainer>
     </Container>
   );
@@ -66,7 +81,8 @@ const PaymentItem = ({ icon, title, description, onClick, selected }) => {
 PaymentItem.propTypes = {
   icon: PropTypes.any,
   title: PropTypes.string.isRequired,
-  description: PropTypes.any.isRequired,
+  description: PropTypes.string.isRequired,
+  notice: PropTypes.string,
   onClick: PropTypes.func,
   selected: PropTypes.bool,
 };

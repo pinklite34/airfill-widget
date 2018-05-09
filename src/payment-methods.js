@@ -1,7 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { css } from 'glamor';
-
 import { PUSHER_API_KEY } from './constants';
 
 import {
@@ -16,15 +12,6 @@ import {
 
 const baseUrl =
   process.env.NODE_ENV === 'development' ? '/api' : 'https://api.bitrefill.com';
-
-const styles = {
-  textIcon: css({
-    fontSize: '12px !important',
-  }),
-  subtitle: css({
-    fontSize: '12px !important',
-  }),
-};
 
 function openWindow(method, order) {
   const win = window.open(`${baseUrl}/widget/${method}?order=${order.id}`);
@@ -53,29 +40,6 @@ function openWindow(method, order) {
     }
   );
 }
-
-function PaymentMethodTextIcon({ children }) {
-  return <p {...styles.textIcon}>{children}</p>;
-}
-
-PaymentMethodTextIcon.propTypes = {
-  children: PropTypes.string.isRequired,
-};
-
-function PaymentMethodDescription({ text, subtext }) {
-  return (
-    <span>
-      {text}
-      <br />
-      <span {...styles.subtitle}>{subtext}</span>
-    </span>
-  );
-}
-
-PaymentMethodDescription.propTypes = {
-  text: PropTypes.string.isRequired,
-  subtext: PropTypes.string,
-};
 
 export default function getPaymentMethods({ currency, dispatch, ...props }) {
   return [
@@ -116,24 +80,16 @@ export default function getPaymentMethods({ currency, dispatch, ...props }) {
     },
     {
       title: 'Lightning BTC Payment',
-      description: (
-        <PaymentMethodDescription
-          text="Low fees, delivery after payment sent usually instant"
-          subtext="Max 0.0429 BTC"
-        />
-      ),
+      description: 'Low fees, delivery after payment sent usually instant',
+      notice: 'Max 0.0429 BTC',
       icon: BitcoinIcon,
       requireAccountBalance: false,
       paymentMode: 'lightning',
     },
     {
       title: 'Lightning LTC Payment',
-      description: (
-        <PaymentMethodDescription
-          text="Low fees, delivery after payment sent usually instant"
-          subtext="Max 0.0429 LTC"
-        />
-      ),
+      description: 'Low fees, delivery after payment sent usually instant',
+      notice: 'Max 0.0429 LTC',
       icon: LitecoinIcon,
       requireAccountBalance: false,
       paymentMode: 'lightning-ltc',
@@ -151,12 +107,8 @@ export default function getPaymentMethods({ currency, dispatch, ...props }) {
     },
     {
       title: 'LocalBitcoins',
-      description: (
-        <PaymentMethodDescription
-          text="Pay with your LocalBitcoins account"
-          subtext="Minimum 0.001 BTC"
-        />
-      ),
+      description: 'Pay with your LocalBitcoins account',
+      notice: 'Minimum 0.001 BTC',
       icon: LocalBitcoinsIcon,
       requireAccountBalance: false,
       paymentMode: 'localbitcoins',
