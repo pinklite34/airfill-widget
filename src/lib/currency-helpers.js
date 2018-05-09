@@ -49,19 +49,13 @@ export const canAfford = ({
   // payment mode
   mode,
 }) => {
-  if (isDirectPayment(mode) || !requireAccountBalance) {
-    return true;
-  }
-
   // if account balance is NaN, it's loading
-  if (isNaN(accountBalance)) {
+  if (accountBalance !== undefined && isNaN(accountBalance)) {
     return false;
   }
 
-  // if (btcPrice < 0.001 && paymentMode === 'localbitcoins') return false;
-  // if (btcPrice > 0.04294967 && paymentMode === 'lightning') return false;
-
   let price = 0;
+  let btcPrice = 0;
 
   // operator has range, take picked amount (like 100 INR) and
   // multiply by userPriceRate, which will get price in user currency (like 1.59 USD for 100 INR)
@@ -72,14 +66,28 @@ export const canAfford = ({
     }
 
     price = amount * rate;
+
+    if (billingCurrency === 'XBT') {
+      btcPrice = price;
+    } else {
+      btcPrice = amount * (operator.range.customerSatoshiPriceRate / 100000000);
+    }
   } else {
     // no range, only static packages. find matching with picked amount
     // amount is set as string, and value is number, therefor no ===
     /* eslint-disable */
     const pkg = operator.packages.find(x => x.value == amount);
     price = getPrice(pkg, billingCurrency);
+    btcPrice = getPrice(pkg, 'XBT');
   }
 
-  console.log(price, accountBalance);
+
+  if (btcPrice < 0.001 && mode === 'localbitcoins') return false;
+  if (btcPrice > 0.04294967 && mode === 'lightning') return false;
+
+  if (isDirectPayment(mode) || !requireAccountBalance) {
+    return true;
+  }
+
   return price <= accountBalance;
 };
