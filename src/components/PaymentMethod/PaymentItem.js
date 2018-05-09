@@ -23,15 +23,14 @@ const Container = styled('div')`
 
 const styles = {
   icon: css`
-    max-width: 24px;
+    max-width: 100%;
   `,
 };
 
 const IconContainer = styled('div')`
-  width: 32px;
-
+  width: 24px;
   display: inline-block;
-  padding: 12px;
+  padding: 16px;
 `;
 
 const TextContainer = styled('div')`
