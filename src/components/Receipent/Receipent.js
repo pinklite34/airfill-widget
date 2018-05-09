@@ -48,12 +48,12 @@ const styles = {
     },
   `,
   button: css`
-    width: 250;
-    height: 38;
+    width: 250px;
+    height: 38px;
     margin-bottom: 0;
   `,
   icon: css`
-    margin-right: 16;
+    margin-right: 16px;
   `,
 };
 
@@ -69,7 +69,7 @@ const Content = styled('div')`
 const Error = styled('div')`
   background-color: #e1283c;
   margin: 0 -16px 16px;
-  padding: 16;
+  padding: 16px;
   color: #fff;
   font-weight: 700;
   display: flex;
