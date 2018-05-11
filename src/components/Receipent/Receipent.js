@@ -118,15 +118,11 @@ class Receipent extends PureComponent {
   };
 
   validate = () => {
-    const { amount, number, country } = this.props;
+    const { number, country } = this.props;
 
     let error;
 
-    // no package or custom amount selected
-    // amount might be string (like reddit gold)
-    if (amount === 'NaN' || (typeof amount !== 'string' && isNaN(amount))) {
-      error = 'Amount not selected';
-    } else if (
+    if (
       this.showNumber &&
       !this.isAccount &&
       !isValidForCountry(number, country)

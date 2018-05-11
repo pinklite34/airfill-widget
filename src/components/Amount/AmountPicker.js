@@ -5,6 +5,7 @@ import { compose } from 'recompose';
 import { css } from 'glamor';
 import { selectOperator, selectAmount } from '../../store';
 import { setAmount } from '../../actions';
+import { Button } from 'material-ui';
 
 import { isValidEmail } from '../../lib/email-validation';
 
@@ -24,11 +25,11 @@ import { CircularProgress } from 'material-ui/Progress';
 
 import ActiveSection from '../UI/ActiveSection';
 import SectionTitle from '../UI/SectionTitle';
+import ErrorBanner from '../UI/ErrorBanner';
+import Info from '../UI/info.svg';
 
 import AmountPackage from './AmountPackage';
 import AmountRange from './AmountRange';
-import Info from '../UI/info.svg';
-import { Button } from 'material-ui';
 
 const styles = {
   packages: css({
@@ -75,6 +76,10 @@ class AmountPicker extends PureComponent {
     history: historyProp,
   };
 
+  state = {
+    error: null,
+  };
+
   componentDidMount() {
     if (!this.props.operator.isLoading) {
       this.onAmountChange(this.props);
@@ -106,7 +111,16 @@ class AmountPicker extends PureComponent {
   };
 
   next = () => {
-    const { history, operator, config } = this.props;
+    const { history, operator, config, amount } = this.props;
+
+    // no package or custom amount selected
+    // amount might be string (like reddit gold)
+    if (amount === 'NaN' || (typeof amount !== 'string' && isNaN(amount))) {
+      this.setState({
+        error: 'Amount not selected',
+      });
+      return;
+    }
 
     const showEmail = !isValidEmail(config.orderOptions.email);
     const showNumber = !operator.result || !operator.result.noNumber;
@@ -152,6 +166,7 @@ class AmountPicker extends PureComponent {
 
   render() {
     const { amount, operator, setAmount, config } = this.props;
+    const { error } = this.state;
     const { billingCurrency } = config;
 
     return operator.isLoading ||
@@ -161,6 +176,7 @@ class AmountPicker extends PureComponent {
       </ActiveSection>
     ) : (
       <ActiveSection>
+        {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
         {operator.result.extraInfo && (
           <Card className={`${styles.operatorInfoContainer}`}>
             <div {...styles.operatorInfo}>
