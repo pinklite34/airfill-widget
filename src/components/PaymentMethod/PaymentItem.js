@@ -19,6 +19,7 @@ const Container = styled('div')`
   text-decoration: none;
   box-sizing: border-box;
   text-align: left;
+  cursor: ${props => (props.disabled ? 'normal' : 'pointer')};
 
   * {
     ${props => (props.disabled ? 'color: gray !important' : '')};

@@ -32,12 +32,11 @@ import {
 
 import { canAfford } from '../../lib/currency-helpers';
 
-const Container = styled('div')``;
-
 const MethodContainer = styled('div')`
   @media (min-width: 460px) {
     max-height: ${72 * 4}px;
     overflow-y: scroll;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   }
 
   width: 100%;
@@ -105,7 +104,7 @@ class PaymentMethod extends React.Component {
     const { isLoading } = this.state;
 
     return (
-      <Container>
+      <div>
         <MethodContainer>
           {config.paymentButtons.map(method => {
             const affordable = this.canAfford(method);
@@ -134,7 +133,7 @@ class PaymentMethod extends React.Component {
             'Continue'
           )}
         </Button>
-      </Container>
+      </div>
     );
   }
 }
