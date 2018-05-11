@@ -170,8 +170,8 @@ class AmountPicker extends PureComponent {
     ) : (
       <ActiveSection>
         {operator.result.extraInfo && (
-          <Card className={`${styles.operatorInfoContainer}`}>
-            <div {...styles.operatorInfo}>
+          <Card className={styles.operatorInfoContainer}>
+            <div className={styles.operatorInfo}>
               <Info fill="#555555" />
               <div
                 dangerouslySetInnerHTML={{ __html: operator.result.extraInfo }}
