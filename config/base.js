@@ -4,7 +4,7 @@ const defaultPort = process.env.PORT || 8000;
 const publicPath = '/';
 
 module.exports = {
-  devtool: 'none',
+  devtool: 'source-map',
   output: {
     path: path.join(__dirname, '/../dist'),
     filename: 'index.js',
