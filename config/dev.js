@@ -10,12 +10,7 @@ const config = Object.assign({}, baseConfig, {
   mode: 'development',
   cache: true,
   devtool: 'cheap-module-source-map',
-  plugins: [
-    new webpack.DefinePlugin({
-      __STANDALONE__: false,
-    }),
-    new webpack.NoEmitOnErrorsPlugin(),
-  ],
+  plugins: [new webpack.NoEmitOnErrorsPlugin()],
 });
 
 module.exports = config;

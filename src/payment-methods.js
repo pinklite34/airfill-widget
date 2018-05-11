@@ -13,42 +13,32 @@ import {
 const baseUrl =
   process.env.NODE_ENV === 'development' ? '/api' : 'https://api.bitrefill.com';
 
-function bindPusherEvents(win, order, getPusherClient) {
-  const pusher = getPusherClient(PUSHER_API_KEY);
-  if (!pusher) return console.error('No Pusher instance');
-
-  const channel = pusher.subscribe(`${order.id}-${order.payment.address}`);
-
-  [
-    'paid',
-    'confirmed',
-    'partial',
-    'failed',
-    'delivered',
-    'expired',
-    'payment_error',
-  ].forEach(e =>
-    channel.bind(e, () => {
-      win.close();
-      pusher.disconnect();
-    })
-  );
-}
-
 function openWindow(method, order) {
   const win = window.open(`${baseUrl}/widget/${method}?order=${order.id}`);
 
-  if (__STANDALONE__) {
-    bindPusherEvents(
-      win,
-      order,
-      require('@bitrefill/react-pusher').getPusherClient
-    );
-  } else {
-    import(/* webpackChunkName: "react-pusher" */ '@bitrefill/react-pusher').then(
-      ({ getPusherClient }) => bindPusherEvents(win, order, getPusherClient)
-    );
-  }
+  import(/* webpackChunkName: "react-pusher" */ '@bitrefill/react-pusher').then(
+    ({ getPusherClient }) => {
+      const pusher = getPusherClient(PUSHER_API_KEY);
+      if (!pusher) return console.error('No Pusher instance');
+
+      const channel = pusher.subscribe(`${order.id}-${order.payment.address}`);
+
+      [
+        'paid',
+        'confirmed',
+        'partial',
+        'failed',
+        'delivered',
+        'expired',
+        'payment_error',
+      ].forEach(e =>
+        channel.bind(e, () => {
+          win.close();
+          pusher.disconnect();
+        })
+      );
+    }
+  );
 }
 
 export default function getPaymentMethods({ currency, dispatch, ...props }) {

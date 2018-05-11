@@ -92,8 +92,7 @@
   "eslintConfig": {
     "extends": "bitrefill",
     "globals": {
-      "btoa": true,
-      "__STANDALONE__": true
+      "btoa": true
     }
   },
   "lint-staged": {

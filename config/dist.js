@@ -15,7 +15,6 @@ const config = Object.assign({}, baseConfig, {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
-      __STANDALONE__: false,
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),

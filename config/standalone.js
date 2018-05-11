@@ -17,12 +17,10 @@ const config = Object.assign({}, distConfig, {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
-      __STANDALONE__: true,
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1,
     }),
