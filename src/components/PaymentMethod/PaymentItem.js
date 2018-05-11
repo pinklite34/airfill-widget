@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'react-emotion';
+import styled from 'react-emotion';
 
 const Container = styled('div')`
   width: 100%;
@@ -26,12 +26,6 @@ const Container = styled('div')`
     ${props => (props.disabled ? 'filter: grayscale(100%)' : '')};
   }
 `;
-
-const styles = {
-  icon: css`
-    max-width: 100%;
-  `,
-};
 
 const IconContainer = styled('div')`
   width: 24px;
@@ -71,20 +65,22 @@ const PaymentItem = ({
   selected,
   disabled,
 }) => {
-  if (typeof icon === 'string') {
-    icon = <img src={icon} className={styles.icon} />;
-  }
-
-  if (typeof description === 'function') {
-    description = description(!disabled); // description(enabled);
-  }
-
   return (
     <Container onClick={onClick} selected={selected} disabled={disabled}>
-      <IconContainer>{icon}</IconContainer>
+      <IconContainer>
+        {typeof icon === 'string' ? (
+          <img src={icon} style={{ maxWidth: '100%' }} />
+        ) : (
+          icon
+        )}
+      </IconContainer>
       <TextContainer>
         <Title>{title}</Title>
-        <Description>{description}</Description>
+        <Description>
+          {typeof description === 'function'
+            ? description(!disabled)
+            : description}
+        </Description>
         {notice && <Notice>{notice}</Notice>}
       </TextContainer>
     </Container>
@@ -94,7 +90,8 @@ const PaymentItem = ({
 PaymentItem.propTypes = {
   icon: PropTypes.any,
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  description: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
+    .isRequired,
   notice: PropTypes.string,
   onClick: PropTypes.func,
   selected: PropTypes.bool,
