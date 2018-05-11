@@ -30,7 +30,7 @@ import Button from 'material-ui/Button';
 import Input from 'material-ui/Input';
 
 import Field from '../UI/Field';
-import ErrorIcon from './error.svg';
+import ErrorBanner from '../UI/ErrorBanner';
 
 const styles = {
   field: css`
@@ -52,9 +52,6 @@ const styles = {
     height: 38px;
     margin-bottom: 0;
   `,
-  icon: css`
-    margin-right: 16px;
-  `,
 };
 
 const Container = styled('div')`
@@ -64,20 +61,6 @@ const Container = styled('div')`
 
 const Content = styled('div')`
   padding-top: 16px;
-`;
-
-const Error = styled('div')`
-  background-color: #e1283c;
-  margin: 0 -16px 16px;
-  padding: 16px;
-  color: #fff;
-  font-weight: 700;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
-  position: relative;
-  z-index: 10;
 `;
 
 class Receipent extends PureComponent {
@@ -175,12 +158,7 @@ class Receipent extends PureComponent {
 
     return (
       <Container>
-        {error && (
-          <Error>
-            <ErrorIcon fill="#fff" className={styles.icon} />
-            <div>{error.message || error}</div>
-          </Error>
-        )}
+        {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
         <Content>
           {this.showNumber && (
             <Field label={numberLabel} className={styles.field}>
