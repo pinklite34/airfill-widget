@@ -38,7 +38,7 @@ function PaymentCollapsed({ operator, history, darken, selectedMethod }) {
     <Collapsed
       darken={darken}
       onClick={() => history.push('/refill/selectPayment')}
-      type="provider">
+      type="payment">
       {operator && (
         <div {...styles.container}>
           <img src={selectedMethod.icon} {...styles.icon} />
