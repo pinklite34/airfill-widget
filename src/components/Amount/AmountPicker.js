@@ -111,16 +111,7 @@ class AmountPicker extends PureComponent {
   };
 
   next = () => {
-    const { history, operator, config, amount } = this.props;
-
-    // no package or custom amount selected
-    // amount might be string (like reddit gold)
-    if (amount === 'NaN' || (typeof amount !== 'string' && isNaN(amount))) {
-      this.setState({
-        error: 'Amount not selected',
-      });
-      return;
-    }
+    const { history, operator, config } = this.props;
 
     const showEmail = !isValidEmail(config.orderOptions.email);
     const showNumber = !operator.result || !operator.result.noNumber;
@@ -169,6 +160,11 @@ class AmountPicker extends PureComponent {
     const { error } = this.state;
     const { billingCurrency } = config;
 
+    // no package or custom amount selected
+    // amount might be string (like reddit gold)
+    const disabled =
+      amount === 'NaN' || (typeof amount !== 'string' && isNaN(amount));
+
     return operator.isLoading ||
       !(operator.result && operator.result.packages) ? (
       <ActiveSection title="Select amount">
@@ -203,7 +199,7 @@ class AmountPicker extends PureComponent {
             onChange={setAmount}
           />
         )}
-        <Button color="primary" raised onClick={this.next}>
+        <Button color="primary" disabled={disabled} raised onClick={this.next}>
           Continue
         </Button>
       </ActiveSection>
