@@ -303,16 +303,13 @@ class PaymentMode extends PureComponent {
                         <strong>{remaining + ' ' + unit}</strong>
                       </div>
                     )}
-                    {window &&
-                      window.BITREFILL__PLATFORM !== 'ios' && (
-                        <Button
-                          {...styles.bottomButton}
-                          raised
-                          color="primary"
-                          onClick={() => (window.location.href = uri)}>
-                          {'Open in Wallet'}
-                        </Button>
-                      )}
+                    <Button
+                      {...styles.bottomButton}
+                      raised
+                      color="primary"
+                      onClick={() => (window.location.href = uri)}>
+                      {'Open in Wallet'}
+                    </Button>
                     {isPartial && (
                       <a
                         href={`https://www.bitrefill.com/support/${
