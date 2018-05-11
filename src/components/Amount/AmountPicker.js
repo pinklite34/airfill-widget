@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
+import { css } from 'react-emotion';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { compose } from 'recompose';
-import { css } from 'glamor';
 import { selectOperator, selectAmount } from '../../store';
 import { setAmount } from '../../actions';
 import { Button } from 'material-ui';
@@ -31,39 +31,42 @@ import AmountPackage from './AmountPackage';
 import AmountRange from './AmountRange';
 
 const styles = {
-  packages: css({
-    backgroundColor: '#fff',
-    margin: '0 -16px',
-    '& > label': {
-      display: 'flex',
-      alignItems: 'center',
-      paddingRight: '2px',
-      height: 'auto',
-      margin: 0,
-      borderTop: '1px solid rgba(0,0,0,0.08)',
-      '&:last-of-type': {
-        borderBottom: '1px solid rgba(0,0,0,0.08)',
+  packages: css`
+    background-color: #fff;
+    margin: 0 -16px;
+    & > label {
+      display: flex;
+      align-items: center;
+      padding-right: 2px;
+      height: auto;
+      margin: 0;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      &:last-of-type {
+        border-bottom: 1px solid rgba(0,0,0,0.08);
       },
     },
-  }),
-  operatorInfoContainer: css({
-    fontWeight: 500,
-    marginBottom: 16,
-  }),
-  operatorInfo: css({
-    padding: 12,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    '& svg': {
-      marginRight: 8,
-      width: 32,
-      height: 32,
+  `,
+  operatorInfoContainer: css`
+    font-weight: 500;
+    margin-bottom: 16px;
+  `,
+  operatorInfo: css`
+    padding: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    & svg {
+      margin-right: 8px;
+      width: 32px;
+      height: 32px;
     },
-  }),
-  title: css({
-    marginLeft: 36,
-  }),
+  `,
+  title: css`
+    margin-left: 36px;
+  `,
+  button: css`
+    margin-top: 12px !important;
+  `,
 };
 
 class AmountPicker extends PureComponent {
@@ -192,7 +195,12 @@ class AmountPicker extends PureComponent {
             onChange={setAmount}
           />
         )}
-        <Button color="primary" disabled={disabled} raised onClick={this.next}>
+        <Button
+          color="primary"
+          disabled={disabled}
+          raised
+          onClick={this.next}
+          className={styles.button}>
           Continue
         </Button>
       </ActiveSection>
