@@ -141,7 +141,6 @@ class PaymentMethod extends React.Component {
 
 PaymentMethod.propTypes = {
   history: historyProp,
-  paymentButtons: PropTypes.array.isRequired,
   selectedMethod: PropTypes.object,
   setPaymentMethod: PropTypes.func.isRequired,
   config: configProp,
