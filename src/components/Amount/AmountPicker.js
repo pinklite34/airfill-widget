@@ -25,7 +25,6 @@ import { CircularProgress } from 'material-ui/Progress';
 
 import ActiveSection from '../UI/ActiveSection';
 import SectionTitle from '../UI/SectionTitle';
-import ErrorBanner from '../UI/ErrorBanner';
 import Info from '../UI/info.svg';
 
 import AmountPackage from './AmountPackage';
@@ -74,10 +73,6 @@ class AmountPicker extends PureComponent {
     amount: amountProp,
     setAmount: fnProp,
     history: historyProp,
-  };
-
-  state = {
-    error: null,
   };
 
   componentDidMount() {
@@ -157,7 +152,6 @@ class AmountPicker extends PureComponent {
 
   render() {
     const { amount, operator, setAmount, config } = this.props;
-    const { error } = this.state;
     const { billingCurrency } = config;
 
     // no package or custom amount selected
@@ -172,7 +166,6 @@ class AmountPicker extends PureComponent {
       </ActiveSection>
     ) : (
       <ActiveSection>
-        {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
         {operator.result.extraInfo && (
           <Card className={`${styles.operatorInfoContainer}`}>
             <div {...styles.operatorInfo}>
