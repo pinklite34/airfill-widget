@@ -85,13 +85,28 @@ class AirfillWidget extends Component {
       defaultNumber,
       setCountry,
       setOperator,
+      forceCountry,
       forceOperator,
+      history,
     } = this.props;
 
+    if (forceCountry) {
+      setCountry(forceCountry.toUpperCase());
+
+      if (!forceOperator) {
+        history.push('/refill/selectProvider');
+      }
+    }
+
     if (forceOperator) {
-      setCountry('XI'); // International
+      // we have a requested default operator but no country set
+      // default to international
+      if (!forceCountry) {
+        setCountry('XI');
+      }
+
       setOperator(forceOperator);
-      this.props.history.push('/refill/selectAmount');
+      history.push('/refill/selectAmount');
     }
 
     init({
