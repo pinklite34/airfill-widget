@@ -56,11 +56,6 @@ class ProviderPicker extends PureComponent {
     config: configProp,
   };
 
-  constructor(props) {
-    super(props);
-    console.log(props);
-  }
-
   state = {
     showSuggestedOperator: true,
   };

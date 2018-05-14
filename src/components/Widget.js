@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Media from 'react-media';
 import { connect } from 'react-redux';
-import { Route } from 'react-router';
+import { Route, withRouter } from 'react-router';
 import { css } from 'glamor';
+import { compose } from 'recompose';
 
-import { init } from '../actions';
+import { init, setOperator, setCountry } from '../actions';
 import { configProps, inventoryProp, fnProp } from '../lib/prop-types';
 import { selectInventory } from '../store';
 
@@ -37,6 +38,8 @@ const theme = createMuiTheme({
 class AirfillWidget extends Component {
   static propTypes = {
     init: fnProp,
+    setOperator: PropTypes.func.isRequired,
+    setCountry: PropTypes.func.isRequired,
     inventory: inventoryProp,
     className: PropTypes.string,
     ...configProps,
@@ -76,7 +79,20 @@ class AirfillWidget extends Component {
   }
 
   componentWillMount() {
-    const { isMobile, init, defaultNumber } = this.props;
+    const {
+      isMobile,
+      init,
+      defaultNumber,
+      setCountry,
+      setOperator,
+      forceOperator,
+    } = this.props;
+
+    if (forceOperator) {
+      setCountry('XI'); // International
+      setOperator(forceOperator);
+      this.props.history.push('/refill/selectAmount');
+    }
 
     init({
       defaultNumber: defaultNumber,
@@ -154,12 +170,16 @@ function AirfillWidgetWrapper(props) {
   );
 }
 
-export default connect(
-  state => ({
-    // recentNumbers: selectRecentNumbers(state)
-    inventory: selectInventory(state),
-  }),
-  {
-    init,
-  }
+export default compose(
+  connect(
+    state => ({
+      inventory: selectInventory(state),
+    }),
+    {
+      init,
+      setOperator,
+      setCountry,
+    }
+  ),
+  withRouter
 )(AirfillWidgetWrapper);
