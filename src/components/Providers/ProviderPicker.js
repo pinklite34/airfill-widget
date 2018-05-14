@@ -18,6 +18,7 @@ import {
   operatorsProp,
   countryProp,
   fnProp,
+  configProp,
 } from '../../lib/prop-types';
 
 const displayOrder = [null, 'pin'];
@@ -52,7 +53,13 @@ class ProviderPicker extends PureComponent {
     setOperator: fnProp,
     operators: operatorsProp,
     country: countryProp,
+    config: configProp,
   };
+
+  constructor(props) {
+    super(props);
+    console.log(props);
+  }
 
   state = {
     showSuggestedOperator: true,

@@ -115,7 +115,7 @@ class AirfillWidget extends Component {
               <Header isMobile={isMobile} branded={showLogo} />
               <Country />
               <NumberLookup />
-              <Providers />
+              <Providers config={config} />
               <Amount config={config} />
               <Receipent config={config} />
               <Payment config={config} />
