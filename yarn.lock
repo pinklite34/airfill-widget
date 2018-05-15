@@ -4677,6 +4677,7 @@ levn@^0.3.0, levn@~0.3.0:
     type-check "~0.3.2"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 libphonenumber-js@^1.2.15:
   version "1.2.15"
   resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.2.15.tgz#f4c5ee85cd0a5438b3f1906bb0467f33975768f3"
@@ -4685,6 +4686,11 @@ libphonenumber-js@^1.1.11:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.1.11.tgz#50114422db389d1d3086f4e9d6c2d8ada657944c"
 >>>>>>> update non breaking deps
+=======
+libphonenumber-js@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.2.3.tgz#9fee57d59b2dcf9e2a0a03fa2ca6256f133b4f64"
+>>>>>>> fix broken lockfile
   dependencies:
     minimist "^1.2.0"
     semver-compare "^1.0.0"
