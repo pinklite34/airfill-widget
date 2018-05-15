@@ -8,6 +8,8 @@ import Collapsed from '../UI/Collapsed';
 import { selectSelectedOperator, selectNumber } from '../../store';
 import { historyProp, operatorProp, numberProp } from '../../lib/prop-types';
 
+import PhoneIcon from './phone.svg';
+
 const styles = {
   container: css({
     display: 'flex',
@@ -39,7 +41,9 @@ function RecipientCollapsed({ operator, history, number }) {
       type="recipient">
       {operator && (
         <div {...styles.container}>
-          <div {...styles.icon} />
+          <div {...styles.icon}>
+            <PhoneIcon />
+          </div>
           {number}
         </div>
       )}
