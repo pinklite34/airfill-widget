@@ -9,6 +9,7 @@ const Container = styled('div')`
   justify-content: space-between;
   align-items: center;
   background-color: #e4e4e4;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 `;
 
 const StyledButton = styled(Button)`
