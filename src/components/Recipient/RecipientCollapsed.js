@@ -37,12 +37,12 @@ const styles = {
   }),
 };
 
-function ReceipentCollapsed({ operator, history, number, darken }) {
+function RecipientCollapsed({ operator, history, number, darken }) {
   return (
     <Collapsed
       darken={darken}
-      onClick={() => history.push('/refill/selectReceipent')}
-      type="receipent">
+      onClick={() => history.push('/refill/selectRecipient')}
+      type="recipient">
       {operator && (
         <div {...styles.container}>
           <div {...styles.icon} />
@@ -53,7 +53,7 @@ function ReceipentCollapsed({ operator, history, number, darken }) {
   );
 }
 
-ReceipentCollapsed.propTypes = {
+RecipientCollapsed.propTypes = {
   operator: operatorProp,
   history: historyProp,
   darken: darkenProp,
@@ -66,4 +66,4 @@ export default compose(
     operator: selectSelectedOperator(state),
     number: selectNumber(state),
   }))
-)(ReceipentCollapsed);
+)(RecipientCollapsed);

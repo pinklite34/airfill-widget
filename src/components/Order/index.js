@@ -10,7 +10,7 @@ export default function Order({ config }) {
       <Route path="/refill" exact />
       <Route path="/refill/selectProvider" />
       <Route path="/refill/selectAmount" />
-      <Route path="/refill/selectReceipent" />
+      <Route path="/refill/selectRecipient" />
       <Route path="/refill/selectPayment" />
       <Route
         path="/refill/payment"
