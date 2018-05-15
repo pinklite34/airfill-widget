@@ -187,7 +187,7 @@ class PaymentLayout extends PureComponent {
     } = this.props;
 
     const showNumber = !operator.result || !operator.result.noNumber;
-    const isDelivered = paymentStatus.status !== 'delivered';
+    const isDelivered = paymentStatus.status === 'delivered';
 
     let billingCurrencyDisplayName = (
       order.payment.altcoinCode || 'BTC'

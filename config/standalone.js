@@ -1,6 +1,8 @@
 'use strict';
 
 const path = require('path');
+const webpack = require('webpack');
+
 const distConfig = require('./dist');
 
 const config = Object.assign({}, distConfig, {
@@ -12,6 +14,17 @@ const config = Object.assign({}, distConfig, {
     libraryTarget: 'umd',
     chunkFilename: '[name].bundle.js',
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"production"',
+    }),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.AggressiveMergingPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 1,
+    }),
+  ],
   externals: {},
 });
 

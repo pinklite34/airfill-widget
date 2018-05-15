@@ -7,8 +7,8 @@ const nodeExternals = require('webpack-node-externals');
 
 const config = Object.assign({}, baseConfig, {
   entry: path.join(__dirname, '../src/index'),
+  mode: 'production',
   cache: false,
-  devtool: 'sourcemap',
   optimization: {
     minimize: true,
   },

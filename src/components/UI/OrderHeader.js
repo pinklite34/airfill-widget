@@ -13,8 +13,8 @@ const styles = {
     padding: 16,
   }),
   icon: css({
-    maxWidth: 32,
-    maxHeight: 32,
+    width: 32,
+    height: 32,
     marginRight: '26px',
     marginTop: '8px',
     marginLeft: '10px',

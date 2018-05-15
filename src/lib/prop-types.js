@@ -67,6 +67,8 @@ export const configProps = {
   showFooter: PropTypes.bool,
   isMobile: PropTypes.bool,
 
+  forceOperator: PropTypes.string,
+
   // Refill history
   // refillHistory: PropTypes.arrayOf(
   //   PropTypes.shape({

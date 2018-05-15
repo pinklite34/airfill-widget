@@ -1,23 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { css } from 'react-emotion';
-
 import { PUSHER_API_KEY } from './constants';
 
-import Coinbase from './coinbase.svg';
-import LocalBitcoins from './localbitcoins.png';
+import {
+  BitcoinIcon,
+  LitecoinIcon,
+  DogecoinIcon,
+  DashIcon,
+  LocalBitcoinsIcon,
+  CoinbaseIcon,
+  EthereumIcon,
+} from './assets';
 
 const baseUrl =
   process.env.NODE_ENV === 'development' ? '/api' : 'https://api.bitrefill.com';
-
-const styles = {
-  textIcon: css`
-    font-size: 12px !important;
-  `,
-  subtitle: css`
-    font-size: 12px !important;
-  `,
-};
 
 function openWindow(method, order) {
   const win = window.open(`${baseUrl}/widget/${method}?order=${order.id}`);
@@ -47,94 +41,55 @@ function openWindow(method, order) {
   );
 }
 
-function PaymentMethodTextIcon({ children }) {
-  return <p className={styles.textIcon}>{children}</p>;
-}
-
-PaymentMethodTextIcon.propTypes = {
-  children: PropTypes.string.isRequired,
-};
-
-function PaymentMethodDescription({ text, subtext }) {
-  return (
-    <span>
-      {text}
-      <br />
-      <span className={styles.subtitle}>{subtext}</span>
-    </span>
-  );
-}
-
-PaymentMethodDescription.propTypes = {
-  text: PropTypes.string.isRequired,
-  subtext: PropTypes.string,
-};
-
 export default function getPaymentMethods({ currency, dispatch, ...props }) {
   return [
     {
       title: 'Bitcoin Transaction',
       description: 'Delivery after one confirmation',
-      icon: <PaymentMethodTextIcon>{'BTC'}</PaymentMethodTextIcon>,
+      icon: BitcoinIcon,
       requireAccountBalance: false,
       paymentMode: 'bitcoin',
     },
     {
+      title: 'Lightning BTC Payment',
+      description: 'Low fees, delivery after payment sent usually instant',
+      notice: 'Max 0.0429 BTC',
+      icon: BitcoinIcon,
+      requireAccountBalance: false,
+      paymentMode: 'lightning',
+    },
+    {
       title: 'Litecoin Transaction',
       description: 'Delivery after one confirmation',
-      icon: <PaymentMethodTextIcon>{'LTC'}</PaymentMethodTextIcon>,
+      icon: LitecoinIcon,
       requireAccountBalance: false,
       paymentMode: 'litecoin',
     },
     {
       title: 'Ether Transaction',
       description: 'Delivery after one confirmation',
-      icon: <PaymentMethodTextIcon>{'ETH'}</PaymentMethodTextIcon>,
+      icon: EthereumIcon,
       requireAccountBalance: false,
       paymentMode: 'ethereum',
     },
     {
       title: 'Dogecoin Transaction',
       description: 'Delivery after one confirmation',
-      icon: <PaymentMethodTextIcon>{'DOGE'}</PaymentMethodTextIcon>,
+      icon: DogecoinIcon,
       requireAccountBalance: false,
       paymentMode: 'dogecoin',
     },
     {
       title: 'Dash Transaction',
       description: 'InstantSend',
-      icon: <PaymentMethodTextIcon>{'DASH'}</PaymentMethodTextIcon>,
+      icon: DashIcon,
       requireAccountBalance: false,
       paymentMode: 'dash',
     },
     {
-      title: 'Lightning BTC Payment',
-      description: (
-        <PaymentMethodDescription
-          text="Low fees, delivery after payment sent usually instant"
-          subtext="Max 0.0429 BTC"
-        />
-      ),
-      icon: <PaymentMethodTextIcon>{'BTCL'}</PaymentMethodTextIcon>,
-      requireAccountBalance: false,
-      paymentMode: 'lightning',
-    },
-    {
-      title: 'Lightning LTC Payment',
-      description: (
-        <PaymentMethodDescription
-          text="Low fees, delivery after payment sent usually instant"
-          subtext="Max 0.0429 LTC"
-        />
-      ),
-      icon: <PaymentMethodTextIcon>{'LTCL'}</PaymentMethodTextIcon>,
-      requireAccountBalance: false,
-      paymentMode: 'lightning-ltc',
-    },
-    {
       title: 'Coinbase',
       description: 'Pay with your Coinbase account',
-      icon: <Coinbase />,
+      icon: CoinbaseIcon,
       requireAccountBalance: false,
       paymentMode: 'coinbase',
       paymentModeOptions: {
@@ -144,13 +99,9 @@ export default function getPaymentMethods({ currency, dispatch, ...props }) {
     },
     {
       title: 'LocalBitcoins',
-      description: (
-        <PaymentMethodDescription
-          text="Pay with your LocalBitcoins account"
-          subtext="Minimum 0.001 BTC"
-        />
-      ),
-      icon: <img src={LocalBitcoins} />,
+      description: 'Pay with your LocalBitcoins account',
+      notice: 'Minimum 0.001 BTC',
+      icon: LocalBitcoinsIcon,
       requireAccountBalance: false,
       paymentMode: 'localbitcoins',
       paymentModeOptions: {

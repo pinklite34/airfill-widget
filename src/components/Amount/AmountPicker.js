@@ -1,8 +1,13 @@
 import React, { PureComponent } from 'react';
+import { css } from 'react-emotion';
 import { connect } from 'react-redux';
-import { css } from 'glamor';
+import { withRouter } from 'react-router';
+import { compose } from 'recompose';
 import { selectOperator, selectAmount } from '../../store';
 import { setAmount } from '../../actions';
+import { Button } from 'material-ui';
+
+import { isValidEmail } from '../../lib/email-validation';
 
 import { selectValidAmount } from '../../lib/amount-validation';
 import { getPrice, getDisplayName } from '../../lib/currency-helpers';
@@ -11,6 +16,7 @@ import {
   operatorResultProp,
   amountProp,
   fnProp,
+  historyProp,
 } from '../../lib/prop-types';
 
 import Card from 'material-ui/Card';
@@ -19,45 +25,48 @@ import { CircularProgress } from 'material-ui/Progress';
 
 import ActiveSection from '../UI/ActiveSection';
 import SectionTitle from '../UI/SectionTitle';
+import Info from '../UI/info.svg';
 
 import AmountPackage from './AmountPackage';
 import AmountRange from './AmountRange';
-import Info from '../UI/info.svg';
 
 const styles = {
-  packages: css({
-    backgroundColor: '#fff',
-    margin: '0 -16px',
-    '& > label': {
-      display: 'flex',
-      alignItems: 'center',
-      paddingRight: '2px',
-      height: 'auto',
-      margin: 0,
-      borderTop: '1px solid rgba(0,0,0,0.08)',
-      '&:last-of-type': {
-        borderBottom: '1px solid rgba(0,0,0,0.08)',
+  packages: css`
+    background-color: #fff;
+    margin: 0 -16px;
+    & > label {
+      display: flex;
+      align-items: center;
+      padding-right: 2px;
+      height: auto;
+      margin: 0;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      &:last-of-type {
+        border-bottom: 1px solid rgba(0,0,0,0.08);
       },
     },
-  }),
-  operatorInfoContainer: css({
-    fontWeight: 500,
-    marginBottom: 16,
-  }),
-  operatorInfo: css({
-    padding: 12,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    '& svg': {
-      marginRight: 8,
-      width: 32,
-      height: 32,
+  `,
+  operatorInfoContainer: css`
+    font-weight: 500;
+    margin-bottom: 16px;
+  `,
+  operatorInfo: css`
+    padding: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    & svg {
+      margin-right: 8px;
+      width: 32px;
+      height: 32px;
     },
-  }),
-  title: css({
-    marginLeft: 36,
-  }),
+  `,
+  title: css`
+    margin-left: 36px;
+  `,
+  button: css`
+    margin-top: 12px !important;
+  `,
 };
 
 class AmountPicker extends PureComponent {
@@ -66,6 +75,7 @@ class AmountPicker extends PureComponent {
     operator: operatorResultProp,
     amount: amountProp,
     setAmount: fnProp,
+    history: historyProp,
   };
 
   componentDidMount() {
@@ -95,6 +105,19 @@ class AmountPicker extends PureComponent {
           packages,
         })
       );
+    }
+  };
+
+  next = () => {
+    const { history, operator, config } = this.props;
+
+    const showEmail = !isValidEmail(config.orderOptions.email);
+    const showNumber = !operator.result || !operator.result.noNumber;
+
+    if (showEmail || showNumber) {
+      history.push('/refill/selectReceipent');
+    } else {
+      history.push('/refill/selectPayment');
     }
   };
 
@@ -134,6 +157,11 @@ class AmountPicker extends PureComponent {
     const { amount, operator, setAmount, config } = this.props;
     const { billingCurrency } = config;
 
+    // no package or custom amount selected
+    // amount might be string (like reddit gold)
+    const disabled =
+      amount === 'NaN' || (typeof amount !== 'string' && isNaN(amount));
+
     return operator.isLoading ||
       !(operator.result && operator.result.packages) ? (
       <ActiveSection title="Select amount">
@@ -142,8 +170,8 @@ class AmountPicker extends PureComponent {
     ) : (
       <ActiveSection>
         {operator.result.extraInfo && (
-          <Card className={`${styles.operatorInfoContainer}`}>
-            <div {...styles.operatorInfo}>
+          <Card className={styles.operatorInfoContainer}>
+            <div className={styles.operatorInfo}>
               <Info fill="#555555" />
               <div
                 dangerouslySetInnerHTML={{ __html: operator.result.extraInfo }}
@@ -167,17 +195,28 @@ class AmountPicker extends PureComponent {
             onChange={setAmount}
           />
         )}
+        <Button
+          color="primary"
+          disabled={disabled}
+          raised
+          onClick={this.next}
+          className={styles.button}>
+          Continue
+        </Button>
       </ActiveSection>
     );
   }
 }
 
-export default connect(
-  state => ({
-    operator: selectOperator(state),
-    amount: selectAmount(state),
-  }),
-  {
-    setAmount,
-  }
+export default compose(
+  withRouter,
+  connect(
+    state => ({
+      operator: selectOperator(state),
+      amount: selectAmount(state),
+    }),
+    {
+      setAmount,
+    }
+  )
 )(AmountPicker);

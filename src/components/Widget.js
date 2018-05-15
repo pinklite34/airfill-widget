@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Media from 'react-media';
 import { connect } from 'react-redux';
-import { Route } from 'react-router';
+import { Route, withRouter } from 'react-router';
 import { css } from 'glamor';
+import { compose } from 'recompose';
 
-import { init } from '../actions';
+import { init, setOperator, setCountry } from '../actions';
 import { configProps, inventoryProp, fnProp } from '../lib/prop-types';
 import { selectInventory } from '../store';
 
@@ -24,7 +25,8 @@ import Providers from './Providers';
 import Instructions from './Instructions';
 import Amount from './Amount';
 import Order from './Order';
-import Details from './Details';
+import Receipent from './Receipent';
+import Payment from './PaymentMethod';
 import getMethods from '../payment-methods';
 
 const theme = createMuiTheme({
@@ -36,6 +38,8 @@ const theme = createMuiTheme({
 class AirfillWidget extends Component {
   static propTypes = {
     init: fnProp,
+    setOperator: PropTypes.func.isRequired,
+    setCountry: PropTypes.func.isRequired,
     inventory: inventoryProp,
     className: PropTypes.string,
     ...configProps,
@@ -75,7 +79,19 @@ class AirfillWidget extends Component {
   }
 
   componentWillMount() {
-    const { isMobile, init, defaultNumber } = this.props;
+    const {
+      isMobile,
+      init,
+      defaultNumber,
+      setOperator,
+      forceOperator,
+      history,
+    } = this.props;
+
+    if (forceOperator) {
+      setOperator(forceOperator);
+      history.push('/refill/selectAmount');
+    }
 
     init({
       defaultNumber: defaultNumber,
@@ -116,7 +132,8 @@ class AirfillWidget extends Component {
               <NumberLookup />
               <Providers />
               <Amount config={config} />
-              <Details config={config} />
+              <Receipent config={config} />
+              <Payment config={config} />
               <Order config={config} />
               {showInstructions && (
                 <Route
@@ -152,12 +169,16 @@ function AirfillWidgetWrapper(props) {
   );
 }
 
-export default connect(
-  state => ({
-    // recentNumbers: selectRecentNumbers(state)
-    inventory: selectInventory(state),
-  }),
-  {
-    init,
-  }
+export default compose(
+  connect(
+    state => ({
+      inventory: selectInventory(state),
+    }),
+    {
+      init,
+      setOperator,
+      setCountry,
+    }
+  ),
+  withRouter
 )(AirfillWidgetWrapper);

@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import styled, { css as emotionCss } from 'react-emotion';
 
 import { connect } from 'react-redux';
 import { createOrder, setPaymentMethod } from '../../actions';
@@ -8,20 +9,15 @@ import { selectAmount, selectPaymentMethod } from '../../store';
 
 import { css } from 'glamor';
 import Button from 'material-ui/Button';
-import { CircularProgress } from 'material-ui/Progress';
 import Tooltip from 'material-ui/Tooltip';
 
 import BitcoinAddress from '../UI/BitcoinAddress';
-import Info from './info.svg';
 import OrderHeader from '../UI/OrderHeader';
 import PaymentLayout from './PaymentLayout';
 
 import QrCode from '../UI/QrCode';
 
-import PaymentMenu from './PaymentMenu';
-
 import {
-  canAfford,
   isDirectPayment,
   isLightningPayment,
 } from '../../lib/currency-helpers';
@@ -119,7 +115,15 @@ const styles = {
     color: '#3e8fe4',
     padding: 12,
   }),
+  paymentIcon: emotionCss`
+    width: 24px;
+    height: 24px;
+  `,
 };
+
+const PaymentIconContainer = styled('div')`
+  padding: 6px;
+`;
 
 class PaymentMode extends PureComponent {
   static propTypes = {
@@ -131,7 +135,7 @@ class PaymentMode extends PureComponent {
     orderOptions: orderOptionsProp,
     paymentStatus: paymentStatusProp,
     createOrder: fnProp,
-    paymentMethod: PropTypes.string,
+    paymentMethod: PropTypes.object.isRequired,
     setPaymentMethod: PropTypes.func.isRequired,
   };
 
@@ -139,7 +143,7 @@ class PaymentMode extends PureComponent {
     super(props);
 
     // pick first affordable payment method
-    const methods = props.paymentButtons.filter(btn =>
+    /* const methods = props.paymentButtons.filter(btn =>
       canAfford({
         amount: props.amount,
         btcPrice: Number(props.order.btcPrice),
@@ -147,89 +151,15 @@ class PaymentMode extends PureComponent {
         paymentMode: btn.paymentMode,
         requireAccountBalance: btn.requireAccountBalance,
       })
-    );
-
-    const method =
-      methods.find(btn => btn.paymentMode === this.props.paymentMethod) ||
-      methods[0];
+    ); */
 
     this.state = {
       open: false,
-      paymentMethod: method,
       isLoading: false,
-      order: props.order,
-      orders: {
-        [method.paymentMode]: props.order,
-      },
       addressTooltip: false,
       amountTooltip: false,
     };
   }
-
-  // cache the order
-  componentWillReceiveProps(newProps) {
-    if (newProps.order.id !== this.props.order.id) {
-      this.setState(prevState => {
-        const orders = prevState.orders;
-        orders[this.state.paymentMethod.paymentMode] = newProps.order;
-
-        return {
-          order: newProps.order,
-          orders,
-        };
-      });
-    }
-  }
-
-  openMenu = () =>
-    this.setState({
-      open: true,
-    });
-
-  closeMenu = () =>
-    this.setState({
-      open: false,
-    });
-
-  menuClick = button => {
-    // if callback is set, then it's an old payment button
-    // keep this for backwards compability
-    if (button.callback) {
-      button.paymentModeOptions = {
-        title: button.title,
-        callback: button.callback,
-      };
-    }
-
-    this.setState({
-      open: false,
-      paymentMethod: button,
-      isLoading: true,
-    });
-
-    // If we already have a cached order for this method, use it
-    if (button.paymentMode in this.state.orders) {
-      this.setState({
-        order: this.state.orders[button.paymentMode],
-        isLoading: false,
-      });
-
-      return;
-    }
-
-    let options = {
-      ...this.props.orderOptions,
-      paymentMethod: button.paymentMode,
-    };
-
-    this.props
-      .createOrder(options)
-      .then(() => {
-        this.setState({ isLoading: false });
-        this.props.setPaymentMethod(button.paymentMode);
-      })
-      .catch(err => console.warn(err));
-  };
 
   copy = (text, field) => {
     this.setState({ [field]: true });
@@ -238,19 +168,10 @@ class PaymentMode extends PureComponent {
   };
 
   render() {
-    const {
-      paymentButtons,
-      amount,
-      accountBalance,
-      paymentStatus,
-    } = this.props;
-
-    const { order, isLoading, paymentMethod } = this.state;
-
-    const method = paymentMethod;
+    const { paymentStatus, paymentMethod, order } = this.props;
 
     // decide if the current payment method is a direct coin payment
-    const isDirect = isDirectPayment(method.paymentMode);
+    const isDirect = isDirectPayment(paymentMethod.paymentMode);
 
     const basePrice = order.payment.altBasePrice || order.payment.satoshiPrice;
     let price = order.payment.altcoinPrice || order.btcPrice;
@@ -260,7 +181,7 @@ class PaymentMode extends PureComponent {
     let remaining;
 
     if (paymentStatus.status === 'partial') {
-      if (method.paymentMode === 'ethereum') {
+      if (paymentMethod.paymentMode === 'ethereum') {
         // convert from Szabo to ETH
         paid = paymentStatus.paidAmount;
         paid = Math.floor(paid) / 1000000;
@@ -277,7 +198,9 @@ class PaymentMode extends PureComponent {
     }
 
     let prefix =
-      method.paymentMode === 'bcash' ? 'bitcoincash' : method.paymentMode;
+      paymentMethod.paymentMode === 'bcash'
+        ? 'bitcoincash'
+        : paymentMethod.paymentMode;
 
     let paymentAddress;
     let uri;
@@ -289,12 +212,12 @@ class PaymentMode extends PureComponent {
       </div>
     );
 
-    if (isLightningPayment(method.paymentMode)) {
+    if (isLightningPayment(paymentMethod.paymentMode)) {
       prefix = 'lightning';
-      if (method.paymentMode === 'lightning') {
+      if (paymentMethod.paymentMode === 'lightning') {
         unit = 'bits';
         price = order.payment.bitsPrice;
-      } else if (method.paymentMode === 'lightning-ltc') {
+      } else if (paymentMethod.paymentMode === 'lightning-ltc') {
         // prefix is not always the same as paymentMode
         unit = 'lites';
         price = order.payment.litesPrice;
@@ -307,7 +230,7 @@ class PaymentMode extends PureComponent {
           {children}
         </div>
       );
-    } else if (method.paymentMode === 'ethereum') {
+    } else if (paymentMethod.paymentMode === 'ethereum') {
       paymentAddress = order.payment.altcoinAddress;
       uri = `${prefix}:${paymentAddress}?amount=${remaining || price}`;
     } else {
@@ -323,53 +246,30 @@ class PaymentMode extends PureComponent {
 
     return (
       <div>
-        <PaymentMenu
-          {...this.props}
-          {...this.state}
-          anchorEl={this.anchorEl}
-          paymentButtons={paymentButtons}
-          onClick={this.menuClick}
-          onClose={this.closeMenu}
-          affordProps={{
-            amount,
-            btcPrice: Number(order.btcPrice),
-            accountBalance,
-          }}
-        />
-
-        <OrderHeader
-          order={order}
-          title={title}
-          subtitle={subtitle}
-          icon={<Info />}
-        />
+        <OrderHeader order={order} title={title} subtitle={subtitle} />
 
         <PaymentLayout {...this.props}>
           <div>
-            <div>Pay with</div>
             <div>
-              <p
-                ref={e => (this.anchorEl = e)}
-                style={{ fontWeight: '500' }}
-                onClick={() => this.openMenu()}>
-                {this.state.paymentMethod.title}
-              </p>
-              <Button {...styles.changeButton} onClick={() => this.openMenu()}>
-                Change
-              </Button>
+              <PaymentIconContainer>
+                <img src={paymentMethod.icon} className={styles.paymentIcon} />
+              </PaymentIconContainer>
+            </div>
+            <div>
+              <p>{paymentMethod.title}</p>
             </div>
           </div>
           <div>
             <div />
             <div>
-              {isLoading ? (
-                <CircularProgress />
-              ) : !isDirect ? (
+              {!isDirect ? (
                 <Button
                   raised
                   color="primary"
-                  onClick={() => method.paymentModeOptions.callback(order)}>
-                  {method.paymentModeOptions.title}
+                  onClick={() =>
+                    paymentMethod.paymentModeOptions.callback(order)
+                  }>
+                  {paymentMethod.paymentModeOptions.title}
                 </Button>
               ) : (
                 <div {...styles.container}>
@@ -403,16 +303,13 @@ class PaymentMode extends PureComponent {
                         <strong>{remaining + ' ' + unit}</strong>
                       </div>
                     )}
-                    {window &&
-                      window.BITREFILL__PLATFORM !== 'ios' && (
-                        <Button
-                          {...styles.bottomButton}
-                          raised
-                          color="primary"
-                          onClick={() => (window.location.href = uri)}>
-                          {'Open in Wallet'}
-                        </Button>
-                      )}
+                    <Button
+                      {...styles.bottomButton}
+                      raised
+                      color="primary"
+                      onClick={() => (window.location.href = uri)}>
+                      {'Open in Wallet'}
+                    </Button>
                     {isPartial && (
                       <a
                         href={`https://www.bitrefill.com/support/${

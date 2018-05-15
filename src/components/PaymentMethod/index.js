@@ -1,25 +1,25 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
-
-import Payment from './Payment';
+import PaymentCollapsed from './PaymentCollapsed';
+import PaymentPicker from './PaymentPicker';
 import { configProp } from '../../lib/prop-types';
 
-export default function Order({ config }) {
+export default function PaymentMethod({ config }) {
   return (
     <Switch>
       <Route path="/refill" exact />
       <Route path="/refill/selectProvider" />
       <Route path="/refill/selectAmount" />
       <Route path="/refill/selectReceipent" />
-      <Route path="/refill/selectPayment" />
       <Route
-        path="/refill/payment"
-        render={props => <Payment {...props} {...config} />}
+        path="/refill/selectPayment"
+        render={props => <PaymentPicker {...props} config={config} />}
       />
+      <Route component={PaymentCollapsed} />
     </Switch>
   );
 }
 
-Order.propTypes = {
+PaymentMethod.propTypes = {
   config: configProp,
 };
