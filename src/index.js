@@ -34,7 +34,7 @@ export const initializeWidget = apiKey => (dispatch, getState) => {
     baseUrl: '/api/widget',
   });
 
-  init({})(dispatch, getState);
+  dispatch(init({}));
 };
 
 export { airfillWidget, widgetStoreEnhancer, client as restClient };
