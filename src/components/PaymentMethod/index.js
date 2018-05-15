@@ -10,7 +10,6 @@ export default function PaymentMethod({ config }) {
       <Route path="/refill" exact />
       <Route path="/refill/selectProvider" />
       <Route path="/refill/selectAmount" />
-      <Route path="/refill/selectStatusEmail" />
       <Route path="/refill/selectRecipient" />
       <Route
         path="/refill/selectPayment"

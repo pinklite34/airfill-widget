@@ -111,10 +111,11 @@ class AmountPicker extends PureComponent {
   next = () => {
     const { history, operator, config } = this.props;
 
-    if (operator.result.recipientType !== 'none') {
+    const showEmail = !isValidEmail(config.orderOptions.email);
+    const showNumber = !operator.result || !operator.result.noNumber;
+
+    if (showEmail || showNumber) {
       history.push('/refill/selectRecipient');
-    } else if (!isValidEmail(config.orderOptions.email)) {
-      history.push('/refill/selectStatusEmail');
     } else {
       history.push('/refill/selectPayment');
     }

@@ -1,51 +1,51 @@
 import React from 'react';
-import { css } from 'react-emotion';
+import { css } from 'glamor';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 
 import Collapsed from '../UI/Collapsed';
 import { selectSelectedOperator, selectNumber } from '../../store';
-import { historyProp, operatorProp, numberProp } from '../../lib/prop-types';
-
-import { getRecipientIcon } from '../../lib/icon-picker';
+import {
+  historyProp,
+  darkenProp,
+  operatorProp,
+  numberProp,
+} from '../../lib/prop-types';
 
 const styles = {
-  container: css`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  `,
-  icon: css`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 24px;
-    margin-right: 30px;
-    margin-left: 14px;
-
-    @media (max-width: 460px) {
-      margin-right: 14px;
-      margin-left: 0px;
-    }
-  `,
-  logo: css`
-    max-width: 40px;
-    max-height: 30px;
-  `,
+  container: css({
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  }),
+  icon: css({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 24,
+    marginRight: 30,
+    marginLeft: 14,
+    '@media(max-width: 460px)': {
+      marginRight: 14,
+      marginLeft: 0,
+    },
+  }),
+  logo: css({
+    maxWidth: 40,
+    maxHeight: 30,
+  }),
 };
 
-function RecipientCollapsed({ operator, history, number }) {
-  const Icon = getRecipientIcon(operator);
+function RecipientCollapsed({ operator, history, number, darken }) {
   return (
     <Collapsed
+      darken={darken}
       onClick={() => history.push('/refill/selectRecipient')}
       type="recipient">
       {operator && (
-        <div className={styles.container}>
-          <div className={styles.icon}>
-            <Icon />
-          </div>
+        <div {...styles.container}>
+          <div {...styles.icon} />
           {number}
         </div>
       )}
@@ -56,6 +56,7 @@ function RecipientCollapsed({ operator, history, number }) {
 RecipientCollapsed.propTypes = {
   operator: operatorProp,
   history: historyProp,
+  darken: darkenProp,
   number: numberProp,
 };
 
