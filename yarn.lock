@@ -5030,15 +5030,9 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-<<<<<<< HEAD
-libphonenumber-js@^1.1.11:
-  version "1.1.11"
-  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.1.11.tgz#50114422db389d1d3086f4e9d6c2d8ada657944c"
-=======
 libphonenumber-js@^1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.2.3.tgz#9fee57d59b2dcf9e2a0a03fa2ca6256f133b4f64"
->>>>>>> master
   dependencies:
     minimist "^1.2.0"
     semver-compare "^1.0.0"
