@@ -63,7 +63,7 @@ const Content = styled('div')`
   padding-top: 16px;
 `;
 
-class Receipent extends PureComponent {
+class Recipient extends PureComponent {
   static propTypes = {
     config: configProp,
     amount: amountProp,
@@ -217,4 +217,4 @@ export default connect(
     setEmail,
     trigger,
   }
-)(Receipent);
+)(Recipient);
