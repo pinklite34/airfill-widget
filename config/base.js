@@ -40,7 +40,7 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        use: ['desvg-loader/react', 'svg-loader'],
+        loader: 'svg-react-loader',
       },
     ],
   },
