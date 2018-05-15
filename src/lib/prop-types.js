@@ -43,8 +43,6 @@ export const paymentModeProp = PropTypes.oneOf([
   'localbitcoins',
 ]);
 
-export const darkenProp = PropTypes.oneOf([0, 1, 2]);
-
 export const configProps = {
   // User data
   defaultNumber: numberProp,

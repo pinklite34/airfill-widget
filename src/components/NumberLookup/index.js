@@ -9,11 +9,9 @@ export default function NumberLookupRoutes() {
       <Route path="/refill/selectProvider" component={NumberLookupCollapsed} />
       <Route
         path="/refill/selectAmount"
-        render={props => <NumberLookupCollapsed darken={1} {...props} />}
+        render={props => <NumberLookupCollapsed {...props} />}
       />
-      <Route
-        render={props => <NumberLookupCollapsed darken={2} {...props} />}
-      />
+      <Route render={props => <NumberLookupCollapsed {...props} />} />
     </Switch>
   );
 }

@@ -13,9 +13,9 @@ export default function CountryRoutes() {
       <Route path="/refill/selectProvider" component={CountryCollapsed} />
       <Route
         path="/refill/selectAmount"
-        render={props => <CountryCollapsed darken={1} {...props} />}
+        render={props => <CountryCollapsed {...props} />}
       />
-      <Route render={props => <CountryCollapsed darken={2} {...props} />} />
+      <Route render={props => <CountryCollapsed {...props} />} />
     </Switch>
   );
 }

@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { css } from 'glamor';
 import Button from 'material-ui/Button';
 
-import { darkenProp } from '../../lib/prop-types';
-
 const styles = {
   container: css({
     padding: 16,
@@ -30,30 +28,9 @@ const styles = {
   }),
 };
 
-const background = [
-  css({
-    backgroundColor: '#EEEEEE',
-  }),
-  css({
-    backgroundColor: '#E3E3E3',
-  }),
-  css({
-    backgroundColor: '#D8D8D8',
-  }),
-  css({
-    backgroundColor: '#CDCDCD',
-  }),
-];
-
-export default function Collapsed({
-  onClick,
-  type,
-  hideButton,
-  children,
-  darken = 0,
-}) {
+export default function Collapsed({ onClick, type, hideButton, children }) {
   return (
-    <div {...styles.container} {...background[darken]}>
+    <div {...styles.container}>
       <div {...styles.text}>{children}</div>
       {hideButton ? null : (
         <Button {...styles.button} onClick={onClick}>
@@ -69,5 +46,4 @@ Collapsed.propTypes = {
   type: PropTypes.string,
   hideButton: PropTypes.bool,
   children: PropTypes.node,
-  darken: darkenProp,
 };

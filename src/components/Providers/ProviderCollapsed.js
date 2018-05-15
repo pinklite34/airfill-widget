@@ -2,10 +2,11 @@ import React from 'react';
 import { css } from 'glamor';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
 
 import Collapsed from '../UI/Collapsed';
 import { selectSelectedOperator } from '../../store';
-import { historyProp, darkenProp, operatorProp } from '../../lib/prop-types';
+import { historyProp, operatorProp } from '../../lib/prop-types';
 
 const styles = {
   container: css({
@@ -31,10 +32,9 @@ const styles = {
   }),
 };
 
-function ProviderCollapsed({ operator, history, darken }) {
+function ProviderCollapsed({ operator, history }) {
   return (
     <Collapsed
-      darken={darken}
       onClick={() => history.push('/refill/selectProvider')}
       type="provider">
       {operator && (
@@ -56,11 +56,11 @@ function ProviderCollapsed({ operator, history, darken }) {
 ProviderCollapsed.propTypes = {
   operator: operatorProp,
   history: historyProp,
-  darken: darkenProp,
 };
 
-export default withRouter(
+export default compose(
+  withRouter,
   connect(state => ({
     operator: selectSelectedOperator(state),
-  }))(ProviderCollapsed)
-);
+  }))
+)(ProviderCollapsed);

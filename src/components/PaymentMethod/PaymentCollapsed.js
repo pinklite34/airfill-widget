@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { css } from 'glamor';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
 
 import Collapsed from '../UI/Collapsed';
 import { selectSelectedOperator, selectPaymentMethod } from '../../store';
-import { historyProp, darkenProp, operatorProp } from '../../lib/prop-types';
+import { historyProp, operatorProp } from '../../lib/prop-types';
 
 const styles = {
   container: css({
@@ -28,7 +29,7 @@ const styles = {
   }),
 };
 
-function PaymentCollapsed({ operator, history, darken, selectedMethod }) {
+function PaymentCollapsed({ operator, history, selectedMethod }) {
   let icon = selectedMethod.icon;
   if (typeof icon === 'string') {
     icon = <img src={icon} />;
@@ -36,7 +37,6 @@ function PaymentCollapsed({ operator, history, darken, selectedMethod }) {
 
   return (
     <Collapsed
-      darken={darken}
       onClick={() => history.push('/refill/selectPayment')}
       type="payment">
       {operator && (
@@ -52,13 +52,13 @@ function PaymentCollapsed({ operator, history, darken, selectedMethod }) {
 PaymentCollapsed.propTypes = {
   operator: operatorProp,
   history: historyProp,
-  darken: darkenProp,
   selectedMethod: PropTypes.object.isRequired,
 };
 
-export default withRouter(
+export default compose(
+  withRouter,
   connect(state => ({
     operator: selectSelectedOperator(state),
     selectedMethod: selectPaymentMethod(state),
-  }))(PaymentCollapsed)
-);
+  }))
+)(PaymentCollapsed);

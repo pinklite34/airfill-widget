@@ -5,12 +5,7 @@ import { connect } from 'react-redux';
 
 import { selectNumber, selectIsNumberLookup } from '../../store';
 import { openComboInput, setComboInputFocus, setNumber } from '../../actions';
-import {
-  darkenProp,
-  historyProp,
-  fnProp,
-  numberProp,
-} from '../../lib/prop-types';
+import { historyProp, fnProp, numberProp } from '../../lib/prop-types';
 
 import Phone from '../UI/phone.svg';
 import Collapsed from '../UI/Collapsed';
@@ -40,7 +35,6 @@ const styles = {
 };
 
 function NumberLookupCollapsed({
-  darken,
   number,
   isNumberLookup,
   openComboInput,
@@ -56,7 +50,7 @@ function NumberLookupCollapsed({
   };
 
   return isNumberLookup ? (
-    <Collapsed darken={darken} onClick={changeNumber} type="number">
+    <Collapsed onClick={changeNumber} type="number">
       <div {...styles.container}>
         <Phone {...styles.icon} />
         <div {...styles.text}>{number}</div>
@@ -66,7 +60,6 @@ function NumberLookupCollapsed({
 }
 
 NumberLookupCollapsed.propTypes = {
-  darken: darkenProp,
   number: numberProp,
   isNumberLookup: PropTypes.bool,
   openComboInput: fnProp,
