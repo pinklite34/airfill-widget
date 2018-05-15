@@ -18,18 +18,27 @@ import configureStore from './store/configureStore';
 import widgetStoreEnhancer from './store/enhanceStore';
 import airfillWidget from './store';
 
-import { init } from './actions';
+import { init, lookupLocation } from './actions';
 
 /**
  * Helper action to initialize widget before being rendered
  */
-export const initializeWidget = apiKey => (dispatch, getState) => {
+export const initializeWidget = (apiKey, lookup = true) => (
+  dispatch,
+  getState
+) => {
   client.configure({
     token: apiKey || '5GY9TZBK8E05U9JQSTWFXNQS4',
     baseUrl: '/api/widget',
   });
 
-  init({})(dispatch, getState);
+  init({
+    shouldLookupLocation: false,
+  })(dispatch, getState);
+
+  if (lookup) {
+    dispatch(lookupLocation(true));
+  }
 };
 
 export { airfillWidget, widgetStoreEnhancer, client as restClient };

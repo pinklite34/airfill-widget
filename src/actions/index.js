@@ -32,9 +32,9 @@ export const loadInventory = createLoadAction({
   uri: '/inventory',
 });
 
-export const lookupLocation = () => (dispatch, getState) => {
+export const lookupLocation = force => (dispatch, getState) => {
   fetch('/lookup_country', {}).then(country => {
-    if (country && !selectCountry(getState())) {
+    if (country && (force || !selectCountry(getState()))) {
       dispatch(setCountry(country.toUpperCase()));
     }
   });
