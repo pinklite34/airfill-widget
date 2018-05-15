@@ -74,6 +74,8 @@ export const configProps = {
   //     operator: operatorProp,
   //   })
   // ),
+
+  onExternalUrl: PropTypes.func,
 };
 
 export const configProp = PropTypes.shape(configProps);

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { css } from 'glamor';
 import Button from 'material-ui/Button';
 import Card from 'material-ui/Card';
-import { CircularProgress } from 'material-ui/Progress';
+import CircularProgress from 'material-ui/Progress/CircularProgress';
 
 import Flag from '../Flag';
 import Check from '../check.svg';

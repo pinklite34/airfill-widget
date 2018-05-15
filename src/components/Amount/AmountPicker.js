@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import { compose } from 'recompose';
 import { selectOperator, selectAmount } from '../../store';
 import { setAmount } from '../../actions';
-import { Button } from 'material-ui';
+import Button from 'material-ui/Button';
 
 import { isValidEmail } from '../../lib/email-validation';
 
@@ -21,7 +21,7 @@ import {
 
 import Card from 'material-ui/Card';
 import Radio from 'material-ui/Radio';
-import { CircularProgress } from 'material-ui/Progress';
+import CircularProgress from 'material-ui/Progress/CircularProgress';
 
 import ActiveSection from '../UI/ActiveSection';
 import SectionTitle from '../UI/SectionTitle';
