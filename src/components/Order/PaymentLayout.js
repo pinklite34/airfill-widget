@@ -188,6 +188,7 @@ class PaymentLayout extends PureComponent {
 
     const showNumber = !operator.result || !operator.result.noNumber;
     const isDelivered = paymentStatus.status === 'delivered';
+    const showPrice = !isDelivered;
 
     let billingCurrencyDisplayName = (
       order.payment.altcoinCode || 'BTC'
@@ -231,34 +232,38 @@ class PaymentLayout extends PureComponent {
           </div>
         </div>
 
-        <div>
-          <div>{!isDelivered && 'Price'}</div>
-          <div
-            {...(this.showCountdown ? styles.cellContainer : {})}
-            {...styles.infoContainer}>
-            {isDelivered ? (
-              <p {...styles.amount}>
-                Delivered{' '}
-                {operator.result && operator.result.slug === 'reddit-gold'
-                  ? 'Reddit Gold'
-                  : formattedPrice}
-                {showNumber && ' to ' + number}
-              </p>
-            ) : (
-              <Tooltip
-                open={this.state.tooltip}
-                title="Copied!"
-                placement="right-end">
-                <p {...styles.amount} onClick={() => this.copy(formattedPrice)}>
-                  {formattedPrice}
+        {showPrice && (
+          <div>
+            <div>{!isDelivered && 'Price'}</div>
+            <div
+              {...(this.showCountdown ? styles.cellContainer : {})}
+              {...styles.infoContainer}>
+              {isDelivered ? (
+                <p {...styles.amount}>
+                  Delivered{' '}
+                  {operator.result && operator.result.slug === 'reddit-gold'
+                    ? 'Reddit Gold'
+                    : formattedPrice}
+                  {showNumber && ' to ' + number}
                 </p>
-              </Tooltip>
-            )}
-            {this.showCountdown && (
-              <p {...styles.label}>Expiring in {this.state.timeLeft}</p>
-            )}
+              ) : (
+                <Tooltip
+                  open={this.state.tooltip}
+                  title="Copied!"
+                  placement="right-end">
+                  <p
+                    {...styles.amount}
+                    onClick={() => this.copy(formattedPrice)}>
+                    {formattedPrice}
+                  </p>
+                </Tooltip>
+              )}
+              {this.showCountdown && (
+                <p {...styles.label}>Expiring in {this.state.timeLeft}</p>
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         {children}
       </div>
