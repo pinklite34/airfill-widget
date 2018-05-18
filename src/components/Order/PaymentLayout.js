@@ -236,15 +236,17 @@ class PaymentLayout extends PureComponent {
           <div
             {...(this.showCountdown ? styles.cellContainer : {})}
             {...styles.infoContainer}>
-            {isDelivered ? (
-              <p {...styles.amount}>
-                Delivered{' '}
-                {operator.result && operator.result.slug === 'reddit-gold'
-                  ? 'Reddit Gold'
-                  : formattedPrice}
-                {showNumber && ' to ' + number}
-              </p>
-            ) : (
+            {isDelivered &&
+              showNumber && (
+                <p {...styles.amount}>
+                  Delivered
+                  {operator.result &&
+                    operator.result.slug === 'reddit-gold' &&
+                    ' Reddit Gold'}
+                  {' to '} {number}
+                </p>
+              )}
+            {!isDelivered && (
               <Tooltip
                 open={this.state.tooltip}
                 title="Copied!"
