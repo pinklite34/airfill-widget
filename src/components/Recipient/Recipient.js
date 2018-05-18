@@ -103,6 +103,10 @@ class Recipient extends PureComponent {
       return 'Reddit username or post link';
     }
 
+    if (operator.result && operator.result.recipientType === 'email') {
+      return 'Your email address';
+    }
+
     return this.isAccount
       ? 'The account number to top up'
       : 'The phone number to top up';
