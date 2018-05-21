@@ -97,11 +97,7 @@ class Recipient extends PureComponent {
           return 'Delivery email address';
         case 'none':
         default:
-          throw new Error(
-            'recipientType ' +
-              operator.result.recipientType +
-              ' should be ignored'
-          );
+          return '';
       }
     }
   };
@@ -126,6 +122,11 @@ class Recipient extends PureComponent {
       !isValidForCountry(number, country)
     ) {
       error = 'Phone number does not match country';
+    } else if (
+      operator.result.recipientType === 'email' &&
+      !isValidEmail(number)
+    ) {
+      error = 'Please enter a valid email address';
     }
 
     this.setState({
