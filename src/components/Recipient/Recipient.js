@@ -110,7 +110,8 @@ class Recipient extends PureComponent {
     const { amount, number, operator, config, email } = this.props;
     return (
       amount &&
-      (number || (operator.result && operator.result.noNumber)) &&
+      (number ||
+        (operator.result && operator.result.recipientType !== 'none')) &&
       (isValidEmail(config.orderOptions.email) || email.valid)
     );
   };

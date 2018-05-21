@@ -100,7 +100,6 @@ export const operatorProp = PropTypes.shape({
   range: rangeProp,
   currency: currencyProp,
   extraInfo: PropTypes.string,
-  noNumber: PropTypes.bool,
   logoImage: PropTypes.string,
   name: PropTypes.string,
   slug: PropTypes.string,
