@@ -99,17 +99,23 @@ class Recipient extends PureComponent {
   getNumberLabel = () => {
     const { operator } = this.props;
 
-    if (operator.result && operator.result.slug === 'reddit-gold') {
-      return 'Reddit username or post link';
+    if (operator.result) {
+      switch (operator.result.recipientType) {
+        case 'phone_number':
+          return 'The phone number to top up';
+        case 'username':
+          return 'Reddit username / post permalink';
+        case 'email':
+          return 'Delivery email address';
+        case 'none':
+        default:
+          throw new Error(
+            'recipientType ' +
+              operator.result.recipientType +
+              ' should be ignored'
+          );
+      }
     }
-
-    if (operator.result && operator.result.recipientType === 'email') {
-      return 'Your email address';
-    }
-
-    return this.isAccount
-      ? 'The account number to top up'
-      : 'The phone number to top up';
   };
 
   isComplete = () => {
@@ -150,11 +156,13 @@ class Recipient extends PureComponent {
   };
 
   render() {
-    const { config, setEmail, number, email, setNumber } = this.props;
+    const { config, setEmail, number, operator, email, setNumber } = this.props;
     const { error } = this.state;
 
     const showEmail = !isValidEmail(config.orderOptions.email);
     const numberLabel = this.getNumberLabel();
+
+    console.log(operator);
 
     return (
       <Container>
@@ -164,7 +172,11 @@ class Recipient extends PureComponent {
             <Field label={numberLabel} className={styles.field}>
               <Input
                 onChange={e => setNumber(e.target.value)}
-                type={this.isAccount ? 'text' : 'tel'}
+                type={
+                  operator.result.recipientType === 'phone_number'
+                    ? 'tel'
+                    : 'text'
+                }
                 value={number}
                 className={styles.input}
               />
