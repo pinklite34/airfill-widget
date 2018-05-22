@@ -79,7 +79,8 @@ function AirfillWidget(ele, opt) {
     showBTCAddress,
     showLogo,
     showInstructions,
-    forceOperator,
+    operator,
+    country,
   } = options;
   const orderOptions = { email, sendEmail, sendSMS, refundAddress };
 
@@ -92,9 +93,7 @@ function AirfillWidget(ele, opt) {
   if (paymentButtons && !Array.isArray(paymentButtons)) {
     console.error('paymentButtons has to be an array');
   } else if (paymentButtons) {
-    paymentButtons.forEach(element => {
-      element.paymentMode = 'dashboard';
-    });
+    paymentButtons.forEach(element => (element.paymentMode = 'dashboard'));
   }
 
   render(
@@ -113,7 +112,8 @@ function AirfillWidget(ele, opt) {
           showLogo={showLogo}
           showPoweredBy={!showLogo}
           keepDefaultPayments={keepDefaultPayments}
-          forceOperator={forceOperator}
+          operator={operator}
+          country={country}
         />
       </ConnectedRouter>
     </Provider>,
