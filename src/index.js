@@ -86,7 +86,8 @@ function AirfillWidget(ele, opt) {
     showBTCAddress,
     showLogo,
     showInstructions,
-    forceOperator,
+    operator,
+    country,
   } = options;
   const orderOptions = { email, sendEmail, sendSMS, refundAddress };
 
@@ -98,33 +99,30 @@ function AirfillWidget(ele, opt) {
   if (paymentButtons && !Array.isArray(paymentButtons)) {
     console.error('paymentButtons has to be an array');
   } else if (paymentButtons) {
-    paymentButtons.forEach(element => {
-      element.paymentMode = 'dashboard';
-    });
+    paymentButtons.forEach(element => (element.paymentMode = 'dashboard'));
   }
 
   render(
     <I18nextProvider i18n={i18n}>
       <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <ConnectedRouter history={history}>
-            <Widget
-              className="refill-widget-root standalone"
-              billingCurrency={billingCurrency}
-              orderOptions={orderOptions}
-              paymentButtons={paymentButtons}
-              showBTCAddress={showBTCAddress}
-              defaultNumber={defaultNumber}
-              accountBalance={userAccountBalance}
-              requireAccountBalance={requireAccountBalance}
-              showInstructions={showInstructions}
-              showLogo={showLogo}
-              showPoweredBy={!showLogo}
-              keepDefaultPayments={keepDefaultPayments}
-              forceOperator={forceOperator}
-            />
-          </ConnectedRouter>
-        </ThemeProvider>
+        <ConnectedRouter history={history}>
+          <Widget
+            className="refill-widget-root standalone"
+            billingCurrency={billingCurrency}
+            orderOptions={orderOptions}
+            paymentButtons={paymentButtons}
+            showBTCAddress={showBTCAddress}
+            defaultNumber={defaultNumber}
+            accountBalance={userAccountBalance}
+            requireAccountBalance={requireAccountBalance}
+            showInstructions={showInstructions}
+            showLogo={showLogo}
+            showPoweredBy={!showLogo}
+            keepDefaultPayments={keepDefaultPayments}
+            operator={operator}
+            country={country}
+          />
+        </ConnectedRouter>
       </Provider>
     </I18nextProvider>,
     element
