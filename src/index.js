@@ -14,27 +14,6 @@ import Widget from './components/Widget';
 import { client } from './lib/api-client';
 import configureStore from './store/configureStore';
 
-// global module exports
-import widgetStoreEnhancer from './store/enhanceStore';
-import airfillWidget from './store';
-
-import { init } from './actions';
-
-/**
- * Helper action to initialize widget before being rendered
- */
-export const initializeWidget = apiKey => (dispatch, getState) => {
-  client.configure({
-    token: apiKey || '5GY9TZBK8E05U9JQSTWFXNQS4',
-    baseUrl: '/api/widget',
-  });
-
-  dispatch(init({}));
-};
-
-export { airfillWidget, widgetStoreEnhancer, client as restClient };
-
-export { default as withWidget } from './components/withWidget';
 export default Widget;
 
 let store;
