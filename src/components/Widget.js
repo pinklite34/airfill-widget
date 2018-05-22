@@ -26,6 +26,7 @@ import Recipient from './Recipient';
 import Payment from './PaymentMethod';
 import getMethods from '../payment-methods';
 import Spinner from './UI/Spinner';
+import { restClient } from '..';
 
 const theme = createMuiTheme({
   palette: {
@@ -78,6 +79,8 @@ class AirfillWidget extends Component {
 
   componentWillMount() {
     const {
+      key,
+      baseUrl,
       isMobile,
       init,
       defaultNumber,
@@ -87,6 +90,11 @@ class AirfillWidget extends Component {
       country,
       history,
     } = this.props;
+
+    restClient.configure({
+      token: key || '5GY9TZBK8E05U9JQSTWFXNQS4',
+      baseUrl: baseUrl || 'https://api.bitrefill.com/widget',
+    });
 
     if (country) {
       setCountry(country);
