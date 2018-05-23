@@ -11,9 +11,9 @@ import { selectOperator } from '../../store';
 
 function Recipient({ config, operator }) {
   const showEmail = !isValidEmail(config.orderOptions.email);
-  const showNumber = !operator.result || !operator.result.noNumber;
+  const showRecipient = operator.result.recipientType !== 'none';
 
-  const show = showEmail || showNumber;
+  const show = showEmail || showRecipient;
   return (
     <Switch>
       <Route path="/refill" exact />

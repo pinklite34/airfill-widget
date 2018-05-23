@@ -186,7 +186,7 @@ class PaymentLayout extends PureComponent {
       paymentStatus,
     } = this.props;
 
-    const showNumber = !operator.result || !operator.result.noNumber;
+    const showRecipient = operator.result.recipientType !== 'none';
     const isDelivered = paymentStatus.status === 'delivered';
 
     let billingCurrencyDisplayName = (
@@ -227,7 +227,7 @@ class PaymentLayout extends PureComponent {
             <p>{`${operator.result.name} ${amount} ${
               operator.result.currency
             }`}</p>
-            <p {...styles.label}>{showNumber && number}</p>
+            <p {...styles.label}>{showRecipient && number}</p>
           </div>
         </div>
 
@@ -237,7 +237,7 @@ class PaymentLayout extends PureComponent {
             {...(this.showCountdown ? styles.cellContainer : {})}
             {...styles.infoContainer}>
             {isDelivered &&
-              showNumber && (
+              showRecipient && (
                 <p {...styles.amount}>
                   Delivered
                   {operator.result &&
