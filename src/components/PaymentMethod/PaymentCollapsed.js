@@ -30,7 +30,7 @@ const styles = {
 };
 
 function PaymentCollapsed({ operator, history, selectedMethod }) {
-  let icon = selectedMethod.icon;
+  let icon = selectedMethod && selectedMethod.icon;
   if (typeof icon === 'string') {
     icon = <img src={icon} />;
   }
@@ -41,8 +41,8 @@ function PaymentCollapsed({ operator, history, selectedMethod }) {
       type="payment">
       {operator && (
         <div {...styles.container}>
-          <img src={selectedMethod.icon} {...styles.icon} />
-          {selectedMethod.title}
+          <img src={icon} {...styles.icon} />
+          {selectedMethod && selectedMethod.title}
         </div>
       )}
     </Collapsed>
