@@ -5,12 +5,7 @@ import { connect } from 'react-redux';
 
 import { openComboInput, setComboInputFocus, setCountry } from '../../actions';
 import { selectCountry, selectIsNumberLookup } from '../../store';
-import {
-  historyProp,
-  countryProp,
-  darkenProp,
-  fnProp,
-} from '../../lib/prop-types';
+import { historyProp, countryProp, fnProp } from '../../lib/prop-types';
 
 import Collapsed from '../UI/Collapsed';
 import Flag from '../UI/Flag';
@@ -50,7 +45,6 @@ const styles = {
 function CountryCollapsed({
   home,
   country,
-  darken,
   isNumberLookup,
   openComboInput,
   setComboInputFocus,
@@ -65,7 +59,7 @@ function CountryCollapsed({
   };
 
   return isNumberLookup ? null : country && country.alpha2 ? (
-    <Collapsed darken={darken} onClick={openMenu} type="country">
+    <Collapsed onClick={openMenu} type="country">
       <div {...styles.container}>
         <div {...styles.country} onClick={openMenu}>
           <div {...styles.flag}>
@@ -76,7 +70,7 @@ function CountryCollapsed({
       </div>
     </Collapsed>
   ) : (
-    <Collapsed hideButton darken={darken} type="country">
+    <Collapsed hideButton type="country">
       {'Select a country above to see available services.'}
     </Collapsed>
   );
@@ -85,7 +79,6 @@ function CountryCollapsed({
 CountryCollapsed.propTypes = {
   home: PropTypes.bool,
   country: countryProp,
-  darken: darkenProp,
   isNumberLookup: PropTypes.bool,
   openComboInput: fnProp,
   setComboInputFocus: fnProp,

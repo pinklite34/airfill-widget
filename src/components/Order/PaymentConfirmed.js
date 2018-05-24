@@ -6,7 +6,7 @@ import { orderProp } from '../../lib/prop-types';
 import PaymentLayout from './PaymentLayout';
 import OrderHeader from '../UI/OrderHeader';
 
-import { CircularProgress } from 'material-ui/Progress';
+import CircularProgress from 'material-ui/Progress/CircularProgress';
 
 const styles = {
   textContainer: css({

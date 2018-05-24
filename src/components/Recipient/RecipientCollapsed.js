@@ -6,12 +6,9 @@ import { compose } from 'recompose';
 
 import Collapsed from '../UI/Collapsed';
 import { selectSelectedOperator, selectNumber } from '../../store';
-import {
-  historyProp,
-  darkenProp,
-  operatorProp,
-  numberProp,
-} from '../../lib/prop-types';
+import { historyProp, operatorProp, numberProp } from '../../lib/prop-types';
+
+import PhoneIcon from './phone.svg';
 
 const styles = {
   container: css({
@@ -37,15 +34,16 @@ const styles = {
   }),
 };
 
-function RecipientCollapsed({ operator, history, number, darken }) {
+function RecipientCollapsed({ operator, history, number }) {
   return (
     <Collapsed
-      darken={darken}
       onClick={() => history.push('/refill/selectRecipient')}
       type="recipient">
       {operator && (
         <div {...styles.container}>
-          <div {...styles.icon} />
+          <div {...styles.icon}>
+            <PhoneIcon />
+          </div>
           {number}
         </div>
       )}
@@ -56,7 +54,6 @@ function RecipientCollapsed({ operator, history, number, darken }) {
 RecipientCollapsed.propTypes = {
   operator: operatorProp,
   history: historyProp,
-  darken: darkenProp,
   number: numberProp,
 };
 

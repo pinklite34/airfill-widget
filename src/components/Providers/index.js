@@ -9,7 +9,7 @@ export default function Providers() {
       <Route path="/refill" exact component={ProviderPicker} />
       <Route path="/refill/selectProvider" component={ProviderPicker} />
       <Route path="/refill/selectAmount" component={ProviderCollapsed} />
-      <Route render={props => <ProviderCollapsed darken={1} {...props} />} />
+      <Route render={props => <ProviderCollapsed {...props} />} />
     </Switch>
   );
 }

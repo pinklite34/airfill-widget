@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { css } from 'glamor';
 import { push } from 'react-router-redux';
-import { CircularProgress } from 'material-ui/Progress';
+import CircularProgress from 'material-ui/Progress/CircularProgress';
 
 import { PUSHER_API_KEY } from '../../constants';
 
@@ -92,6 +92,7 @@ function Payment({
   country,
   paymentStatus,
   updatePaymentStatus,
+  onExternalUrl,
   reset,
 }) {
   if (!order.result) {
@@ -146,6 +147,7 @@ function Payment({
         billingCurrency={billingCurrency}
         number={number}
         onReset={reset}
+        onExternalUrl={onExternalUrl}
       />
     </div>
   );
@@ -167,6 +169,7 @@ Payment.propTypes = {
   paymentStatus: paymentStatusProp,
   updatePaymentStatus: fnProp,
   reset: fnProp,
+  onExternalUrl: PropTypes.func,
 };
 
 export default connect(

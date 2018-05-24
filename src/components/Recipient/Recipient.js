@@ -84,50 +84,49 @@ class Recipient extends PureComponent {
     error: null,
   };
 
-  // if we should show number input at all
-  get showNumber() {
-    const { operator } = this.props;
-    return !operator.result || !operator.result.noNumber;
-  }
-
-  // if we need account number instead of phone number
-  get isAccount() {
-    const { operator } = this.props;
-    return operator.result && !!operator.result.type;
-  }
-
   getNumberLabel = () => {
     const { operator } = this.props;
 
-    if (operator.result && operator.result.slug === 'reddit-gold') {
-      return 'Reddit username or post link';
+    if (operator.result) {
+      switch (operator.result.recipientType) {
+        case 'phone_number':
+          return 'The phone number to top up';
+        case 'username':
+          return 'Reddit username / post permalink';
+        case 'email':
+          return 'Delivery email address';
+        case 'none':
+        default:
+          return '';
+      }
     }
-
-    return this.isAccount
-      ? 'The account number to top up'
-      : 'The phone number to top up';
   };
 
   isComplete = () => {
     const { amount, number, operator, config, email } = this.props;
     return (
       amount &&
-      (number || (operator.result && operator.result.noNumber)) &&
+      (number ||
+        (operator.result && operator.result.recipientType !== 'none')) &&
       (isValidEmail(config.orderOptions.email) || email.valid)
     );
   };
 
   validate = () => {
-    const { number, country } = this.props;
+    const { number, country, operator } = this.props;
 
     let error;
 
     if (
-      this.showNumber &&
-      !this.isAccount &&
+      operator.result.recipientType === 'phone_number' &&
       !isValidForCountry(number, country)
     ) {
       error = 'Phone number does not match country';
+    } else if (
+      operator.result.recipientType === 'email' &&
+      !isValidEmail(number)
+    ) {
+      error = 'Please enter a valid email address';
     }
 
     this.setState({
@@ -146,7 +145,7 @@ class Recipient extends PureComponent {
   };
 
   render() {
-    const { config, setEmail, number, email, setNumber } = this.props;
+    const { config, setEmail, number, operator, email, setNumber } = this.props;
     const { error } = this.state;
 
     const showEmail = !isValidEmail(config.orderOptions.email);
@@ -156,16 +155,18 @@ class Recipient extends PureComponent {
       <Container>
         {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
         <Content>
-          {this.showNumber && (
-            <Field label={numberLabel} className={styles.field}>
-              <Input
-                onChange={e => setNumber(e.target.value)}
-                type={this.isAccount ? 'text' : 'tel'}
-                value={number}
-                className={styles.input}
-              />
-            </Field>
-          )}
+          <Field label={numberLabel} className={styles.field}>
+            <Input
+              onChange={e => setNumber(e.target.value)}
+              type={
+                operator.result.recipientType === 'phone_number'
+                  ? 'tel'
+                  : 'text'
+              }
+              value={number}
+              className={styles.input}
+            />
+          </Field>
           {showEmail && (
             <Field
               label="E-mail address"

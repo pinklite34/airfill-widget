@@ -11,7 +11,7 @@ import { configProps, inventoryProp, fnProp } from '../lib/prop-types';
 import { selectInventory } from '../store';
 
 import Card from 'material-ui/Card';
-import { CircularProgress } from 'material-ui/Progress';
+import CircularProgress from 'material-ui/Progress/CircularProgress';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import createMuiTheme from 'material-ui/styles/createMuiTheme';
 import blue from 'material-ui/colors/blue';

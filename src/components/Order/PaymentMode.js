@@ -137,6 +137,11 @@ class PaymentMode extends PureComponent {
     createOrder: fnProp,
     paymentMethod: PropTypes.object.isRequired,
     setPaymentMethod: PropTypes.func.isRequired,
+    onExternalUrl: PropTypes.func,
+  };
+
+  static defaultProps = {
+    onExternalUrl: uri => (window.location.href = uri),
   };
 
   constructor(props) {
@@ -161,11 +166,13 @@ class PaymentMode extends PureComponent {
     };
   }
 
-  copy = (text, field) => {
+  onCopy = (text, field) => () => {
     this.setState({ [field]: true });
     setTimeout(() => this.setState({ [field]: false }), 2000);
     setClipboardText(text);
   };
+
+  onExternalUrl = uri => () => this.props.onExternalUrl(uri);
 
   render() {
     const { paymentStatus, paymentMethod, order } = this.props;
@@ -276,17 +283,14 @@ class PaymentMode extends PureComponent {
                   <div {...styles.left}>
                     <PaymentInstructions>
                       <Tooltip open={this.state.amountTooltip} title="Copied!">
-                        <strong
-                          onClick={() => this.copy(price, 'amountTooltip')}>
+                        <strong onClick={this.onCopy(price, 'amountTooltip')}>
                           {` ${remaining || price} ${unit} `}
                         </strong>
                       </Tooltip>
                     </PaymentInstructions>
                     <Tooltip open={this.state.addressTooltip} title="Copied!">
                       <BitcoinAddress
-                        onClick={() =>
-                          this.copy(paymentAddress, 'addressTooltip')
-                        }
+                        onClick={this.onCopy(paymentAddress, 'addressTooltip')}
                         address={paymentAddress}
                       />
                     </Tooltip>
@@ -307,7 +311,7 @@ class PaymentMode extends PureComponent {
                       {...styles.bottomButton}
                       raised
                       color="primary"
-                      onClick={() => (window.location.href = uri)}>
+                      onClick={this.onExternalUrl(uri)}>
                       {'Open in Wallet'}
                     </Button>
                     {isPartial && (

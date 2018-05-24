@@ -1,66 +1,42 @@
 import React from 'react';
+import styled from 'react-emotion';
 import PropTypes from 'prop-types';
-import { css } from 'glamor';
 import Button from 'material-ui/Button';
 
-import { darkenProp } from '../../lib/prop-types';
+const Container = styled('div')`
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #efefef;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+`;
 
-const styles = {
-  container: css({
-    padding: 16,
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    transition: 'background-color 0.2s ease',
-  }),
-  button: css({
-    backgroundColor: '#fff !important',
-    fontSize: '12px !important',
-    margin: '-4px !important',
-  }),
-  text: css({
-    fontSize: 16,
-    color: '#777777 !important',
-    fontWeight: '500 !important',
-    '& strong': {
-      paddingBottom: 2,
-      borderBottom: '1px solid #CCCCCC',
-    },
-    flex: '1 1 auto',
-  }),
-};
+const StyledButton = styled(Button)`
+  background-color: #fff !important;
+  font-size: 12px !important;
+  margin: -4px !important;
+`;
 
-const background = [
-  css({
-    backgroundColor: '#EEEEEE',
-  }),
-  css({
-    backgroundColor: '#E3E3E3',
-  }),
-  css({
-    backgroundColor: '#D8D8D8',
-  }),
-  css({
-    backgroundColor: '#CDCDCD',
-  }),
-];
+const Text = styled('div')`
+  font-size: 16px;
+  color: #777777 !important;
+  font-weight: 500 !important;
+  flex: 1 1 auto;
+  & strong {
+    padding-bottom: 2px;
+    border-bottom: 1px solid #cccccc;
+  }
+`;
 
-export default function Collapsed({
-  onClick,
-  type,
-  hideButton,
-  children,
-  darken = 0,
-}) {
+export default function Collapsed({ onClick, type, hideButton, children }) {
   return (
-    <div {...styles.container} {...background[darken]}>
-      <div {...styles.text}>{children}</div>
+    <Container>
+      <Text>{children}</Text>
       {hideButton ? null : (
-        <Button {...styles.button} onClick={onClick}>
-          Change {type}
-        </Button>
+        <StyledButton onClick={onClick}>Change {type}</StyledButton>
       )}
-    </div>
+    </Container>
   );
 }
 
@@ -69,5 +45,4 @@ Collapsed.propTypes = {
   type: PropTypes.string,
   hideButton: PropTypes.bool,
   children: PropTypes.node,
-  darken: darkenProp,
 };

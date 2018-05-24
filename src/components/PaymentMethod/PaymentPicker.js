@@ -10,7 +10,7 @@ import {
   amountProp,
   operatorProp,
 } from '../../lib/prop-types';
-import { CircularProgress } from 'material-ui/Progress';
+import CircularProgress from 'material-ui/Progress/CircularProgress';
 
 import PaymentItem from './PaymentItem';
 import Button from 'material-ui/Button';

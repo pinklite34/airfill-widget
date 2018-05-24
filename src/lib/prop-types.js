@@ -43,8 +43,6 @@ export const paymentModeProp = PropTypes.oneOf([
   'localbitcoins',
 ]);
 
-export const darkenProp = PropTypes.oneOf([0, 1, 2]);
-
 export const configProps = {
   // User data
   defaultNumber: numberProp,
@@ -76,6 +74,8 @@ export const configProps = {
   //     operator: operatorProp,
   //   })
   // ),
+
+  onExternalUrl: PropTypes.func,
 };
 
 export const configProp = PropTypes.shape(configProps);
@@ -100,7 +100,6 @@ export const operatorProp = PropTypes.shape({
   range: rangeProp,
   currency: currencyProp,
   extraInfo: PropTypes.string,
-  noNumber: PropTypes.bool,
   logoImage: PropTypes.string,
   name: PropTypes.string,
   slug: PropTypes.string,
