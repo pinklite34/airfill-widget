@@ -32,8 +32,7 @@ import Recipient from './Recipient';
 import Payment from './PaymentMethod';
 import getMethods from '../payment-methods';
 import Spinner from './UI/Spinner';
-import { restClient } from '..';
-// import { client } from '../lib/api-client';
+import { client } from '../lib/api-client';
 
 const theme = createMuiTheme({
   palette: {
@@ -86,8 +85,8 @@ class AirfillWidget extends Component {
 
   componentWillMount() {
     const {
-      // key,
-      // baseUrl,
+      key,
+      baseUrl,
       isMobile,
       init,
       defaultNumber,
@@ -98,10 +97,10 @@ class AirfillWidget extends Component {
       history,
     } = this.props;
 
-    // client.configure({
-    //  token: key || '5GY9TZBK8E05U9JQSTWFXNQS4',
-    //  baseUrl: baseUrl || 'https://api.bitrefill.com/widget',
-    // });
+    client.configure({
+      token: key || '5GY9TZBK8E05U9JQSTWFXNQS4',
+      baseUrl: baseUrl || '/api/widget',
+    });
 
     history.push('/refill');
 
