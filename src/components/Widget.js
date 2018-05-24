@@ -1,19 +1,25 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Media from 'react-media';
-import { connect } from 'react-redux';
+import { connect, Provider } from 'react-redux';
 import { Route, withRouter } from 'react-router';
 import { compose } from 'recompose';
+import createHistory from 'history/createMemoryHistory';
+import {
+  routerReducer,
+  routerMiddleware,
+  ConnectedRouter,
+} from 'react-router-redux';
 
 import { init, setOperator, setCountry } from '../actions';
 import { configProps, inventoryProp, fnProp } from '../lib/prop-types';
 import { selectInventory } from '../store';
+import configureStore from '../store/configureStore';
 
 import Card from './UI/Card';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import createMuiTheme from 'material-ui/styles/createMuiTheme';
 import blue from 'material-ui/colors/blue';
-
 import Root from './UI/Root';
 import Header from './Header';
 import Footer from './Footer';
@@ -97,6 +103,8 @@ class AirfillWidget extends Component {
       baseUrl: baseUrl || 'https://api.bitrefill.com/widget',
     });
 
+    history.push('/refill');
+
     if (country) {
       setCountry(country);
 
@@ -172,15 +180,11 @@ class AirfillWidget extends Component {
   }
 }
 
-function AirfillWidgetWrapper(props) {
-  return (
-    <Media query="(-moz-touch-enabled: 1), (pointer: coarse)">
-      {isMobile => <AirfillWidget isMobile={isMobile} {...props} />}
-    </Media>
-  );
-}
+const history = createHistory();
+const middleware = routerMiddleware(history);
+const store = configureStore(routerReducer, middleware);
 
-export default compose(
+const StoreWidgetWrapper = compose(
   connect(
     state => ({
       inventory: selectInventory(state),
@@ -192,4 +196,18 @@ export default compose(
     }
   ),
   withRouter
-)(AirfillWidgetWrapper);
+)(AirfillWidget);
+
+function Widget(props) {
+  return (
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <Media query="(-moz-touch-enabled: 1), (pointer: coarse)">
+          {isMobile => <StoreWidgetWrapper isMobile={isMobile} {...props} />}
+        </Media>
+      </ConnectedRouter>
+    </Provider>
+  );
+}
+
+export default Widget;
