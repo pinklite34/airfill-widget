@@ -119,7 +119,7 @@ class AirfillWidget extends Component {
 
     init({
       defaultNumber: defaultNumber,
-      shouldLookupLocation: !isMobile,
+      shouldLookupLocation: !country && !isMobile,
     });
   }
 
