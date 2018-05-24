@@ -11,7 +11,8 @@ import { selectOperator } from '../../store';
 
 function Recipient({ config, operator }) {
   const showEmail = !isValidEmail(config.orderOptions.email);
-  const showRecipient = operator.result.recipientType !== 'none';
+  const showRecipient =
+    operator.result && operator.result.recipientType !== 'none';
 
   const show = showEmail || showRecipient;
   return (
