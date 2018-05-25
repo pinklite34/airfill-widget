@@ -1,15 +1,21 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'react-emotion';
 import { connect } from 'react-redux';
 
-import { createOrder, setNumber, setEmail, trigger } from '../../actions';
+import {
+  setNumber,
+  setEmail,
+  trigger,
+  setSubscribeNewsletter,
+} from '../../actions';
 import {
   selectNumber,
   selectEmail,
   selectAmount,
   selectOperator,
   selectCountry,
+  selectSubscribeNewsletter,
 } from '../../store';
 
 import {
@@ -31,6 +37,7 @@ import Input from 'material-ui/Input';
 
 import Field from '../UI/Field';
 import ErrorBanner from '../UI/ErrorBanner';
+import { Checkbox } from 'material-ui';
 
 const styles = {
   field: css`
@@ -67,7 +74,6 @@ class Recipient extends PureComponent {
   static propTypes = {
     config: configProp,
     amount: amountProp,
-    createOrder: fnProp,
     operator: operatorResultProp,
     history: historyProp,
     trigger: fnProp,
@@ -78,6 +84,8 @@ class Recipient extends PureComponent {
     email: emailProp,
     paymentMethod: PropTypes.object,
     country: countryProp,
+    setSubscribeNewsletter: fnProp,
+    subscribing: PropTypes.bool.isRequired,
   };
 
   state = {
@@ -145,7 +153,16 @@ class Recipient extends PureComponent {
   };
 
   render() {
-    const { config, setEmail, number, operator, email, setNumber } = this.props;
+    const {
+      config,
+      setEmail,
+      number,
+      operator,
+      email,
+      setNumber,
+      setSubscribeNewsletter,
+      subscribing,
+    } = this.props;
     const { error } = this.state;
 
     const showEmail = !isValidEmail(config.orderOptions.email);
@@ -155,40 +172,52 @@ class Recipient extends PureComponent {
       <Container>
         {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
         <Content>
-          <Field label={numberLabel} className={styles.field}>
-            <Input
-              onChange={e => setNumber(e.target.value)}
-              type={
-                operator.result.recipientType === 'phone_number'
-                  ? 'tel'
-                  : 'text'
-              }
-              value={number}
-              className={styles.input}
-            />
-          </Field>
-          {showEmail && (
-            <Field
-              label="E-mail address"
-              hint="The email address will receive order status updates"
-              className={styles.field}>
+          {numberLabel !== '' && (
+            <Field label={numberLabel} className={styles.field}>
               <Input
-                onChange={e =>
-                  setEmail({
-                    value: e.target.value,
-                    inFocus: true,
-                  })
+                onChange={e => setNumber(e.target.value)}
+                type={
+                  operator.result.recipientType === 'phone_number'
+                    ? 'tel'
+                    : 'text'
                 }
-                onBlur={e =>
-                  setEmail({
-                    value: e.target.value,
-                    inFocus: false,
-                  })
-                }
-                value={email.value}
+                value={number}
                 className={styles.input}
               />
             </Field>
+          )}
+          {showEmail && (
+            <Fragment>
+              <Field
+                label="E-mail address"
+                hint="The email address will receive order status updates"
+                className={styles.field}>
+                <Input
+                  onChange={e =>
+                    setEmail({
+                      value: e.target.value,
+                      inFocus: true,
+                    })
+                  }
+                  onBlur={e =>
+                    setEmail({
+                      value: e.target.value,
+                      inFocus: false,
+                    })
+                  }
+                  value={email.value}
+                  className={styles.input}
+                />
+              </Field>
+              <Field>
+                <Checkbox
+                  onChange={e => setSubscribeNewsletter(e.target.checked)}
+                  checked={subscribing}
+                />
+                Add me to the newsletter to receive news about new products and
+                features
+              </Field>
+            </Fragment>
           )}
         </Content>
         <Button
@@ -211,11 +240,12 @@ export default connect(
     amount: selectAmount(state),
     operator: selectOperator(state),
     country: selectCountry(state),
+    subscribing: selectSubscribeNewsletter(state),
   }),
   {
-    createOrder,
     setNumber,
     setEmail,
     trigger,
+    setSubscribeNewsletter,
   }
 )(Recipient);
