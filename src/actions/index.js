@@ -3,7 +3,6 @@ import { createLoadAction } from '../lib/rest-helpers';
 import { fetch } from '../lib/api-client';
 import { parse, format } from 'libphonenumber-js';
 
-// import {refillNumberLookupIsLoadingSelector} from '../reducers/refill-widget';
 import {
   selectNumber,
   selectAmount,
@@ -22,6 +21,7 @@ export const trigger = createAction('UPDATE');
 export const setEmail = createAction('SET_EMAIL');
 export const setComboInputFocus = createAction('SET_COMBOINPUT_FOCUS');
 export const updatePaymentStatus = createAction('UPDATE_PAYMENT_STATUS');
+export const setSubscribeNewsletter = createAction('SET_SUBSCRIBE_NEWSLETTER');
 
 const setComboInputOpen = createAction('SET_COMBOINPUT_OPEN');
 export const openComboInput = () => setComboInputOpen(true);

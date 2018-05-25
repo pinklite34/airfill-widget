@@ -3,13 +3,20 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'react-emotion';
 import { connect } from 'react-redux';
 
-import { createOrder, setNumber, setEmail, trigger } from '../../actions';
+import {
+  createOrder,
+  setNumber,
+  setEmail,
+  trigger,
+  setSubscribeNewsletter,
+} from '../../actions';
 import {
   selectNumber,
   selectEmail,
   selectAmount,
   selectOperator,
   selectCountry,
+  selectSubscribeNewsletter,
 } from '../../store';
 
 import {
@@ -31,6 +38,7 @@ import Input from 'material-ui/Input';
 
 import Field from '../UI/Field';
 import ErrorBanner from '../UI/ErrorBanner';
+import { Checkbox } from 'material-ui';
 
 const styles = {
   field: css`
@@ -78,6 +86,8 @@ class Recipient extends PureComponent {
     email: emailProp,
     paymentMethod: PropTypes.object,
     country: countryProp,
+    setSubscribeNewsletter: fnProp,
+    subscribing: PropTypes.bool.isRequired,
   };
 
   state = {
@@ -145,7 +155,16 @@ class Recipient extends PureComponent {
   };
 
   render() {
-    const { config, setEmail, number, operator, email, setNumber } = this.props;
+    const {
+      config,
+      setEmail,
+      number,
+      operator,
+      email,
+      setNumber,
+      setSubscribeNewsletter,
+      subscribing,
+    } = this.props;
     const { error } = this.state;
 
     const showEmail = !isValidEmail(config.orderOptions.email);
@@ -193,7 +212,10 @@ class Recipient extends PureComponent {
                 />
               </Field>
               <Field>
-                <input type="checkbox" name="subscribe" />
+                <Checkbox
+                  onChange={e => setSubscribeNewsletter(e.target.checked)}
+                  checked={subscribing}
+                />
                 Add me to the newsletter to receive news about new products and
                 features
               </Field>
@@ -220,11 +242,13 @@ export default connect(
     amount: selectAmount(state),
     operator: selectOperator(state),
     country: selectCountry(state),
+    subscribing: selectSubscribeNewsletter(state),
   }),
   {
     createOrder,
     setNumber,
     setEmail,
     trigger,
+    setSubscribeNewsletter,
   }
 )(Recipient);

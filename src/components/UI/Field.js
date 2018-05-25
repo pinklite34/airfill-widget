@@ -10,7 +10,7 @@ const styles = {
   }),
   hint: css({
     fontSize: 12,
-    margin: '4px 0 8px',
+    margin: '-12px 0 8px',
   }),
   error: css({
     color: '#D65C5C',

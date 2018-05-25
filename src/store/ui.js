@@ -10,6 +10,7 @@ const initialState = {
   email: { value: '', valid: false, error: false },
   comboInputOpen: false,
   paymentMethod: null,
+  subscribing: false,
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -42,7 +43,9 @@ export default (state = initialState, { type, payload }) => {
     case 'SET_PAYMENT_METHOD': {
       return { ...state, paymentMethod: payload };
     }
-
+    case 'SET_SUBSCRIBE_NEWSLETTER': {
+      return { ...state, subscribing: payload };
+    }
     case 'SET_EMAIL': {
       const { value, inFocus } = payload;
       const valid = isValidEmail(value);
@@ -97,3 +100,6 @@ export const selectValidEmail = state => {
   const email = selectEmail(state);
   return email && email.valid ? email.value : null;
 };
+
+export const selectSubscribeNewsletter = state =>
+  selectUiState(state).subscribing;
