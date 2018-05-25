@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'react-emotion';
 import { connect } from 'react-redux';
@@ -168,27 +168,34 @@ class Recipient extends PureComponent {
             />
           </Field>
           {showEmail && (
-            <Field
-              label="E-mail address"
-              hint="The email address will receive order status updates"
-              className={styles.field}>
-              <Input
-                onChange={e =>
-                  setEmail({
-                    value: e.target.value,
-                    inFocus: true,
-                  })
-                }
-                onBlur={e =>
-                  setEmail({
-                    value: e.target.value,
-                    inFocus: false,
-                  })
-                }
-                value={email.value}
-                className={styles.input}
-              />
-            </Field>
+            <Fragment>
+              <Field
+                label="E-mail address"
+                hint="The email address will receive order status updates"
+                className={styles.field}>
+                <Input
+                  onChange={e =>
+                    setEmail({
+                      value: e.target.value,
+                      inFocus: true,
+                    })
+                  }
+                  onBlur={e =>
+                    setEmail({
+                      value: e.target.value,
+                      inFocus: false,
+                    })
+                  }
+                  value={email.value}
+                  className={styles.input}
+                />
+              </Field>
+              <Field>
+                <input type="checkbox" name="subscribe" />
+                Add me to the newsletter to receive news about new products and
+                features
+              </Field>
+            </Fragment>
           )}
         </Content>
         <Button
