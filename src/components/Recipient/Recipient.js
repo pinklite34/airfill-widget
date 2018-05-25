@@ -4,7 +4,6 @@ import styled, { css } from 'react-emotion';
 import { connect } from 'react-redux';
 
 import {
-  createOrder,
   setNumber,
   setEmail,
   trigger,
@@ -75,7 +74,6 @@ class Recipient extends PureComponent {
   static propTypes = {
     config: configProp,
     amount: amountProp,
-    createOrder: fnProp,
     operator: operatorResultProp,
     history: historyProp,
     trigger: fnProp,
@@ -245,7 +243,6 @@ export default connect(
     subscribing: selectSubscribeNewsletter(state),
   }),
   {
-    createOrder,
     setNumber,
     setEmail,
     trigger,
