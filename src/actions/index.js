@@ -10,6 +10,7 @@ import {
   selectOrder,
   selectCountry,
   selectOperator,
+  selectSubscribeNewsletter,
 } from '../store';
 
 export const setStep = createAction('SET_STEP');
@@ -139,6 +140,7 @@ export const createOrder = orderOptions => (dispatch, getState) => {
   const email = selectValidEmail(state) || orderOptions.email;
   const operator = selectOperator(state);
   const order = selectOrder(state);
+  const isSubscribing = selectSubscribeNewsletter(state);
 
   const options = {
     body: {
@@ -147,6 +149,7 @@ export const createOrder = orderOptions => (dispatch, getState) => {
       valuePackage: amount,
       number,
       email,
+      isSubscribing,
     },
   };
 
