@@ -11,6 +11,7 @@ import {
   selectCountry,
   selectOperator,
   selectSubscribeNewsletter,
+  selectPaymentMethod,
 } from '../store';
 
 export const setStep = createAction('SET_STEP');
@@ -141,6 +142,7 @@ export const createOrder = orderOptions => (dispatch, getState) => {
   const operator = selectOperator(state);
   const order = selectOrder(state);
   const isSubscribing = selectSubscribeNewsletter(state);
+  const method = selectPaymentMethod(state);
 
   const options = {
     body: {
@@ -150,6 +152,7 @@ export const createOrder = orderOptions => (dispatch, getState) => {
       number,
       email,
       isSubscribing,
+      paymentMethod: method.paymentMode,
     },
   };
 

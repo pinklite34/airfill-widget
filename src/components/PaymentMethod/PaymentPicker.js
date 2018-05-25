@@ -76,22 +76,13 @@ class PaymentMethod extends React.Component {
   select = method => this.props.setPaymentMethod(method);
 
   createOrder = () => {
-    const {
-      config,
-      createOrder,
-      history,
-      trigger,
-      selectedMethod,
-    } = this.props;
+    const { config, createOrder, history, trigger } = this.props;
 
     this.setState({
       isLoading: true,
     });
 
-    createOrder({
-      ...config.orderOptions,
-      paymentMethod: selectedMethod.paymentMode,
-    })
+    createOrder(config.orderOptions)
       .then(() => {
         history.push('/refill/payment');
         trigger();
