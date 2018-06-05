@@ -28,20 +28,20 @@ const getDisplayText = key => {
   switch (lower) {
     case 'pin':
       return 'Phone refill vouchers / PINs';
-    case 'voucher':
-      return 'Vouchers';
     case 'dth':
       return 'Digital Television (DTH)';
     case 'data':
       return 'Data bundles';
     case 'sms':
       return 'SMS bundles';
+    case 'voip':
+      return 'VoIP';
     case 'other':
       return 'Other products';
     case null:
       return 'Prepaid phones';
     default:
-      return key + ' Refill';
+      return `${key[0].toUpperCase()}${key.substr(1)}`;
   }
 };
 
