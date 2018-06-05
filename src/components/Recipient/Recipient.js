@@ -155,18 +155,20 @@ class Recipient extends PureComponent {
       <Container>
         {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
         <Content>
-          <Field label={numberLabel} className={styles.field}>
-            <Input
-              onChange={e => setNumber(e.target.value)}
-              type={
-                operator.result.recipientType === 'phone_number'
-                  ? 'tel'
-                  : 'text'
-              }
-              value={number}
-              className={styles.input}
-            />
-          </Field>
+          {!!numberLabel && (
+            <Field label={numberLabel} className={styles.field}>
+              <Input
+                onChange={e => setNumber(e.target.value)}
+                type={
+                  operator.result.recipientType === 'phone_number'
+                    ? 'tel'
+                    : 'text'
+                }
+                value={number}
+                className={styles.input}
+              />
+            </Field>
+          )}
           {showEmail && (
             <Field
               label="E-mail address"
