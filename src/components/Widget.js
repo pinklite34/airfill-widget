@@ -99,7 +99,7 @@ class AirfillWidget extends Component {
 
     client.configure({
       token: key || '5GY9TZBK8E05U9JQSTWFXNQS4',
-      baseUrl: baseUrl || '/api/widget',
+      baseUrl: baseUrl || 'https://api.bitrefill.com/widget',
     });
 
     history.push('/refill');
