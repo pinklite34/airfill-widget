@@ -135,7 +135,7 @@ class Recipient extends PureComponent {
       !isValidEmail(number)
     ) {
       error = 'Please enter a valid recipient email address';
-    } else if (!isValidEmail(config.orderOptions.email) || email.valid) {
+    } else if (!isValidEmail(config.orderOptions.email) && !email.valid) {
       error = 'Please enter a valid status update email address';
     }
 
