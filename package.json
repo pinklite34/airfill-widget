@@ -1,6 +1,6 @@
 {
   "name": "@bitrefill/airfill-widget",
-  "version": "4.0.0-alpha.19",
+  "version": "4.0.0-alpha.20",
   "description": "Airfill Embeddable Refill Widget",
   "main": "dist/index.js",
   "engines": {
@@ -67,11 +67,15 @@
 =======
     "input-format": "^0.2.3",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "libphonenumber-js": "^1.2.9",
 >>>>>>> 4.0.0-alpha.14
 =======
     "libphonenumber-js": "^1.2.14",
 >>>>>>> upgrade shared deps with dashboard
+=======
+    "libphonenumber-js": "^1.2.15",
+>>>>>>> 4.0.0-alpha.20
     "material-ui": "1.0.0-beta.27",
     "object-assign": "^4.1.1",
     "promise": "^8.0.1",
@@ -165,8 +169,12 @@
 =======
     "webpack": "4.10.2",
     "webpack-bundle-analyzer": "^2.13.1",
+<<<<<<< HEAD
     "webpack-cli": "^2.1.4",
 >>>>>>> upgrade shared deps with dashboard
+=======
+    "webpack-cli": "^3.0.2",
+>>>>>>> 4.0.0-alpha.20
     "webpack-dev-server": "3.1.4",
 >>>>>>> 4.0.0-alpha.14
     "webpack-node-externals": "^1.7.2"
