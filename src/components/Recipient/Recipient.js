@@ -156,11 +156,15 @@ class Recipient extends PureComponent {
       <Container>
         {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
         <Content>
-          {this.showNumber && (
+          {!!numberLabel && (
             <Field label={numberLabel} className={styles.field}>
               <Input
                 onChange={e => setNumber(e.target.value)}
-                type={this.isAccount ? 'text' : 'tel'}
+                type={
+                  operator.result.recipientType === 'phone_number'
+                    ? 'tel'
+                    : 'text'
+                }
                 value={number}
                 className={styles.input}
               />
