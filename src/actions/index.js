@@ -3,7 +3,6 @@ import { createLoadAction } from '../lib/rest-helpers';
 import { fetch } from '../lib/api-client';
 import { parse, format } from 'libphonenumber-js';
 
-// import {refillNumberLookupIsLoadingSelector} from '../reducers/refill-widget';
 import {
   selectNumber,
   selectAmount,
@@ -11,6 +10,8 @@ import {
   selectOrder,
   selectCountry,
   selectOperator,
+  selectSubscribeNewsletter,
+  selectPaymentMethod,
 } from '../store';
 
 export const setStep = createAction('SET_STEP');
@@ -22,6 +23,7 @@ export const trigger = createAction('UPDATE');
 export const setEmail = createAction('SET_EMAIL');
 export const setComboInputFocus = createAction('SET_COMBOINPUT_FOCUS');
 export const updatePaymentStatus = createAction('UPDATE_PAYMENT_STATUS');
+export const setSubscribeNewsletter = createAction('SET_SUBSCRIBE_NEWSLETTER');
 
 const setComboInputOpen = createAction('SET_COMBOINPUT_OPEN');
 export const openComboInput = () => setComboInputOpen(true);
@@ -144,6 +146,8 @@ export const createOrder = orderOptions => (dispatch, getState) => {
   const email = selectValidEmail(state) || orderOptions.email;
   const operator = selectOperator(state);
   const order = selectOrder(state);
+  const isSubscribing = selectSubscribeNewsletter(state);
+  const method = selectPaymentMethod(state);
 
   const options = {
     body: {
@@ -152,6 +156,8 @@ export const createOrder = orderOptions => (dispatch, getState) => {
       valuePackage: amount,
       number,
       email,
+      isSubscribing,
+      paymentMethod: method.paymentMode,
     },
   };
 

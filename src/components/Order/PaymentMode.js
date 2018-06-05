@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled, { css as emotionCss } from 'react-emotion';
 
 import { connect } from 'react-redux';
-import { createOrder, setPaymentMethod } from '../../actions';
+import { setPaymentMethod } from '../../actions';
 
 import { selectAmount, selectPaymentMethod } from '../../store';
 
@@ -28,7 +28,6 @@ import {
   orderOptionsProp,
   amountProp,
   paymentStatusProp,
-  fnProp,
 } from '../../lib/prop-types';
 
 const styles = {
@@ -134,7 +133,6 @@ class PaymentMode extends PureComponent {
     accountBalance: amountProp,
     orderOptions: orderOptionsProp,
     paymentStatus: paymentStatusProp,
-    createOrder: fnProp,
     paymentMethod: PropTypes.object.isRequired,
     setPaymentMethod: PropTypes.func.isRequired,
     onExternalUrl: PropTypes.func,
@@ -344,7 +342,6 @@ export default connect(
     paymentMethod: selectPaymentMethod(state),
   }),
   {
-    createOrder,
     setPaymentMethod,
   }
 )(PaymentMode);

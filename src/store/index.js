@@ -8,6 +8,7 @@ import ui, {
   selectComboInputOpen,
   selectComboInputFocus,
   selectPaymentMethod,
+  selectSubscribeNewsletter,
 } from './ui';
 import paymentStatus, { selectPaymentStatus } from './paymentStatus';
 import inventory, {
@@ -57,6 +58,7 @@ export {
   selectAvailableOperators,
   selectSelectedOperator,
   selectInventory,
+  selectSubscribeNewsletter,
   // Operator
   selectOperator,
   // Payment status
