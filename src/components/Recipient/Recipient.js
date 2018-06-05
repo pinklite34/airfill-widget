@@ -118,7 +118,7 @@ class Recipient extends PureComponent {
   };
 
   validate = () => {
-    const { number, country } = this.props;
+    const { config, number, country, operator, email } = this.props;
 
     let error;
 
@@ -128,6 +128,13 @@ class Recipient extends PureComponent {
       !isValidForCountry(number, country)
     ) {
       error = 'Phone number does not match country';
+    } else if (
+      operator.result.recipientType === 'email' &&
+      !isValidEmail(number)
+    ) {
+      error = 'Please enter a valid recipient email address';
+    } else if (!isValidEmail(config.orderOptions.email) || email.valid) {
+      error = 'Please enter a valid status update email address';
     }
 
     this.setState({
