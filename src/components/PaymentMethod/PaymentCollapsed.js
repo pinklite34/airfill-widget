@@ -30,18 +30,13 @@ const styles = {
 };
 
 function PaymentCollapsed({ operator, history, selectedMethod }) {
-  let icon = selectedMethod && selectedMethod.icon;
-  if (typeof icon === 'string') {
-    icon = <img src={icon} />;
-  }
-
   return (
     <Collapsed
       onClick={() => history.push('/refill/selectPayment')}
       type="payment">
       {operator && (
         <div {...styles.container}>
-          <img src={icon} {...styles.icon} />
+          <img src={selectedMethod && selectedMethod.icon} {...styles.icon} />
           {selectedMethod && selectedMethod.title}
         </div>
       )}
