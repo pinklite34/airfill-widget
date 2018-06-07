@@ -74,15 +74,22 @@ class ChangeCountry extends Component {
 
     const asYouType = new AsYouType();
     const input = asYouType.input(number);
+    console.log(input);
 
-    if (asYouType.country) {
+    if (input && asYouType.country) {
       this.props.setCountry(asYouType.country);
+      this.props.setNumber(input);
     }
 
     this.setState({
-      value: input,
+      value: input || number,
     });
   };
+
+  onChange = item => {
+    this.props.setCountry(item.alpha2);
+  };
+
   setOpen = open => this.setState({ open });
   toggle = () => this.setOpen(!this.state.open);
 
@@ -92,7 +99,7 @@ class ChangeCountry extends Component {
     return (
       <Downshift
         onFocusLost={() => console.log('lost focus')}
-        onChange={() => console.log('on change')}
+        onChange={this.onChange}
         itemToString={item => (item ? item.name : '')}
         isOpen={open}
         onStateChange={changes => {
@@ -124,7 +131,7 @@ class ChangeCountry extends Component {
                   value: this.state.value,
                 })}
               />
-              {true && (
+              {isOpen && (
                 <DropdownContainer>
                   {items.map((item, index) => (
                     <MenuItem
