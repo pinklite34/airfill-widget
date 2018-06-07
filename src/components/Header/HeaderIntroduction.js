@@ -128,7 +128,7 @@ class HeaderIntroduction extends PureComponent {
         {numberLookup.error ? (
           <div {...styles.error}>
             <Info {...styles.errorIcon} />
-            <div>({numberLookup.error.message || numberLookup.error})</div>
+            <div>{numberLookup.error.message || numberLookup.error}</div>
           </div>
         ) : (
           <div {...styles.description}>
