@@ -29,7 +29,6 @@ const DropdownContainer = styled('div')`
 
 const ItemContainer = styled('div')`
   border-top: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 12px;
   background-color: ${props =>
     props.active ? 'rgba(0, 0, 0, 0.08)' : 'white'};
   color: black;
@@ -37,11 +36,23 @@ const ItemContainer = styled('div')`
   margin-top: -4px;
 
   display: flex;
-  flex-direction: row;
+  align-items: stretch;
 `;
 
-const Flag = styled('img')`
-  margin-right: 8px;
+const FlagContainer = styled('div')`
+  background: rgba(0, 0, 0, 0.04);
+  width: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 10px 0;
+`;
+
+const Content = styled('div')`
+  margin-left: 6px;
+  font-size: 16px;
+  padding: 12px;
 `;
 
 function MenuItem({ country, ...props }) {
@@ -51,8 +62,12 @@ function MenuItem({ country, ...props }) {
   const flag = flags[country.alpha2];
   return (
     <ItemContainer {...props}>
-      <Flag src={flag} />
-      <span style={{ marginTop: 'auto' }}>{country.name}</span>
+      <FlagContainer>
+        <img src={flag} />
+      </FlagContainer>
+      <Content>
+        <span style={{ marginTop: 'auto' }}>{country.name}</span>
+      </Content>
     </ItemContainer>
   );
 }
