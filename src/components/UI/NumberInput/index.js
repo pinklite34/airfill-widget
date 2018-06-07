@@ -150,7 +150,7 @@ class ChangeCountry extends Component {
                   onClick: this.toggle,
                   onChange: e => this.onType(e),
                   loading: false,
-                  submitEnabled: true,
+                  submitEnabled: !!this.props.country,
                   onSubmit: e => console.log('onsubmit', e),
                   setOpen: this.setOpen,
                   value: this.state.value,
