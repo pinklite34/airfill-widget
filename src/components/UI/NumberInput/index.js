@@ -18,21 +18,16 @@ const Container = styled('div')`
 const DropdownContainer = styled('div')`
   position: absolute;
   max-height: 248px;
-  width: 240px;
   overflow-y: scroll;
 
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 4px;
-
-  @media (min-width: ${p => p.theme.bp.mobile}) {
-    right: 0;
-  }
 `;
 
 const ItemContainer = styled('div')`
   padding: 12px;
-  background-color: ${props =>
-    props.active ? props.theme.bg.light : props.theme.white};
+  background-color: ${props => (props.active ? 'gray' : 'white')};
+  color: black;
   cursor: pointer;
 
   display: flex;
@@ -69,10 +64,8 @@ class ChangeCountry extends Component {
     open: false,
   };
 
-  toggle = () =>
-    this.setState(prevState => ({
-      open: !prevState.open,
-    }));
+  setOpen = open => this.setState({ open });
+  toggle = () => this.setOpen(!this.state.open);
 
   render() {
     const { open, country } = this.state;
@@ -108,9 +101,10 @@ class ChangeCountry extends Component {
                   loading: false,
                   submitEnabled: true,
                   onSubmit: e => console.log('onsubmit', e),
+                  setOpen: this.setOpen,
                 })}
               />
-              {isOpen && (
+              {true && (
                 <DropdownContainer>
                   {items.map((item, index) => (
                     <MenuItem

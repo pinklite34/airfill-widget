@@ -1,73 +1,76 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'glamor';
-import Button from 'material-ui/Button';
-import Card from 'material-ui/Card';
+import styled, { css } from 'react-emotion';
+import { default as MuiButton } from 'material-ui/Button';
 import CircularProgress from 'material-ui/Progress/CircularProgress';
 
 import Flag from '../Flag';
 import Check from '../check.svg';
 
+const Input = styled('input')`
+  width: 100%;
+  font-size: 16px;
+  border: 0;
+  &:focus {
+    outline: none;
+  }
+  &::placeholder: {
+    color: rgba(0, 0, 0, 0.26);
+  }
+`;
+
+const Container = styled('div')`
+  position: relative;
+  z-index: 11;
+
+  background-color: white;
+  border-radius: 2px;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+`;
+
+const InputContainer = styled('div')`
+  padding: 12px;
+  flex: 1 1 auto;
+`;
+
+const FlagContainer = styled('div')`
+  width: 48px;
+  background: #f0f6fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`;
+
+const Button = styled(MuiButton)`
+  background-color: #f0f6fa !important;
+  color: ${props => (props.disabled ? '#cccccc' : '#3e8fe4')} !important;
+  min-width: 48px !important;
+  height: auto !important;
+  display: flex !important;
+  & svg {
+    margin-right: 0;
+  }
+`;
+
+const Row = styled('div')`
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+`;
+
 const styles = {
-  container: css({
-    position: 'relative',
-    zIndex: 11,
-  }),
-  row: css({
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'stretch',
-  }),
-  inputContainer: css({
-    padding: 12,
-    flex: '1 1 auto',
-  }),
-  input: css({
-    width: '100%',
-    fontSize: 16,
-    border: 0,
-    '&:focus': {
-      outline: 'none',
-    },
-    '&::placeholder': {
-      color: 'rgba(0,0,0,.26)',
-    },
-  }),
-  flag: css({
-    width: 48,
-    background: '#F0F6FA',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer',
-  }),
-  button: css({
-    backgroundColor: '#F0F6FA !important',
-    color: '#3E8FE4 !important',
-    minWidth: '48px !important',
-    height: 'auto !important',
-    display: 'flex !important',
-    '& svg': {
-      marginRight: '0 !important',
-    },
-  }),
-  buttonDisabled: css({
-    color: '#cccccc !important',
-  }),
-  progressBar: css({
-    width: '24px !important',
-    height: '24px !important',
-  }),
-  check: css({
-    fill: '#3E8FE4',
-    width: 16,
-    height: 16,
-  }),
-  checkDisabled: css({
-    fill: 'rgb(204, 204, 204)',
-    width: 16,
-    height: 16,
-  }),
+  check: css`
+    fill: #3e8fe4;
+    width: 16px;
+    height: 16px;
+  `,
+  checkDisabled: css`
+    fill: rgb(204, 204, 204);
+    width: 16px;
+    height: 16px;
+  `,
 };
 
 export default function InputRow({
@@ -76,25 +79,23 @@ export default function InputRow({
   loading,
   submitEnabled,
   onSubmit,
+  setOpen,
 }) {
   return (
-    <Card {...styles.container}>
+    <Container>
       <form
         onSubmit={e => {
           e.preventDefault();
           onSubmit();
         }}>
-        <div {...styles.row}>
-          <div {...styles.flag}>
+        <Row>
+          <FlagContainer>
             <Flag country={country} />
-          </div>
-          <div {...styles.inputContainer}>
-            <input {...styles.input} onChange={onChange} />
-          </div>
-          <Button
-            disabled={loading || !submitEnabled}
-            {...css([styles.button, !submitEnabled && styles.buttonDisabled])}
-            type="submit">
+          </FlagContainer>
+          <InputContainer>
+            <Input onChange={onChange} />
+          </InputContainer>
+          <Button disabled={loading || !submitEnabled} type="submit">
             {loading ? (
               <CircularProgress className={`${styles.progressBar}`} />
             ) : (
@@ -105,9 +106,9 @@ export default function InputRow({
               />
             )}
           </Button>
-        </div>
+        </Row>
       </form>
-    </Card>
+    </Container>
   );
 }
 
@@ -117,4 +118,5 @@ InputRow.propTypes = {
   loading: PropTypes.any,
   submitEnabled: PropTypes.any,
   onSubmit: PropTypes.any,
+  setOpen: PropTypes.any,
 };
