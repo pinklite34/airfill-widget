@@ -15,6 +15,7 @@ import {
 import Info from '../UI/info.svg';
 
 import NumberInput from '../UI/NumberInput';
+import { isValidNumber } from 'libphonenumber-js';
 
 const styles = {
   container: css({
@@ -93,10 +94,14 @@ class HeaderIntroduction extends PureComponent {
   lookupNumber = () => {
     const { lookupNumber, history, number } = this.props;
 
-    lookupNumber(number).then(
-      result => history.push('/refill/selectProvider'),
-      () => null // No uncaught promise rejections
-    );
+    if (isValidNumber(number)) {
+      lookupNumber(number).then(
+        result => history.push('/refill/selectProvider'),
+        () => null // No uncaught promise rejections
+      );
+    } else {
+      history.push('/refill/selectProvider');
+    }
   };
 
   render() {
@@ -119,7 +124,7 @@ class HeaderIntroduction extends PureComponent {
           loading={numberLookup.isLoading}
           onSubmit={this.lookupNumber}
         /> */}
-        <NumberInput />
+        <NumberInput onSubmit={this.lookupNumber} />
         {numberLookup.error ? (
           <div {...styles.error}>
             <Info {...styles.errorIcon} />

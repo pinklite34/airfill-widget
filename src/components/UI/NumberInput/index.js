@@ -63,6 +63,7 @@ class ChangeCountry extends Component {
     number: PropTypes.string,
     setCountry: PropTypes.func.isRequired,
     setNumber: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
   };
 
   state = {
@@ -113,6 +114,7 @@ class ChangeCountry extends Component {
   toggle = () => this.setOpen(!this.state.open);
 
   render() {
+    const { onSubmit } = this.props;
     const { open, value } = this.state;
 
     const rows = items.filter(({ name }) => {
@@ -151,7 +153,7 @@ class ChangeCountry extends Component {
                   onChange: e => this.onType(e),
                   loading: false,
                   submitEnabled: !!this.props.country,
-                  onSubmit: e => console.log('onsubmit', e),
+                  onSubmit: onSubmit,
                   setOpen: this.setOpen,
                   value: this.state.value,
                 })}
