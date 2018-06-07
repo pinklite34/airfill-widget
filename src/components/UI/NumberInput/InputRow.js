@@ -93,7 +93,11 @@ function InputRow({
           onSubmit();
         }}>
         <Row>
-          <FlagContainer onClick={() => setOpen(true)}>
+          <FlagContainer
+            onClick={() => {
+              setOpen(true);
+              onChange('');
+            }}>
             <Flag country={country && country.alpha2} />
           </FlagContainer>
           <InputContainer>

@@ -103,7 +103,7 @@ class ChangeCountry extends Component {
 
   onChange = item => {
     this.setState({
-      value: '',
+      value: item.name,
     });
     this.props.setNumber('');
     this.props.setCountry(item.alpha2);
