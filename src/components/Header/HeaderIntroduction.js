@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { css } from 'glamor';
 
 import { selectNumber, selectNumberLookup } from '../../store';
-import { lookupNumber, resetNumberLookup } from '../../actions';
+import { lookupNumber, resetNumberLookup, trigger } from '../../actions';
 import {
   historyProp,
   fnProp,
@@ -85,6 +85,7 @@ class HeaderIntroduction extends PureComponent {
     history: historyProp,
     number: numberProp,
     branded: PropTypes.bool,
+    trigger: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -92,12 +93,15 @@ class HeaderIntroduction extends PureComponent {
   }
 
   lookupNumber = () => {
-    const { lookupNumber, history, number } = this.props;
+    const { lookupNumber, trigger, history, number } = this.props;
 
     if (isValidNumber(number)) {
       lookupNumber(number).then(
         result => history.push('/refill/selectProvider'),
-        () => null // No uncaught promise rejections
+        () => {
+          history.push('/refill/selectProvider');
+          trigger();
+        } // No uncaught promise rejections
       );
     } else {
       history.push('/refill/selectProvider');
@@ -154,5 +158,6 @@ export default connect(
   {
     lookupNumber,
     resetNumberLookup,
+    trigger,
   }
 )(HeaderIntroduction);

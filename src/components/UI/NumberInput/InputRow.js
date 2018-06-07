@@ -95,12 +95,12 @@ function InputRow({
         <Row>
           <FlagContainer
             onClick={() => {
-              setOpen(true);
               onChange('');
+              setOpen(true);
             }}>
             <Flag country={country && country.alpha2} />
           </FlagContainer>
-          <InputContainer>
+          <InputContainer onClick={() => setOpen(true)}>
             <Input onChange={e => onChange(e.target.value)} value={value} />
           </InputContainer>
           <Button disabled={loading || !submitEnabled} type="submit">

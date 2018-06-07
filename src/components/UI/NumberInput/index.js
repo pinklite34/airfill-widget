@@ -94,7 +94,7 @@ class ChangeCountry extends Component {
       );
 
       this.props.setCountry(match ? match.alpha2 : null);
-      this.setState({ open: !match });
+      this.setState({ open: !match && e !== '' });
     }
 
     this.setState({
@@ -111,6 +111,7 @@ class ChangeCountry extends Component {
   };
 
   setOpen = open => this.setState({ open });
+
   toggle = () => this.setOpen(!this.state.open);
 
   render() {
@@ -149,7 +150,6 @@ class ChangeCountry extends Component {
             <Container>
               <InputRow
                 {...getLabelProps({
-                  onClick: this.toggle,
                   onChange: e => this.onType(e),
                   loading: false,
                   submitEnabled: !!this.props.country,
