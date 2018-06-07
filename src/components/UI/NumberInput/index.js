@@ -22,6 +22,7 @@ const DropdownContainer = styled('div')`
   max-height: 248px;
   overflow-y: scroll;
   background-color: #fff;
+  width: 100%;
 
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 4px;
