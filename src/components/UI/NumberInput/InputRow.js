@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'react-emotion';
+import { connect } from 'react-redux';
+
 import { default as MuiButton } from 'material-ui/Button';
 import CircularProgress from 'material-ui/Progress/CircularProgress';
 
 import Flag from '../Flag';
 import Check from '../check.svg';
+import { selectCountry } from '../../../store';
 
 const Input = styled('input')`
   width: 100%;
@@ -73,13 +76,14 @@ const styles = {
   `,
 };
 
-export default function InputRow({
+function InputRow({
   onChange,
   country,
   loading,
   submitEnabled,
   onSubmit,
   setOpen,
+  value,
 }) {
   return (
     <Container>
@@ -90,10 +94,10 @@ export default function InputRow({
         }}>
         <Row>
           <FlagContainer>
-            <Flag country={country} />
+            <Flag country={country && country.alpha2} />
           </FlagContainer>
           <InputContainer>
-            <Input onChange={onChange} />
+            <Input onChange={onChange} value={value} />
           </InputContainer>
           <Button disabled={loading || !submitEnabled} type="submit">
             {loading ? (
@@ -119,4 +123,9 @@ InputRow.propTypes = {
   submitEnabled: PropTypes.any,
   onSubmit: PropTypes.any,
   setOpen: PropTypes.any,
+  value: PropTypes.string.isRequired,
 };
+
+export default connect(state => ({
+  country: selectCountry(state),
+}))(InputRow);

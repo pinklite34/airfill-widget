@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
+import { AsYouType } from 'libphonenumber-js';
 
 import InputRow from './InputRow';
 
 import { selectCountry } from '../../../store';
+import { setCountry, setNumber } from '../../../actions';
 
 import items from '../../../countries.json';
 import flags from '../flags';
@@ -58,12 +60,29 @@ MenuItem.propTypes = {
 class ChangeCountry extends Component {
   static propTypes = {
     country: PropTypes.any,
+    setCountry: PropTypes.func.isRequired,
+    setNumber: PropTypes.func.isRequired,
   };
 
   state = {
     open: false,
+    value: '',
   };
 
+  onType = e => {
+    const number = e.target.value;
+
+    const asYouType = new AsYouType();
+    const input = asYouType.input(number);
+
+    if (asYouType.country) {
+      this.props.setCountry(asYouType.country);
+    }
+
+    this.setState({
+      value: input,
+    });
+  };
   setOpen = open => this.setState({ open });
   toggle = () => this.setOpen(!this.state.open);
 
@@ -96,12 +115,13 @@ class ChangeCountry extends Component {
               <InputRow
                 {...getLabelProps({
                   onClick: this.toggle,
-                  onChange: e => console.log('onchange', e),
+                  onChange: e => this.onType(e),
                   country,
                   loading: false,
                   submitEnabled: true,
                   onSubmit: e => console.log('onsubmit', e),
                   setOpen: this.setOpen,
+                  value: this.state.value,
                 })}
               />
               {true && (
@@ -127,6 +147,12 @@ class ChangeCountry extends Component {
   }
 }
 
-export default connect(state => ({
-  country: selectCountry(state),
-}))(ChangeCountry);
+export default connect(
+  state => ({
+    country: selectCountry(state),
+  }),
+  {
+    setCountry,
+    setNumber,
+  }
+)(ChangeCountry);
