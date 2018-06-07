@@ -7,7 +7,7 @@ import { AsYouType } from 'libphonenumber-js';
 
 import InputRow from './InputRow';
 
-import { selectCountry } from '../../../store';
+import { selectCountry, selectNumber } from '../../../store';
 import { setCountry, setNumber } from '../../../actions';
 
 import items from '../../../countries.json';
@@ -60,14 +60,19 @@ MenuItem.propTypes = {
 class ChangeCountry extends Component {
   static propTypes = {
     country: PropTypes.any,
+    number: PropTypes.string,
     setCountry: PropTypes.func.isRequired,
     setNumber: PropTypes.func.isRequired,
   };
 
-  state = {
-    open: false,
-    value: '',
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      open: false,
+      value: props.number,
+    };
+  }
 
   onType = e => {
     const number = e.target.value;
@@ -79,6 +84,12 @@ class ChangeCountry extends Component {
     if (input && asYouType.country) {
       this.props.setCountry(asYouType.country);
       this.props.setNumber(input);
+      this.setState({
+        open: false,
+      });
+    } else {
+      this.props.setCountry(null);
+      this.setState({ open: true });
     }
 
     this.setState({
@@ -98,7 +109,16 @@ class ChangeCountry extends Component {
   toggle = () => this.setOpen(!this.state.open);
 
   render() {
-    const { open, country } = this.state;
+    const { open, value } = this.state;
+
+    const rows = this.props.number
+      ? items
+      : items.filter(({ name }) => {
+          const display = name.toLowerCase();
+          const input = value.toLowerCase();
+
+          return display.indexOf(input) > -1;
+        });
 
     return (
       <Downshift
@@ -127,7 +147,6 @@ class ChangeCountry extends Component {
                 {...getLabelProps({
                   onClick: this.toggle,
                   onChange: e => this.onType(e),
-                  country,
                   loading: false,
                   submitEnabled: true,
                   onSubmit: e => console.log('onsubmit', e),
@@ -137,7 +156,7 @@ class ChangeCountry extends Component {
               />
               {isOpen && (
                 <DropdownContainer>
-                  {items.map((item, index) => (
+                  {rows.map((item, index) => (
                     <MenuItem
                       {...getItemProps({
                         index,
@@ -160,6 +179,7 @@ class ChangeCountry extends Component {
 
 export default connect(
   state => ({
+    number: selectNumber(state),
     country: selectCountry(state),
   }),
   {
