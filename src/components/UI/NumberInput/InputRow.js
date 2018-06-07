@@ -97,7 +97,7 @@ function InputRow({
             <Flag country={country && country.alpha2} />
           </FlagContainer>
           <InputContainer>
-            <Input onChange={onChange} value={value} />
+            <Input onChange={e => onChange(e.target.value)} value={value} />
           </InputContainer>
           <Button disabled={loading || !submitEnabled} type="submit">
             {loading ? (

@@ -65,17 +65,17 @@ class ChangeCountry extends Component {
     setNumber: PropTypes.func.isRequired,
   };
 
-  constructor(props) {
-    super(props);
+  state = {
+    open: false,
+    value: '',
+  };
 
-    this.state = {
-      open: false,
-      value: props.number,
-    };
+  componentDidMount() {
+    this.onType(this.props.number || '');
   }
 
   onType = e => {
-    const number = e.target.value;
+    const number = e;
 
     const asYouType = new AsYouType();
     const input = asYouType.input(number);
