@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { css } from 'glamor';
 
 import { selectNumber, selectNumberLookup } from '../../store';
-import { lookupNumber, resetNumberLookup, trigger } from '../../actions';
+import { lookupNumber, resetNumberLookup } from '../../actions';
 import {
   historyProp,
   fnProp,
@@ -85,7 +85,6 @@ class HeaderIntroduction extends PureComponent {
     history: historyProp,
     number: numberProp,
     branded: PropTypes.bool,
-    trigger: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -93,15 +92,12 @@ class HeaderIntroduction extends PureComponent {
   }
 
   lookupNumber = () => {
-    const { lookupNumber, trigger, history, number } = this.props;
+    const { lookupNumber, history, number } = this.props;
 
     if (isValidNumber(number)) {
       lookupNumber(number).then(
         result => history.push('/refill/selectProvider'),
-        () => {
-          history.push('/refill/selectProvider');
-          trigger();
-        } // No uncaught promise rejections
+        () => null // No uncaught promise rejections
       );
     } else {
       history.push('/refill/selectProvider');
@@ -132,11 +128,7 @@ class HeaderIntroduction extends PureComponent {
         {numberLookup.error ? (
           <div {...styles.error}>
             <Info {...styles.errorIcon} />
-            <div>
-              An unknown error occured
-              <br />
-              ({numberLookup.error.message || numberLookup.error})
-            </div>
+            <div>({numberLookup.error.message || numberLookup.error})</div>
           </div>
         ) : (
           <div {...styles.description}>
@@ -158,6 +150,5 @@ export default connect(
   {
     lookupNumber,
     resetNumberLookup,
-    trigger,
   }
 )(HeaderIntroduction);
