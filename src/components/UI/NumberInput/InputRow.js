@@ -74,6 +74,10 @@ const styles = {
     width: 16px;
     height: 16px;
   `,
+  progressBar: css`
+    width: 24px !important;
+    height: 24px !important;
+  `,
 };
 
 function InputRow({
@@ -105,7 +109,7 @@ function InputRow({
           </InputContainer>
           <Button disabled={loading || !submitEnabled} type="submit">
             {loading ? (
-              <CircularProgress className={`${styles.progressBar}`} />
+              <CircularProgress className={styles.progressBar} />
             ) : (
               <Check
                 className={`${
