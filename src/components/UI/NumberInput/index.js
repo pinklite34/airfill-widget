@@ -88,8 +88,12 @@ class ChangeCountry extends Component {
         open: false,
       });
     } else {
-      this.props.setCountry(null);
-      this.setState({ open: true });
+      const match = items.find(
+        ({ name }) => name.toLowerCase() === number.toLowerCase()
+      );
+
+      this.props.setCountry(match ? match.alpha2 : null);
+      this.setState({ open: !match });
     }
 
     this.setState({
@@ -111,14 +115,12 @@ class ChangeCountry extends Component {
   render() {
     const { open, value } = this.state;
 
-    const rows = this.props.number
-      ? items
-      : items.filter(({ name }) => {
-          const display = name.toLowerCase();
-          const input = value.toLowerCase();
+    const rows = items.filter(({ name }) => {
+      const display = name.toLowerCase();
+      const input = value.toLowerCase();
 
-          return display.indexOf(input) > -1;
-        });
+      return display.indexOf(input) > -1;
+    });
 
     return (
       <Downshift
