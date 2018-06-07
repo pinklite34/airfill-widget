@@ -21,16 +21,20 @@ const DropdownContainer = styled('div')`
   position: absolute;
   max-height: 248px;
   overflow-y: scroll;
+  background-color: #fff;
 
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 4px;
 `;
 
 const ItemContainer = styled('div')`
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
   padding: 12px;
-  background-color: ${props => (props.active ? 'gray' : 'white')};
+  background-color: ${props =>
+    props.active ? 'rgba(0, 0, 0, 0.08)' : 'white'};
   color: black;
   cursor: pointer;
+  margin-top: -4px;
 
   display: flex;
   flex-direction: row;

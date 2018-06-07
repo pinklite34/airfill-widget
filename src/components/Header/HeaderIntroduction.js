@@ -99,8 +99,6 @@ class HeaderIntroduction extends PureComponent {
         result => history.push('/refill/selectProvider'),
         () => null // No uncaught promise rejections
       );
-    } else {
-      history.push('/refill/selectProvider');
     }
   };
 
