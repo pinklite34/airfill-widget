@@ -70,7 +70,7 @@ export const createClient = (conf = {}) => {
         throw response;
       })
       .catch(error => {
-        if (typeof error && error.json === 'function') {
+        if (typeof error.json === 'function') {
           return error
             .json()
             .then(json => {
@@ -99,6 +99,7 @@ export const createClient = (conf = {}) => {
             });
         } else {
           console.error(error.message || error);
+          throw error.message || error;
         }
       });
   };
