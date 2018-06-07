@@ -1,0 +1,120 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { css } from 'glamor';
+import Button from 'material-ui/Button';
+import Card from 'material-ui/Card';
+import CircularProgress from 'material-ui/Progress/CircularProgress';
+
+import Flag from '../Flag';
+import Check from '../check.svg';
+
+const styles = {
+  container: css({
+    position: 'relative',
+    zIndex: 11,
+  }),
+  row: css({
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'stretch',
+  }),
+  inputContainer: css({
+    padding: 12,
+    flex: '1 1 auto',
+  }),
+  input: css({
+    width: '100%',
+    fontSize: 16,
+    border: 0,
+    '&:focus': {
+      outline: 'none',
+    },
+    '&::placeholder': {
+      color: 'rgba(0,0,0,.26)',
+    },
+  }),
+  flag: css({
+    width: 48,
+    background: '#F0F6FA',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+  }),
+  button: css({
+    backgroundColor: '#F0F6FA !important',
+    color: '#3E8FE4 !important',
+    minWidth: '48px !important',
+    height: 'auto !important',
+    display: 'flex !important',
+    '& svg': {
+      marginRight: '0 !important',
+    },
+  }),
+  buttonDisabled: css({
+    color: '#cccccc !important',
+  }),
+  progressBar: css({
+    width: '24px !important',
+    height: '24px !important',
+  }),
+  check: css({
+    fill: '#3E8FE4',
+    width: 16,
+    height: 16,
+  }),
+  checkDisabled: css({
+    fill: 'rgb(204, 204, 204)',
+    width: 16,
+    height: 16,
+  }),
+};
+
+export default function InputRow({
+  onChange,
+  country,
+  loading,
+  submitEnabled,
+  onSubmit,
+}) {
+  return (
+    <Card {...styles.container}>
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          onSubmit();
+        }}>
+        <div {...styles.row}>
+          <div {...styles.flag}>
+            <Flag country={country} />
+          </div>
+          <div {...styles.inputContainer}>
+            <input {...styles.input} onChange={onChange} />
+          </div>
+          <Button
+            disabled={loading || !submitEnabled}
+            {...css([styles.button, !submitEnabled && styles.buttonDisabled])}
+            type="submit">
+            {loading ? (
+              <CircularProgress className={`${styles.progressBar}`} />
+            ) : (
+              <Check
+                className={`${
+                  submitEnabled ? styles.check : styles.checkDisabled
+                }`}
+              />
+            )}
+          </Button>
+        </div>
+      </form>
+    </Card>
+  );
+}
+
+InputRow.propTypes = {
+  onChange: PropTypes.any,
+  country: PropTypes.any,
+  loading: PropTypes.any,
+  submitEnabled: PropTypes.any,
+  onSubmit: PropTypes.any,
+};

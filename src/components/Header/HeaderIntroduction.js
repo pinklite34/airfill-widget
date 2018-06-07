@@ -12,8 +12,9 @@ import {
   numberLookupProp,
 } from '../../lib/prop-types';
 
-import ComboInput from '../UI/ComboInput';
 import Info from '../UI/info.svg';
+
+import NumberInput from '../UI/NumberInput';
 
 const styles = {
   container: css({
@@ -99,7 +100,7 @@ class HeaderIntroduction extends PureComponent {
   };
 
   render() {
-    const { isMobile, branded, history, numberLookup } = this.props;
+    const { isMobile, branded, numberLookup } = this.props;
     return (
       <div {...styles.container}>
         {branded ? (
@@ -112,12 +113,13 @@ class HeaderIntroduction extends PureComponent {
             <h2 {...styles.title}>Top Up Anything With Bitcoin</h2>
           </div>
         )}
-        <ComboInput
+        {/* <ComboInput
           countryOnly={isMobile}
           history={history}
           loading={numberLookup.isLoading}
           onSubmit={this.lookupNumber}
-        />
+        /> */}
+        <NumberInput />
         {numberLookup.error ? (
           <div {...styles.error}>
             <Info {...styles.errorIcon} />
