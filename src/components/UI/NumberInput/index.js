@@ -59,6 +59,7 @@ MenuItem.propTypes = {
 
 class ChangeCountry extends Component {
   static propTypes = {
+    isLoading: PropTypes.bool,
     country: PropTypes.any,
     number: PropTypes.string,
     setCountry: PropTypes.func.isRequired,
@@ -115,7 +116,7 @@ class ChangeCountry extends Component {
   toggle = () => this.setOpen(!this.state.open);
 
   render() {
-    const { onSubmit } = this.props;
+    const { onSubmit, isLoading } = this.props;
     const { open, value } = this.state;
 
     const rows = items.filter(({ name }) => {
@@ -151,7 +152,7 @@ class ChangeCountry extends Component {
               <InputRow
                 {...getLabelProps({
                   onChange: e => this.onType(e),
-                  loading: false,
+                  loading: isLoading,
                   submitEnabled: !!this.props.country,
                   onSubmit: onSubmit,
                   setOpen: this.setOpen,

@@ -106,6 +106,7 @@ class HeaderIntroduction extends PureComponent {
 
   render() {
     const { isMobile, branded, numberLookup } = this.props;
+
     return (
       <div {...styles.container}>
         {branded ? (
@@ -124,7 +125,10 @@ class HeaderIntroduction extends PureComponent {
           loading={numberLookup.isLoading}
           onSubmit={this.lookupNumber}
         /> */}
-        <NumberInput onSubmit={this.lookupNumber} />
+        <NumberInput
+          isLoading={numberLookup.isLoading}
+          onSubmit={this.lookupNumber}
+        />
         {numberLookup.error ? (
           <div {...styles.error}>
             <Info {...styles.errorIcon} />

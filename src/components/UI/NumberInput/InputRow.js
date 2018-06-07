@@ -123,7 +123,7 @@ function InputRow({
 InputRow.propTypes = {
   onChange: PropTypes.any,
   country: PropTypes.any,
-  loading: PropTypes.any,
+  loading: PropTypes.bool,
   submitEnabled: PropTypes.any,
   onSubmit: PropTypes.any,
   setOpen: PropTypes.any,
