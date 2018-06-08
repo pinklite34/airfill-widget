@@ -3,42 +3,22 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'react-emotion';
 import { connect } from 'react-redux';
 
-import {
-  setNumber,
-  setEmail,
-  trigger,
-  setSubscribeNewsletter,
-} from '../../actions';
-import {
-  selectNumber,
-  selectEmail,
-  selectAmount,
-  selectOperator,
-  selectCountry,
-  selectSubscribeNewsletter,
-} from '../../store';
+import { setEmail, setSubscribeNewsletter } from '../../actions';
+import { selectEmail, selectSubscribeNewsletter } from '../../store';
 
 import {
   historyProp,
   configProp,
-  operatorResultProp,
   fnProp,
   emailProp,
-  numberProp,
-  amountProp,
-  countryProp,
 } from '../../lib/prop-types';
-import { isValidEmail } from '../../lib/email-validation';
-
-import { isValidForCountry } from '../../lib/number-helpers';
-import { isPhoneNumber } from '../../lib/number-input-helpers';
 
 import Button from 'material-ui/Button';
 
 import ErrorBanner from '../UI/ErrorBanner';
 import InputRow from '../UI/NumberInput';
 
-import { getRecipientIcon } from '../../lib/icon-picker';
+import EmailIcon from '../../assets/email.svg';
 
 const styles = {
   field: css`
@@ -84,17 +64,9 @@ const Content = styled('div')`
 class StatusEmail extends PureComponent {
   static propTypes = {
     config: configProp,
-    amount: amountProp,
-    operator: operatorResultProp,
     history: historyProp,
-    trigger: fnProp,
-    setNumber: fnProp,
     setEmail: fnProp,
-    classes: PropTypes.object,
-    number: numberProp,
     email: emailProp,
-    paymentMethod: PropTypes.object,
-    country: countryProp,
     setSubscribeNewsletter: fnProp,
     subscribing: PropTypes.bool.isRequired,
   };
@@ -103,41 +75,9 @@ class StatusEmail extends PureComponent {
     error: null,
   };
 
-  onChange = number => this.props.setNumber(number);
+  onChange = email => this.props.setEmail({ value: email, inFocus: true });
 
-  validateInput = () => {
-    const { number, country, operator } = this.props;
-
-    switch (operator.result.recipientType) {
-      case 'phone_number':
-        if (country.alpha2 === 'XI') {
-          return isPhoneNumber(number);
-        }
-        return isValidForCountry(number, country);
-      case 'email':
-        return isValidEmail(number);
-      default:
-        return true;
-    }
-  };
-
-  validationMessage = () => {
-    const { operator, country } = this.props;
-
-    if (!this.validateInput()) {
-      switch (operator.result.recipientType) {
-        case 'phone_number':
-          if (country.alpha2 === 'XI') {
-            return 'Please enter a valid phone number';
-          }
-          return 'Phone number does not match country';
-        case 'email':
-          return 'Please enter a valid email address';
-      }
-    }
-
-    return '';
-  };
+  validateInput = () => this.props.email.valid;
 
   continue = () => {
     const { history } = this.props;
@@ -151,70 +91,30 @@ class StatusEmail extends PureComponent {
     const {
       // config,
       // setEmail,
-      country,
-      number,
-      operator,
-      // email,
+      email,
       // setSubscribeNewsletter,
       // subscribing,
     } = this.props;
     const { error } = this.state;
 
-    const Icon = getRecipientIcon(operator.result);
-    // const showEmail = !isValidEmail(config.orderOptions.email);
-    console.log(operator);
     return (
       <Container>
         {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
         <Content>
-          <Text>Enter order stauts email</Text>
+          <Text>The email address will receive order status updates</Text>
           <InputContainer>
             <InputRow
-              country={country}
-              value={number}
+              value={email.value}
               onChange={this.onChange}
               submitEnabled={this.validateInput()}
-              icon={<Icon />}
+              icon={<EmailIcon />}
             />
           </InputContainer>
-          {/* showEmail && (
-            <Fragment>
-              <Field
-                label="E-mail address"
-                hint="The email address will receive order status updates"
-                className={styles.field}>
-                <Input
-                  onChange={e =>
-                    setEmail({
-                      value: e.target.value,
-                      inFocus: true,
-                    })
-                  }
-                  onBlur={e =>
-                    setEmail({
-                      value: e.target.value,
-                      inFocus: false,
-                    })
-                  }
-                  value={email.value}
-                  className={styles.input}
-                />
-              </Field>
-              <Field>
-                <Checkbox
-                  onChange={e => setSubscribeNewsletter(e.target.checked)}
-                  checked={subscribing}
-                />
-                Add me to the newsletter to receive news about new products and
-                features
-              </Field>
-            </Fragment>
-          ) */}
         </Content>
         <Button
           color="primary"
           raised
-          disabled={!number}
+          disabled={!this.validateInput()}
           onClick={this.continue}
           className={styles.button}>
           Continue
@@ -226,17 +126,11 @@ class StatusEmail extends PureComponent {
 
 export default connect(
   state => ({
-    number: selectNumber(state),
     email: selectEmail(state),
-    amount: selectAmount(state),
-    operator: selectOperator(state),
-    country: selectCountry(state),
     subscribing: selectSubscribeNewsletter(state),
   }),
   {
-    setNumber,
     setEmail,
-    trigger,
     setSubscribeNewsletter,
   }
 )(StatusEmail);
