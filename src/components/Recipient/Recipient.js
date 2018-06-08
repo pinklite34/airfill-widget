@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'react-emotion';
 import { connect } from 'react-redux';
@@ -31,13 +31,14 @@ import {
 import { isValidEmail } from '../../lib/email-validation';
 
 import { isValidForCountry } from '../../lib/number-helpers';
+import { isPhoneNumber } from '../../lib/number-input-helpers';
 
 import Button from 'material-ui/Button';
-import Input from 'material-ui/Input';
 
-import Field from '../UI/Field';
 import ErrorBanner from '../UI/ErrorBanner';
-import { Checkbox } from 'material-ui';
+import InputRow from '../UI/NumberInput';
+
+import PhoneIcon from './phone.svg';
 
 const styles = {
   field: css`
@@ -61,13 +62,23 @@ const styles = {
   `,
 };
 
+const Text = styled('p')`
+  font-weight: 500;
+`;
+
 const Container = styled('div')`
   background-color: #fafafa;
   padding: 0 16px 16px;
 `;
 
+const InputContainer = styled('div')`
+  @media (min-width: 460px) {
+    width: 50%;
+  }
+`;
+
 const Content = styled('div')`
-  padding-top: 16px;
+  padding: 16px 0;
 `;
 
 class Recipient extends PureComponent {
@@ -92,6 +103,8 @@ class Recipient extends PureComponent {
     error: null,
   };
 
+  onChange = number => this.props.setNumber(number);
+
   getNumberLabel = () => {
     const { operator } = this.props;
 
@@ -110,68 +123,71 @@ class Recipient extends PureComponent {
     }
   };
 
-  isComplete = () => {
-    const { amount, number, config, email } = this.props;
-    return (
-      amount &&
-      (number || (isValidEmail(config.orderOptions.email) || email.valid))
-    );
-  };
-
-  validate = () => {
+  validateInput = () => {
     const { number, country, operator } = this.props;
 
-    let error;
+    switch (operator.result.recipientType) {
+      case 'phone_number':
+        if (country.alpha2 === 'XI') {
+          return isPhoneNumber(number);
+        }
+        return isValidForCountry(number, country);
+      case 'email':
+        return isValidEmail(number);
+      default:
+        return true;
+    }
+  };
 
-    if (
-      operator.result.recipientType === 'phone_number' &&
-      !isValidForCountry(number, country)
-    ) {
-      error = 'Phone number does not match country';
-    } else if (
-      operator.result.recipientType === 'email' &&
-      !isValidEmail(number)
-    ) {
-      error = 'Please enter a valid email address';
+  validationMessage = () => {
+    const { operator, country } = this.props;
+    console.log(country);
+    if (!this.validateInput()) {
+      switch (operator.result.recipientType) {
+        case 'phone_number':
+          if (country.alpha2 === 'XI') {
+            return 'Please enter a valid phone number';
+          }
+          return 'Phone number does not match country';
+        case 'email':
+          return 'Please enter a valid email address';
+      }
     }
 
-    this.setState({
-      error,
-    });
-
-    return !error;
+    return '';
   };
 
   continue = () => {
     const { history } = this.props;
 
-    if (this.validate()) {
+    if (this.validateInput()) {
       history.push('/refill/selectPayment');
+    } else {
+      this.setState({
+        error: this.validationMessage(),
+      });
     }
   };
 
   render() {
     const {
-      config,
-      setEmail,
+      // config,
+      // setEmail,
+      country,
       number,
-      operator,
-      email,
-      setNumber,
-      setSubscribeNewsletter,
-      subscribing,
+      // email,
+      // setSubscribeNewsletter,
+      // subscribing,
     } = this.props;
     const { error } = this.state;
 
-    const showEmail = !isValidEmail(config.orderOptions.email);
-    const numberLabel = this.getNumberLabel();
+    // const showEmail = !isValidEmail(config.orderOptions.email);
 
     return (
       <Container>
         {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
         <Content>
-          {numberLabel !== '' && (
-            <Field label={numberLabel} className={styles.field}>
+          {/* <Field label={numberLabel} className={styles.field}>
               <Input
                 onChange={e => setNumber(e.target.value)}
                 type={
@@ -182,9 +198,18 @@ class Recipient extends PureComponent {
                 value={number}
                 className={styles.input}
               />
-            </Field>
-          )}
-          {showEmail && (
+              </Field> */}
+          <Text>{this.getNumberLabel()}</Text>
+          <InputContainer>
+            <InputRow
+              country={country}
+              value={number}
+              onChange={this.onChange}
+              submitEnabled={this.validateInput()}
+              icon={<PhoneIcon />}
+            />
+          </InputContainer>
+          {/* showEmail && (
             <Fragment>
               <Field
                 label="E-mail address"
@@ -216,12 +241,12 @@ class Recipient extends PureComponent {
                 features
               </Field>
             </Fragment>
-          )}
+          ) */}
         </Content>
         <Button
           color="primary"
           raised
-          disabled={!this.isComplete()}
+          disabled={!number}
           onClick={this.continue}
           className={styles.button}>
           Continue
