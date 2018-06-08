@@ -8,7 +8,7 @@ import Collapsed from '../UI/Collapsed';
 import { selectSelectedOperator, selectNumber } from '../../store';
 import { historyProp, operatorProp, numberProp } from '../../lib/prop-types';
 
-import PhoneIcon from './phone.svg';
+import { getRecipientIcon } from '../../lib/icon-picker';
 
 const styles = {
   container: css({
@@ -35,6 +35,7 @@ const styles = {
 };
 
 function RecipientCollapsed({ operator, history, number }) {
+  const Icon = getRecipientIcon(operator);
   return (
     <Collapsed
       onClick={() => history.push('/refill/selectRecipient')}
@@ -42,7 +43,7 @@ function RecipientCollapsed({ operator, history, number }) {
       {operator && (
         <div {...styles.container}>
           <div {...styles.icon}>
-            <PhoneIcon />
+            <Icon />
           </div>
           {number}
         </div>

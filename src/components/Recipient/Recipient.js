@@ -38,7 +38,7 @@ import Button from 'material-ui/Button';
 import ErrorBanner from '../UI/ErrorBanner';
 import InputRow from '../UI/NumberInput';
 
-import PhoneIcon from './phone.svg';
+import { getRecipientIcon } from '../../lib/icon-picker';
 
 const styles = {
   field: css`
@@ -141,7 +141,7 @@ class Recipient extends PureComponent {
 
   validationMessage = () => {
     const { operator, country } = this.props;
-    console.log(country);
+
     if (!this.validateInput()) {
       switch (operator.result.recipientType) {
         case 'phone_number':
@@ -175,14 +175,16 @@ class Recipient extends PureComponent {
       // setEmail,
       country,
       number,
+      operator,
       // email,
       // setSubscribeNewsletter,
       // subscribing,
     } = this.props;
     const { error } = this.state;
 
+    const Icon = getRecipientIcon(operator.result);
     // const showEmail = !isValidEmail(config.orderOptions.email);
-
+    console.log(operator);
     return (
       <Container>
         {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
@@ -206,7 +208,7 @@ class Recipient extends PureComponent {
               value={number}
               onChange={this.onChange}
               submitEnabled={this.validateInput()}
-              icon={<PhoneIcon />}
+              icon={<Icon />}
             />
           </InputContainer>
           {/* showEmail && (
