@@ -14,6 +14,7 @@ import {
 } from '../../lib/prop-types';
 
 import Button from 'material-ui/Button';
+import Checkbox from 'material-ui/Checkbox';
 
 import ErrorBanner from '../UI/ErrorBanner';
 import InputRow from '../UI/NumberInput';
@@ -61,6 +62,11 @@ const Content = styled('div')`
   padding: 16px 0;
 `;
 
+const CheckboxContainer = styled('div')`
+  display: flex;
+  flex-direction: row;
+`;
+
 class StatusEmail extends PureComponent {
   static propTypes = {
     config: configProp,
@@ -88,13 +94,7 @@ class StatusEmail extends PureComponent {
   };
 
   render() {
-    const {
-      // config,
-      // setEmail,
-      email,
-      // setSubscribeNewsletter,
-      // subscribing,
-    } = this.props;
+    const { email, setSubscribeNewsletter, subscribing } = this.props;
     const { error } = this.state;
 
     return (
@@ -110,6 +110,16 @@ class StatusEmail extends PureComponent {
               icon={<EmailIcon />}
             />
           </InputContainer>
+          <CheckboxContainer>
+            <Checkbox
+              onChange={e => setSubscribeNewsletter(e.target.checked)}
+              checked={subscribing}
+            />
+            <Text>
+              Add me to the newsletter to receive news about new products and
+              features
+            </Text>
+          </CheckboxContainer>
         </Content>
         <Button
           color="primary"

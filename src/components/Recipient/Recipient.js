@@ -193,18 +193,6 @@ class Recipient extends PureComponent {
       <Container>
         {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
         <Content>
-          {/* <Field label={numberLabel} className={styles.field}>
-              <Input
-                onChange={e => setNumber(e.target.value)}
-                type={
-                  operator.result.recipientType === 'phone_number'
-                    ? 'tel'
-                    : 'text'
-                }
-                value={number}
-                className={styles.input}
-              />
-              </Field> */}
           <Text>{this.getNumberLabel()}</Text>
           <InputContainer>
             <InputRow
@@ -212,42 +200,10 @@ class Recipient extends PureComponent {
               value={number}
               onChange={this.onChange}
               submitEnabled={this.validateInput()}
+              onSubmit={this.continue}
               icon={<Icon />}
             />
           </InputContainer>
-          {/* showEmail && (
-            <Fragment>
-              <Field
-                label="E-mail address"
-                hint="The email address will receive order status updates"
-                className={styles.field}>
-                <Input
-                  onChange={e =>
-                    setEmail({
-                      value: e.target.value,
-                      inFocus: true,
-                    })
-                  }
-                  onBlur={e =>
-                    setEmail({
-                      value: e.target.value,
-                      inFocus: false,
-                    })
-                  }
-                  value={email.value}
-                  className={styles.input}
-                />
-              </Field>
-              <Field>
-                <Checkbox
-                  onChange={e => setSubscribeNewsletter(e.target.checked)}
-                  checked={subscribing}
-                />
-                Add me to the newsletter to receive news about new products and
-                features
-              </Field>
-            </Fragment>
-          ) */}
         </Content>
         <Button
           color="primary"

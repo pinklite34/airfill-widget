@@ -96,7 +96,7 @@ function InputRow({ onChange, submitEnabled, onSubmit, value, icon }) {
 InputRow.propTypes = {
   onChange: PropTypes.any,
   submitEnabled: PropTypes.any,
-  onSubmit: PropTypes.any,
+  onSubmit: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   icon: PropTypes.any.isRequired,
 };
