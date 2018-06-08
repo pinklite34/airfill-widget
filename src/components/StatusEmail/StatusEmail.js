@@ -77,10 +77,6 @@ class StatusEmail extends PureComponent {
     subscribing: PropTypes.bool.isRequired,
   };
 
-  state = {
-    error: null,
-  };
-
   onChange = email => this.props.setEmail({ value: email, inFocus: true });
 
   validateInput = () => this.props.email.valid;
@@ -95,11 +91,10 @@ class StatusEmail extends PureComponent {
 
   render() {
     const { email, setSubscribeNewsletter, subscribing } = this.props;
-    const { error } = this.state;
 
     return (
       <Container>
-        {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
+        {email.error && <ErrorBanner>{email.error}</ErrorBanner>}
         <Content>
           <Text>The email address will receive order status updates</Text>
           <InputContainer>
