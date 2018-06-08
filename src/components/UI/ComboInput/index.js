@@ -26,7 +26,6 @@ import {
 import {
   isPhoneNumber,
   removeNextDigit,
-  removePreviousDigit,
   formatNumber,
 } from '../../../lib/number-input-helpers';
 import {
@@ -129,20 +128,7 @@ class ComboInput extends PureComponent {
     const { selectionStart, selectionEnd } = e.target;
     const selectionRange = selectionEnd - selectionStart;
 
-    if (e.keyCode === 8) {
-      // Handle backspace
-      if (!e.target.value.length) {
-        this.resetCountry();
-      } else if (isPhoneNumber(e.target.value)) {
-        if (!selectionRange) {
-          e.preventDefault();
-          this.changeValue(
-            removePreviousDigit(e.target.value, selectionStart),
-            selectionStart - 1
-          );
-        }
-      }
-    } else if (e.keyCode === 46) {
+    if (e.keyCode === 46) {
       // Delete key
       if (!selectionRange) {
         e.preventDefault();

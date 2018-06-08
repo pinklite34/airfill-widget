@@ -14,7 +14,7 @@ import {
 
 import Info from '../UI/info.svg';
 
-import NumberInput from '../UI/NumberInput';
+import ComboInput from '../UI/ComboInput';
 import { isValidNumber } from 'libphonenumber-js';
 
 const styles = {
@@ -103,7 +103,7 @@ class HeaderIntroduction extends PureComponent {
   };
 
   render() {
-    const { isMobile, branded, numberLookup } = this.props;
+    const { isMobile, history, branded, numberLookup } = this.props;
 
     return (
       <div {...styles.container}>
@@ -117,16 +117,13 @@ class HeaderIntroduction extends PureComponent {
             <h2 {...styles.title}>Top Up Anything With Bitcoin</h2>
           </div>
         )}
-        {/* <ComboInput
+        <ComboInput
           countryOnly={isMobile}
           history={history}
           loading={numberLookup.isLoading}
           onSubmit={this.lookupNumber}
-        /> */}
-        <NumberInput
-          isLoading={numberLookup.isLoading}
-          onSubmit={this.lookupNumber}
         />
+
         {numberLookup.error ? (
           <div {...styles.error}>
             <Info {...styles.errorIcon} />
