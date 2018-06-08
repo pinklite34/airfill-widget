@@ -115,7 +115,9 @@ class StatusEmail extends PureComponent {
               onChange={e => setSubscribeNewsletter(e.target.checked)}
               checked={subscribing}
             />
-            <Text>
+            <Text
+              onClick={() => setSubscribeNewsletter(!subscribing)}
+              style={{ cursor: 'pointer' }}>
               Add me to the newsletter to receive news about new products and
               features
             </Text>
