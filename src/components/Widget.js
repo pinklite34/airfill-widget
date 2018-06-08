@@ -26,6 +26,7 @@ import Instructions from './Instructions';
 import Amount from './Amount';
 import Order from './Order';
 import Recipient from './Recipient';
+import StatusEmail from './StatusEmail';
 import Payment from './PaymentMethod';
 import getMethods from '../payment-methods';
 
@@ -133,6 +134,7 @@ class AirfillWidget extends Component {
               <Providers />
               <Amount config={config} />
               <Recipient config={config} />
+              <StatusEmail config={config} />
               <Payment config={config} />
               <Order config={config} />
               {showInstructions && (

@@ -81,7 +81,7 @@ const Content = styled('div')`
   padding: 16px 0;
 `;
 
-class Recipient extends PureComponent {
+class StatusEmail extends PureComponent {
   static propTypes = {
     config: configProp,
     amount: amountProp,
@@ -104,24 +104,6 @@ class Recipient extends PureComponent {
   };
 
   onChange = number => this.props.setNumber(number);
-
-  getNumberLabel = () => {
-    const { operator } = this.props;
-
-    if (operator.result) {
-      switch (operator.result.recipientType) {
-        case 'phone_number':
-          return 'The phone number to top up';
-        case 'username':
-          return 'Reddit username / post permalink';
-        case 'email':
-          return 'Delivery email address';
-        case 'none':
-        default:
-          return '';
-      }
-    }
-  };
 
   validateInput = () => {
     const { number, country, operator } = this.props;
@@ -158,18 +140,10 @@ class Recipient extends PureComponent {
   };
 
   continue = () => {
-    const { history, config } = this.props;
+    const { history } = this.props;
 
     if (this.validateInput()) {
-      if (!isValidEmail(config.orderOptions.email)) {
-        history.push('/refill/selectStatusEmail');
-      } else {
-        history.push('/refill/selectPayment');
-      }
-    } else {
-      this.setState({
-        error: this.validationMessage(),
-      });
+      history.push('/refill/selectPayment');
     }
   };
 
@@ -193,19 +167,7 @@ class Recipient extends PureComponent {
       <Container>
         {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
         <Content>
-          {/* <Field label={numberLabel} className={styles.field}>
-              <Input
-                onChange={e => setNumber(e.target.value)}
-                type={
-                  operator.result.recipientType === 'phone_number'
-                    ? 'tel'
-                    : 'text'
-                }
-                value={number}
-                className={styles.input}
-              />
-              </Field> */}
-          <Text>{this.getNumberLabel()}</Text>
+          <Text>Enter order stauts email</Text>
           <InputContainer>
             <InputRow
               country={country}
@@ -277,4 +239,4 @@ export default connect(
     trigger,
     setSubscribeNewsletter,
   }
-)(Recipient);
+)(StatusEmail);
