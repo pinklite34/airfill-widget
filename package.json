@@ -27,7 +27,9 @@
     "test:watch": "npm test -- --watch",
     "webpack-stats": "webpack-bundle-analyzer stats.json",
     "precommit": "lint-staged",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "heroku": "node config/herokuServer.js",
+    "heroku-postbuild": "npm run build"
   },
   "keywords": [],
   "peerDependencies": {
@@ -39,6 +41,7 @@
     "core-js": "^2.5.5",
     "downshift": "^1.31.7",
     "emotion": "^9.1.2",
+    "express": "^4.16.3",
     "fetch-ponyfill": "^6.0.1",
     "flag-icons": "^1.0.2",
     "glamor": "^2.20.39",
