@@ -4,10 +4,10 @@ import { parse, format } from 'input-format';
 const SINGLE_PHONENUMBER_CHAR = /(\d|\+)/;
 const PHONENUMBER = /^[+\-0-9 ()]+/;
 
+export const isPhoneNumber = value => PHONENUMBER.test(value);
+
 const isPhoneNumberChar = char =>
   SINGLE_PHONENUMBER_CHAR.test(char) ? char : undefined;
-
-export const isPhoneNumber = value => PHONENUMBER.test(value);
 
 // Removes the closest digit before index
 export const removePreviousDigit = (string, index) => {
@@ -45,34 +45,29 @@ export const removeNextDigit = (string, index) => {
     : string.slice(0, index); // Remove everything after index
 };
 
-export const formatNumber = (countryCode, inputValue, currentCaret) => {
+export const formatNumber = (country, inputValue, caretStart) => {
   if (isPhoneNumber(inputValue)) {
     // Strip everything but digits and +
-    const { value, caret } = parse(inputValue, currentCaret, isPhoneNumberChar);
+    const { value, caret: caretBefore } = parse(
+      inputValue,
+      caretStart,
+      isPhoneNumberChar
+    );
 
-    const formatter = new AsYouType(countryCode) // eslint-disable-line
-    const formattedNumber = formatter.input(value);
+    const formatter = new AsYouType(country && country.alpha2) // eslint-disable-line
+    const formattedNumber = formatter.input(inputValue);
 
-    const { caret: nextCaret } = format(value, caret, () => ({
+    const { caret: caretAfter } = format(value, caretBefore, () => ({
       text: formattedNumber,
       template: formatter.template,
     }));
 
-    if (
-      (formatter.country &&
-        formatter.chosen_format == null &&
-        inputValue.indexOf(formatter.metadata[0]) === 0) ||
-      (!formatter.country && inputValue.indexOf('+') < 0)
-    ) {
-      return formatNumber(countryCode, `+${inputValue}`, inputValue.length + 1);
-    } else {
-      return {
-        formattedValue: formattedNumber,
-        number: value,
-        country: formatter.country,
-        caret: nextCaret,
-      };
-    }
+    return {
+      formattedValue: formattedNumber,
+      number: value,
+      country: formatter.country || (country && country.alpha2),
+      caret: caretAfter,
+    };
   } else {
     return null;
   }

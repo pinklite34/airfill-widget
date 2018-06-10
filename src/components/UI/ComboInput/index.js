@@ -104,10 +104,8 @@ class ComboInput extends PureComponent {
   state = {
     inputValue: this.props.countryOnly
       ? ''
-      : getInitialInputValue(
-          this.props.country && this.props.country.alpha2,
-          this.props.number
-        ),
+      : getInitialInputValue(this.props.country, this.props.number),
+    caretStart: 0,
   };
 
   componentDidMount() {
@@ -121,7 +119,10 @@ class ComboInput extends PureComponent {
   componentDidUpdate() {
     if (isPhoneNumber(this.state.inputValue)) {
       this.input &&
-        this.input.setSelectionRange(this.state.caret, this.state.caret);
+        this.input.setSelectionRange(
+          this.state.caretStart,
+          this.state.caretStart
+        );
     }
   }
 
@@ -159,8 +160,10 @@ class ComboInput extends PureComponent {
   handleSelect = item => {
     if (item.__type === 'country') {
       this.props.setCountry(item.alpha2);
+      const newValue = this.props.number || '';
       this.setState({
-        inputValue: this.props.number || '',
+        inputValue: newValue,
+        caretStart: newValue.length,
       });
     } else if (item.__type === 'provider') {
       this.props.setOperator(item.slug);
@@ -251,28 +254,28 @@ class ComboInput extends PureComponent {
     }
   };
 
-  changeValue = (inputValue, currentCaret) => {
-    if (isPhoneNumber(inputValue)) {
-      const { formattedValue, number, country, caret } = formatNumber(
-        this.props.country && this.props.country.alpha2,
-        inputValue,
-        currentCaret
-      );
+  changeValue = (newInputValue, caretStart) => {
+    const { inputValue } = this.state;
+    const { setCountry, setNumber, country } = this.props;
+    if (newInputValue === inputValue) return;
 
-      this.props.setCountry(country);
-
-      this.props.setNumber(number);
-      this.setState(
-        { inputValue: formattedValue },
-        () => this.input && this.input.setSelectionRange(caret, caret)
-      );
+    if (isPhoneNumber(newInputValue)) {
+      const {
+        formattedValue,
+        number,
+        country: newCountry,
+        caret,
+      } = formatNumber(country, newInputValue, caretStart);
+      console.log('-------------------- index --> ', { caretStart, caret });
+      setCountry(newCountry);
+      setNumber(number);
+      this.setState({
+        inputValue: formattedValue,
+        caretStart: caret,
+      });
     } else {
-      if (this.props.country && !inputValue) {
-        this.props.setNumber('');
-      }
-      this.setState(state => ({
-        inputValue,
-      }));
+      if (!newInputValue) setNumber('');
+      this.setState({ inputValue: newInputValue });
     }
   };
 
