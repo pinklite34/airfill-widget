@@ -46,7 +46,7 @@ export const removeNextDigit = (string, index) => {
 };
 
 export const formatNumber = (country, inputValue, caretStart) => {
-  if (isPhoneNumber(inputValue)) {
+  if (inputValue && isPhoneNumber(inputValue)) {
     // Strip everything but digits and +
     const { value, caret: caretBefore } = parse(
       inputValue,
