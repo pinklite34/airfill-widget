@@ -65,7 +65,7 @@ export const formatNumber = (country, inputValue, caretStart) => {
     return {
       formattedValue: formattedNumber,
       number: value,
-      country: formatter.country || (country && country.alpha2),
+      country: formatter.country,
       caret: caretAfter,
     };
   } else {

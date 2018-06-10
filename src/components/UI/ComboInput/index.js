@@ -254,19 +254,17 @@ class ComboInput extends PureComponent {
     }
   };
 
-  changeValue = (newInputValue, caretStart) => {
-    const { inputValue } = this.state;
-    const { setCountry, setNumber, country } = this.props;
-    if (newInputValue === inputValue) return;
+  changeValue = (inputValue, caretStart) => {
+    const { setCountry, setNumber, country, openComboInput } = this.props;
 
-    if (isPhoneNumber(newInputValue)) {
+    if (isPhoneNumber(inputValue)) {
       const {
         formattedValue,
         number,
         country: newCountry,
         caret,
-      } = formatNumber(country, newInputValue, caretStart);
-      console.log('-------------------- index --> ', { caretStart, caret });
+      } = formatNumber(country, inputValue, caretStart);
+
       setCountry(newCountry);
       setNumber(number);
       this.setState({
@@ -274,8 +272,11 @@ class ComboInput extends PureComponent {
         caretStart: caret,
       });
     } else {
-      if (!newInputValue) setNumber('');
-      this.setState({ inputValue: newInputValue });
+      if (!inputValue) {
+        setNumber('');
+        openComboInput();
+      }
+      this.setState({ inputValue });
     }
   };
 
