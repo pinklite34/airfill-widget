@@ -15,7 +15,7 @@
     "build:standalone": "webpack --config config/standalone.js --json > stats.json",
     "build:module": "webpack --config config/dist.js --json > stats.json",
     "build": "npm run prebuild && npm run build:module && npm run build:standalone",
-    "build:watch": "npm run prebuild && npm run build:module -- -w",
+    "build:watch": "npm run prebuild && npm run build:module -- --mode=development -w",
     "dist": "webpack --env=dist --json > stats.json",
     "standalone": "npm run copy && webpack --env=standalone --json > stats.json",
     "lint": "eslint ./src --max-warnings 0 --fix",

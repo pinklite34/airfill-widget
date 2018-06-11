@@ -101,7 +101,6 @@ export default function InputRow({
               {...getInputProps({
                 onFocus,
                 onKeyDown,
-                onKeyUp: e => onChange(e.target.value, e.target.selectionStart),
                 onChange: e =>
                   onChange(e.target.value, e.target.selectionStart),
                 ref: inputRef,

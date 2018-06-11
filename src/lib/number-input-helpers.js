@@ -45,34 +45,25 @@ export const removeNextDigit = (string, index) => {
     : string.slice(0, index); // Remove everything after index
 };
 
-export const formatNumber = (countryCode, inputValue, currentCaret) => {
-  if (isPhoneNumber(inputValue)) {
+export const formatNumber = (country, inputValue, currentCaret) => {
+  if (inputValue && isPhoneNumber(inputValue)) {
     // Strip everything but digits and +
     const { value, caret } = parse(inputValue, currentCaret, isPhoneNumberChar);
 
-    const formatter = new AsYouType(countryCode) // eslint-disable-line
-    const formattedNumber = formatter.input(value);
+    const formatter = new AsYouType(country && country.alpha2) // eslint-disable-line
+    const formattedValue = formatter.input(value);
 
     const { caret: nextCaret } = format(value, caret, () => ({
-      text: formattedNumber,
+      text: formattedValue,
       template: formatter.template,
     }));
 
-    if (
-      (formatter.country &&
-        formatter.chosen_format == null &&
-        inputValue.indexOf(formatter.metadata[0]) === 0) ||
-      (!formatter.country && inputValue.indexOf('+') < 0)
-    ) {
-      return formatNumber(countryCode, `+${inputValue}`, inputValue.length + 1);
-    } else {
-      return {
-        formattedValue: formattedNumber,
-        number: value,
-        country: formatter.country,
-        caret: nextCaret,
-      };
-    }
+    return {
+      formattedValue,
+      number: value,
+      country: formatter.country,
+      caret: nextCaret,
+    };
   } else {
     return null;
   }
