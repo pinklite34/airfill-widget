@@ -4,10 +4,10 @@ import { parse, format } from 'input-format';
 const SINGLE_PHONENUMBER_CHAR = /(\d|\+)/;
 const PHONENUMBER = /^[+\-0-9 ()]+/;
 
-export const isPhoneNumber = value => PHONENUMBER.test(value);
-
 const isPhoneNumberChar = char =>
   SINGLE_PHONENUMBER_CHAR.test(char) ? char : undefined;
+
+export const isPhoneNumber = value => PHONENUMBER.test(value);
 
 // Removes the closest digit before index
 export const removePreviousDigit = (string, index) => {
@@ -45,28 +45,24 @@ export const removeNextDigit = (string, index) => {
     : string.slice(0, index); // Remove everything after index
 };
 
-export const formatNumber = (country, inputValue, caretStart) => {
+export const formatNumber = (country, inputValue, currentCaret) => {
   if (inputValue && isPhoneNumber(inputValue)) {
     // Strip everything but digits and +
-    const { value, caret: caretBefore } = parse(
-      inputValue,
-      caretStart,
-      isPhoneNumberChar
-    );
+    const { value, caret } = parse(inputValue, currentCaret, isPhoneNumberChar);
 
     const formatter = new AsYouType(country && country.alpha2) // eslint-disable-line
-    const formattedNumber = formatter.input(inputValue);
+    const formattedValue = formatter.input(value);
 
-    const { caret: caretAfter } = format(value, caretBefore, () => ({
-      text: formattedNumber,
+    const { caret: nextCaret } = format(value, caret, () => ({
+      text: formattedValue,
       template: formatter.template,
     }));
 
     return {
-      formattedValue: formattedNumber,
+      formattedValue,
       number: value,
       country: formatter.country,
-      caret: caretAfter,
+      caret: nextCaret,
     };
   } else {
     return null;

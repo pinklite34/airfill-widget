@@ -105,7 +105,7 @@ class ComboInput extends PureComponent {
     inputValue: this.props.countryOnly
       ? ''
       : getInitialInputValue(this.props.country, this.props.number),
-    caretStart: 0,
+    caret: 0,
   };
 
   componentDidMount() {
@@ -117,12 +117,9 @@ class ComboInput extends PureComponent {
   }
 
   componentDidUpdate() {
-    if (isPhoneNumber(this.state.inputValue)) {
-      this.input &&
-        this.input.setSelectionRange(
-          this.state.caretStart,
-          this.state.caretStart
-        );
+    const { inputValue, caret } = this.state;
+    if (isPhoneNumber(inputValue)) {
+      this.input && this.input.setSelectionRange(caret, caret);
     }
   }
 
@@ -254,27 +251,21 @@ class ComboInput extends PureComponent {
     }
   };
 
-  changeValue = (inputValue, caretStart) => {
-    const { setCountry, setNumber, country, openComboInput } = this.props;
-
+  changeValue = (inputValue, currentCaret) => {
     if (isPhoneNumber(inputValue)) {
-      const {
-        formattedValue,
-        number,
-        country: newCountry,
-        caret,
-      } = formatNumber(country, inputValue, caretStart);
+      const { formattedValue, number, country, caret } = formatNumber(
+        this.props.country,
+        inputValue,
+        currentCaret
+      );
 
-      setCountry(newCountry);
-      setNumber(number);
-      this.setState({
-        inputValue: formattedValue,
-        caretStart: caret,
-      });
+      this.props.setCountry(country);
+      this.props.setNumber(number);
+      this.setState({ inputValue: formattedValue, caret });
     } else {
       if (!inputValue) {
-        setNumber('');
-        openComboInput();
+        this.props.setNumber('');
+        this.props.openComboInput();
       }
       this.setState({ inputValue });
     }
