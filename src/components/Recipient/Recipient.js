@@ -1,44 +1,40 @@
-import React, { PureComponent } from 'react';
+import { formatNumber } from 'libphonenumber-js';
+import Button from 'material-ui/Button';
 import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
 import styled, { css } from 'react-emotion';
 import { connect } from 'react-redux';
 
 import {
-  setNumber,
   setEmail,
-  trigger,
+  setNumber,
   setSubscribeNewsletter,
+  trigger,
 } from '../../actions';
+import { isValidEmail } from '../../lib/email-validation';
+import { getRecipientIcon } from '../../lib/icon-picker';
+import { getPlaceholder, isValidForCountry } from '../../lib/number-helpers';
+import { isPhoneNumber } from '../../lib/number-input-helpers';
 import {
-  selectNumber,
-  selectEmail,
+  amountProp,
+  configProp,
+  countryProp,
+  emailProp,
+  fnProp,
+  historyProp,
+  numberProp,
+  operatorResultProp,
+} from '../../lib/prop-types';
+import {
   selectAmount,
-  selectOperator,
   selectCountry,
+  selectEmail,
+  selectNumber,
+  selectOperator,
   selectSubscribeNewsletter,
 } from '../../store';
-
-import {
-  historyProp,
-  configProp,
-  operatorResultProp,
-  fnProp,
-  emailProp,
-  numberProp,
-  amountProp,
-  countryProp,
-} from '../../lib/prop-types';
-import { isValidEmail } from '../../lib/email-validation';
-
-import { isValidForCountry } from '../../lib/number-helpers';
-import { isPhoneNumber } from '../../lib/number-input-helpers';
-
-import Button from 'material-ui/Button';
-
 import ErrorBanner from '../UI/ErrorBanner';
 import InputRow from '../UI/NumberInput';
-
-import { getRecipientIcon } from '../../lib/icon-picker';
 
 const styles = {
   field: css`
@@ -101,7 +97,30 @@ class Recipient extends PureComponent {
 
   state = {
     error: null,
+    placeholder: '',
   };
+
+  componentDidMount() {
+    const { operator, country, config } = this.props;
+    let placeholder;
+
+    switch (operator.result.recipientType) {
+      case 'phone_number':
+        placeholder = formatNumber(
+          { country: country.alpha2, phone: getPlaceholder(country.alpha2) },
+          'National'
+        );
+        console.log(placeholder);
+        break;
+      case 'email':
+        placeholder = config.orderOptions.email || 'example@mail.com';
+        break;
+    }
+
+    this.setState({
+      placeholder,
+    });
+  }
 
   onChange = number => this.props.setNumber(number);
 
@@ -187,8 +206,7 @@ class Recipient extends PureComponent {
     const { error } = this.state;
 
     const Icon = getRecipientIcon(operator.result);
-    // const showEmail = !isValidEmail(config.orderOptions.email);
-    console.log(operator);
+
     return (
       <Container>
         {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
@@ -198,6 +216,7 @@ class Recipient extends PureComponent {
             <InputRow
               country={country}
               value={number}
+              placeholder={this.state.placeholder}
               onChange={this.onChange}
               submitEnabled={this.validateInput()}
               onSubmit={this.continue}
