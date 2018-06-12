@@ -72,7 +72,14 @@ const Icon = styled(Check)`
   fill: #3e8fe3;
 `;
 
-function InputRow({ onChange, submitEnabled, onSubmit, value, icon }) {
+function InputRow({
+  onChange,
+  submitEnabled,
+  onSubmit,
+  placeholder,
+  value,
+  icon,
+}) {
   return (
     <Container>
       <form
@@ -83,7 +90,11 @@ function InputRow({ onChange, submitEnabled, onSubmit, value, icon }) {
         <Row>
           <IconContainer>{icon}</IconContainer>
           <InputContainer>
-            <Input onChange={e => onChange(e.target.value)} value={value} />
+            <Input
+              placeholder={placeholder}
+              onChange={e => onChange(e.target.value)}
+              value={value}
+            />
           </InputContainer>
           <Button disabled={!submitEnabled} type="submit">
             {submitEnabled ? <Icon /> : <ErrorIcon />}
@@ -94,9 +105,14 @@ function InputRow({ onChange, submitEnabled, onSubmit, value, icon }) {
   );
 }
 
+InputRow.defaultProps = {
+  placeholder: '',
+};
+
 InputRow.propTypes = {
   onChange: PropTypes.any,
   submitEnabled: PropTypes.any,
+  placeholder: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   icon: PropTypes.any.isRequired,
