@@ -5,6 +5,7 @@ import styled from 'react-emotion';
 import { default as MuiButton } from 'material-ui/Button';
 
 import Check from '../check.svg';
+import Cross from '../error.svg';
 
 const Input = styled('input')`
   width: 100%;
@@ -59,7 +60,7 @@ const Row = styled('div')`
   align-items: stretch;
 `;
 
-const ErrorIcon = styled(Check)`
+const ErrorIcon = styled(Cross)`
   width: 16px;
   height: 16px;
   fill: #f00;
