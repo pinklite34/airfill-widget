@@ -20,7 +20,6 @@ import Root from './UI/Root';
 import Header from './Header';
 import Footer from './Footer';
 import Country from './Country';
-import NumberLookup from './NumberLookup';
 import Providers from './Providers';
 import Instructions from './Instructions';
 import Amount from './Amount';
@@ -130,7 +129,6 @@ class AirfillWidget extends Component {
             <Card>
               <Header isMobile={isMobile} branded={showLogo} />
               <Country />
-              <NumberLookup />
               <Providers />
               <Amount config={config} />
               <Recipient config={config} />
