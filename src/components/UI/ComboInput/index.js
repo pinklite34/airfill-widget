@@ -126,7 +126,10 @@ class ComboInput extends PureComponent {
     const { selectionStart, selectionEnd } = e.target;
     const selectionRange = selectionEnd - selectionStart;
 
-    if (e.keyCode === 46) {
+    if (e.keyCode === 8) {
+      // Handle backspace
+      if (!e.target.value.length) this.resetCountry();
+    } else if (e.keyCode === 46) {
       // Delete key
       if (!selectionRange) {
         e.preventDefault();
