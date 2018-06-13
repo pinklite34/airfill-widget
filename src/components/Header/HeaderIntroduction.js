@@ -15,7 +15,6 @@ import {
 import Info from '../UI/info.svg';
 
 import ComboInput from '../UI/ComboInput';
-import { isValidNumber } from 'libphonenumber-js';
 
 const styles = {
   container: css({
@@ -87,6 +86,10 @@ class HeaderIntroduction extends PureComponent {
     branded: PropTypes.bool,
   };
 
+  state = {
+    error: null,
+  };
+
   componentDidMount() {
     this.props.resetNumberLookup();
   }
@@ -94,16 +97,23 @@ class HeaderIntroduction extends PureComponent {
   lookupNumber = () => {
     const { lookupNumber, history, number } = this.props;
 
-    if (isValidNumber(number)) {
-      lookupNumber(number).then(
-        result => history.push('/refill/selectProvider'),
-        () => null // No uncaught promise rejections
+    if (number.startsWith('+')) {
+      this.setState({ error: null }, () =>
+        lookupNumber(number).then(
+          result => history.push('/refill/selectProvider'),
+          () => null // No uncaught promise rejections
+        )
       );
+    } else {
+      this.setState({
+        error: 'A phone country code is required (example: +66)',
+      });
     }
   };
 
   render() {
-    const { isMobile, history, branded, numberLookup } = this.props;
+    const { isMobile, branded, history, numberLookup } = this.props;
+    const { error } = this.state;
 
     return (
       <div {...styles.container}>
@@ -123,11 +133,16 @@ class HeaderIntroduction extends PureComponent {
           loading={numberLookup.isLoading}
           onSubmit={this.lookupNumber}
         />
-
-        {numberLookup.error ? (
+        {error || numberLookup.error ? (
           <div {...styles.error}>
             <Info {...styles.errorIcon} />
-            <div>{numberLookup.error.message || numberLookup.error}</div>
+            {error || (
+              <div>
+                {'An error occured'}
+                <br />
+                ({numberLookup.error.message || numberLookup.error})
+              </div>
+            )}
           </div>
         ) : (
           <div {...styles.description}>

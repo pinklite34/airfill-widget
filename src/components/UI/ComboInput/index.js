@@ -103,10 +103,8 @@ class ComboInput extends PureComponent {
   state = {
     inputValue: this.props.countryOnly
       ? ''
-      : getInitialInputValue(
-          this.props.country && this.props.country.alpha2,
-          this.props.number
-        ),
+      : getInitialInputValue(this.props.country, this.props.number),
+    caret: 0,
   };
 
   componentDidMount() {
@@ -118,9 +116,9 @@ class ComboInput extends PureComponent {
   }
 
   componentDidUpdate() {
-    if (isPhoneNumber(this.state.inputValue)) {
-      this.input &&
-        this.input.setSelectionRange(this.state.caret, this.state.caret);
+    const { inputValue, caret } = this.state;
+    if (isPhoneNumber(inputValue)) {
+      this.input && this.input.setSelectionRange(caret, caret);
     }
   }
 
@@ -145,8 +143,10 @@ class ComboInput extends PureComponent {
   handleSelect = item => {
     if (item.__type === 'country') {
       this.props.setCountry(item.alpha2);
+      const newValue = this.props.number || '';
       this.setState({
-        inputValue: this.props.number || '',
+        inputValue: newValue,
+        caretStart: newValue.length,
       });
     } else if (item.__type === 'provider') {
       this.props.setOperator(item.slug);
@@ -240,25 +240,20 @@ class ComboInput extends PureComponent {
   changeValue = (inputValue, currentCaret) => {
     if (isPhoneNumber(inputValue)) {
       const { formattedValue, number, country, caret } = formatNumber(
-        this.props.country && this.props.country.alpha2,
+        this.props.country,
         inputValue,
         currentCaret
       );
 
       this.props.setCountry(country);
-
       this.props.setNumber(number);
-      this.setState(
-        { inputValue: formattedValue },
-        () => this.input && this.input.setSelectionRange(caret, caret)
-      );
+      this.setState({ inputValue: formattedValue, caret });
     } else {
-      if (this.props.country && !inputValue) {
+      if (!inputValue) {
         this.props.setNumber('');
+        this.props.openComboInput();
       }
-      this.setState(state => ({
-        inputValue,
-      }));
+      this.setState({ inputValue });
     }
   };
 
