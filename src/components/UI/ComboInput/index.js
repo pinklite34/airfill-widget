@@ -176,7 +176,10 @@ class ComboInput extends PureComponent {
   };
 
   handleStateChange = changes => {
-    if (changes.hasOwnProperty('isOpen')) {
+    if (
+      changes.hasOwnProperty('isOpen') &&
+      changes.type !== '__autocomplete_blur_input__'
+    ) {
       if (changes.isOpen) {
         this.props.openComboInput();
       } else {
