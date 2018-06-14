@@ -7,6 +7,8 @@ export default (state = [], { type, payload }) => {
   switch (type) {
     case 'LOAD_ORDER_SUCCESS':
       const { number } = payload;
+      // Make sure number starts with +
+      const formattedNumber = number.indexOf('+') === 0 ? number : `+${number}`;
 
       return state.reduce(
         (numbers, cur) => {
@@ -19,7 +21,7 @@ export default (state = [], { type, payload }) => {
 
           return numbers;
         },
-        [{ number, operator: payload.operator }]
+        [{ number: formattedNumber, operator: payload.operator }]
       );
 
     case REHYDRATE:
