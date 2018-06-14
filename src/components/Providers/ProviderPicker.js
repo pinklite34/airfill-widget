@@ -20,12 +20,10 @@ import {
   fnProp,
 } from '../../lib/prop-types';
 
-const displayOrder = [null, 'pin'];
+const displayOrder = ['refill', 'pin'];
 
 const getDisplayText = key => {
-  const lower = key ? key.toLowerCase() : null;
-
-  switch (lower) {
+  switch (key) {
     case 'pin':
       return 'Phone refill vouchers / PINs';
     case 'dth':
@@ -38,7 +36,7 @@ const getDisplayText = key => {
       return 'VoIP';
     case 'other':
       return 'Other products';
-    case null:
+    case 'refill':
       return 'Prepaid phones';
     default:
       return `${key[0].toUpperCase()}${key.substr(1)}`;
@@ -99,11 +97,13 @@ class ProviderPicker extends PureComponent {
         <ActiveSection>
           {Object.keys(operators)
             .sort((a, b) => {
-              if (a.toLowerCase() === 'other') {
+              if (a === 'other') {
                 return 1;
               }
 
-              return displayOrder.indexOf(a) - displayOrder.indexOf(b);
+              return displayOrder.includes(a) && displayOrder.includes(b)
+                ? displayOrder.indexOf(a) - displayOrder.indexOf(b)
+                : displayOrder.indexOf(b) - displayOrder.indexOf(a);
             })
             .map(key => (
               <ProviderGrid
