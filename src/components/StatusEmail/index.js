@@ -2,22 +2,24 @@ import React from 'react';
 import { Switch, Route } from 'react-router';
 import { connect } from 'react-redux';
 
-import RecipientCollapsed from './RecipientCollapsed';
-import RecipientPicker from './Recipient';
+import RecipientCollapsed from './StatusEmailCollapsed';
+import RecipientPicker from './StatusEmail';
 import { configProp, operatorProp } from '../../lib/prop-types';
 
 import { selectOperator } from '../../store';
+import { isValidEmail } from '../../lib/email-validation';
 
-function Recipient({ config, operator }) {
-  const show = operator.result && operator.result.recipientType !== 'none';
+function StatusEmail({ config, operator }) {
+  const show = !isValidEmail(config.orderOptions.email);
 
   return (
     <Switch>
       <Route path="/refill" exact />
       <Route path="/refill/selectProvider" />
       <Route path="/refill/selectAmount" />
+      <Route path="/refill/selectRecipient" />
       <Route
-        path="/refill/selectRecipient"
+        path="/refill/selectStatusEmail"
         render={props => <RecipientPicker {...props} config={config} />}
       />
       {show && <Route component={RecipientCollapsed} />}
@@ -25,11 +27,11 @@ function Recipient({ config, operator }) {
   );
 }
 
-Recipient.propTypes = {
+StatusEmail.propTypes = {
   config: configProp,
   operator: operatorProp,
 };
 
 export default connect(state => ({ operator: selectOperator(state) }))(
-  Recipient
+  StatusEmail
 );

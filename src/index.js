@@ -27,6 +27,8 @@ export default Widget;
 
 let store;
 
+const history = createHistory();
+
 function AirfillWidget(ele, opt) {
   const element = typeof ele === 'string' ? document.querySelector(ele) : ele;
   const options = {
@@ -71,7 +73,6 @@ function AirfillWidget(ele, opt) {
   } = options;
   const orderOptions = { email, sendEmail, sendSMS, refundAddress };
 
-  const history = createHistory();
   const middleware = routerMiddleware(history);
 
   store = store || configureStore(routerReducer, middleware);

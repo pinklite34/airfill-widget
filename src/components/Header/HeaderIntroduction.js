@@ -12,8 +12,9 @@ import {
   numberLookupProp,
 } from '../../lib/prop-types';
 
-import ComboInput from '../UI/ComboInput';
 import Info from '../UI/info.svg';
+
+import ComboInput from '../UI/ComboInput';
 
 const styles = {
   container: css({

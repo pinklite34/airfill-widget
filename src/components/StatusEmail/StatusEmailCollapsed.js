@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 
 import Collapsed from '../UI/Collapsed';
-import { selectSelectedOperator, selectNumber } from '../../store';
-import { historyProp, operatorProp, numberProp } from '../../lib/prop-types';
+import { selectSelectedOperator, selectEmail } from '../../store';
+import { historyProp, operatorProp, emailProp } from '../../lib/prop-types';
 
-import { getRecipientIcon } from '../../lib/icon-picker';
+import Icon from '../../assets/email.svg';
 
 const styles = {
   container: css({
@@ -34,34 +34,33 @@ const styles = {
   }),
 };
 
-function RecipientCollapsed({ operator, history, number }) {
-  const Icon = getRecipientIcon(operator);
+function StautsEmailCollapsed({ operator, history, email }) {
   return (
     <Collapsed
-      onClick={() => history.push('/refill/selectRecipient')}
-      type="recipient">
+      onClick={() => history.push('/refill/selectStatusEmail')}
+      type="email">
       {operator && (
         <div {...styles.container}>
           <div {...styles.icon}>
             <Icon />
           </div>
-          {number}
+          {email.value}
         </div>
       )}
     </Collapsed>
   );
 }
 
-RecipientCollapsed.propTypes = {
+StautsEmailCollapsed.propTypes = {
   operator: operatorProp,
   history: historyProp,
-  number: numberProp,
+  email: emailProp,
 };
 
 export default compose(
   withRouter,
   connect(state => ({
     operator: selectSelectedOperator(state),
-    number: selectNumber(state),
+    email: selectEmail(state),
   }))
-)(RecipientCollapsed);
+)(StautsEmailCollapsed);
