@@ -82,6 +82,7 @@ describe('selectors', () => {
       'atg-mobile-germany': {
         name: 'ATG Mobile Germany',
         slug: 'atg-mobile-germany',
+        type: 'refill',
       },
       viber: {
         name: 'Viber',
@@ -145,7 +146,7 @@ describe('selectors', () => {
 
     it('returns an object with operators grouped by type', () => {
       const groupedOperators = {
-        mobile: [germany.operators['atg-mobile-germany']],
+        refill: [germany.operators['atg-mobile-germany']],
         voip: [germany.operators['viber']],
       };
 
@@ -157,6 +158,7 @@ describe('selectors', () => {
         'e-plus-germany': {
           name: 'E-Plus Germany',
           slug: 'e-plus-germany',
+          type: 'refill',
           stats: {
             popularity: 30.017241379310345,
           },
@@ -164,6 +166,7 @@ describe('selectors', () => {
         'o2-germany': {
           name: 'O2 Germany',
           slug: 'o2-germany',
+          type: 'refill',
           stats: {
             popularity: 55,
           },
@@ -190,7 +193,7 @@ describe('selectors', () => {
       };
 
       const sortedOperators = {
-        mobile: [
+        refill: [
           operators['o2-germany'],
           operators['e-plus-germany'],
           germany.operators['atg-mobile-germany'],

@@ -50,7 +50,7 @@ function AirfillWidget(ele, opt) {
 
   client.configure({
     token: options.key,
-    baseUrl: options.baseUrl || 'https://api.bitrefill.com/widget',
+    baseUrl: 'http://localhost:3002/widget',
   });
 
   const {
