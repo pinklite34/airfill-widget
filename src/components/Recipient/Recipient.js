@@ -1,43 +1,40 @@
-import React, { PureComponent, Fragment } from 'react';
+import { formatNumber } from 'libphonenumber-js';
+import Button from 'material-ui/Button';
 import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
 import styled, { css } from 'react-emotion';
 import { connect } from 'react-redux';
 
 import {
-  setNumber,
   setEmail,
-  trigger,
+  setNumber,
   setSubscribeNewsletter,
+  trigger,
 } from '../../actions';
+import { isValidEmail } from '../../lib/email-validation';
+import { getRecipientIcon } from '../../lib/icon-picker';
+import { getPlaceholder, isValidForCountry } from '../../lib/number-helpers';
+import { isPhoneNumber } from '../../lib/number-input-helpers';
 import {
-  selectNumber,
-  selectEmail,
+  amountProp,
+  configProp,
+  countryProp,
+  emailProp,
+  fnProp,
+  historyProp,
+  numberProp,
+  operatorResultProp,
+} from '../../lib/prop-types';
+import {
   selectAmount,
-  selectOperator,
   selectCountry,
+  selectEmail,
+  selectNumber,
+  selectOperator,
   selectSubscribeNewsletter,
 } from '../../store';
-
-import {
-  historyProp,
-  configProp,
-  operatorResultProp,
-  fnProp,
-  emailProp,
-  numberProp,
-  amountProp,
-  countryProp,
-} from '../../lib/prop-types';
-import { isValidEmail } from '../../lib/email-validation';
-
-import { isValidForCountry } from '../../lib/number-helpers';
-
-import Button from 'material-ui/Button';
-import Input from 'material-ui/Input';
-
-import Field from '../UI/Field';
 import ErrorBanner from '../UI/ErrorBanner';
-import { Checkbox } from 'material-ui';
+import InputRow from '../UI/NumberInput';
 
 const styles = {
   field: css`
@@ -61,13 +58,23 @@ const styles = {
   `,
 };
 
+const Text = styled('p')`
+  font-weight: 500;
+`;
+
 const Container = styled('div')`
   background-color: #fafafa;
   padding: 0 16px 16px;
 `;
 
+const InputContainer = styled('div')`
+  @media (min-width: 460px) {
+    width: 50%;
+  }
+`;
+
 const Content = styled('div')`
-  padding-top: 16px;
+  padding: 16px 0;
 `;
 
 class Recipient extends PureComponent {
@@ -90,7 +97,32 @@ class Recipient extends PureComponent {
 
   state = {
     error: null,
+    placeholder: '',
   };
+
+  componentDidMount() {
+    const { operator, country, config } = this.props;
+    let placeholder;
+
+    switch (operator.result.recipientType) {
+      case 'phone_number':
+        placeholder = formatNumber(
+          { country: country.alpha2, phone: getPlaceholder(country.alpha2) },
+          'National'
+        );
+        console.log(placeholder);
+        break;
+      case 'email':
+        placeholder = config.orderOptions.email || 'example@mail.com';
+        break;
+    }
+
+    this.setState({
+      placeholder,
+    });
+  }
+
+  onChange = number => this.props.setNumber(number);
 
   getNumberLabel = () => {
     const { operator } = this.props;
@@ -110,122 +142,92 @@ class Recipient extends PureComponent {
     }
   };
 
-  isComplete = () => {
-    const { amount, number, operator, config, email } = this.props;
-    return (
-      (amount &&
-        (number ||
-          (operator.result && operator.result.recipientType !== 'none'))) ||
-      (isValidEmail(config.orderOptions.email) || email.valid)
-    );
+  validateInput = () => {
+    const { number, country, operator } = this.props;
+
+    switch (operator.result.recipientType) {
+      case 'phone_number':
+        if (country.alpha2 === 'XI') {
+          return isPhoneNumber(number);
+        }
+        return isValidForCountry(number, country);
+      case 'email':
+        return isValidEmail(number);
+      default:
+        return true;
+    }
   };
 
-  validate = () => {
-    const { config, number, country, operator, email } = this.props;
+  validationMessage = () => {
+    const { operator, country } = this.props;
 
-    let error;
-
-    if (
-      operator.result.recipientType === 'phone_number' &&
-      !isValidForCountry(number, country)
-    ) {
-      error = 'Phone number does not match country';
-    } else if (
-      operator.result.recipientType === 'email' &&
-      !isValidEmail(number)
-    ) {
-      error = 'Please enter a valid recipient email address';
-    } else if (!isValidEmail(config.orderOptions.email) && !email.valid) {
-      error = 'Please enter a valid status update email address';
+    if (!this.validateInput()) {
+      switch (operator.result.recipientType) {
+        case 'phone_number':
+          if (country.alpha2 === 'XI') {
+            return 'Please enter a valid phone number';
+          }
+          return 'Phone number does not match country';
+        case 'email':
+          return 'Please enter a valid email address';
+      }
     }
 
-    this.setState({
-      error,
-    });
-
-    return !error;
+    return '';
   };
 
   continue = () => {
-    const { history } = this.props;
+    const { history, config } = this.props;
 
-    if (this.validate()) {
-      history.push('/refill/selectPayment');
+    if (this.validateInput()) {
+      if (!isValidEmail(config.orderOptions.email)) {
+        history.push('/refill/selectStatusEmail');
+      } else {
+        history.push('/refill/selectPayment');
+      }
+    } else {
+      this.setState({
+        error: this.validationMessage(),
+      });
     }
   };
 
   render() {
     const {
-      config,
-      setEmail,
+      // config,
+      // setEmail,
+      country,
       number,
       operator,
-      email,
-      setNumber,
-      setSubscribeNewsletter,
-      subscribing,
+      // email,
+      // setSubscribeNewsletter,
+      // subscribing,
     } = this.props;
     const { error } = this.state;
 
-    const showEmail = !isValidEmail(config.orderOptions.email);
-    const numberLabel = this.getNumberLabel();
+    const Icon = getRecipientIcon(operator.result);
 
     return (
       <Container>
         {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
         <Content>
-          {numberLabel !== '' && (
-            <Field label={numberLabel} className={styles.field}>
-              <Input
-                onChange={e => setNumber(e.target.value)}
-                type={
-                  operator.result.recipientType === 'phone_number'
-                    ? 'tel'
-                    : 'text'
-                }
-                value={number}
-                className={styles.input}
-              />
-            </Field>
-          )}
-          {showEmail && (
-            <Fragment>
-              <Field
-                label="E-mail address"
-                hint="The email address will receive order status updates"
-                className={styles.field}>
-                <Input
-                  onChange={e =>
-                    setEmail({
-                      value: e.target.value,
-                      inFocus: true,
-                    })
-                  }
-                  onBlur={e =>
-                    setEmail({
-                      value: e.target.value,
-                      inFocus: false,
-                    })
-                  }
-                  value={email.value}
-                  className={styles.input}
-                />
-              </Field>
-              <Field>
-                <Checkbox
-                  onChange={e => setSubscribeNewsletter(e.target.checked)}
-                  checked={subscribing}
-                />
-                Add me to the newsletter to receive news about new products and
-                features
-              </Field>
-            </Fragment>
-          )}
+          <Text>{this.getNumberLabel()}</Text>
+          <InputContainer>
+            <InputRow
+              country={country}
+              value={number}
+              placeholder={this.state.placeholder}
+              onChange={this.onChange}
+              submitEnabled={this.validateInput()}
+              onSubmit={this.continue}
+              icon={<Icon />}
+            />
+          </InputContainer>
         </Content>
         <Button
           color="primary"
           raised
-          disabled={!this.isComplete()}
+          disabled={!number}
           onClick={this.continue}
           className={styles.button}>
           Continue

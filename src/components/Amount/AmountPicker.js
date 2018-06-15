@@ -7,8 +7,6 @@ import { selectOperator, selectAmount } from '../../store';
 import { setAmount } from '../../actions';
 import Button from 'material-ui/Button';
 
-import { isValidEmail } from '../../lib/email-validation';
-
 import { selectValidAmount } from '../../lib/amount-validation';
 import { getPrice, getDisplayName } from '../../lib/currency-helpers';
 import {
@@ -29,6 +27,8 @@ import Info from '../UI/info.svg';
 
 import AmountPackage from './AmountPackage';
 import AmountRange from './AmountRange';
+
+import { isValidEmail } from '../../lib/email-validation';
 
 const styles = {
   packages: css`
@@ -111,11 +111,10 @@ class AmountPicker extends PureComponent {
   next = () => {
     const { history, operator, config } = this.props;
 
-    const showEmail = !isValidEmail(config.orderOptions.email);
-    const showNumber = operator.result.recipientType !== 'none';
-
-    if (showEmail || showNumber) {
+    if (operator.result.recipientType !== 'none') {
       history.push('/refill/selectRecipient');
+    } else if (!isValidEmail(config.orderOptions.email)) {
+      history.push('/refill/selectStatusEmail');
     } else {
       history.push('/refill/selectPayment');
     }

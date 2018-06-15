@@ -58,7 +58,7 @@ function CountryCollapsed({
     !home && history.push('/refill');
   };
 
-  return isNumberLookup ? null : country && country.alpha2 ? (
+  return country && country.alpha2 ? (
     <Collapsed onClick={openMenu} type="country">
       <div {...styles.container}>
         <div {...styles.country} onClick={openMenu}>

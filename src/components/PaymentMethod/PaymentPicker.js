@@ -31,6 +31,7 @@ import {
 } from '../../actions';
 
 import { canAfford } from '../../lib/currency-helpers';
+import ErrorBanner from '../../components/UI/ErrorBanner';
 
 const MethodContainer = styled('div')`
   @media (min-width: 460px) {
@@ -60,6 +61,7 @@ class PaymentMethod extends React.Component {
 
     this.state = {
       isLoading: false,
+      error: null,
     };
   }
 
@@ -92,10 +94,11 @@ class PaymentMethod extends React.Component {
 
   render() {
     const { config, selectedMethod } = this.props;
-    const { isLoading } = this.state;
+    const { isLoading, error } = this.state;
 
     return (
       <div>
+        {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
         <MethodContainer>
           {config.paymentButtons.map(method => {
             const affordable = this.canAfford(method);

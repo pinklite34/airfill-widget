@@ -26,12 +26,12 @@ import Root from './UI/Root';
 import Header from './Header';
 import Footer from './Footer';
 import Country from './Country';
-import NumberLookup from './NumberLookup';
 import Providers from './Providers';
 import Instructions from './Instructions';
 import Amount from './Amount';
 import Order from './Order';
 import Recipient from './Recipient';
+import StatusEmail from './StatusEmail';
 import Payment from './PaymentMethod';
 import getMethods from '../payment-methods';
 import { client } from '../lib/api-client';
@@ -155,10 +155,10 @@ class AirfillWidget extends Component {
             <Card>
               <Header isMobile={isMobile} branded={showLogo} />
               <Country />
-              <NumberLookup />
               <Providers />
               <Amount config={config} />
               <Recipient config={config} />
+              <StatusEmail config={config} />
               <Payment config={config} />
               <Order config={config} />
               {showInstructions && (

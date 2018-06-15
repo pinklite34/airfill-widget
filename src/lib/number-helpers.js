@@ -1,4 +1,5 @@
 import { parse, format } from 'libphonenumber-js';
+import examples from 'libphonenumber-js/examples.mobile.json';
 
 const getCountryData = country => {
   if (country) {
@@ -88,3 +89,5 @@ export const isValidForCountry = (number, country) => {
   const parsed = parse(number);
   return parsed && country && parsed.country === country.alpha2;
 };
+
+export const getPlaceholder = alpha2 => examples[alpha2.toUpperCase()] || '';

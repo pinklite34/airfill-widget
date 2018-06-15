@@ -109,7 +109,6 @@ export const setOperator = operatorSlug => (dispatch, getState) => {
 
 const transformNumberLookupReponse = response => {
   const { operator, altOperators, country } = response;
-
   return {
     operator: processOperatorPackages(operator),
     altOperators,
