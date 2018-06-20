@@ -14,7 +14,8 @@ import {
   selectPaymentMethod,
 } from '../store';
 
-export const setStep = createAction('SET_STEP');
+import { history } from '../components/Widget';
+
 export const setCountry = createAction('SET_COUNTRY');
 export const setNumber = createAction('SET_NUMBER');
 export const setPaymentMethod = createAction('SET_PAYMENT_METHOD');
@@ -231,11 +232,11 @@ export const useRecentRefill = recentRefill => dispatch => {
   dispatch(prefillNumber(recentRefill.number));
   if (recentRefill.operator) {
     dispatch(setOperator(recentRefill.operator));
-    dispatch(setStep(3));
+    history.push('/refill/selectAmount');
   } else {
     dispatch(lookupNumber(recentRefill.number)).then(
-      () => dispatch(setStep(3)),
-      () => dispatch(setStep(2))
+      () => history.push('/refill/selectProvider'),
+      () => history.push('/refill/selectAmount')
     );
   }
 };

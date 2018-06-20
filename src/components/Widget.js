@@ -12,7 +12,7 @@ import {
   ConnectedRouter,
 } from 'react-router-redux';
 
-import { init, setOperator, setCountry } from '../actions';
+import { init, setOperator, setCountry, useRecentRefill } from '../actions';
 import { configProps, inventoryProp, fnProp } from '../lib/prop-types';
 import { selectInventory } from '../store';
 import configureStore from '../store/configureStore';
@@ -97,6 +97,8 @@ class AirfillWidget extends Component {
       operator,
       country,
       history,
+      repeatOrder,
+      useRecentRefill,
     } = this.props;
 
     client.configure({
@@ -119,10 +121,14 @@ class AirfillWidget extends Component {
       history.push('/refill/selectAmount');
     }
 
-    init({
-      defaultNumber: defaultNumber,
-      shouldLookupLocation: !country && !isMobile,
-    });
+    if (repeatOrder) {
+      useRecentRefill(repeatOrder);
+    } else {
+      init({
+        defaultNumber: defaultNumber,
+        shouldLookupLocation: !country && !isMobile,
+      });
+    }
   }
 
   componentDidCatch(err, info) {
@@ -187,7 +193,7 @@ class AirfillWidget extends Component {
   }
 }
 
-const history = createHistory();
+export const history = createHistory();
 const middleware = routerMiddleware(history);
 const store = configureStore(routerReducer, middleware);
 
@@ -200,6 +206,7 @@ const StoreWidgetWrapper = compose(
       init,
       setOperator,
       setCountry,
+      useRecentRefill,
     }
   ),
   withRouter
