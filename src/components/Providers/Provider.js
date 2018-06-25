@@ -63,6 +63,7 @@ const styles = {
   name: css({
     flex: '1 0 auto',
     fontWeight: 500,
+    width: '100%',
     '@media(max-width: 460px)': {
       textAlign: 'left',
     },

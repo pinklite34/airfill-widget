@@ -55,6 +55,7 @@ const styles = {
   }),
   content: css({
     flex: '1 1 auto',
+    width: '100%',
   }),
 };
 

@@ -6,7 +6,7 @@ const baseConfig = require('./base');
 baseConfig.output.filename = 'widget.js';
 
 const config = Object.assign({}, baseConfig, {
-  entry: './src/index',
+  entry: [require.resolve('./polyfills'), require.resolve('../src/index')],
   mode: 'development',
   cache: true,
   devtool: 'cheap-module-source-map',

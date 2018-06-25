@@ -1,12 +1,11 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
-const path = require('path');
 const webpack = require('webpack');
 const baseConfig = require('./base');
 const nodeExternals = require('webpack-node-externals');
 
 const config = Object.assign({}, baseConfig, {
-  entry: path.join(__dirname, '../src/index'),
+  entry: [require.resolve('./polyfills'), require.resolve('../src/index')],
   mode: 'production',
   cache: false,
   optimization: {
