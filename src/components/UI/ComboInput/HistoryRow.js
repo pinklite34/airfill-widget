@@ -1,17 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { css } from 'glamor';
+import { css } from 'react-emotion';
 
 import { selectCountryList } from '../../../store';
 import Row from './Row';
 import { operatorProp, countriesProp, rowProps } from '../../../lib/prop-types';
 
 const styles = {
-  icon: css({
-    maxWidth: 24,
-    maxHeight: 18,
-    display: 'block',
-  }),
+  icon: css`
+    max-width: 24px;
+    max-height: 18px;
+    display: block;
+  `,
 };
 
 function HistoryRow({ item, countryList, ...props }) {
@@ -26,7 +26,11 @@ function HistoryRow({ item, countryList, ...props }) {
       <Row
         {...props}
         icon={
-          <img src={operator.logoImage} alt={operator.name} {...styles.icon} />
+          <img
+            src={operator.logoImage}
+            alt={operator.name}
+            className={styles.icon}
+          />
         }
         content={
           <span>

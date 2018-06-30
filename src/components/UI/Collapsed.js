@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'react-emotion';
 import PropTypes from 'prop-types';
-import Button from 'material-ui/Button';
+import Button from './Button';
 
 const Container = styled('div')`
   padding: 16px;

@@ -13,7 +13,7 @@ import {
 import CircularProgress from 'material-ui/Progress/CircularProgress';
 
 import PaymentItem from './PaymentItem';
-import Button from 'material-ui/Button';
+import Button from '../UI/Button';
 import {
   selectPaymentMethod,
   selectNumber,
@@ -116,8 +116,6 @@ class PaymentMethod extends React.Component {
         </MethodContainer>
 
         <Button
-          color="primary"
-          raised
           disabled={isLoading || !selectedMethod}
           className={styles.button}
           onClick={this.createOrder}>

@@ -13,7 +13,7 @@ import {
   emailProp,
 } from '../../lib/prop-types';
 
-import Button from 'material-ui/Button';
+import Button from '../UI/Button';
 import Checkbox from 'material-ui/Checkbox';
 
 import ErrorBanner from '../UI/ErrorBanner';
@@ -32,9 +32,10 @@ const styles = {
     padding: 0 !important;
     background-color: #fff;
     margin-bottom: 24px;
-    & > input: {
+
+    & > input {
       padding: 8px;
-    },
+    }
   `,
   button: css`
     width: 250px;
@@ -119,8 +120,6 @@ class StatusEmail extends PureComponent {
           </CheckboxContainer>
         </Content>
         <Button
-          color="primary"
-          raised
           disabled={!this.validateInput()}
           onClick={this.continue}
           className={styles.button}>

@@ -1,26 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'glamor';
+import { css } from 'react-emotion';
 
 const styles = {
-  name: css({
-    fontSize: 16,
-    fontWeight: 500,
-  }),
-  price: css({
-    fontSize: 12,
-    color: '#777777',
-    fontWeight: 500,
-  }),
+  name: css`
+    font-size: 16px;
+    font-weight: 500;
+  `,
+  price: css`
+    font-size: 12px;
+    color: #777777;
+    font-weight: 500;
+  `,
 };
 
 export default function AmountPackage({ name, price }) {
   return (
     <div>
-      <div {...styles.name} className="package-value">
-        {name}
-      </div>
-      <div {...styles.price}>{price}</div>
+      <div className={styles.name}>{name}</div>
+      <div className={styles.price}>{price}</div>
     </div>
   );
 }

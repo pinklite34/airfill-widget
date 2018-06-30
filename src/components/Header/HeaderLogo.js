@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from 'glamor';
+import { css } from 'react-emotion';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
@@ -7,17 +7,23 @@ import BitrefillLogo from './logo.svg';
 import { fnProp } from '../../lib/prop-types';
 
 const styles = {
-  logo: css({
-    cursor: 'pointer',
-    '& + div': {
-      marginTop: 16,
-    },
-  }),
+  logo: css`
+    cursor: pointer;
+
+    & + div {
+      margin-top: 16px;
+    }
+  `,
 };
 
 function HeaderLogo({ goHome }) {
   return (
-    <BitrefillLogo fill="#fff" width="104" {...styles.logo} onClick={goHome} />
+    <BitrefillLogo
+      fill="#fff"
+      width="114"
+      className={styles.logo}
+      onClick={goHome}
+    />
   );
 }
 

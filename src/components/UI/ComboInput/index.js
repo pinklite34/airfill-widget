@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { css } from 'glamor';
+import { css } from 'react-emotion';
 import Downshift from 'downshift';
 
 import {
@@ -46,13 +46,13 @@ import {
 } from '../../../lib/prop-types';
 
 const styles = {
-  container: css({
-    position: 'relative',
-    width: '100%',
-    maxWidth: '400px',
-    color: '#444',
-    overflow: 'visible',
-  }),
+  container: css`
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    color: #444;
+    overflow: visible;
+  `,
 };
 
 const itemToString = item => {
@@ -326,7 +326,7 @@ class ComboInput extends PureComponent {
         isOpen={isOpen}
         onStateChange={this.handleStateChange}>
         {({ getInputProps, getItemProps, inputValue, highlightedIndex }) => (
-          <div {...styles.container}>
+          <div className={styles.container}>
             <InputRow
               getInputProps={getInputProps}
               onChange={this.changeValue}

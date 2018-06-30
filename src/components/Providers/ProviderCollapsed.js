@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from 'glamor';
+import { css } from 'react-emotion';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -9,27 +9,28 @@ import { selectSelectedOperator } from '../../store';
 import { historyProp, operatorProp } from '../../lib/prop-types';
 
 const styles = {
-  container: css({
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-  }),
-  icon: css({
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 24,
-    marginRight: 30,
-    marginLeft: 14,
-    '@media(max-width: 460px)': {
-      marginRight: 14,
-      marginLeft: 0,
-    },
-  }),
-  logo: css({
-    maxWidth: 40,
-    maxHeight: 30,
-  }),
+  container: css`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  `,
+  icon: css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    margin-right: 30px;
+    margin-left: 14px;
+
+    @media (max-width: 460px) {
+      margin-right: 14;
+      margin-left: 0px;
+    }
+  `,
+  logo: css`
+    max-width: 40px;
+    max-height: 30px;
+  `,
 };
 
 function ProviderCollapsed({ operator, history }) {
@@ -38,12 +39,12 @@ function ProviderCollapsed({ operator, history }) {
       onClick={() => history.push('/refill/selectProvider')}
       type="provider">
       {operator && (
-        <div {...styles.container}>
-          <div {...styles.icon}>
+        <div className={styles.container}>
+          <div className={styles.icon}>
             <img
               src={operator.logoImage}
               alt={operator.name}
-              {...styles.logo}
+              className={styles.logo}
             />
           </div>
           {operator.name}

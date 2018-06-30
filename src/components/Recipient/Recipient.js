@@ -1,5 +1,5 @@
 import { formatNumber } from 'libphonenumber-js';
-import Button from 'material-ui/Button';
+import Button from '../UI/Button';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import styled, { css } from 'react-emotion';
@@ -40,16 +40,16 @@ const styles = {
   field: css`
     flex: 1 0 250px;
     margin: 0;
-    margin-bottom: 24;
+    margin-bottom: 24px;
   `,
   input: css`
-    max-width: 250;
+    max-width: 250px;
     padding: 0 !important;
     background-color: #fff;
     margin-bottom: 24px;
-    & > input: {
+    & > input {
       padding: 8px;
-    },
+    }
   `,
   button: css`
     width: 250px;
@@ -225,8 +225,6 @@ class Recipient extends PureComponent {
           </InputContainer>
         </Content>
         <Button
-          color="primary"
-          raised
           disabled={!number}
           onClick={this.continue}
           className={styles.button}>

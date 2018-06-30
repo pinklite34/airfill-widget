@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import { compose } from 'recompose';
 import { selectOperator, selectAmount } from '../../store';
 import { setAmount } from '../../actions';
-import Button from 'material-ui/Button';
+import Button from '../UI/Button';
 
 import { selectValidAmount } from '../../lib/amount-validation';
 import { getPrice, getDisplayName } from '../../lib/currency-helpers';
@@ -17,7 +17,7 @@ import {
   historyProp,
 } from '../../lib/prop-types';
 
-import Card from 'material-ui/Card';
+import Card from '../UI/Card';
 import Radio from 'material-ui/Radio';
 import CircularProgress from 'material-ui/Progress/CircularProgress';
 
@@ -34,17 +34,19 @@ const styles = {
   packages: css`
     background-color: #fff;
     margin: 0 -16px;
+
     & > label {
       display: flex;
       align-items: center;
       padding-right: 2px;
       height: auto;
       margin: 0;
-      border-top: 1px solid rgba(0,0,0,0.08);
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+
       &:last-of-type {
-        border-bottom: 1px solid rgba(0,0,0,0.08);
-      },
-    },
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      }
+    }
   `,
   operatorInfoContainer: css`
     font-weight: 500;
@@ -55,11 +57,12 @@ const styles = {
     display: flex;
     flex-direction: row;
     align-items: center;
+
     & svg {
       margin-right: 8px;
       width: 32px;
       height: 32px;
-    },
+    }
   `,
   title: css`
     margin-left: 36px;
@@ -179,7 +182,7 @@ class AmountPicker extends PureComponent {
           </Card>
         )}
 
-        <SectionTitle {...styles.title}>{'Select amount'}</SectionTitle>
+        <SectionTitle className={styles.title}>{'Select amount'}</SectionTitle>
 
         <div className={`${styles.packages} amount-picker`}>
           {operator.result.packages.map(this.renderPackage)}
@@ -195,9 +198,7 @@ class AmountPicker extends PureComponent {
           />
         )}
         <Button
-          color="primary"
           disabled={disabled}
-          raised
           onClick={this.next}
           className={styles.button}>
           Continue

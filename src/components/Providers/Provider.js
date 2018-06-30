@@ -1,91 +1,98 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'glamor';
-import Card from 'material-ui/Card';
+import { css } from 'react-emotion';
+import Card from '../UI/Card';
 
 import More from './more.svg';
 import Select from './select.svg';
 import { operatorProp, fnProp } from '../../lib/prop-types';
 
 const styles = {
-  container: css({
-    width: 'auto',
-    flex: '0 1 128px',
-    padding: 12,
-    margin: 6,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    textAlign: 'center',
-    fontSize: 12,
-    lineHeight: 1.4,
-    cursor: 'pointer',
-    '@media(max-width: 460px)': {
-      flex: '1 0 100%',
-      margin: '0 -16px',
-      flexDirection: 'row !important',
-      padding: 16,
-      boxShadow: 'none !important',
-      borderTop: '1px solid rgba(0,0,0,0.08)',
-      '&:last-of-type': {
-        borderBottom: '1px solid rgba(0,0,0,0.08)',
-        marginBottom: 6,
-      },
-      '&:first-of-type': {
-        marginTop: 6,
-      },
-    },
-  }),
-  logoWrapper: css({
-    height: 42,
-    width: 88,
-    marginBottom: 6,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: '1 0 auto',
-    '@media(max-width: 460px)': {
-      width: 24,
-      height: 18,
-      flex: '0 0 auto',
-      marginRight: 12,
-    },
-  }),
-  logo: css({
-    maxHeight: 42,
-    maxWidth: 88,
-    display: 'block',
-    '@media(max-width: 460px)': {
-      maxWidth: 24,
-      maxHeight: 18,
-    },
-  }),
-  name: css({
-    flex: '1 0 auto',
-    fontWeight: 500,
-    width: '100%',
-    '@media(max-width: 460px)': {
-      textAlign: 'left',
-    },
-  }),
-  select: css({
-    display: 'none',
-    '@media(max-width: 460px)': {
-      display: 'block',
-    },
-  }),
+  container: css`
+    width: auto;
+    flex: 0 1 128px;
+    padding: 12px;
+    margin: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.4;
+    cursor: pointer;
+
+    @media (max-width: 460px) {
+      flex: 1 0 100%;
+      margin: 0 -16px;
+      flex-direction: row !important;
+      padding: 16px;
+      box-shadow: none !important;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+
+      &:last-of-type {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        margin-bottom: 6px;
+      }
+
+      &:first-of-type {
+        margin-top: 6px;
+      }
+    }
+  `,
+  logoWrapper: css`
+    height: 42px;
+    width: 88px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 0 auto;
+
+    @media (max-width: 460px) {
+      width: 24;
+      height: 18px;
+      flex: 0 0 auto;
+      margin-right: 12px;
+    }
+  `,
+  logo: css`
+    max-height: 42px;
+    max-width: 88px;
+    display: block;
+
+    @media (max-width: 460px) {
+      max-width: 24px;
+      max-height: 18px;
+    }
+  `,
+  name: css`
+    flex: 1 0 auto;
+    font-weight: 500;
+    width: 100%;
+
+    @media (max-width: 460px) {
+      text-align: left;
+    }
+  `,
+  select: css`
+    display: none;
+
+    @media (max-width: 460px) {
+      display: block;
+    }
+  `,
 };
 
 export function ShowAll({ onClick, count }) {
   return (
-    <Card {...styles.container} onClick={onClick}>
-      <div {...styles.logoWrapper}>
+    <Card className={styles.container} onClick={onClick}>
+      <div className={styles.logoWrapper}>
         <More fill="#777777" width="42px" height="42px" />
       </div>
       <div>
         Show all <strong>{count}</strong> services
       </div>
-      <Select {...styles.select} fill="#777" />
+      <Select className={styles.select} fill="#777" />
     </Card>
   );
 }
@@ -97,14 +104,14 @@ ShowAll.propTypes = {
 
 export default function Provider({ data, onSelect }) {
   return (
-    <Card {...styles.container} onClick={onSelect}>
-      <div {...styles.logoWrapper}>
-        <img src={data.logoImage} alt={data.name} {...styles.logo} />
+    <Card className={styles.container} onClick={onSelect}>
+      <div className={styles.logoWrapper}>
+        <img src={data.logoImage} alt={data.name} className={styles.logo} />
       </div>
-      <div {...styles.name} data-package-slug={data.slug}>
+      <div className={styles.name} data-package-slug={data.slug}>
         {data.name}
       </div>
-      <Select {...styles.select} fill="#777" />
+      <Select className={styles.select} fill="#777" />
     </Card>
   );
 }

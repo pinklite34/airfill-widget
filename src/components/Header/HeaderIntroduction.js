@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { css } from 'glamor';
+import { css } from 'react-emotion';
 
 import { selectNumber, selectNumberLookup } from '../../store';
 import { lookupNumber, resetNumberLookup } from '../../actions';
@@ -17,62 +17,62 @@ import Info from '../UI/info.svg';
 import ComboInput from '../UI/ComboInput';
 
 const styles = {
-  container: css({
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  }),
-  head: css({
-    marginBottom: 20,
-  }),
-  title: css({
-    margin: 0,
-    fontSize: 16,
-    fontWeight: 700,
-  }),
-  subtitle: css({
-    fontSize: 12,
-    fontWeight: 700,
-    color: 'rgba(255, 255, 255, 0.8)',
-    width: 260,
-    marginTop: 8,
-  }),
-  description: css({
-    marginTop: 8,
-    fontSize: 12,
-    color: 'rgba(255, 255, 255, 0.9)',
-    width: '100%',
-    maxWidth: 300,
-    lineHeight: 1.5,
-    fontWeight: 500,
-  }),
-  error: css({
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    textAlign: 'initial',
-    fontSize: 14,
-    backgroundColor: 'rgba(255,255,255,0.8)',
-    padding: 8,
-    paddingTop: 10,
-    color: '#333',
-    width: '100%',
-    maxWidth: 400,
-    lineHeight: 1.5,
-    boxShadow:
-      '0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)',
-    borderRadius: '0 0 2px 2px',
-    marginTop: -2,
-    position: 'relative',
-    zIndex: -1,
-  }),
-  errorIcon: css({
-    marginRight: 8,
-    fill: '#555555',
-    width: 24,
-    height: 24,
-    flex: '0 0 auto',
-  }),
+  container: css`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  `,
+  head: css`
+    margin-bottom: 20px;
+  `,
+  title: css`
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+  `,
+  subtitle: css`
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.8);
+    width: 260px;
+    margin-top: 8px;
+  `,
+  description: css`
+    margin-top: 8px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    width: 100%;
+    max-width: 300px;
+    line-height: 1.5;
+    font-weight: 500;
+  `,
+  error: css`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: initial;
+    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 8px;
+    padding-top: 10px;
+    color: #333;
+    width: 100%;
+    max-width: 400px;
+    line-height: 1.5;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+      0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 0 0 2px 2px;
+    margin-top: -2px;
+    position: relative;
+    z-index: -1;
+  `,
+  errorIcon: css`
+    margin-right: 8px;
+    fill: #555555;
+    width: 24px;
+    height: 24px;
+    flex: 0 0 auto;
+  `,
 };
 
 class HeaderIntroduction extends PureComponent {
@@ -116,15 +116,17 @@ class HeaderIntroduction extends PureComponent {
     const { error } = this.state;
 
     return (
-      <div {...styles.container}>
+      <div className={styles.container}>
         {branded ? (
-          <div {...styles.head}>
-            <h2 {...styles.title}>Send Global Top Ups With Bitcoin</h2>
-            <div {...styles.subtitle}>Trusted by More Than 500 000 People</div>
+          <div className={styles.head}>
+            <h2 className={styles.title}>Send Global Top Ups With Bitcoin</h2>
+            <div className={styles.subtitle}>
+              Trusted by More Than 500 000 People
+            </div>
           </div>
         ) : (
-          <div {...styles.head}>
-            <h2 {...styles.title}>Top Up Anything With Bitcoin</h2>
+          <div className={styles.head}>
+            <h2 className={styles.title}>Top Up Anything With Bitcoin</h2>
           </div>
         )}
         <ComboInput
@@ -134,8 +136,8 @@ class HeaderIntroduction extends PureComponent {
           onSubmit={this.lookupNumber}
         />
         {error || numberLookup.error ? (
-          <div {...styles.error}>
-            <Info {...styles.errorIcon} />
+          <div className={styles.error}>
+            <Info className={styles.errorIcon} />
             {error || (
               <div>
                 {'An error occured'}
@@ -145,7 +147,7 @@ class HeaderIntroduction extends PureComponent {
             )}
           </div>
         ) : (
-          <div {...styles.description}>
+          <div className={styles.description}>
             {`Enter ${
               isMobile ? 'your country' : 'a phone number'
             } to see available services or select a service below for more information`}

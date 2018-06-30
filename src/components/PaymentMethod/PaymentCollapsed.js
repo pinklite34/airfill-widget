@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'glamor';
+import { css } from 'react-emotion';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -10,23 +10,24 @@ import { selectSelectedOperator, selectPaymentMethod } from '../../store';
 import { historyProp, operatorProp } from '../../lib/prop-types';
 
 const styles = {
-  container: css({
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-  }),
-  icon: css({
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 24,
-    marginRight: 30,
-    marginLeft: 14,
-    '@media(max-width: 460px)': {
-      marginRight: 14,
-      marginLeft: 0,
+  container: css`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  `,
+  icon: css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    margin-right: 30px;
+    margin-left: 14px;
+
+    @media (max-width: 460px) {
+      margin-right: 14px;
+      margin-left: 0px;
     },
-  }),
+  `,
 };
 
 function PaymentCollapsed({ operator, history, selectedMethod }) {
@@ -40,8 +41,8 @@ function PaymentCollapsed({ operator, history, selectedMethod }) {
       onClick={() => history.push('/refill/selectPayment')}
       type="payment">
       {operator && (
-        <div {...styles.container}>
-          <img src={selectedMethod.icon} {...styles.icon} />
+        <div className={styles.container}>
+          <img src={selectedMethod.icon} className={styles.icon} />
           {selectedMethod.title}
         </div>
       )}
