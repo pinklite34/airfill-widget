@@ -4,6 +4,8 @@ import Media from 'react-media';
 import { connect, Provider } from 'react-redux';
 import { Route, withRouter } from 'react-router';
 import { compose } from 'recompose';
+import { I18nextProvider } from 'react-i18next';
+import { ThemeProvider } from 'emotion-theming';
 import createHistory from 'history/createMemoryHistory';
 import {
   routerReducer,
@@ -34,8 +36,10 @@ import Payment from './PaymentMethod';
 import getMethods from '../payment-methods';
 import Spinner from './UI/Spinner';
 import { client } from '../lib/api-client';
+import i18n from '../lib/i18n';
+import theme from '../theme';
 
-const theme = createMuiTheme({
+const muiTheme = createMuiTheme({
   palette: {
     primary: blue,
   },
@@ -154,34 +158,32 @@ class AirfillWidget extends Component {
     const hasLoaded = !!inventory.result;
 
     return (
-      <MuiThemeProvider theme={theme}>
-        <Root className={className}>
-          <Card>
-            {hasLoaded ? (
-              <Fragment>
-                <Header isMobile={isMobile} branded={showLogo} />
-                <Country />
-                <Providers />
-                <Amount config={config} />
-                <Recipient config={config} />
-                <StatusEmail config={config} />
-                <Payment config={config} />
-                <Order config={config} />
-                {showInstructions && (
-                  <Route
-                    path="/refill"
-                    exact
-                    render={() => <Instructions config={config} />}
-                  />
-                )}
-              </Fragment>
-            ) : (
-              <Spinner />
-            )}
-          </Card>
-          {showFooter && <Footer branded={showPoweredBy} />}
-        </Root>
-      </MuiThemeProvider>
+      <Root className={className}>
+        <Card>
+          {hasLoaded ? (
+            <Fragment>
+              <Header isMobile={isMobile} branded={showLogo} />
+              <Country />
+              <Providers />
+              <Amount config={config} />
+              <Recipient config={config} />
+              <StatusEmail config={config} />
+              <Payment config={config} />
+              <Order config={config} />
+              {showInstructions && (
+                <Route
+                  path="/refill"
+                  exact
+                  render={() => <Instructions config={config} />}
+                />
+              )}
+            </Fragment>
+          ) : (
+            <Spinner />
+          )}
+        </Card>
+        {showFooter && <Footer branded={showPoweredBy} />}
+      </Root>
     );
   }
 }
@@ -205,16 +207,22 @@ const StoreWidgetWrapper = compose(
   withRouter
 )(AirfillWidget);
 
-function Widget(props) {
+export default function Widget(props) {
   return (
-    <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <Media query="(-moz-touch-enabled: 1), (pointer: coarse)">
-          {isMobile => <StoreWidgetWrapper isMobile={isMobile} {...props} />}
-        </Media>
-      </ConnectedRouter>
-    </Provider>
+    <I18nextProvider i18n={i18n}>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <MuiThemeProvider theme={muiTheme}>
+            <ConnectedRouter history={history}>
+              <Media query="(-moz-touch-enabled: 1), (pointer: coarse)">
+                {isMobile => (
+                  <StoreWidgetWrapper isMobile={isMobile} {...props} />
+                )}
+              </Media>
+            </ConnectedRouter>
+          </MuiThemeProvider>
+        </ThemeProvider>
+      </Provider>
+    </I18nextProvider>
   );
 }
-
-export default Widget;
