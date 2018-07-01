@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { css } from 'react-emotion';
+import styled from 'react-emotion';
 
 import { selectNumber, selectNumberLookup } from '../../store';
 import { lookupNumber, resetNumberLookup } from '../../actions';
@@ -12,68 +12,42 @@ import {
   numberLookupProp,
 } from '../../lib/prop-types';
 
-import Info from '../UI/info.svg';
-
+import Text from '../UI/Text';
 import ComboInput from '../UI/ComboInput';
 
-const styles = {
-  container: css`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  `,
-  head: css`
-    margin-bottom: 20px;
-  `,
-  title: css`
-    margin: 0;
-    font-size: 16px;
-    font-weight: 700;
-  `,
-  subtitle: css`
-    font-size: 12px;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.8);
-    width: 260px;
-    margin-top: 8px;
-  `,
-  description: css`
-    margin-top: 8px;
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.9);
-    width: 100%;
-    max-width: 300px;
-    line-height: 1.5;
-    font-weight: 500;
-  `,
-  error: css`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    text-align: initial;
-    font-size: 14px;
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 8px;
-    padding-top: 10px;
-    color: #333;
-    width: 100%;
-    max-width: 400px;
-    line-height: 1.5;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
-      0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-    border-radius: 0 0 2px 2px;
-    margin-top: -2px;
-    position: relative;
-    z-index: -1;
-  `,
-  errorIcon: css`
-    margin-right: 8px;
-    fill: #555555;
-    width: 24px;
-    height: 24px;
-    flex: 0 0 auto;
-  `,
-};
+import Info from '../UI/info.svg';
+import theme from '../../theme';
+import Flex from '../UI/Flex';
+
+const Error = styled('div')`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: initial;
+  font-size: 14px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 8px;
+  padding-top: 10px;
+  color: #333;
+  width: 100%;
+  max-width: 400px;
+  line-height: 1.5;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 0 0 2px 2px;
+  margin-top: -2px;
+  position: relative;
+  z-index: -1;
+  box-sizing: border-box;
+`;
+
+const ErrorIcon = styled(Info)`
+  margin-right: 8px;
+  fill: #555555;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+`;
 
 class HeaderIntroduction extends PureComponent {
   static propTypes = {
@@ -114,20 +88,41 @@ class HeaderIntroduction extends PureComponent {
   render() {
     const { isMobile, branded, history, numberLookup } = this.props;
     const { error } = this.state;
+    const lookupError =
+      (numberLookup.error && numberLookup.error.message) || numberLookup.error;
 
     return (
-      <div className={styles.container}>
+      <Flex centered>
         {branded ? (
-          <div className={styles.head}>
-            <h2 className={styles.title}>Send Global Top Ups With Bitcoin</h2>
-            <div className={styles.subtitle}>
+          <Flex centered padding="0 0 12px">
+            <Text
+              type="h1"
+              centered
+              tight
+              id="widget.introduction.title"
+              color={theme.white}>
+              Send Global Top Ups With Bitcoin
+            </Text>
+            <Text
+              type="h3"
+              centered
+              size="12px"
+              id="widget.introduction.subtitle"
+              color={'rgba(255, 255, 255, 0.8)'}>
               Trusted by More Than 500 000 People
-            </div>
-          </div>
+            </Text>
+          </Flex>
         ) : (
-          <div className={styles.head}>
-            <h2 className={styles.title}>Top Up Anything With Bitcoin</h2>
-          </div>
+          <Flex centered padding="0 0 20px">
+            <Text
+              type="h1"
+              centered
+              tight
+              id="widget.introduction.title.unbranded"
+              color={theme.white}>
+              Top Up Anything With Bitcoin
+            </Text>
+          </Flex>
         )}
         <ComboInput
           countryOnly={isMobile}
@@ -135,25 +130,34 @@ class HeaderIntroduction extends PureComponent {
           loading={numberLookup.isLoading}
           onSubmit={this.lookupNumber}
         />
-        {error || numberLookup.error ? (
-          <div className={styles.error}>
-            <Info className={styles.errorIcon} />
-            {error || (
-              <div>
-                {'An error occured'}
-                <br />
-                ({numberLookup.error.message || numberLookup.error})
-              </div>
+        {error || lookupError ? (
+          <Error>
+            <ErrorIcon />
+            {error ? (
+              <Text type="p">{error}</Text>
+            ) : (
+              <Text type="p" id="widget.introduction.error">
+                An error occured<br />({{ lookupError }})
+              </Text>
             )}
-          </div>
+          </Error>
         ) : (
-          <div className={styles.description}>
-            {`Enter ${
-              isMobile ? 'your country' : 'a phone number'
-            } to see available services or select a service below for more information`}
-          </div>
+          <Text
+            type="p"
+            centered
+            padding="20px 0 0"
+            tight
+            small
+            width="300px"
+            id={`widget.introduction.description.${
+              isMobile ? 'country' : 'phone'
+            }`}
+            color={'rgba(255, 255, 255, 0.9)'}>
+            Enter {isMobile ? 'your country' : 'a phone number'} to see
+            available services or select a service below for more information
+          </Text>
         )}
-      </div>
+      </Flex>
     );
   }
 }

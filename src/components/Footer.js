@@ -1,67 +1,82 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'react-emotion';
+import styled from 'react-emotion';
 
-const styles = {
-  container: css`
-    padding: 16px;
-    display: flex;
-    justify-content: center;
-    font-size: 12px;
+import Text from './UI/Text';
+
+const Container = styled('div')`
+  padding: 16px;
+  display: flex;
+  justify-content: ${p => (p.branded ? 'space-between' : 'center')};
+  font-size: 12px;
+  color: #999;
+
+  & strong {
+    color: #777;
+  }
+
+  & a {
     color: #999;
+  }
+`;
 
-    & strong {
-      color: #777;
-    }
+const List = styled('ul')`
+  display: flex;
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+`;
 
-    & a {
-      color: #999;
-    }
-  `,
-  branded: css`
-    justify-content: space-between;
-  `,
-  linkList: css`
-    display: flex;
-    list-style-type: none;
-    margin: 0px;
-    padding: 0px;
-  `,
-  link: css`
-    display: block;
-    margin-left: 12px;
-  `,
-};
+const ListItem = styled('li')`
+  margin: 0 5px;
+`;
+
+const Link = styled('a')`
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
 
 export default function Footer({ branded }) {
   return (
-    <div className={`${styles.container} ${branded && styles.branded}`}>
+    <Container branded={branded}>
       {branded && (
-        <div>
-          Powered by <strong>bitrefill</strong>
-        </div>
+        <Link
+          href="https://www.bitrefill.com/"
+          target="_blank"
+          rel="noopener noreferrer">
+          <Text type="p" id="widget.footer.powered" tight small>
+            Powered by <strong>bitrefill</strong>
+          </Text>
+        </Link>
       )}
       <div>
-        <ul className={styles.linkList}>
-          <li className={styles.link}>
-            <a
+        <List>
+          <ListItem>
+            <Link
               href="https://www.bitrefill.com/privacy/"
               target="_blank"
               rel="noopener noreferrer">
-              Privacy Policy
-            </a>
-          </li>
-          <li className={styles.link}>
-            <a
+              <Text type="p" small tight id="widget.footer.privacy">
+                Privacy Policy
+              </Text>
+            </Link>
+          </ListItem>
+          <ListItem>
+            <Link
               href="https://www.bitrefill.com/terms/"
               target="_blank"
               rel="noopener noreferrer">
-              Terms of Service
-            </a>
-          </li>
-        </ul>
+              <Text type="p" small tight id="widget.footer.terms">
+                Terms of Service
+              </Text>
+            </Link>
+          </ListItem>
+        </List>
       </div>
-    </div>
+    </Container>
   );
 }
 
