@@ -45,7 +45,7 @@ const styles = {
       margin-bottom: 8px;
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 460px) {
       > dt {
         width: auto;
       }

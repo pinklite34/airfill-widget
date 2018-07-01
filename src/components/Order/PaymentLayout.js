@@ -19,7 +19,6 @@ import setClipboardText from '../../lib/clipboard-helper';
 
 const styles = {
   container: css`
-    font-family: px;
     background-color: #fff;
 
     & > div {

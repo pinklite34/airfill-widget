@@ -53,11 +53,7 @@ const style = css`
 `;
 
 export default function Root({ children, className }) {
-  return (
-    <div className={className} {...style}>
-      {children}
-    </div>
-  );
+  return <div className={`${className} ${style}`}>{children}</div>;
 }
 
 Root.propTypes = {

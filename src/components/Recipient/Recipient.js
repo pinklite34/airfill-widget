@@ -1,8 +1,7 @@
 import { formatNumber } from 'libphonenumber-js';
-import Button from '../UI/Button';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import styled, { css } from 'react-emotion';
+import styled from 'react-emotion';
 import { connect } from 'react-redux';
 
 import {
@@ -33,38 +32,14 @@ import {
   selectOperator,
   selectSubscribeNewsletter,
 } from '../../store';
-import ErrorBanner from '../UI/ErrorBanner';
-import InputRow from '../UI/NumberInput';
 
-const styles = {
-  field: css`
-    flex: 1 0 250px;
-    margin: 0;
-    margin-bottom: 24px;
-  `,
-  input: css`
-    max-width: 250px;
-    padding: 0 !important;
-    background-color: #fff;
-    margin-bottom: 24px;
-    & > input {
-      padding: 8px;
-    }
-  `,
-  button: css`
-    width: 250px;
-    height: 38px;
-    margin-bottom: 0;
-  `,
-};
+import NextButton from '../UI/NextButton';
+import ErrorBanner from '../UI/ErrorBanner';
+import NumberInput from '../UI/NumberInput';
+import ActiveSection from '../UI/ActiveSection';
 
 const Text = styled('p')`
   font-weight: 500;
-`;
-
-const Container = styled('div')`
-  background-color: #fafafa;
-  padding: 0 16px 16px;
 `;
 
 const InputContainer = styled('div')`
@@ -74,7 +49,7 @@ const InputContainer = styled('div')`
 `;
 
 const Content = styled('div')`
-  padding: 16px 0;
+  padding: 0 0 16px;
 `;
 
 class Recipient extends PureComponent {
@@ -208,12 +183,16 @@ class Recipient extends PureComponent {
     const Icon = getRecipientIcon(operator.result);
 
     return (
-      <Container>
+      <ActiveSection
+        padding="0 16px"
+        renderNextButton={() => (
+          <NextButton disabled={!number} onClick={this.continue} />
+        )}>
         {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
         <Content>
           <Text>{this.getNumberLabel()}</Text>
           <InputContainer>
-            <InputRow
+            <NumberInput
               country={country}
               value={number}
               placeholder={this.state.placeholder}
@@ -224,13 +203,7 @@ class Recipient extends PureComponent {
             />
           </InputContainer>
         </Content>
-        <Button
-          disabled={!number}
-          onClick={this.continue}
-          className={styles.button}>
-          Continue
-        </Button>
-      </Container>
+      </ActiveSection>
     );
   }
 }

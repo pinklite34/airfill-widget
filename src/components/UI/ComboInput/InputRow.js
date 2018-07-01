@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { css } from 'react-emotion';
-import CircularProgress from 'material-ui/Progress/CircularProgress';
 
 import { inputTypeProp, fnProp } from '../../../lib/prop-types';
 
@@ -40,25 +39,14 @@ const styles = {
   `,
   flag: css`
     width: 48px;
-    background: #f0f6fa;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+    min-width: 48px;
+    height: auto;
+    border-radius: 2px 0 0 2px;
   `,
   button: css`
-    background-color: #f0f6fa !important;
-    color: #3e8fe4 !important;
-    min-width: 48px !important;
-    height: auto !important;
-    display: flex !important;
-
-    & svg {
-      margin-right: 0 !important;
-    }
-  `,
-  buttonDisabled: css`
-    color: #cccccc !important;
+    min-width: 48px;
+    height: auto;
+    border-radius: 0 2px 2px 0;
   `,
   progressBar: css`
     width: 24px !important;
@@ -98,9 +86,12 @@ export default function InputRow({
           onSubmit();
         }}>
         <div className={styles.row}>
-          <div className={styles.flag} onClick={resetCountry}>
+          <Button
+            className={styles.flag}
+            background="#f0f6fa"
+            onClick={resetCountry}>
             <Flag country={country} />
-          </div>
+          </Button>
           <div className={styles.inputContainer}>
             <input
               {...getInputProps({
@@ -120,19 +111,15 @@ export default function InputRow({
             />
           </div>
           <Button
-            disabled={loading || !submitEnabled}
-            className={`${styles.button} ${!submitEnabled &&
-              styles.buttonDisabled}`}
-            type="submit">
-            {loading ? (
-              <CircularProgress className={`${styles.progressBar}`} />
-            ) : (
-              <Check
-                className={`${
-                  submitEnabled ? styles.check : styles.checkDisabled
-                }`}
-              />
-            )}
+            className={styles.button}
+            type="submit"
+            background="#f0f6fa"
+            loading={loading}>
+            <Check
+              className={`${
+                submitEnabled ? styles.check : styles.checkDisabled
+              }`}
+            />
           </Button>
         </div>
       </form>

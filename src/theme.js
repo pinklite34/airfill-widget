@@ -8,6 +8,7 @@ const colors = {
   greyBlue: '#ecf0f9',
   greyDark: '#5e6c82',
   greyLight: '#eeeeee',
+  greyLighter: '#fafafa',
   redDark: '#df1e3b',
   redLight: '#e8374b',
   white: '#ffffff',
@@ -22,7 +23,7 @@ export default {
 
   // background
   bg: {
-    light: colors.greyBlue,
+    light: colors.greyLighter,
     dark: colors.blueDark,
     secondary: colors.blue,
     primary: colors.blue,
@@ -41,13 +42,12 @@ export default {
 
   // borders
   bd: {
-    primary: colors.greyDark,
-    faint: colors.greyBlue,
+    primary: '1px solid rgba(0, 0, 0, 0.08)',
   },
 
   // breakpoints
   bp: {
-    mobile: '480px',
-    tablet: '1024px',
+    mobile: '460px',
+    tablet: '720px',
   },
 };

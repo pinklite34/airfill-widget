@@ -49,7 +49,7 @@ const styles = {
     flex: 1 0 auto;
 
     @media (max-width: 460px) {
-      width: 24;
+      width: 24px;
       height: 18px;
       flex: 0 0 auto;
       margin-right: 12px;

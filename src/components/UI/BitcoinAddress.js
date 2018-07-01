@@ -17,7 +17,7 @@ export default function BitcoinAddress({ address, ...props }) {
     <TextField
       {...props}
       fullWidth
-      {...style}
+      className={style}
       type="text"
       readOnly
       value={address}

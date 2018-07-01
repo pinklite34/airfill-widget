@@ -17,7 +17,7 @@ const styles = {
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
     position: relative;
 
-    @media (max-width: 400px) {
+    @media (max-width: 460px) {
       & {
         padding: 12px;
       }

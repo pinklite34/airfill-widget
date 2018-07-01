@@ -9,6 +9,7 @@ const styles = {
     flex-wrap: wrap;
     justify-content: space-around;
     padding: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
   `,
   instruction: css`
     display: flex;
@@ -17,11 +18,12 @@ const styles = {
     flex: 1 1 auto;
     line-height: 1.4;
     font-size: 14px;
+
     & + & {
       margin-top: 20px;
     }
 
-    @media (min-width: 620px) {
+    @media (min-width: 720px) {
       flex-direction: column;
       text-align: center;
       flex: 0 0 180px;
@@ -45,7 +47,7 @@ const styles = {
     align-items: center;
     margin-right: 20px;
 
-    @media (min-width: 620px) {
+    @media (min-width: 720px) {
       margin-right: 0;
     }
   `,
@@ -53,7 +55,7 @@ const styles = {
     color: #2079d6;
     margin: 0px;
 
-    @media (min-width: 620px) {
+    @media (min-width: 720px) {
       margin: 8px 0;
     }
   `,

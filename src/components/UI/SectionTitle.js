@@ -11,9 +11,9 @@ const style = css`
   color: #777;
 `;
 
-export default function SectionTitle({ children, ...props }) {
+export default function SectionTitle({ children, className, ...props }) {
   return (
-    <div {...style} {...props}>
+    <div className={`${style} ${className}`} {...props}>
       {children}
     </div>
   );
@@ -21,4 +21,5 @@ export default function SectionTitle({ children, ...props }) {
 
 SectionTitle.propTypes = {
   children: PropTypes.node,
+  className: PropTypes.string,
 };

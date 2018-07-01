@@ -2,46 +2,45 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'react-emotion';
 
-import { colorDarken } from '../../lib/color';
+import { colorDarken, colorToString } from '../../lib/color';
 import { transProp } from '../../lib/prop-types';
 
 import Text from './Text';
 import Spinner from './Spinner';
 
-function getColor({ theme, secondary, loading, disabled, backgroundcolor }) {
-  return theme.bg.primary;
-  // const base =
-  //   backgroundcolor || (secondary ? theme.bg.secondary : theme.bg.primary);
-  // return colorToString(
-  //   disabled ? theme.bg.disabled : loading ? colorDarken(base, 0.2) : base
-  // );
+function getColor({ disabled, background, theme, loading, white }) {
+  if (disabled) return theme.bg.disabled;
+  const base = background || (white ? theme.white : theme.bg.primary);
+  return colorToString(loading ? colorDarken(base, 0.2) : base);
 }
 
 const StyledButton = styled('button')`
   display: flex;
   align-items: center;
   justify-content: center;
+
   min-height: 36px;
+  min-width: 100px;
+  margin: ${p => p.margin || 0};
+  padding: ${p => p.padding || '8px 16px'};
+
   border: none;
   border-radius: 2px;
-  margin: 0;
-  padding: 8px 16px;
-  min-width: 100px;
-  color: ${p => p.theme.tx.primary};
+
+  color: ${p => (p.white ? p.theme.tx.primary : p.theme.white)};
+  background-color: ${getColor};
+  opacity: ${p => (p.disabled ? 0.4 : 1)};
+
+  font-weight: 500;
+  font-size: ${p => (p.small ? '12px' : '14px')};
+
+  text-transform: uppercase;
   text-decoration: none;
   text-align: center;
   text-rendering: optimizeLegibility !important;
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
-  line-height: 24px;
-  opacity: ${p => (p.disabled ? 0.4 : 1)};
   cursor: ${p => (p.disabled ? 'not-allowed' : 'pointer')};
-  background-color: ${getColor};
-  color: ${p => p.theme.white};
-
-  font-weight: 500;
-  font-size: 0.875rem;
-  text-transform: uppercase;
 
   :hover {
     background-color: ${p => colorDarken(getColor(p), 0.1)};
@@ -53,13 +52,13 @@ const StyledButton = styled('button')`
 
 const StyledA = StyledButton.withComponent('a');
 
-function Button({ text, loading, children, ...props }) {
+function Button({ text, loading, children, white, ...props }) {
   const Component = props.href ? StyledA : StyledButton;
 
   return (
-    <Component loading={loading} {...props}>
+    <Component loading={loading} white={white} {...props}>
       {loading ? (
-        <Spinner white tight small />
+        <Spinner white={!white} tight small />
       ) : (
         <Fragment>
           {children}
@@ -73,11 +72,15 @@ function Button({ text, loading, children, ...props }) {
 Button.propTypes = {
   children: PropTypes.node,
   text: transProp,
-  loading: PropTypes.bool,
-  secondary: PropTypes.bool,
   href: PropTypes.string,
   disabled: PropTypes.bool,
-  backgroundcolor: PropTypes.string,
+  loading: PropTypes.bool,
+  color: PropTypes.string,
+  small: PropTypes.bool,
+  white: PropTypes.bool,
+  background: PropTypes.string,
+  margin: PropTypes.string,
+  padding: PropTypes.string,
 };
 
 export default Button;

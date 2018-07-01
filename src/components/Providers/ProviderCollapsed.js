@@ -23,7 +23,7 @@ const styles = {
     margin-left: 14px;
 
     @media (max-width: 460px) {
-      margin-right: 14;
+      margin-right: 14px;
       margin-left: 0px;
     }
   `,

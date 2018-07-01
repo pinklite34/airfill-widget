@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { css } from 'react-emotion';
 import { push } from 'react-router-redux';
-import CircularProgress from 'material-ui/Progress/CircularProgress';
 
 import { PUSHER_API_KEY } from '../../constants';
 
@@ -16,6 +15,7 @@ import RefillFailed from './RefillFailed';
 import RefillDelivered from './RefillDelivered';
 import BalanceTooLow from './BalanceTooLow';
 import PaymentError from './PaymentError';
+import Spinner from '../UI/Spinner';
 
 import {
   selectOrder,
@@ -98,7 +98,7 @@ function Payment({
   if (!order.result) {
     return (
       <div className={styles.spinner}>
-        <CircularProgress />
+        <Spinner />
         <div className={styles.spinnerText}>Loading order status...</div>
       </div>
     );

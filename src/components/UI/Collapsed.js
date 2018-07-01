@@ -4,18 +4,13 @@ import PropTypes from 'prop-types';
 import Button from './Button';
 
 const Container = styled('div')`
-  padding: 16px;
+  height: 36px;
+  padding: 12px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #efefef;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-`;
-
-const StyledButton = styled(Button)`
-  background-color: #fff !important;
-  font-size: 12px !important;
-  margin: -4px !important;
 `;
 
 const Text = styled('div')`
@@ -34,7 +29,9 @@ export default function Collapsed({ onClick, type, hideButton, children }) {
     <Container>
       <Text>{children}</Text>
       {hideButton ? null : (
-        <StyledButton onClick={onClick}>Change {type}</StyledButton>
+        <Button small white onClick={onClick}>
+          Change {type}
+        </Button>
       )}
     </Container>
   );

@@ -1,12 +1,12 @@
 import React from 'react';
 import { css } from 'react-emotion';
 
-import CircularProgress from 'material-ui/Progress/CircularProgress';
-import Button from '../UI/Button';
-
 import { orderProp, fnProp } from '../../lib/prop-types';
+
 import PaymentLayout from './PaymentLayout';
 import OrderHeader from '../UI/OrderHeader';
+import Button from '../UI/Button';
+import Spinner from '../UI/Spinner';
 
 const styles = {
   textContainer: css`
@@ -35,7 +35,7 @@ export default function PaymentDetected(props) {
         order={props.order}
         title="Payment detected"
         subtitle="We're waiting for your payment to be confirmed"
-        icon={<CircularProgress size={32} />}
+        icon={<Spinner tight />}
       />
       <PaymentLayout {...props}>
         <div>

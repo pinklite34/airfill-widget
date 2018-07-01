@@ -5,8 +5,7 @@ import { orderProp } from '../../lib/prop-types';
 
 import PaymentLayout from './PaymentLayout';
 import OrderHeader from '../UI/OrderHeader';
-
-import CircularProgress from 'material-ui/Progress/CircularProgress';
+import Spinner from '../UI/Spinner';
 
 const styles = {
   textContainer: css`
@@ -27,7 +26,7 @@ export default function PaymentConfirmed(props) {
         order={props.order}
         title="Refill sent!"
         subtitle="Waiting for delivery confirmation"
-        icon={<CircularProgress size={32} />}
+        icon={<Spinner tight />}
       />
       <PaymentLayout {...props}>
         <div>
