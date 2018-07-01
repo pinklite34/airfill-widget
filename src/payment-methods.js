@@ -1,7 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { css } from 'react-emotion';
-
 import { PUSHER_API_KEY } from './constants';
 
 import {
@@ -16,15 +12,6 @@ import {
 
 const baseUrl =
   process.env.NODE_ENV === 'development' ? '/api' : 'https://api.bitrefill.com';
-
-const styles = {
-  textIcon: css`
-    font-size: 12px !important;
-  `,
-  subtitle: css`
-    font-size: 12px !important;
-  `,
-};
 
 function openWindow(method, order) {
   const win = window.open(`${baseUrl}/widget/${method}?order=${order.id}`);
@@ -53,29 +40,6 @@ function openWindow(method, order) {
     }
   );
 }
-
-function PaymentMethodTextIcon({ children }) {
-  return <p className={styles.textIcon}>{children}</p>;
-}
-
-PaymentMethodTextIcon.propTypes = {
-  children: PropTypes.string.isRequired,
-};
-
-function PaymentMethodDescription({ text, subtext }) {
-  return (
-    <span>
-      {text}
-      <br />
-      <span className={styles.subtitle}>{subtext}</span>
-    </span>
-  );
-}
-
-PaymentMethodDescription.propTypes = {
-  text: PropTypes.string.isRequired,
-  subtext: PropTypes.string,
-};
 
 export default function getPaymentMethods({ currency, dispatch, ...props }) {
   return [

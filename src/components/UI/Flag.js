@@ -10,7 +10,7 @@ const style = css`
   height: 24px;
 `;
 
-const Flag = ({ country }) => {
+export default function Flag({ country }) {
   let flag;
 
   try {
@@ -18,10 +18,8 @@ const Flag = ({ country }) => {
   } catch (ex) {}
 
   return <img src={flag || defaultFlag} alt={country} className={style} />;
-};
+}
 
 Flag.propTypes = {
   country: PropTypes.string,
 };
-
-export default Flag;
