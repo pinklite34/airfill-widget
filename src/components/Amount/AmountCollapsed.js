@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { css } from 'react-emotion';
+import styled from 'react-emotion';
 
 import { selectAmount, selectOperator } from '../../store';
 import {
@@ -12,38 +12,35 @@ import {
 import Icon from './icon.svg';
 import Collapsed from '../UI/Collapsed';
 
-const styles = {
-  container: css`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  `,
-  icon: css`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 24px;
-    margin-right: 30px;
-    margin-left: 14px;
+const Container = styled('div')`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
 
-    @media (max-width: 460px) {
-      margin-right: 14px;
-      margin-left: 0px;
-    }
-  `,
-};
+const StyledIcon = styled(Icon)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  margin-right: 30px;
+  margin-left: 14px;
+
+  @media (max-width: 460px) {
+    margin-right: 14px;
+    margin-left: 0px;
+  }
+`;
 
 function AmountCollapsed({ history, amount, operator }) {
   return (
     <Collapsed
       onClick={() => history.push('/refill/selectAmount')}
       type="amount">
-      <div className={styles.container}>
-        <div className={styles.icon}>
-          <Icon />
-        </div>
+      <Container>
+        <StyledIcon />
         {amount} {operator.result && operator.result.currency}
-      </div>
+      </Container>
     </Collapsed>
   );
 }

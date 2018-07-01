@@ -1,29 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router';
-import { css } from 'react-emotion';
+import styled from 'react-emotion';
 
 import HeaderLogo from './HeaderLogo';
 import HeaderIntroduction from './HeaderIntroduction';
 
-const styles = {
-  container: css`
-    background: #3e8fe4;
-    border-radius: 0px;
-    padding: 24px;
-    text-align: center;
-    color: #ffffff;
-    z-index: 10;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
-    position: relative;
+const Container = styled('div')`
+  background: #3e8fe4;
+  border-radius: 0px;
+  padding: 24px;
+  text-align: center;
+  color: #ffffff;
+  z-index: 10;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+  position: relative;
 
-    @media (max-width: 460px) {
-      & {
-        padding: 12px;
-      }
+  @media (max-width: ${p => p.theme.bp.mobile}) {
+    & {
+      padding: 12px;
     }
-  `,
-};
+  }
+`;
 
 export default function Header({ branded, isMobile }) {
   return (
@@ -32,22 +30,22 @@ export default function Header({ branded, isMobile }) {
         path="/refill"
         exact
         render={props => (
-          <div className={styles.container}>
+          <Container>
             {branded && <HeaderLogo />}
             <HeaderIntroduction
               isMobile={isMobile}
               branded={branded}
               {...props}
             />
-          </div>
+          </Container>
         )}
       />
       <Route
-        render={props =>
+        render={() =>
           branded && (
-            <div className={styles.container}>
+            <Container>
               <HeaderLogo />
-            </div>
+            </Container>
           )
         }
       />

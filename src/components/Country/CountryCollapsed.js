@@ -9,6 +9,7 @@ import { historyProp, countryProp, fnProp } from '../../lib/prop-types';
 
 import Collapsed from '../UI/Collapsed';
 import Flag from '../UI/Flag';
+import Text from '../UI/Text';
 
 const styles = {
   container: css`
@@ -73,7 +74,9 @@ function CountryCollapsed({
     </Collapsed>
   ) : (
     <Collapsed hideButton type="country">
-      {'Select a country above to see available services.'}
+      <Text type="p" size="16px" id="widget.introduction.select">
+        Select a country above to see available services.
+      </Text>
     </Collapsed>
   );
 }

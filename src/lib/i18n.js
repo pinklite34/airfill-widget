@@ -13,7 +13,7 @@ i18n
     ns: ['widget'],
     defaultNS: 'widget',
 
-    // debug: process.env.NODE_ENV === 'development',
+    debug: process.env.NODE_ENV === 'development',
 
     backend: {
       projectId: 'a83885d2-6afa-4605-a751-8949e8c0a47a',

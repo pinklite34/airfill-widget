@@ -2,6 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css } from 'react-emotion';
 
+import { transProp } from '../lib/prop-types';
+
+import Text from './UI/Text';
+
 const styles = {
   container: css`
     display: flex;
@@ -65,13 +69,13 @@ const styles = {
   `,
 };
 
-function Instruction({ number, title, children }) {
+function Instruction({ number, title, description }) {
   return (
     <div className={styles.instruction}>
       <div className={styles.badge}>{number}</div>
       <div className={styles.content}>
-        <h3 className={styles.title}>{title}</h3>
-        <div>{children}</div>
+        <Text type="h3" centered className={styles.title} {...title} />
+        <Text type="p" centered {...description} />
       </div>
     </div>
   );
@@ -79,22 +83,48 @@ function Instruction({ number, title, children }) {
 
 Instruction.propTypes = {
   number: PropTypes.number,
-  title: PropTypes.node,
-  children: PropTypes.node,
+  title: transProp,
+  description: transProp,
 };
 
 export default function Instructions() {
   return (
     <div className={styles.container}>
-      <Instruction number={1} title="Find a service">
-        Select a country or enter a phone number to see available services
-      </Instruction>
-      <Instruction number={2} title="Pick package &amp; pay">
-        Select your desired refill amount and pay with a single click
-      </Instruction>
-      <Instruction number={3} title="Instant refill delivery">
-        We send your refill the second we receive your payment
-      </Instruction>
+      <Instruction
+        number={1}
+        title={{
+          id: 'widget.instructions.title1',
+          children: 'Find a service',
+        }}
+        description={{
+          id: 'widget.instructions.description1',
+          children:
+            'Select a country or enter a phone number to see available services',
+        }}
+      />
+      <Instruction
+        number={2}
+        title={{
+          id: 'widget.instructions.title2',
+          children: 'Pick package & pay',
+        }}
+        description={{
+          id: 'widget.instructions.description2',
+          children:
+            'Select your desired refill amount and pay with a single click',
+        }}
+      />
+      <Instruction
+        number={3}
+        title={{
+          id: 'widget.instructions.title3',
+          children: 'Instant refill delivery',
+        }}
+        description={{
+          id: 'widget.instructions.description3',
+          children: 'We send your refill the second we receive your payment',
+        }}
+      />
     </div>
   );
 }
