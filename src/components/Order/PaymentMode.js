@@ -320,6 +320,7 @@ class PaymentMode extends PureComponent {
                           order.orderId
                         }/${order.payment.address}`}
                         target="_blank"
+                        rel="noopener noreferrer"
                         className={styles.help}>
                         Need help?
                       </a>

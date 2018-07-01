@@ -1,73 +1,62 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'react-emotion';
+import styled from 'react-emotion';
 import { connect } from 'react-redux';
+import { formatNumber } from 'libphonenumber-js';
 
-import { createOrder, setNumber, setEmail, trigger } from '../../actions';
 import {
-  selectNumber,
-  selectEmail,
+  setEmail,
+  setNumber,
+  setSubscribeNewsletter,
+  trigger,
+} from '../../actions';
+
+import { isValidEmail } from '../../lib/email-validation';
+import { getRecipientIcon } from '../../lib/icon-picker';
+import { getPlaceholder, isValidForCountry } from '../../lib/number-helpers';
+import { isPhoneNumber } from '../../lib/number-input-helpers';
+import {
+  amountProp,
+  configProp,
+  countryProp,
+  emailProp,
+  fnProp,
+  historyProp,
+  numberProp,
+  operatorResultProp,
+} from '../../lib/prop-types';
+import {
   selectAmount,
-  selectOperator,
   selectCountry,
+  selectEmail,
+  selectNumber,
+  selectOperator,
+  selectSubscribeNewsletter,
 } from '../../store';
 
-import {
-  historyProp,
-  configProp,
-  operatorResultProp,
-  fnProp,
-  emailProp,
-  numberProp,
-  amountProp,
-  countryProp,
-} from '../../lib/prop-types';
-import { isValidEmail } from '../../lib/email-validation';
-
-import { isValidForCountry } from '../../lib/number-helpers';
-
-import Button from 'material-ui/Button';
-import Input from 'material-ui/Input';
-
-import Field from '../UI/Field';
+import NextButton from '../UI/NextButton';
 import ErrorBanner from '../UI/ErrorBanner';
+import InputRow from '../UI/NumberInput';
+import ActiveSection from '../UI/ActiveSection';
 
-const styles = {
-  field: css`
-    flex: 1 0 250px;
-    margin: 0;
-    margin-bottom: 24;
-  `,
-  input: css`
-    max-width: 250;
-    padding: 0 !important;
-    background-color: #fff;
-    margin-bottom: 24px;
-    & > input: {
-      padding: 8px;
-    },
-  `,
-  button: css`
-    width: 250px;
-    height: 38px;
-    margin-bottom: 0;
-  `,
-};
+const Text = styled('p')`
+  font-weight: 500;
+`;
 
-const Container = styled('div')`
-  background-color: #fafafa;
-  padding: 0 16px 16px;
+const InputContainer = styled('div')`
+  @media (min-width: 460px) {
+    width: 50%;
+  }
 `;
 
 const Content = styled('div')`
-  padding-top: 16px;
+  padding: 0 0 16px;
 `;
 
 class Recipient extends PureComponent {
   static propTypes = {
     config: configProp,
     amount: amountProp,
-    createOrder: fnProp,
     operator: operatorResultProp,
     history: historyProp,
     trigger: fnProp,
@@ -78,139 +67,144 @@ class Recipient extends PureComponent {
     email: emailProp,
     paymentMethod: PropTypes.object,
     country: countryProp,
+    setSubscribeNewsletter: fnProp,
+    subscribing: PropTypes.bool.isRequired,
   };
 
   state = {
     error: null,
+    placeholder: '',
   };
 
-  // if we should show number input at all
-  get showNumber() {
-    const { operator } = this.props;
-    return !operator.result || !operator.result.noNumber;
+  componentDidMount() {
+    const { operator, country, config } = this.props;
+    let placeholder;
+
+    switch (operator.result.recipientType) {
+      case 'phone_number':
+        placeholder = formatNumber(
+          { country: country.alpha2, phone: getPlaceholder(country.alpha2) },
+          'National'
+        );
+        console.log(placeholder);
+        break;
+      case 'email':
+        placeholder = config.orderOptions.email || 'example@mail.com';
+        break;
+    }
+
+    this.setState({
+      placeholder,
+    });
   }
 
-  // if we need account number instead of phone number
-  get isAccount() {
-    const { operator } = this.props;
-    return operator.result && !!operator.result.type;
-  }
+  onChange = number => this.props.setNumber(number);
 
   getNumberLabel = () => {
     const { operator } = this.props;
 
-    if (operator.result && operator.result.slug === 'reddit-gold') {
-      return 'Reddit username or post link';
+    if (operator.result) {
+      switch (operator.result.recipientType) {
+        case 'phone_number':
+          return 'The phone number to top up';
+        case 'username':
+          return 'Reddit username / post permalink';
+        case 'email':
+          return 'Delivery email address';
+        case 'none':
+        default:
+          return '';
+      }
     }
-
-    return this.isAccount
-      ? 'The account number to top up'
-      : 'The phone number to top up';
   };
 
-  isComplete = () => {
-    const { amount, number, operator, config, email } = this.props;
-    return (
-      (amount &&
-        (number ||
-          (operator.result && operator.result.recipientType !== 'none'))) ||
-      (isValidEmail(config.orderOptions.email) || email.valid)
-    );
+  validateInput = () => {
+    const { number, country, operator } = this.props;
+
+    switch (operator.result.recipientType) {
+      case 'phone_number':
+        if (country.alpha2 === 'XI') {
+          return isPhoneNumber(number);
+        }
+        return isValidForCountry(number, country);
+      case 'email':
+        return isValidEmail(number);
+      default:
+        return true;
+    }
   };
 
-  validate = () => {
-    const { config, number, country, operator, email } = this.props;
+  validationMessage = () => {
+    const { operator, country } = this.props;
 
-    let error;
-
-    if (
-      this.showNumber &&
-      !this.isAccount &&
-      !isValidForCountry(number, country)
-    ) {
-      error = 'Phone number does not match country';
-    } else if (
-      operator.result.recipientType === 'email' &&
-      !isValidEmail(number)
-    ) {
-      error = 'Please enter a valid recipient email address';
-    } else if (!isValidEmail(config.orderOptions.email) && !email.valid) {
-      error = 'Please enter a valid status update email address';
+    if (!this.validateInput()) {
+      switch (operator.result.recipientType) {
+        case 'phone_number':
+          if (country.alpha2 === 'XI') {
+            return 'Please enter a valid phone number';
+          }
+          return 'Phone number does not match country';
+        case 'email':
+          return 'Please enter a valid email address';
+      }
     }
 
-    this.setState({
-      error,
-    });
-
-    return !error;
+    return '';
   };
 
   continue = () => {
-    const { history } = this.props;
+    const { history, config } = this.props;
 
-    if (this.validate()) {
-      history.push('/refill/selectPayment');
+    if (this.validateInput()) {
+      if (!isValidEmail(config.orderOptions.email)) {
+        history.push('/refill/selectStatusEmail');
+      } else {
+        history.push('/refill/selectPayment');
+      }
+    } else {
+      this.setState({
+        error: this.validationMessage(),
+      });
     }
   };
 
   render() {
-    const { config, setEmail, number, email, setNumber } = this.props;
+    const {
+      // config,
+      // setEmail,
+      country,
+      number,
+      operator,
+      // email,
+      // setSubscribeNewsletter,
+      // subscribing,
+    } = this.props;
     const { error } = this.state;
 
-    const showEmail = !isValidEmail(config.orderOptions.email);
-    const numberLabel = this.getNumberLabel();
+    const Icon = getRecipientIcon(operator.result);
 
     return (
-      <Container>
+      <ActiveSection
+        padding="0 16px"
+        renderNextButton={() => (
+          <NextButton disabled={!number} onClick={this.continue} />
+        )}>
         {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
         <Content>
-          {!!numberLabel && (
-            <Field label={numberLabel} className={styles.field}>
-              <Input
-                onChange={e => setNumber(e.target.value)}
-                type={
-                  operator.result.recipientType === 'phone_number'
-                    ? 'tel'
-                    : 'text'
-                }
-                value={number}
-                className={styles.input}
-              />
-            </Field>
-          )}
-          {showEmail && (
-            <Field
-              label="E-mail address"
-              hint="The email address will receive order status updates"
-              className={styles.field}>
-              <Input
-                onChange={e =>
-                  setEmail({
-                    value: e.target.value,
-                    inFocus: true,
-                  })
-                }
-                onBlur={e =>
-                  setEmail({
-                    value: e.target.value,
-                    inFocus: false,
-                  })
-                }
-                value={email.value}
-                className={styles.input}
-              />
-            </Field>
-          )}
+          <Text>{this.getNumberLabel()}</Text>
+          <InputContainer>
+            <InputRow
+              country={country}
+              value={number}
+              placeholder={this.state.placeholder}
+              onChange={this.onChange}
+              submitEnabled={this.validateInput()}
+              onSubmit={this.continue}
+              icon={<Icon />}
+            />
+          </InputContainer>
         </Content>
-        <Button
-          color="primary"
-          raised
-          disabled={!this.isComplete()}
-          onClick={this.continue}
-          className={styles.button}>
-          Continue
-        </Button>
-      </Container>
+      </ActiveSection>
     );
   }
 }
@@ -222,11 +216,12 @@ export default connect(
     amount: selectAmount(state),
     operator: selectOperator(state),
     country: selectCountry(state),
+    subscribing: selectSubscribeNewsletter(state),
   }),
   {
-    createOrder,
     setNumber,
     setEmail,
     trigger,
+    setSubscribeNewsletter,
   }
 )(Recipient);

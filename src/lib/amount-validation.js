@@ -68,7 +68,7 @@ const selectValidRangedAmount = ({
   } else {
     if (currency === 'XBT') {
       const amountForMaxCost = Math.floor(
-        maxCost * 100000000 / costConversionRate
+        (maxCost * 100000000) / costConversionRate
       );
       return String(amountForMaxCost); // Return the maximum amount allowed
     } else {

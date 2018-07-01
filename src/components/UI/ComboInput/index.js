@@ -111,7 +111,7 @@ class ComboInput extends PureComponent {
     if (this.props.shouldFocus) this.focusInput();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) { // eslint-disable-line
     if (nextProps.shouldFocus) this.focusInput();
   }
 

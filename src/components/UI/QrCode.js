@@ -13,7 +13,7 @@ class QrCode extends PureComponent {
     };
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) { // eslint-disable-line
     const { qr } = this.state;
     qr.set(newProps);
 

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'glamor';
+import { css } from 'react-emotion';
 import { connect } from 'react-redux';
 
 import { createOrder, setNumber, setEmail, trigger } from '../../actions';
@@ -37,52 +37,53 @@ import Field from '../UI/Field';
 import Error from './error.svg';
 
 const styles = {
-  title: css({
-    margin: 0,
-  }),
-  container: css({
-    backgroundColor: '#FAFAFA',
-    padding: '0 16px 16px',
-  }),
-  field: css({
-    flex: '1 0 250px',
-    margin: 0,
-    marginBottom: 24,
-  }),
-  input: css({
-    maxWidth: 250,
-    padding: '0 !important',
-    backgroundColor: '#fff',
-    margin: '4px -8px',
-    '& > input': {
-      padding: 8,
+  title: css`
+    margin: 0;
+  `,
+  container: css`
+    background-color: #fafafa;
+    padding: 0 16px 16px;
+  `,
+  field: css`
+    flex: 1 0 250px;
+    margin: 0px;
+    margin-bottom: 24px;
+  `,
+  input: css`
+    max-width: 250px;
+    padding: 0 !important;
+    background-color: #fff;
+    margin: 4px -8px;
+    
+    & > input {
+      padding: 8px;
     },
-  }),
-  button: css({
-    color: '#fff !important',
-    width: 250,
-    height: 38,
-    marginBottom: 0,
-  }),
-  error: css({
-    backgroundColor: '#E1283C',
-    margin: '0 -16px 16px',
-    padding: 16,
-    color: '#fff',
-    fontWeight: 700,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    boxShadow: '0 1px 2px 0 rgba(0,0,0,.16)',
-    position: 'relative',
-    zIndex: 10,
-  }),
-  icon: css({
-    marginRight: 16,
-  }),
-  progressBar: css({
-    fill: '#fff',
-  }),
+  `,
+  button: css`
+    color: #fff !important;
+    width: 250px;
+    height: 38px;
+    margin-bottom: 0px;
+  `,
+  error: css`
+    background-color: #E1283C;
+    margin: 0 -16px 16px;
+    padding: 16px;
+    color: #fff;
+    font-weight: 700;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-shadow: 0 1px 2px 0 rgba(0;0:px;0:px;.16):px;
+    position: relative;
+    z-index: 10;
+  `,
+  icon: css`
+    margin-right: 16px;
+  `,
+  progressBar: css`
+    fill: #fff;
+  `,
 };
 
 const muiStyles = {
@@ -227,15 +228,18 @@ class DetailsTopup extends PureComponent {
     const numberLabel = this.getNumberLabel();
 
     return (
-      <div {...styles.container}>
+      <div className={styles.container}>
         {error && (
-          <div {...styles.error}>
-            <Error fill="#fff" {...styles.icon} />
+          <div className={styles.error}>
+            <Error fill="#fff" className={styles.icon} />
             <div>{error.message || error}</div>
           </div>
         )}
         {this.showNumber && (
-          <Field label={numberLabel} hint={numberLabel} {...styles.field}>
+          <Field
+            label={numberLabel}
+            hint={numberLabel}
+            className={styles.field}>
             <Input
               onChange={e => setNumber(e.target.value)}
               type={this.isAccount ? 'text' : 'tel'}
@@ -249,7 +253,7 @@ class DetailsTopup extends PureComponent {
           <Field
             label="E-mail address"
             hint="The email address will receive order status updates"
-            {...styles.field}>
+            className={styles.field}>
             <Input
               onChange={e =>
                 setEmail({

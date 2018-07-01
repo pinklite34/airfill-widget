@@ -5,7 +5,6 @@
 import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import airfillWidget from './index';
-import enhanceStore from './enhanceStore';
 
 export default function configureStore(routerReducer, middleware) {
   const store = createStore(
@@ -23,7 +22,7 @@ export default function configureStore(routerReducer, middleware) {
 
   // Enable store persistance. Exported as a standalone enhancer to enable
   // reuse when integrating the widget in to other react projects.
-  enhanceStore(store);
+  require('./enhanceStore').default(store);
 
   return store;
 }

@@ -84,24 +84,26 @@ function AirfillWidget(ele, opt) {
   render(
     <I18nextProvider i18n={i18n}>
       <Provider store={store}>
-        <ConnectedRouter history={history}>
-          <Widget
-            className="refill-widget-root standalone"
-            billingCurrency={billingCurrency}
-            orderOptions={orderOptions}
-            paymentButtons={paymentButtons}
-            showBTCAddress={showBTCAddress}
-            defaultNumber={defaultNumber}
-            accountBalance={userAccountBalance}
-            requireAccountBalance={requireAccountBalance}
-            showInstructions={showInstructions}
-            showLogo={showLogo}
-            showPoweredBy={!showLogo}
-            keepDefaultPayments={keepDefaultPayments}
-            operator={operator}
-            country={country}
-          />
-        </ConnectedRouter>
+        <ThemeProvider theme={theme}>
+          <ConnectedRouter history={history}>
+            <Widget
+              className="refill-widget-root standalone"
+              billingCurrency={billingCurrency}
+              orderOptions={orderOptions}
+              paymentButtons={paymentButtons}
+              showBTCAddress={showBTCAddress}
+              defaultNumber={defaultNumber}
+              accountBalance={userAccountBalance}
+              requireAccountBalance={requireAccountBalance}
+              showInstructions={showInstructions}
+              showLogo={showLogo}
+              showPoweredBy={!showLogo}
+              keepDefaultPayments={keepDefaultPayments}
+              operator={operator}
+              country={country}
+            />
+          </ConnectedRouter>
+        </ThemeProvider>
       </Provider>
     </I18nextProvider>,
     element

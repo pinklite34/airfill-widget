@@ -105,7 +105,8 @@ Thanks!`);
               href={`https://www.bitrefill.com/support/${order.orderId}/${
                 order.payment.address
               }`}
-              target="_blank">
+              target="_blank"
+              rel="noopener noreferrer">
               Click here for more information
             </a>
           </div>

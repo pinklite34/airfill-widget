@@ -29,6 +29,7 @@ import Instructions from './Instructions';
 import Amount from './Amount';
 import Order from './Order';
 import Recipient from './Recipient';
+import StatusEmail from './StatusEmail';
 import Payment from './PaymentMethod';
 import getMethods from '../payment-methods';
 import Spinner from './UI/Spinner';
@@ -83,7 +84,7 @@ class AirfillWidget extends Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() { // eslint-disable-line
     const {
       key,
       baseUrl,
@@ -158,21 +159,21 @@ class AirfillWidget extends Component {
           <Card>
             {hasLoaded ? (
               <Fragment>
-              <Header isMobile={isMobile} branded={showLogo} />
-              <Country />
-              <NumberLookup />
-              <Providers />
-              <Amount config={config} />
-              <Recipient config={config} />
-              <Payment config={config} />
-              <Order config={config} />
-              {showInstructions && (
-                <Route
-                  path="/refill"
-                  exact
-                  render={() => <Instructions config={config} />}
-                />
-              )}
+                <Header isMobile={isMobile} branded={showLogo} />
+                <Country />
+                <Providers />
+                <Amount config={config} />
+                <Recipient config={config} />
+                <StatusEmail config={config} />
+                <Payment config={config} />
+                <Order config={config} />
+                {showInstructions && (
+                  <Route
+                    path="/refill"
+                    exact
+                    render={() => <Instructions config={config} />}
+                  />
+                )}
               </Fragment>
             ) : (
               <Spinner />

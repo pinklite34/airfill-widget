@@ -39,7 +39,7 @@ export default class ProviderGrid extends PureComponent {
     const { showAll } = this.state;
 
     const visibleProviders =
-      showAll || providers.length <= 5 ? providers : providers.slice(0, 4);
+      showAll || providers.length <= 4 ? providers : providers.slice(0, 3);
 
     return (
       <div className={styles.container}>

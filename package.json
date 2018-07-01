@@ -1,10 +1,6 @@
 {
   "name": "@bitrefill/airfill-widget",
-<<<<<<< HEAD
-  "version": "4.0.0-alpha.21",
-=======
   "version": "4.0.0-alpha.23",
->>>>>>> 4.0.0-alpha.23
   "description": "Airfill Embeddable Refill Widget",
   "main": "dist/index.js",
   "engines": {
@@ -42,71 +38,33 @@
   },
   "dependencies": {
     "@bitrefill/react-pusher": "^2.3.2",
-<<<<<<< HEAD
-<<<<<<< HEAD
     "color": "^3.0.0",
     "core-js": "^2.5.7",
-    "downshift": "^1.31.12",
-    "emotion-theming": "^9.2.4",
+    "downshift": "^1.31.7",
     "emotion": "^9.1.2",
+    "emotion-theming": "^9.2.4",
     "express": "^4.16.3",
-=======
-    "core-js": "^2.5.6",
-    "downshift": "^1.31.14",
-=======
-    "core-js": "^2.5.7",
-    "downshift": "^1.31.15",
->>>>>>> upgrade shared deps with dashboard
-    "emotion": "^9.1.3",
->>>>>>> 4.0.0-alpha.14
-    "fetch-ponyfill": "^6.0.2",
+    "fetch-ponyfill": "^6.0.1",
     "flag-icons": "^1.0.2",
     "history": "^4.7.2",
-<<<<<<< HEAD
+    "i18next": "^11.3.3",
     "i18next-browser-languagedetector": "^2.2.0",
     "i18next-locize-backend": "^1.6.0",
-    "i18next": "^11.3.3",
-    "input-format": "^0.2.1",
-    "libphonenumber-js": "^1.2.15",
-=======
     "input-format": "^0.2.3",
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "libphonenumber-js": "^1.2.9",
->>>>>>> 4.0.0-alpha.14
-=======
-    "libphonenumber-js": "^1.2.14",
->>>>>>> upgrade shared deps with dashboard
-=======
     "libphonenumber-js": "^1.2.15",
->>>>>>> 4.0.0-alpha.20
     "material-ui": "1.0.0-beta.27",
-    "object-assign": "^4.1.1",
-    "promise": "^8.0.1",
-    "prop-types": "^15.6.2",
+    "prop-types": "^15.5.8",
     "qrious": "^4.0.2",
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "react-dom": "^16.4.1",
-    "react": "^16.4.1",
-    "react-emotion": "^9.1.2",
-    "react-i18next": "^7.7.0",
-    "react-loadable": "^5.3.1",
-=======
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
-=======
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
->>>>>>> upgrade shared deps with dashboard
     "react-emotion": "^9.1.3",
+    "react-i18next": "^7.7.0",
     "react-loadable": "^5.4.0",
->>>>>>> 4.0.0-alpha.14
     "react-media": "^1.8.0",
     "react-redux": "^5.0.4",
     "react-router": "^4.1.2",
     "react-router-redux": "^5.0.0-alpha.8",
-    "react-tiny-virtual-list": "^2.1.6",
+    "react-tiny-virtual-list": "^2.1.4",
     "redux": "^3.6.0",
     "redux-actions": "^2.4.0",
     "redux-persist": "^4.6.0",
@@ -116,71 +74,21 @@
     "babel-core": "6.26.3",
     "babel-jest": "22.4.4",
     "babel-loader": "7.1.4",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-react-app": "^3.1.2",
+    "babel-preset-react-app": "^3.0.0",
     "babel-runtime": "6.26.0",
     "eslint-config-bitrefill": "^1.1.1",
     "husky": "^0.14.3",
-<<<<<<< HEAD
-<<<<<<< HEAD
     "jest": "22.4.3",
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "lint-staged": "^7.2.0",
-=======
-    "lint-staged": "^7.0.5",
->>>>>>> update non breaking deps
-=======
-    "jest": "22.4.4",
-=======
-    "jest": "22.4.3",
->>>>>>> downgrade jest, fix tests
-    "lint-staged": "^7.1.2",
->>>>>>> 4.0.0-alpha.14
-    "minimist": "^1.2.0",
-    "react-addons-test-utils": "^15.0.0",
-<<<<<<< HEAD
-    "react-test-renderer": "16.4.1",
-    "svg-loader": "^0.0.2",
-=======
-    "react-test-renderer": "16.3.2",
-=======
     "lint-staged": "^7.1.3",
     "minimist": "^1.2.0",
     "react-addons-test-utils": "^15.0.0",
     "react-test-renderer": "16.4.0",
->>>>>>> upgrade shared deps with dashboard
     "svg-react-loader": "^0.4.5",
->>>>>>> use svg-react-loader
     "url-loader": "^1.0.1",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "webpack": "4.12.1",
-    "webpack-bundle-analyzer": "^2.13.1",
-    "webpack-cli": "^3.0.8",
-    "webpack-dev-server": "3.1.4",
-=======
-    "webpack": "4.6.0",
-    "webpack-bundle-analyzer": "^2.11.1",
-    "webpack-cli": "^2.0.15",
-    "webpack-dev-server": "3.1.3",
->>>>>>> update non breaking deps
-=======
-    "webpack": "4.8.3",
-    "webpack-bundle-analyzer": "^2.13.0",
-    "webpack-cli": "^2.1.3",
-=======
     "webpack": "4.10.2",
     "webpack-bundle-analyzer": "^2.13.1",
-<<<<<<< HEAD
-    "webpack-cli": "^2.1.4",
->>>>>>> upgrade shared deps with dashboard
-=======
     "webpack-cli": "^3.0.2",
->>>>>>> 4.0.0-alpha.20
     "webpack-dev-server": "3.1.4",
->>>>>>> 4.0.0-alpha.14
     "webpack-node-externals": "^1.7.2"
   },
   "babel": {
