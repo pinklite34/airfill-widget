@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'react-emotion';
 
-import { default as MuiButton } from 'material-ui/Button';
+import Button from '../Button';
 
 import Check from '../check.svg';
 import Cross from '../error.svg';
@@ -43,7 +43,7 @@ const IconContainer = styled('div')`
   cursor: pointer;
 `;
 
-const Button = styled(MuiButton)`
+const StyledButton = styled(Button)`
   background-color: #f0f6fa !important;
   color: ${props => (props.disabled ? '#cccccc' : '#3e8fe4')} !important;
   min-width: 48px !important;
@@ -96,9 +96,9 @@ function InputRow({
               value={value}
             />
           </InputContainer>
-          <Button disabled={!submitEnabled} type="submit">
+          <StyledButton disabled={!submitEnabled} type="submit">
             {submitEnabled ? <Icon /> : <ErrorIcon />}
-          </Button>
+          </StyledButton>
         </Row>
       </form>
     </Container>

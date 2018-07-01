@@ -1,22 +1,22 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'glamor';
+import { css } from 'react-emotion';
 
 import SectionTitle from '../UI/SectionTitle';
 import Provider, { ShowAll } from './Provider';
 import { providersProp, fnProp } from '../../lib/prop-types';
 
 const styles = {
-  container: css({
-    '& + &': {
-      marginTop: 20,
-    },
-  }),
-  grid: css({
-    display: 'flex',
-    flexWrap: 'wrap',
-    width: '100%',
-  }),
+  container: css`
+    & + & {
+      margin-top: 20px;
+    }
+  `,
+  grid: css`
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  `,
 };
 
 export default class ProvidersGrid extends PureComponent {
@@ -42,9 +42,9 @@ export default class ProvidersGrid extends PureComponent {
       showAll || providers.length <= 5 ? providers : providers.slice(0, 4);
 
     return (
-      <div {...styles.container}>
+      <div className={styles.container}>
         <SectionTitle>{title}</SectionTitle>
-        <div {...styles.grid}>
+        <div className={styles.grid}>
           {visibleProviders.map(provider => (
             <Provider
               key={provider.slug}

@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import VirtualList from 'react-tiny-virtual-list';
 
-import { css } from 'glamor';
-import Card from 'material-ui/Card';
+import { css } from 'react-emotion';
+import Card from '../../UI/Card';
 
 import CountryRow from './CountryRow';
 import ProviderRow from './ProviderRow';
@@ -15,28 +15,29 @@ import { connect } from 'react-redux';
 import { selectCountryList } from '../../../store';
 
 const styles = {
-  container: css({
-    position: 'absolute',
-    zIndex: 10,
-    width: '100%',
-    marginTop: -4,
-    textAlign: 'left',
-  }),
-  containerCard: css({
-    borderRadius: '0 0 4px 4px !important',
-    paddingTop: 4,
-  }),
-  content: css({
-    maxHeight: 264,
-  }),
-  sectionTitle: css({
-    paddingLeft: 60,
-    paddingTop: 6,
-    borderTop: '1px solid rgba(0,0,0,0.08)',
-    '&:first-of-type': {
-      borderTop: '0',
-    },
-  }),
+  container: css`
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    margin-top: -4px;
+    text-align: left;
+  `,
+  containerCard: css`
+    border-radius: 0 0 4px 4px !important;
+    padding-top: 4px;
+  `,
+  content: css`
+    max-height: 264px;
+  `,
+  sectionTitle: css`
+    padding-left: 60px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+
+    &:first-of-type {
+      border-top: 0;
+    }
+  `,
 };
 
 function SectionTitleRow({ item, style }) {
@@ -80,9 +81,9 @@ const Dropdown = ({ getItemProps, countryList, items, highlightedIndex }) => {
       : 264;
 
   return (
-    <div {...styles.container}>
-      <Card {...styles.containerCard}>
-        <div {...styles.content}>
+    <div className={styles.container}>
+      <Card className={styles.containerCard}>
+        <div className={styles.content}>
           <VirtualList
             width="100%"
             height={height}
@@ -98,7 +99,7 @@ const Dropdown = ({ getItemProps, countryList, items, highlightedIndex }) => {
                   <SectionTitle
                     key={item.key}
                     style={style}
-                    {...styles.sectionTitle}>
+                    className={styles.sectionTitle}>
                     {item.title}
                   </SectionTitle>
                 );

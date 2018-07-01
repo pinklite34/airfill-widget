@@ -1,74 +1,67 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'glamor';
-import Button from 'material-ui/Button';
-import Card from 'material-ui/Card';
-import CircularProgress from 'material-ui/Progress/CircularProgress';
+import { css } from 'react-emotion';
 
-import Flag from '../Flag';
-import Check from '../check.svg';
 import { inputTypeProp, fnProp } from '../../../lib/prop-types';
 
+import Button from '../../UI/Button';
+import Card from '../../UI/Card';
+import Flag from '../Flag';
+
+import Check from '../check.svg';
+
 const styles = {
-  container: css({
-    position: 'relative',
-    zIndex: 11,
-  }),
-  row: css({
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'stretch',
-  }),
-  inputContainer: css({
-    padding: 12,
-    flex: '1 1 auto',
-  }),
-  input: css({
-    width: '100%',
-    fontSize: 16,
-    border: 0,
-    '&:focus': {
-      outline: 'none',
-    },
-    '&::placeholder': {
-      color: 'rgba(0,0,0,.26)',
-    },
-  }),
-  flag: css({
-    width: 48,
-    background: '#F0F6FA',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer',
-  }),
-  button: css({
-    backgroundColor: '#F0F6FA !important',
-    color: '#3E8FE4 !important',
-    minWidth: '48px !important',
-    height: 'auto !important',
-    display: 'flex !important',
-    '& svg': {
-      marginRight: '0 !important',
-    },
-  }),
-  buttonDisabled: css({
-    color: '#cccccc !important',
-  }),
-  progressBar: css({
-    width: '24px !important',
-    height: '24px !important',
-  }),
-  check: css({
-    fill: '#3E8FE4',
-    width: 16,
-    height: 16,
-  }),
-  checkDisabled: css({
-    fill: 'rgb(204, 204, 204)',
-    width: 16,
-    height: 16,
-  }),
+  container: css`
+    position: relative;
+    z-index: 11;
+  `,
+  row: css`
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+  `,
+  inputContainer: css`
+    padding: 12px;
+    flex: 1 1 auto;
+  `,
+  input: css`
+    width: 100%;
+    font-size: 16px;
+    border: 0px;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: rgba(0, 0, 0, 0.26);
+    }
+  `,
+  flag: css`
+    width: 48px;
+    min-width: 48px;
+    height: auto;
+    border-radius: 2px 0 0 2px;
+  `,
+  button: css`
+    min-width: 48px;
+    height: auto;
+    border-radius: 0 2px 2px 0;
+  `,
+  progressBar: css`
+    width: 24px !important;
+    height: 24px !important;
+  `,
+  check: css`
+    fill: #3e8fe4;
+    width: 16px;
+    height: 16px;
+  `,
+  checkDisabled: css`
+    fill: rgb(204, 204, 204);
+    width: 16px;
+    height: 16px;
+  `,
 };
 
 export default function InputRow({
@@ -86,17 +79,20 @@ export default function InputRow({
   type,
 }) {
   return (
-    <Card {...styles.container}>
+    <Card className={styles.container}>
       <form
         onSubmit={e => {
           e.preventDefault();
           onSubmit();
         }}>
-        <div {...styles.row}>
-          <div {...styles.flag} onClick={resetCountry}>
+        <div className={styles.row}>
+          <Button
+            className={styles.flag}
+            background="#f0f6fa"
+            onClick={resetCountry}>
             <Flag country={country} />
-          </div>
-          <div {...styles.inputContainer}>
+          </Button>
+          <div className={styles.inputContainer}>
             <input
               {...getInputProps({
                 onFocus,
@@ -110,23 +106,20 @@ export default function InputRow({
                   : country
                     ? 'Enter phone number or provider'
                     : 'Enter country or phone number',
-                ...styles.input,
+                className: styles.input,
               })}
             />
           </div>
           <Button
-            disabled={loading || !submitEnabled}
-            {...css([styles.button, !submitEnabled && styles.buttonDisabled])}
-            type="submit">
-            {loading ? (
-              <CircularProgress className={`${styles.progressBar}`} />
-            ) : (
-              <Check
-                className={`${
-                  submitEnabled ? styles.check : styles.checkDisabled
-                }`}
-              />
-            )}
+            className={styles.button}
+            type="submit"
+            background="#f0f6fa"
+            loading={loading}>
+            <Check
+              className={`${
+                submitEnabled ? styles.check : styles.checkDisabled
+              }`}
+            />
           </Button>
         </div>
       </form>

@@ -1,24 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'glamor';
+import { css } from 'react-emotion';
 import flags from './flags';
 
 import defaultFlag from '../../unknown-flag.png';
 
 const styles = {
-  image: css({
-    margin: '-3px 0',
-    width: 24,
-    height: 24,
-  }),
+  image: css`
+    margin: -3px 0;
+    width: 24px;
+    height: 24px;
+  `,
 };
 
-const Flag = ({ country }) => (
-  <img src={flags[country] || defaultFlag} alt={country} {...styles.image} />
-);
+export default function Flag({ country }) {
+  return (
+    <img
+      src={flags[country] || defaultFlag}
+      alt={country}
+      className={styles.image}
+    />
+  );
+}
 
 Flag.propTypes = {
   country: PropTypes.string,
 };
-
-export default Flag;

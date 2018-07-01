@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'glamor';
+import { css } from 'react-emotion';
 import { connect } from 'react-redux';
 
 import { setCountry } from '../../actions';
@@ -8,19 +8,19 @@ import { selectCountryCode, selectCountryList } from '../../store';
 import { countriesProp, fnProp } from '../../lib/prop-types';
 
 const styles = {
-  select: css({
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    opacity: 0,
-    zIndex: 999,
-  }),
+  select: css`
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 999;
+  `,
 };
 
 function SelectCountry({ countries, selected, setCountry, onChange }) {
   return (
     <select
-      {...styles.select}
+      className={styles.select}
       value={selected}
       ref={n => (this.select = n)}
       onChange={event => {

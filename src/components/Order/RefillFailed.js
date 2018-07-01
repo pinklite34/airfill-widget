@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'glamor';
-import Button from 'material-ui/Button';
+import { css } from 'react-emotion';
+import Button from '../UI/Button';
 
 import OrderHeader from '../UI/OrderHeader';
 import PaymentLayout from './PaymentLayout';
@@ -9,22 +9,22 @@ import Error from './error.svg';
 import { orderProp, paymentStatusProp, fnProp } from '../../lib/prop-types';
 
 const styles = {
-  textContainer: css({
-    display: 'block !important',
-    lineHeight: '21px',
-    marginRight: '48px',
-  }),
-  info: css({
-    color: '#777777',
-    fontSize: '14px',
-  }),
-  button: css({
-    marginTop: '12px',
-  }),
-  link: css({
-    textDecoration: 'none',
-    color: '#3e8fe4',
-  }),
+  textContainer: css`
+    display: block !important;
+    line-height: 21px;
+    margin-right: 48px;
+  `,
+  info: css`
+    color: #777777;
+    font-size: 14px;
+  `,
+  button: css`
+    margin-top: 12px;
+  `,
+  link: css`
+    text-decoration: none;
+    color: #3e8fe4;
+  `,
 };
 
 export default function RefillFailed(props) {
@@ -61,11 +61,7 @@ Thanks!`);
   if (!refundAddress && (needRefund === false || order.refunded === true)) {
     text =
       'We have sent you an automatic refund. Please make sure your details are correct and try again!';
-    action = (
-      <Button raised color="primary" onClick={onReset}>
-        Send another refill
-      </Button>
-    );
+    action = <Button onClick={onReset}>Send another refill</Button>;
   } else if (refundAddress) {
     text =
       'We have sent you an automatic refund. You should receive it within a few minutes.';
@@ -83,11 +79,7 @@ Thanks!`);
   } else {
     text =
       'Please use the button below to contact our support so that we can send you a refund.';
-    action = (
-      <Button raised href={mailto}>
-        Contact Support
-      </Button>
-    );
+    action = <Button href={mailto}>Contact Support</Button>;
   }
 
   return (
@@ -101,20 +93,19 @@ Thanks!`);
       <PaymentLayout {...props}>
         <div>
           <div />
-          <div {...styles.textContainer}>
-            <span {...styles.info}>{text}</span>
+          <div className={styles.textContainer}>
+            <span className={styles.info}>{text}</span>
             <br />
             <br />
             {action}
             <br />
             <br />
             <a
-              {...styles.link}
+              className={`${styles.link} ${styles.help}`}
               href={`https://www.bitrefill.com/support/${order.orderId}/${
                 order.payment.address
               }`}
-              target="_blank"
-              {...styles.help}>
+              target="_blank">
               Click here for more information
             </a>
           </div>

@@ -1,25 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'glamor';
-import SectionTitle from './SectionTitle';
+import styled from 'react-emotion';
 
-const styles = {
-  container: css({
-    backgroundColor: '#FAFAFA',
-    padding: 16,
-  }),
-};
+const Container = styled('div')`
+  background-color: #fafafa;
+`;
 
-export default function ActiveSection({ title, children, ...props }) {
+const Content = styled('div')`
+  padding: ${p => p.padding};
+`;
+
+const NextContainer = styled('div')`
+  background-color: #fafafa;
+  padding: 16px;
+  border-top: ${p => p.theme.bd.primary};
+`;
+
+export default function ActiveSection({
+  children,
+  renderNextButton,
+  padding,
+  ...props
+}) {
   return (
-    <div {...styles.container} {...props}>
-      {title && <SectionTitle>{title}</SectionTitle>}
-      {children}
-    </div>
+    <Container {...props}>
+      <Content padding={padding}>{children}</Content>
+      {renderNextButton && <NextContainer>{renderNextButton()}</NextContainer>}
+    </Container>
   );
 }
 
 ActiveSection.propTypes = {
-  title: PropTypes.node,
   children: PropTypes.node,
+  renderNextButton: PropTypes.func,
+  padding: PropTypes.string,
 };

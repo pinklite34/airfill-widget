@@ -1,17 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Media from 'react-media';
 import { connect } from 'react-redux';
 import { Route, withRouter } from 'react-router';
-import { css } from 'glamor';
 import { compose } from 'recompose';
 
 import { init, setOperator, setCountry } from '../actions';
 import { configProps, inventoryProp, fnProp } from '../lib/prop-types';
 import { selectInventory } from '../store';
 
-import Card from 'material-ui/Card';
-import CircularProgress from 'material-ui/Progress/CircularProgress';
+import Card from './UI/Card';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import createMuiTheme from 'material-ui/styles/createMuiTheme';
 import blue from 'material-ui/colors/blue';
@@ -28,6 +26,7 @@ import Recipient from './Recipient';
 import StatusEmail from './StatusEmail';
 import Payment from './PaymentMethod';
 import getMethods from '../payment-methods';
+import Spinner from './UI/Spinner';
 
 const theme = createMuiTheme({
   palette: {
@@ -125,34 +124,29 @@ class AirfillWidget extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <Root className={className}>
-          {hasLoaded ? (
-            <Card>
-              <Header isMobile={isMobile} branded={showLogo} />
-              <Country />
-              <Providers />
-              <Amount config={config} />
-              <Recipient config={config} />
-              <StatusEmail config={config} />
-              <Payment config={config} />
-              <Order config={config} />
-              {showInstructions && (
-                <Route
-                  path="/refill"
-                  exact
-                  render={() => <Instructions config={config} />}
-                />
-              )}
-            </Card>
-          ) : (
-            <div
-              {...css({
-                display: 'flex',
-                justifyContent: 'center',
-                margin: 64,
-              })}>
-              <CircularProgress />
-            </div>
-          )}
+          <Card>
+            {hasLoaded ? (
+              <Fragment>
+                <Header isMobile={isMobile} branded={showLogo} />
+                <Country />
+                <Providers />
+                <Amount config={config} />
+                <Recipient config={config} />
+                <StatusEmail config={config} />
+                <Payment config={config} />
+                <Order config={config} />
+                {showInstructions && (
+                  <Route
+                    path="/refill"
+                    exact
+                    render={() => <Instructions config={config} />}
+                  />
+                )}
+              </Fragment>
+            ) : (
+              <Spinner />
+            )}
+          </Card>
 
           {showFooter && <Footer branded={showPoweredBy} />}
         </Root>

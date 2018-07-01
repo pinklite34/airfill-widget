@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'glamor';
+import { css } from 'react-emotion';
 import { connect } from 'react-redux';
 
 import { openComboInput, setComboInputFocus, setCountry } from '../../actions';
@@ -11,35 +11,37 @@ import Collapsed from '../UI/Collapsed';
 import Flag from '../UI/Flag';
 
 const styles = {
-  container: css({
-    position: 'relative',
-    width: '100%',
-    maxWidth: 350,
-  }),
-  country: css({
-    display: 'flex',
-    alignItems: 'center',
-    cursor: 'pointer',
-    position: 'relative',
-    zIndex: 9,
-  }),
-  flag: css({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    '& svg': {
-      width: 26,
-      height: 18,
-      borderRadius: 1,
-      boxShadow: '1px 1px 1px rgba(0,0,0,0.08)',
-    },
-    marginRight: 30,
-    marginLeft: 14,
-    '@media(max-width: 460px)': {
-      marginRight: 14,
-      marginLeft: 0,
-    },
-  }),
+  container: css`
+    position: relative;
+    width: 100%;
+    max-width: 350px;
+  `,
+  country: css`
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    z-index: 9;
+  `,
+  flag: css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & svg {
+      width: 26px;
+      height: 18px;
+      border-radius: 1px;
+      box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.08);
+    }
+    margin-right: 30px;
+    margin-left: 14px;
+
+    @media (max-width: 460px) {
+      margin-right: 14px;
+      margin-left: 0px;
+    }
+  `,
 };
 
 function CountryCollapsed({
@@ -60,9 +62,9 @@ function CountryCollapsed({
 
   return country && country.alpha2 ? (
     <Collapsed onClick={openMenu} type="country">
-      <div {...styles.container}>
-        <div {...styles.country} onClick={openMenu}>
-          <div {...styles.flag}>
+      <div className={styles.container}>
+        <div className={styles.country} onClick={openMenu}>
+          <div className={styles.flag}>
             <Flag country={country.alpha2} />
           </div>
           {country.name}

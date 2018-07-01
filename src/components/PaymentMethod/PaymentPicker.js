@@ -1,19 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'react-emotion';
+import styled from 'react-emotion';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import {
-  historyProp,
-  configProp,
-  amountProp,
-  operatorProp,
-} from '../../lib/prop-types';
-import CircularProgress from 'material-ui/Progress/CircularProgress';
 
-import PaymentItem from './PaymentItem';
-import Button from 'material-ui/Button';
 import {
   selectPaymentMethod,
   selectNumber,
@@ -29,29 +20,28 @@ import {
   setEmail,
   trigger,
 } from '../../actions';
+import {
+  historyProp,
+  configProp,
+  amountProp,
+  operatorProp,
+} from '../../lib/prop-types';
 
 import { canAfford } from '../../lib/currency-helpers';
-import ErrorBanner from '../../components/UI/ErrorBanner';
+
+import PaymentItem from './PaymentItem';
+import NextButton from '../UI/NextButton';
+import ErrorBanner from '../UI/ErrorBanner';
+import ActiveSection from '../UI/ActiveSection';
 
 const MethodContainer = styled('div')`
   @media (min-width: 460px) {
     max-height: ${72 * 4}px;
     overflow-y: scroll;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   }
 
   width: 100%;
 `;
-
-const styles = {
-  button: css`
-    width: 250px;
-    margin: 24px;
-  `,
-  progress: css`
-    color: #fff !important;
-  `,
-};
 
 class PaymentMethod extends React.Component {
   constructor(props) {
@@ -97,7 +87,14 @@ class PaymentMethod extends React.Component {
     const { isLoading, error } = this.state;
 
     return (
-      <div>
+      <ActiveSection
+        renderNextButton={() => (
+          <NextButton
+            disabled={isLoading || !selectedMethod}
+            onClick={this.createOrder}
+            loading={isLoading}
+          />
+        )}>
         {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
         <MethodContainer>
           {config.paymentButtons.map(method => {
@@ -114,20 +111,7 @@ class PaymentMethod extends React.Component {
             );
           })}
         </MethodContainer>
-
-        <Button
-          color="primary"
-          raised
-          disabled={isLoading || !selectedMethod}
-          className={styles.button}
-          onClick={this.createOrder}>
-          {isLoading ? (
-            <CircularProgress size={24} className={styles.progress} />
-          ) : (
-            'Continue'
-          )}
-        </Button>
-      </div>
+      </ActiveSection>
     );
   }
 }

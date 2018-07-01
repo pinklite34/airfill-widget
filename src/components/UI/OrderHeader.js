@@ -1,58 +1,60 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'glamor';
+import { css } from 'react-emotion';
 import Tooltip from 'material-ui/Tooltip';
 import setClipboardText from '../../lib/clipboard-helper';
 import { orderProp } from '../../lib/prop-types';
 
 const styles = {
-  base: css({
-    backgroundColor: '#fafafa',
-    display: 'flex',
-    overflow: 'hidden',
-    padding: 16,
-  }),
-  icon: css({
-    width: 32,
-    height: 32,
-    marginRight: '26px',
-    marginTop: '8px',
-    marginLeft: '10px',
-    '@media(max-width: 460px)': {
-      marginLeft: 0,
-      marginRight: '14px',
-    },
-  }),
-  text: css({
-    margin: 0,
-    flex: 1,
-    flexDirection: 'column',
-  }),
-  textHeader: css({
-    display: 'flex',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    width: '100%',
-  }),
-  label: css({
-    margin: 0,
-    padding: 0,
-    fontSize: '18px',
-    fontWeight: '500',
-  }),
-  orderId: css({
-    marginRight: '12px',
-    lineHeight: '31.5px',
-    color: '#777777',
-    fontSize: '12px',
-    '@media(max-width: 460px)': {
-      width: '100%',
-    },
-  }),
-  subtitle: css({
-    color: '#777777',
-    fontSize: '14px',
-  }),
+  base: css`
+    background-color: #fafafa;
+    display: flex;
+    overflow: hidden;
+    padding: 16px;
+  `,
+  icon: css`
+    width: 32px;
+    height: 32px;
+    margin-right: 26px;
+    margin-top: 8px;
+    margin-left: 10px;
+
+    @media (max-width: 460px) {
+      margin-left: 0px;
+      margin-right: 14px;
+    }
+  `,
+  text: css`
+    margin: 0px;
+    flex: 1;
+    flex-direction: column;
+  `,
+  textHeader: css`
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+  `,
+  label: css`
+    margin: 0px;
+    padding: 0px;
+    font-size: 18px;
+    font-weight: 500;
+  `,
+  orderId: css`
+    margin-right: 12px;
+    line-height: 31.5px;
+    color: #777777;
+    font-size: 12px;
+
+    @media (max-width: 460px) {
+      width: 100%;
+    }
+  `,
+  subtitle: css`
+    color: #777777;
+    font-size: 14px;
+  `,
 };
 
 class OrderHeader extends PureComponent {
@@ -71,18 +73,18 @@ class OrderHeader extends PureComponent {
     const { order, title, subtitle, icon } = this.props;
 
     return (
-      <div {...styles.base}>
-        <div {...styles.icon}>{icon}</div>
-        <div {...styles.text}>
-          <div {...styles.textHeader}>
-            <div {...styles.label}>{title}</div>
+      <div className={styles.base}>
+        <div className={styles.icon}>{icon}</div>
+        <div className={styles.text}>
+          <div className={styles.textHeader}>
+            <div className={styles.label}>{title}</div>
             <Tooltip open={this.state.open} title="Copied!">
-              <div {...styles.orderId} onClick={this.copy}>
+              <div className={styles.orderId} onClick={this.copy}>
                 Order ID {order.id}
               </div>
             </Tooltip>
           </div>
-          <div {...styles.subtitle}>{subtitle}</div>
+          <div className={styles.subtitle}>{subtitle}</div>
         </div>
       </div>
     );

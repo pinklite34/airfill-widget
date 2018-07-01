@@ -1,20 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'glamor';
+import { css } from 'react-emotion';
 
 import SectionTitle from './SectionTitle';
 
 const styles = {
-  title: css({
-    marginBottom: 0,
-  }),
-  hint: css({
-    fontSize: 12,
-    margin: '-12px 0 8px',
-  }),
-  error: css({
-    color: '#D65C5C',
-  }),
+  title: css`
+    margin-bottom: 0px;
+  `,
+  hint: css`
+    font-size: 12px;
+    margin: -12px 0 8px;
+  `,
+  error: css`
+    color: #d65c5c;
+  `,
 };
 
 export default function Field({
@@ -28,13 +28,13 @@ export default function Field({
   return (
     <div {...props}>
       {label && (
-        <SectionTitle {...styles.title}>
+        <SectionTitle className={styles.title}>
           <label htmlFor={htmlFor}>{label}</label>
         </SectionTitle>
       )}
       <div>{children}</div>
-      {error && <p {...styles.error}>{error}</p>}
-      {!error && hint && <p {...styles.hint}>{hint}</p>}
+      {error && <p className={styles.error}>{error}</p>}
+      {!error && hint && <p className={styles.hint}>{hint}</p>}
     </div>
   );
 }

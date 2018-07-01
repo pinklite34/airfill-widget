@@ -1,15 +1,15 @@
 import React from 'react';
-import { css } from 'glamor';
+import { css } from 'react-emotion';
 
 const styles = {
-  input: css({
-    fontSize: 16,
-    border: '1px solid #ccc',
-    borderRadius: 2,
-    padding: 8,
-  }),
+  input: css`
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding: 8px;
+  `,
 };
 
 export default function Input(props) {
-  return <input {...styles.input} {...props} />;
+  return <input className={styles.input} {...props} />;
 }

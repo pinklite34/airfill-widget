@@ -1,14 +1,15 @@
 import React, { PureComponent } from 'react';
-import { css } from 'react-emotion';
+import styled, { css } from 'react-emotion';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { compose } from 'recompose';
+
 import { selectOperator, selectAmount } from '../../store';
 import { setAmount } from '../../actions';
-import Button from 'material-ui/Button';
 
 import { selectValidAmount } from '../../lib/amount-validation';
 import { getPrice, getDisplayName } from '../../lib/currency-helpers';
+import { isValidEmail } from '../../lib/email-validation';
 import {
   configProp,
   operatorResultProp,
@@ -17,34 +18,31 @@ import {
   historyProp,
 } from '../../lib/prop-types';
 
-import Card from 'material-ui/Card';
 import Radio from 'material-ui/Radio';
-import CircularProgress from 'material-ui/Progress/CircularProgress';
 
+import Card from '../UI/Card';
+import NextButton from '../UI/NextButton';
 import ActiveSection from '../UI/ActiveSection';
 import SectionTitle from '../UI/SectionTitle';
-import Info from '../UI/info.svg';
+import Spinner from '../UI/Spinner';
 
 import AmountPackage from './AmountPackage';
 import AmountRange from './AmountRange';
 
-import { isValidEmail } from '../../lib/email-validation';
+import Info from '../UI/info.svg';
 
 const styles = {
   packages: css`
     background-color: #fff;
-    margin: 0 -16px;
+
     & > label {
       display: flex;
       align-items: center;
       padding-right: 2px;
       height: auto;
       margin: 0;
-      border-top: 1px solid rgba(0,0,0,0.08);
-      &:last-of-type {
-        border-bottom: 1px solid rgba(0,0,0,0.08);
-      },
-    },
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+    }
   `,
   operatorInfoContainer: css`
     font-weight: 500;
@@ -55,19 +53,21 @@ const styles = {
     display: flex;
     flex-direction: row;
     align-items: center;
+
     & svg {
       margin-right: 8px;
       width: 32px;
       height: 32px;
-    },
+    }
   `,
   title: css`
     margin-left: 36px;
   `,
-  button: css`
-    margin-top: 12px !important;
-  `,
 };
+
+const InfoContainer = styled('div')`
+  padding: 16px;
+`;
 
 class AmountPicker extends PureComponent {
   static propTypes = {
@@ -163,23 +163,31 @@ class AmountPicker extends PureComponent {
 
     return operator.isLoading ||
       !(operator.result && operator.result.packages) ? (
-      <ActiveSection title="Select amount">
-        <CircularProgress />
+      <ActiveSection>
+        <Spinner />
       </ActiveSection>
     ) : (
-      <ActiveSection>
+      <ActiveSection
+        padding="16px 0 0"
+        renderNextButton={() => (
+          <NextButton disabled={disabled} onClick={this.next} />
+        )}>
         {operator.result.extraInfo && (
-          <Card className={styles.operatorInfoContainer}>
-            <div className={styles.operatorInfo}>
-              <Info fill="#555555" />
-              <div
-                dangerouslySetInnerHTML={{ __html: operator.result.extraInfo }}
-              />
-            </div>
-          </Card>
+          <InfoContainer>
+            <Card className={styles.operatorInfoContainer}>
+              <div className={styles.operatorInfo}>
+                <Info fill="#555555" />
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: operator.result.extraInfo,
+                  }}
+                />
+              </div>
+            </Card>
+          </InfoContainer>
         )}
 
-        <SectionTitle {...styles.title}>{'Select amount'}</SectionTitle>
+        <SectionTitle className={styles.title}>{'Select amount'}</SectionTitle>
 
         <div className={`${styles.packages} amount-picker`}>
           {operator.result.packages.map(this.renderPackage)}
@@ -194,14 +202,6 @@ class AmountPicker extends PureComponent {
             onChange={setAmount}
           />
         )}
-        <Button
-          color="primary"
-          disabled={disabled}
-          raised
-          onClick={this.next}
-          className={styles.button}>
-          Continue
-        </Button>
       </ActiveSection>
     );
   }

@@ -1,47 +1,49 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'glamor';
+import { css } from 'react-emotion';
 
 const styles = {
-  container: css({
-    padding: 16,
-    display: 'flex',
-    justifyContent: 'center',
-    fontSize: 12,
-    color: '#999',
-    '& strong': {
-      color: '#777',
-    },
-    '& a': {
-      color: '#999',
-    },
-  }),
-  branded: css({
-    justifyContent: 'space-between',
-  }),
-  linkList: css({
-    display: 'flex',
-    listStyleType: 'none',
-    margin: 0,
-    padding: 0,
-  }),
-  link: css({
-    display: 'block',
-    marginLeft: 12,
-  }),
+  container: css`
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    font-size: 12px;
+    color: #999;
+
+    & strong {
+      color: #777;
+    }
+
+    & a {
+      color: #999;
+    }
+  `,
+  branded: css`
+    justify-content: space-between;
+  `,
+  linkList: css`
+    display: flex;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+  `,
+  link: css`
+    display: block;
+    margin-left: 12px;
+  `,
 };
 
 export default function Footer({ branded }) {
   return (
-    <div {...css(styles.container, branded && styles.branded)}>
+    <div className={`${styles.container} ${branded && styles.branded}`}>
       {branded && (
         <div>
           Powered by <strong>bitrefill</strong>
         </div>
       )}
       <div>
-        <ul {...styles.linkList}>
-          <li {...styles.link}>
+        <ul className={styles.linkList}>
+          <li className={styles.link}>
             <a
               href="https://www.bitrefill.com/privacy/"
               target="_blank"
@@ -49,7 +51,7 @@ export default function Footer({ branded }) {
               Privacy Policy
             </a>
           </li>
-          <li {...styles.link}>
+          <li className={styles.link}>
             <a
               href="https://www.bitrefill.com/terms/"
               target="_blank"

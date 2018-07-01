@@ -1,31 +1,31 @@
 import React from 'react';
-import { css } from 'glamor';
-
-import CircularProgress from 'material-ui/Progress/CircularProgress';
-import Button from 'material-ui/Button';
+import { css } from 'react-emotion';
 
 import { orderProp, fnProp } from '../../lib/prop-types';
+
 import PaymentLayout from './PaymentLayout';
 import OrderHeader from '../UI/OrderHeader';
+import Button from '../UI/Button';
+import Spinner from '../UI/Spinner';
 
 const styles = {
-  textContainer: css({
-    display: 'block !important',
-    lineHeight: '21px',
-    marginRight: '48px',
-  }),
-  info: css({
-    color: '#777777',
-    fontSize: '14px',
-  }),
-  link: css({
-    color: '#3e8fe4',
-    fontSize: '14px',
-    textDecoration: 'underline',
-  }),
-  button: css({
-    marginTop: '12px',
-  }),
+  textContainer: css`
+    display: block !important;
+    line-height: 21px;
+    margin-right: 48px;
+  `,
+  info: css`
+    color: #777777;
+    font-size: 14px;
+  `,
+  link: css`
+    color: #3e8fe4;
+    font-size: 14px;
+    text-decoration: underline;
+  `,
+  button: css`
+    margin-top: 12px;
+  `,
 };
 
 export default function PaymentDetected(props) {
@@ -35,13 +35,13 @@ export default function PaymentDetected(props) {
         order={props.order}
         title="Payment detected"
         subtitle="We're waiting for your payment to be confirmed"
-        icon={<CircularProgress size={32} />}
+        icon={<Spinner tight />}
       />
       <PaymentLayout {...props}>
         <div>
           <div />
-          <div {...styles.textContainer}>
-            <span {...styles.info}>
+          <div className={styles.textContainer}>
+            <span className={styles.info}>
               <p>
                 We will send your refill as soon as the transaction is
                 completed. This can be slow if the network is very busy, but
@@ -53,7 +53,7 @@ export default function PaymentDetected(props) {
             <br />
             {props.order.paymentMethod === 'bitcoin' ? (
               <span
-                {...styles.link}
+                className={styles.link}
                 onClick={() =>
                   window.open(
                     `https://transactioncheck.bitrefill.com/lookup/${
@@ -65,14 +65,10 @@ export default function PaymentDetected(props) {
                 Click here to see how it&#39;s going
               </span>
             ) : (
-              <span {...styles.link}>When will I get my refill?</span>
+              <span className={styles.link}>When will I get my refill?</span>
             )}
             <br />
-            <Button
-              color="primary"
-              raised
-              {...styles.button}
-              onClick={props.onReset}>
+            <Button className={styles.button} onClick={props.onReset}>
               Buy another refill
             </Button>
           </div>

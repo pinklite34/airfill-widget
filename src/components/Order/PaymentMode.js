@@ -1,14 +1,13 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import styled, { css as emotionCss } from 'react-emotion';
+import styled, { css } from 'react-emotion';
 
 import { connect } from 'react-redux';
 import { setPaymentMethod } from '../../actions';
 
 import { selectAmount, selectPaymentMethod } from '../../store';
 
-import { css } from 'glamor';
-import Button from 'material-ui/Button';
+import Button from '../UI/Button';
 import Tooltip from 'material-ui/Tooltip';
 
 import BitcoinAddress from '../UI/BitcoinAddress';
@@ -31,90 +30,97 @@ import {
 } from '../../lib/prop-types';
 
 const styles = {
-  list: css({
-    display: 'block',
-    '> dt': {
-      float: 'left',
-      textAlign: 'right',
-      width: 120,
-      fontWeight: 500,
-      marginRight: '24px',
-    },
-    '> dd': {
-      marginBottom: 8,
-    },
+  list: css`
+    display: block;
 
-    '@media(max-width: 480px)': {
-      '> dt': {
-        width: 'auto',
-      },
-      '> dd': {
-        textAlign: 'right',
-      },
-    },
-  }),
-  paymentMethods: css({
-    display: 'flex',
-    alignItems: 'center',
-    position: 'relative',
-  }),
-  buttonGroup: css({
-    margin: -8,
-  }),
-  button: css({
-    margin: 8,
-  }),
-  package: css({
-    fontSize: 16,
-    color: '#323232',
-    fontWeight: '500',
-  }),
-  changeButton: css({
-    color: '#3e8fe4 !important',
-    fontWeight: '500 !important',
-    marginLeft: '12px',
-  }),
-  container: css({
-    display: 'flex',
-    width: '100%',
-    flexDirection: 'row',
+    > dt {
+      float: left;
+      text-align: right;
+      width: 120px;
+      font-weight: 500;
+      margin-right: 24px;
+    }
 
-    '@media(max-width: 720px)': {
-      flexDirection: 'column',
+    > dd {
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 460px) {
+      > dt {
+        width: auto;
+      }
+
+      > dd {
+        text-align: right;
+      }
+    }
+  `,
+  paymentMethods: css`
+    display: flex;
+    align-items: center;
+    position: relative;
+  `,
+  buttonGroup: css`
+    margin: -8px;
+  `,
+  button: css`
+    margin: 8px;
+  `,
+  package: css`
+    font-size: 16px;
+    color: #323232;
+    font-weight: 500;
+  `,
+  changeButton: css`
+    color: #3e8fe4 !important;
+    font-weight: 500 !important;
+    margin-left: 12px;
+  `,
+  container: css`
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+
+    @media (max-width: 720px) {
+      flex-direction: column;
+    }
+  `,
+  left: css`
+    flex: 0 0 70%;
+
+    @media (max-width: 460px) {
+      padding-right: 48px;
+    }
+  `,
+  right: css`
+    flex: 0 0 28%;
+    margin-left: auto;
+
+    & img {
+      width: 90%;
+    }
+
+    @media (max-width: 720px) {
+      margin-left: 0px;
+
+      & img {
+        padding-top: 24px;
+        width: 50%;
+      }
     },
-  }),
-  left: css({
-    flex: '0 0 70%',
-    '@media(max-width: 460px)': {
-      paddingRight: '48px',
-    },
-  }),
-  right: css({
-    flex: '0 0 28%',
-    marginLeft: 'auto',
-    '& img': {
-      width: '90%',
-    },
-    '@media(max-width: 720px)': {
-      marginLeft: 0,
-      '& img': {
-        paddingTop: '24px',
-        width: '50%',
-      },
-    },
-  }),
-  partialWarning: css({
-    borderRadius: 4,
-    padding: 12,
-    background: '#ffdfdf',
-    marginBottom: 24,
-  }),
-  help: css({
-    textDecoration: 'none',
-    color: '#3e8fe4',
-    padding: 12,
-  }),
-  paymentIcon: emotionCss`
+  `,
+  partialWarning: css`
+    border-radius: 4px;
+    padding: 12px;
+    background: #ffdfdf;
+    margin-bottom: 24px;
+  `,
+  help: css`
+    text-decoration: none;
+    color: #3e8fe4;
+    padding: 12px;
+  `,
+  paymentIcon: css`
     width: 24px;
     height: 24px;
   `,
@@ -269,16 +275,14 @@ class PaymentMode extends PureComponent {
             <div>
               {!isDirect ? (
                 <Button
-                  raised
-                  color="primary"
                   onClick={() =>
                     paymentMethod.paymentModeOptions.callback(order)
                   }>
                   {paymentMethod.paymentModeOptions.title}
                 </Button>
               ) : (
-                <div {...styles.container}>
-                  <div {...styles.left}>
+                <div className={styles.container}>
+                  <div className={styles.left}>
                     <PaymentInstructions>
                       <Tooltip open={this.state.amountTooltip} title="Copied!">
                         <strong onClick={this.onCopy(price, 'amountTooltip')}>
@@ -295,7 +299,7 @@ class PaymentMode extends PureComponent {
                     <br />
                     <br />
                     {isPartial && (
-                      <div {...styles.partialWarning}>
+                      <div className={styles.partialWarning}>
                         We have received a partial payment from you.
                         <br /> You paid <strong>{paid + ' ' + unit}</strong>,
                         but the invoice was for{' '}
@@ -306,9 +310,7 @@ class PaymentMode extends PureComponent {
                       </div>
                     )}
                     <Button
-                      {...styles.bottomButton}
-                      raised
-                      color="primary"
+                      className={styles.bottomButton}
                       onClick={this.onExternalUrl(uri)}>
                       {'Open in Wallet'}
                     </Button>
@@ -318,12 +320,12 @@ class PaymentMode extends PureComponent {
                           order.orderId
                         }/${order.payment.address}`}
                         target="_blank"
-                        {...styles.help}>
+                        className={styles.help}>
                         Need help?
                       </a>
                     )}
                   </div>
-                  <div {...styles.right}>
+                  <div className={styles.right}>
                     <QrCode value={uri} size={200} />
                   </div>
                 </div>

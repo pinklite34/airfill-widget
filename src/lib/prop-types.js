@@ -1,5 +1,15 @@
 import PropTypes from 'prop-types';
 
+export const transProp = PropTypes.oneOfType([
+  PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    children: PropTypes.string.isRequired,
+  }),
+  PropTypes.shape({
+    children: PropTypes.node.isRequired,
+  }),
+]);
+
 export const fnProp = PropTypes.func.isRequired;
 export const amountProp = PropTypes.oneOfType([
   PropTypes.string,

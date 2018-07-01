@@ -78,7 +78,7 @@ class ProviderPicker extends PureComponent {
 
     return country ? (
       isNumberLookup ? (
-        <ActiveSection>
+        <ActiveSection padding="16px">
           {showSuggestedOperator ? (
             <ProviderSuggested
               operator={numberLookup.operator}
@@ -94,7 +94,7 @@ class ProviderPicker extends PureComponent {
           />
         </ActiveSection>
       ) : (
-        <ActiveSection>
+        <ActiveSection padding="16px">
           {Object.keys(operators)
             .sort((a, b) => {
               if (a === 'other') {
