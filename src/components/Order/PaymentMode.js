@@ -176,7 +176,32 @@ class PaymentMode extends PureComponent {
     setClipboardText(text);
   };
 
-  onExternalUrl = uri => () => this.props.onExternalUrl(uri);
+  onOpenWallet = uri => () => {
+    const { onExternalUrl, paymentMethod, order } = this.props;
+
+    /* eslint-disable no-undef */
+    if (
+      web3 &&
+      web3.eth &&
+      web3.eth.accounts[0] &&
+      paymentMethod.paymentMode === 'ethereum'
+    ) {
+      web3.eth.sendTransaction(
+        {
+          to: order.payment.altcoinAddress,
+          from: web3.eth.accounts[0],
+          value: web3.toWei(order.payment.altcoinPrice, 'ether'),
+        },
+        err => {
+          console.error(err);
+          onExternalUrl(uri);
+        }
+      );
+    } else {
+      onExternalUrl(uri);
+    }
+    /* eslint-enable */
+  };
 
   render() {
     const { paymentStatus, paymentMethod, order } = this.props;
@@ -311,7 +336,7 @@ class PaymentMode extends PureComponent {
                     )}
                     <Button
                       className={styles.bottomButton}
-                      onClick={this.onExternalUrl(uri)}>
+                      onClick={this.onOpenWallet(uri)}>
                       {'Open in Wallet'}
                     </Button>
                     {isPartial && (
