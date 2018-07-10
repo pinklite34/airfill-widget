@@ -8,7 +8,7 @@ i18n
   .init({
     fallbackLng: 'en',
     appendNamespaceToCIMode: true,
-    // saveMissing: true,
+    saveMissing: process.env.NODE_ENV === 'production',
 
     ns: ['widget'],
     defaultNS: 'widget',
@@ -16,8 +16,8 @@ i18n
     debug: process.env.NODE_ENV === 'development',
 
     backend: {
-      projectId: 'a83885d2-6afa-4605-a751-8949e8c0a47a',
-      apiKey: '542d30db-78f0-456c-8be9-6454c0bc9995',
+      projectId: '3a082193-3b75-4cdb-9be4-018cee014baa',
+      apiKey: '4c7cd672-bbe4-4575-a9bf-5292fe8c4c75',
       referenceLng: 'en',
     },
 
