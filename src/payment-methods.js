@@ -51,14 +51,6 @@ export default function getPaymentMethods({ currency, dispatch, ...props }) {
       paymentMode: 'bitcoin',
     },
     {
-      title: 'Lightning BTC Payment',
-      description: 'Low fees, delivery after payment sent usually instant',
-      notice: 'Max 0.0429 BTC',
-      icon: BitcoinIcon,
-      requireAccountBalance: false,
-      paymentMode: 'lightning',
-    },
-    {
       title: 'Litecoin Transaction',
       description: 'Delivery after one confirmation',
       icon: LitecoinIcon,
@@ -73,6 +65,25 @@ export default function getPaymentMethods({ currency, dispatch, ...props }) {
       paymentMode: 'ethereum',
     },
     {
+      title: 'Lightning BTC Payment',
+      description: 'Low fees, delivery after payment sent usually instant',
+      notice: 'Max 0.0429 BTC',
+      icon: BitcoinIcon,
+      requireAccountBalance: false,
+      paymentMode: 'lightning',
+    },
+    {
+      title: 'Coinbase',
+      description: 'Pay with your Coinbase account',
+      icon: CoinbaseIcon,
+      requireAccountBalance: false,
+      paymentMode: 'coinbase',
+      paymentModeOptions: {
+        title: 'Pay with Coinbase',
+        callback: order => openWindow('coinbase', order),
+      },
+    },
+    {
       title: 'Dogecoin Transaction',
       description: 'Delivery after one confirmation',
       icon: DogecoinIcon,
@@ -85,17 +96,6 @@ export default function getPaymentMethods({ currency, dispatch, ...props }) {
       icon: DashIcon,
       requireAccountBalance: false,
       paymentMode: 'dash',
-    },
-    {
-      title: 'Coinbase',
-      description: 'Pay with your Coinbase account',
-      icon: CoinbaseIcon,
-      requireAccountBalance: false,
-      paymentMode: 'coinbase',
-      paymentModeOptions: {
-        title: 'Pay with Coinbase',
-        callback: order => openWindow('coinbase', order),
-      },
     },
     {
       title: 'LocalBitcoins',
