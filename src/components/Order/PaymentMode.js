@@ -167,6 +167,7 @@ class PaymentMode extends PureComponent {
     /* eslint-disable no-undef */
     if (
       web3 &&
+      web3.eth &&
       web3.eth.accounts[0] &&
       paymentMethod.paymentMode === 'ethereum'
     ) {
