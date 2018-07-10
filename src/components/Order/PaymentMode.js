@@ -234,7 +234,7 @@ class PaymentMode extends PureComponent {
         price = order.payment.litesPrice;
       }
       paymentAddress = order.payment.lightningInvoice;
-      uri = `${prefix}:${paymentAddress}`;
+      uri = `${prefix}:${paymentAddress}`.toUpperCase();
       PaymentInstructions = ({ children }) => (
         <div>
           Copy the invoice below and pay
