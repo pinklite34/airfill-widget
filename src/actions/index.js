@@ -30,9 +30,29 @@ const setComboInputOpen = createAction('SET_COMBOINPUT_OPEN');
 export const openComboInput = () => setComboInputOpen(true);
 export const closeComboInput = () => setComboInputOpen(false);
 
+// add max width to all logoImage cloudinary URLs.
+// We don't use more than 88 px wide in the widget atm so this will work for now
+const transformInventory = inventory => {
+  Object.keys(inventory)
+    .map(key => inventory[key])
+    .forEach(country =>
+      Object.keys(country.operators)
+        .map(key => country.operators[key])
+        .forEach(operator => {
+          operator.logoImage = operator.logoImage.replace(
+            'd_operator.png',
+            'd_operator.png,w_88,c_fit'
+          );
+        })
+    );
+
+  return inventory;
+};
+
 export const loadInventory = createLoadAction({
   name: 'airfillWidget.inventory',
   uri: '/inventory',
+  responseTransform: transformInventory,
 });
 
 export const lookupLocation = () => (dispatch, getState) => {
