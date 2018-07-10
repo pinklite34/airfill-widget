@@ -170,17 +170,16 @@ class PaymentMode extends PureComponent {
       web3.eth.accounts[0] &&
       paymentMethod.paymentMode === 'ethereum'
     ) {
-      const userAddress = web3.eth.accounts[0];
-      const orderAddress = order.payment.altcoinAddress;
-      const ethValue = order.payment.altcoinPrice;
-
       web3.eth.sendTransaction(
         {
-          to: orderAddress,
-          from: userAddress,
-          value: web3.toWei(ethValue, 'ether'),
+          to: order.payment.altcoinAddress,
+          from: web3.eth.accounts[0],
+          value: web3.toWei(order.payment.altcoinPrice, 'ether'),
         },
-        err => console.error(err)
+        err => {
+          console.error(err);
+          onExternalUrl(uri);
+        }
       );
     } else {
       onExternalUrl(uri);
