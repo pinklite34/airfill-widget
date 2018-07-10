@@ -13,7 +13,7 @@ import {
   ConnectedRouter,
 } from 'react-router-redux';
 
-import { init, setOperator, setCountry, useRecentRefill } from '../actions';
+import { init, setOperator, useRecentRefill } from '../actions';
 import { configProps, inventoryProp, fnProp } from '../lib/prop-types';
 import { selectInventory } from '../store';
 import configureStore from '../store/configureStore';
@@ -49,7 +49,6 @@ class AirfillWidget extends Component {
   static propTypes = {
     init: fnProp,
     setOperator: PropTypes.func.isRequired,
-    setCountry: PropTypes.func.isRequired,
     inventory: inventoryProp,
     className: PropTypes.string,
     ...configProps,
@@ -96,9 +95,7 @@ class AirfillWidget extends Component {
       init,
       defaultNumber,
       setOperator,
-      setCountry,
       operator,
-      country,
       history,
       repeatOrder,
       useRecentRefill,
@@ -111,14 +108,6 @@ class AirfillWidget extends Component {
 
     history.push('/refill');
 
-    if (country) {
-      setCountry(country);
-
-      if (!operator) {
-        history.push('/refill/selectProvider');
-      }
-    }
-
     if (operator) {
       setOperator(operator);
       history.push('/refill/selectAmount');
@@ -129,7 +118,7 @@ class AirfillWidget extends Component {
     } else {
       init({
         defaultNumber: defaultNumber,
-        shouldLookupLocation: !country && !isMobile,
+        shouldLookupLocation: !isMobile,
       });
     }
   }
@@ -200,7 +189,6 @@ const StoreWidgetWrapper = compose(
     {
       init,
       setOperator,
-      setCountry,
       useRecentRefill,
     }
   ),
