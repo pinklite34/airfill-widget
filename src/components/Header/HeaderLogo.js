@@ -31,6 +31,9 @@ HeaderLogo.propTypes = {
   goHome: fnProp,
 };
 
-export default connect(null, dispatch => ({
-  goHome: () => dispatch(push('/refill')),
-}))(HeaderLogo);
+export default connect(
+  null,
+  dispatch => ({
+    goHome: () => dispatch(push('/refill')),
+  })
+)(HeaderLogo);
