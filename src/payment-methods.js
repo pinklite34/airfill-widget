@@ -16,7 +16,7 @@ const baseUrl =
 function openWindow(method, order) {
   const win = window.open(`${baseUrl}/widget/${method}?order=${order.id}`);
 
-  import(/* webpackChunkName: "react-pusher" */ '@bitrefill/react-pusher').then(
+  import(/* webpackChunkName: "module__react-pusher" */ '@bitrefill/react-pusher').then(
     ({ getPusherClient }) => {
       const pusher = getPusherClient(PUSHER_API_KEY);
       if (!pusher) return console.error('No Pusher instance');

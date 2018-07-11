@@ -6,12 +6,13 @@ import { connect } from 'react-redux';
 import { setPaymentMethod } from '../../actions';
 import { selectAmount, selectPaymentMethod } from '../../store';
 
-import { getWeb3 } from '../../lib/web3';
+import { getEth, getEthInstance } from '../../lib/eth';
 import {
   isDirectPayment,
   isLightningPayment,
 } from '../../lib/currency-helpers';
 import setClipboardText from '../../lib/clipboard-helper';
+import { fromWindow } from '../../lib/web-globals';
 import {
   orderProp,
   paymentsProp,
@@ -161,21 +162,20 @@ class PaymentMode extends PureComponent {
     setClipboardText(text);
   };
 
-  onOpenWallet = uri => () => {
+  onOpenWallet = uri => async () => {
     const { onExternalUrl, paymentMethod, order } = this.props;
-    const web3 = getWeb3();
 
-    if (
-      web3 &&
-      web3.eth &&
-      web3.eth.accounts[0] &&
-      paymentMethod.paymentMode === 'ethereum'
-    ) {
-      web3.eth.sendTransaction(
+    if (fromWindow('web3') && paymentMethod.paymentMode === 'ethereum') {
+      const Eth = await getEth();
+      const eth = await getEthInstance();
+      const fromAccount = eth.accounts()[0];
+      if (!fromAccount) return onExternalUrl(uri);
+
+      eth.sendTransaction(
         {
           to: order.payment.altcoinAddress,
-          from: web3.eth.accounts[0],
-          value: web3.toWei(order.payment.altcoinPrice, 'ether'),
+          from: fromAccount,
+          value: Eth.toWei(order.payment.altcoinPrice, 'ether'),
         },
         err => {
           console.error(err);

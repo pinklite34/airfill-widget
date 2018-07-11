@@ -21,9 +21,6 @@ const config = Object.assign({}, distConfig, {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.optimize.LimitChunkCountPlugin({
-      maxChunks: 1,
-    }),
   ],
   externals: {},
 });
