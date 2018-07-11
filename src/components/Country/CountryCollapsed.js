@@ -74,7 +74,7 @@ function CountryCollapsed({
     </Collapsed>
   ) : (
     <Collapsed hideButton type="country">
-      <Text type="p" size="16px" id="widget.introduction.select">
+      <Text type="p" tight size="16px" id="widget.introduction.select">
         Select a country above to see available services.
       </Text>
     </Collapsed>

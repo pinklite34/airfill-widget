@@ -41,7 +41,8 @@ const styles = {
         min-height: 50px;
         text-transform: uppercase;
         text-align: end;
-        padding: 0 14px 0 4px;
+        padding: 0 16px;
+        min-width: 84px;
 
         & > img {
           width: 64px;
@@ -264,7 +265,11 @@ class PaymentLayout extends PureComponent {
               </Tooltip>
             )}
             {this.showCountdown && (
-              <p className={styles.label}>Expiring in {this.state.timeLeft}</p>
+              <div style={{ paddingLeft: '6px' }}>
+                <p className={styles.label}>
+                  Expiring in {this.state.timeLeft}
+                </p>
+              </div>
             )}
           </div>
         </div>

@@ -64,7 +64,7 @@ class StatusEmail extends PureComponent {
 
     return (
       <ActiveSection
-        padding="16px 0 0"
+        padding="0 16px"
         renderNextButton={() => (
           <NextButton
             disabled={!this.validateInput()}
@@ -79,6 +79,7 @@ class StatusEmail extends PureComponent {
             onChange={this.onChange}
             submitEnabled={this.validateInput()}
             icon={<EmailIcon />}
+            onSubmit={this.continue}
           />
         </InputContainer>
         <CheckboxContainer>

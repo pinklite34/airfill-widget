@@ -4,10 +4,15 @@ import Media from 'react-media';
 import { connect } from 'react-redux';
 import { Route, withRouter } from 'react-router';
 import { compose } from 'recompose';
+import { injectGlobal } from 'emotion';
+import { ThemeProvider } from 'emotion-theming';
+import { I18nextProvider } from 'react-i18next';
 
 import { init, setOperator, setCountry } from '../actions';
 import { configProps, inventoryProp, fnProp } from '../lib/prop-types';
+import i18n from '../lib/i18n';
 import { selectInventory } from '../store';
+import theme from '../theme';
 
 import Card from './UI/Card';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -28,11 +33,17 @@ import Payment from './PaymentMethod';
 import getMethods from '../payment-methods';
 import Spinner from './UI/Spinner';
 
-const theme = createMuiTheme({
+const muiTheme = createMuiTheme({
   palette: {
     primary: blue,
   },
 });
+
+injectGlobal`
+  * {
+    box-sizing: border-box;
+  }
+`;
 
 class AirfillWidget extends Component {
   static propTypes = {
@@ -77,7 +88,7 @@ class AirfillWidget extends Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() { // eslint-disable-line
     const {
       isMobile,
       init,
@@ -122,35 +133,39 @@ class AirfillWidget extends Component {
     const hasLoaded = !!inventory.result;
 
     return (
-      <MuiThemeProvider theme={theme}>
-        <Root className={className}>
-          <Card>
-            {hasLoaded ? (
-              <Fragment>
-                <Header isMobile={isMobile} branded={showLogo} />
-                <Country />
-                <Providers />
-                <Amount config={config} />
-                <Recipient config={config} />
-                <StatusEmail config={config} />
-                <Payment config={config} />
-                <Order config={config} />
-                {showInstructions && (
-                  <Route
-                    path="/refill"
-                    exact
-                    render={() => <Instructions config={config} />}
-                  />
+      <I18nextProvider i18n={i18n}>
+        <ThemeProvider theme={theme}>
+          <MuiThemeProvider theme={muiTheme}>
+            <Root className={className}>
+              <Card>
+                {hasLoaded ? (
+                  <Fragment>
+                    <Header isMobile={isMobile} branded={showLogo} />
+                    <Country />
+                    <Providers />
+                    <Amount config={config} />
+                    <Recipient config={config} />
+                    <StatusEmail config={config} />
+                    <Payment config={config} />
+                    <Order config={config} />
+                    {showInstructions && (
+                      <Route
+                        path="/refill"
+                        exact
+                        render={() => <Instructions config={config} />}
+                      />
+                    )}
+                  </Fragment>
+                ) : (
+                  <Spinner />
                 )}
-              </Fragment>
-            ) : (
-              <Spinner />
-            )}
-          </Card>
+              </Card>
 
-          {showFooter && <Footer branded={showPoweredBy} />}
-        </Root>
-      </MuiThemeProvider>
+              {showFooter && <Footer branded={showPoweredBy} />}
+            </Root>
+          </MuiThemeProvider>
+        </ThemeProvider>
+      </I18nextProvider>
     );
   }
 }
