@@ -1,3 +1,15 @@
 machine:
   node:
     version: 8.2.0
+  environment:
+    NODE_ENV: test
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+general:
+  artifacts:
+    - "tests/output"
+dependencies:
+  override:
+    - yarn
+  cache_directories:
+    - ~/.cache/yarn
+
