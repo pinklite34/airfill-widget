@@ -31,7 +31,7 @@ const styles = {
 };
 
 function PaymentCollapsed({ operator, history, selectedMethod = {} }) {
-  let icon = selectedMethod.icon;
+  let icon = selectedMethod && selectedMethod.icon;
   if (typeof icon === 'string') {
     icon = <img src={icon} />;
   }
@@ -56,7 +56,7 @@ function PaymentCollapsed({ operator, history, selectedMethod = {} }) {
 PaymentCollapsed.propTypes = {
   operator: operatorProp,
   history: historyProp,
-  selectedMethod: PropTypes.object.isRequired,
+  selectedMethod: PropTypes.object,
 };
 
 export default compose(

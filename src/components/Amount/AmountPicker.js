@@ -29,6 +29,7 @@ import AmountPackage from './AmountPackage';
 import AmountRange from './AmountRange';
 
 import Info from '../UI/info.svg';
+import { isValidEmail } from '../../lib/email-validation';
 
 const styles = {
   packages: css`
@@ -108,10 +109,12 @@ class AmountPicker extends PureComponent {
   };
 
   next = () => {
-    const { history, operator } = this.props;
+    const { history, operator, config } = this.props;
 
     if (operator.result.recipientType !== 'none') {
       history.push('/refill/selectRecipient');
+    } else if (!isValidEmail(config.orderOptions.email)) {
+      history.push('/refill/selectStatusEmail');
     } else {
       history.push('/refill/selectPayment');
     }
