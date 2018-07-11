@@ -9,7 +9,6 @@ import { setAmount } from '../../actions';
 
 import { selectValidAmount } from '../../lib/amount-validation';
 import { getPrice, getDisplayName } from '../../lib/currency-helpers';
-import { isValidEmail } from '../../lib/email-validation';
 import {
   configProp,
   operatorResultProp,
@@ -109,11 +108,9 @@ class AmountPicker extends PureComponent {
   };
 
   next = () => {
-    const { history, operator, config } = this.props;
+    const { history, operator } = this.props;
 
-    const showEmail = !isValidEmail(config.orderOptions.email);
-
-    if (showEmail || operator.result.recipientType !== 'none') {
+    if (operator.result.recipientType !== 'none') {
       history.push('/refill/selectRecipient');
     } else {
       history.push('/refill/selectPayment');
