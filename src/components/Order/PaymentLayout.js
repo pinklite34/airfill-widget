@@ -118,18 +118,15 @@ class PaymentLayout extends PureComponent {
     paymentStatus: paymentStatusProp,
   };
 
-  constructor() {
-    super();
-
-    this.state = {
-      countdownInterval: null,
-      timeLeft: '15:00',
-      tooltip: false,
-      invoiceTime: 15 * 60 * 1000,
-    };
-  }
+  state = {
+    countdownInterval: null,
+    timeLeft: '15:00',
+    tooltip: false,
+    invoiceTime: 15 * 60 * 1000,
+  };
 
   componentDidMount() {
+    this.mounted = true;
     if (this.showCountdown) {
       this.setState({
         countdownInterval: setInterval(() => {
@@ -157,13 +154,15 @@ class PaymentLayout extends PureComponent {
             diff = `${minutes}:${seconds}`;
           }
 
-          this.setState({ timeLeft: diff, invoiceTime: invoiceTime - 1000 });
+          this.mounted &&
+            this.setState({ timeLeft: diff, invoiceTime: invoiceTime - 1000 });
         }, 1000),
       });
     }
   }
 
   componentWillUnmount() {
+    this.mounted = false;
     const { countdownInterval } = this.state;
 
     if (countdownInterval) clearInterval(countdownInterval);
@@ -177,7 +176,7 @@ class PaymentLayout extends PureComponent {
 
   copy = text => {
     this.setState({ tooltip: true });
-    setTimeout(() => this.setState({ tooltip: false }), 2000);
+    setTimeout(() => this.mounted && this.setState({ tooltip: false }), 2000);
     setClipboardText(text);
   };
 
@@ -240,8 +239,8 @@ class PaymentLayout extends PureComponent {
         <div>
           <div>{!isDelivered && 'Price'}</div>
           <div
-            {...(this.showCountdown ? styles.cellContainer : {})}
-            className={styles.infoContainer}>
+            className={`${styles.infoContainer} ${this.showCountdown &&
+              styles.cellContainer}`}>
             {isDelivered &&
               showRecipient && (
                 <p className={styles.amount}>
@@ -265,11 +264,7 @@ class PaymentLayout extends PureComponent {
               </Tooltip>
             )}
             {this.showCountdown && (
-              <div style={{ paddingLeft: '6px' }}>
-                <p className={styles.label}>
-                  Expiring in {this.state.timeLeft}
-                </p>
-              </div>
+              <p className={styles.label}>Expiring in {this.state.timeLeft}</p>
             )}
           </div>
         </div>
