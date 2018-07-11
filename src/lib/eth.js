@@ -16,3 +16,8 @@ export async function getEthInstance() {
   ethInstance = new Eth(web3 && web3.currentProvider);
   return ethInstance;
 }
+
+export async function toWei(value) {
+  const Eth = await getEth();
+  return Eth.toWei(value, 'ether').toString(10);
+}

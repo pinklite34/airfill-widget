@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { setPaymentMethod } from '../../actions';
 import { selectAmount, selectPaymentMethod } from '../../store';
 
-import { getEth, getEthInstance } from '../../lib/eth';
+import { toWei, getEthInstance } from '../../lib/eth';
 import {
   isDirectPayment,
   isLightningPayment,
@@ -166,16 +166,20 @@ class PaymentMode extends PureComponent {
     const { onExternalUrl, paymentMethod, order } = this.props;
 
     if (fromWindow('web3') && paymentMethod.paymentMode === 'ethereum') {
-      const Eth = await getEth();
       const eth = await getEthInstance();
-      const fromAccount = eth.accounts()[0];
+      const accounts = await eth.accounts();
+      const fromAccount = accounts[0];
+      const toAccount = order.payment.altcoinAddress;
+      const value = await toWei(order.payment.altcoinPrice);
+
       if (!fromAccount) return onExternalUrl(uri);
 
       eth.sendTransaction(
         {
-          to: order.payment.altcoinAddress,
+          to: toAccount,
           from: fromAccount,
-          value: Eth.toWei(order.payment.altcoinPrice, 'ether'),
+          value,
+          data: '0x',
         },
         err => {
           console.error(err);
