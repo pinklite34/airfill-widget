@@ -30,7 +30,7 @@ const styles = {
   `,
 };
 
-function PaymentCollapsed({ operator, history, selectedMethod }) {
+function PaymentCollapsed({ operator, history, selectedMethod = {} }) {
   let icon = selectedMethod.icon;
   if (typeof icon === 'string') {
     icon = <img src={icon} />;

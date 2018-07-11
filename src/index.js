@@ -3,19 +3,15 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { ThemeProvider } from 'emotion-theming';
 import createHistory from 'history/createMemoryHistory';
-import { I18nextProvider } from 'react-i18next';
 import {
   ConnectedRouter,
   routerReducer,
   routerMiddleware,
 } from 'react-router-redux';
 
-import i18n from './lib/i18n';
 import { client } from './lib/api-client';
 import configureStore from './store/configureStore';
-import theme from './theme';
 
 import Widget from './components/Widget';
 
@@ -92,29 +88,25 @@ function AirfillWidget(ele, opt) {
   }
 
   render(
-    <I18nextProvider i18n={i18n}>
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <ConnectedRouter history={history}>
-            <Widget
-              className="refill-widget-root standalone"
-              billingCurrency={billingCurrency}
-              orderOptions={orderOptions}
-              paymentButtons={paymentButtons}
-              showBTCAddress={showBTCAddress}
-              defaultNumber={defaultNumber}
-              accountBalance={userAccountBalance}
-              requireAccountBalance={requireAccountBalance}
-              showInstructions={showInstructions}
-              showLogo={showLogo}
-              showPoweredBy={!showLogo}
-              keepDefaultPayments={keepDefaultPayments}
-              forceOperator={forceOperator}
-            />
-          </ConnectedRouter>
-        </ThemeProvider>
-      </Provider>
-    </I18nextProvider>,
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <Widget
+          className="refill-widget-root standalone"
+          billingCurrency={billingCurrency}
+          orderOptions={orderOptions}
+          paymentButtons={paymentButtons}
+          showBTCAddress={showBTCAddress}
+          defaultNumber={defaultNumber}
+          accountBalance={userAccountBalance}
+          requireAccountBalance={requireAccountBalance}
+          showInstructions={showInstructions}
+          showLogo={showLogo}
+          showPoweredBy={!showLogo}
+          keepDefaultPayments={keepDefaultPayments}
+          forceOperator={forceOperator}
+        />
+      </ConnectedRouter>
+    </Provider>,
     element
   );
 }

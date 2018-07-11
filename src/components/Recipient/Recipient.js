@@ -85,7 +85,6 @@ class Recipient extends PureComponent {
           { country: country.alpha2, phone: getPlaceholder(country.alpha2) },
           'National'
         );
-        console.log(placeholder);
         break;
       case 'email':
         placeholder = config.orderOptions.email || 'example@mail.com';

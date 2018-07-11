@@ -23,7 +23,7 @@ const styles = {
     flex-direction: row;
     align-items: center;
     background-color: #fff;
-    margin: 0 -16px;
+    margin: 0;
     border-top: 1px solid rgba(0, 0, 0, 0.08);
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     padding: 8px 16px;

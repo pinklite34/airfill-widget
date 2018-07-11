@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { css } from 'react-emotion';
 
 import { transProp } from '../lib/prop-types';
+import DeviceInfo from '../lib/DeviceInfo';
 
 import Text from './UI/Text';
 
@@ -18,7 +19,6 @@ const styles = {
   instruction: css`
     display: flex;
     flex-direction: row;
-    align-items: center;
     flex: 1 1 auto;
     line-height: 1.4;
     font-size: 14px;
@@ -29,6 +29,7 @@ const styles = {
 
     @media (min-width: 720px) {
       flex-direction: column;
+      align-items: center;
       text-align: center;
       flex: 0 0 180px;
 
@@ -71,13 +72,27 @@ const styles = {
 
 function Instruction({ number, title, description }) {
   return (
-    <div className={styles.instruction}>
-      <div className={styles.badge}>{number}</div>
-      <div className={styles.content}>
-        <Text type="h3" centered className={styles.title} {...title} />
-        <Text type="p" centered {...description} />
-      </div>
-    </div>
+    <DeviceInfo>
+      {({ greaterThan }) => (
+        <div className={styles.instruction}>
+          <div className={styles.badge}>{number}</div>
+          <div className={styles.content}>
+            <Text
+              type="h3"
+              centered={greaterThan.tablet}
+              className={styles.title}
+              {...title}
+            />
+            <Text
+              type="p"
+              tight
+              centered={greaterThan.tablet}
+              {...description}
+            />
+          </div>
+        </div>
+      )}
+    </DeviceInfo>
   );
 }
 

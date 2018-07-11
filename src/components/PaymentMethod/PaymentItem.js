@@ -28,7 +28,7 @@ const Container = styled('div')`
 `;
 
 const IconContainer = styled('div')`
-  width: 24px;
+  width: 56px;
   display: inline-block;
   padding: 16px;
 `;
