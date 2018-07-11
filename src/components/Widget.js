@@ -14,6 +14,8 @@ import {
 } from 'react-router-redux';
 
 import { init, setOperator, useRecentRefill } from '../actions';
+import { injectGlobal } from 'emotion';
+
 import { configProps, inventoryProp, fnProp } from '../lib/prop-types';
 import { selectInventory } from '../store';
 import configureStore from '../store/configureStore';
@@ -44,6 +46,12 @@ const muiTheme = createMuiTheme({
     primary: blue,
   },
 });
+
+injectGlobal`
+  * {
+    box-sizing: border-box;
+  }
+`;
 
 class AirfillWidget extends Component {
   static propTypes = {
@@ -147,32 +155,39 @@ class AirfillWidget extends Component {
     const hasLoaded = !!inventory.result;
 
     return (
-      <Root className={className}>
-        <Card>
-          {hasLoaded ? (
-            <Fragment>
-              <Header isMobile={isMobile} branded={showLogo} />
-              <Country />
-              <Providers />
-              <Amount config={config} />
-              <Recipient config={config} />
-              <StatusEmail config={config} />
-              <Payment config={config} />
-              <Order config={config} />
-              {showInstructions && (
-                <Route
-                  path="/refill"
-                  exact
-                  render={() => <Instructions config={config} />}
-                />
-              )}
-            </Fragment>
-          ) : (
-            <Spinner />
-          )}
-        </Card>
-        {showFooter && <Footer branded={showPoweredBy} />}
-      </Root>
+      <I18nextProvider i18n={i18n}>
+        <ThemeProvider theme={theme}>
+          <MuiThemeProvider theme={muiTheme}>
+            <Root className={className}>
+              <Card>
+                {hasLoaded ? (
+                  <Fragment>
+                    <Header isMobile={isMobile} branded={showLogo} />
+                    <Country />
+                    <Providers />
+                    <Amount config={config} />
+                    <Recipient config={config} />
+                    <StatusEmail config={config} />
+                    <Payment config={config} />
+                    <Order config={config} />
+                    {showInstructions && (
+                      <Route
+                        path="/refill"
+                        exact
+                        render={() => <Instructions config={config} />}
+                      />
+                    )}
+                  </Fragment>
+                ) : (
+                  <Spinner />
+                )}
+              </Card>
+
+              {showFooter && <Footer branded={showPoweredBy} />}
+            </Root>
+          </MuiThemeProvider>
+        </ThemeProvider>
+      </I18nextProvider>
     );
   }
 }

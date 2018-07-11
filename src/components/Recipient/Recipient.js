@@ -86,7 +86,6 @@ class Recipient extends PureComponent {
           { country: country.alpha2, phone: getPlaceholder(country.alpha2) },
           'National'
         );
-        console.log(placeholder);
         break;
       case 'email':
         placeholder = config.orderOptions.email || 'example@mail.com';
@@ -102,6 +101,8 @@ class Recipient extends PureComponent {
 
   getNumberLabel = () => {
     const { operator } = this.props;
+
+    console.log(operator.result.recipientType);
 
     if (operator.result) {
       switch (operator.result.recipientType) {

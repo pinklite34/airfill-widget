@@ -4,18 +4,9 @@ import styled, { css } from 'react-emotion';
 
 import { connect } from 'react-redux';
 import { setPaymentMethod } from '../../actions';
-
 import { selectAmount, selectPaymentMethod } from '../../store';
 
-import Button from '../UI/Button';
-import Tooltip from 'material-ui/Tooltip';
-
-import BitcoinAddress from '../UI/BitcoinAddress';
-import OrderHeader from '../UI/OrderHeader';
-import PaymentLayout from './PaymentLayout';
-
-import QrCode from '../UI/QrCode';
-
+import { getWeb3 } from '../../lib/web3';
 import {
   isDirectPayment,
   isLightningPayment,
@@ -28,6 +19,15 @@ import {
   amountProp,
   paymentStatusProp,
 } from '../../lib/prop-types';
+
+import Button from '../UI/Button';
+import Tooltip from 'material-ui/Tooltip';
+
+import BitcoinAddress from '../UI/BitcoinAddress';
+import OrderHeader from '../UI/OrderHeader';
+import PaymentLayout from './PaymentLayout';
+
+import QrCode from '../UI/QrCode';
 
 const styles = {
   list: css`
@@ -148,27 +148,12 @@ class PaymentMode extends PureComponent {
     onExternalUrl: uri => (window.location.href = uri),
   };
 
-  constructor(props) {
-    super(props);
-
-    // pick first affordable payment method
-    /* const methods = props.paymentButtons.filter(btn =>
-      canAfford({
-        amount: props.amount,
-        btcPrice: Number(props.order.btcPrice),
-        accountBalance: props.accountBalance,
-        paymentMode: btn.paymentMode,
-        requireAccountBalance: btn.requireAccountBalance,
-      })
-    ); */
-
-    this.state = {
-      open: false,
-      isLoading: false,
-      addressTooltip: false,
-      amountTooltip: false,
-    };
-  }
+  state = {
+    open: false,
+    isLoading: false,
+    addressTooltip: false,
+    amountTooltip: false,
+  };
 
   onCopy = (text, field) => () => {
     this.setState({ [field]: true });
@@ -178,8 +163,8 @@ class PaymentMode extends PureComponent {
 
   onOpenWallet = uri => () => {
     const { onExternalUrl, paymentMethod, order } = this.props;
+    const web3 = getWeb3();
 
-    /* eslint-disable no-undef */
     if (
       web3 &&
       web3.eth &&
@@ -200,7 +185,6 @@ class PaymentMode extends PureComponent {
     } else {
       onExternalUrl(uri);
     }
-    /* eslint-enable */
   };
 
   render() {
@@ -259,7 +243,7 @@ class PaymentMode extends PureComponent {
         price = order.payment.litesPrice;
       }
       paymentAddress = order.payment.lightningInvoice;
-      uri = `${prefix}:${paymentAddress}`;
+      uri = `${prefix}:${paymentAddress}`.toUpperCase();
       PaymentInstructions = ({ children }) => (
         <div>
           Copy the invoice below and pay

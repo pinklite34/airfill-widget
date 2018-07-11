@@ -6,7 +6,7 @@ import ErrorIcon from './error-small.svg';
 
 const Container = styled('div')`
   background-color: #e1283c;
-  margin: 0 -16px 16px;
+  margin: 0;
   padding: 16px;
   color: #fff;
   font-weight: 700;

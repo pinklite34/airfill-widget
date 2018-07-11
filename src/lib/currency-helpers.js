@@ -49,6 +49,8 @@ export const canAfford = ({
   // payment mode
   mode,
 }) => {
+  if (!operator) return false;
+
   // if account balance is NaN, it's loading
   if (accountBalance !== undefined && isNaN(accountBalance)) {
     return false;

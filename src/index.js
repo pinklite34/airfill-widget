@@ -3,7 +3,12 @@
 import React from 'react';
 import { render } from 'react-dom';
 import createHistory from 'history/createMemoryHistory';
-import { routerReducer, routerMiddleware } from 'react-router-redux';
+import { Provider } from 'react-redux';
+import {
+  ConnectedRouter,
+  routerReducer,
+  routerMiddleware,
+} from 'react-router-redux';
 
 import { client } from './lib/api-client';
 import configureStore from './store/configureStore';
@@ -56,8 +61,7 @@ function AirfillWidget(ele, opt) {
     showBTCAddress,
     showLogo,
     showInstructions,
-    operator,
-    country,
+    forceOperator,
   } = options;
   const orderOptions = { email, sendEmail, sendSMS, refundAddress };
 
@@ -73,22 +77,25 @@ function AirfillWidget(ele, opt) {
   }
 
   render(
-    <Widget
-      className="refill-widget-root standalone"
-      billingCurrency={billingCurrency}
-      orderOptions={orderOptions}
-      paymentButtons={paymentButtons}
-      showBTCAddress={showBTCAddress}
-      defaultNumber={defaultNumber}
-      accountBalance={userAccountBalance}
-      requireAccountBalance={requireAccountBalance}
-      showInstructions={showInstructions}
-      showLogo={showLogo}
-      showPoweredBy={!showLogo}
-      keepDefaultPayments={keepDefaultPayments}
-      operator={operator}
-      country={country}
-    />,
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <Widget
+          className="refill-widget-root standalone"
+          billingCurrency={billingCurrency}
+          orderOptions={orderOptions}
+          paymentButtons={paymentButtons}
+          showBTCAddress={showBTCAddress}
+          defaultNumber={defaultNumber}
+          accountBalance={userAccountBalance}
+          requireAccountBalance={requireAccountBalance}
+          showInstructions={showInstructions}
+          showLogo={showLogo}
+          showPoweredBy={!showLogo}
+          keepDefaultPayments={keepDefaultPayments}
+          forceOperator={forceOperator}
+        />
+      </ConnectedRouter>
+    </Provider>,
     element
   );
 }

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Button from './Button';
 
 const Container = styled('div')`
-  height: 36px;
   padding: 12px 16px;
   display: flex;
   justify-content: space-between;
