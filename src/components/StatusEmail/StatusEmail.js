@@ -62,8 +62,6 @@ class StatusEmail extends PureComponent {
   render() {
     const { email, setSubscribeNewsletter, subscribing } = this.props;
 
-    console.log('status email');
-
     return (
       <ActiveSection
         padding="0 16px"
