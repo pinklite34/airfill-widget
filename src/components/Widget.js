@@ -99,7 +99,6 @@ class AirfillWidget extends Component {
     const {
       key,
       baseUrl,
-      isMobile,
       init,
       defaultNumber,
       setOperator,
@@ -124,10 +123,7 @@ class AirfillWidget extends Component {
     if (repeatOrder) {
       useRecentRefill(repeatOrder);
     } else {
-      init({
-        defaultNumber: defaultNumber,
-        shouldLookupLocation: !isMobile,
-      });
+      init({ defaultNumber });
     }
   }
 
@@ -159,7 +155,7 @@ class AirfillWidget extends Component {
         <ThemeProvider theme={theme}>
           <MuiThemeProvider theme={muiTheme}>
             <Root className={className}>
-              <Card>
+              <Card style={{ overflow: 'hidden' }}>
                 {hasLoaded ? (
                   <Fragment>
                     <Header isMobile={isMobile} branded={showLogo} />
