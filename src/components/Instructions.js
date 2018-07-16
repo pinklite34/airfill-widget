@@ -108,11 +108,11 @@ export default function Instructions() {
       <Instruction
         number={1}
         title={{
-          id: 'widget.instructions.title1',
+          id: 'instructions.title1',
           children: 'Find a service',
         }}
         description={{
-          id: 'widget.instructions.description1',
+          id: 'instructions.description1',
           children:
             'Select a country or enter a phone number to see available services',
         }}
@@ -120,11 +120,11 @@ export default function Instructions() {
       <Instruction
         number={2}
         title={{
-          id: 'widget.instructions.title2',
+          id: 'instructions.title2',
           children: 'Pick package & pay',
         }}
         description={{
-          id: 'widget.instructions.description2',
+          id: 'instructions.description2',
           children:
             'Select your desired refill amount and pay with a single click',
         }}
@@ -132,11 +132,11 @@ export default function Instructions() {
       <Instruction
         number={3}
         title={{
-          id: 'widget.instructions.title3',
+          id: 'instructions.title3',
           children: 'Instant refill delivery',
         }}
         description={{
-          id: 'widget.instructions.description3',
+          id: 'instructions.description3',
           children: 'We send your refill the second we receive your payment',
         }}
       />

@@ -187,7 +187,10 @@ class AmountPicker extends PureComponent {
           </InfoContainer>
         )}
 
-        <SectionTitle className={styles.title}>{'Select amount'}</SectionTitle>
+        <SectionTitle
+          className={styles.title}
+          text={{ id: 'title.selectamount', children: 'Select amount' }}
+        />
 
         <div className={`${styles.packages} amount-picker`}>
           {operator.result.packages.map(this.renderPackage)}

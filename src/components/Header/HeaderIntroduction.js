@@ -99,7 +99,7 @@ class HeaderIntroduction extends PureComponent {
               type="h1"
               centered
               tight
-              id="widget.introduction.title"
+              id="introduction.title"
               color={theme.white}>
               Send Global Top Ups With Bitcoin
             </Text>
@@ -107,7 +107,7 @@ class HeaderIntroduction extends PureComponent {
               type="h3"
               centered
               size="12px"
-              id="widget.introduction.subtitle"
+              id="introduction.subtitle"
               color={'rgba(255, 255, 255, 0.8)'}>
               Trusted by More Than 500 000 People
             </Text>
@@ -118,7 +118,7 @@ class HeaderIntroduction extends PureComponent {
               type="h1"
               centered
               tight
-              id="widget.introduction.title.unbranded"
+              id="introduction.title.unbranded"
               color={theme.white}>
               Top Up Anything With Bitcoin
             </Text>
@@ -136,7 +136,7 @@ class HeaderIntroduction extends PureComponent {
             {error ? (
               <Text type="p">{error}</Text>
             ) : (
-              <Text type="p" id="widget.introduction.error">
+              <Text type="p" id="introduction.error">
                 An error occured<br />({{ lookupError }})
               </Text>
             )}

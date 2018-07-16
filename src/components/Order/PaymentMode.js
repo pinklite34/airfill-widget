@@ -324,9 +324,12 @@ class PaymentMode extends PureComponent {
                     )}
                     <Button
                       className={styles.bottomButton}
-                      onClick={this.onOpenWallet(uri)}>
-                      {'Open in Wallet'}
-                    </Button>
+                      onClick={this.onOpenWallet(uri)}
+                      text={{
+                        id: 'button.openwallet',
+                        children: 'Open in Wallet',
+                      }}
+                    />
                     {isPartial && (
                       <a
                         href={`https://www.bitrefill.com/support/${

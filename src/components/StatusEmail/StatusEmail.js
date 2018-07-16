@@ -16,7 +16,6 @@ import {
 import Checkbox from 'material-ui/Checkbox';
 
 import NextButton from '../UI/NextButton';
-import ErrorBanner from '../UI/ErrorBanner';
 import NumberInput from '../UI/NumberInput';
 
 import EmailIcon from '../../assets/email.svg';
@@ -70,8 +69,8 @@ class StatusEmail extends PureComponent {
             disabled={!this.validateInput()}
             onClick={this.continue}
           />
-        )}>
-        {email.error && <ErrorBanner>{email.error}</ErrorBanner>}
+        )}
+        error={email.error}>
         <Text>The email address will receive order status updates</Text>
         <InputContainer>
           <NumberInput

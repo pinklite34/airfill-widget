@@ -31,7 +31,6 @@ import { canAfford } from '../../lib/currency-helpers';
 
 import PaymentItem from './PaymentItem';
 import NextButton from '../UI/NextButton';
-import ErrorBanner from '../UI/ErrorBanner';
 import ActiveSection from '../UI/ActiveSection';
 
 const MethodContainer = styled('div')`
@@ -106,8 +105,8 @@ class PaymentMethod extends React.Component {
             onClick={this.createOrder}
             loading={isLoading}
           />
-        )}>
-        {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
+        )}
+        error={error.message || error}>
         <MethodContainer>
           {config.paymentButtons.map(method => {
             const affordable = this.canAfford(method);

@@ -74,12 +74,19 @@ export default function ProviderSuggested({ operator, onAccept, onReject }) {
           We&apos;ve detected <strong>{operator.name}</strong> as your service.
           If this is not correct, please select another service below.
         </p>
-        <Button onClick={onAccept} className={styles.button}>
-          Yes, this is my service
-        </Button>
-        <Button onClick={onReject} className={styles.button}>
-          No, it&apos;s not correct
-        </Button>
+        <Button
+          onClick={onAccept}
+          className={styles.button}
+          text={{
+            id: 'button.suggested.yes',
+            children: 'Yes, this is my service',
+          }}
+        />
+        <Button
+          onClick={onAccept}
+          className={styles.button}
+          text={{ id: 'button.suggested.no', children: "No, it's not correct" }}
+        />
       </div>
     </div>
   ) : (

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'react-emotion';
 import PropTypes from 'prop-types';
+
 import Button from './Button';
 
 const Container = styled('div')`
@@ -12,7 +13,7 @@ const Container = styled('div')`
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 `;
 
-const Text = styled('div')`
+const Title = styled('div')`
   font-size: 16px;
   color: #777777 !important;
   font-weight: 500 !important;
@@ -26,11 +27,14 @@ const Text = styled('div')`
 export default function Collapsed({ onClick, type, hideButton, children }) {
   return (
     <Container>
-      <Text>{children}</Text>
+      <Title>{children}</Title>
       {hideButton ? null : (
-        <Button small white onClick={onClick}>
-          Change {type}
-        </Button>
+        <Button
+          small
+          white
+          onClick={onClick}
+          text={{ id: `button.change.${type}`, children: `Change ${type}` }}
+        />
       )}
     </Container>
   );

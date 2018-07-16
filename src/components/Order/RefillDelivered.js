@@ -85,9 +85,14 @@ export default function RefillDelivered(props) {
               Can&apos;t see your refill?
             </a>
             <br />
-            <Button className={styles.button} onClick={props.onReset}>
-              Buy another refill
-            </Button>
+            <Button
+              className={styles.button}
+              onClick={props.onReset}
+              text={{
+                id: 'button.refillagain',
+                children: 'Buy another refill',
+              }}
+            />
           </div>
         </div>
       </PaymentLayout>

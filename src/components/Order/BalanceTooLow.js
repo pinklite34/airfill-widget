@@ -11,9 +11,10 @@ export default function BalanceTooLow({ order, history }) {
         Your balance on this account is too low to purchase the refill{' '}
         <strong>{order.itemDesc}</strong>.
       </p>
-      <Button onClick={() => history.push('/refill/selectAmount')}>
-        Pick another package
-      </Button>
+      <Button
+        onClick={() => history.push('/refill/selectAmount')}
+        text={{ id: 'button.pickpackage', children: 'Pick another package' }}
+      />
     </div>
   );
 }

@@ -28,7 +28,10 @@ export default function PaymentExpired(props) {
         <div>
           <div />
           <div className={styles.textContainer}>
-            <Button onClick={props.onReset}>New order</Button>
+            <Button
+              onClick={props.onReset}
+              text={{ id: 'button.neworder', children: 'New order' }}
+            />
           </div>
         </div>
       </PaymentLayout>

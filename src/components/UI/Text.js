@@ -27,10 +27,11 @@ export const H1Text = styled('h1')`
 
 export const H3Text = styled('h3')`
   color: ${p => getColor(p, p.theme.tx.primary)};
-  margin: ${p => (p.tight ? 0 : '8px 0')};
+  margin: ${p => (p.tight ? 0 : '14px 0')};
   padding: ${p => p.padding || 0};
   text-align: ${p => (p.centered ? 'center' : 'left')};
-  font-size: ${p => p.size || '16px'};
+  font-size: ${p => p.size || '14px'};
+  font-weight: 500;
   line-height: 1.5;
   text-decoration: ${p => p.underline && 'underline'};
   width: ${p => p.width};

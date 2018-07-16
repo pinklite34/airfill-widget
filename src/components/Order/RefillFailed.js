@@ -61,7 +61,12 @@ Thanks!`);
   if (!refundAddress && (needRefund === false || order.refunded === true)) {
     text =
       'We have sent you an automatic refund. Please make sure your details are correct and try again!';
-    action = <Button onClick={onReset}>Send another refill</Button>;
+    action = (
+      <Button
+        onClick={onReset}
+        text={{ id: 'button.sendrefill', children: 'Send another refill' }}
+      />
+    );
   } else if (refundAddress) {
     text =
       'We have sent you an automatic refund. You should receive it within a few minutes.';
@@ -79,7 +84,12 @@ Thanks!`);
   } else {
     text =
       'Please use the button below to contact our support so that we can send you a refund.';
-    action = <Button href={mailto}>Contact Support</Button>;
+    action = (
+      <Button
+        href={mailto}
+        text={{ id: 'button.contactsupport', children: 'Contact Support' }}
+      />
+    );
   }
 
   return (

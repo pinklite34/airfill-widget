@@ -35,13 +35,9 @@ import {
 } from '../../store';
 
 import NextButton from '../UI/NextButton';
-import ErrorBanner from '../UI/ErrorBanner';
 import InputRow from '../UI/NumberInput';
 import ActiveSection from '../UI/ActiveSection';
-
-const Text = styled('p')`
-  font-weight: 500;
-`;
+import Text from '../UI/Text';
 
 const InputContainer = styled('div')`
   @media (min-width: 460px) {
@@ -107,14 +103,23 @@ class Recipient extends PureComponent {
     if (operator.result) {
       switch (operator.result.recipientType) {
         case 'phone_number':
-          return 'The phone number to top up';
+          return {
+            id: 'recipient.label.phone',
+            children: 'The phone number to top up',
+          };
         case 'username':
-          return 'Reddit username / post permalink';
+          return {
+            id: 'recipient.label.username',
+            children: 'Reddit username / post permalink',
+          };
         case 'email':
-          return 'Delivery email address';
+          return {
+            id: 'recipient.label.email',
+            children: 'Delivery email address',
+          };
         case 'none':
         default:
-          return '';
+          return { id: 'recipient.label.empty', children: '' };
       }
     }
   };
@@ -142,15 +147,24 @@ class Recipient extends PureComponent {
       switch (operator.result.recipientType) {
         case 'phone_number':
           if (country.alpha2 === 'XI') {
-            return 'Please enter a valid phone number';
+            return {
+              id: 'recipient.validation.number',
+              children: 'Please enter a valid phone number',
+            };
           }
-          return 'Phone number does not match country';
+          return {
+            id: 'recipient.validation.country',
+            children: 'Phone number does not match country',
+          };
         case 'email':
-          return 'Please enter a valid email address';
+          return {
+            id: 'recipient.validation.email',
+            children: 'Please enter a valid email address',
+          };
       }
     }
 
-    return '';
+    return { id: 'recipient.validation.empty', children: '' };
   };
 
   continue = () => {
@@ -189,10 +203,10 @@ class Recipient extends PureComponent {
         padding="0 16px"
         renderNextButton={() => (
           <NextButton disabled={!number} onClick={this.continue} />
-        )}>
-        {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
+        )}
+        error={(error && error.message) || error}>
         <Content>
-          <Text>{this.getNumberLabel()}</Text>
+          <Text type="h3" {...this.getNumberLabel()} />
           <InputContainer>
             <InputRow
               country={country}

@@ -25,19 +25,26 @@ const displayOrder = ['refill', 'pin'];
 const getDisplayText = key => {
   switch (key) {
     case 'pin':
-      return 'Phone refill vouchers / PINs';
+      return {
+        id: 'provider.type.pin',
+        children: 'Phone refill vouchers / PINs',
+      };
     case 'dth':
-      return 'Digital Television (DTH)';
+      return { id: 'provider.type.dth', children: 'Digital Television (DTH)' };
     case 'data':
-      return 'Data bundles';
+      return { id: 'provider.type.data', children: 'Data bundles' };
     case 'sms':
-      return 'SMS bundles';
+      return { id: 'provider.type.sms', children: 'SMS bundles' };
     case 'voip':
-      return 'VoIP';
+      return { id: 'provider.type.voip', children: 'VoIP' };
     case 'other':
-      return 'Other products';
+      return { id: 'provider.type.other', children: 'Other products' };
     case 'refill':
-      return 'Prepaid phones';
+      return { id: 'provider.type.refill', children: 'Prepaid phones' };
+    case 'games':
+      return { id: 'provider.type.games', children: 'Games' };
+    case 'travel':
+      return { id: 'provider.type.travel', children: 'Travel' };
     default:
       return `${key[0].toUpperCase()}${key.substr(1)}`;
   }
@@ -87,7 +94,10 @@ class ProviderPicker extends PureComponent {
             />
           ) : null}
           <ProviderGrid
-            title={'Available operators'}
+            title={{
+              id: 'title.availableoperators',
+              children: 'Available operators',
+            }}
             providers={numberLookup.altOperators}
             onSelect={this.onSelectOperator}
             defaultShowAll={true}

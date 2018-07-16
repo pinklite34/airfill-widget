@@ -68,9 +68,14 @@ export default function PaymentDetected(props) {
               <span className={styles.link}>When will I get my refill?</span>
             )}
             <br />
-            <Button className={styles.button} onClick={props.onReset}>
-              Buy another refill
-            </Button>
+            <Button
+              className={styles.button}
+              onClick={props.onReset}
+              text={{
+                id: 'button.refillagain',
+                children: 'Buy another refill',
+              }}
+            />
           </div>
         </div>
       </PaymentLayout>

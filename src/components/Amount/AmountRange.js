@@ -89,9 +89,13 @@ export default function AmountRange({
 
   return (
     <div className={styles.container}>
-      <SectionTitle className={styles.title}>
-        {'...or select custom amount'}
-      </SectionTitle>
+      <SectionTitle
+        className={styles.title}
+        text={{
+          id: 'title.customamount',
+          children: '...or select custom amount',
+        }}
+      />
       <div className={styles.row}>
         <RangeContainer>
           <AmountPackage

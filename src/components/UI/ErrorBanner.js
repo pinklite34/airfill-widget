@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'react-emotion';
+import styled from 'react-emotion';
+
+import { transProp } from '../../lib/prop-types';
+
+import Text from './Text';
 
 import ErrorIcon from './error-small.svg';
 
@@ -18,21 +22,20 @@ const Container = styled('div')`
   z-index: 10;
 `;
 
-const styles = {
-  icon: css`
-    margin-right: 16px;
-  `,
-};
+const Icon = styled(ErrorIcon)`
+  margin-right: 16px;
+  fill: ${p => p.theme.white};
+`;
 
-const ErrorBanner = ({ children }) => (
-  <Container>
-    <ErrorIcon fill="#fff" className={styles.icon} />
-    <div>{children}</div>
-  </Container>
-);
+export default function ErrorBanner({ text }) {
+  return (
+    <Container>
+      <Icon />
+      {text && text.id ? <Text {...text} /> : text}
+    </Container>
+  );
+}
 
 ErrorBanner.propTypes = {
-  children: PropTypes.any.isRequired,
+  text: PropTypes.oneOfType([transProp, PropTypes.string]).isRequired,
 };
-
-export default ErrorBanner;
