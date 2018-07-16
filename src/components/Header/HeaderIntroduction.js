@@ -90,6 +90,7 @@ class HeaderIntroduction extends PureComponent {
     const { error } = this.state;
     const lookupError =
       (numberLookup.error && numberLookup.error.message) || numberLookup.error;
+    const displayedError = error || lookupError;
 
     return (
       <Flex centered>
@@ -107,6 +108,7 @@ class HeaderIntroduction extends PureComponent {
               type="h3"
               centered
               size="12px"
+              margin="8px 0"
               id="introduction.subtitle"
               color={'rgba(255, 255, 255, 0.8)'}>
               Trusted by More Than 500 000 People
@@ -130,14 +132,14 @@ class HeaderIntroduction extends PureComponent {
           loading={numberLookup.isLoading}
           onSubmit={this.lookupNumber}
         />
-        {error || lookupError ? (
+        {displayedError ? (
           <Error>
             <ErrorIcon />
-            {error ? (
-              <Text type="p">{error}</Text>
+            {displayedError.id ? (
+              <Text type="p" size="14px" {...displayedError} />
             ) : (
-              <Text type="p" id="introduction.error">
-                An error occured<br />({{ lookupError }})
+              <Text type="p" size="14px">
+                {displayedError}
               </Text>
             )}
           </Error>
@@ -147,7 +149,6 @@ class HeaderIntroduction extends PureComponent {
             centered
             padding="20px 0 0"
             tight
-            small
             width="300px"
             id={`widget.introduction.description.${
               isMobile ? 'country' : 'phone'

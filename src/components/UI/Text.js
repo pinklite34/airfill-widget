@@ -13,7 +13,7 @@ function getColor({ color, error, success, theme }, defaultColor) {
 export const H1Text = styled('h1')`
   color: ${p => getColor(p, p.theme.tx.primary)};
   padding: ${p => p.padding || 0};
-  margin: ${p => (p.tight ? 0 : '16px 0')};
+  margin: ${p => p.margin || (p.tight ? 0 : '16px 0')};
   text-align: ${p => (p.centered ? 'center' : 'left')};
   font-size: ${p => p.size || '16px'};
   line-height: 1.5;
@@ -27,7 +27,7 @@ export const H1Text = styled('h1')`
 
 export const H3Text = styled('h3')`
   color: ${p => getColor(p, p.theme.tx.primary)};
-  margin: ${p => (p.tight ? 0 : '14px 0')};
+  margin: ${p => p.margin || (p.tight ? 0 : '14px 0')};
   padding: ${p => p.padding || 0};
   text-align: ${p => (p.centered ? 'center' : 'left')};
   font-size: ${p => p.size || '14px'};
@@ -42,8 +42,8 @@ export const H3Text = styled('h3')`
 `;
 
 export const PText = styled('p')`
-  color: ${p => getColor(p, p.theme.tx.primary)};
-  margin: ${p => (p.tight ? 0 : '8px 0')};
+  color: ${p => getColor(p, p.theme.tx.secondary)};
+  margin: ${p => p.margin || (p.tight ? 0 : '8px 0')};
   padding: ${p => p.padding || 0};
   font-size: ${p => p.size || '12px'};
   text-align: ${p => (p.centered ? 'center' : 'left')};
@@ -73,6 +73,7 @@ export default function Text({
   small,
   size,
   centered,
+  margin,
   padding,
   tight,
   underline,
@@ -89,6 +90,7 @@ export default function Text({
     small,
     size,
     centered,
+    margin,
     padding,
     tight,
     underline,
@@ -121,6 +123,7 @@ Text.propTypes = {
   small: PropTypes.bool,
   size: PropTypes.string,
   centered: PropTypes.bool,
+  margin: PropTypes.string,
   padding: PropTypes.string,
   tight: PropTypes.bool,
   underline: PropTypes.bool,

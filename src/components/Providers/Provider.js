@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'react-emotion';
 
 import { operatorProp, fnProp } from '../../lib/prop-types';
+import theme from '../../theme';
 
 import Card from '../UI/Card';
 import Text from '../UI/Text';
@@ -97,7 +98,12 @@ export function ShowAll({ onClick, count }) {
         <More fill="#777777" width="42px" height="42px" />
       </LogoWrapper>
       <Name>
-        <Text type="p" id="provider.showall" centered tight>
+        <Text
+          type="p"
+          color={theme.tx.primary}
+          id="provider.showall"
+          centered
+          tight>
           Show all <strong>{{ count }}</strong> services
         </Text>
       </Name>
@@ -119,7 +125,7 @@ export default function Provider({ provider, onSelect }) {
         </LogoWrapper>
       )}
       <Name data-package-slug={provider.slug}>
-        <Text type="p" centered tight>
+        <Text type="p" color={theme.tx.primary} centered tight>
           {provider.name}
         </Text>
       </Name>

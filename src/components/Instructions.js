@@ -85,6 +85,7 @@ function Instruction({ number, title, description }) {
             />
             <Text
               type="p"
+              size="14px"
               tight
               centered={greaterThan.tablet}
               {...description}

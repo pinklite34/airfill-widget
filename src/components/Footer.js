@@ -47,7 +47,7 @@ export default function Footer({ branded }) {
           href="https://www.bitrefill.com/"
           target="_blank"
           rel="noopener noreferrer">
-          <Text type="p" id="footer.powered" tight small>
+          <Text type="p" id="footer.powered" tight>
             Powered by <strong>bitrefill</strong>
           </Text>
         </Link>
@@ -59,7 +59,7 @@ export default function Footer({ branded }) {
               href="https://www.bitrefill.com/privacy/"
               target="_blank"
               rel="noopener noreferrer">
-              <Text type="p" small tight id="footer.privacy">
+              <Text type="p" tight id="footer.privacy">
                 Privacy Policy
               </Text>
             </Link>
@@ -69,7 +69,7 @@ export default function Footer({ branded }) {
               href="https://www.bitrefill.com/terms/"
               target="_blank"
               rel="noopener noreferrer">
-              <Text type="p" small tight id="footer.terms">
+              <Text type="p" tight id="footer.terms">
                 Terms of Service
               </Text>
             </Link>
