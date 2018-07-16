@@ -15,7 +15,6 @@ const Container = styled('div')`
 `;
 
 export default function SectionTitle({ text, className, children, ...props }) {
-  console.log('-------------------- SectionTitle --> ', text);
   return (
     <Container className={className} {...props}>
       {text && text.id ? <Text {...text} /> : text}

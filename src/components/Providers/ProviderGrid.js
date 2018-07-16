@@ -48,7 +48,7 @@ export default class ProviderGrid extends PureComponent {
           {visibleProviders.map(provider => (
             <Provider
               key={provider.slug}
-              data={provider}
+              provider={provider}
               onSelect={() => onSelect(provider.slug)}
             />
           ))}

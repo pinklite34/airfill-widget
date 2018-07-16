@@ -155,7 +155,7 @@ class AirfillWidget extends Component {
         <ThemeProvider theme={theme}>
           <MuiThemeProvider theme={muiTheme}>
             <Root className={className}>
-              <Card style={{ overflow: 'hidden' }}>
+              <Card alwaysBorder style={{ overflow: 'hidden' }}>
                 {hasLoaded ? (
                   <Fragment>
                     <Header isMobile={isMobile} branded={showLogo} />

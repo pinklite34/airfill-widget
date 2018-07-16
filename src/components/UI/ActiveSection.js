@@ -29,7 +29,7 @@ export default function ActiveSection({
 }) {
   return (
     <Container {...props}>
-      {error && <ErrorBanner text={error} />}
+      {error && <ErrorBanner text={error.message || error} />}
       <Content padding={padding}>{children}</Content>
       {renderNextButton && <NextContainer>{renderNextButton()}</NextContainer>}
     </Container>
@@ -40,5 +40,11 @@ ActiveSection.propTypes = {
   children: PropTypes.node,
   renderNextButton: PropTypes.func,
   padding: PropTypes.string,
-  error: PropTypes.oneOfType([transProp, PropTypes.string]).isRequired,
+  error: PropTypes.oneOfType([
+    transProp,
+    PropTypes.string,
+    PropTypes.shape({
+      message: PropTypes.string,
+    }),
+  ]),
 };

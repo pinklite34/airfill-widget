@@ -204,7 +204,7 @@ class Recipient extends PureComponent {
         renderNextButton={() => (
           <NextButton disabled={!number} onClick={this.continue} />
         )}
-        error={(error && error.message) || error}>
+        error={error}>
         <Content>
           <Text type="h3" {...this.getNumberLabel()} />
           <InputContainer>

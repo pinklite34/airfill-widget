@@ -42,12 +42,12 @@ export const H3Text = styled('h3')`
 `;
 
 export const PText = styled('p')`
-  color: ${p => getColor(p, p.theme.tx.secondary)};
+  color: ${p => getColor(p, p.theme.tx.primary)};
   margin: ${p => (p.tight ? 0 : '8px 0')};
   padding: ${p => p.padding || 0};
-  font-size: ${p => p.size || (p.small ? '12px' : '14px')};
+  font-size: ${p => p.size || '12px'};
   text-align: ${p => (p.centered ? 'center' : 'left')};
-  line-height: ${p => p.lineHeight || 1.5};
+  line-height: ${p => p.lineHeight || 1.4};
   text-decoration: ${p => p.underline && 'underline'};
   width: ${p => p.width};
 

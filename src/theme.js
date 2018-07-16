@@ -24,7 +24,7 @@ export default {
   // background
   bg: {
     light: colors.greyLighter,
-    dark: colors.blueDark,
+    dark: colors.greyDark,
     secondary: colors.blue,
     primary: colors.blue,
     disabled: colors.greyDark,

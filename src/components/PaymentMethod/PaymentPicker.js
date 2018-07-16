@@ -106,7 +106,7 @@ class PaymentMethod extends React.Component {
             loading={isLoading}
           />
         )}
-        error={error.message || error}>
+        error={error}>
         <MethodContainer>
           {config.paymentButtons.map(method => {
             const affordable = this.canAfford(method);
