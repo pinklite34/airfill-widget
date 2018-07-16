@@ -6,10 +6,10 @@ const Container = styled('div')`
   width: 100%;
   height: 72px;
 
-  background-color: ${props => (props.selected ? '#d8d8d8' : '#fff')};
+  background-color: ${p => (p.selected ? '#d8d8d8' : '#fff')};
 
   &:hover {
-    background-color: ${props => (props.selected ? '#d8d8d8' : '#fafafa')};
+    background-color: ${p => (p.selected ? '#d8d8d8' : '#fafafa')};
   }
 
   display: flex;
@@ -19,11 +19,11 @@ const Container = styled('div')`
   text-decoration: none;
   box-sizing: border-box;
   text-align: left;
-  cursor: ${props => (props.disabled ? 'normal' : 'pointer')};
+  cursor: ${p => (p.disabled ? 'normal' : 'pointer')};
 
   * {
-    ${props => (props.disabled ? 'color: gray !important' : '')};
-    ${props => (props.disabled ? 'filter: grayscale(100%)' : '')};
+    ${p => (p.disabled ? 'color: gray !important' : '')};
+    ${p => (p.disabled ? 'filter: grayscale(100%)' : '')};
   }
 `;
 

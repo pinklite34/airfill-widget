@@ -80,7 +80,10 @@ class HeaderIntroduction extends PureComponent {
       );
     } else {
       this.setState({
-        error: 'A phone country code is required (example: +66)',
+        error: {
+          id: 'introduction.error.countrycode',
+          children: 'A phone country code is required (example: +66)',
+        },
       });
     }
   };
