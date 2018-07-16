@@ -159,7 +159,7 @@ class AmountPicker extends PureComponent {
     // amount might be string (like reddit gold)
     const disabled =
       amount === 'NaN' || (typeof amount !== 'string' && isNaN(amount));
-    console.log(operator);
+
     return operator.isLoading ||
       !(operator.result && operator.result.packages) ? (
       <ActiveSection>
