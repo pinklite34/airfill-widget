@@ -1,35 +1,30 @@
+import Radio from 'material-ui/Radio';
 import React, { PureComponent } from 'react';
 import styled, { css } from 'react-emotion';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { compose } from 'recompose';
 
-import { selectOperator, selectAmount } from '../../store';
 import { setAmount } from '../../actions';
-
 import { selectValidAmount } from '../../lib/amount-validation';
-import { getPrice, getDisplayName } from '../../lib/currency-helpers';
+import { getDisplayName, getPrice } from '../../lib/currency-helpers';
 import { isValidEmail } from '../../lib/email-validation';
 import {
-  configProp,
-  operatorResultProp,
   amountProp,
+  configProp,
   fnProp,
   historyProp,
+  operatorResultProp,
 } from '../../lib/prop-types';
-
-import Radio from 'material-ui/Radio';
-
-import Card from '../UI/Card';
-import NextButton from '../UI/NextButton';
+import { selectAmount, selectOperator } from '../../store';
 import ActiveSection from '../UI/ActiveSection';
+import Card from '../UI/Card';
+import Info from '../UI/info.svg';
+import NextButton from '../UI/NextButton';
 import SectionTitle from '../UI/SectionTitle';
 import Spinner from '../UI/Spinner';
-
 import AmountPackage from './AmountPackage';
 import AmountRange from './AmountRange';
-
-import Info from '../UI/info.svg';
 
 const styles = {
   packages: css`
@@ -58,6 +53,10 @@ const styles = {
       margin-right: 8px;
       width: 32px;
       height: 32px;
+    }
+
+    & * {
+      max-width: 100%;
     }
   `,
   title: css`
@@ -160,7 +159,7 @@ class AmountPicker extends PureComponent {
     // amount might be string (like reddit gold)
     const disabled =
       amount === 'NaN' || (typeof amount !== 'string' && isNaN(amount));
-
+    console.log(operator);
     return operator.isLoading ||
       !(operator.result && operator.result.packages) ? (
       <ActiveSection>
@@ -176,7 +175,11 @@ class AmountPicker extends PureComponent {
           <InfoContainer>
             <Card className={styles.operatorInfoContainer}>
               <div className={styles.operatorInfo}>
-                <Info fill="#555555" />
+                {operator.result &&
+                  operator.result.slug !==
+                    'flightgiftcard-usd-vouchers-usa' && (
+                    <Info fill="#555555" />
+                  )}
                 <div
                   dangerouslySetInnerHTML={{
                     __html: operator.result.extraInfo,
