@@ -5,33 +5,40 @@ import PropTypes from 'prop-types';
 import DeviceInfo from '../../lib/DeviceInfo';
 
 import Button from './Button';
+import Text from './Text';
+import Icon from './Icon';
 
 const Container = styled('div')`
-  padding: 12px 16px;
+  padding: 0 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #efefef;
   border-bottom: ${p => p.theme.bd.primary};
+  max-height: 60px;
+  min-height: 60px;
 `;
 
-const Title = styled('div')`
-  font-size: 16px;
-  color: #777777 !important;
-  font-weight: 500 !important;
-  flex: 1 1 auto;
-  & strong {
-    padding-bottom: 2px;
-    border-bottom: 1px solid #cccccc;
-  }
+const Left = styled('div')`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+  overflow: hidden;
+  margin-right: 10px;
 `;
 
-export default function Collapsed({ onClick, type, hideButton, children }) {
+export default function Collapsed({ icon, title, onClick, type, hideButton }) {
   return (
     <DeviceInfo>
       {({ lessThan }) => (
         <Container>
-          <Title>{children}</Title>
+          <Left>
+            <Icon src={icon} alt={title} margin="0 16px 0 0" />
+            <Text type="p" size="16px">
+              {title}
+            </Text>
+          </Left>
           {hideButton ? null : lessThan.tablet ? (
             <Button
               small
@@ -44,7 +51,10 @@ export default function Collapsed({ onClick, type, hideButton, children }) {
               small
               white
               onClick={onClick}
-              text={{ id: `button.change.${type}`, children: `Change ${type}` }}
+              text={{
+                id: `button.change.${type}`,
+                children: `Change ${type}`,
+              }}
             />
           )}
         </Container>
@@ -57,5 +67,6 @@ Collapsed.propTypes = {
   onClick: PropTypes.func,
   type: PropTypes.string,
   hideButton: PropTypes.bool,
-  children: PropTypes.node,
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  title: PropTypes.node,
 };

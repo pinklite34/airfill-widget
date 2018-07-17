@@ -20,10 +20,7 @@ import setClipboardText from '../../lib/clipboard-helper';
 import Flex from '../UI/Flex';
 import Text from '../UI/Text';
 import SectionTitle from '../UI/SectionTitle';
-
-const Logo = styled('img')`
-  max-width: 48px;
-`;
+import Icon from '../UI/Icon';
 
 const Row = styled(Flex)`
   min-height: 38px;
@@ -35,11 +32,9 @@ const Row = styled(Flex)`
 const RowTitle = styled('div')`
   justify-content: flex-end;
   flex: 0 0 68px;
-  min-height: 50px;
   text-align: end;
   padding: 14px 16px;
-  min-width: 84px;
-  min-height: 100%;
+  min-width: 72px;
 
   & > img {
     width: 64px;
@@ -220,7 +215,7 @@ class PaymentLayout extends PureComponent {
           <Fragment>
             <Row>
               <RowTitle>
-                <Logo src={logoImage} alt={name} />
+                <Icon src={logoImage} alt={name} />
               </RowTitle>
               <RowContent>
                 <SectionTitle

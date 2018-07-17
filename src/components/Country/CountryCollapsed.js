@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'react-emotion';
 import { connect } from 'react-redux';
 
 import { openComboInput, setComboInputFocus, setCountry } from '../../actions';
@@ -10,40 +9,6 @@ import { historyProp, countryProp, fnProp } from '../../lib/prop-types';
 import Collapsed from '../UI/Collapsed';
 import Flag from '../UI/Flag';
 import Text from '../UI/Text';
-
-const styles = {
-  container: css`
-    position: relative;
-    width: 100%;
-    max-width: 350px;
-  `,
-  country: css`
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    position: relative;
-    z-index: 9;
-  `,
-  flag: css`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    & svg {
-      width: 26px;
-      height: 18px;
-      border-radius: 1px;
-      box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.08);
-    }
-    margin-right: 30px;
-    margin-left: 14px;
-
-    @media (max-width: 460px) {
-      margin-right: 14px;
-      margin-left: 0px;
-    }
-  `,
-};
 
 function CountryCollapsed({
   home,
@@ -62,22 +27,22 @@ function CountryCollapsed({
   };
 
   return country && country.alpha2 ? (
-    <Collapsed onClick={openMenu} type="country">
-      <div className={styles.container}>
-        <div className={styles.country} onClick={openMenu}>
-          <div className={styles.flag}>
-            <Flag country={country.alpha2} />
-          </div>
-          {country.name}
-        </div>
-      </div>
-    </Collapsed>
+    <Collapsed
+      onClick={openMenu}
+      type="country"
+      icon={<Flag country={country.alpha2} width="40px" height="30px" />}
+      title={country.name}
+    />
   ) : (
-    <Collapsed hideButton type="country">
-      <Text type="p" tight size="16px" id="introduction.select">
-        Select a country above to see available services.
-      </Text>
-    </Collapsed>
+    <Collapsed
+      hideButton
+      type="country"
+      title={
+        <Text type="p" tight size="16px" id="introduction.select">
+          Select a country above to see available services.
+        </Text>
+      }
+    />
   );
 }
 

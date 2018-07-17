@@ -31,7 +31,7 @@ import { isValidEmail } from '../../lib/email-validation';
 import ExtraInfo from './ExtraInfo';
 
 const Title = styled(SectionTitle)`
-  margin-left: 36px;
+  margin-left: 72px;
 `;
 
 const Packages = styled('div')`
@@ -45,6 +45,12 @@ const Packages = styled('div')`
     margin: 0;
     border-top: ${p => p.theme.bd.primary};
   }
+`;
+
+const RadioWrapper = styled('div')`
+  width: 72px;
+  display: flex;
+  justify-content: center;
 `;
 
 class AmountPicker extends PureComponent {
@@ -113,11 +119,13 @@ class AmountPicker extends PureComponent {
 
     return (
       <label key={pkg.value}>
-        <Radio
-          checked={amount === pkg.value}
-          onChange={e => setAmount(pkg.value)}
-          disabled={requireAccountBalance && price > userAccountBalance}
-        />
+        <RadioWrapper>
+          <Radio
+            checked={amount === pkg.value}
+            onChange={e => setAmount(pkg.value)}
+            disabled={requireAccountBalance && price > userAccountBalance}
+          />
+        </RadioWrapper>
         <AmountPackage
           name={
             operator.result.type === 'data'

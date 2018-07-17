@@ -33,12 +33,7 @@ import QrCode from '../UI/QrCode';
 import Flex from '../UI/Flex';
 import Text from '../UI/Text';
 import Link from '../UI/Link';
-
-const Icon = styled('img')`
-  width: 24px;
-  height: 24px;
-  margin: 0 10px 0 0;
-`;
+import Icon from '../UI/Icon';
 
 const PartialWarning = styled('div')`
   border-radius: 4px;
@@ -200,7 +195,11 @@ class PaymentMode extends PureComponent {
           {({ greaterThan }) => (
             <PaymentLayout {...this.props}>
               <Flex row alignItems="center" padding="0 0 16px 0">
-                <Icon src={paymentMethod.icon} />
+                <Icon
+                  src={paymentMethod.icon}
+                  alt={paymentMethod.title}
+                  margin="0 8px 0 0"
+                />
                 <Text type="h3">{paymentMethod.title}</Text>
               </Flex>
 

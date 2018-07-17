@@ -19,13 +19,12 @@ const Container = styled('div')`
 const Icon = styled('div')`
   width: 32px;
   height: 32px;
-  margin-right: 26px;
+  margin-right: 16px;
   margin-top: 8px;
   margin-left: 10px;
 
   @media (max-width: ${p => p.theme.bp.mobile}) {
     margin-left: 0px;
-    margin-right: 14px;
   }
 `;
 
