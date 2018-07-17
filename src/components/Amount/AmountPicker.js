@@ -117,6 +117,8 @@ class AmountPicker extends PureComponent {
       billingCurrency
     ).toUpperCase();
 
+    const showPrice = !config.coin || config.coin === 'bitcoin';
+
     return (
       <label key={pkg.value}>
         <RadioWrapper>
@@ -132,7 +134,7 @@ class AmountPicker extends PureComponent {
               ? pkg.value
               : `${pkg.value} ${operator.result.currency}`
           }
-          price={`${price} ${formattedBillingCurrency}`}
+          price={showPrice && `${price} ${formattedBillingCurrency}`}
         />
       </label>
     );
