@@ -56,7 +56,7 @@ const RowContent = styled(Flex)`
   font-size: 16px;
   color: #323232;
   padding: 14px 16px 14px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: ${p => p.theme.bd.primary};
   font-weight: 500;
 
   & > p {

@@ -7,9 +7,14 @@ const Container = styled('div')`
   height: 72px;
 
   background-color: ${p => (p.selected ? '#d8d8d8' : '#fff')};
+  border-bottom: ${p => p.theme.bd.primary};
 
   &:hover {
     background-color: ${p => (p.selected ? '#d8d8d8' : '#fafafa')};
+  }
+
+  &:last-of-type {
+    border: none;
   }
 
   display: flex;

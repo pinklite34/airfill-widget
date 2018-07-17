@@ -9,7 +9,7 @@ const Container = styled('div')`
   flex-wrap: wrap;
   justify-content: space-around;
   padding: 20px;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  border-top: ${p => p.theme.bd.primary};
 `;
 
 export default function Instructions() {

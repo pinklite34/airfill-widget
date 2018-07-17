@@ -45,10 +45,6 @@ const InputContainer = styled('div')`
   }
 `;
 
-const Content = styled('div')`
-  padding: 0 0 16px;
-`;
-
 class Recipient extends PureComponent {
   static propTypes = {
     config: configProp,
@@ -200,25 +196,23 @@ class Recipient extends PureComponent {
 
     return (
       <ActiveSection
-        padding="0 16px"
+        padding="0 16px 16px"
         renderNextButton={() => (
           <NextButton disabled={!number} onClick={this.continue} />
         )}
         error={error}>
-        <Content>
-          <Text type="h3" {...this.getNumberLabel()} />
-          <InputContainer>
-            <InputRow
-              country={country}
-              value={number}
-              placeholder={this.state.placeholder}
-              onChange={this.onChange}
-              submitEnabled={this.validateInput()}
-              onSubmit={this.continue}
-              icon={<Icon />}
-            />
-          </InputContainer>
-        </Content>
+        <Text type="h3" {...this.getNumberLabel()} />
+        <InputContainer>
+          <InputRow
+            country={country}
+            value={number}
+            placeholder={this.state.placeholder}
+            onChange={this.onChange}
+            submitEnabled={this.validateInput()}
+            onSubmit={this.continue}
+            icon={<Icon />}
+          />
+        </InputContainer>
       </ActiveSection>
     );
   }

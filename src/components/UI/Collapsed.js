@@ -12,7 +12,7 @@ const Container = styled('div')`
   justify-content: space-between;
   align-items: center;
   background-color: #efefef;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: ${p => p.theme.bd.primary};
 `;
 
 const Title = styled('div')`

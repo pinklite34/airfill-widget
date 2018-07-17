@@ -43,7 +43,7 @@ const Packages = styled('div')`
     padding-right: 2px;
     height: auto;
     margin: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    border-top: ${p => p.theme.bd.primary};
   }
 `;
 

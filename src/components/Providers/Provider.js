@@ -30,10 +30,10 @@ const Container = styled(Card)`
     flex-direction: row !important;
     padding: 16px;
     box-shadow: none !important;
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    border-top: ${p => p.theme.bd.primary};
 
     &:last-of-type {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      border-bottom: ${p => p.theme.bd.primary};
       margin-bottom: 6px;
     }
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import VirtualList from 'react-tiny-virtual-list';
 
-import { css } from 'react-emotion';
+import styled from 'react-emotion';
 import Card from '../../UI/Card';
 
 import CountryRow from './CountryRow';
@@ -14,31 +14,32 @@ import { operatorProp, fnProp, countriesProp } from '../../../lib/prop-types';
 import { connect } from 'react-redux';
 import { selectCountryList } from '../../../store';
 
-const styles = {
-  container: css`
-    position: absolute;
-    z-index: 10;
-    width: 100%;
-    margin-top: -4px;
-    text-align: left;
-  `,
-  containerCard: css`
-    border-radius: 0 0 4px 4px !important;
-    padding-top: 4px;
-  `,
-  content: css`
-    max-height: 264px;
-  `,
-  sectionTitle: css`
-    padding-left: 60px;
-    padding-top: 6px;
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
+const Container = styled('div')`
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  margin-top: -4px;
+  text-align: left;
+`;
 
-    &:first-of-type {
-      border-top: 0;
-    }
-  `,
-};
+const ContainerCard = styled(Card)`
+  border-radius: 0 0 4px 4px !important;
+  padding-top: 4px;
+`;
+
+const Content = styled('div')`
+  max-height: 264px;
+`;
+
+const Title = styled(SectionTitle)`
+  padding-left: 60px;
+  padding-top: 6px;
+  border-top: ${p => p.theme.bd.primary};
+
+  &:first-of-type {
+    border-top: 0;
+  }
+`;
 
 function SectionTitleRow({ item, style }) {
   return <div style={style}>{item.title}</div>;
@@ -81,9 +82,9 @@ const Dropdown = ({ getItemProps, countryList, items, highlightedIndex }) => {
       : 264;
 
   return (
-    <div className={styles.container}>
-      <Card className={styles.containerCard}>
-        <div className={styles.content}>
+    <Container>
+      <ContainerCard>
+        <Content>
           <VirtualList
             width="100%"
             height={height}
@@ -96,12 +97,9 @@ const Dropdown = ({ getItemProps, countryList, items, highlightedIndex }) => {
 
               if (item.__type === 'sectionTitle') {
                 return (
-                  <SectionTitle
-                    key={item.key}
-                    style={style}
-                    className={styles.sectionTitle}>
+                  <Title key={item.key} style={style}>
                     {item.title}
-                  </SectionTitle>
+                  </Title>
                 );
               } else {
                 const Row = rowComponents[item.__type];
@@ -121,9 +119,9 @@ const Dropdown = ({ getItemProps, countryList, items, highlightedIndex }) => {
               }
             }}
           />
-        </div>
-      </Card>
-    </div>
+        </Content>
+      </ContainerCard>
+    </Container>
   );
 };
 

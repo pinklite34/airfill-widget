@@ -21,16 +21,12 @@ import NumberInput from '../UI/NumberInput';
 import EmailIcon from '../../assets/email.svg';
 import ActiveSection from '../UI/ActiveSection';
 import Text from '../UI/Text';
+import Flex from '../UI/Flex';
 
 const InputContainer = styled('div')`
   @media (min-width: 460px) {
     width: 50%;
   }
-`;
-
-const CheckboxContainer = styled('div')`
-  display: flex;
-  flex-direction: row;
 `;
 
 class StatusEmail extends PureComponent {
@@ -68,8 +64,8 @@ class StatusEmail extends PureComponent {
           />
         )}
         error={email.error}>
-        <Text id="email.description">
-          The email address will receive order status updates
+        <Text type="h3" id="email.description">
+          Email address for order status updates
         </Text>
         <InputContainer>
           <NumberInput
@@ -80,19 +76,20 @@ class StatusEmail extends PureComponent {
             onSubmit={this.continue}
           />
         </InputContainer>
-        <CheckboxContainer>
+        <Flex row justifyContent="flex-start" alignItems="center">
           <Checkbox
             onChange={e => setSubscribeNewsletter(e.target.checked)}
             checked={subscribing}
           />
           <Text
+            type="p"
             onClick={() => setSubscribeNewsletter(!subscribing)}
             style={{ cursor: 'pointer' }}
             id="email.newsletter">
             Add me to the newsletter to receive news about new products and
             features
           </Text>
-        </CheckboxContainer>
+        </Flex>
       </ActiveSection>
     );
   }
