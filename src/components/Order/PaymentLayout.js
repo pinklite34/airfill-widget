@@ -156,7 +156,7 @@ class PaymentLayout extends PureComponent {
 
   getBillingCurrency() {
     const { order } = this.props;
-    const { altcoinCode } = order;
+    const { altcoinCode } = order.payment;
     const displayCurrency = (altcoinCode || 'BTC').toUpperCase();
 
     return displayCurrency === 'LNBC'
