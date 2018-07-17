@@ -104,7 +104,7 @@ class HeaderIntroduction extends PureComponent {
               type="h1"
               centered
               tight
-              id="introduction.title"
+              id="introduction.title.branded"
               size="16px"
               weight={700}
               color={theme.white}>

@@ -42,19 +42,17 @@ export default class ExtraInfo extends PureComponent {
 
   render() {
     const { info } = this.props;
-    return (
-      info && (
-        <Container alwaysBorder>
-          <Content>
-            <Info fill="#555555" />
-            <div
-              dangerouslySetInnerHTML={{
-                __html: info,
-              }}
-            />
-          </Content>
-        </Container>
-      )
-    );
+    return info ? (
+      <Container alwaysBorder>
+        <Content>
+          <Info fill="#555555" />
+          <div
+            dangerouslySetInnerHTML={{
+              __html: info,
+            }}
+          />
+        </Content>
+      </Container>
+    ) : null;
   }
 }
