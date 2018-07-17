@@ -5,8 +5,8 @@ import Icon from '../UI/Icon';
 
 const Container = styled('div')`
   width: 100%;
-  height: 72px;
-  padding: 0 16px;
+  min-height: 72px;
+  padding: 5px 16px;
 
   background-color: ${p => (p.selected ? '#d8d8d8' : '#fff')};
   border-bottom: ${p => p.theme.bd.primary};

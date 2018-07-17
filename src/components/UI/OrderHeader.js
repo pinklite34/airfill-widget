@@ -41,17 +41,6 @@ const Header = styled('div')`
   width: 100%;
 `;
 
-const OrderId = styled('div')`
-  margin-right: 12px;
-  line-height: 31.5px;
-  color: #777777;
-  font-size: 12px;
-
-  @media (max-width: ${p => p.theme.bp.mobile}) {
-    width: 100%;
-  }
-`;
-
 export default class OrderHeader extends PureComponent {
   state = {
     open: false,
@@ -78,9 +67,9 @@ export default class OrderHeader extends PureComponent {
               <Header>
                 <Text type="h1" tight {...title} />
                 <Tooltip open={this.state.open} title="Copied!">
-                  <OrderId onClick={this.copy}>
+                  <Text type="p" tight>
                     <Text id="order.id">Order ID</Text> {order.id}
-                  </OrderId>
+                  </Text>
                 </Tooltip>
               </Header>
               <Text type="h3" tight {...subtitle} />
