@@ -44,7 +44,7 @@ export default class ExtraInfo extends PureComponent {
     const { info } = this.props;
     return (
       info && (
-        <Container>
+        <Container alwaysBorder>
           <Content>
             <Info fill="#555555" />
             <div

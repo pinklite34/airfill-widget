@@ -18,6 +18,7 @@ import ComboInput from '../UI/ComboInput';
 import Info from '../UI/info.svg';
 import theme from '../../theme';
 import Flex from '../UI/Flex';
+import { startsWith } from '../../lib/string';
 
 const Error = styled('div')`
   display: flex;
@@ -71,7 +72,7 @@ class HeaderIntroduction extends PureComponent {
   lookupNumber = () => {
     const { lookupNumber, history, number } = this.props;
 
-    if (number.startsWith('+')) {
+    if (startsWith(number, '+')) {
       this.setState({ error: null }, () =>
         lookupNumber(number).then(
           result => history.push('/refill/selectProvider'),

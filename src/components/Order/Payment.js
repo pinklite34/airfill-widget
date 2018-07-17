@@ -9,7 +9,7 @@ import Pusher from '../Pusher';
 import PaymentMode from './PaymentMode';
 import PaymentDetected from './PaymentDetected';
 import PaymentConfirmed from './PaymentConfirmed';
-import ExpiredPayment from './PaymentExpired';
+import PaymentExpired from './PaymentExpired';
 import RefillFailed from './RefillFailed';
 import RefillDelivered from './RefillDelivered';
 import BalanceTooLow from './BalanceTooLow';
@@ -46,7 +46,7 @@ const componentForStatus = status => {
     case 'confirmed':
       return PaymentConfirmed;
     case 'expired':
-      return ExpiredPayment;
+      return PaymentExpired;
     case 'failed':
       return RefillFailed;
     case 'payment_error':

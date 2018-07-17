@@ -1,7 +1,7 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { css } from 'react-emotion';
+import styled from 'react-emotion';
 
 import Tooltip from 'material-ui/Tooltip';
 import {
@@ -17,88 +17,62 @@ import { selectOperator, selectAmount, selectNumber } from '../../store';
 import { updatePaymentStatus } from '../../actions/index';
 import setClipboardText from '../../lib/clipboard-helper';
 
-const styles = {
-  container: css`
-    background-color: #fff;
+import Flex from '../UI/Flex';
+import Text from '../UI/Text';
+import SectionTitle from '../UI/SectionTitle';
 
-    & > div {
-      display: flex;
+const Logo = styled('img')`
+  max-width: 48px;
+`;
 
-      & > div {
-        display: flex;
-        align-items: center;
-        padding: 14px 0 14px 0;
-        min-height: 38px;
-      }
+const Row = styled(Flex)`
+  min-height: 38px;
+  align-items: center;
+  justify-content: flex-start;
+`;
 
-      & > div:first-of-type {
-        justify-content: flex-end;
-        margin: 0px;
-        flex: 0 0 68px;
-        font-weight: 500;
-        font-size: 10px;
-        color: #777777;
-        min-height: 50px;
-        text-transform: uppercase;
-        text-align: end;
-        padding: 0 16px;
-        min-width: 84px;
+const RowTitle = styled('div')`
+  justify-content: flex-end;
+  flex: 0 0 68px;
+  min-height: 50px;
+  text-align: end;
+  padding: 14px 16px;
+  min-width: 84px;
+  min-height: 100%;
 
-        & > img {
-          width: 64px;
-          height: auto;
-        }
+  & > img {
+    width: 64px;
+    height: auto;
+  }
 
-        @media (max-width: 460px) {
-          flex-basis: 44px;
-          & > img {
-            width: 24px;
-          }
-        }
-      }
-      & > div:last-of-type {
-        flex: auto;
-        font-size: 16px;
-        color: #323232;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-
-        & > p {
-          padding: 0;
-          margin: 0px;
-        }
-      }
+  @media (max-width: 460px) {
+    min-width: 62px;
+    & > img {
+      width: 24px;
     }
-  `,
-  infoContainer: css`
-    font-weight: 500;
-  `,
-  cellContainer: css`
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    line-height: 20px;
-  `,
-  topLabel: css`
-    display: block;
-    color: #777777;
-    font-weight: 500;
-    font-size: 10px;
-    text-transform: uppercase;
-  `,
-  label: css`
-    font-weight: 500;
-    font-size: 12px;
-    color: #777777;
-  `,
-  paymentLabel: css`
-    font-size: 12px !important;
-  `,
-  logo: css`
-    max-width: 48px;
-  `,
-  amount: css`
-    margin: 0;
-  `,
-};
+  }
+`;
+
+const RowContent = styled(Flex)`
+  width: 100%;
+  font-size: 16px;
+  color: #323232;
+  padding: 14px 16px 14px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  font-weight: 500;
+
+  & > p {
+    padding: 0;
+    margin: 0px;
+  }
+`;
+
+const ChildContainer = styled(Flex)`
+  line-height: 21px;
+  width: 100%;
+  padding: 14px 16px 14px 0;
+  align-items: flex-start;
+`;
 
 const valueField = {
   xbt: 'btcPrice',
@@ -110,12 +84,18 @@ class PaymentLayout extends PureComponent {
   static propTypes = {
     order: orderProp,
     updatePaymentStatus: fnProp,
-    children: PropTypes.node.isRequired,
+    children: PropTypes.node,
     amount: amountProp,
     operator: operatorResultProp,
     number: numberProp,
     billingCurrency: currencyProp,
     paymentStatus: paymentStatusProp,
+  };
+
+  static defaultProps = {
+    order: { payment: {} },
+    operator: { result: {} },
+    billingCurrency: '',
   };
 
   state = {
@@ -127,7 +107,7 @@ class PaymentLayout extends PureComponent {
 
   componentDidMount() {
     this.mounted = true;
-    if (this.showCountdown) {
+    if (this.shouldShowCountdown()) {
       this.setState({
         countdownInterval: setInterval(() => {
           const { updatePaymentStatus, order } = this.props;
@@ -164,113 +144,132 @@ class PaymentLayout extends PureComponent {
   componentWillUnmount() {
     this.mounted = false;
     const { countdownInterval } = this.state;
-
     if (countdownInterval) clearInterval(countdownInterval);
   }
 
-  get showCountdown() {
-    const { paymentStatus } = this.props;
-
-    return !paymentStatus.status || paymentStatus.status === 'partial';
-  }
-
-  copy = text => {
+  onCopy = text => {
     this.setState({ tooltip: true });
     setTimeout(() => this.mounted && this.setState({ tooltip: false }), 2000);
     setClipboardText(text);
   };
 
-  render() {
-    const {
-      children,
-      amount,
-      operator,
-      number,
-      billingCurrency,
-      order,
-      paymentStatus,
-    } = this.props;
+  getBillingCurrency() {
+    const { order } = this.props;
+    const { altcoinCode } = order;
+    const displayCurrency = (altcoinCode || 'BTC').toUpperCase();
 
-    const showRecipient = operator.result.recipientType !== 'none';
-    const isDelivered = paymentStatus.status === 'delivered';
+    return displayCurrency === 'LNBC'
+      ? 'bits'
+      : displayCurrency === 'LNLTC'
+        ? 'lites'
+        : displayCurrency;
+  }
 
-    let billingCurrencyDisplayName = (
-      order.payment.altcoinCode || 'BTC'
-    ).toUpperCase();
+  getCoinPrice(billingDisplayCurrency) {
+    const { order } = this.props;
+    const { altcoinPrice, bitsPrice, litesPrice } = order.payment;
+    const coinPrice = altcoinPrice || order.btcPrice;
 
+    return billingDisplayCurrency === 'LNBC'
+      ? bitsPrice
+      : billingDisplayCurrency === 'LNLTC'
+        ? litesPrice
+        : coinPrice;
+  }
+
+  getFormattedPrice() {
+    const { billingCurrency, order } = this.props;
+    const billingDisplayCurrency = this.getBillingCurrency();
+    const coinPrice = this.getCoinPrice(billingDisplayCurrency);
     const price = order[valueField[billingCurrency.toLowerCase()]];
-    let coinPrice = order.payment.altcoinPrice || order.btcPrice;
+    const formattedPrice = `${coinPrice} ${billingDisplayCurrency}`;
+    const displayCurrency =
+      billingCurrency === 'XBT' ? 'BTC' : billingDisplayCurrency;
 
-    if (billingCurrencyDisplayName === 'LNBC') {
-      coinPrice = order.payment.bitsPrice;
-      billingCurrencyDisplayName = 'bits';
-    } else if (billingCurrencyDisplayName === 'LNLTC') {
-      coinPrice = order.payment.litesPrice;
-      billingCurrencyDisplayName = 'lites';
-    }
+    return displayCurrency !== billingDisplayCurrency
+      ? `${formattedPrice} (${price} ${displayCurrency})`
+      : formattedPrice;
+  }
 
-    let formattedPrice = coinPrice + ' ' + billingCurrencyDisplayName;
+  shouldShowCountdown() {
+    const { paymentStatus } = this.props;
+    if (!paymentStatus) return false;
+    return !paymentStatus.status || paymentStatus.status === 'partial';
+  }
 
-    const displayCurrency = billingCurrency === 'XBT' ? 'BTC' : billingCurrency;
+  render() {
+    const { children, amount, operator, number, paymentStatus } = this.props;
+    const { timeLeft, tooltip } = this.state;
 
-    if (displayCurrency !== billingCurrencyDisplayName) {
-      formattedPrice += ` (${price} ${displayCurrency})`;
-    }
+    const { recipientType, logoImage, name, currency, slug } =
+      (operator && operator.result) || {};
 
+    const showRecipient = recipientType !== 'none';
+    const isDelivered = paymentStatus && paymentStatus.status === 'delivered';
+    const formattedPrice = this.getFormattedPrice();
+    const productName = slug === 'reddit-gold' ? ' Reddit Gold' : '';
     return (
-      <div className={styles.container}>
-        <div>
-          <div>
-            <img
-              src={operator.result.logoImage}
-              alt={operator.result.name}
-              className={styles.logo}
-            />
-          </div>
-          <div className={`${styles.cellContainer} ${styles.infoContainer}`}>
-            <span className={styles.topLabel}>Refill details</span>
-            <p>{`${operator.result.name} ${amount} ${
-              operator.result.currency
-            }`}</p>
-            <p className={styles.label}>{showRecipient && number}</p>
-          </div>
-        </div>
+      <Fragment>
+        {paymentStatus && (
+          <Fragment>
+            <Row row>
+              <RowTitle>
+                <Logo src={logoImage} alt={name} />
+              </RowTitle>
+              <RowContent>
+                <SectionTitle
+                  tight
+                  text={{
+                    id: 'order.details.title',
+                    children: 'Refill details',
+                  }}
+                />
+                <Text>{`${name} ${amount} ${currency}`}</Text>
+                <Text type="p">{showRecipient && number}</Text>
+              </RowContent>
+            </Row>
 
-        <div>
-          <div>{!isDelivered && 'Price'}</div>
-          <div
-            className={`${styles.infoContainer} ${this.showCountdown &&
-              styles.cellContainer}`}>
-            {isDelivered &&
-              showRecipient && (
-                <p className={styles.amount}>
-                  Delivered
-                  {operator.result &&
-                    operator.result.slug === 'reddit-gold' &&
-                    ' Reddit Gold'}
-                  {' to '} {number}
-                </p>
-              )}
-            {!isDelivered && (
-              <Tooltip
-                open={this.state.tooltip}
-                title="Copied!"
-                placement="right-end">
-                <p
-                  className={styles.amount}
-                  onClick={() => this.copy(formattedPrice)}>
-                  {formattedPrice}
-                </p>
-              </Tooltip>
-            )}
-            {this.showCountdown && (
-              <p className={styles.label}>Expiring in {this.state.timeLeft}</p>
-            )}
-          </div>
-        </div>
+            {isDelivered && showRecipient ? (
+              <Row row>
+                <RowTitle />
+                <RowContent>
+                  <Text id="order.details.delivered">
+                    Delivered {{ productName }} to {{ number }}
+                  </Text>
+                </RowContent>
+              </Row>
+            ) : !isDelivered ? (
+              <Row row>
+                <RowTitle>
+                  <SectionTitle
+                    tight
+                    text={{ id: 'order.details.price', children: 'Price' }}
+                  />
+                </RowTitle>
+                <RowContent>
+                  <Tooltip open={tooltip} title="Copied!" placement="right-end">
+                    <Text onClick={() => this.onCopy(formattedPrice)}>
+                      {formattedPrice}
+                    </Text>
+                  </Tooltip>
+                  {this.shouldShowCountdown() && (
+                    <Text type="p" id="order.details.expiring">
+                      Expiring in {{ timeLeft }}
+                    </Text>
+                  )}
+                </RowContent>
+              </Row>
+            ) : null}
+          </Fragment>
+        )}
 
-        {children}
-      </div>
+        {children && (
+          <Flex row padding="0 0 16px">
+            <RowTitle />
+            <ChildContainer>{children}</ChildContainer>
+          </Flex>
+        )}
+      </Fragment>
     );
   }
 }

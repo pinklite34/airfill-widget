@@ -14,6 +14,7 @@ const Flex = styled('div')`
 
   padding: ${p => p.padding};
   margin: ${p => p.margin};
+  width: ${p => p.width};
 `;
 
 Flex.propTypes = {
@@ -29,6 +30,7 @@ Flex.propTypes = {
   ]),
   padding: PropTypes.string,
   margin: PropTypes.string,
+  width: PropTypes.string,
   direction: PropTypes.oneOf([
     'row',
     'row-reverse',

@@ -1,5 +1,4 @@
-import React from 'react';
-import { css } from 'react-emotion';
+import React, { Fragment } from 'react';
 import Button from '../UI/Button';
 
 import { orderProp, fnProp } from '../../lib/prop-types';
@@ -7,17 +6,9 @@ import OrderHeader from '../UI/OrderHeader';
 import Error from './error.svg';
 import PaymentLayout from './PaymentLayout';
 
-const styles = {
-  textContainer: css`
-    display: block !important;
-    line-height: 21px;
-    margin-right: 48px;
-  `,
-};
-
 export default function PaymentExpired(props) {
   return (
-    <div>
+    <Fragment>
       <OrderHeader
         order={props.order}
         title={{ id: 'order.expired.title', children: 'Order expired' }}
@@ -27,18 +18,14 @@ export default function PaymentExpired(props) {
         }}
         icon={<Error />}
       />
+
       <PaymentLayout {...props}>
-        <div>
-          <div />
-          <div className={styles.textContainer}>
-            <Button
-              onClick={props.onReset}
-              text={{ id: 'button.neworder', children: 'New order' }}
-            />
-          </div>
-        </div>
+        <Button
+          onClick={props.onReset}
+          text={{ id: 'button.neworder', children: 'New order' }}
+        />
       </PaymentLayout>
-    </div>
+    </Fragment>
   );
 }
 

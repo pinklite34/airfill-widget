@@ -3,12 +3,13 @@ import Button from '../UI/Button';
 
 import { historyProp, orderProp } from '../../lib/prop-types';
 import Text from '../UI/Text';
+import PaymentLayout from './PaymentLayout';
 
 export default function BalanceTooLow({ order, history }) {
   const description = order && order.itemDesc;
   return (
-    <div>
-      <Text type="h3" id="order.lowbalance.title">
+    <PaymentLayout>
+      <Text type="h1" id="order.lowbalance.title">
         Insufficient funds
       </Text>
       <Text id="order.lowbalance.subtitle">
@@ -19,7 +20,7 @@ export default function BalanceTooLow({ order, history }) {
         onClick={() => history.push('/refill/selectAmount')}
         text={{ id: 'button.pickpackage', children: 'Pick another package' }}
       />
-    </div>
+    </PaymentLayout>
   );
 }
 

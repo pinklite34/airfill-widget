@@ -1,32 +1,14 @@
 import React, { Fragment } from 'react';
-import { css } from 'react-emotion';
-
-import Button from '../UI/Button';
 
 import { paymentStatusProp, orderProp, fnProp } from '../../lib/prop-types';
-import OrderHeader from '../UI/OrderHeader';
-import Confirmed from './confirmed.svg';
-import PaymentLayout from './PaymentLayout';
 
-const styles = {
-  textContainer: css`
-    display: block !important;
-    line-height: 21px;
-    margin-right: 48px;
-  `,
-  info: css`
-    color: #777777;
-    font-size: 14px;
-  `,
-  link: css`
-    color: #3e8fe4;
-    font-size: 14px;
-    text-decoration: underline;
-  `,
-  button: css`
-    margin-top: 12px;
-  `,
-};
+import PaymentLayout from './PaymentLayout';
+import OrderHeader from '../UI/OrderHeader';
+import Button from '../UI/Button';
+import Link from '../UI/Link';
+import Text from '../UI/Text';
+
+import Confirmed from './confirmed.svg';
 
 export default function RefillDelivered(props) {
   const { paymentStatus } = props;
@@ -41,7 +23,7 @@ export default function RefillDelivered(props) {
     paymentStatus.deliveryData && paymentStatus.deliveryData.pinInfo;
 
   return (
-    <div>
+    <Fragment>
       <OrderHeader
         order={props.order}
         title={{ id: 'order.delivered.title', children: 'Refill delivered' }}
@@ -82,29 +64,21 @@ export default function RefillDelivered(props) {
             )}
           </Fragment>
         )}
-        <div>
-          <div />
-          <div className={styles.textContainer}>
-            <a
-              className={styles.link}
-              href="https://www.bitrefill.com/faq/#my-topup-did-not-arrive"
-              target="_blank"
-              rel="noopener noreferrer">
-              Can&apos;t see your refill?
-            </a>
-            <br />
-            <Button
-              className={styles.button}
-              onClick={props.onReset}
-              text={{
-                id: 'button.refillagain',
-                children: 'Buy another refill',
-              }}
-            />
-          </div>
-        </div>
+
+        <Link href="https://www.bitrefill.com/faq/#my-topup-did-not-arrive">
+          <Text id="order.delivered.link">Can&apos;t see your refill?</Text>
+        </Link>
+
+        <Button
+          margin="12px 0 0"
+          onClick={props.onReset}
+          text={{
+            id: 'button.refillagain',
+            children: 'Buy another refill',
+          }}
+        />
       </PaymentLayout>
-    </div>
+    </Fragment>
   );
 }
 

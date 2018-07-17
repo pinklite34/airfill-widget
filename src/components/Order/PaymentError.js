@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import OrderHeader from '../UI/OrderHeader';
 import PaymentLayout from './PaymentLayout';
@@ -12,15 +12,16 @@ const PaymentError = props => {
   } = props;
 
   return (
-    <div>
+    <Fragment>
       <OrderHeader
         order={order}
         title={{ id: 'order.error.title', children: 'Payment error' }}
         subtitle={{ children: message }}
         icon={<Error />}
       />
+
       <PaymentLayout {...props} />
-    </div>
+    </Fragment>
   );
 };
 
