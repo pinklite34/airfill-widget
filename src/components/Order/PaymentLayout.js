@@ -67,11 +67,11 @@ const RowContent = styled(Flex)`
 const ChildContainer = styled(Flex)`
   line-height: 21px;
   width: 100%;
-  padding: 14px 16px 14px 0;
+  padding: 14px 16px 0 0;
   align-items: flex-start;
 
   @media (max-width: ${p => p.theme.bp.mobile}) {
-    padding: 14px 16px;
+    padding: 14px 16px 0;
   }
 `;
 
