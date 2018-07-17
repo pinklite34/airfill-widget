@@ -1,6 +1,9 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'react-emotion';
 
 import { paymentStatusProp, orderProp, fnProp } from '../../lib/prop-types';
+import setClipboardText from '../../lib/clipboard-helper';
 
 import PaymentLayout from './PaymentLayout';
 import OrderHeader from '../UI/OrderHeader';
@@ -10,13 +13,31 @@ import Text from '../UI/Text';
 
 import Confirmed from './confirmed.svg';
 
+const PinContainer = styled('div')`
+  border: ${p => p.theme.bd.dotted};
+  cursor: pointer;
+  padding: 6px 32px;
+`;
+
+const PinLabel = ({ children, ...props }) => (
+  <Text type="h1" margin="8px 0" weight="600" {...props}>
+    {children}
+  </Text>
+);
+
+PinLabel.propTypes = {
+  children: PropTypes.any,
+};
+
 export default function RefillDelivered(props) {
   const { paymentStatus } = props;
 
-  /* paymentStatus.pinInfo = {
-    pin: 'pin',
-    instructions: 'instructions',
-    other: 'other',
+  /* let pinInfo = {
+    pin: '1234 1234 5678 6666',
+    instructions:
+      'To redeem this gift card, go to "Your Account" on Amazon.com and select "Gift Cards"',
+    other:
+      'Amazon.com Gift Cards* never expire and can be redeemed towards millions of items at www.amazon.com.',
   }; */
 
   const pinInfo =
@@ -47,19 +68,37 @@ export default function RefillDelivered(props) {
         {pinInfo && (
           <Fragment>
             {pinInfo.pin && (
+              <PinContainer onClick={() => setClipboardText(pinInfo.pin)}>
+                <PinLabel
+                  type="h1"
+                  id="order.delivered.giftcard"
+                  margin="8px 0">
+                  Gift card code
+                </PinLabel>
+                <p style={{ fontFamily: 'monospace' }}>{pinInfo.pin}</p>
+              </PinContainer>
+            )}
+            {pinInfo.instructions && (
               <div>
-                <div>PIN</div>
-                <div>{pinInfo.pin}</div>
+                <PinLabel
+                  type="h1"
+                  id="order.delivered.instructions"
+                  margin="8px 0">
+                  Instructions
+                </PinLabel>
+                <Text type="p">{pinInfo.instructions}</Text>
               </div>
             )}
-            {(pinInfo.instructions || pinInfo.other) && (
+            {pinInfo.other && (
               <div>
-                <div />
-                <div>
-                  {pinInfo.instructions}
-                  <br />
-                  {pinInfo.other}
-                </div>
+                <PinLabel
+                  type="h1"
+                  id="order.delivered.other"
+                  margin="8px 0"
+                  weight="600">
+                  Other Info
+                </PinLabel>
+                <Text type="p">{pinInfo.other}</Text>
               </div>
             )}
           </Fragment>

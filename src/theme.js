@@ -43,6 +43,7 @@ export default {
   // borders
   bd: {
     primary: '1px solid rgba(0, 0, 0, 0.08)',
+    dotted: '2px dotted rgba(0, 0, 0, 0.08)',
   },
 
   // breakpoints
