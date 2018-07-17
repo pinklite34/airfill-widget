@@ -148,7 +148,6 @@ export const createOrder = orderOptions => (dispatch, getState) => {
       ...orderOptions,
       operatorSlug: operator.result.slug,
       valuePackage: amount,
-      number,
       email,
       isSubscribing,
       paymentMethod: method.paymentMode,
@@ -157,6 +156,10 @@ export const createOrder = orderOptions => (dispatch, getState) => {
 
   if (order.isLoading || operator.isLoading) {
     return Promise.reject() // eslint-disable-line
+  }
+
+  if (operator.result.recipientType !== 'none') {
+    options.body.number = number;
   }
 
   return dispatch(postOrder(options));
