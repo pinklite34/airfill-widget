@@ -1,7 +1,7 @@
 const colors = {
   black: '#18212e',
   blue: '#449bf7',
-  blueDark: '#084a96',
+  blueDark: '#2079d6',
   blueLight: '#20a5ff',
   green: '#13ce66',
   grey: '#777777',
@@ -34,8 +34,8 @@ export default {
   tx: {
     primary: colors.black,
     secondary: colors.greyDark,
-    accent: colors.redLight,
-    link: colors.blueLight,
+    accent: colors.blueDark,
+    link: colors.blueDark,
     error: colors.redLight,
     success: colors.green,
   },

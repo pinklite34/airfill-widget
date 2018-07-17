@@ -96,8 +96,11 @@ Thanks!`);
     <div>
       <OrderHeader
         order={order}
-        title="Delivery error"
-        subtitle="The refill could not be delivered to the target account"
+        title={{ id: 'order.failed.title', children: 'Delivery error' }}
+        subtitle={{
+          id: 'order.failed.subtitle',
+          children: 'The refill could not be delivered to the target account',
+        }}
         icon={<Error />}
       />
       <PaymentLayout {...props}>

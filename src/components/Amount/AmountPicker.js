@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import styled, { css } from 'react-emotion';
+import styled from 'react-emotion';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { compose } from 'recompose';
@@ -19,7 +19,6 @@ import {
 
 import Radio from 'material-ui/Radio';
 
-import Card from '../UI/Card';
 import NextButton from '../UI/NextButton';
 import ActiveSection from '../UI/ActiveSection';
 import SectionTitle from '../UI/SectionTitle';
@@ -28,45 +27,24 @@ import Spinner from '../UI/Spinner';
 import AmountPackage from './AmountPackage';
 import AmountRange from './AmountRange';
 
-import Info from '../UI/info.svg';
 import { isValidEmail } from '../../lib/email-validation';
+import ExtraInfo from './ExtraInfo';
 
-const styles = {
-  packages: css`
-    background-color: #fff;
+const Title = styled(SectionTitle)`
+  margin-left: 36px;
+`;
 
-    & > label {
-      display: flex;
-      align-items: center;
-      padding-right: 2px;
-      height: auto;
-      margin: 0;
-      border-top: 1px solid rgba(0, 0, 0, 0.08);
-    }
-  `,
-  operatorInfoContainer: css`
-    font-weight: 500;
-    margin-bottom: 16px;
-  `,
-  operatorInfo: css`
-    padding: 12px;
+const Packages = styled('div')`
+  background-color: #fff;
+
+  & > label {
     display: flex;
-    flex-direction: row;
     align-items: center;
-
-    & svg {
-      margin-right: 8px;
-      width: 32px;
-      height: 32px;
-    }
-  `,
-  title: css`
-    margin-left: 36px;
-  `,
-};
-
-const InfoContainer = styled('div')`
-  padding: 16px;
+    padding-right: 2px;
+    height: auto;
+    margin: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+  }
 `;
 
 class AmountPicker extends PureComponent {
@@ -172,29 +150,11 @@ class AmountPicker extends PureComponent {
         renderNextButton={() => (
           <NextButton disabled={disabled} onClick={this.next} />
         )}>
-        {operator.result.extraInfo && (
-          <InfoContainer>
-            <Card className={styles.operatorInfoContainer}>
-              <div className={styles.operatorInfo}>
-                <Info fill="#555555" />
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: operator.result.extraInfo,
-                  }}
-                />
-              </div>
-            </Card>
-          </InfoContainer>
-        )}
+        <ExtraInfo info={operator.result.extraInfo} />
 
-        <SectionTitle
-          className={styles.title}
-          text={{ id: 'title.selectamount', children: 'Select amount' }}
-        />
+        <Title text={{ id: 'title.selectamount', children: 'Select amount' }} />
 
-        <div className={`${styles.packages} amount-picker`}>
-          {operator.result.packages.map(this.renderPackage)}
-        </div>
+        <Packages>{operator.result.packages.map(this.renderPackage)}</Packages>
 
         {operator.result.isRanged && (
           <AmountRange

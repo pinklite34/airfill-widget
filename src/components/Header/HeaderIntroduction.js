@@ -104,6 +104,8 @@ class HeaderIntroduction extends PureComponent {
               centered
               tight
               id="introduction.title"
+              size="16px"
+              weight={700}
               color={theme.white}>
               Send Global Top Ups With Bitcoin
             </Text>

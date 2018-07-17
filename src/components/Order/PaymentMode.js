@@ -263,14 +263,31 @@ class PaymentMode extends PureComponent {
     }
 
     const isPartial = paymentStatus.status === 'partial';
-    const title = isPartial ? 'Partial payment detected' : 'Payment';
-    const subtitle = isPartial
-      ? 'Send the remainder to purchase your refill'
-      : 'Confirm the details below to purchase your refill';
 
     return (
       <div>
-        <OrderHeader order={order} title={title} subtitle={subtitle} />
+        <OrderHeader
+          order={order}
+          title={
+            isPartial
+              ? {
+                  id: 'order.partial.title',
+                  children: 'Partial payment detected',
+                }
+              : { id: 'order.default.title', children: 'Payment' }
+          }
+          subtitle={
+            isPartial
+              ? {
+                  id: 'order.partial.subtitle',
+                  children: 'Send the remainder to purchase your refill',
+                }
+              : {
+                  id: 'order.default.subtitle',
+                  children: 'Confirm the details below to purchase your refill',
+                }
+          }
+        />
 
         <PaymentLayout {...this.props}>
           <div>

@@ -20,8 +20,11 @@ export default function PaymentExpired(props) {
     <div>
       <OrderHeader
         order={props.order}
-        title="Order expired"
-        subtitle="This order has expired"
+        title={{ id: 'order.expired.title', children: 'Order expired' }}
+        subtitle={{
+          id: 'order.expired.subtitle',
+          children: 'This order has expired',
+        }}
         icon={<Error />}
       />
       <PaymentLayout {...props}>

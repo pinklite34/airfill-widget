@@ -1,70 +1,67 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'react-emotion';
+import styled from 'react-emotion';
 import Tooltip from 'material-ui/Tooltip';
+
 import setClipboardText from '../../lib/clipboard-helper';
-import { orderProp } from '../../lib/prop-types';
+import { orderProp, transProp } from '../../lib/prop-types';
 
-const styles = {
-  base: css`
-    background-color: #fafafa;
-    display: flex;
-    overflow: hidden;
-    padding: 16px;
-  `,
-  icon: css`
-    width: 32px;
-    height: 32px;
-    margin-right: 26px;
-    margin-top: 8px;
-    margin-left: 10px;
+import Text from './Text';
 
-    @media (max-width: 460px) {
-      margin-left: 0px;
-      margin-right: 14px;
-    }
-  `,
-  text: css`
-    margin: 0px;
-    flex: 1;
-    flex-direction: column;
-  `,
-  textHeader: css`
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+const Container = styled('div')`
+  background-color: #fafafa;
+  display: flex;
+  overflow: hidden;
+  padding: 16px;
+`;
+
+const Icon = styled('div')`
+  width: 32px;
+  height: 32px;
+  margin-right: 26px;
+  margin-top: 8px;
+  margin-left: 10px;
+
+  @media (max-width: ${p => p.theme.bp.mobile}) {
+    margin-left: 0px;
+    margin-right: 14px;
+  }
+`;
+
+const TextContainer = styled('div')`
+  margin: 0px;
+  flex: 1;
+  flex-direction: column;
+`;
+
+const Header = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+`;
+
+const OrderId = styled('div')`
+  margin-right: 12px;
+  line-height: 31.5px;
+  color: #777777;
+  font-size: 12px;
+
+  @media (max-width: ${p => p.theme.bp.mobile}) {
     width: 100%;
-  `,
-  label: css`
-    margin: 0px;
-    padding: 0px;
-    font-size: 18px;
-    font-weight: 500;
-  `,
-  orderId: css`
-    margin-right: 12px;
-    line-height: 31.5px;
-    color: #777777;
-    font-size: 12px;
+  }
+`;
 
-    @media (max-width: 460px) {
-      width: 100%;
-    }
-  `,
-  subtitle: css`
-    color: #777777;
-    font-size: 14px;
-  `,
-};
-
-class OrderHeader extends PureComponent {
+export default class OrderHeader extends PureComponent {
   state = {
     open: false,
   };
 
   copy = () => {
-    this.setState({ open: true });
-    setTimeout(() => this.setState({ open: false }), 2000);
+    this.setState(
+      () => ({ open: true }),
+      () => setTimeout(() => this.setState(() => ({ open: false })), 2000)
+    );
 
     setClipboardText(this.props.order.id);
   };
@@ -73,29 +70,27 @@ class OrderHeader extends PureComponent {
     const { order, title, subtitle, icon } = this.props;
 
     return (
-      <div className={styles.base}>
-        <div className={styles.icon}>{icon}</div>
-        <div className={styles.text}>
-          <div className={styles.textHeader}>
-            <div className={styles.label}>{title}</div>
+      <Container>
+        <Icon>{icon}</Icon>
+        <TextContainer>
+          <Header>
+            <Text type="h1" tight {...title} />
             <Tooltip open={this.state.open} title="Copied!">
-              <div className={styles.orderId} onClick={this.copy}>
-                Order ID {order.id}
-              </div>
+              <OrderId onClick={this.copy}>
+                <Text id="order.id">Order ID</Text> {order.id}
+              </OrderId>
             </Tooltip>
-          </div>
-          <div className={styles.subtitle}>{subtitle}</div>
-        </div>
-      </div>
+          </Header>
+          <Text type="h3" tight {...subtitle} />
+        </TextContainer>
+      </Container>
     );
   }
 }
 
 OrderHeader.propTypes = {
-  title: PropTypes.node.isRequired,
-  subtitle: PropTypes.node.isRequired,
+  title: transProp,
+  subtitle: transProp,
   icon: PropTypes.node,
   order: orderProp,
 };
-
-export default OrderHeader;

@@ -15,8 +15,8 @@ const PaymentError = props => {
     <div>
       <OrderHeader
         order={order}
-        title="Payment error"
-        subtitle={message}
+        title={{ id: 'order.error.title', children: 'Payment error' }}
+        subtitle={{ children: message }}
         icon={<Error />}
       />
       <PaymentLayout {...props} />

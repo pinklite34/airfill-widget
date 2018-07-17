@@ -33,8 +33,11 @@ export default function PaymentDetected(props) {
     <div>
       <OrderHeader
         order={props.order}
-        title="Payment detected"
-        subtitle="We're waiting for your payment to be confirmed"
+        title={{ id: 'order.detected.title', children: 'Payment detected' }}
+        subtitle={{
+          id: 'order.detected.subtitle',
+          children: "We're waiting for your payment to be confirmed",
+        }}
         icon={<Spinner tight />}
       />
       <PaymentLayout {...props}>

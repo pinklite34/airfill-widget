@@ -15,7 +15,8 @@ export const H1Text = styled('h1')`
   padding: ${p => p.padding || 0};
   margin: ${p => p.margin || (p.tight ? 0 : '16px 0')};
   text-align: ${p => (p.centered ? 'center' : 'left')};
-  font-size: ${p => p.size || '16px'};
+  font-size: ${p => p.size || '18px'};
+  font-weight: ${p => p.weight || 500};
   line-height: 1.5;
   text-decoration: ${p => p.underline && 'underline'};
   width: ${p => p.width};
@@ -26,18 +27,18 @@ export const H1Text = styled('h1')`
 `;
 
 export const H3Text = styled('h3')`
-  color: ${p => getColor(p, p.theme.tx.primary)};
+  color: ${p => getColor(p, p.theme.tx.secondary)};
   margin: ${p => p.margin || (p.tight ? 0 : '14px 0')};
   padding: ${p => p.padding || 0};
   text-align: ${p => (p.centered ? 'center' : 'left')};
   font-size: ${p => p.size || '14px'};
-  font-weight: 500;
+  font-weight: ${p => p.weight || 500};
   line-height: 1.5;
   text-decoration: ${p => p.underline && 'underline'};
   width: ${p => p.width};
 
   * {
-    color: ${p => getColor(p, p.theme.tx.primary)};
+    color: ${p => getColor(p, p.theme.tx.secondary)};
   }
 `;
 
@@ -46,6 +47,7 @@ export const PText = styled('p')`
   margin: ${p => p.margin || (p.tight ? 0 : '8px 0')};
   padding: ${p => p.padding || 0};
   font-size: ${p => p.size || '12px'};
+  font-weight: ${p => p.weight};
   text-align: ${p => (p.centered ? 'center' : 'left')};
   line-height: ${p => p.lineHeight || 1.4};
   text-decoration: ${p => p.underline && 'underline'};
@@ -79,6 +81,7 @@ export default function Text({
   underline,
   style,
   width,
+  weight,
   className,
   ...transProps
 }) {
@@ -96,6 +99,7 @@ export default function Text({
     underline,
     style,
     width,
+    weight,
     className,
   };
 
@@ -130,4 +134,5 @@ Text.propTypes = {
   style: PropTypes.object,
   className: PropTypes.string,
   width: PropTypes.string,
+  weight: PropTypes.number,
 };

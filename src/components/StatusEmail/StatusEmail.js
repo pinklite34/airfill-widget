@@ -20,10 +20,7 @@ import NumberInput from '../UI/NumberInput';
 
 import EmailIcon from '../../assets/email.svg';
 import ActiveSection from '../UI/ActiveSection';
-
-const Text = styled('p')`
-  font-weight: 500;
-`;
+import Text from '../UI/Text';
 
 const InputContainer = styled('div')`
   @media (min-width: 460px) {
@@ -71,7 +68,9 @@ class StatusEmail extends PureComponent {
           />
         )}
         error={email.error}>
-        <Text>The email address will receive order status updates</Text>
+        <Text id="email.description">
+          The email address will receive order status updates
+        </Text>
         <InputContainer>
           <NumberInput
             value={email.value}
@@ -88,7 +87,8 @@ class StatusEmail extends PureComponent {
           />
           <Text
             onClick={() => setSubscribeNewsletter(!subscribing)}
-            style={{ cursor: 'pointer' }}>
+            style={{ cursor: 'pointer' }}
+            id="email.newsletter">
             Add me to the newsletter to receive news about new products and
             features
           </Text>

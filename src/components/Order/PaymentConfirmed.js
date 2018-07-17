@@ -24,8 +24,11 @@ export default function PaymentConfirmed(props) {
     <div>
       <OrderHeader
         order={props.order}
-        title="Refill sent!"
-        subtitle="Waiting for delivery confirmation"
+        title={{ id: 'order.confirmed.title', children: 'Refill sent!' }}
+        subtitle={{
+          id: 'order.confirmed.subtitle',
+          children: 'Waiting for delivery confirmation',
+        }}
         icon={<Spinner tight />}
       />
       <PaymentLayout {...props}>

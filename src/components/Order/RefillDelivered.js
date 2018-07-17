@@ -44,11 +44,19 @@ export default function RefillDelivered(props) {
     <div>
       <OrderHeader
         order={props.order}
-        title="Refill delivered"
+        title={{ id: 'order.delivered.title', children: 'Refill delivered' }}
         subtitle={
           pinInfo
-            ? 'See below for instructions on applying your voucher code'
-            : 'The refill delivery has been confirmed by the operator'
+            ? {
+                id: 'order.delivered.subtitle.pin',
+                children:
+                  'See below for instructions on applying your voucher code',
+              }
+            : {
+                id: 'order.delivered.subtitle',
+                children:
+                  'The refill delivery has been confirmed by the operator',
+              }
         }
         icon={<Confirmed />}
       />
