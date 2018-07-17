@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'react-emotion';
 import PropTypes from 'prop-types';
 
+import DeviceInfo from '../../lib/DeviceInfo';
+
 import Button from './Button';
 
 const Container = styled('div')`
@@ -26,17 +28,28 @@ const Title = styled('div')`
 
 export default function Collapsed({ onClick, type, hideButton, children }) {
   return (
-    <Container>
-      <Title>{children}</Title>
-      {hideButton ? null : (
-        <Button
-          small
-          white
-          onClick={onClick}
-          text={{ id: `button.change.${type}`, children: `Change ${type}` }}
-        />
+    <DeviceInfo>
+      {({ lessThan }) => (
+        <Container>
+          <Title>{children}</Title>
+          {hideButton ? null : lessThan.tablet ? (
+            <Button
+              small
+              white
+              onClick={onClick}
+              text={{ id: 'button.change', children: 'Change' }}
+            />
+          ) : (
+            <Button
+              small
+              white
+              onClick={onClick}
+              text={{ id: `button.change.${type}`, children: `Change ${type}` }}
+            />
+          )}
+        </Container>
       )}
-    </Container>
+    </DeviceInfo>
   );
 }
 

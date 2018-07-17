@@ -5,6 +5,7 @@ import Tooltip from 'material-ui/Tooltip';
 
 import setClipboardText from '../../lib/clipboard-helper';
 import { orderProp, transProp } from '../../lib/prop-types';
+import DeviceInfo from '../../lib/DeviceInfo';
 
 import Text from './Text';
 
@@ -70,20 +71,24 @@ export default class OrderHeader extends PureComponent {
     const { order, title, subtitle, icon } = this.props;
 
     return (
-      <Container>
-        <Icon>{icon}</Icon>
-        <TextContainer>
-          <Header>
-            <Text type="h1" tight {...title} />
-            <Tooltip open={this.state.open} title="Copied!">
-              <OrderId onClick={this.copy}>
-                <Text id="order.id">Order ID</Text> {order.id}
-              </OrderId>
-            </Tooltip>
-          </Header>
-          <Text type="h3" tight {...subtitle} />
-        </TextContainer>
-      </Container>
+      <DeviceInfo>
+        {({ greaterThan }) => (
+          <Container>
+            {greaterThan.mobile && <Icon>{icon}</Icon>}
+            <TextContainer>
+              <Header>
+                <Text type="h1" tight {...title} />
+                <Tooltip open={this.state.open} title="Copied!">
+                  <OrderId onClick={this.copy}>
+                    <Text id="order.id">Order ID</Text> {order.id}
+                  </OrderId>
+                </Tooltip>
+              </Header>
+              <Text type="h3" tight {...subtitle} />
+            </TextContainer>
+          </Container>
+        )}
+      </DeviceInfo>
     );
   }
 }

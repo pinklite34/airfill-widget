@@ -214,3 +214,20 @@ export const emailProp = PropTypes.shape({
   value: PropTypes.string,
   error: errorProp,
 });
+
+export const deviceInfoProp = PropTypes.shape({
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  is: PropTypes.shape({
+    mobile: PropTypes.bool,
+    tablet: PropTypes.bool,
+    desktop: PropTypes.bool,
+  }).isRequired,
+  lessThan: PropTypes.shape({ mobile: PropTypes.bool, tablet: PropTypes.bool })
+    .isRequired,
+  greaterThan: PropTypes.shape({
+    mobile: PropTypes.bool,
+    tablet: PropTypes.bool,
+  }).isRequired,
+  deviceType: PropTypes.oneOf(['ios', 'android']),
+}).isRequired;

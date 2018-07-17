@@ -196,20 +196,22 @@ class PaymentMode extends PureComponent {
           }
         />
 
-        <PaymentLayout {...this.props}>
-          <Flex row alignItems="center" padding="0 0 16px 0">
-            <Icon src={paymentMethod.icon} />
-            <Text type="h3">{paymentMethod.title}</Text>
-          </Flex>
+        <DeviceInfo>
+          {({ greaterThan }) => (
+            <PaymentLayout {...this.props}>
+              <Flex row alignItems="center" padding="0 0 16px 0">
+                <Icon src={paymentMethod.icon} />
+                <Text type="h3">{paymentMethod.title}</Text>
+              </Flex>
 
-          {!isDirect ? (
-            <Button
-              onClick={() => paymentMethod.paymentModeOptions.callback(order)}>
-              {paymentMethod.paymentModeOptions.title}
-            </Button>
-          ) : (
-            <DeviceInfo>
-              {({ greaterThan }) => (
+              {!isDirect ? (
+                <Button
+                  onClick={() =>
+                    paymentMethod.paymentModeOptions.callback(order)
+                  }>
+                  {paymentMethod.paymentModeOptions.title}
+                </Button>
+              ) : (
                 <Flex row={greaterThan.tablet} width="100%">
                   <Flex
                     style={{ flex: 1 }}
@@ -287,9 +289,9 @@ class PaymentMode extends PureComponent {
                   </div>
                 </Flex>
               )}
-            </DeviceInfo>
+            </PaymentLayout>
           )}
-        </PaymentLayout>
+        </DeviceInfo>
       </div>
     );
   }

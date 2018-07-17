@@ -29,6 +29,7 @@ const Row = styled(Flex)`
   min-height: 38px;
   align-items: center;
   justify-content: flex-start;
+  flex-direction: row;
 `;
 
 const RowTitle = styled('div')`
@@ -45,11 +46,8 @@ const RowTitle = styled('div')`
     height: auto;
   }
 
-  @media (max-width: 460px) {
-    min-width: 62px;
-    & > img {
-      width: 24px;
-    }
+  @media (max-width: ${p => p.theme.bp.mobile}) {
+    display: none;
   }
 `;
 
@@ -65,6 +63,10 @@ const RowContent = styled(Flex)`
     padding: 0;
     margin: 0px;
   }
+
+  @media (max-width: ${p => p.theme.bp.mobile}) {
+    padding: 14px 16px;
+  }
 `;
 
 const ChildContainer = styled(Flex)`
@@ -72,6 +74,10 @@ const ChildContainer = styled(Flex)`
   width: 100%;
   padding: 14px 16px 14px 0;
   align-items: flex-start;
+
+  @media (max-width: ${p => p.theme.bp.mobile}) {
+    padding: 14px 16px;
+  }
 `;
 
 const valueField = {
@@ -212,7 +218,7 @@ class PaymentLayout extends PureComponent {
       <Fragment>
         {paymentStatus && (
           <Fragment>
-            <Row row>
+            <Row>
               <RowTitle>
                 <Logo src={logoImage} alt={name} />
               </RowTitle>
@@ -230,7 +236,7 @@ class PaymentLayout extends PureComponent {
             </Row>
 
             {isDelivered && showRecipient ? (
-              <Row row>
+              <Row>
                 <RowTitle />
                 <RowContent>
                   <Text id="order.details.delivered">
@@ -239,7 +245,7 @@ class PaymentLayout extends PureComponent {
                 </RowContent>
               </Row>
             ) : !isDelivered ? (
-              <Row row>
+              <Row>
                 <RowTitle>
                   <SectionTitle
                     tight
