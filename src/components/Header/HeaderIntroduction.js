@@ -10,6 +10,7 @@ import {
   fnProp,
   numberProp,
   numberLookupProp,
+  configProp,
 } from '../../lib/prop-types';
 
 import Text from '../UI/Text';
@@ -18,7 +19,7 @@ import ComboInput from '../UI/ComboInput';
 import Info from '../UI/info.svg';
 import theme from '../../theme';
 import Flex from '../UI/Flex';
-import { startsWith } from '../../lib/string';
+import { startsWith, capitalizeFirst } from '../../lib/string';
 
 const Error = styled('div')`
   display: flex;
@@ -59,6 +60,7 @@ class HeaderIntroduction extends PureComponent {
     history: historyProp,
     number: numberProp,
     branded: PropTypes.bool,
+    config: configProp,
   };
 
   state = {
@@ -90,11 +92,13 @@ class HeaderIntroduction extends PureComponent {
   };
 
   render() {
-    const { isMobile, branded, history, numberLookup } = this.props;
+    const { isMobile, branded, history, numberLookup, config } = this.props;
     const { error } = this.state;
     const lookupError =
       (numberLookup.error && numberLookup.error.message) || numberLookup.error;
     const displayedError = error || lookupError;
+
+    const coin = capitalizeFirst(config.coin || 'Bitcoin');
 
     return (
       <Flex centered>
@@ -108,7 +112,7 @@ class HeaderIntroduction extends PureComponent {
               size="16px"
               weight={700}
               color={theme.white}>
-              Send Global Top Ups With Bitcoin
+              Send Global Top Ups With {{ coin }}
             </Text>
             <Text
               type="h3"
@@ -128,7 +132,7 @@ class HeaderIntroduction extends PureComponent {
               tight
               id="introduction.title.unbranded"
               color={theme.white}>
-              Top Up Anything With Bitcoin
+              Top Up Anything With {{ coin }}
             </Text>
           </Flex>
         )}

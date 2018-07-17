@@ -53,6 +53,14 @@ export const paymentModeProp = PropTypes.oneOf([
   'localbitcoins',
 ]);
 
+export const coinPageProp = PropTypes.oneOf([
+  'bitcoin',
+  'litecoin',
+  'dash',
+  'lightning',
+  'dogecoin',
+]);
+
 export const configProps = {
   // User data
   defaultNumber: numberProp,
@@ -86,6 +94,8 @@ export const configProps = {
   // ),
 
   onExternalUrl: PropTypes.func,
+
+  coin: coinPageProp,
 };
 
 export const configProp = PropTypes.shape(configProps);

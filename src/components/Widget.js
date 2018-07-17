@@ -158,7 +158,11 @@ class AirfillWidget extends Component {
               <Card alwaysBorder style={{ overflow: 'hidden' }}>
                 {hasLoaded ? (
                   <Fragment>
-                    <Header isMobile={isMobile} branded={showLogo} />
+                    <Header
+                      config={config}
+                      isMobile={isMobile}
+                      branded={showLogo}
+                    />
                     <Country />
                     <Providers />
                     <Amount config={config} />

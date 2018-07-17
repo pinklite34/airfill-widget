@@ -5,6 +5,7 @@ import styled from 'react-emotion';
 
 import HeaderLogo from './HeaderLogo';
 import HeaderIntroduction from './HeaderIntroduction';
+import { configProp } from '../../lib/prop-types';
 
 const Container = styled('div')`
   background: #3e8fe4;
@@ -23,7 +24,7 @@ const Container = styled('div')`
   }
 `;
 
-export default function Header({ branded, isMobile }) {
+export default function Header({ branded, isMobile, config }) {
   return (
     <Switch>
       <Route
@@ -35,6 +36,7 @@ export default function Header({ branded, isMobile }) {
             <HeaderIntroduction
               isMobile={isMobile}
               branded={branded}
+              config={config}
               {...props}
             />
           </Container>
@@ -56,4 +58,5 @@ export default function Header({ branded, isMobile }) {
 Header.propTypes = {
   branded: PropTypes.bool,
   isMobile: PropTypes.bool,
+  config: configProp,
 };
