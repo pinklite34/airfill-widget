@@ -12,8 +12,8 @@ function ProviderCollapsed({ operator, history }) {
     <Collapsed
       onClick={() => history.push('/refill/selectProvider')}
       type="provider"
-      icon={operator.logoImage}
-      title={operator.name}
+      icon={operator && operator.logoImage}
+      title={operator && operator.name}
     />
   );
 }
