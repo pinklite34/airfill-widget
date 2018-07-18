@@ -44,7 +44,7 @@ export default function Collapsed({ icon, title, onClick, type, hideButton }) {
               small
               white
               onClick={onClick}
-              text={{ id: 'button.change', children: 'Change' }}
+              text={{ id: 'button.change.default', children: 'Change' }}
             />
           ) : (
             <Button
