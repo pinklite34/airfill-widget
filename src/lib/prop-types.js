@@ -59,6 +59,7 @@ export const coinPageProp = PropTypes.oneOf([
   'dash',
   'lightning',
   'dogecoin',
+  false,
 ]);
 
 export const configProps = {
