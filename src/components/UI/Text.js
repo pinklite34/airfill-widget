@@ -83,6 +83,7 @@ export default function Text({
   width,
   weight,
   className,
+  dangerouslySetInnerHTML,
   ...transProps
 }) {
   const TextComponent = getComponent(type);
@@ -101,6 +102,7 @@ export default function Text({
     width,
     weight,
     className,
+    dangerouslySetInnerHTML,
   };
 
   const children = id ? (
@@ -135,4 +137,7 @@ Text.propTypes = {
   className: PropTypes.string,
   width: PropTypes.string,
   weight: PropTypes.number,
+  dangerouslySetInnerHTML: PropTypes.shape({
+    __html: PropTypes.string.isRequired,
+  }),
 };

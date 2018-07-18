@@ -86,7 +86,10 @@ export default function RefillDelivered(props) {
                   margin="8px 0">
                   Instructions
                 </PinLabel>
-                <Text type="p">{pinInfo.instructions}</Text>
+                <Text
+                  type="p"
+                  dangerouslySetInnerHTML={{ __html: pinInfo.instructions }}
+                />
               </div>
             )}
             {pinInfo.other && (
@@ -98,7 +101,10 @@ export default function RefillDelivered(props) {
                   weight="600">
                   Other Info
                 </PinLabel>
-                <Text type="p">{pinInfo.other}</Text>
+                <Text
+                  type="p"
+                  dangerouslySetInnerHTML={{ __html: pinInfo.other }}
+                />
               </div>
             )}
           </Fragment>
