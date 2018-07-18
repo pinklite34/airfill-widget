@@ -173,6 +173,7 @@ class AmountPicker extends PureComponent {
             currency={operator.result.currency}
             billingCurrency={billingCurrency}
             onChange={setAmount}
+            config={config}
           />
         )}
       </ActiveSection>

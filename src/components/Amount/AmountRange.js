@@ -9,6 +9,7 @@ import {
   currencyProp,
   amountProp,
   fnProp,
+  configProp,
 } from '../../lib/prop-types';
 
 import AmountPackage from './AmountPackage';
@@ -83,6 +84,7 @@ export default function AmountRange({
   currency,
   billingCurrency,
   onChange,
+  config,
 }) {
   const min = Math.ceil(range.min);
   const max = Math.floor(range.max);
@@ -93,6 +95,8 @@ export default function AmountRange({
     billingCurrency === 'XBT' ? satoshiToBTC(cost) : cost.toFixed(2);
 
   const displayedCurrency = getDisplayName(currency);
+  const showPrice = !config.coin || config.coin === 'bitcoin';
+
   return (
     <Container>
       <Title
@@ -126,10 +130,12 @@ export default function AmountRange({
               </div>
             }
             price={
-              <Cost>
-                {displayableCost > 0 ? displayableCost : '0'}{' '}
-                {getDisplayName(billingCurrency)}
-              </Cost>
+              showPrice && (
+                <Cost>
+                  {displayableCost > 0 ? displayableCost : '0'}{' '}
+                  {getDisplayName(billingCurrency)}
+                </Cost>
+              )
             }
           />
         </RangeContainer>
@@ -157,4 +163,5 @@ AmountRange.propTypes = {
   currency: currencyProp,
   billingCurrency: currencyProp,
   onChange: fnProp,
+  config: configProp,
 };
