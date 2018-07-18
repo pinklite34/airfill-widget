@@ -56,6 +56,7 @@ export const paymentModeProp = PropTypes.oneOf([
 export const coinPageProp = PropTypes.oneOf([
   'bitcoin',
   'litecoin',
+  'ethereum',
   'dash',
   'lightning',
   'dogecoin',
