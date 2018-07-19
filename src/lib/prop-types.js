@@ -53,14 +53,16 @@ export const paymentModeProp = PropTypes.oneOf([
   'localbitcoins',
 ]);
 
-export const coinPageProp = PropTypes.oneOf([
-  'bitcoin',
-  'litecoin',
-  'ethereum',
-  'dash',
-  'lightning',
-  'dogecoin',
-  false,
+export const coinPageProp = PropTypes.oneOfType([
+  PropTypes.bool,
+  PropTypes.oneOf([
+    'bitcoin',
+    'litecoin',
+    'ethereum',
+    'dash',
+    'lightning',
+    'dogecoin',
+  ]),
 ]);
 
 export const configProps = {
