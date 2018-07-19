@@ -1,10 +1,12 @@
 import i18n from 'i18next';
 import LocizeBackend from 'i18next-locize-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import { reactI18nextModule } from 'react-i18next';
 
 i18n
   .use(LocizeBackend)
   .use(LanguageDetector)
+  .use(reactI18nextModule)
   .init({
     fallbackLng: 'en',
     appendNamespaceToCIMode: true,
@@ -14,6 +16,7 @@ i18n
     defaultNS: 'widget',
 
     debug: process.env.NODE_ENV === 'development',
+    keySeparator: '### not used ###',
 
     backend: {
       projectId: '3a082193-3b75-4cdb-9be4-018cee014baa',
@@ -28,6 +31,10 @@ i18n
         if (format === 'uppercase') return value.toUpperCase();
         return value;
       },
+    },
+
+    react: {
+      wait: true,
     },
   });
 
