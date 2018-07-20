@@ -23,7 +23,6 @@ import {
 import DeviceInfo from '../../lib/DeviceInfo';
 
 import Button from '../UI/Button';
-import Tooltip from 'material-ui/Tooltip';
 
 import BitcoinAddress from '../UI/BitcoinAddress';
 import OrderHeader from '../UI/OrderHeader';
@@ -66,14 +65,6 @@ class PaymentMode extends PureComponent {
   state = {
     open: false,
     isLoading: false,
-    addressTooltip: false,
-    amountTooltip: false,
-  };
-
-  onCopy = (text, field) => () => {
-    this.setState({ [field]: true });
-    setTimeout(() => this.setState({ [field]: false }), 2000);
-    setClipboardText(text);
   };
 
   onOpenWallet = uri => async () => {
@@ -236,15 +227,10 @@ class PaymentMode extends PureComponent {
                     </PaymentSection>
 
                     <PaymentSection>
-                      <Tooltip open={this.state.addressTooltip} title="Copied!">
-                        <BitcoinAddress
-                          onClick={this.onCopy(
-                            paymentAddress,
-                            'addressTooltip'
-                          )}
-                          address={paymentAddress}
-                        />
-                      </Tooltip>
+                      <BitcoinAddress
+                        onClick={() => setClipboardText(paymentAddress)}
+                        address={paymentAddress}
+                      />
                     </PaymentSection>
 
                     {isPartial && (

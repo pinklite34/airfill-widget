@@ -1,26 +1,24 @@
-import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Fragment, PureComponent } from 'react';
 import styled from 'react-emotion';
+import { connect } from 'react-redux';
 
-import Tooltip from 'material-ui/Tooltip';
+import { updatePaymentStatus } from '../../actions';
+import setClipboardText from '../../lib/clipboard-helper';
 import {
-  paymentStatusProp,
-  orderProp,
   amountProp,
-  operatorResultProp,
   currencyProp,
   fnProp,
   numberProp,
+  operatorResultProp,
+  orderProp,
+  paymentStatusProp,
 } from '../../lib/prop-types';
-import { selectOperator, selectAmount, selectNumber } from '../../store';
-import { updatePaymentStatus } from '../../actions/index';
-import setClipboardText from '../../lib/clipboard-helper';
-
+import { selectAmount, selectNumber, selectOperator } from '../../store';
 import Flex from '../UI/Flex';
-import Text from '../UI/Text';
-import SectionTitle from '../UI/SectionTitle';
 import Icon from '../UI/Icon';
+import SectionTitle from '../UI/SectionTitle';
+import Text from '../UI/Text';
 
 const Row = styled(Flex)`
   min-height: 38px;
@@ -102,7 +100,6 @@ class PaymentLayout extends PureComponent {
   state = {
     countdownInterval: null,
     timeLeft: '15:00',
-    tooltip: false,
     invoiceTime: 15 * 60 * 1000,
   };
 
@@ -200,7 +197,7 @@ class PaymentLayout extends PureComponent {
 
   render() {
     const { children, amount, operator, number, paymentStatus } = this.props;
-    const { timeLeft, tooltip } = this.state;
+    const { timeLeft } = this.state;
 
     const { recipientType, logoImage, name, currency, slug } =
       (operator && operator.result) || {};
@@ -248,11 +245,9 @@ class PaymentLayout extends PureComponent {
                   />
                 </RowTitle>
                 <RowContent>
-                  <Tooltip open={tooltip} title="Copied!" placement="right-end">
-                    <Text onClick={() => this.onCopy(formattedPrice)}>
-                      {formattedPrice}
-                    </Text>
-                  </Tooltip>
+                  <Text onClick={() => this.onCopy(formattedPrice)}>
+                    {formattedPrice}
+                  </Text>
                   {this.shouldShowCountdown() && (
                     <Text type="p" id="order.details.expiring">
                       Expiring in {{ timeLeft }}

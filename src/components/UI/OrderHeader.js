@@ -1,12 +1,9 @@
-import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
 import styled from 'react-emotion';
-import Tooltip from 'material-ui/Tooltip';
 
-import setClipboardText from '../../lib/clipboard-helper';
-import { orderProp, transProp } from '../../lib/prop-types';
 import DeviceInfo from '../../lib/DeviceInfo';
-
+import { orderProp, transProp } from '../../lib/prop-types';
 import Text from './Text';
 
 const Container = styled('div')`
@@ -46,15 +43,6 @@ export default class OrderHeader extends PureComponent {
     open: false,
   };
 
-  copy = () => {
-    this.setState(
-      () => ({ open: true }),
-      () => setTimeout(() => this.setState(() => ({ open: false })), 2000)
-    );
-
-    setClipboardText(this.props.order.id);
-  };
-
   render() {
     const { order, title, subtitle, icon } = this.props;
 
@@ -66,11 +54,9 @@ export default class OrderHeader extends PureComponent {
             <TextContainer>
               <Header>
                 <Text type="h1" tight {...title} />
-                <Tooltip open={this.state.open} title="Copied!">
-                  <Text type="p" tight>
-                    <Text id="order.id">Order ID</Text> {order.id}
-                  </Text>
-                </Tooltip>
+                <Text type="p" tight>
+                  <Text id="order.id">Order ID</Text> {order.id}
+                </Text>
               </Header>
               <Text type="h3" tight {...subtitle} />
             </TextContainer>
