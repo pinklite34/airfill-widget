@@ -58,7 +58,7 @@ export default class OrderHeader extends PureComponent {
                   <Text id="order.id">Order ID</Text> {order.id}
                 </Text>
               </Header>
-              <Text type="h3" tight {...subtitle} />
+              {subtitle && <Text type="h3" tight {...subtitle} />}
             </TextContainer>
           </Container>
         )}

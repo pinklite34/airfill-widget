@@ -25,7 +25,8 @@ const StyledLink = styled('p')`
 const ExternalLink = StyledLink.withComponent('a');
 
 export default function Link({ href, children, ...props }) {
-  const isExternal = Boolean(href) && !startsWith(href, '#');
+  const isExternal =
+    Boolean(href) && !startsWith(href, '#') && !startsWith(href, 'mailto');
   const Component = href ? ExternalLink : StyledLink;
 
   return (

@@ -199,6 +199,7 @@ class PaymentLayout extends PureComponent {
     const isDelivered = paymentStatus && paymentStatus.status === 'delivered';
     const formattedPrice = this.getFormattedPrice();
     const productName = slug === 'reddit-gold' ? ' Reddit Gold' : '';
+
     return (
       <Fragment>
         {paymentStatus && (

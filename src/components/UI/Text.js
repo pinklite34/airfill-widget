@@ -58,11 +58,28 @@ export const PText = styled('p')`
   }
 `;
 
+const LinkText = styled(PText)`
+  color: ${p => getColor(p, p.theme.tx.link)};
+  text-decoration: none;
+  cursor: pointer;
+
+  * {
+    color: ${p => getColor(p, p.theme.tx.link)};
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    text-decoration: underline;
+  }
+`;
+
 function getComponent(type) {
   return {
     h1: H1Text,
     h3: H3Text,
     p: PText,
+    link: LinkText,
   }[type];
 }
 
@@ -122,7 +139,7 @@ export default function Text({
 
 Text.propTypes = {
   id: PropTypes.string,
-  type: PropTypes.oneOf(['h1', 'h3', 'p']),
+  type: PropTypes.oneOf(['h1', 'h3', 'p', 'link']),
   color: PropTypes.string,
   error: PropTypes.bool,
   success: PropTypes.bool,

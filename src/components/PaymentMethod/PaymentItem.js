@@ -83,7 +83,7 @@ const PaymentItem = ({
 };
 
 PaymentItem.propTypes = {
-  icon: PropTypes.any,
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   title: PropTypes.string.isRequired,
   description: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
     .isRequired,

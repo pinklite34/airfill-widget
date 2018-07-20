@@ -67,6 +67,6 @@ Collapsed.propTypes = {
   onClick: PropTypes.func,
   type: PropTypes.string,
   hideButton: PropTypes.bool,
-  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   title: PropTypes.node,
 };

@@ -30,8 +30,8 @@ export default function Icon({ src, alt, width, height, ...props }) {
 }
 
 Icon.propTypes = {
-  src: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
+  src: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  alt: PropTypes.string,
   width: PropTypes.string,
   height: PropTypes.string,
   margin: PropTypes.string,
