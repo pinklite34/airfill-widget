@@ -40,7 +40,6 @@ import {
 } from '../../lib/prop-types';
 
 const componentForStatus = status => {
-  return RefillFailed;
   switch (status) {
     case 'paid':
       return PaymentDetected;
