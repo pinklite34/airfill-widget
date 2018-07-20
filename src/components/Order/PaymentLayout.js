@@ -4,7 +4,6 @@ import styled from 'react-emotion';
 import { connect } from 'react-redux';
 
 import { updatePaymentStatus } from '../../actions';
-import setClipboardText from '../../lib/clipboard-helper';
 import {
   amountProp,
   currencyProp,
@@ -144,12 +143,6 @@ class PaymentLayout extends PureComponent {
     const { countdownInterval } = this.state;
     if (countdownInterval) clearInterval(countdownInterval);
   }
-
-  onCopy = text => {
-    this.setState({ tooltip: true });
-    setTimeout(() => this.mounted && this.setState({ tooltip: false }), 2000);
-    setClipboardText(text);
-  };
 
   getBillingCurrency() {
     const { order } = this.props;
