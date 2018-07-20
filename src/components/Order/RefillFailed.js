@@ -20,7 +20,7 @@ function getMailTo({ order, refundAddress }) {
 My order (ID ${
     order.id
   }) failed to process. I'd like a refund to be sent to <Replace This With Your Refund Address>.
-  
+
 Thanks!`);
   const mailTo = `mailto:support@bitrefill.com?subject=${subject}`;
 
@@ -55,6 +55,12 @@ export default function RefillFailed(props) {
       />
 
       <PaymentLayout {...props}>
+        {order.errorMessage && (
+          <Text type="p" size="14px">
+            {order.errorMessage}
+          </Text>
+        )}
+
         <RefillFailedInfo
           refundAddress={refundAddress}
           needRefund={needRefund}
