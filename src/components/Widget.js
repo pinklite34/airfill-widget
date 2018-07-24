@@ -151,7 +151,7 @@ class AirfillWidget extends Component {
     const hasLoaded = !!inventory.result;
 
     return (
-      <I18nextProvider i18n={i18n}>
+      <I18nextProvider i18n={i18n} defaultNs="widget">
         <ThemeProvider theme={theme}>
           <MuiThemeProvider theme={muiTheme}>
             <Root className={className}>
@@ -212,20 +212,18 @@ const StoreWidgetWrapper = compose(
 
 export default function Widget(props) {
   return (
-    <I18nextProvider i18n={i18n}>
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <MuiThemeProvider theme={muiTheme}>
-            <ConnectedRouter history={history}>
-              <Media query="(-moz-touch-enabled: 1), (pointer: coarse)">
-                {isMobile => (
-                  <StoreWidgetWrapper isMobile={isMobile} {...props} />
-                )}
-              </Media>
-            </ConnectedRouter>
-          </MuiThemeProvider>
-        </ThemeProvider>
-      </Provider>
-    </I18nextProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <MuiThemeProvider theme={muiTheme}>
+          <ConnectedRouter history={history}>
+            <Media query="(-moz-touch-enabled: 1), (pointer: coarse)">
+              {isMobile => (
+                <StoreWidgetWrapper isMobile={isMobile} {...props} />
+              )}
+            </Media>
+          </ConnectedRouter>
+        </MuiThemeProvider>
+      </ThemeProvider>
+    </Provider>
   );
 }

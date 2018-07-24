@@ -1,18 +1,21 @@
 import i18n from 'i18next';
 import LocizeBackend from 'i18next-locize-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import { reactI18nextModule } from 'react-i18next';
+
+const envLng = window.BITREFILL__LNG;
 
 i18n
   .use(LocizeBackend)
-  .use(LanguageDetector)
-  .use(reactI18nextModule)
+  .use(envLng ? () => {} : LanguageDetector)
   .init({
     fallbackLng: 'en',
+    lng: envLng,
+    preload: [envLng || 'en'],
+
     appendNamespaceToCIMode: true,
     saveMissing: process.env.NODE_ENV === 'production',
 
-    ns: ['widget'],
+    ns: ['widget', 'website'],
     defaultNS: 'widget',
 
     debug: process.env.NODE_ENV === 'development',
@@ -26,11 +29,6 @@ i18n
 
     interpolation: {
       escapeValue: false,
-      formatSeparator: ',',
-      format: function(value, format, lng) {
-        if (format === 'uppercase') return value.toUpperCase();
-        return value;
-      },
     },
 
     react: {
