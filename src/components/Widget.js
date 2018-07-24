@@ -151,7 +151,7 @@ class AirfillWidget extends Component {
     const hasLoaded = !!inventory.result;
 
     return (
-      <I18nextProvider i18n={i18n} defaultNs="widget">
+      <I18nextProvider i18n={i18n}>
         <ThemeProvider theme={theme}>
           <MuiThemeProvider theme={muiTheme}>
             <Root className={className}>

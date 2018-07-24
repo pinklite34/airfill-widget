@@ -123,7 +123,7 @@ export default function Text({
   };
 
   const children = id ? (
-    <Trans i18nKey={id} {...transProps} />
+    <Trans i18nKey={`widget:${id}`} {...transProps} />
   ) : (
     transProps.children
   );
