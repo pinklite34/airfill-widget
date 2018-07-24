@@ -213,17 +213,11 @@ const StoreWidgetWrapper = compose(
 export default function Widget(props) {
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <MuiThemeProvider theme={muiTheme}>
-          <ConnectedRouter history={history}>
-            <Media query="(-moz-touch-enabled: 1), (pointer: coarse)">
-              {isMobile => (
-                <StoreWidgetWrapper isMobile={isMobile} {...props} />
-              )}
-            </Media>
-          </ConnectedRouter>
-        </MuiThemeProvider>
-      </ThemeProvider>
+      <ConnectedRouter history={history}>
+        <Media query="(-moz-touch-enabled: 1), (pointer: coarse)">
+          {isMobile => <StoreWidgetWrapper isMobile={isMobile} {...props} />}
+        </Media>
+      </ConnectedRouter>
     </Provider>
   );
 }

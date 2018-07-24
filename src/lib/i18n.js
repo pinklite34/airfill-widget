@@ -2,7 +2,9 @@ import i18n from 'i18next';
 import LocizeBackend from 'i18next-locize-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-const envLng = window.BITREFILL__LNG;
+import { getLanguage } from './web-globals';
+
+const envLng = getLanguage();
 
 i18n
   .use(LocizeBackend)
