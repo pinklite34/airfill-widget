@@ -15,10 +15,12 @@ export const getMissingCountries = countryList =>
         code = '+' + getCountryCallingCode(country.alpha2);
       } catch (ex) {}
 
+      const international = selectInternational(countryList);
+
       return {
         ...country,
         countryCallingCodes: [code],
-        operators: selectInternational(countryList).operators,
+        operators: international ? international.operators : [],
         slug: country.name.toLowerCase().replace(' ', ''),
       };
     });

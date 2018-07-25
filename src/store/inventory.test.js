@@ -1,5 +1,4 @@
 import reducer, {
-  selectCountryList,
   selectCountry,
   selectAvailableOperators,
   selectSelectedOperator,
@@ -101,14 +100,6 @@ describe('selectors', () => {
       },
     },
   };
-
-  describe('selectCountryList', () => {
-    it('returns an alphabetically sorted array of countries', () => {
-      expect(
-        selectCountryList(baseState).filter(country => !country.virtual)
-      ).toEqual([germany, sweden]);
-    });
-  });
 
   describe('selectCountry', () => {
     it('returns null if no country was selected', () => {
