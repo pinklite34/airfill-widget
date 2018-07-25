@@ -13,11 +13,17 @@ import {
   orderProp,
   paymentStatusProp,
 } from '../../lib/prop-types';
-import { selectAmount, selectNumber, selectOperator } from '../../store';
+import {
+  selectAmount,
+  selectNumber,
+  selectOperator,
+  selectPaymentMethod,
+} from '../../store';
 import Flex from '../UI/Flex';
 import Icon from '../UI/Icon';
 import SectionTitle from '../UI/SectionTitle';
 import Text from '../UI/Text';
+import { getPaymentInfo } from '../../lib/price';
 
 const Row = styled(Flex)`
   min-height: 38px;
@@ -72,12 +78,6 @@ const ChildContainer = styled(Flex)`
   }
 `;
 
-const valueField = {
-  xbt: 'btcPrice',
-  eur: 'eurPrice',
-  usd: 'usdPrice',
-};
-
 class PaymentLayout extends PureComponent {
   static propTypes = {
     order: orderProp,
@@ -88,6 +88,7 @@ class PaymentLayout extends PureComponent {
     number: numberProp,
     billingCurrency: currencyProp,
     paymentStatus: paymentStatusProp,
+    paymentMethod: PropTypes.object,
   };
 
   static defaultProps = {
@@ -144,44 +145,6 @@ class PaymentLayout extends PureComponent {
     if (countdownInterval) clearInterval(countdownInterval);
   }
 
-  getBillingCurrency() {
-    const { order } = this.props;
-    const { altcoinCode } = order.payment;
-    const displayCurrency = (altcoinCode || 'BTC').toUpperCase();
-
-    return displayCurrency === 'LNBC'
-      ? 'bits'
-      : displayCurrency === 'LNLTC'
-        ? 'lites'
-        : displayCurrency;
-  }
-
-  getCoinPrice(billingDisplayCurrency) {
-    const { order } = this.props;
-    const { altcoinPrice, bitsPrice, litesPrice } = order.payment;
-    const coinPrice = altcoinPrice || order.btcPrice;
-
-    return billingDisplayCurrency === 'LNBC'
-      ? bitsPrice
-      : billingDisplayCurrency === 'LNLTC'
-        ? litesPrice
-        : coinPrice;
-  }
-
-  getFormattedPrice() {
-    const { billingCurrency, order } = this.props;
-    const billingDisplayCurrency = this.getBillingCurrency();
-    const coinPrice = this.getCoinPrice(billingDisplayCurrency);
-    const price = order[valueField[billingCurrency.toLowerCase()]];
-    const formattedPrice = `${coinPrice} ${billingDisplayCurrency}`;
-    const displayCurrency =
-      billingCurrency === 'XBT' ? 'BTC' : billingDisplayCurrency;
-
-    return displayCurrency !== billingDisplayCurrency
-      ? `${formattedPrice} (${price} ${displayCurrency})`
-      : formattedPrice;
-  }
-
   shouldShowCountdown() {
     const { paymentStatus } = this.props;
     if (!paymentStatus) return false;
@@ -189,7 +152,15 @@ class PaymentLayout extends PureComponent {
   }
 
   render() {
-    const { children, amount, operator, number, paymentStatus } = this.props;
+    const {
+      children,
+      amount,
+      operator,
+      number,
+      paymentMethod,
+      paymentStatus,
+      order,
+    } = this.props;
     const { timeLeft } = this.state;
 
     const { recipientType, logoImage, name, currency, slug } =
@@ -197,7 +168,13 @@ class PaymentLayout extends PureComponent {
 
     const showRecipient = recipientType !== 'none';
     const isDelivered = paymentStatus && paymentStatus.status === 'delivered';
-    const formattedPrice = this.getFormattedPrice();
+
+    const stuff = getPaymentInfo(
+      paymentMethod.paymentMode,
+      paymentStatus,
+      order
+    );
+    const formattedPrice = `${stuff.displayPrice} ${stuff.unit}`;
     const productName = slug === 'reddit-gold' ? ' Reddit Gold' : '';
 
     return (
@@ -269,6 +246,7 @@ export default connect(
     amount: selectAmount(state),
     operator: selectOperator(state),
     number: selectNumber(state),
+    paymentMethod: selectPaymentMethod(state),
   }),
   dispatch => ({
     updatePaymentStatus: (...args) => dispatch(updatePaymentStatus(...args)),

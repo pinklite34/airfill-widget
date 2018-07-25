@@ -33,6 +33,7 @@ import Flex from '../UI/Flex';
 import Text from '../UI/Text';
 import Link from '../UI/Link';
 import Icon from '../UI/Icon';
+import { getPaymentInfo } from '../../lib/price';
 
 const PartialWarning = styled('div')`
   border-radius: 4px;
@@ -102,60 +103,17 @@ class PaymentMode extends PureComponent {
     // decide if the current payment method is a direct coin payment
     const isDirect = isDirectPayment(paymentMethod.paymentMode);
 
-    const basePrice = order.payment.altBasePrice || order.payment.satoshiPrice;
-    let price = order.payment.altcoinPrice || order.btcPrice;
-    let unit = order.payment.altcoinCode || 'BTC';
-
-    let paid;
-    let remaining;
-
-    if (paymentStatus.status === 'partial') {
-      if (paymentMethod.paymentMode === 'ethereum') {
-        // convert from Szabo to ETH
-        paid = paymentStatus.paidAmount;
-        paid = Math.floor(paid) / 1000000;
-        remaining = basePrice - paymentStatus.paidAmount;
-        remaining = Math.floor(remaining) / 1000000;
-      } else {
-        // bitcoin and bitcoin based altcoins
-        // convert from baseAmount to BTC/LTC
-        paid = paymentStatus.paidAmount;
-        paid = Math.floor(paid / 10000) / 10000;
-        remaining = basePrice - paymentStatus.paidAmount;
-        remaining = Math.floor(remaining / 10000) / 10000;
-      }
-    }
-
-    let prefix =
-      paymentMethod.paymentMode === 'bcash'
-        ? 'bitcoincash'
-        : paymentMethod.paymentMode;
-
-    let paymentAddress;
-    let uri;
-
-    if (isLightningPayment(paymentMethod.paymentMode)) {
-      prefix = 'lightning';
-      if (paymentMethod.paymentMode === 'lightning') {
-        unit = 'bits';
-        price = order.payment.bitsPrice;
-      } else if (paymentMethod.paymentMode === 'lightning-ltc') {
-        // prefix is not always the same as paymentMode
-        unit = 'lites';
-        price = order.payment.litesPrice;
-      }
-      paymentAddress = order.payment.lightningInvoice;
-      uri = `${prefix}:${paymentAddress}`.toUpperCase();
-    } else if (paymentMethod.paymentMode === 'ethereum') {
-      paymentAddress = order.payment.altcoinAddress;
-      uri = `${prefix}:${paymentAddress}?amount=${remaining || price}`;
-    } else {
-      paymentAddress = order.payment.address;
-      uri = `${prefix}:${paymentAddress}?amount=${remaining || price}`;
-    }
-
     const isPartial = paymentStatus.status === 'partial';
-    const displayPrice = remaining || price;
+
+    const {
+      displayPrice,
+      unit,
+      paymentAddress,
+      remaining,
+      price,
+      paid,
+      uri,
+    } = getPaymentInfo(paymentMethod.paymentMode, paymentStatus, order);
 
     return (
       <div>
