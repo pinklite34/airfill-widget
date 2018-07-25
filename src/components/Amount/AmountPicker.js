@@ -160,7 +160,7 @@ class AmountPicker extends PureComponent {
         renderNextButton={() => (
           <NextButton disabled={disabled} onClick={this.next} />
         )}>
-        <ExtraInfo info={operator.result.extraInfo} />
+        <ExtraInfo info={operator.result.extraInfo} operator={operator} />
 
         <Title text={{ id: 'title.selectamount', children: 'Select amount' }} />
 

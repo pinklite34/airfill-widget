@@ -4,6 +4,8 @@ import styled from 'react-emotion';
 
 import Card from '../UI/Card';
 
+import { operatorProp } from '../../lib/prop-types';
+
 import Info from '../UI/info.svg';
 
 const Container = styled(Card)`
@@ -23,6 +25,10 @@ const Content = styled('div')`
     height: 32px;
   }
 
+  & * {
+    max-width: 100%;
+  }
+
   a {
     color: ${p => p.theme.tx.link};
     text-decoration: none;
@@ -38,14 +44,18 @@ const Content = styled('div')`
 export default class ExtraInfo extends PureComponent {
   static propTypes = {
     info: PropTypes.string,
+    operator: operatorProp,
   };
 
   render() {
-    const { info } = this.props;
+    const { info, operator } = this.props;
     return info ? (
       <Container alwaysBorder>
         <Content>
-          <Info fill="#555555" />
+          {operator.result &&
+            operator.result.slug !== 'flightgiftcard-usd-vouchers-usa' && (
+              <Info fill="#555555" />
+            )}
           <div
             dangerouslySetInnerHTML={{
               __html: info,

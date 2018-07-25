@@ -49,6 +49,6 @@ export default {
   // breakpoints
   bp: {
     mobile: '460px',
-    tablet: '720px',
+    tablet: '770px', // raised this to 770px because iPads according to chrome dev tools is 768 px
   },
 };
