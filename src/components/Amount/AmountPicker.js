@@ -1,10 +1,10 @@
-import Radio from 'material-ui/Radio';
 import React, { PureComponent } from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { compose } from 'recompose';
 
+import { selectAmount, selectOperator } from '../../store';
 import { setAmount } from '../../actions';
 import { selectValidAmount } from '../../lib/amount-validation';
 import { getPrice, getDisplayName } from '../../lib/currency-helpers';
@@ -18,6 +18,7 @@ import {
 
 import Radio from 'material-ui/Radio';
 
+import ActiveSection from '../UI/ActiveSection';
 import NextButton from '../UI/NextButton';
 import SectionTitle from '../UI/SectionTitle';
 import Spinner from '../UI/Spinner';
