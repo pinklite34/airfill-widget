@@ -50,31 +50,3 @@ render() {
   return <Widget />;
 }
 ```
-
-## Components
-
-```javascript
-import { withWidget } from '@bitrefill/airfill-widget';
-
-const WidgetState = ({ operators, countryList }) => (
-  <div>
-    {operators.map(op => <p key={op.name}>{op.name}</p>)}
-    {countryList.map(c => <p key={c.name}>{c.name}</p>)}
-  </div>
-);
-
-export default withWidget(WidgetState);
-```
-
-## Initialize widget before render
-
-```javascript
-import { initializeWidget } from '@bitrefill/airfill-widget';
-import { connect } from 'react-redux';
-
-const Component = ({ initializeWidget }) => {
-  initializeWidget(apiKey || 'key');
-}
-
-export default connect(null, { initializeWidget })(Component);
-```
