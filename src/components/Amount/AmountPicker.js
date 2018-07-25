@@ -1,29 +1,26 @@
+import Radio from 'material-ui/Radio';
 import React, { PureComponent } from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { compose } from 'recompose';
 
-import { selectOperator, selectAmount } from '../../store';
 import { setAmount } from '../../actions';
-
 import { selectValidAmount } from '../../lib/amount-validation';
 import { getPrice, getDisplayName } from '../../lib/currency-helpers';
 import {
-  configProp,
-  operatorResultProp,
   amountProp,
+  configProp,
   fnProp,
   historyProp,
+  operatorResultProp,
 } from '../../lib/prop-types';
 
 import Radio from 'material-ui/Radio';
 
 import NextButton from '../UI/NextButton';
-import ActiveSection from '../UI/ActiveSection';
 import SectionTitle from '../UI/SectionTitle';
 import Spinner from '../UI/Spinner';
-
 import AmountPackage from './AmountPackage';
 import AmountRange from './AmountRange';
 
