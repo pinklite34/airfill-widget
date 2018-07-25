@@ -49,6 +49,10 @@ export const canAfford = ({
   // payment mode
   mode,
 }) => {
+  if (isDirectPayment(mode)) {
+    return true;
+  }
+
   if (!operator) return false;
 
   // if account balance is NaN, it's loading
@@ -87,7 +91,7 @@ export const canAfford = ({
   if (btcPrice < 0.001 && mode === 'localbitcoins') return false;
   if (btcPrice > 0.04294967 && mode === 'lightning') return false;
 
-  if (isDirectPayment(mode) || !requireAccountBalance) {
+  if (!requireAccountBalance) {
     return true;
   }
 
