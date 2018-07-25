@@ -150,7 +150,8 @@ class Recipient extends PureComponent {
           }
           return {
             id: 'recipient.validation.country',
-            children: 'Phone number does not match country',
+            children:
+              'The phone number appears to be typed incorrectly. Please verify that there are no extra digits.',
           };
         case 'email':
           return {
