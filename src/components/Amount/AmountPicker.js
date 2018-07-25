@@ -1,14 +1,13 @@
 import Radio from 'material-ui/Radio';
 import React, { PureComponent } from 'react';
-import styled, { css } from 'react-emotion';
+import styled from 'react-emotion';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { compose } from 'recompose';
 
 import { setAmount } from '../../actions';
 import { selectValidAmount } from '../../lib/amount-validation';
-import { getDisplayName, getPrice } from '../../lib/currency-helpers';
-import { isValidEmail } from '../../lib/email-validation';
+import { getPrice, getDisplayName } from '../../lib/currency-helpers';
 import {
   amountProp,
   configProp,
@@ -16,56 +15,39 @@ import {
   historyProp,
   operatorResultProp,
 } from '../../lib/prop-types';
-import { selectAmount, selectOperator } from '../../store';
-import ActiveSection from '../UI/ActiveSection';
-import Card from '../UI/Card';
-import Info from '../UI/info.svg';
+
+import Radio from 'material-ui/Radio';
+
 import NextButton from '../UI/NextButton';
 import SectionTitle from '../UI/SectionTitle';
 import Spinner from '../UI/Spinner';
 import AmountPackage from './AmountPackage';
 import AmountRange from './AmountRange';
 
-const styles = {
-  packages: css`
-    background-color: #fff;
+import { isValidEmail } from '../../lib/email-validation';
+import ExtraInfo from './ExtraInfo';
 
-    & > label {
-      display: flex;
-      align-items: center;
-      padding-right: 2px;
-      height: auto;
-      margin: 0;
-      border-top: 1px solid rgba(0, 0, 0, 0.08);
-    }
-  `,
-  operatorInfoContainer: css`
-    font-weight: 500;
-    margin-bottom: 16px;
-  `,
-  operatorInfo: css`
-    padding: 12px;
+const Title = styled(SectionTitle)`
+  margin-left: 72px;
+`;
+
+const Packages = styled('div')`
+  background-color: #fff;
+
+  & > label {
     display: flex;
-    flex-direction: row;
     align-items: center;
+    padding-right: 2px;
+    height: auto;
+    margin: 0;
+    border-top: ${p => p.theme.bd.primary};
+  }
+`;
 
-    & svg {
-      margin-right: 8px;
-      width: 32px;
-      height: 32px;
-    }
-
-    & * {
-      max-width: 100%;
-    }
-  `,
-  title: css`
-    margin-left: 36px;
-  `,
-};
-
-const InfoContainer = styled('div')`
-  padding: 16px;
+const RadioWrapper = styled('div')`
+  width: 72px;
+  display: flex;
+  justify-content: center;
 `;
 
 class AmountPicker extends PureComponent {
@@ -132,20 +114,24 @@ class AmountPicker extends PureComponent {
       billingCurrency
     ).toUpperCase();
 
+    const showPrice = !config.coin || config.coin === 'bitcoin';
+
     return (
       <label key={pkg.value}>
-        <Radio
-          checked={amount === pkg.value}
-          onChange={e => setAmount(pkg.value)}
-          disabled={requireAccountBalance && price > userAccountBalance}
-        />
+        <RadioWrapper>
+          <Radio
+            checked={amount === pkg.value}
+            onChange={e => setAmount(pkg.value)}
+            disabled={requireAccountBalance && price > userAccountBalance}
+          />
+        </RadioWrapper>
         <AmountPackage
           name={
             operator.result.type === 'data'
               ? pkg.value
               : `${pkg.value} ${operator.result.currency}`
           }
-          price={`${price} ${formattedBillingCurrency}`}
+          price={showPrice && `${price} ${formattedBillingCurrency}`}
         />
       </label>
     );
@@ -171,30 +157,11 @@ class AmountPicker extends PureComponent {
         renderNextButton={() => (
           <NextButton disabled={disabled} onClick={this.next} />
         )}>
-        {operator.result.extraInfo && (
-          <InfoContainer>
-            <Card className={styles.operatorInfoContainer}>
-              <div className={styles.operatorInfo}>
-                {operator.result &&
-                  operator.result.slug !==
-                    'flightgiftcard-usd-vouchers-usa' && (
-                    <Info fill="#555555" />
-                  )}
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: operator.result.extraInfo,
-                  }}
-                />
-              </div>
-            </Card>
-          </InfoContainer>
-        )}
+        <ExtraInfo info={operator.result.extraInfo} operator={operator} />
 
-        <SectionTitle className={styles.title}>{'Select amount'}</SectionTitle>
+        <Title text={{ id: 'title.selectamount', children: 'Select amount' }} />
 
-        <div className={`${styles.packages} amount-picker`}>
-          {operator.result.packages.map(this.renderPackage)}
-        </div>
+        <Packages>{operator.result.packages.map(this.renderPackage)}</Packages>
 
         {operator.result.isRanged && (
           <AmountRange
@@ -203,6 +170,7 @@ class AmountPicker extends PureComponent {
             currency={operator.result.currency}
             billingCurrency={billingCurrency}
             onChange={setAmount}
+            config={config}
           />
         )}
       </ActiveSection>

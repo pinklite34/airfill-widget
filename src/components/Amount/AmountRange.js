@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { css } from 'react-emotion';
+import styled from 'react-emotion';
 
 import Input from 'material-ui/Input';
 
@@ -9,67 +9,73 @@ import {
   currencyProp,
   amountProp,
   fnProp,
+  configProp,
 } from '../../lib/prop-types';
 
 import AmountPackage from './AmountPackage';
 import SectionTitle from '../UI/SectionTitle';
+import Text from '../UI/Text';
 
-const styles = {
-  container: css`
-    margin-top: 16px;
-  `,
-  row: css`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    background-color: #fff;
-    margin: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    padding: 8px 16px;
-  `,
-  input: css`
-    display: inline-block;
-    width: 100px;
-    padding: 0 !important;
-
-    & input {
-      font-family: inherit;
-      padding: 0 !important;
-      color: #000;
-      font-weight: 500;
-    }
-  `,
-  label: css`
-    position: relative;
-    display: inline-block;
-    color: #000;
-    width: 48px;
-    left: -48px;
-    margin-right: -48px;
-    background-color: #fff;
-    text-align: right;
-    font-size: 16px;
-    line-height: 1;
-  `,
-  cost: css`
-    line-height: 20px;
-  `,
-  title: css`
-    margin-left: 36px;
-  `,
-  meta: css`
-    background: rgba(0, 0, 0, 0.1);
-    padding: 4px;
-    font-size: 12px;
-    line-height: 16px;
-    color: #333;
-    margin-left: 16px;
-  `,
-};
+const Container = styled('div')`
+  margin-top: 16px;
+`;
 
 const RangeContainer = styled('div')`
   margin-left: 32px;
+`;
+
+const Title = styled(SectionTitle)`
+  margin-left: 36px;
+`;
+
+const Row = styled('div')`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #fff;
+  margin: 0;
+  border-top: ${p => p.theme.bd.primary};
+  border-bottom: ${p => p.theme.bd.primary};
+  padding: 8px 16px;
+`;
+
+const StyledInput = styled(Input)`
+  display: inline-block;
+  width: 100px;
+  padding: 0 !important;
+
+  & input {
+    font-family: inherit;
+    padding: 0 !important;
+    color: #000;
+    font-weight: 500;
+  }
+`;
+
+const Label = styled('label')`
+  position: relative;
+  display: inline-block;
+  color: #000;
+  width: 48px;
+  left: -48px;
+  margin-right: -48px;
+  background-color: #fff;
+  text-align: right;
+  font-size: 16px;
+  line-height: 1;
+`;
+
+const Cost = styled('span')`
+  line-height: 20px;
+`;
+
+const Meta = styled('div')`
+  background: rgba(0, 0, 0, 0.1);
+  padding: 4px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #333;
+  margin-left: 16px;
 `;
 
 export default function AmountRange({
@@ -78,6 +84,7 @@ export default function AmountRange({
   currency,
   billingCurrency,
   onChange,
+  config,
 }) {
   const min = Math.ceil(range.min);
   const max = Math.floor(range.max);
@@ -87,17 +94,23 @@ export default function AmountRange({
   const displayableCost =
     billingCurrency === 'XBT' ? satoshiToBTC(cost) : cost.toFixed(2);
 
+  const displayedCurrency = getDisplayName(currency);
+  const showPrice = !config.coin || config.coin === 'bitcoin';
+
   return (
-    <div className={styles.container}>
-      <SectionTitle className={styles.title}>
-        {'...or select custom amount'}
-      </SectionTitle>
-      <div className={styles.row}>
+    <Container>
+      <Title
+        text={{
+          id: 'title.customamount',
+          children: '...or select custom amount',
+        }}
+      />
+      <Row>
         <RangeContainer>
           <AmountPackage
             name={
               <div>
-                <Input
+                <StyledInput
                   type="number"
                   min={min}
                   max={max}
@@ -111,33 +124,36 @@ export default function AmountRange({
                         ? onChange(range.min)
                         : null
                   }
-                  className={`${styles.input}`}
                   id="custom_amount"
                 />
-                <label className={styles.label} htmlFor="custom_amount">
-                  {currency}
-                </label>
+                <Label htmlFor="custom_amount">{currency}</Label>
               </div>
             }
             price={
-              <span className={styles.cost}>
-                {displayableCost > 0 ? displayableCost : '0'}{' '}
-                {getDisplayName(billingCurrency)}
-              </span>
+              showPrice && (
+                <Cost>
+                  {displayableCost > 0 ? displayableCost : '0'}{' '}
+                  {getDisplayName(billingCurrency)}
+                </Cost>
+              )
             }
           />
         </RangeContainer>
 
-        <div className={styles.meta}>
+        <Meta>
           <div>
-            <strong>Min:</strong> {range.min} {getDisplayName(currency)}
+            <Text id="amount.min">
+              <strong>Min:</strong> {{ min }} {{ displayedCurrency }}
+            </Text>
           </div>
           <div>
-            <strong>Max:</strong> {range.max} {getDisplayName(currency)}
+            <Text id="amount.max">
+              <strong>Max:</strong> {{ max }} {{ displayedCurrency }}
+            </Text>
           </div>
-        </div>
-      </div>
-    </div>
+        </Meta>
+      </Row>
+    </Container>
   );
 }
 
@@ -147,4 +163,5 @@ AmountRange.propTypes = {
   currency: currencyProp,
   billingCurrency: currencyProp,
   onChange: fnProp,
+  config: configProp,
 };

@@ -5,3 +5,7 @@ export function fromWindow(prop) {
     console.error(e);
   }
 }
+
+export function getLanguage() {
+  return fromWindow('BITREFILL__LNG');
+}

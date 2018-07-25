@@ -9,4 +9,5 @@ export default text => {
   } catch (e) {}
 
   document.body.removeChild(element);
+  window.alert('Copied to clipboard!');
 };

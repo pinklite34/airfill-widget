@@ -32,6 +32,10 @@
     "alpha2": "AI"
   },
   {
+    "name": "Antarctica",
+    "alpha2": "AQ"
+  },
+  {
     "name": "Antigua and Barbuda",
     "alpha2": "AG"
   },
@@ -112,8 +116,16 @@
     "alpha2": "BW"
   },
   {
+    "name": "Bouvet Island",
+    "alpha2": "BV"
+  },
+  {
     "name": "Brazil",
     "alpha2": "BR"
+  },
+  {
+    "name": "British Indian Ocean Territory",
+    "alpha2": "IO"
   },
   {
     "name": "Brunei Darussalam",
@@ -166,6 +178,14 @@
   {
     "name": "China",
     "alpha2": "CN"
+  },
+  {
+    "name": "Christmas Island",
+    "alpha2": "CX"
+  },
+  {
+    "name": "Cocos (Keeling) Islands",
+    "alpha2": "CC"
   },
   {
     "name": "Colombia",
@@ -256,7 +276,7 @@
     "alpha2": "ET"
   },
   {
-    "name": "Falkland Islands",
+    "name": "Falkland Islands (Malvinas)",
     "alpha2": "FK"
   },
   {
@@ -274,6 +294,18 @@
   {
     "name": "France",
     "alpha2": "FR"
+  },
+  {
+    "name": "French Guiana",
+    "alpha2": "GF"
+  },
+  {
+    "name": "French Polynesia",
+    "alpha2": "PF"
+  },
+  {
+    "name": "French Southern Territories",
+    "alpha2": "TF"
   },
   {
     "name": "Gabon",
@@ -312,6 +344,10 @@
     "alpha2": "GD"
   },
   {
+    "name": "Guadeloupe",
+    "alpha2": "GP"
+  },
+  {
     "name": "Guam",
     "alpha2": "GU"
   },
@@ -338,6 +374,10 @@
   {
     "name": "Haiti",
     "alpha2": "HT"
+  },
+  {
+    "name": "Heard Island and Mcdonald Islands",
+    "alpha2": "HM"
   },
   {
     "name": "Holy See (Vatican City State)",
@@ -424,7 +464,7 @@
     "alpha2": "KP"
   },
   {
-    "name": "Korea, Republic of",
+    "name": "South Korea",
     "alpha2": "KR"
   },
   {
@@ -580,6 +620,10 @@
     "alpha2": "NL"
   },
   {
+    "name": "Netherlands Antilles",
+    "alpha2": "AN"
+  },
+  {
     "name": "New Caledonia",
     "alpha2": "NC"
   },
@@ -600,6 +644,18 @@
     "alpha2": "NG"
   },
   {
+    "name": "Niue",
+    "alpha2": "NU"
+  },
+  {
+    "name": "Norfolk Island",
+    "alpha2": "NF"
+  },
+  {
+    "name": "Northern Mariana Islands",
+    "alpha2": "MP"
+  },
+  {
     "name": "Norway",
     "alpha2": "NO"
   },
@@ -614,6 +670,10 @@
   {
     "name": "Palau",
     "alpha2": "PW"
+  },
+  {
+    "name": "Palestinian Territory",
+    "alpha2": "PS"
   },
   {
     "name": "Panama",
@@ -636,6 +696,10 @@
     "alpha2": "PH"
   },
   {
+    "name": "Pitcairn",
+    "alpha2": "PN"
+  },
+  {
     "name": "Poland",
     "alpha2": "PL"
   },
@@ -650,6 +714,10 @@
   {
     "name": "Qatar",
     "alpha2": "QA"
+  },
+  {
+    "name": "Reunion",
+    "alpha2": "RE"
   },
   {
     "name": "Romania",
@@ -674,6 +742,10 @@
   {
     "name": "Saint Lucia",
     "alpha2": "LC"
+  },
+  {
+    "name": "Saint Pierre and Miquelon",
+    "alpha2": "PM"
   },
   {
     "name": "Saint Vincent and the Grenadines",
@@ -736,6 +808,10 @@
     "alpha2": "ZA"
   },
   {
+    "name": "South Georgia and the South Sandwich Islands",
+    "alpha2": "GS"
+  },
+  {
     "name": "Spain",
     "alpha2": "ES"
   },
@@ -750,6 +826,10 @@
   {
     "name": "Suriname",
     "alpha2": "SR"
+  },
+  {
+    "name": "Svalbard and Jan Mayen",
+    "alpha2": "SJ"
   },
   {
     "name": "Swaziland",
@@ -816,6 +896,10 @@
     "alpha2": "TM"
   },
   {
+    "name": "Turks and Caicos Islands",
+    "alpha2": "TC"
+  },
+  {
     "name": "Tuvalu",
     "alpha2": "TV"
   },
@@ -840,6 +924,10 @@
     "alpha2": "US"
   },
   {
+    "name": "United States Minor Outlying Islands",
+    "alpha2": "UM"
+  },
+  {
     "name": "Uruguay",
     "alpha2": "UY"
   },
@@ -858,6 +946,18 @@
   {
     "name": "Viet Nam",
     "alpha2": "VN"
+  },
+  {
+    "name": "Virgin Islands, British",
+    "alpha2": "VG"
+  },
+  {
+    "name": "Virgin Islands, U.S.",
+    "alpha2": "VI"
+  },
+  {
+    "name": "Wallis and Futuna",
+    "alpha2": "WF"
   },
   {
     "name": "Western Sahara",

@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { render } from 'react-dom';
-import { Provider } from 'react-redux';
 import createHistory from 'history/createMemoryHistory';
+import { Provider } from 'react-redux';
 import {
   ConnectedRouter,
   routerReducer,
@@ -14,15 +14,6 @@ import { client } from './lib/api-client';
 import configureStore from './store/configureStore';
 
 import Widget from './components/Widget';
-
-// global module exports
-import widgetStoreEnhancer from './store/enhanceStore';
-import airfillWidget from './store';
-
-export { airfillWidget, widgetStoreEnhancer, client as restClient };
-
-export * from './store';
-export * from './actions';
 
 export default Widget;
 
@@ -82,9 +73,7 @@ function AirfillWidget(ele, opt) {
   if (paymentButtons && !Array.isArray(paymentButtons)) {
     console.error('paymentButtons has to be an array');
   } else if (paymentButtons) {
-    paymentButtons.forEach(element => {
-      element.paymentMode = 'dashboard';
-    });
+    paymentButtons.forEach(element => (element.paymentMode = 'dashboard'));
   }
 
   render(

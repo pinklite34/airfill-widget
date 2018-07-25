@@ -1,8 +1,8 @@
-import { formatNumber } from 'libphonenumber-js';
-import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
+import { formatNumber } from 'libphonenumber-js';
 
 import {
   setEmail,
@@ -10,6 +10,7 @@ import {
   setSubscribeNewsletter,
   trigger,
 } from '../../actions';
+
 import { isValidEmail } from '../../lib/email-validation';
 import { getRecipientIcon } from '../../lib/icon-picker';
 import { getPlaceholder, isValidForCountry } from '../../lib/number-helpers';
@@ -34,22 +35,14 @@ import {
 } from '../../store';
 
 import NextButton from '../UI/NextButton';
-import ErrorBanner from '../UI/ErrorBanner';
-import NumberInput from '../UI/NumberInput';
+import InputRow from '../UI/NumberInput';
 import ActiveSection from '../UI/ActiveSection';
-
-const Text = styled('p')`
-  font-weight: 500;
-`;
+import Text from '../UI/Text';
 
 const InputContainer = styled('div')`
   @media (min-width: 460px) {
     width: 50%;
   }
-`;
-
-const Content = styled('div')`
-  padding: 0 0 16px;
 `;
 
 class Recipient extends PureComponent {
@@ -101,17 +94,28 @@ class Recipient extends PureComponent {
   getNumberLabel = () => {
     const { operator } = this.props;
 
+    console.log(operator.result.recipientType);
+
     if (operator.result) {
       switch (operator.result.recipientType) {
         case 'phone_number':
-          return 'The phone number to top up';
+          return {
+            id: 'recipient.label.phone',
+            children: 'The phone number to top up',
+          };
         case 'username':
-          return 'Reddit username / post permalink';
+          return {
+            id: 'recipient.label.username',
+            children: 'Reddit username / post permalink',
+          };
         case 'email':
-          return 'Delivery email address';
+          return {
+            id: 'recipient.label.email',
+            children: 'Delivery email address',
+          };
         case 'none':
         default:
-          return '';
+          return { id: 'recipient.label.empty', children: '' };
       }
     }
   };
@@ -139,15 +143,24 @@ class Recipient extends PureComponent {
       switch (operator.result.recipientType) {
         case 'phone_number':
           if (country.alpha2 === 'XI') {
-            return 'Please enter a valid phone number';
+            return {
+              id: 'recipient.validation.number',
+              children: 'Please enter a valid phone number',
+            };
           }
-          return 'Phone number does not match country';
+          return {
+            id: 'recipient.validation.country',
+            children: 'Phone number does not match country',
+          };
         case 'email':
-          return 'Please enter a valid email address';
+          return {
+            id: 'recipient.validation.email',
+            children: 'Please enter a valid email address',
+          };
       }
     }
 
-    return '';
+    return { id: 'recipient.validation.empty', children: '' };
   };
 
   continue = () => {
@@ -183,25 +196,23 @@ class Recipient extends PureComponent {
 
     return (
       <ActiveSection
-        padding="0 16px"
+        padding="0 16px 16px"
         renderNextButton={() => (
           <NextButton disabled={!number} onClick={this.continue} />
-        )}>
-        {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
-        <Content>
-          <Text>{this.getNumberLabel()}</Text>
-          <InputContainer>
-            <NumberInput
-              country={country}
-              value={number}
-              placeholder={this.state.placeholder}
-              onChange={this.onChange}
-              submitEnabled={this.validateInput()}
-              onSubmit={this.continue}
-              icon={<Icon />}
-            />
-          </InputContainer>
-        </Content>
+        )}
+        error={error}>
+        <Text type="h3" {...this.getNumberLabel()} />
+        <InputContainer>
+          <InputRow
+            country={country}
+            value={number}
+            placeholder={this.state.placeholder}
+            onChange={this.onChange}
+            submitEnabled={this.validateInput()}
+            onSubmit={this.continue}
+            icon={<Icon />}
+          />
+        </InputContainer>
       </ActiveSection>
     );
   }

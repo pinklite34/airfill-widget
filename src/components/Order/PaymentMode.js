@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'react-emotion';
+import styled from 'react-emotion';
 
 import { connect } from 'react-redux';
 import { setPaymentMethod } from '../../actions';
@@ -20,115 +20,28 @@ import {
   amountProp,
   paymentStatusProp,
 } from '../../lib/prop-types';
+import DeviceInfo from '../../lib/DeviceInfo';
 
 import Button from '../UI/Button';
-import Tooltip from 'material-ui/Tooltip';
 
 import BitcoinAddress from '../UI/BitcoinAddress';
 import OrderHeader from '../UI/OrderHeader';
 import PaymentLayout from './PaymentLayout';
 
 import QrCode from '../UI/QrCode';
+import Flex from '../UI/Flex';
+import Text from '../UI/Text';
+import Link from '../UI/Link';
+import Icon from '../UI/Icon';
 
-const styles = {
-  list: css`
-    display: block;
+const PartialWarning = styled('div')`
+  border-radius: 4px;
+  padding: 12px;
+  background: #ffdfdf;
+`;
 
-    > dt {
-      float: left;
-      text-align: right;
-      width: 120px;
-      font-weight: 500;
-      margin-right: 24px;
-    }
-
-    > dd {
-      margin-bottom: 8px;
-    }
-
-    @media (max-width: 460px) {
-      > dt {
-        width: auto;
-      }
-
-      > dd {
-        text-align: right;
-      }
-    }
-  `,
-  paymentMethods: css`
-    display: flex;
-    align-items: center;
-    position: relative;
-  `,
-  buttonGroup: css`
-    margin: -8px;
-  `,
-  button: css`
-    margin: 8px;
-  `,
-  package: css`
-    font-size: 16px;
-    color: #323232;
-    font-weight: 500;
-  `,
-  changeButton: css`
-    color: #3e8fe4 !important;
-    font-weight: 500 !important;
-    margin-left: 12px;
-  `,
-  container: css`
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-
-    @media (max-width: 720px) {
-      flex-direction: column;
-    }
-  `,
-  left: css`
-    flex: 0 0 70%;
-
-    @media (max-width: 460px) {
-      padding-right: 48px;
-    }
-  `,
-  right: css`
-    flex: 0 0 28%;
-    margin-left: auto;
-
-    & img {
-      width: 90%;
-    }
-
-    @media (max-width: 720px) {
-      margin-left: 0px;
-
-      & img {
-        padding-top: 24px;
-        width: 50%;
-      }
-    },
-  `,
-  partialWarning: css`
-    border-radius: 4px;
-    padding: 12px;
-    background: #ffdfdf;
-    margin-bottom: 24px;
-  `,
-  help: css`
-    text-decoration: none;
-    color: #3e8fe4;
-    padding: 12px;
-  `,
-  paymentIcon: css`
-    width: 24px;
-    height: 24px;
-  `,
-};
-
-const PaymentIconContainer = styled('div')`
-  padding: 6px;
+const PaymentSection = styled('div')`
+  margin-bottom: 16px;
 `;
 
 class PaymentMode extends PureComponent {
@@ -152,14 +65,6 @@ class PaymentMode extends PureComponent {
   state = {
     open: false,
     isLoading: false,
-    addressTooltip: false,
-    amountTooltip: false,
-  };
-
-  onCopy = (text, field) => () => {
-    this.setState({ [field]: true });
-    setTimeout(() => this.setState({ [field]: false }), 2000);
-    setClipboardText(text);
   };
 
   onOpenWallet = uri => async () => {
@@ -229,13 +134,6 @@ class PaymentMode extends PureComponent {
     let paymentAddress;
     let uri;
 
-    let PaymentInstructions = ({ children }) => (
-      <div>
-        Send <i>exactly</i>
-        {children} to this address:
-      </div>
-    );
-
     if (isLightningPayment(paymentMethod.paymentMode)) {
       prefix = 'lightning';
       if (paymentMethod.paymentMode === 'lightning') {
@@ -248,12 +146,6 @@ class PaymentMode extends PureComponent {
       }
       paymentAddress = order.payment.lightningInvoice;
       uri = `${prefix}:${paymentAddress}`.toUpperCase();
-      PaymentInstructions = ({ children }) => (
-        <div>
-          Copy the invoice below and pay
-          {children}
-        </div>
-      );
     } else if (paymentMethod.paymentMode === 'ethereum') {
       paymentAddress = order.payment.altcoinAddress;
       uri = `${prefix}:${paymentAddress}?amount=${remaining || price}`;
@@ -263,29 +155,45 @@ class PaymentMode extends PureComponent {
     }
 
     const isPartial = paymentStatus.status === 'partial';
-    const title = isPartial ? 'Partial payment detected' : 'Payment';
-    const subtitle = isPartial
-      ? 'Send the remainder to purchase your refill'
-      : 'Confirm the details below to purchase your refill';
+    const displayPrice = remaining || price;
 
     return (
       <div>
-        <OrderHeader order={order} title={title} subtitle={subtitle} />
+        <OrderHeader
+          order={order}
+          title={
+            isPartial
+              ? {
+                  id: 'order.partial.title',
+                  children: 'Partial payment detected',
+                }
+              : { id: 'order.default.title', children: 'Payment' }
+          }
+          subtitle={
+            isPartial
+              ? {
+                  id: 'order.partial.subtitle',
+                  children: 'Send the remainder to purchase your refill',
+                }
+              : {
+                  id: 'order.default.subtitle',
+                  children: 'Confirm the details below to purchase your refill',
+                }
+          }
+        />
 
-        <PaymentLayout {...this.props}>
-          <div>
-            <div>
-              <PaymentIconContainer>
-                <img src={paymentMethod.icon} className={styles.paymentIcon} />
-              </PaymentIconContainer>
-            </div>
-            <div>
-              <p>{paymentMethod.title}</p>
-            </div>
-          </div>
-          <div>
-            <div />
-            <div>
+        <DeviceInfo>
+          {({ greaterThan }) => (
+            <PaymentLayout {...this.props}>
+              <Flex row alignItems="center" padding="0 0 16px 0">
+                <Icon
+                  src={paymentMethod.icon}
+                  alt={paymentMethod.title}
+                  margin="0 8px 0 0"
+                />
+                <Text type="h3">{paymentMethod.title}</Text>
+              </Flex>
+
               {!isDirect ? (
                 <Button
                   onClick={() =>
@@ -294,58 +202,81 @@ class PaymentMode extends PureComponent {
                   {paymentMethod.paymentModeOptions.title}
                 </Button>
               ) : (
-                <div className={styles.container}>
-                  <div className={styles.left}>
-                    <PaymentInstructions>
-                      <Tooltip open={this.state.amountTooltip} title="Copied!">
-                        <strong onClick={this.onCopy(price, 'amountTooltip')}>
-                          {` ${remaining || price} ${unit} `}
-                        </strong>
-                      </Tooltip>
-                    </PaymentInstructions>
-                    <Tooltip open={this.state.addressTooltip} title="Copied!">
+                <Flex row={greaterThan.tablet} width="100%">
+                  <Flex
+                    style={{ flex: 1 }}
+                    justifyContent="flex-start"
+                    padding={greaterThan.tablet ? '0 16px 0 0' : '0 0 16px'}>
+                    <PaymentSection>
+                      {isLightningPayment(paymentMethod.paymentMode) ? (
+                        <Text id="order.payment.sendLightning">
+                          Copy the invoice below and pay{' '}
+                          <strong>
+                            {{ displayPrice }} {{ unit }}
+                          </strong>
+                        </Text>
+                      ) : (
+                        <Text id="order.payment.send">
+                          Send <i>exactly</i>{' '}
+                          <strong>
+                            {{ displayPrice }} {{ unit }}
+                          </strong>{' '}
+                          to this address:
+                        </Text>
+                      )}
+                    </PaymentSection>
+
+                    <PaymentSection>
                       <BitcoinAddress
-                        onClick={this.onCopy(paymentAddress, 'addressTooltip')}
+                        onClick={() => setClipboardText(paymentAddress)}
                         address={paymentAddress}
                       />
-                    </Tooltip>
-                    <br />
-                    <br />
+                    </PaymentSection>
+
                     {isPartial && (
-                      <div className={styles.partialWarning}>
-                        We have received a partial payment from you.
-                        <br /> You paid <strong>{paid + ' ' + unit}</strong>,
-                        but the invoice was for{' '}
-                        <strong>{price + ' ' + unit}</strong>.
-                        <br />
-                        Please send the remaining{' '}
-                        <strong>{remaining + ' ' + unit}</strong>
-                      </div>
+                      <PaymentSection>
+                        <PartialWarning>
+                          We have received a partial payment from you.
+                          <br /> You paid <strong>{paid + ' ' + unit}</strong>,
+                          but the invoice was for{' '}
+                          <strong>{price + ' ' + unit}</strong>.
+                          <br />
+                          Please send the remaining{' '}
+                          <strong>{remaining + ' ' + unit}</strong>
+                        </PartialWarning>
+                      </PaymentSection>
                     )}
-                    <Button
-                      className={styles.bottomButton}
-                      onClick={this.onOpenWallet(uri)}>
-                      {'Open in Wallet'}
-                    </Button>
+
+                    <PaymentSection>
+                      <Button
+                        onClick={this.onOpenWallet(uri)}
+                        text={{
+                          id: 'button.openwallet',
+                          children: 'Open in Wallet',
+                        }}
+                      />
+                    </PaymentSection>
+
                     {isPartial && (
-                      <a
-                        href={`https://www.bitrefill.com/support/${
-                          order.orderId
-                        }/${order.payment.address}`}
-                        target="_blank"
-                        className={styles.help}>
-                        Need help?
-                      </a>
+                      <PaymentSection>
+                        <Link
+                          href={`https://www.bitrefill.com/support/${
+                            order.orderId
+                          }/${order.payment.address}`}>
+                          <Text id="order.help">Need help?</Text>
+                        </Link>
+                      </PaymentSection>
                     )}
-                  </div>
-                  <div className={styles.right}>
+                  </Flex>
+
+                  <div>
                     <QrCode value={uri} size={200} />
                   </div>
-                </div>
+                </Flex>
               )}
-            </div>
-          </div>
-        </PaymentLayout>
+            </PaymentLayout>
+          )}
+        </DeviceInfo>
       </div>
     );
   }

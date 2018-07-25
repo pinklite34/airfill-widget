@@ -1,28 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'react-emotion';
-import flags from './flags';
+import styled from 'react-emotion';
 
 import defaultFlag from '../../unknown-flag.png';
 
-const styles = {
-  image: css`
-    margin: -3px 0;
-    width: 24px;
-    height: 24px;
-  `,
-};
+const Img = styled('img')`
+  margin: -3px 0;
+  max-width: ${p => p.maxWidth || '24px'};
+  max-height: ${p => p.maxHeight || '24px'};
+`;
 
-export default function Flag({ country }) {
+export default function Flag({ country, width, height }) {
+  let flag;
+
+  try {
+    flag = require('flag-icons/flags/flags-iso/flat/24/' + country + '.png');
+  } catch (ex) {}
+
   return (
-    <img
-      src={flags[country] || defaultFlag}
+    <Img
+      src={flag || defaultFlag}
       alt={country}
-      className={styles.image}
+      maxWidth={width}
+      maxHeight={height}
     />
   );
 }
 
 Flag.propTypes = {
   country: PropTypes.string,
+  width: PropTypes.string,
+  height: PropTypes.string,
 };

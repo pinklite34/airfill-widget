@@ -1,15 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'react-emotion';
+import Icon from '../UI/Icon';
 
 const Container = styled('div')`
   width: 100%;
-  height: 72px;
+  min-height: 72px;
+  padding: 5px 16px;
 
-  background-color: ${props => (props.selected ? '#d8d8d8' : '#fff')};
+  background-color: ${p => (p.selected ? '#d8d8d8' : '#fff')};
+  border-bottom: ${p => p.theme.bd.primary};
 
   &:hover {
-    background-color: ${props => (props.selected ? '#d8d8d8' : '#fafafa')};
+    background-color: ${p => (p.selected ? '#d8d8d8' : '#fafafa')};
+  }
+
+  &:last-of-type {
+    border: none;
   }
 
   display: flex;
@@ -19,18 +26,12 @@ const Container = styled('div')`
   text-decoration: none;
   box-sizing: border-box;
   text-align: left;
-  cursor: ${props => (props.disabled ? 'normal' : 'pointer')};
+  cursor: ${p => (p.disabled ? 'normal' : 'pointer')};
 
   * {
-    ${props => (props.disabled ? 'color: gray !important' : '')};
-    ${props => (props.disabled ? 'filter: grayscale(100%)' : '')};
+    ${p => (p.disabled ? 'color: gray !important' : '')};
+    ${p => (p.disabled ? 'filter: grayscale(100%)' : '')};
   }
-`;
-
-const IconContainer = styled('div')`
-  width: 56px;
-  display: inline-block;
-  padding: 16px;
 `;
 
 const TextContainer = styled('div')`
@@ -67,13 +68,7 @@ const PaymentItem = ({
 }) => {
   return (
     <Container onClick={onClick} selected={selected} disabled={disabled}>
-      <IconContainer>
-        {typeof icon === 'string' ? (
-          <img src={icon} style={{ maxWidth: '100%' }} />
-        ) : (
-          icon
-        )}
-      </IconContainer>
+      <Icon src={icon} alt={title} />
       <TextContainer>
         <Title>{title}</Title>
         <Description>
@@ -88,7 +83,7 @@ const PaymentItem = ({
 };
 
 PaymentItem.propTypes = {
-  icon: PropTypes.any,
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   title: PropTypes.string.isRequired,
   description: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
     .isRequired,

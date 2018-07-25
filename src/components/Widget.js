@@ -1,24 +1,29 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Media from 'react-media';
-import { connect } from 'react-redux';
+import { connect, Provider } from 'react-redux';
 import { Route, withRouter } from 'react-router';
 import { compose } from 'recompose';
-import { injectGlobal } from 'emotion';
-import { ThemeProvider } from 'emotion-theming';
 import { I18nextProvider } from 'react-i18next';
+import { ThemeProvider } from 'emotion-theming';
+import createHistory from 'history/createMemoryHistory';
+import {
+  routerReducer,
+  routerMiddleware,
+  ConnectedRouter,
+} from 'react-router-redux';
 
-import { init, setOperator, setCountry } from '../actions';
+import { init, setOperator, useRecentRefill } from '../actions';
+import { injectGlobal } from 'emotion';
+
 import { configProps, inventoryProp, fnProp } from '../lib/prop-types';
-import i18n from '../lib/i18n';
 import { selectInventory } from '../store';
-import theme from '../theme';
+import configureStore from '../store/configureStore';
 
 import Card from './UI/Card';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import createMuiTheme from 'material-ui/styles/createMuiTheme';
 import blue from 'material-ui/colors/blue';
-
 import Root from './UI/Root';
 import Header from './Header';
 import Footer from './Footer';
@@ -32,6 +37,9 @@ import StatusEmail from './StatusEmail';
 import Payment from './PaymentMethod';
 import getMethods from '../payment-methods';
 import Spinner from './UI/Spinner';
+import { client } from '../lib/api-client';
+import i18n from '../lib/i18n';
+import theme from '../theme';
 
 const muiTheme = createMuiTheme({
   palette: {
@@ -49,7 +57,6 @@ class AirfillWidget extends Component {
   static propTypes = {
     init: fnProp,
     setOperator: PropTypes.func.isRequired,
-    setCountry: PropTypes.func.isRequired,
     inventory: inventoryProp,
     className: PropTypes.string,
     ...configProps,
@@ -90,23 +97,34 @@ class AirfillWidget extends Component {
 
   UNSAFE_componentWillMount() { // eslint-disable-line
     const {
-      isMobile,
+      key,
+      baseUrl,
       init,
       defaultNumber,
       setOperator,
-      forceOperator,
+      operator,
       history,
+      repeatOrder,
+      useRecentRefill,
     } = this.props;
 
-    if (forceOperator) {
-      setOperator(forceOperator);
+    client.configure({
+      token: key || '5GY9TZBK8E05U9JQSTWFXNQS4',
+      baseUrl: baseUrl || 'https://api.bitrefill.com/widget',
+    });
+
+    history.push('/refill');
+
+    if (operator) {
+      setOperator(operator);
       history.push('/refill/selectAmount');
     }
 
-    init({
-      defaultNumber: defaultNumber,
-      shouldLookupLocation: !isMobile,
-    });
+    if (repeatOrder) {
+      useRecentRefill(repeatOrder);
+    } else {
+      init({ defaultNumber });
+    }
   }
 
   componentDidCatch(err, info) {
@@ -137,10 +155,14 @@ class AirfillWidget extends Component {
         <ThemeProvider theme={theme}>
           <MuiThemeProvider theme={muiTheme}>
             <Root className={className}>
-              <Card>
+              <Card alwaysBorder style={{ overflow: 'hidden' }}>
                 {hasLoaded ? (
                   <Fragment>
-                    <Header isMobile={isMobile} branded={showLogo} />
+                    <Header
+                      config={config}
+                      isMobile={isMobile}
+                      branded={showLogo}
+                    />
                     <Country />
                     <Providers />
                     <Amount config={config} />
@@ -170,15 +192,11 @@ class AirfillWidget extends Component {
   }
 }
 
-function AirfillWidgetWrapper(props) {
-  return (
-    <Media query="(-moz-touch-enabled: 1), (pointer: coarse)">
-      {isMobile => <AirfillWidget isMobile={isMobile} {...props} />}
-    </Media>
-  );
-}
+export const history = createHistory();
+const middleware = routerMiddleware(history);
+const store = configureStore(routerReducer, middleware);
 
-export default compose(
+const StoreWidgetWrapper = compose(
   connect(
     state => ({
       inventory: selectInventory(state),
@@ -186,8 +204,20 @@ export default compose(
     {
       init,
       setOperator,
-      setCountry,
+      useRecentRefill,
     }
   ),
   withRouter
-)(AirfillWidgetWrapper);
+)(AirfillWidget);
+
+export default function Widget(props) {
+  return (
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <Media query="(-moz-touch-enabled: 1), (pointer: coarse)">
+          {isMobile => <StoreWidgetWrapper isMobile={isMobile} {...props} />}
+        </Media>
+      </ConnectedRouter>
+    </Provider>
+  );
+}

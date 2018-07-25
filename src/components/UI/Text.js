@@ -13,9 +13,10 @@ function getColor({ color, error, success, theme }, defaultColor) {
 export const H1Text = styled('h1')`
   color: ${p => getColor(p, p.theme.tx.primary)};
   padding: ${p => p.padding || 0};
-  margin: ${p => (p.tight ? 0 : '16px 0')};
+  margin: ${p => p.margin || (p.tight ? 0 : '16px 0')};
   text-align: ${p => (p.centered ? 'center' : 'left')};
-  font-size: ${p => p.size || '16px'};
+  font-size: ${p => p.size || '18px'};
+  font-weight: ${p => p.weight || 500};
   line-height: 1.5;
   text-decoration: ${p => p.underline && 'underline'};
   width: ${p => p.width};
@@ -26,27 +27,13 @@ export const H1Text = styled('h1')`
 `;
 
 export const H3Text = styled('h3')`
-  color: ${p => getColor(p, p.theme.tx.primary)};
-  margin: ${p => (p.tight ? 0 : '8px 0')};
-  padding: ${p => p.padding || 0};
-  text-align: ${p => (p.centered ? 'center' : 'left')};
-  font-size: ${p => p.size || '16px'};
-  line-height: 1.5;
-  text-decoration: ${p => p.underline && 'underline'};
-  width: ${p => p.width};
-
-  * {
-    color: ${p => getColor(p, p.theme.tx.primary)};
-  }
-`;
-
-export const PText = styled('p')`
   color: ${p => getColor(p, p.theme.tx.secondary)};
-  margin: ${p => (p.tight ? 0 : '8px 0')};
+  margin: ${p => p.margin || (p.tight ? 0 : '14px 0')};
   padding: ${p => p.padding || 0};
-  font-size: ${p => p.size || (p.small ? '12px' : '14px')};
   text-align: ${p => (p.centered ? 'center' : 'left')};
-  line-height: ${p => p.lineHeight || 1.5};
+  font-size: ${p => p.size || '14px'};
+  font-weight: ${p => p.weight || 500};
+  line-height: 1.5;
   text-decoration: ${p => p.underline && 'underline'};
   width: ${p => p.width};
 
@@ -55,11 +42,44 @@ export const PText = styled('p')`
   }
 `;
 
+export const PText = styled('p')`
+  color: ${p => getColor(p, p.theme.tx.secondary)};
+  margin: ${p => p.margin || (p.tight ? 0 : '8px 0')};
+  padding: ${p => p.padding || 0};
+  font-size: ${p => p.size || '12px'};
+  font-weight: ${p => p.weight};
+  text-align: ${p => (p.centered ? 'center' : 'left')};
+  line-height: ${p => p.lineHeight || 1.4};
+  text-decoration: ${p => p.underline && 'underline'};
+  width: ${p => p.width};
+
+  * {
+    color: ${p => getColor(p, p.theme.tx.secondary)};
+  }
+`;
+
+const LinkText = styled(PText)`
+  color: ${p => getColor(p, p.theme.tx.link)};
+  text-decoration: none;
+  cursor: pointer;
+
+  * {
+    color: ${p => getColor(p, p.theme.tx.link)};
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    text-decoration: underline;
+  }
+`;
+
 function getComponent(type) {
   return {
     h1: H1Text,
     h3: H3Text,
     p: PText,
+    link: LinkText,
   }[type];
 }
 
@@ -72,12 +92,15 @@ export default function Text({
   small,
   size,
   centered,
+  margin,
   padding,
   tight,
   underline,
   style,
   width,
+  weight,
   className,
+  dangerouslySetInnerHTML,
   ...transProps
 }) {
   const TextComponent = getComponent(type);
@@ -88,16 +111,19 @@ export default function Text({
     small,
     size,
     centered,
+    margin,
     padding,
     tight,
     underline,
     style,
     width,
+    weight,
     className,
+    dangerouslySetInnerHTML,
   };
 
   const children = id ? (
-    <Trans i18nKey={id} {...transProps} />
+    <Trans i18nKey={`widget:${id}`} {...transProps} />
   ) : (
     transProps.children
   );
@@ -113,17 +139,22 @@ export default function Text({
 
 Text.propTypes = {
   id: PropTypes.string,
-  type: PropTypes.oneOf(['h1', 'h3', 'p']),
+  type: PropTypes.oneOf(['h1', 'h3', 'p', 'link']),
   color: PropTypes.string,
   error: PropTypes.bool,
   success: PropTypes.bool,
   small: PropTypes.bool,
   size: PropTypes.string,
   centered: PropTypes.bool,
+  margin: PropTypes.string,
   padding: PropTypes.string,
   tight: PropTypes.bool,
   underline: PropTypes.bool,
   style: PropTypes.object,
   className: PropTypes.string,
   width: PropTypes.string,
+  weight: PropTypes.number,
+  dangerouslySetInnerHTML: PropTypes.shape({
+    __html: PropTypes.string.isRequired,
+  }),
 };

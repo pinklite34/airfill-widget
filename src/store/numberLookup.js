@@ -1,8 +1,14 @@
 const errorMessages = {
-  'Number is not valid':
-    'It seems like the number you entered is invalid. Please make sure all digits were entered correctly.',
-  'Country not supported':
-    "Unfortunately we currently don't support phone numbers from the country you entered.",
+  'Number is not valid': {
+    id: 'lookup.error.number',
+    children:
+      'It seems like the number you entered is invalid. Please make sure all digits were entered correctly.',
+  },
+  'Country not supported': {
+    id: 'lookup.error.country',
+    children:
+      "Unfortunately we currently don't support phone numbers from the country you entered.",
+  },
 };
 
 const initialState = {

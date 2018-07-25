@@ -1,7 +1,7 @@
 const colors = {
   black: '#18212e',
   blue: '#449bf7',
-  blueDark: '#084a96',
+  blueDark: '#2079d6',
   blueLight: '#20a5ff',
   green: '#13ce66',
   grey: '#777777',
@@ -24,7 +24,7 @@ export default {
   // background
   bg: {
     light: colors.greyLighter,
-    dark: colors.blueDark,
+    dark: colors.greyDark,
     secondary: colors.blue,
     primary: colors.blue,
     disabled: colors.greyDark,
@@ -34,8 +34,8 @@ export default {
   tx: {
     primary: colors.black,
     secondary: colors.greyDark,
-    accent: colors.redLight,
-    link: colors.blueLight,
+    accent: colors.blueDark,
+    link: colors.blueDark,
     error: colors.redLight,
     success: colors.green,
   },
@@ -43,6 +43,7 @@ export default {
   // borders
   bd: {
     primary: '1px solid rgba(0, 0, 0, 0.08)',
+    dotted: '2px dotted rgba(0, 0, 0, 0.08)',
   },
 
   // breakpoints

@@ -1,25 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'react-emotion';
+import styled from 'react-emotion';
 
-const style = css`
+import Text from './Text';
+import { transProp } from '../../lib/prop-types';
+
+const Container = styled('div')`
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
-  margin-bottom: 8px;
-  margin-left: 8px;
-  color: #777;
+  margin: ${p => (p.tight ? 0 : '0 0 8px 8px')};
+  color: ${p => p.theme.tx.secondary};
 `;
 
-export default function SectionTitle({ children, className, ...props }) {
+export default function SectionTitle({ text, className, children, ...props }) {
   return (
-    <div className={`${style} ${className}`} {...props}>
+    <Container className={className} {...props}>
+      {text && text.id ? <Text {...text} /> : text}
       {children}
-    </div>
+    </Container>
   );
 }
 
 SectionTitle.propTypes = {
+  text: PropTypes.oneOfType([transProp, PropTypes.string]).isRequired,
+  title: PropTypes.bool,
   children: PropTypes.node,
   className: PropTypes.string,
 };

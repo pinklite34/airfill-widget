@@ -10,6 +10,7 @@ import {
   fnProp,
   numberProp,
   numberLookupProp,
+  configProp,
 } from '../../lib/prop-types';
 
 import Text from '../UI/Text';
@@ -18,6 +19,7 @@ import ComboInput from '../UI/ComboInput';
 import Info from '../UI/info.svg';
 import theme from '../../theme';
 import Flex from '../UI/Flex';
+import { startsWith, capitalizeFirst } from '../../lib/string';
 
 const Error = styled('div')`
   display: flex;
@@ -58,6 +60,7 @@ class HeaderIntroduction extends PureComponent {
     history: historyProp,
     number: numberProp,
     branded: PropTypes.bool,
+    config: configProp,
   };
 
   state = {
@@ -71,7 +74,7 @@ class HeaderIntroduction extends PureComponent {
   lookupNumber = () => {
     const { lookupNumber, history, number } = this.props;
 
-    if (number.startsWith('+')) {
+    if (startsWith(number, '+')) {
       this.setState({ error: null }, () =>
         lookupNumber(number).then(
           result => history.push('/refill/selectProvider'),
@@ -80,16 +83,22 @@ class HeaderIntroduction extends PureComponent {
       );
     } else {
       this.setState({
-        error: 'A phone country code is required (example: +66)',
+        error: {
+          id: 'introduction.error.countrycode',
+          children: 'A phone country code is required (example: +66)',
+        },
       });
     }
   };
 
   render() {
-    const { isMobile, branded, history, numberLookup } = this.props;
+    const { isMobile, branded, history, numberLookup, config } = this.props;
     const { error } = this.state;
     const lookupError =
       (numberLookup.error && numberLookup.error.message) || numberLookup.error;
+    const displayedError = error || lookupError;
+
+    const coin = capitalizeFirst(config.coin || 'Bitcoin');
 
     return (
       <Flex centered>
@@ -99,15 +108,18 @@ class HeaderIntroduction extends PureComponent {
               type="h1"
               centered
               tight
-              id="widget.introduction.title"
+              id="introduction.title.branded"
+              size="16px"
+              weight={700}
               color={theme.white}>
-              Send Global Top Ups With Bitcoin
+              Send Global Top Ups With {{ coin }}
             </Text>
             <Text
               type="h3"
               centered
               size="12px"
-              id="widget.introduction.subtitle"
+              margin="8px 0"
+              id="introduction.subtitle"
               color={'rgba(255, 255, 255, 0.8)'}>
               Trusted by More Than 500 000 People
             </Text>
@@ -118,9 +130,9 @@ class HeaderIntroduction extends PureComponent {
               type="h1"
               centered
               tight
-              id="widget.introduction.title.unbranded"
+              id="introduction.title.unbranded"
               color={theme.white}>
-              Top Up Anything With Bitcoin
+              Top Up Anything With {{ coin }}
             </Text>
           </Flex>
         )}
@@ -130,14 +142,14 @@ class HeaderIntroduction extends PureComponent {
           loading={numberLookup.isLoading}
           onSubmit={this.lookupNumber}
         />
-        {error || lookupError ? (
+        {displayedError ? (
           <Error>
             <ErrorIcon />
-            {error ? (
-              <Text type="p">{error}</Text>
+            {displayedError.id ? (
+              <Text type="p" size="14px" {...displayedError} />
             ) : (
-              <Text type="p" id="widget.introduction.error">
-                An error occured<br />({{ lookupError }})
+              <Text type="p" size="14px">
+                {displayedError}
               </Text>
             )}
           </Error>
@@ -147,7 +159,6 @@ class HeaderIntroduction extends PureComponent {
             centered
             padding="20px 0 0"
             tight
-            small
             width="300px"
             id={`widget.introduction.description.${
               isMobile ? 'country' : 'phone'

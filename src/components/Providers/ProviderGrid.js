@@ -4,7 +4,7 @@ import { css } from 'react-emotion';
 
 import SectionTitle from '../UI/SectionTitle';
 import Provider, { ShowAll } from './Provider';
-import { providersProp, fnProp } from '../../lib/prop-types';
+import { providersProp, fnProp, transProp } from '../../lib/prop-types';
 
 const styles = {
   container: css`
@@ -23,7 +23,7 @@ export default class ProviderGrid extends PureComponent {
   static propTypes = {
     defaultShowAll: PropTypes.bool,
     providers: providersProp,
-    title: PropTypes.node,
+    title: PropTypes.oneOfType([transProp, PropTypes.string]).isRequired,
     onSelect: fnProp,
   };
 
@@ -39,16 +39,16 @@ export default class ProviderGrid extends PureComponent {
     const { showAll } = this.state;
 
     const visibleProviders =
-      showAll || providers.length <= 5 ? providers : providers.slice(0, 4);
+      showAll || providers.length <= 4 ? providers : providers.slice(0, 3);
 
     return (
       <div className={styles.container}>
-        <SectionTitle>{title}</SectionTitle>
+        <SectionTitle text={title} />
         <div className={styles.grid}>
           {visibleProviders.map(provider => (
             <Provider
               key={provider.slug}
-              data={provider}
+              provider={provider}
               onSelect={() => onSelect(provider.slug)}
             />
           ))}

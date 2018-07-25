@@ -31,7 +31,6 @@ import { canAfford } from '../../lib/currency-helpers';
 
 import PaymentItem from './PaymentItem';
 import NextButton from '../UI/NextButton';
-import ErrorBanner from '../UI/ErrorBanner';
 import ActiveSection from '../UI/ActiveSection';
 
 const MethodContainer = styled('div')`
@@ -59,12 +58,20 @@ class PaymentMethod extends React.Component {
   constructor(props) {
     super(props);
 
-    this.select(null);
-
     this.state = {
       isLoading: false,
       error: null,
     };
+
+    const { config } = this.props;
+
+    if (config.coin) {
+      this.select(
+        config.paymentButtons.find(x => x.paymentMode === config.coin)
+      );
+    } else {
+      this.select(null);
+    }
   }
 
   canAfford = btn =>
@@ -106,22 +113,30 @@ class PaymentMethod extends React.Component {
             onClick={this.createOrder}
             loading={isLoading}
           />
-        )}>
-        {error && <ErrorBanner>{error.message || error}</ErrorBanner>}
+        )}
+        error={error}>
         <MethodContainer>
-          {config.paymentButtons.map(method => {
-            const affordable = this.canAfford(method);
+          {config.paymentButtons
+            .reduce(
+              (prev, curr) =>
+                curr.paymentMode === config.coin
+                  ? [curr, ...prev]
+                  : [...prev, curr],
+              []
+            )
+            .map(method => {
+              const affordable = this.canAfford(method);
 
-            return (
-              <PaymentItem
-                key={method.title}
-                {...method}
-                onClick={() => affordable && this.select(method)}
-                selected={method === selectedMethod}
-                disabled={!affordable}
-              />
-            );
-          })}
+              return (
+                <PaymentItem
+                  key={method.title}
+                  {...method}
+                  onClick={() => affordable && this.select(method)}
+                  selected={method === selectedMethod}
+                  disabled={!affordable}
+                />
+              );
+            })}
         </MethodContainer>
       </ActiveSection>
     );

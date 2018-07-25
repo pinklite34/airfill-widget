@@ -1,39 +1,36 @@
 import React from 'react';
-import { css } from 'react-emotion';
+import styled from 'react-emotion';
+
 import { rowProps } from '../../../lib/prop-types';
 
-const styles = {
-  container: css`
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
-    display: flex;
-    align-items: stretch;
-    cursor: pointer;
-  `,
-  active: css`
-    background: rgba(0, 0, 0, 0.08);
-  `,
-  icon: css`
-    background: rgba(0, 0, 0, 0.04);
-    width: 48px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `,
-  content: css`
-    margin-left: 6px;
-    font-size: 16px;
-    padding: 12px;
-  `,
-};
+const Container = styled('div')`
+  border-top: ${p => p.theme.bd.primary};
+  display: flex;
+  align-items: stretch;
+  cursor: pointer;
+  background: ${p => p.isActive && 'rgba(0, 0, 0, 0.08)'};
+`;
+
+const Icon = styled('div')`
+  background: rgba(0, 0, 0, 0.04);
+  width: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Content = styled('div')`
+  margin-left: 6px;
+  font-size: 16px;
+  padding: 12px;
+`;
 
 export default function Row({ operatorProps, isActive, icon, content }) {
   return (
-    <div
-      {...operatorProps}
-      className={`${styles.container} ${isActive && styles.active}`}>
-      <div className={styles.icon}>{icon}</div>
-      <div className={styles.content}>{content}</div>
-    </div>
+    <Container {...operatorProps} isActive={isActive}>
+      <Icon>{icon}</Icon>
+      <Content>{content}</Content>
+    </Container>
   );
 }
 

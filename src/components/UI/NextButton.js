@@ -11,7 +11,10 @@ const Container = styled('div')`
 export default function NextButton(props) {
   return (
     <Container>
-      <Button {...props}>Continue</Button>
+      <Button
+        {...props}
+        text={{ id: 'button.continue', children: 'Continue' }}
+      />
     </Container>
   );
 }

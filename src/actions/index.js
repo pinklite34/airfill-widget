@@ -14,7 +14,8 @@ import {
   selectPaymentMethod,
 } from '../store';
 
-export const setStep = createAction('SET_STEP');
+import { history } from '../components/Widget';
+
 export const setCountry = createAction('SET_COUNTRY');
 export const setNumber = createAction('SET_NUMBER');
 export const setPaymentMethod = createAction('SET_PAYMENT_METHOD');
@@ -29,9 +30,29 @@ const setComboInputOpen = createAction('SET_COMBOINPUT_OPEN');
 export const openComboInput = () => setComboInputOpen(true);
 export const closeComboInput = () => setComboInputOpen(false);
 
+// add max width to all logoImage cloudinary URLs.
+// We don't use more than 88 px wide in the widget atm so this will work for now
+const transformInventory = inventory => {
+  Object.keys(inventory)
+    .map(key => inventory[key])
+    .forEach(country =>
+      Object.keys(country.operators)
+        .map(key => country.operators[key])
+        .forEach(operator => {
+          operator.logoImage = operator.logoImage.replace(
+            'd_operator.png',
+            'd_operator.png,w_88,c_fit'
+          );
+        })
+    );
+
+  return inventory;
+};
+
 export const loadInventory = createLoadAction({
   name: 'airfillWidget.inventory',
   uri: '/inventory',
+  responseTransform: transformInventory,
 });
 
 export const lookupLocation = () => (dispatch, getState) => {
@@ -96,6 +117,11 @@ const loadOperator = createLoadAction({
 });
 
 export const setOperator = operatorSlug => (dispatch, getState) => {
+  // prevent acccident if we do setOperator(operator)
+  if (typeof operatorSlug === 'object') {
+    operatorSlug = operatorSlug.slug;
+  }
+
   dispatch(setAmount(''));
   return dispatch(
     loadOperator({ operatorSlug, uri: `/inventory/${operatorSlug}` })
@@ -204,7 +230,7 @@ const prefillNumber = number => (dispatch, getState) => {
   }
 };
 
-export const init = ({ defaultNumber, shouldLookupLocation = true }) => (
+export const init = ({ defaultNumber, shouldLookupLocation = true } = {}) => (
   dispatch,
   getState
 ) => {
@@ -229,11 +255,11 @@ export const useRecentRefill = recentRefill => dispatch => {
   dispatch(prefillNumber(recentRefill.number));
   if (recentRefill.operator) {
     dispatch(setOperator(recentRefill.operator));
-    dispatch(setStep(3));
+    history.push('/refill/selectAmount');
   } else {
     dispatch(lookupNumber(recentRefill.number)).then(
-      () => dispatch(setStep(3)),
-      () => dispatch(setStep(2))
+      () => history.push('/refill/selectProvider'),
+      () => history.push('/refill/selectAmount')
     );
   }
 };

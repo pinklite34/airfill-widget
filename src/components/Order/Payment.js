@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { css } from 'react-emotion';
 import { push } from 'react-router-redux';
 
 import { PUSHER_API_KEY } from '../../constants';
@@ -10,7 +9,7 @@ import Pusher from '../Pusher';
 import PaymentMode from './PaymentMode';
 import PaymentDetected from './PaymentDetected';
 import PaymentConfirmed from './PaymentConfirmed';
-import ExpiredPayment from './PaymentExpired';
+import PaymentExpired from './PaymentExpired';
 import RefillFailed from './RefillFailed';
 import RefillDelivered from './RefillDelivered';
 import BalanceTooLow from './BalanceTooLow';
@@ -47,7 +46,7 @@ const componentForStatus = status => {
     case 'confirmed':
       return PaymentConfirmed;
     case 'expired':
-      return ExpiredPayment;
+      return PaymentExpired;
     case 'failed':
       return RefillFailed;
     case 'payment_error':
@@ -60,21 +59,6 @@ const componentForStatus = status => {
     default:
       return PaymentMode;
   }
-};
-
-const styles = {
-  title: css`
-    margin: 0;
-  `,
-  spinner: css`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 64px;
-  `,
-  spinnerText: css`
-    margin-top: 16px;
-  `,
 };
 
 function Payment({
@@ -95,14 +79,7 @@ function Payment({
   onExternalUrl,
   reset,
 }) {
-  if (!order.result) {
-    return (
-      <div className={styles.spinner}>
-        <Spinner />
-        <div className={styles.spinnerText}>Loading order status...</div>
-      </div>
-    );
-  }
+  if (!order.result) return <Spinner />;
 
   const PaymentComponent = componentForStatus(paymentStatus.status);
   const {
@@ -111,7 +88,7 @@ function Payment({
   } = order.result;
 
   return (
-    <div>
+    <Fragment>
       <Pusher
         apiKey={PUSHER_API_KEY}
         channel={[orderId, address].join('-')}
@@ -149,7 +126,7 @@ function Payment({
         onReset={reset}
         onExternalUrl={onExternalUrl}
       />
-    </div>
+    </Fragment>
   );
 }
 

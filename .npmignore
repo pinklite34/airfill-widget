@@ -6,5 +6,3 @@ dist/.gitkeep
 stats.json
 circle.yml
 yarn*
-Procfile
-app.json

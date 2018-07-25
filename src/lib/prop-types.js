@@ -53,6 +53,18 @@ export const paymentModeProp = PropTypes.oneOf([
   'localbitcoins',
 ]);
 
+export const coinPageProp = PropTypes.oneOfType([
+  PropTypes.bool,
+  PropTypes.oneOf([
+    'bitcoin',
+    'litecoin',
+    'ethereum',
+    'dash',
+    'lightning',
+    'dogecoin',
+  ]),
+]);
+
 export const configProps = {
   // User data
   defaultNumber: numberProp,
@@ -86,6 +98,8 @@ export const configProps = {
   // ),
 
   onExternalUrl: PropTypes.func,
+
+  coin: coinPageProp,
 };
 
 export const configProp = PropTypes.shape(configProps);
@@ -162,15 +176,42 @@ export const orderOptionsProp = PropTypes.shape({
 });
 
 export const orderProp = PropTypes.shape({
-  id: PropTypes.string,
-  orderId: PropTypes.string,
-  payment: paymentProp,
+  accessToken: PropTypes.string,
+  allowRetry: PropTypes.bool,
   btcPrice: amountProp,
-  itemDesc: PropTypes.string,
+  coinCurrency: coinCurrencyProp,
+  country: PropTypes.string,
+  currency: currencyProp,
+  delivered: PropTypes.bool,
+  email: PropTypes.string,
+  eurPrice: amountProp,
   expirationTime: PropTypes.number,
   expired: PropTypes.bool,
+  id: PropTypes.string.isRequired,
+  invoiceTime: PropTypes.number,
+  itemDesc: PropTypes.string,
+  merchant_price: amountProp,
   needRefund: PropTypes.bool,
+  number: PropTypes.string,
+  operator: PropTypes.string,
+  operatorResponse: PropTypes.string,
+  operatorSlug: PropTypes.string,
+  orderId: PropTypes.string,
+  paidAmount: amountProp,
+  partialPayment: PropTypes.bool,
+  payment: paymentProp,
+  paymentMethod: paymentModeProp,
+  paymentReceived: PropTypes.bool,
+  price: amountProp,
+  priciness: amountProp,
   refunded: PropTypes.bool,
+  satoshiPrice: amountProp,
+  sent: PropTypes.bool,
+  summary: PropTypes.string,
+  usdPrice: amountProp,
+  value: amountProp,
+  valuePackage: amountProp,
+  willRetry: PropTypes.bool,
 });
 
 export const orderResultProp = PropTypes.shape({
@@ -214,3 +255,20 @@ export const emailProp = PropTypes.shape({
   value: PropTypes.string,
   error: errorProp,
 });
+
+export const deviceInfoProp = PropTypes.shape({
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  is: PropTypes.shape({
+    mobile: PropTypes.bool,
+    tablet: PropTypes.bool,
+    desktop: PropTypes.bool,
+  }).isRequired,
+  lessThan: PropTypes.shape({ mobile: PropTypes.bool, tablet: PropTypes.bool })
+    .isRequired,
+  greaterThan: PropTypes.shape({
+    mobile: PropTypes.bool,
+    tablet: PropTypes.bool,
+  }).isRequired,
+  deviceType: PropTypes.oneOf(['ios', 'android']),
+}).isRequired;
