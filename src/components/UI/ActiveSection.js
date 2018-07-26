@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'react-emotion';
 
 import { transProp } from '../../lib/prop-types';
-import { fromWindow } from '../../lib/globals';
+import { fromWindow, isMobileApp } from '../../lib/globals';
 import { WidgetRectContext } from '../../lib/WidgetRect';
 import DeviceInfo from '../../lib/DeviceInfo';
 
@@ -32,6 +32,7 @@ const NextContainer = styled('div')`
   border-top: ${p => p.theme.bd.primary};
   position: ${p => (p.fixed ? 'fixed' : 'absolute')};
   bottom: 0;
+  left: ${p => p.isMobile && 0};
   width: ${p => p.width || '100%'};
   max-height: ${p => p.height};
   height: ${p => p.height};
@@ -46,20 +47,30 @@ class ActiveSectionNext extends PureComponent {
     children: PropTypes.node,
     fixed: PropTypes.bool,
     tight: PropTypes.bool,
-    onUpdate: PropTypes.func.isRequired,
+    onUpdate: PropTypes.func,
     width: PropTypes.string,
     height: PropTypes.string,
+    isMobile: PropTypes.bool,
   };
 
   componentDidMount() {
-    this.props.onUpdate();
+    this.props.onUpdate && this.props.onUpdate();
   }
 
   render() {
-    const { children, fixed, tight, onUpdate, width, height } = this.props;
+    const {
+      children,
+      fixed,
+      tight,
+      onUpdate,
+      width,
+      height,
+      isMobile,
+    } = this.props;
     return (
-      <div style={{ position: !fixed && 'relative' }}>
+      <div style={{ position: !fixed && !isMobile && 'relative' }}>
         <NextContainer
+          isMobile={isMobile}
           onClick={onUpdate}
           tight={tight}
           fixed={fixed}
@@ -67,7 +78,7 @@ class ActiveSectionNext extends PureComponent {
           width={width}>
           {children}
         </NextContainer>
-        <div style={{ height }} />
+        {!isMobile && <div style={{ height }} />}
       </div>
     );
   }
@@ -86,7 +97,15 @@ export default function ActiveSection({
         <Container {...props}>
           {error && <ErrorBanner text={error.message || error} />}
           <Content padding={padding}>{children}</Content>
-          {renderNextButton && (
+          {renderNextButton && isMobileApp() ? (
+            <ActiveSectionNext
+              fixed={true}
+              isMobile
+              tight={lessThan.tablet}
+              height={getNextHeight(lessThan.tablet)}>
+              {renderNextButton()}
+            </ActiveSectionNext>
+          ) : renderNextButton ? (
             <WidgetRectContext.Consumer>
               {({ rect, onUpdate }) => (
                 <ActiveSectionNext
@@ -99,7 +118,7 @@ export default function ActiveSection({
                 </ActiveSectionNext>
               )}
             </WidgetRectContext.Consumer>
-          )}
+          ) : null}
         </Container>
       )}
     </DeviceInfo>

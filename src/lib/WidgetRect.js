@@ -1,5 +1,6 @@
 import React, { PureComponent, createRef, createContext } from 'react';
 import PropTypes from 'prop-types';
+import { isMobileApp } from './globals';
 
 export const WidgetRectContext = createContext('widgetRect');
 
@@ -39,7 +40,9 @@ export default class WidgetRect extends PureComponent {
     const { children } = this.props;
     const { rect } = this.state;
 
-    return (
+    return isMobileApp() ? (
+      children
+    ) : (
       <WidgetRectContext.Provider value={{ rect, onUpdate: this.onUpdate }}>
         <div ref={this.childRef}>{children}</div>
       </WidgetRectContext.Provider>
