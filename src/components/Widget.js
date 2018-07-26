@@ -1,47 +1,43 @@
-import React, { Component, Fragment } from 'react';
+import { injectGlobal, injectGlobal } from 'emotion';
+import { ThemeProvider } from 'emotion-theming';
+import createHistory from 'history/createMemoryHistory';
+import blue from 'material-ui/colors/blue';
+import createMuiTheme from 'material-ui/styles/createMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import PropTypes from 'prop-types';
+import React, { Component, Fragment } from 'react';
+import { I18nextProvider } from 'react-i18next';
 import Media from 'react-media';
 import { connect, Provider } from 'react-redux';
 import { Route, withRouter } from 'react-router';
-import { compose } from 'recompose';
-import { I18nextProvider } from 'react-i18next';
-import { injectGlobal } from 'emotion';
-import { ThemeProvider } from 'emotion-theming';
-import createHistory from 'history/createMemoryHistory';
 import {
-  routerReducer,
-  routerMiddleware,
   ConnectedRouter,
+  routerMiddleware,
+  routerReducer,
 } from 'react-router-redux';
+import { compose } from 'recompose';
 
-import { init, setOperator, useRecentRefill } from '../actions';
-
-import { selectInventory } from '../store';
-import configureStore from '../store/configureStore';
-
-import { configProps, inventoryProp, fnProp } from '../lib/prop-types';
-import WidgetRect from '../lib/WidgetRect';
+import { getOrder, init, setOperator, useRecentRefill } from '../actions';
 import { client } from '../lib/api-client';
 import i18n from '../lib/i18n';
+import { configProps, fnProp, inventoryProp } from '../lib/prop-types';
+import WidgetRect from '../lib/WidgetRect';
 import getMethods from '../payment-methods';
+import { selectInventory } from '../store';
+import configureStore from '../store/configureStore';
 import theme from '../theme';
-
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import createMuiTheme from 'material-ui/styles/createMuiTheme';
-import blue from 'material-ui/colors/blue';
-
-import Card from './UI/Card';
-import Root from './UI/Root';
-import Header from './Header';
-import Footer from './Footer';
-import Country from './Country';
-import Providers from './Providers';
-import Instructions from './Instructions';
 import Amount from './Amount';
+import Country from './Country';
+import Footer from './Footer';
+import Header from './Header';
+import Instructions from './Instructions';
 import Order from './Order';
+import Payment from './PaymentMethod';
+import Providers from './Providers';
 import Recipient from './Recipient';
 import StatusEmail from './StatusEmail';
-import Payment from './PaymentMethod';
+import Card from './UI/Card';
+import Root from './UI/Root';
 import Spinner from './UI/Spinner';
 
 const muiTheme = createMuiTheme({
@@ -102,6 +98,8 @@ class AirfillWidget extends Component {
     const {
       key,
       baseUrl,
+      orderId,
+      loadOrder,
       init,
       defaultNumber,
       setOperator,
@@ -123,6 +121,12 @@ class AirfillWidget extends Component {
       history.push('/refill/selectAmount');
     }
 
+    if (orderId) {
+      loadOrder()
+        .then(e => history.push('/refill/payment'))
+        .catch(x => console.error(x));
+    }
+
     if (repeatOrder) {
       useRecentRefill(repeatOrder);
     } else {
@@ -137,6 +141,7 @@ class AirfillWidget extends Component {
 
   render() {
     const {
+      orderId,
       className,
       showLogo,
       showInstructions,
@@ -145,6 +150,8 @@ class AirfillWidget extends Component {
       inventory,
       isMobile,
     } = this.props;
+
+    console.log('order id', orderId);
 
     const config = {
       ...this.props,
@@ -206,11 +213,12 @@ const StoreWidgetWrapper = compose(
     state => ({
       inventory: selectInventory(state),
     }),
-    {
+    (dispatch, b) => ({
       init,
       setOperator,
       useRecentRefill,
-    }
+      loadOrder: () => dispatch(getOrder(b.orderId)),
+    })
   ),
   withRouter
 )(AirfillWidget);
