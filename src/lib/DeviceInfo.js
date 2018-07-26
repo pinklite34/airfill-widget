@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Media from 'react-media';
 
-import { fromWindow } from './web-globals';
+import { fromWindow } from './globals';
 import theme from '../theme';
 
 export default class DeviceInfo extends PureComponent {

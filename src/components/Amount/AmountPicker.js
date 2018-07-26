@@ -66,9 +66,10 @@ class AmountPicker extends PureComponent {
     }
   }
 
-  UNSAFE_componentWillReceiveProps(newProps) { // eslint-disable-line
-    if (!newProps.operator.isLoading && this.props.operator.isLoading) {
-      this.onAmountChange(newProps);
+  componentDidUpdate(prevProps) {
+    const { operator } = this.props;
+    if (!operator.isLoading && prevProps.operator.isLoading) {
+      this.onAmountChange(this.props);
     }
   }
 

@@ -181,7 +181,7 @@ export const createOrder = orderOptions => (dispatch, getState) => {
   };
 
   if (order.isLoading || operator.isLoading) {
-    return Promise.reject() // eslint-disable-line
+    return Promise.reject(); // eslint-disable-line
   }
 
   if (operator.result.recipientType !== 'none') {

@@ -15,7 +15,7 @@ jest.mock('./api-client', () => {
   };
 });
 
-import { fetch } from './api-client' // eslint-disable-line
+import { fetch } from './api-client'; // eslint-disable-line
 
 // // --------------------------
 // // --- Collection Reducer ---

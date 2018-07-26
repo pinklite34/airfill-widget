@@ -9,16 +9,17 @@ class QrCode extends PureComponent {
     const qr = new QRious(props);
     this.state = {
       qr,
-      src: qr.toDataURL(this.props.mime || 'image/png'),
+      src: qr.toDataURL(props.mime || 'image/png'),
     };
   }
 
-  UNSAFE_componentWillReceiveProps(newProps) { // eslint-disable-line
+  componentDidUpdate() {
     const { qr } = this.state;
-    qr.set(newProps);
+    const { mime } = this.props;
+    qr.set(this.props);
 
     this.setState({
-      src: qr.toDataURL(newProps.mime || 'image/png'),
+      src: qr.toDataURL(mime || 'image/png'),
     });
   }
 

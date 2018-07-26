@@ -37,6 +37,7 @@ function CountryCollapsed({
     <Collapsed
       hideButton
       type="country"
+      alt="Select a country above to see available services."
       title={
         <Text type="p" tight size="16px" id="introduction.select">
           Select a country above to see available services.

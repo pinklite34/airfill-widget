@@ -2,7 +2,7 @@ import i18n from 'i18next';
 import LocizeBackend from 'i18next-locize-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-import { getLanguage } from './web-globals';
+import { getLanguage } from './globals';
 
 const envLng = getLanguage();
 
@@ -20,7 +20,7 @@ i18n
     ns: ['widget', 'website'],
     defaultNS: 'widget',
 
-    debug: process.env.NODE_ENV === 'development',
+    // debug: process.env.NODE_ENV === 'development',
     keySeparator: '### not used ###',
 
     backend: {

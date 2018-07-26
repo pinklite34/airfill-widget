@@ -15,7 +15,6 @@ const Container = styled('div')`
   align-items: center;
   background-color: #efefef;
   border-bottom: ${p => p.theme.bd.primary};
-  max-height: 60px;
   min-height: 60px;
 `;
 
@@ -28,16 +27,27 @@ const Left = styled('div')`
   margin-right: 10px;
 `;
 
-export default function Collapsed({ icon, title, onClick, type, hideButton }) {
+export default function Collapsed({
+  icon,
+  title,
+  onClick,
+  type,
+  hideButton,
+  alt,
+}) {
   return (
     <DeviceInfo>
       {({ lessThan }) => (
         <Container>
           <Left>
-            <Icon src={icon} alt={title} margin="0 16px 0 0" />
-            <Text type="p" size="16px">
-              {title}
-            </Text>
+            <Icon src={icon} alt={alt || title} margin="0 16px 0 0" />
+            {typeof title === 'string' ? (
+              <Text type="p" size="16px">
+                {title}
+              </Text>
+            ) : (
+              title
+            )}
           </Left>
           {hideButton ? null : lessThan.tablet ? (
             <Button
@@ -69,4 +79,5 @@ Collapsed.propTypes = {
   hideButton: PropTypes.bool,
   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   title: PropTypes.node,
+  alt: PropTypes.string,
 };

@@ -12,7 +12,7 @@ import {
   isLightningPayment,
 } from '../../lib/currency-helpers';
 import setClipboardText from '../../lib/clipboard-helper';
-import { fromWindow } from '../../lib/web-globals';
+import { fromWindow } from '../../lib/globals';
 import {
   orderProp,
   paymentsProp,

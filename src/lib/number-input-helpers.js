@@ -50,7 +50,7 @@ export const formatNumber = (country, inputValue, currentCaret) => {
     // Strip everything but digits and +
     const { value, caret } = parse(inputValue, currentCaret, isPhoneNumberChar);
 
-    const formatter = new AsYouType(country && country.alpha2) // eslint-disable-line
+    const formatter = new AsYouType(country && country.alpha2); // eslint-disable-line
     const formattedValue = formatter.input(value);
 
     const { caret: nextCaret } = format(value, caret, () => ({

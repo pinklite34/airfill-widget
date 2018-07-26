@@ -14,4 +14,6 @@ Card.propTypes = {
   noBorder: PropTypes.bool,
 };
 
+Card.displayName = 'Card';
+
 export default Card;

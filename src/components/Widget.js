@@ -5,6 +5,7 @@ import { connect, Provider } from 'react-redux';
 import { Route, withRouter } from 'react-router';
 import { compose } from 'recompose';
 import { I18nextProvider } from 'react-i18next';
+import { injectGlobal } from 'emotion';
 import { ThemeProvider } from 'emotion-theming';
 import createHistory from 'history/createMemoryHistory';
 import {
@@ -14,16 +15,22 @@ import {
 } from 'react-router-redux';
 
 import { init, setOperator, useRecentRefill } from '../actions';
-import { injectGlobal } from 'emotion';
 
-import { configProps, inventoryProp, fnProp } from '../lib/prop-types';
 import { selectInventory } from '../store';
 import configureStore from '../store/configureStore';
 
-import Card from './UI/Card';
+import { configProps, inventoryProp, fnProp } from '../lib/prop-types';
+import WidgetRect from '../lib/WidgetRect';
+import { client } from '../lib/api-client';
+import i18n from '../lib/i18n';
+import getMethods from '../payment-methods';
+import theme from '../theme';
+
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import createMuiTheme from 'material-ui/styles/createMuiTheme';
 import blue from 'material-ui/colors/blue';
+
+import Card from './UI/Card';
 import Root from './UI/Root';
 import Header from './Header';
 import Footer from './Footer';
@@ -35,11 +42,7 @@ import Order from './Order';
 import Recipient from './Recipient';
 import StatusEmail from './StatusEmail';
 import Payment from './PaymentMethod';
-import getMethods from '../payment-methods';
 import Spinner from './UI/Spinner';
-import { client } from '../lib/api-client';
-import i18n from '../lib/i18n';
-import theme from '../theme';
 
 const muiTheme = createMuiTheme({
   palette: {
@@ -95,7 +98,7 @@ class AirfillWidget extends Component {
     };
   }
 
-  UNSAFE_componentWillMount() { // eslint-disable-line
+  componentDidMount() {
     const {
       key,
       baseUrl,
@@ -155,33 +158,35 @@ class AirfillWidget extends Component {
         <ThemeProvider theme={theme}>
           <MuiThemeProvider theme={muiTheme}>
             <Root className={className}>
-              <Card alwaysBorder style={{ overflow: 'hidden' }}>
-                {hasLoaded ? (
-                  <Fragment>
-                    <Header
-                      config={config}
-                      isMobile={isMobile}
-                      branded={showLogo}
-                    />
-                    <Country />
-                    <Providers />
-                    <Amount config={config} />
-                    <Recipient config={config} />
-                    <StatusEmail config={config} />
-                    <Payment config={config} />
-                    <Order config={config} />
-                    {showInstructions && (
-                      <Route
-                        path="/refill"
-                        exact
-                        render={() => <Instructions config={config} />}
+              <WidgetRect>
+                <Card alwaysBorder style={{ overflow: 'hidden' }}>
+                  {hasLoaded ? (
+                    <Fragment>
+                      <Header
+                        config={config}
+                        isMobile={isMobile}
+                        branded={showLogo}
                       />
-                    )}
-                  </Fragment>
-                ) : (
-                  <Spinner />
-                )}
-              </Card>
+                      <Country />
+                      <Providers />
+                      <Amount config={config} />
+                      <Recipient config={config} />
+                      <StatusEmail config={config} />
+                      <Payment config={config} />
+                      <Order config={config} />
+                      {showInstructions && (
+                        <Route
+                          path="/refill"
+                          exact
+                          render={() => <Instructions config={config} />}
+                        />
+                      )}
+                    </Fragment>
+                  ) : (
+                    <Spinner />
+                  )}
+                </Card>
+              </WidgetRect>
 
               {showFooter && <Footer branded={showPoweredBy} />}
             </Root>

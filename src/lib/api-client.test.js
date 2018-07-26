@@ -14,7 +14,7 @@ jest.mock('fetch-ponyfill', () => {
 });
 
 // Retrieve fetch mock so we can use it in assertions
-import ponyFetch from 'fetch-ponyfill' // eslint-disable-line
+import ponyFetch from 'fetch-ponyfill'; // eslint-disable-line
 
 const { fetch } = ponyFetch();
 

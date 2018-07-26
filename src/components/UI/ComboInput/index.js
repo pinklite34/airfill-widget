@@ -111,14 +111,14 @@ class ComboInput extends PureComponent {
     if (this.props.shouldFocus) this.focusInput();
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) { // eslint-disable-line
-    if (nextProps.shouldFocus) this.focusInput();
-  }
-
   componentDidUpdate() {
+    const { shouldFocus } = this.props;
     const { inputValue, caret } = this.state;
-    if (isPhoneNumber(inputValue)) {
-      this.input && this.input.setSelectionRange(caret, caret);
+
+    if (shouldFocus) this.focusInput();
+
+    if (this.input && isPhoneNumber(inputValue)) {
+      this.input.setSelectionRange(caret, caret);
     }
   }
 

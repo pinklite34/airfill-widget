@@ -1,4 +1,4 @@
-import { fromWindow } from './web-globals';
+import { fromWindow } from './globals';
 
 let ethInstance = null;
 
