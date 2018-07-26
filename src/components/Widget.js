@@ -13,7 +13,7 @@ import {
   ConnectedRouter,
 } from 'react-router-redux';
 
-import { init, setOperator, useRecentRefill } from '../actions';
+import { init, setOperator, useRecentRefill, getOrder } from '../actions';
 import { injectGlobal } from 'emotion';
 
 import { configProps, inventoryProp, fnProp } from '../lib/prop-types';
@@ -99,6 +99,8 @@ class AirfillWidget extends Component {
     const {
       key,
       baseUrl,
+      orderId,
+      loadOrder,
       init,
       defaultNumber,
       setOperator,
@@ -120,6 +122,12 @@ class AirfillWidget extends Component {
       history.push('/refill/selectAmount');
     }
 
+    if (orderId) {
+      loadOrder()
+        .then(e => history.push('/refill/payment'))
+        .catch(x => console.error(x));
+    }
+
     if (repeatOrder) {
       useRecentRefill(repeatOrder);
     } else {
@@ -134,6 +142,7 @@ class AirfillWidget extends Component {
 
   render() {
     const {
+      orderId,
       className,
       showLogo,
       showInstructions,
@@ -142,6 +151,8 @@ class AirfillWidget extends Component {
       inventory,
       isMobile,
     } = this.props;
+
+    console.log('order id', orderId);
 
     const config = {
       ...this.props,
@@ -201,11 +212,12 @@ const StoreWidgetWrapper = compose(
     state => ({
       inventory: selectInventory(state),
     }),
-    {
+    (dispatch, b) => ({
       init,
       setOperator,
       useRecentRefill,
-    }
+      loadOrder: () => dispatch(getOrder(b.orderId)),
+    })
   ),
   withRouter
 )(AirfillWidget);

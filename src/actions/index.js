@@ -159,6 +159,15 @@ const postOrder = createLoadAction({
   uri: '/order',
 });
 
+export const getOrder = id => {
+  const load = createLoadAction({
+    name: 'airfillWidget.order',
+    uri: `/order/${id}`,
+    method: 'GET',
+  });
+  return load();
+};
+
 export const createOrder = orderOptions => (dispatch, getState) => {
   const state = getState();
   const number = selectNumber(state);
