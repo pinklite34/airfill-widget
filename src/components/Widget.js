@@ -141,7 +141,6 @@ class AirfillWidget extends Component {
 
   render() {
     const {
-      orderId,
       className,
       showLogo,
       showInstructions,
@@ -150,8 +149,6 @@ class AirfillWidget extends Component {
       inventory,
       isMobile,
     } = this.props;
-
-    console.log('order id', orderId);
 
     const config = {
       ...this.props,
