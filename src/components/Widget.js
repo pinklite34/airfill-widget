@@ -97,7 +97,7 @@ class AirfillWidget extends Component {
 
   UNSAFE_componentWillMount() { // eslint-disable-line
     const {
-      key,
+      apiKey,
       baseUrl,
       orderId,
       loadOrder,
@@ -111,7 +111,7 @@ class AirfillWidget extends Component {
     } = this.props;
 
     client.configure({
-      token: key || '5GY9TZBK8E05U9JQSTWFXNQS4',
+      token: apiKey || '5GY9TZBK8E05U9JQSTWFXNQS4',
       baseUrl: baseUrl || 'https://api.bitrefill.com/widget',
     });
 
