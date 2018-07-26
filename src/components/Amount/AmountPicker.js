@@ -36,6 +36,7 @@ const Packages = styled('div')`
   background-color: #fff;
 
   & > label {
+    cursor: pointer;
     display: flex;
     align-items: center;
     padding-right: 2px;
