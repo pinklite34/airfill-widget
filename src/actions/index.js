@@ -184,7 +184,7 @@ export const createOrder = orderOptions => (dispatch, getState) => {
     return Promise.reject(); // eslint-disable-line
   }
 
-  if (operator.result.recipientType !== 'none') {
+  if (operator.result && operator.result.recipientType !== 'none') {
     options.body.number = number;
   }
 

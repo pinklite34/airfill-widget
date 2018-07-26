@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'react-emotion';
 
-import { transProp } from '../../lib/prop-types';
 import { fromWindow, isMobileApp } from '../../lib/globals';
 import { WidgetRectContext } from '../../lib/WidgetRect';
 import DeviceInfo from '../../lib/DeviceInfo';
@@ -91,11 +90,13 @@ export default function ActiveSection({
   error,
   ...props
 }) {
+  const errorMsg = error && (error.message || error);
+
   return (
     <DeviceInfo>
       {({ lessThan }) => (
         <Container {...props}>
-          {error && <ErrorBanner text={error.message || error} />}
+          {errorMsg && <ErrorBanner text={errorMsg} />}
           <Content padding={padding}>{children}</Content>
           {renderNextButton && isMobileApp() ? (
             <ActiveSectionNext
@@ -125,15 +126,11 @@ export default function ActiveSection({
   );
 }
 
+ActiveSection.displayName = 'ActiveSection';
+
 ActiveSection.propTypes = {
   children: PropTypes.node,
   renderNextButton: PropTypes.func,
   padding: PropTypes.string,
-  error: PropTypes.oneOfType([
-    transProp,
-    PropTypes.string,
-    PropTypes.shape({
-      message: PropTypes.string,
-    }),
-  ]),
+  error: PropTypes.any,
 };

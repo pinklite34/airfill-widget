@@ -141,7 +141,7 @@ Text.propTypes = {
   id: PropTypes.string,
   type: PropTypes.oneOf(['h1', 'h3', 'p', 'link']),
   color: PropTypes.string,
-  error: PropTypes.bool,
+  error: PropTypes.any,
   success: PropTypes.bool,
   small: PropTypes.bool,
   size: PropTypes.string,

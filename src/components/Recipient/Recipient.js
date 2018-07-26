@@ -72,7 +72,7 @@ class Recipient extends PureComponent {
     const { operator, country, config } = this.props;
     let placeholder;
 
-    switch (operator.result.recipientType) {
+    switch (operator.result && operator.result.recipientType) {
       case 'phone_number':
         placeholder = formatNumber(
           { country: country.alpha2, phone: getPlaceholder(country.alpha2) },
@@ -94,10 +94,10 @@ class Recipient extends PureComponent {
   getNumberLabel = () => {
     const { operator } = this.props;
 
-    console.log(operator.result.recipientType);
+    console.log(operator.result && operator.result.recipientType);
 
     if (operator.result) {
-      switch (operator.result.recipientType) {
+      switch (operator.result && operator.result.recipientType) {
         case 'phone_number':
           return {
             id: 'recipient.label.phone',
@@ -123,7 +123,7 @@ class Recipient extends PureComponent {
   validateInput = () => {
     const { number, country, operator } = this.props;
 
-    switch (operator.result.recipientType) {
+    switch (operator.result && operator.result.recipientType) {
       case 'phone_number':
         if (country.alpha2 === 'XI') {
           return isPhoneNumber(number);
@@ -140,7 +140,7 @@ class Recipient extends PureComponent {
     const { operator, country } = this.props;
 
     if (!this.validateInput()) {
-      switch (operator.result.recipientType) {
+      switch (operator.result && operator.result.recipientType) {
         case 'phone_number':
           if (country.alpha2 === 'XI') {
             return {
