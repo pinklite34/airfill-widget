@@ -113,7 +113,7 @@ export default function ActiveSection({
                   fixed={isFixed(rect)}
                   onUpdate={onUpdate}
                   tight={lessThan.tablet}
-                  width={rect && `${rect.width}px`}
+                  width={rect && `${rect.width - 1}px`}
                   height={getNextHeight(lessThan.tablet)}>
                   {renderNextButton()}
                 </ActiveSectionNext>
