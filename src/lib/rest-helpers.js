@@ -133,11 +133,11 @@ export const createLoadAction = options => {
           return response;
         })
         .catch(error => {
+          if (props.silent) return Promise.resolve();
+
           dispatch(loadError({ props, response: error }));
 
-          if (errorHandler) {
-            dispatch(errorHandler(error.response));
-          }
+          if (errorHandler) dispatch(errorHandler(error.response));
 
           return Promise.reject(error);
         });
