@@ -1,20 +1,19 @@
+import { format, parse } from 'libphonenumber-js';
 import { createAction } from 'redux-actions';
-import { createLoadAction } from '../lib/rest-helpers';
-import { fetch } from '../lib/api-client';
-import { parse, format } from 'libphonenumber-js';
-
-import {
-  selectNumber,
-  selectAmount,
-  selectValidEmail,
-  selectOrder,
-  selectCountry,
-  selectOperator,
-  selectSubscribeNewsletter,
-  selectPaymentMethod,
-} from '../store';
 
 import { history } from '../components/Widget';
+import { fetch } from '../lib/api-client';
+import { createLoadAction } from '../lib/rest-helpers';
+import {
+  selectAmount,
+  selectCountry,
+  selectNumber,
+  selectOperator,
+  selectOrder,
+  selectPaymentMethod,
+  selectSubscribeNewsletter,
+  selectValidEmail,
+} from '../store';
 
 export const setCountry = createAction('SET_COUNTRY');
 export const setNumber = createAction('SET_NUMBER');
@@ -159,13 +158,30 @@ const postOrder = createLoadAction({
   uri: '/order',
 });
 
-export const getOrder = id => {
+export const loadOrder = (id, methods) => (dispatch, getState) => {
   const load = createLoadAction({
     name: 'airfillWidget.order',
     uri: `/order/${id}`,
     method: 'GET',
   });
-  return load();
+
+  return new Promise((resolve, reject) =>
+    dispatch(load())
+      .then(data => {
+        console.log(data);
+        dispatch(setOperator(data.operatorSlug));
+        dispatch(setAmount(data.valuePackage));
+        dispatch(
+          setPaymentMethod(
+            methods.find(x => x && x.paymentMode === data.paymentMethod)
+          )
+        );
+
+        dispatch(prefillNumber(data.number));
+        resolve(data);
+      })
+      .catch(x => console.error(x))
+  );
 };
 
 export const createOrder = orderOptions => (dispatch, getState) => {
@@ -200,7 +216,7 @@ export const createOrder = orderOptions => (dispatch, getState) => {
   return dispatch(postOrder(options));
 };
 
-const fetchOrder = createLoadAction('airfillWidget.order');
+/* const fetchOrder = createLoadAction('airfillWidget.order');
 export const updateOrderStatus = () => (dispatch, getState) => {
   const order = selectOrder(getState());
   if (
@@ -221,7 +237,7 @@ export const updateOrderStatus = () => (dispatch, getState) => {
       })
     );
   }
-};
+}; */
 
 const prefillNumber = number => (dispatch, getState) => {
   let parsedNumber;
@@ -244,7 +260,6 @@ export const init = ({ defaultNumber, shouldLookupLocation = true } = {}) => (
   getState
 ) => {
   const inventoryPromise = dispatch(loadInventory());
-  dispatch(updateOrderStatus());
 
   const state = getState();
 

@@ -1,4 +1,4 @@
-import { injectGlobal, injectGlobal } from 'emotion';
+import { injectGlobal } from 'emotion';
 import { ThemeProvider } from 'emotion-theming';
 import createHistory from 'history/createMemoryHistory';
 import blue from 'material-ui/colors/blue';
@@ -17,7 +17,7 @@ import {
 } from 'react-router-redux';
 import { compose } from 'recompose';
 
-import { getOrder, init, setOperator, useRecentRefill } from '../actions';
+import { init, loadOrder, setOperator, useRecentRefill } from '../actions';
 import { client } from '../lib/api-client';
 import i18n from '../lib/i18n';
 import { configProps, fnProp, inventoryProp } from '../lib/prop-types';
@@ -86,7 +86,7 @@ class AirfillWidget extends Component {
     const { paymentButtons } = props;
 
     if (props.keepDefaultPayments) {
-      paymentButtons.push(...getMethods(props));
+      paymentButtons.push(...getMethods());
     }
 
     this.state = {
@@ -210,12 +210,19 @@ const StoreWidgetWrapper = compose(
     state => ({
       inventory: selectInventory(state),
     }),
-    (dispatch, b) => ({
-      init,
-      setOperator,
-      useRecentRefill,
-      loadOrder: () => dispatch(getOrder(b.orderId)),
-    })
+    (dispatch, props) => {
+      const paymentButtons = props.paymentButtons || [];
+      if (props.keepDefaultPayments) {
+        paymentButtons.push(...getMethods());
+      }
+
+      return {
+        init,
+        setOperator,
+        useRecentRefill,
+        loadOrder: () => dispatch(loadOrder(props.orderId, paymentButtons)),
+      };
+    }
   ),
   withRouter
 )(AirfillWidget);
