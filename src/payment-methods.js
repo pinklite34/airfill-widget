@@ -41,7 +41,7 @@ function openWindow(method, order) {
   );
 }
 
-export default function getPaymentMethods({ currency, dispatch, ...props }) {
+export default function getPaymentMethods() {
   return [
     {
       title: 'Bitcoin Transaction',

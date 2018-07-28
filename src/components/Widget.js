@@ -13,7 +13,7 @@ import {
   ConnectedRouter,
 } from 'react-router-redux';
 
-import { init, setOperator, useRecentRefill, getOrder } from '../actions';
+import { init, setOperator, useRecentRefill, loadOrder } from '../actions';
 import { injectGlobal } from 'emotion';
 
 import { configProps, inventoryProp, fnProp } from '../lib/prop-types';
@@ -87,7 +87,7 @@ class AirfillWidget extends Component {
     const { paymentButtons } = props;
 
     if (props.keepDefaultPayments) {
-      paymentButtons.push(...getMethods(props));
+      paymentButtons.push(...getMethods());
     }
 
     this.state = {
@@ -209,12 +209,19 @@ const StoreWidgetWrapper = compose(
     state => ({
       inventory: selectInventory(state),
     }),
-    (dispatch, b) => ({
-      init,
-      setOperator,
-      useRecentRefill,
-      loadOrder: () => dispatch(getOrder(b.orderId)),
-    })
+    (dispatch, props) => {
+      const paymentButtons = props.paymentButtons || [];
+      if (props.keepDefaultPayments) {
+        paymentButtons.push(...getMethods());
+      }
+
+      return {
+        init,
+        setOperator,
+        useRecentRefill,
+        loadOrder: () => dispatch(loadOrder(props.orderId, paymentButtons)),
+      };
+    }
   ),
   withRouter
 )(AirfillWidget);
