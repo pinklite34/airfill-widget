@@ -124,7 +124,7 @@ class AirfillWidget extends Component {
 
     if (orderId) {
       loadOrder()
-        .then(e => history.push('/refill/payment'))
+        .then(e => '') // history.push('/refill/payment'))
         .catch(x => console.error(x));
     }
 
