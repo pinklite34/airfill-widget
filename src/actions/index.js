@@ -171,13 +171,21 @@ export const loadOrder = (id, methods) => (dispatch, getState) => {
         console.log(data);
         dispatch(setOperator(data.operatorSlug));
         dispatch(setAmount(data.valuePackage));
-        dispatch(
-          setPaymentMethod(
-            methods.find(x => x && x.paymentMode === data.paymentMethod)
-          )
+        if (data.number) {
+          dispatch(prefillNumber('+' + data.number));
+        }
+
+        const paymentMethod = methods.find(
+          x => x.paymentMode === data.paymentMethod
         );
 
-        dispatch(prefillNumber(data.number));
+        if (paymentMethod) {
+          dispatch(setPaymentMethod(paymentMethod));
+          history.push('/refill/payment');
+        } else {
+          history.push('/refill/selectPayment');
+        }
+
         resolve(data);
       })
       .catch(x => console.error(x))
@@ -240,6 +248,7 @@ export const updateOrderStatus = () => (dispatch, getState) => {
 }; */
 
 const prefillNumber = number => (dispatch, getState) => {
+  console.log('prefilling number', number);
   let parsedNumber;
   try {
     parsedNumber = number.indexOf('+') > -1 && parse(number);
