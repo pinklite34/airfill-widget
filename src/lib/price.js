@@ -29,7 +29,6 @@ export function getPaymentInfo(method, paymentStatus, order) {
 
   let paymentAddress;
   let uri;
-
   if (isLightningPayment(method)) {
     prefix = 'lightning';
     if (method === 'lightning') {
@@ -45,6 +44,9 @@ export function getPaymentInfo(method, paymentStatus, order) {
   } else if (method === 'ethereum') {
     paymentAddress = order.payment.altcoinAddress;
     uri = `${prefix}:${paymentAddress}?amount=${remaining || price}`;
+  } else if (method === 'dash') {
+    paymentAddress = order.payment.altcoinAddress;
+    uri = `${prefix}:${paymentAddress}?amount=${remaining || price}&IS=1`;
   } else {
     paymentAddress = order.payment.address;
     uri = `${prefix}:${paymentAddress}?amount=${remaining || price}`;
