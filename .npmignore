@@ -1,5 +1,7 @@
 config/
 src/
+scripts/
+translations/
 .editorconfig
 dist/.gitkeep
 .vscode/
