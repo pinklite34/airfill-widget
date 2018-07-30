@@ -6,7 +6,7 @@ const i18n = require('../config/i18n');
 
 const LOCIZE_PROJECT_ID = '3a082193-3b75-4cdb-9be4-018cee014baa';
 
-const translationPath = path.relative(process.cwd(), './translations');
+const translationPath = path.relative(process.cwd(), './src/translations');
 
 function downloadTranslations({ lng, namespace }) {
   const cmd = `npx locize download --language ${lng} --project-id ${LOCIZE_PROJECT_ID} --ver latest  --namespace ${namespace} --target ${translationPath} --format flat`;
