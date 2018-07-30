@@ -215,9 +215,9 @@ const StoreWidgetWrapper = compose(
       }
 
       return {
-        init,
-        setOperator,
-        useRecentRefill,
+        init: c => dispatch(init(c)),
+        setOperator: operator => dispatch(setOperator(operator)),
+        useRecentRefill: order => dispatch(useRecentRefill(order)),
         loadOrder: () => dispatch(loadOrder(props.orderId, paymentButtons)),
       };
     }

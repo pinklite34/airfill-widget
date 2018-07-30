@@ -248,7 +248,6 @@ export const updateOrderStatus = () => (dispatch, getState) => {
 }; */
 
 const prefillNumber = number => (dispatch, getState) => {
-  console.log('prefilling number', number);
   let parsedNumber;
   try {
     parsedNumber = number.indexOf('+') > -1 && parse(number);
