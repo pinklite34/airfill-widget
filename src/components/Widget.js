@@ -85,10 +85,6 @@ class AirfillWidget extends Component {
 
     const { paymentButtons } = props;
 
-    if (props.keepDefaultPayments) {
-      paymentButtons.push(...getMethods());
-    }
-
     this.state = {
       paymentButtons,
     };
