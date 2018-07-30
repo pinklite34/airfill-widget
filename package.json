@@ -14,7 +14,7 @@
     "prebuild": "npm run clean && npm run copy",
     "build:standalone": "webpack --config config/standalone.js --json > stats.json",
     "build:module": "webpack --config config/dist.js --json > stats.json",
-    "build": "npm run prebuild && npm run build:module && npm run build:standalone",
+    "build": "npm run build:translations && npm run prebuild && npm run build:module && npm run build:standalone",
     "build:watch": "npm run prebuild && npm run build:module -- --mode=development -w",
     "build:translations": "NODE_ENV=production node scripts/translations.js",
     "dist": "webpack --env=dist --json > stats.json",
@@ -30,7 +30,7 @@
     "precommit": "lint-staged",
     "prepublishOnly": "npm run build",
     "heroku": "node config/herokuServer.js",
-    "heroku-postbuild": "npm run build:translations && npm run build"
+    "heroku-postbuild": "npm run build"
   },
   "keywords": [],
   "peerDependencies": {
