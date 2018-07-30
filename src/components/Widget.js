@@ -114,6 +114,8 @@ class AirfillWidget extends Component {
       baseUrl: baseUrl || 'https://api.bitrefill.com/widget',
     });
 
+    init({ defaultNumber, shouldLookupLocation: !repeatOrder });
+
     history.push('/refill');
 
     if (operator) {
@@ -127,8 +129,6 @@ class AirfillWidget extends Component {
 
     if (repeatOrder) {
       useRecentRefill(repeatOrder);
-    } else {
-      init({ defaultNumber });
     }
   }
 
