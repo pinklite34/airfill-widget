@@ -16,6 +16,7 @@
     "build:module": "webpack --config config/dist.js --json > stats.json",
     "build": "npm run prebuild && npm run build:module && npm run build:standalone",
     "build:watch": "npm run prebuild && npm run build:module -- --mode=development -w",
+    "build:translations": "NODE_ENV=production node scripts/translations.js",
     "dist": "webpack --env=dist --json > stats.json",
     "standalone": "npm run copy && webpack --env=standalone --json > stats.json",
     "lint": "eslint ./src --max-warnings 0 --fix",
@@ -29,7 +30,7 @@
     "precommit": "lint-staged",
     "prepublishOnly": "npm run build",
     "heroku": "node config/herokuServer.js",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build:translations && npm run build"
   },
   "keywords": [],
   "peerDependencies": {
@@ -37,6 +38,7 @@
     "react-dom": "^16.2.0"
   },
   "dependencies": {
+    "@alienfast/i18next-loader": "^1.0.16",
     "@bitrefill/react-pusher": "^2.3.2",
     "color": "^3.0.0",
     "core-js": "^2.5.7",
@@ -47,12 +49,13 @@
     "express": "^4.16.3",
     "fetch-ponyfill": "^6.0.1",
     "flag-icons": "^1.0.2",
+    "fs-extra": "^7.0.0",
     "history": "^4.7.2",
     "i18next": "^11.3.3",
     "i18next-browser-languagedetector": "^2.2.0",
-    "i18next-locize-backend": "^1.6.0",
     "input-format": "^0.2.3",
     "libphonenumber-js": "^1.2.15",
+    "locize-cli": "^3.12.0",
     "material-ui": "1.0.0-beta.27",
     "prop-types": "^15.5.8",
     "qrious": "^4.0.2",
@@ -102,6 +105,9 @@
     "extends": "bitrefill",
     "globals": {
       "btoa": true
+    },
+    "rules": {
+      "import/no-webpack-loader-syntax": 0
     }
   },
   "lint-staged": {

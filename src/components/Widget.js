@@ -19,7 +19,7 @@ import { compose } from 'recompose';
 
 import { init, loadOrder, setOperator, useRecentRefill } from '../actions';
 import { client } from '../lib/api-client';
-import i18n from '../lib/i18n';
+import i18n from '../lib/i18n-instance';
 import { configProps, fnProp, inventoryProp } from '../lib/prop-types';
 import WidgetRect from '../lib/WidgetRect';
 import getMethods from '../payment-methods';
