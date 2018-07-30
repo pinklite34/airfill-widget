@@ -5,4 +5,4 @@ node_modules
 dist/*
 stats.json
 package-lock.json
-src/translations/
+src/translations/*
