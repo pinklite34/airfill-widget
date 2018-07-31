@@ -19,7 +19,7 @@ import ComboInput from '../UI/ComboInput';
 import Info from '../UI/info.svg';
 import theme from '../../theme';
 import Flex from '../UI/Flex';
-import { startsWith, capitalizeFirst } from '../../lib/string';
+import { startsWith, capitalize } from '../../lib/string';
 
 const Error = styled('div')`
   display: flex;
@@ -98,7 +98,7 @@ class HeaderIntroduction extends PureComponent {
       (numberLookup.error && numberLookup.error.message) || numberLookup.error;
     const displayedError = error || lookupError;
 
-    const coin = capitalizeFirst(config.coin || 'Bitcoin');
+    const coin = capitalize(config.coin || 'Bitcoin');
 
     return (
       <Flex centered>
