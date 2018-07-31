@@ -86,7 +86,7 @@ export default function RefillFailed(props) {
         />
 
         {refundAddress ? (
-          <Text type="p" id="order.failed.refund">
+          <Text type="p" id="order.failed.transaction">
             <Link
               href={`https://live.blockcypher.com/btc/address/${refundAddress}/`}>
               Click here to see how it&apos;s going
@@ -95,7 +95,7 @@ export default function RefillFailed(props) {
           </Text>
         ) : (
           <Link href={mailTo}>
-            <Text type="link" id="order.failed.refund">
+            <Text type="link" id="order.failed.support">
               Click to email support
             </Text>
           </Link>
