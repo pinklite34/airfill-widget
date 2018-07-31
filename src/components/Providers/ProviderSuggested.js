@@ -78,7 +78,7 @@ export default function ProviderSuggested({ operator, onAccept, onReject }) {
             }}
           />
           <StyledButton
-            onClick={onAccept}
+            onClick={onReject}
             text={{
               id: 'button.suggested.no',
               children: "No, it's not correct",
