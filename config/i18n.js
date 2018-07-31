@@ -25,6 +25,7 @@ function createI18nConfig(resources, lng) {
 
     appendNamespaceToCIMode: true,
     saveMissing: isProd,
+    updateMissing: isProd,
 
     ns: namespaces,
     defaultNS: defaultNamespace,
