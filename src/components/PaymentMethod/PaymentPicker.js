@@ -25,6 +25,7 @@ import {
   configProp,
   amountProp,
   operatorProp,
+  paymentProp,
 } from '../../lib/prop-types';
 
 import { canAfford } from '../../lib/currency-helpers';
@@ -113,8 +114,8 @@ class PaymentMethod extends React.Component {
 
               return (
                 <PaymentItem
-                  key={method.title}
-                  {...method}
+                  key={method.title.id || method.title}
+                  method={method}
                   onClick={() => affordable && this.select(method)}
                   selected={method === selectedMethod}
                   disabled={!affordable}
@@ -129,7 +130,7 @@ class PaymentMethod extends React.Component {
 
 PaymentMethod.propTypes = {
   history: historyProp,
-  selectedMethod: PropTypes.object,
+  selectedMethod: paymentProp,
   setPaymentMethod: PropTypes.func.isRequired,
   config: configProp,
   createOrder: PropTypes.func.isRequired,

@@ -99,6 +99,7 @@ class PaymentMode extends PureComponent {
 
   render() {
     const { paymentStatus, paymentMethod, order } = this.props;
+    const title = paymentMethod.paymentModeOptions.title;
 
     // decide if the current payment method is a direct coin payment
     const isDirect = isDirectPayment(paymentMethod.paymentMode);
@@ -157,7 +158,12 @@ class PaymentMode extends PureComponent {
                   onClick={() =>
                     paymentMethod.paymentModeOptions.callback(order)
                   }>
-                  {paymentMethod.paymentModeOptions.title}
+                  {}
+                  {title && title.id ? (
+                    <Text {...title} />
+                  ) : (
+                    <Text>{title}</Text>
+                  )}
                 </Button>
               ) : (
                 <Flex row={greaterThan.tablet} width="100%">

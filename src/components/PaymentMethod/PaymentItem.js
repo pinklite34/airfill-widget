@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'react-emotion';
+
+import { paymentProp } from '../../lib/prop-types';
+
 import Icon from '../UI/Icon';
+import Text from '../UI/Text';
+import theme from '../../theme';
 
 const Container = styled('div')`
   width: 100%;
-  min-height: 72px;
-  padding: 5px 16px;
+  padding: 0 16px;
 
   background-color: ${p => (p.selected ? '#d8d8d8' : '#fff')};
   border-bottom: ${p => p.theme.bd.primary};
@@ -40,54 +44,45 @@ const TextContainer = styled('div')`
   }
 `;
 
-const Title = styled('span')`
-  font-weight: 700;
-`;
+const PaymentItem = ({ method, onClick, selected, disabled }) => {
+  const { icon, title, description, notice } = method;
 
-const Description = styled('span')`
-  color: #777777;
-  font-size: 12px;
-  padding-top: 4px;
-`;
-
-const Notice = styled('span')`
-  color: #777777;
-  font-size: 12px;
-  font-weight: 700;
-  padding-top: 4px;
-`;
-
-const PaymentItem = ({
-  icon,
-  title,
-  description,
-  notice,
-  onClick,
-  selected,
-  disabled,
-}) => {
   return (
     <Container onClick={onClick} selected={selected} disabled={disabled}>
-      <Icon src={icon} alt={title} />
+      <Icon src={icon} alt={title.id || title} />
       <TextContainer>
-        <Title>{title}</Title>
-        <Description>
-          {typeof description === 'function'
-            ? description(!disabled)
-            : description}
-        </Description>
-        {notice && <Notice>{notice}</Notice>}
+        {title && title.id ? (
+          <Text
+            type="h3"
+            color={theme.tx.primary}
+            weight={500}
+            margin="8px 0"
+            {...title}
+          />
+        ) : (
+          <Text type="h3" color={theme.tx.primary} weight={500} margin="8px 0">
+            {title}
+          </Text>
+        )}
+        {typeof description === 'function' ? (
+          description(!disabled)
+        ) : description && description.id ? (
+          <Text type="p" {...description} />
+        ) : (
+          <Text type="p">{description}</Text>
+        )}
+        {notice && (
+          <Text type="p" weight={700}>
+            {notice}
+          </Text>
+        )}
       </TextContainer>
     </Container>
   );
 };
 
 PaymentItem.propTypes = {
-  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  title: PropTypes.string.isRequired,
-  description: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
-    .isRequired,
-  notice: PropTypes.string,
+  method: paymentProp,
   onClick: PropTypes.func,
   selected: PropTypes.bool,
   disabled: PropTypes.bool,

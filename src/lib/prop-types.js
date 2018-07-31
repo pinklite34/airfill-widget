@@ -155,11 +155,15 @@ export const paymentProps = {
   address: PropTypes.string,
   altcoinCode: coinCurrencyProp,
   altcoinPrice: amountProp,
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.string, transProp]),
   description: PropTypes.any,
   icon: PropTypes.node,
   requireAccountBalance: PropTypes.bool,
   paymentMode: paymentModeProp,
+  paymentModeOptions: PropTypes.shape({
+    title: PropTypes.oneOfType([PropTypes.string, transProp]),
+    callback: PropTypes.func,
+  }),
   altBasePrice: amountProp,
   satoshiPrice: amountProp,
 };
