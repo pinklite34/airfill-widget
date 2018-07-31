@@ -12,7 +12,9 @@ const supportedLanguages = [
   { lng: 'de', name: 'German' },
 ];
 
-const supportedLanguageKeys = supportedLanguages.map(x => x.lng);
+const supportedLanguageKeys = supportedLanguages.map(function(x) {
+  return x.lng;
+});
 
 function createI18nConfig(resources, lng) {
   return {
