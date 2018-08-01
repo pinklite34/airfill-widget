@@ -7,6 +7,7 @@ import DeviceInfo from '../../lib/DeviceInfo';
 import Button from './Button';
 import Text from './Text';
 import Icon from './Icon';
+import { transProp } from '../../lib/prop-types';
 
 const Container = styled('div')`
   padding: 0 16px;
@@ -40,11 +41,17 @@ export default function Collapsed({
       {({ lessThan }) => (
         <Container>
           <Left>
-            <Icon src={icon} alt={alt || title} margin="0 16px 0 0" />
+            <Icon
+              src={icon}
+              alt={alt || title.id || title}
+              margin="0 16px 0 0"
+            />
             {typeof title === 'string' ? (
               <Text type="p" size="16px">
                 {title}
               </Text>
+            ) : title.id ? (
+              <Text type="p" size="16px" {...title} />
             ) : (
               title
             )}
@@ -78,6 +85,6 @@ Collapsed.propTypes = {
   type: PropTypes.string,
   hideButton: PropTypes.bool,
   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  title: PropTypes.node,
+  title: PropTypes.oneOfType([transProp, PropTypes.node]),
   alt: PropTypes.string,
 };

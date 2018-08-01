@@ -19,6 +19,7 @@ import {
   orderOptionsProp,
   amountProp,
   paymentStatusProp,
+  paymentProp,
 } from '../../lib/prop-types';
 import DeviceInfo from '../../lib/DeviceInfo';
 
@@ -54,7 +55,7 @@ class PaymentMode extends PureComponent {
     accountBalance: amountProp,
     orderOptions: orderOptionsProp,
     paymentStatus: paymentStatusProp,
-    paymentMethod: PropTypes.object.isRequired,
+    paymentMethod: paymentProp,
     setPaymentMethod: PropTypes.func.isRequired,
     onExternalUrl: PropTypes.func,
   };
@@ -98,8 +99,10 @@ class PaymentMode extends PureComponent {
   };
 
   render() {
-    const { paymentStatus, paymentMethod, order } = this.props;
-    const title = paymentMethod.paymentModeOptions.title;
+    const { paymentStatus, paymentMethod = {}, order } = this.props;
+    const title =
+      paymentMethod.paymentModeOptions &&
+      paymentMethod.paymentModeOptions.title;
 
     // decide if the current payment method is a direct coin payment
     const isDirect = isDirectPayment(paymentMethod.paymentMode);
@@ -147,10 +150,17 @@ class PaymentMode extends PureComponent {
               <Flex row alignItems="center" padding="0 0 16px 0">
                 <Icon
                   src={paymentMethod.icon}
-                  alt={paymentMethod.title}
+                  alt={
+                    (paymentMethod.title && paymentMethod.title.id) ||
+                    paymentMethod.title
+                  }
                   margin="0 8px 0 0"
                 />
-                <Text type="h3">{paymentMethod.title}</Text>
+                {paymentMethod.title && paymentMethod.title.id ? (
+                  <Text {...paymentMethod.title} />
+                ) : (
+                  <Text>{paymentMethod.title}</Text>
+                )}
               </Flex>
 
               {!isDirect ? (
