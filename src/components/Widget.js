@@ -17,7 +17,15 @@ import {
 } from 'react-router-redux';
 import { compose } from 'recompose';
 
-import { init, loadOrder, setOperator, useRecentRefill } from '../actions';
+import {
+  init,
+  loadOrder,
+  openComboInput,
+  setComboInputFocus,
+  setCountry,
+  setOperator,
+  useRecentRefill,
+} from '../actions';
 import { client } from '../lib/api-client';
 import i18n from '../lib/i18n-instance';
 import { configProps, fnProp, inventoryProp } from '../lib/prop-types';
@@ -103,6 +111,7 @@ class AirfillWidget extends Component {
       history,
       repeatOrder,
       useRecentRefill,
+      openDropdown,
     } = this.props;
 
     client.configure({
@@ -110,13 +119,16 @@ class AirfillWidget extends Component {
       baseUrl: baseUrl || 'https://api.bitrefill.com/widget',
     });
 
-    init({ defaultNumber, shouldLookupLocation: !repeatOrder });
+    init({
+      defaultNumber,
+      shouldLookupLocation: !repeatOrder && !openDropdown,
+    });
 
-    history.push('/refill');
+    let route = '/refill';
 
     if (operator) {
       setOperator(operator);
-      history.push('/refill/selectAmount');
+      route = '/refill/selectAmount';
     }
 
     if (orderId) {
@@ -126,6 +138,8 @@ class AirfillWidget extends Component {
     if (repeatOrder) {
       useRecentRefill(repeatOrder);
     }
+
+    history.push(route);
   }
 
   componentDidCatch(err, info) {
@@ -208,6 +222,12 @@ const StoreWidgetWrapper = compose(
       const paymentButtons = props.paymentButtons || [];
       if (props.keepDefaultPayments) {
         paymentButtons.push(...getMethods());
+      }
+
+      if (props.openDropdown) {
+        dispatch(setCountry(''));
+        dispatch(openComboInput());
+        dispatch(setComboInputFocus(true));
       }
 
       return {

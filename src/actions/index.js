@@ -25,7 +25,7 @@ export const setComboInputFocus = createAction('SET_COMBOINPUT_FOCUS');
 export const updatePaymentStatus = createAction('UPDATE_PAYMENT_STATUS');
 export const setSubscribeNewsletter = createAction('SET_SUBSCRIBE_NEWSLETTER');
 
-const setComboInputOpen = createAction('SET_COMBOINPUT_OPEN');
+export const setComboInputOpen = createAction('SET_COMBOINPUT_OPEN');
 export const openComboInput = () => setComboInputOpen(true);
 export const closeComboInput = () => setComboInputOpen(false);
 

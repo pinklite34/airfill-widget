@@ -12,11 +12,7 @@ const Address = styled('span')`
 `;
 
 export default function BitcoinAddress({ address, ...props }) {
-  return (
-    <Address {...props} size="44">
-      {address}
-    </Address>
-  );
+  return <Address {...props}>{address}</Address>;
 }
 
 BitcoinAddress.propTypes = {
