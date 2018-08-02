@@ -131,7 +131,15 @@ const transformNumberLookupReponse = response => {
   const { operator, altOperators, country } = response;
   return {
     operator: processOperatorPackages(operator),
-    altOperators,
+    altOperators: altOperators.sort((a, b) => {
+      if (a.type === 'refill') {
+        return -1;
+      } else if (a.type === 'pin') {
+        return 1;
+      }
+
+      return 0;
+    }),
     country: country.alpha2,
   };
 };
