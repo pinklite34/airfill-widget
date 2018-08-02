@@ -61,7 +61,7 @@ class PaymentMode extends PureComponent {
   };
 
   static defaultProps = {
-    onExternalUrl: uri => window.open(uri),
+    onExternalUrl: uri => window.open(uri, '_blank'),
   };
 
   state = {
