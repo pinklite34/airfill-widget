@@ -13,10 +13,12 @@ const Address = styled('div')`
   line-height: 1;
 `;
 
-export default function BitcoinAddress({ address, ...props }) {
-  return <Address {...props}>{address}</Address>;
+export default function BitcoinAddress({ copy, children, ...props }) {
+  return <Address {...props}>{children}</Address>;
 }
 
 BitcoinAddress.propTypes = {
   address: PropTypes.string,
+  children: PropTypes.any,
+  copy: PropTypes.string,
 };

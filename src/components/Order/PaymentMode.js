@@ -206,16 +206,6 @@ class PaymentMode extends PureComponent {
                       </PaymentSection>
                     )}
 
-                    <PaymentSection>
-                      <Button
-                        onClick={this.onOpenWallet(uri)}
-                        text={{
-                          id: 'button.openwallet',
-                          children: 'Open in Wallet',
-                        }}
-                      />
-                    </PaymentSection>
-
                     {isPartial && (
                       <PaymentSection>
                         <Link
@@ -248,7 +238,9 @@ class PaymentMode extends PureComponent {
                           SEND THIS AMOUNT
                         </Text>
                         <Flex row margin="0 auto" centered>
-                          <BitcoinAddress address={displayPrice} size="36px" />
+                          <BitcoinAddress copy={displayPrice} size="36px">
+                            {displayPrice}
+                          </BitcoinAddress>
                           <Text
                             type="p"
                             size="36px"
@@ -273,7 +265,21 @@ class PaymentMode extends PureComponent {
                           ).toUpperCase()}{' '}
                           ({unit}) ADDRESS
                         </Text>
-                        <BitcoinAddress address={paymentAddress} width="100%" />
+                        <BitcoinAddress copy={paymentAddress} width="100%">
+                          <Flex row justifyContent="left">
+                            <Icon
+                              src={paymentMethod.icon}
+                              alt={
+                                (paymentMethod.title &&
+                                  paymentMethod.title.id) ||
+                                paymentMethod.title
+                              }
+                            />
+                            <span style={{ lineHeight: 1.5, fontSize: '19px' }}>
+                              {paymentAddress}
+                            </span>
+                          </Flex>
+                        </BitcoinAddress>
                       </div>
                     </Flex>
                   </Flex>
