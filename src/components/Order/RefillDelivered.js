@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'react-emotion';
 
 import { paymentStatusProp, orderProp, fnProp } from '../../lib/prop-types';
-import setClipboardText from '../../lib/clipboard-helper';
 
 import PaymentLayout from './PaymentLayout';
 import OrderHeader from '../UI/OrderHeader';
@@ -68,7 +67,7 @@ export default function RefillDelivered(props) {
         {pinInfo && (
           <Fragment>
             {pinInfo.pin && (
-              <PinContainer onClick={() => setClipboardText(pinInfo.pin)}>
+              <PinContainer>
                 <PinLabel
                   type="h1"
                   id="order.delivered.giftcard"

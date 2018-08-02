@@ -1,40 +1,35 @@
-import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
 import styled from 'react-emotion';
-
 import { connect } from 'react-redux';
-import { setPaymentMethod } from '../../actions';
-import { selectAmount, selectPaymentMethod } from '../../store';
 
-import { toWei, getEthInstance } from '../../lib/eth';
+import { setPaymentMethod } from '../../actions';
 import {
   isDirectPayment,
   isLightningPayment,
 } from '../../lib/currency-helpers';
-import setClipboardText from '../../lib/clipboard-helper';
-import { fromWindow } from '../../lib/globals';
-import {
-  orderProp,
-  paymentsProp,
-  orderOptionsProp,
-  amountProp,
-  paymentStatusProp,
-  paymentProp,
-} from '../../lib/prop-types';
 import DeviceInfo from '../../lib/DeviceInfo';
-
-import Button from '../UI/Button';
-
-import BitcoinAddress from '../UI/BitcoinAddress';
-import OrderHeader from '../UI/OrderHeader';
-import PaymentLayout from './PaymentLayout';
-
-import QrCode from '../UI/QrCode';
-import Flex from '../UI/Flex';
-import Text from '../UI/Text';
-import Link from '../UI/Link';
-import Icon from '../UI/Icon';
+import { getEthInstance, toWei } from '../../lib/eth';
+import { fromWindow } from '../../lib/globals';
 import { getPaymentInfo } from '../../lib/price';
+import {
+  amountProp,
+  orderOptionsProp,
+  orderProp,
+  paymentProp,
+  paymentsProp,
+  paymentStatusProp,
+} from '../../lib/prop-types';
+import { selectAmount, selectPaymentMethod } from '../../store';
+import BitcoinAddress from '../UI/BitcoinAddress';
+import Button from '../UI/Button';
+import Flex from '../UI/Flex';
+import Icon from '../UI/Icon';
+import Link from '../UI/Link';
+import OrderHeader from '../UI/OrderHeader';
+import QrCode from '../UI/QrCode';
+import Text from '../UI/Text';
+import PaymentLayout from './PaymentLayout';
 
 const PartialWarning = styled('div')`
   border-radius: 4px;
@@ -201,10 +196,7 @@ class PaymentMode extends PureComponent {
                     </PaymentSection>
 
                     <PaymentSection>
-                      <BitcoinAddress
-                        onClick={() => setClipboardText(paymentAddress)}
-                        address={paymentAddress}
-                      />
+                      <BitcoinAddress address={paymentAddress} />
                     </PaymentSection>
 
                     {isPartial && (
