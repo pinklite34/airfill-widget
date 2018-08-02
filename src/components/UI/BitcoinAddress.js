@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextField from 'material-ui/TextField';
-import { css } from 'react-emotion';
+import styled from 'react-emotion';
 
-const style = css`
+const Address = styled('span')`
   border: 1px solid rgba(0, 0, 0, 0.16);
   background-color: #fff;
   font-weight: normal;
@@ -14,15 +13,9 @@ const style = css`
 
 export default function BitcoinAddress({ address, ...props }) {
   return (
-    <TextField
-      {...props}
-      fullWidth
-      className={style}
-      type="text"
-      readOnly
-      value={address}
-      size="44"
-    />
+    <Address {...props} size="44">
+      {address}
+    </Address>
   );
 }
 
