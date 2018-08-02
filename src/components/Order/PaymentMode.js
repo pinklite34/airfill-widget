@@ -30,6 +30,7 @@ import OrderHeader from '../UI/OrderHeader';
 import QrCode from '../UI/QrCode';
 import Text from '../UI/Text';
 import PaymentLayout from './PaymentLayout';
+import theme from '../../theme';
 
 const PartialWarning = styled('div')`
   border-radius: 4px;
@@ -39,6 +40,10 @@ const PartialWarning = styled('div')`
 
 const PaymentSection = styled('div')`
   margin-bottom: 16px;
+`;
+
+const PaymentContainer = styled('div')`
+  display: flex;
 `;
 
 class PaymentMode extends PureComponent {
@@ -141,23 +146,10 @@ class PaymentMode extends PureComponent {
 
         <DeviceInfo>
           {({ greaterThan }) => (
-            <PaymentLayout {...this.props}>
-              <Flex row alignItems="center" padding="0 0 16px 0">
-                <Icon
-                  src={paymentMethod.icon}
-                  alt={
-                    (paymentMethod.title && paymentMethod.title.id) ||
-                    paymentMethod.title
-                  }
-                  margin="0 8px 0 0"
-                />
-                {paymentMethod.title && paymentMethod.title.id ? (
-                  <Text {...paymentMethod.title} />
-                ) : (
-                  <Text>{paymentMethod.title}</Text>
-                )}
-              </Flex>
-
+            <PaymentLayout
+              fullWidth
+              childPadding="18px 18px 52px 18px"
+              {...this.props}>
               {!isDirect ? (
                 <Button
                   onClick={() =>
@@ -175,8 +167,9 @@ class PaymentMode extends PureComponent {
                   <Flex
                     style={{ flex: 1 }}
                     justifyContent="flex-start"
-                    padding={greaterThan.tablet ? '0 16px 0 0' : '0 0 16px'}>
-                    <PaymentSection>
+                    // padding={greaterThan.tablet ? '0 16px 0 0' : '0 0 16px'}>
+                  >
+                    {/* <PaymentSection>
                       {isLightningPayment(paymentMethod.paymentMode) ? (
                         <Text id="order.payment.sendLightning">
                           Copy the invoice below and pay{' '}
@@ -232,12 +225,58 @@ class PaymentMode extends PureComponent {
                           <Text id="order.help">Need help?</Text>
                         </Link>
                       </PaymentSection>
-                    )}
+                    )} */}
+                    <Flex row>
+                      <div style={{ flex: 2 }}>
+                        <QrCode
+                          value={uri}
+                          foreground={theme.tx.primary}
+                          foregroundAlpha={0.8}
+                          size={200}
+                        />
+                        <Button
+                          onClick={this.onOpenWallet(uri)}
+                          text={{
+                            id: 'button.openwallet',
+                            children: 'Open in Wallet',
+                          }}
+                          width="100%"
+                        />
+                      </div>
+                      <div style={{ flex: 5, marginLeft: '12px' }}>
+                        <Text type="p" centered>
+                          SEND THIS AMOUNT
+                        </Text>
+                        <Flex row margin="0 auto" centered>
+                          <BitcoinAddress address={displayPrice} size="36px" />
+                          <Text
+                            type="p"
+                            size="36px"
+                            centered
+                            margin="0 0 0 16px"
+                            lineHeight={1}>
+                            {unit}
+                          </Text>
+                        </Flex>
+                        <div
+                          style={{
+                            width: '100%',
+                            height: '1px',
+                            borderTop: '1px solid rgba(0, 0, 0, 0.08)',
+                            margin: '24px 0',
+                          }}
+                        />
+                        <Text type="p" centered id="order.payment.to">
+                          TO THIS{' '}
+                          {(
+                            paymentMethod.title.children || paymentMethod.title
+                          ).toUpperCase()}{' '}
+                          ({unit}) ADDRESS
+                        </Text>
+                        <BitcoinAddress address={paymentAddress} width="100%" />
+                      </div>
+                    </Flex>
                   </Flex>
-
-                  <div>
-                    <QrCode value={uri} size={200} />
-                  </div>
                 </Flex>
               )}
             </PaymentLayout>

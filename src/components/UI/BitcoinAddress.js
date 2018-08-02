@@ -2,13 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'react-emotion';
 
-const Address = styled('span')`
+const Address = styled('div')`
   border: 1px solid rgba(0, 0, 0, 0.16);
-  background-color: #fff;
+  background-color: #fafafa;
   font-weight: normal;
   border-radius: 2px;
-  padding: 8px;
-  font-size: 16px;
+  padding: ${p => p.padding || '8px'};
+  font-size: ${p => p.size || '16px'};
+  width: ${p => p.width};
+  line-height: 1;
 `;
 
 export default function BitcoinAddress({ address, ...props }) {

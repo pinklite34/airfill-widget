@@ -1,6 +1,17 @@
 import React, { PureComponent } from 'react';
+import styled from 'react-emotion';
 import PropTypes from 'prop-types';
 import QRious from 'qrious';
+
+const QrContainer = styled('div')`
+  background-image: url(${p => p.src});
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+
+  width: 100%;
+  height: 100%;
+`;
 
 class QrCode extends PureComponent {
   constructor(props) {
@@ -24,7 +35,7 @@ class QrCode extends PureComponent {
   }
 
   render() {
-    return <img src={this.state.src} />;
+    return <QrContainer src={this.state.src} />;
   }
 }
 

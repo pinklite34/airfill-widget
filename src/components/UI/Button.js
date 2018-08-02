@@ -24,6 +24,8 @@ const StyledButton = styled('button')`
   margin: ${p => p.margin || 0};
   padding: ${p => p.padding || '8px 16px'};
 
+  width: ${p => p.width};
+
   border: none;
   border-radius: 2px;
 
