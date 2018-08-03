@@ -128,6 +128,8 @@ class PaymentMode extends PureComponent {
       uri,
     } = getPaymentInfo(paymentMethod.paymentMode, paymentStatus, order);
 
+    const isLightning = isLightningPayment(paymentMethod.paymentMode);
+
     return (
       <div>
         <OrderHeader
@@ -282,14 +284,23 @@ class PaymentMode extends PureComponent {
                           copy={paymentAddress}
                           width="100%"
                           label={
-                            <Text type="p" centered id="order.payment.to">
-                              TO THIS{' '}
-                              {(
-                                paymentMethod.title.children ||
-                                paymentMethod.title
-                              ).toUpperCase()}{' '}
-                              ADDRESS
-                            </Text>
+                            isLightning ? (
+                              <Text
+                                type="p"
+                                centered
+                                id="order.payment.toLightning">
+                                Copy the Lightning invoice
+                              </Text>
+                            ) : (
+                              <Text type="p" centered id="order.payment.to">
+                                TO THIS{' '}
+                                {(
+                                  paymentMethod.title.children ||
+                                  paymentMethod.title
+                                ).toUpperCase()}{' '}
+                                ADDRESS
+                              </Text>
+                            )
                           }>
                           {/* <Flex row justifyContent="center">
                             {/* <Icon
