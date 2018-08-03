@@ -50,6 +50,10 @@ export default class CopyField extends React.Component {
   onClick = () => {
     const { copy } = this.props;
 
+    if (this.state.animating) {
+      return;
+    }
+
     try {
       copyText(copy);
       this.setState({
