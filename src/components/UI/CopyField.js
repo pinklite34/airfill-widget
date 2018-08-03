@@ -63,7 +63,7 @@ export default class CopyField extends React.Component {
 
     return (
       <Address {...props} onClick={this.onClick}>
-        <div>{children}</div>
+        {children}
         <CopyTooltip show={animating}>Copied!</CopyTooltip>
       </Address>
     );

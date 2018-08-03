@@ -46,6 +46,15 @@ const PaymentContainer = styled('div')`
   display: flex;
 `;
 
+const Address = styled('p')`
+  line-height: 1.5;
+  font-size: 14px;
+  margin: 0;
+  text-align: center;
+
+  word-wrap: break-word;
+`;
+
 class PaymentMode extends PureComponent {
   static propTypes = {
     order: orderProp,
@@ -146,7 +155,7 @@ class PaymentMode extends PureComponent {
 
         <DeviceInfo>
           {({ is, greaterThan }) => (
-            <PaymentLayout fullWidth {...this.props}>
+            <PaymentLayout fullWidth={isDirect} {...this.props}>
               {!isDirect ? (
                 <Button
                   onClick={() =>
@@ -164,6 +173,7 @@ class PaymentMode extends PureComponent {
                   <Flex
                     style={{ flex: 1 }}
                     justifyContent="flex-start"
+                    width="100%"
                     // padding={greaterThan.tablet ? '0 16px 0 0' : '0 0 16px'}>
                   >
                     {/* <PaymentSection>
@@ -240,20 +250,25 @@ class PaymentMode extends PureComponent {
                           margin="12px 0"
                         />
                       </Flex>
-                      <div style={{ flex: 5, marginLeft: '12px' }}>
+                      <div
+                        style={{
+                          flex: 5,
+                          marginLeft: '12px',
+                          justifyContent: 'center',
+                          overflow: 'hidden',
+                        }}>
                         <Text type="p" centered>
                           SEND THIS AMOUNT
                         </Text>
                         <Flex row margin="0 auto" centered>
-                          <CopyField copy={displayPrice} size="36px">
+                          <CopyField copy={displayPrice} size="24px">
                             {displayPrice}
                           </CopyField>
                           <Text
                             type="p"
-                            size="36px"
+                            size="24px"
                             centered
                             margin="0 0 0 16px"
-                            color="black"
                             lineHeight={1}>
                             {unit}
                           </Text>
@@ -274,18 +289,18 @@ class PaymentMode extends PureComponent {
                           ADDRESS
                         </Text>
                         <CopyField copy={paymentAddress} width="100%">
-                          <Flex row justifyContent="left">
-                            <Icon
+                          {/* <Flex row justifyContent="center">
+                            {/* <Icon
                               src={paymentMethod.icon}
                               alt={
                                 (paymentMethod.title &&
                                   paymentMethod.title.id) ||
                                 paymentMethod.title
                               }
-                            />
-                            <span style={{ lineHeight: 1.5, fontSize: '19px' }}>
-                              {paymentAddress}
-                            </span>
+                            /> } */}
+
+                          <Flex justifyContent="center" width="100%">
+                            <Address>{paymentAddress}</Address>
                           </Flex>
                         </CopyField>
                       </div>
