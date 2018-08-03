@@ -52,7 +52,8 @@ const Address = styled('p')`
   margin: 0;
   text-align: center;
 
-  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 class PaymentMode extends PureComponent {
