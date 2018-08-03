@@ -21,29 +21,19 @@ import {
   paymentStatusProp,
 } from '../../lib/prop-types';
 import { selectAmount, selectPaymentMethod } from '../../store';
-import CopyField from '../UI/CopyField';
+import theme from '../../theme';
 import Button from '../UI/Button';
+import CopyField from '../UI/CopyField';
 import Flex from '../UI/Flex';
-import Icon from '../UI/Icon';
 import Link from '../UI/Link';
 import OrderHeader from '../UI/OrderHeader';
 import QrCode from '../UI/QrCode';
 import Text from '../UI/Text';
 import PaymentLayout from './PaymentLayout';
-import theme from '../../theme';
 
 const PartialWarning = styled('div')`
-  border-radius: 4px;
   padding: 12px;
   background: #ffdfdf;
-`;
-
-const PaymentSection = styled('div')`
-  margin-bottom: 16px;
-`;
-
-const PaymentContainer = styled('div')`
-  display: flex;
 `;
 
 const Address = styled('p')`
@@ -193,22 +183,18 @@ class PaymentMode extends PureComponent {
                     style={{ flex: 1 }}
                     justifyContent="flex-start"
                     width="100%">
-                    {/*
                     {isPartial && (
-                      <PaymentSection>
-                        <PartialWarning>
-                          We have received a partial payment from you.
-                          <br /> You paid <strong>{paid + ' ' + unit}</strong>,
-                          but the invoice was for{' '}
-                          <strong>{price + ' ' + unit}</strong>.
-                          <br />
-                          Please send the remaining{' '}
-                          <strong>{remaining + ' ' + unit}</strong>
-                        </PartialWarning>
-                      </PaymentSection>
+                      <PartialWarning>
+                        We have received a partial payment from you.
+                        <br /> You paid <strong>{paid + ' ' + unit}</strong>,
+                        but the invoice was for{' '}
+                        <strong>{price + ' ' + unit}</strong>.
+                        <br />
+                        Please send the remaining{' '}
+                        <strong>{remaining + ' ' + unit}</strong>
+                      </PartialWarning>
                     )}
 
-                    { */}
                     <Flex
                       direction={is.mobile ? 'column-reverse' : 'row'}
                       padding="14px">
