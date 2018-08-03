@@ -257,21 +257,17 @@ class PaymentMode extends PureComponent {
                           justifyContent: 'center',
                           overflow: 'hidden',
                         }}>
-                        <Text type="p" centered>
-                          SEND THIS AMOUNT
-                        </Text>
                         <Flex row margin="0 auto" centered>
-                          <CopyField copy={displayPrice} size="24px">
-                            {displayPrice}
-                          </CopyField>
-                          <Text
-                            type="p"
+                          <CopyField
+                            copy={displayPrice}
                             size="24px"
-                            centered
-                            margin="0 0 0 16px"
-                            lineHeight={1}>
-                            {unit}
-                          </Text>
+                            label={
+                              <Text type="p" centered>
+                                SEND THIS AMOUNT
+                              </Text>
+                            }>
+                            {displayPrice} {unit}
+                          </CopyField>
                         </Flex>
                         <div
                           style={{
@@ -281,14 +277,20 @@ class PaymentMode extends PureComponent {
                             margin: '24px 0',
                           }}
                         />
-                        <Text type="p" centered id="order.payment.to">
-                          TO THIS{' '}
-                          {(
-                            paymentMethod.title.children || paymentMethod.title
-                          ).toUpperCase()}{' '}
-                          ADDRESS
-                        </Text>
-                        <CopyField copy={paymentAddress} width="100%">
+
+                        <CopyField
+                          copy={paymentAddress}
+                          width="100%"
+                          label={
+                            <Text type="p" centered id="order.payment.to">
+                              TO THIS{' '}
+                              {(
+                                paymentMethod.title.children ||
+                                paymentMethod.title
+                              ).toUpperCase()}{' '}
+                              ADDRESS
+                            </Text>
+                          }>
                           {/* <Flex row justifyContent="center">
                             {/* <Icon
                               src={paymentMethod.icon}
