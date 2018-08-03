@@ -33,6 +33,8 @@ const LabelContainer = styled('div')`
   justify-content: center;
   align-items: center;
   overflow: visible;
+
+  white-space: nowrap;
 `;
 
 export default class CopyField extends React.Component {
