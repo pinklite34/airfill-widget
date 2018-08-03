@@ -11,6 +11,8 @@ const QrContainer = styled('div')`
 
   width: 100%;
   height: 100%;
+  min-width: 200px;
+  min-height: 200px;
 `;
 
 class QrCode extends PureComponent {

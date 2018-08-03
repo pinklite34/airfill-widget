@@ -70,12 +70,13 @@ const RowContent = styled(Flex)`
 const ChildContainer = styled(Flex)`
   line-height: 21px;
   width: 100%;
-  padding: ${p => p.padding};
   align-items: flex-start;
 
   @media (max-width: ${p => p.theme.bp.mobile}) {
-    padding: 14px 16px 0;
+    padding: ${p => p.padding || '14px 16px 0'};
   }
+
+  padding: ${p => p.padding};
 `;
 
 class PaymentLayout extends PureComponent {
@@ -90,7 +91,6 @@ class PaymentLayout extends PureComponent {
     paymentStatus: paymentStatusProp,
     paymentMethod: PropTypes.object,
     fullWidth: PropTypes.bool,
-    childPadding: PropTypes.string,
   };
 
   static defaultProps = {
@@ -98,7 +98,6 @@ class PaymentLayout extends PureComponent {
     operator: { result: {} },
     billingCurrency: '',
     fullWidth: false,
-    childPadding: '14px 16px 0 0',
   };
 
   state = {
@@ -165,7 +164,6 @@ class PaymentLayout extends PureComponent {
       paymentStatus,
       order,
       fullWidth,
-      childPadding,
     } = this.props;
 
     const { timeLeft } = this.state;
@@ -238,9 +236,9 @@ class PaymentLayout extends PureComponent {
         )}
 
         {children && (
-          <Flex row padding={fullWidth ? 0 : '0 0 16px'}>
+          <Flex row padding={fullWidth ? '0px' : '0 0 16px'}>
             {!fullWidth && <RowTitle />}
-            <ChildContainer padding={childPadding || '14px 16px 0 0'}>
+            <ChildContainer padding={fullWidth ? '0px' : '14px 16px 0 0'}>
               {children}
             </ChildContainer>
           </Flex>

@@ -145,11 +145,8 @@ class PaymentMode extends PureComponent {
         />
 
         <DeviceInfo>
-          {({ greaterThan }) => (
-            <PaymentLayout
-              fullWidth
-              childPadding="18px 18px 52px 18px"
-              {...this.props}>
+          {({ is, greaterThan }) => (
+            <PaymentLayout fullWidth {...this.props}>
               {!isDirect ? (
                 <Button
                   onClick={() =>
@@ -216,8 +213,16 @@ class PaymentMode extends PureComponent {
                         </Link>
                       </PaymentSection>
                     )} */}
-                    <Flex row>
-                      <div style={{ flex: 2 }}>
+                    <Flex
+                      direction={is.mobile ? 'column-reverse' : 'row'}
+                      padding="14px">
+                      <Flex
+                        direction={is.mobile ? 'column-reverse' : 'column'}
+                        alignItems="center"
+                        justifyContent="center"
+                        style={{
+                          flex: 2,
+                        }}>
                         <QrCode
                           value={uri}
                           foreground={theme.tx.primary}
@@ -230,9 +235,10 @@ class PaymentMode extends PureComponent {
                             id: 'button.openwallet',
                             children: 'Open in Wallet',
                           }}
-                          width="100%"
+                          width="200px"
+                          margin="12px 0"
                         />
-                      </div>
+                      </Flex>
                       <div style={{ flex: 5, marginLeft: '12px' }}>
                         <Text type="p" centered>
                           SEND THIS AMOUNT

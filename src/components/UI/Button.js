@@ -19,12 +19,11 @@ const StyledButton = styled('button')`
   align-items: center;
   justify-content: center;
 
+  width: ${p => p.width};
   min-height: 36px;
   min-width: 100px;
   margin: ${p => p.margin || 0};
   padding: ${p => p.padding || '8px 16px'};
-
-  width: ${p => p.width};
 
   border: none;
   border-radius: 2px;
