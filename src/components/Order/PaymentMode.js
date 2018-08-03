@@ -179,28 +179,8 @@ class PaymentMode extends PureComponent {
                     width="100%"
                     // padding={greaterThan.tablet ? '0 16px 0 0' : '0 0 16px'}>
                   >
-                    {/* <PaymentSection>
-                      {isLightningPayment(paymentMethod.paymentMode) ? (
-                        <Text id="order.payment.sendLightning">
-                          Copy the invoice below and pay{' '}
-                          <strong>
-                            {{ displayPrice }} {{ unit }}
-                          </strong>
-                        </Text>
-                      ) : (
-                        <Text id="order.payment.send">
-                          Send <i>exactly</i>{' '}
-                          <strong>
-                            {{ displayPrice }} {{ unit }}
-                          </strong>{' '}
-                          to this address:
-                        </Text>
-                      )}
-                    </PaymentSection>
+                    {/*
 
-                    <PaymentSection>
-                      <CopyField address={paymentAddress} />
-                    </PaymentSection>
 
                     {isPartial && (
                       <PaymentSection>
@@ -249,14 +229,14 @@ class PaymentMode extends PureComponent {
                             id: 'button.openwallet',
                             children: 'Open in Wallet',
                           }}
-                          width="200px"
+                          width={is.mobile ? '100%' : '200px'}
                           margin="12px 0"
                         />
                       </Flex>
                       <div
                         style={{
                           flex: 5,
-                          marginLeft: '12px',
+                          marginLeft: !is.mobile && '12px',
                           justifyContent: 'center',
                           overflow: 'hidden',
                         }}>
