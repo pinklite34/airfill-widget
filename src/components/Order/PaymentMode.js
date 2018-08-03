@@ -21,7 +21,7 @@ import {
   paymentStatusProp,
 } from '../../lib/prop-types';
 import { selectAmount, selectPaymentMethod } from '../../store';
-import BitcoinAddress from '../UI/BitcoinAddress';
+import CopyField from '../UI/CopyField';
 import Button from '../UI/Button';
 import Flex from '../UI/Flex';
 import Icon from '../UI/Icon';
@@ -189,7 +189,7 @@ class PaymentMode extends PureComponent {
                     </PaymentSection>
 
                     <PaymentSection>
-                      <BitcoinAddress address={paymentAddress} />
+                      <CopyField address={paymentAddress} />
                     </PaymentSection>
 
                     {isPartial && (
@@ -238,14 +238,15 @@ class PaymentMode extends PureComponent {
                           SEND THIS AMOUNT
                         </Text>
                         <Flex row margin="0 auto" centered>
-                          <BitcoinAddress copy={displayPrice} size="36px">
+                          <CopyField copy={displayPrice} size="36px">
                             {displayPrice}
-                          </BitcoinAddress>
+                          </CopyField>
                           <Text
                             type="p"
                             size="36px"
                             centered
                             margin="0 0 0 16px"
+                            color="black"
                             lineHeight={1}>
                             {unit}
                           </Text>
@@ -263,9 +264,9 @@ class PaymentMode extends PureComponent {
                           {(
                             paymentMethod.title.children || paymentMethod.title
                           ).toUpperCase()}{' '}
-                          ({unit}) ADDRESS
+                          ADDRESS
                         </Text>
-                        <BitcoinAddress copy={paymentAddress} width="100%">
+                        <CopyField copy={paymentAddress} width="100%">
                           <Flex row justifyContent="left">
                             <Icon
                               src={paymentMethod.icon}
@@ -279,7 +280,7 @@ class PaymentMode extends PureComponent {
                               {paymentAddress}
                             </span>
                           </Flex>
-                        </BitcoinAddress>
+                        </CopyField>
                       </div>
                     </Flex>
                   </Flex>
