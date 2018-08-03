@@ -131,6 +131,22 @@ class PaymentMode extends PureComponent {
 
     const isLightning = isLightningPayment(paymentMethod.paymentMode);
 
+    const SupportLink = (
+      <Flex
+        justifyContent="center"
+        alignItems="center"
+        padding="6px"
+        width="100%">
+        <Link
+          href={`https://www.bitrefill.com/support/${order.orderId}/${
+            order.payment.address
+          }`}
+          width="fit-content">
+          <Text id="order.help">Need help?</Text>
+        </Link>
+      </Flex>
+    );
+
     return (
       <div>
         <OrderHeader
@@ -176,12 +192,8 @@ class PaymentMode extends PureComponent {
                   <Flex
                     style={{ flex: 1 }}
                     justifyContent="flex-start"
-                    width="100%"
-                    // padding={greaterThan.tablet ? '0 16px 0 0' : '0 0 16px'}>
-                  >
+                    width="100%">
                     {/*
-
-
                     {isPartial && (
                       <PaymentSection>
                         <PartialWarning>
@@ -196,16 +208,7 @@ class PaymentMode extends PureComponent {
                       </PaymentSection>
                     )}
 
-                    {isPartial && (
-                      <PaymentSection>
-                        <Link
-                          href={`https://www.bitrefill.com/support/${
-                            order.orderId
-                          }/${order.payment.address}`}>
-                          <Text id="order.help">Need help?</Text>
-                        </Link>
-                      </PaymentSection>
-                    )} */}
+                    { */}
                     <Flex
                       direction={is.mobile ? 'column-reverse' : 'row'}
                       padding="14px">
@@ -232,6 +235,7 @@ class PaymentMode extends PureComponent {
                           width={is.mobile ? '100%' : '200px'}
                           margin="12px 0"
                         />
+                        {is.mobile && isPartial && SupportLink}
                       </Flex>
                       <div
                         style={{
@@ -260,7 +264,6 @@ class PaymentMode extends PureComponent {
                             margin: '24px 0',
                           }}
                         />
-
                         <CopyField
                           copy={paymentAddress}
                           width="100%"
@@ -283,20 +286,11 @@ class PaymentMode extends PureComponent {
                               </Text>
                             )
                           }>
-                          {/* <Flex row justifyContent="center">
-                            {/* <Icon
-                              src={paymentMethod.icon}
-                              alt={
-                                (paymentMethod.title &&
-                                  paymentMethod.title.id) ||
-                                paymentMethod.title
-                              }
-                            /> } */}
-
                           <Flex justifyContent="center" width="100%">
                             <Address>{paymentAddress}</Address>
                           </Flex>
                         </CopyField>
+                        {!is.mobile && isPartial && SupportLink}
                       </div>
                     </Flex>
                   </Flex>

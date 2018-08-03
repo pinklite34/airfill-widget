@@ -9,6 +9,8 @@ const StyledLink = styled('p')`
   text-decoration: none;
   cursor: pointer;
 
+  width: ${p => p.width};
+
   &:hover,
   &:focus,
   &:active {
