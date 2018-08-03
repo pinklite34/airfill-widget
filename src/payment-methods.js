@@ -56,6 +56,7 @@ export default function getPaymentMethods() {
       icon: BitcoinIcon,
       requireAccountBalance: false,
       paymentMode: 'bitcoin',
+      color: '#e46718',
     },
     {
       title: {
@@ -70,6 +71,7 @@ export default function getPaymentMethods() {
       icon: BitcoinIcon,
       requireAccountBalance: false,
       paymentMode: 'lightning',
+      color: '#e48718',
     },
     {
       title: {
@@ -97,6 +99,7 @@ export default function getPaymentMethods() {
       icon: EthereumIcon,
       requireAccountBalance: false,
       paymentMode: 'ethereum',
+      color: '#5770d0',
     },
     {
       title: {
@@ -111,6 +114,7 @@ export default function getPaymentMethods() {
       icon: DogecoinIcon,
       requireAccountBalance: false,
       paymentMode: 'dogecoin',
+      color: '#b99e31',
     },
     {
       title: {
@@ -125,6 +129,7 @@ export default function getPaymentMethods() {
       icon: DashIcon,
       requireAccountBalance: false,
       paymentMode: 'dash',
+      color: '#008de4',
     },
     {
       title: {

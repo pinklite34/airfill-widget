@@ -230,6 +230,7 @@ class PaymentMode extends PureComponent {
                           size={200}
                         />
                         <Button
+                          background={paymentMethod.color}
                           onClick={this.onOpenWallet(uri)}
                           text={{
                             id: 'button.openwallet',
