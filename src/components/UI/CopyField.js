@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'react-emotion';
+import copyText from '../../lib/clipboard-helper';
 
 const Address = styled('div')`
   position: relative;
@@ -46,12 +47,14 @@ export default class CopyField extends React.Component {
 
   onClick = () => {
     const { copy } = this.props;
-    console.log('copying', copy);
 
-    this.setState({
-      animating: true,
-      timeout: setTimeout(() => this.setState({ animating: false }), 2000),
-    });
+    try {
+      copyText(copy);
+      this.setState({
+        animating: true,
+        timeout: setTimeout(() => this.setState({ animating: false }), 2000),
+      });
+    } catch (e) {}
   };
 
   render() {
