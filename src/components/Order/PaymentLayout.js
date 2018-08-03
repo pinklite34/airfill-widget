@@ -174,12 +174,12 @@ class PaymentLayout extends PureComponent {
     const showRecipient = recipientType !== 'none';
     const isDelivered = paymentStatus && paymentStatus.status === 'delivered';
 
-    const stuff = getPaymentInfo(
+    const paymentInfo = getPaymentInfo(
       paymentMethod.paymentMode,
       paymentStatus,
       order
     );
-    const formattedPrice = `${stuff.displayPrice} ${stuff.unit}`;
+    const formattedPrice = `${paymentInfo.displayPrice} ${paymentInfo.unit}`;
     const productName = slug === 'reddit-gold' ? ' Reddit Gold' : '';
 
     return (
