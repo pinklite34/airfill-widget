@@ -224,7 +224,7 @@ class PaymentMode extends PureComponent {
                           <CopyField
                             copyLength={String(displayPrice).length}
                             fontSize="24px"
-                            width="70%"
+                            width="auto"
                             label={
                               <Text type="p" centered>
                                 SEND THIS AMOUNT

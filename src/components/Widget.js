@@ -129,6 +129,7 @@ class AirfillWidget extends Component {
     if (operator) {
       setOperator(operator);
       route = '/refill/selectAmount';
+      console.log(operator, 'ss');
     }
 
     if (orderId) {
