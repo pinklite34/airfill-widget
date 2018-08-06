@@ -19,6 +19,7 @@ const Address = styled('div')`
   padding: ${p => p.padding || '8px'};
   width: ${p => p.width};
   line-height: 1;
+  cursor: pointer;
 `;
 
 const LabelContainer = styled('div')`
@@ -77,7 +78,14 @@ export default class CopyField extends React.Component {
             Copied!
           </Text>
         </LabelContainer>
-        <Address padding={padding} width={width} onClick={this.onClick}>
+        <Address
+          padding={padding}
+          width={width}
+          onMouseDown={() => (this.clicking = true)}
+          onMouseMove={() => (this.clicking = false)}
+          onMouseUp={() => {
+            if (this.clicking) this.onClick();
+          }}>
           {children}
         </Address>
       </Container>
