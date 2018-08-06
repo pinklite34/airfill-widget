@@ -24,6 +24,10 @@ const Address = styled('input')`
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: ${p => p.fontSize};
+
+  :focus {
+    outline: none;
+  }
 `;
 
 const LabelContainer = styled('div')`
