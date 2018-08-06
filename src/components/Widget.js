@@ -31,7 +31,7 @@ import i18n from '../lib/i18n-instance';
 import { configProps, fnProp, inventoryProp } from '../lib/prop-types';
 import WidgetRect from '../lib/WidgetRect';
 import getMethods from '../payment-methods';
-import { selectInventory } from '../store';
+import { selectInventory, selectOperator } from '../store';
 import configureStore from '../store/configureStore';
 import theme from '../theme';
 import Amount from './Amount';
@@ -129,7 +129,7 @@ class AirfillWidget extends Component {
     if (operator) {
       setOperator(operator);
       route = '/refill/selectAmount';
-      console.log(operator, 'ss');
+      console.log('setoperator', operator);
     }
 
     if (orderId) {
@@ -141,6 +141,22 @@ class AirfillWidget extends Component {
     }
 
     history.push(route);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { selectedOperator, onChange } = this.props;
+
+    if (onChange) {
+      const prev =
+        prevProps.selectedOperator && prevProps.selectedOperator.result;
+      const curr = selectedOperator && selectedOperator.result;
+
+      if ((curr && !prev) || (curr && prev.slug !== curr.slug)) {
+        onChange({
+          operator: curr.slug,
+        });
+      }
+    }
   }
 
   componentDidCatch(err, info) {
@@ -218,6 +234,7 @@ const StoreWidgetWrapper = compose(
   connect(
     state => ({
       inventory: selectInventory(state),
+      selectedOperator: selectOperator(state),
     }),
     (dispatch, props) => {
       const paymentButtons = props.paymentButtons || [];
