@@ -239,7 +239,7 @@ class PaymentMode extends PureComponent {
                                 SEND THIS AMOUNT
                               </Text>
                             }>
-                            {displayPrice} {unit}
+                            <span>{displayPrice}</span> {unit}
                           </CopyField>
                         </Flex>
                         <div
