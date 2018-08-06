@@ -130,7 +130,7 @@ class AmountPicker extends PureComponent {
         </RadioWrapper>
         <AmountPackage
           name={
-            operator.result.type === 'data' || operator.result.type === 'other'
+            isNaN(Number(pkg.value))
               ? pkg.value
               : `${pkg.value} ${operator.result.currency}`
           }
@@ -143,6 +143,8 @@ class AmountPicker extends PureComponent {
   render() {
     const { amount, operator, setAmount, config } = this.props;
     const { billingCurrency } = config;
+
+    console.log(operator.result);
 
     // no package or custom amount selected
     // amount might be string (like reddit gold)
