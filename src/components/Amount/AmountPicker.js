@@ -130,7 +130,7 @@ class AmountPicker extends PureComponent {
         </RadioWrapper>
         <AmountPackage
           name={
-            operator.result.type === 'data'
+            operator.result.type === 'data' || operator.result.type === 'other'
               ? pkg.value
               : `${pkg.value} ${operator.result.currency}`
           }
