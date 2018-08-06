@@ -259,7 +259,7 @@ class PaymentMode extends PureComponent {
                                 type="p"
                                 centered
                                 id="order.payment.toLightning">
-                                Copy the Lightning invoice
+                                COPY THE LIGHTNING INVOICE
                               </Text>
                             ) : (
                               <Text type="p" centered id="order.payment.to">
