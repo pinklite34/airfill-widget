@@ -144,8 +144,6 @@ class AmountPicker extends PureComponent {
     const { amount, operator, setAmount, config } = this.props;
     const { billingCurrency } = config;
 
-    console.log(operator.result);
-
     // no package or custom amount selected
     // amount might be string (like reddit gold)
     const disabled =
