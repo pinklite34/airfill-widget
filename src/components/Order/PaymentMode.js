@@ -222,7 +222,7 @@ class PaymentMode extends PureComponent {
                         }}>
                         <Flex row margin="0 auto" centered>
                           <CopyField
-                            copyLength={displayPrice.length}
+                            copyLength={String(displayPrice).length}
                             fontSize="24px"
                             label={
                               <Text type="p" centered>

@@ -7,7 +7,6 @@ const Container = styled('div')`
   position: relative;
   font-size: ${p => p.size || '16px'};
   margin-top: 48px;
-  font-size: ${p => p.fontSize};
 `;
 
 const Address = styled('input')`
@@ -24,6 +23,7 @@ const Address = styled('input')`
   text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: ${p => p.fontSize};
 `;
 
 const LabelContainer = styled('div')`
