@@ -36,16 +36,6 @@ const PartialWarning = styled('div')`
   background: #ffdfdf;
 `;
 
-const Address = styled('p')`
-  line-height: 1.5;
-  font-size: 14px;
-  margin: 0;
-  text-align: center;
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
 class PaymentMode extends PureComponent {
   static propTypes = {
     order: orderProp,
@@ -232,14 +222,14 @@ class PaymentMode extends PureComponent {
                         }}>
                         <Flex row margin="0 auto" centered>
                           <CopyField
-                            copy={displayPrice}
-                            size="24px"
+                            copyLength={displayPrice.length}
+                            fontSize="24px"
                             label={
                               <Text type="p" centered>
                                 SEND THIS AMOUNT
                               </Text>
                             }>
-                            <span>{displayPrice}</span> {unit}
+                            {displayPrice + ' ' + unit}
                           </CopyField>
                         </Flex>
                         <div
@@ -251,8 +241,8 @@ class PaymentMode extends PureComponent {
                           }}
                         />
                         <CopyField
-                          copy={paymentAddress}
                           width="100%"
+                          fontSize="14px"
                           label={
                             isLightning ? (
                               <Text
@@ -272,9 +262,7 @@ class PaymentMode extends PureComponent {
                               </Text>
                             )
                           }>
-                          <Flex justifyContent="center" width="100%">
-                            <Address>{paymentAddress}</Address>
-                          </Flex>
+                          {paymentAddress}
                         </CopyField>
                         {!is.mobile && isPartial && SupportLink}
                       </div>

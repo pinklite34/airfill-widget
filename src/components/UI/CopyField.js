@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'react-emotion';
-import copyText from '../../lib/clipboard-helper';
 import Text from './Text';
 
 const Container = styled('div')`
   position: relative;
   font-size: ${p => p.size || '16px'};
   margin-top: 48px;
+  font-size: ${p => p.fontSize};
 `;
 
-const Address = styled('div')`
+const Address = styled('input')`
   border: 1px solid rgba(0, 0, 0, 0.16);
   background-color: #fafafa;
   font-weight: normal;
@@ -20,6 +20,10 @@ const Address = styled('div')`
   width: ${p => p.width};
   line-height: 1;
   cursor: pointer;
+
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const LabelContainer = styled('div')`
@@ -50,24 +54,25 @@ export default class CopyField extends React.Component {
     }
   }
 
-  onClick = () => {
-    const { copy } = this.props;
+  onClick = e => {
+    const { copyLength } = this.props;
 
     if (this.state.animating) {
       return;
     }
 
-    try {
-      copyText(copy);
-      this.setState({
-        animating: true,
-        timeout: setTimeout(() => this.setState({ animating: false }), 2000),
-      });
-    } catch (e) {}
+    e.target.focus();
+    e.target.setSelectionRange(0, copyLength || e.target.value.length);
+    document.execCommand('copy');
+
+    this.setState({
+      animating: true,
+      timeout: setTimeout(() => this.setState({ animating: false }), 2000),
+    });
   };
 
   render() {
-    const { children, label, padding, width, ...props } = this.props;
+    const { children, label, padding, width, fontSize, ...props } = this.props;
     const { animating } = this.state;
 
     return (
@@ -81,13 +86,11 @@ export default class CopyField extends React.Component {
         <Address
           padding={padding}
           width={width}
-          onMouseDown={() => (this.clicking = true)}
-          onMouseMove={() => (this.clicking = false)}
-          onMouseUp={() => {
-            if (this.clicking) this.onClick();
-          }}>
-          {children}
-        </Address>
+          onClick={this.onClick}
+          readonly
+          fontSize={fontSize}
+          value={children}
+        />
       </Container>
     );
   }
@@ -99,5 +102,6 @@ CopyField.propTypes = {
   width: PropTypes.string,
   address: PropTypes.string,
   children: PropTypes.any,
-  copy: PropTypes.string,
+  fontSize: PropTypes.string,
+  copyLength: PropTypes.number,
 };
