@@ -31,7 +31,7 @@ import i18n from '../lib/i18n-instance';
 import { configProps, fnProp, inventoryProp } from '../lib/prop-types';
 import WidgetRect from '../lib/WidgetRect';
 import getMethods from '../payment-methods';
-import { selectInventory, selectOperator } from '../store';
+import { selectInventory, selectOperator, selectOrder } from '../store';
 import configureStore from '../store/configureStore';
 import theme from '../theme';
 import Amount from './Amount';
@@ -129,7 +129,6 @@ class AirfillWidget extends Component {
     if (operator) {
       setOperator(operator);
       route = '/refill/selectAmount';
-      console.log('setoperator', operator);
     }
 
     if (orderId) {
@@ -144,16 +143,31 @@ class AirfillWidget extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { selectedOperator, onChange } = this.props;
+    const { selectedOperator, onChange, order } = this.props;
 
     if (onChange) {
-      const prev =
+      const prevOperator =
         prevProps.selectedOperator && prevProps.selectedOperator.result;
-      const curr = selectedOperator && selectedOperator.result;
+      const currOperator = selectedOperator && selectedOperator.result;
 
-      if ((curr && !prev) || (curr && prev.slug !== curr.slug)) {
+      if (
+        (currOperator && !prevOperator) ||
+        (currOperator && prevOperator.slug !== currOperator.slug)
+      ) {
         onChange({
-          operator: curr.slug,
+          operator: currOperator.slug,
+        });
+      }
+
+      const prevOrder = prevProps.order && prevProps.order.result;
+      const currOrder = order && order.result;
+
+      if (
+        (currOrder && !prevOrder) ||
+        (currOrder && prevOrder.id !== currOrder.id)
+      ) {
+        onChange({
+          orderId: currOrder.id,
         });
       }
     }
@@ -235,6 +249,7 @@ const StoreWidgetWrapper = compose(
     state => ({
       inventory: selectInventory(state),
       selectedOperator: selectOperator(state),
+      order: selectOrder(state),
     }),
     (dispatch, props) => {
       const paymentButtons = props.paymentButtons || [];
