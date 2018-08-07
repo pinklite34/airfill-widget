@@ -9,12 +9,21 @@ import Button from '../UI/Button';
 import Info from '../UI/info.svg';
 import Text from '../UI/Text';
 
+import { fetch } from '../../lib/api-client';
+
 export default class PaymentTwoFactor extends React.Component {
   state = {
     code: '',
   };
 
-  onClick = () => {};
+  onClick = () =>
+    fetch(
+      `/coinbase/2fa?order=${this.props.order.id}&twoFactorCode=${
+        this.state.code
+      }`
+    )
+      .then(response => console.log(response))
+      .catch(error => console.error(error));
 
   render() {
     const { order } = this.props;
