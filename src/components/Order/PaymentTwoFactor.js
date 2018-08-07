@@ -1,29 +1,23 @@
-import React, { Fragment } from 'react';
 import Input from 'material-ui/Input';
+import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
 
-import { orderProp, fnProp } from '../../lib/prop-types';
-
-import PaymentLayout from './PaymentLayout';
-import OrderHeader from '../UI/OrderHeader';
+import { post2faCode } from '../../actions';
+import { fnProp, orderProp } from '../../lib/prop-types';
 import Button from '../UI/Button';
 import Info from '../UI/info.svg';
+import OrderHeader from '../UI/OrderHeader';
 import Text from '../UI/Text';
+import PaymentLayout from './PaymentLayout';
 
-import { fetch } from '../../lib/api-client';
-
-export default class PaymentTwoFactor extends React.Component {
+class PaymentTwoFactor extends React.Component {
   state = {
     code: '',
   };
 
   onClick = () =>
-    fetch(
-      `/coinbase/2fa?order=${this.props.order.id}&twoFactorCode=${
-        this.state.code
-      }`
-    )
-      .then(response => console.log(response))
-      .catch(error => console.error(error));
+    this.props.dispatch(post2faCode(this.props.order.id, this.state.code));
 
   render() {
     const { order } = this.props;
@@ -68,4 +62,7 @@ export default class PaymentTwoFactor extends React.Component {
 PaymentTwoFactor.propTypes = {
   order: orderProp,
   onReset: fnProp,
+  dispatch: PropTypes.func.isRequired,
 };
+
+export default connect(state => ({}))(PaymentTwoFactor);
