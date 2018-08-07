@@ -10,8 +10,7 @@ import {
   EthereumIcon,
 } from './assets';
 
-const baseUrl =
-  process.env.NODE_ENV === 'development' ? '/api' : 'https://api.bitrefill.com';
+const baseUrl = 'http://localhost:3002';
 
 function openWindow(method, order) {
   const win = window.open(`${baseUrl}/widget/${method}?order=${order.id}`);
@@ -31,6 +30,7 @@ function openWindow(method, order) {
         'delivered',
         'expired',
         'payment_error',
+        '2fa_required',
       ].forEach(e =>
         channel.bind(e, () => {
           win.close();
