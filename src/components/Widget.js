@@ -143,33 +143,21 @@ class AirfillWidget extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { selectedOperator, onChange, order } = this.props;
+    const { onChange } = this.props;
 
     if (onChange) {
-      const prevOperator =
-        prevProps.selectedOperator && prevProps.selectedOperator.result;
-      const currOperator = selectedOperator && selectedOperator.result;
+      const operator = this.getResultProp(
+        prevProps,
+        'selectedOperator',
+        'slug'
+      );
 
-      if (
-        (currOperator && !prevOperator) ||
-        (currOperator && prevOperator.slug !== currOperator.slug)
-      ) {
-        onChange({
-          operator: currOperator.slug,
-        });
-      }
+      const orderId = this.getResultProp(prevProps, 'order', 'id');
 
-      const prevOrder = prevProps.order && prevProps.order.result;
-      const currOrder = order && order.result;
-
-      if (
-        (currOrder && !prevOrder) ||
-        (currOrder && prevOrder.id !== currOrder.id)
-      ) {
-        onChange({
-          orderId: currOrder.id,
-        });
-      }
+      onChange({
+        operator,
+        orderId,
+      });
     }
   }
 
@@ -177,6 +165,14 @@ class AirfillWidget extends Component {
     console.error('widget', err);
     console.error('widget', info);
   }
+
+  getResultProp = (prevProps, toCompare, toCompare2) => {
+    const prev = prevProps[toCompare] && prevProps[toCompare].result;
+    const curr = this.props[toCompare] && this.props[toCompare].result;
+
+    if ((curr && !prev) || (curr && prev[toCompare2] !== curr[toCompare2]))
+      return curr[toCompare2];
+  };
 
   render() {
     const {
