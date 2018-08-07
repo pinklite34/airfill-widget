@@ -152,11 +152,11 @@ class AirfillWidget extends Component {
         'slug'
       );
 
-      const orderId = this.getResultProp(prevProps, 'order', 'id');
+      const order = this.getResultProp(prevProps, 'order', 'id');
 
       onChange({
         operator,
-        orderId,
+        order,
       });
     }
   }
@@ -171,7 +171,7 @@ class AirfillWidget extends Component {
     const curr = this.props[toCompare] && this.props[toCompare].result;
 
     if ((curr && !prev) || (curr && prev[toCompare2] !== curr[toCompare2]))
-      return curr[toCompare2];
+      return this.props[toCompare].result;
   };
 
   render() {
