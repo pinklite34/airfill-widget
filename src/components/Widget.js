@@ -115,7 +115,7 @@ class AirfillWidget extends Component {
     } = this.props;
 
     client.configure({
-      token: apiKey || '5GY9TZBK8E05U9JQSTWFXNQS4',
+      token: apiKey || 'hMY0TozyGOWKfSkV',
       baseUrl: baseUrl || 'https://api.bitrefill.com/widget',
     });
 
