@@ -1,8 +1,8 @@
-import React, { PureComponent } from 'react';
+import { formatNumber } from 'libphonenumber-js';
 import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
-import { formatNumber } from 'libphonenumber-js';
 
 import {
   setEmail,
@@ -10,10 +10,9 @@ import {
   setSubscribeNewsletter,
   trigger,
 } from '../../actions';
-
 import { isValidEmail } from '../../lib/email-validation';
 import { getRecipientIcon } from '../../lib/icon-picker';
-import { getPlaceholder, isValidForCountry } from '../../lib/number-helpers';
+import { getPlaceholder } from '../../lib/number-helpers';
 import { isPhoneNumber } from '../../lib/number-input-helpers';
 import {
   amountProp,
@@ -33,10 +32,9 @@ import {
   selectOperator,
   selectSubscribeNewsletter,
 } from '../../store';
-
+import ActiveSection from '../UI/ActiveSection';
 import NextButton from '../UI/NextButton';
 import InputRow from '../UI/NumberInput';
-import ActiveSection from '../UI/ActiveSection';
 import Text from '../UI/Text';
 
 const InputContainer = styled('div')`
@@ -121,14 +119,11 @@ class Recipient extends PureComponent {
   };
 
   validateInput = () => {
-    const { number, country, operator } = this.props;
+    const { number, operator } = this.props;
 
     switch (operator.result && operator.result.recipientType) {
       case 'phone_number':
-        if (country.alpha2 === 'XI') {
-          return isPhoneNumber(number);
-        }
-        return isValidForCountry(number, country);
+        return isPhoneNumber(number);
       case 'email':
         return isValidEmail(number);
       default:

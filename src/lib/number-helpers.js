@@ -84,10 +84,4 @@ export const parseNumber = (number, country) => {
   return null;
 };
 
-// if number matches country
-export const isValidForCountry = (number, country) => {
-  const parsed = parse(number);
-  return parsed && country && parsed.country === country.alpha2;
-};
-
 export const getPlaceholder = alpha2 => examples[alpha2.toUpperCase()] || '';
