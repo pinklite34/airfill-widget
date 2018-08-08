@@ -176,7 +176,6 @@ export const loadOrder = (id, methods) => (dispatch, getState) => {
   return new Promise((resolve, reject) =>
     dispatch(load())
       .then(data => {
-        console.log(data);
         dispatch(setOperator(data.operatorSlug));
         dispatch(setAmount(data.valuePackage));
         if (data.number) {
