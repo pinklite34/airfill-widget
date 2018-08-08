@@ -124,11 +124,10 @@ class AirfillWidget extends Component {
       shouldLookupLocation: !repeatOrder && !openDropdown,
     });
 
-    let route = '/refill';
-
     if (operator) {
-      setOperator(operator);
-      route = '/refill/selectAmount';
+      setOperator(operator)
+        .then(e => history.push('/refill/selectAmount'))
+        .catch(e => console.log('error', e));
     }
 
     if (orderId) {
@@ -139,7 +138,7 @@ class AirfillWidget extends Component {
       useRecentRefill(repeatOrder);
     }
 
-    history.push(route);
+    history.push('/refill');
   }
 
   componentDidUpdate(prevProps) {
