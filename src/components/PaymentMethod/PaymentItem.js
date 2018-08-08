@@ -49,7 +49,7 @@ const PaymentItem = ({ method, onClick, selected, disabled }) => {
 
   return (
     <Container onClick={onClick} selected={selected} disabled={disabled}>
-      <Icon src={icon} alt={title.id || title} />
+      <Icon src={icon} alt={(title && title.id) || title} />
       <TextContainer>
         {title && title.id ? (
           <Text

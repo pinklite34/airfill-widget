@@ -43,14 +43,14 @@ export default function Collapsed({
           <Left>
             <Icon
               src={icon}
-              alt={alt || title.id || title}
+              alt={alt || (title && title.id) || title}
               margin="0 16px 0 0"
             />
             {typeof title === 'string' ? (
               <Text type="p" size="16px">
                 {title}
               </Text>
-            ) : title.id ? (
+            ) : title && title.id ? (
               <Text type="p" size="16px" {...title} />
             ) : (
               title
