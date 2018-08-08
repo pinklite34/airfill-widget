@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import styled from 'react-emotion';
 
 import { selectNumber, selectNumberLookup } from '../../store';
-import { lookupNumber, resetNumberLookup } from '../../actions';
+import { lookupNumber, resetNumberLookup, setOperator } from '../../actions';
 import {
   historyProp,
   fnProp,
@@ -61,6 +61,7 @@ class HeaderIntroduction extends PureComponent {
     number: numberProp,
     branded: PropTypes.bool,
     config: configProp,
+    setOperator: PropTypes.func.isRequired,
   };
 
   state = {
@@ -72,12 +73,17 @@ class HeaderIntroduction extends PureComponent {
   }
 
   lookupNumber = () => {
-    const { lookupNumber, history, number } = this.props;
+    const { lookupNumber, history, number, setOperator } = this.props;
 
     if (startsWith(number, '+')) {
       this.setState({ error: null }, () =>
         lookupNumber(number).then(
-          result => history.push('/refill/selectProvider'),
+          result => {
+            if (result.operator) {
+              setOperator(result.operator);
+            }
+            history.push('/refill/selectProvider');
+          },
           () => null // No uncaught promise rejections
         )
       );
@@ -181,5 +187,6 @@ export default connect(
   {
     lookupNumber,
     resetNumberLookup,
+    setOperator,
   }
 )(HeaderIntroduction);
