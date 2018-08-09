@@ -54,7 +54,6 @@ export default function getPaymentMethods() {
           'Regular Bitcoin transaction. Most transactions are accepted immediately, or after maximum one confirmation.',
       },
       icon: BitcoinIcon,
-      requireAccountBalance: false,
       paymentMode: 'bitcoin',
       color: '#e46718',
     },
@@ -69,7 +68,6 @@ export default function getPaymentMethods() {
       },
       notice: 'Max 0.0429 BTC',
       icon: BitcoinIcon,
-      requireAccountBalance: false,
       paymentMode: 'lightning',
       color: '#e48718',
     },
@@ -84,7 +82,6 @@ export default function getPaymentMethods() {
           'Regular Litecoin transaction. Most transactions are accepted immediately, or after maximum one confirmation.',
       },
       icon: LitecoinIcon,
-      requireAccountBalance: false,
       paymentMode: 'litecoin',
     },
     {
@@ -97,7 +94,6 @@ export default function getPaymentMethods() {
         children: 'Delivery after one confirmation.',
       },
       icon: EthereumIcon,
-      requireAccountBalance: false,
       paymentMode: 'ethereum',
       color: '#5770d0',
     },
@@ -112,7 +108,6 @@ export default function getPaymentMethods() {
           'Regular Dogecoin transaction. Delivery after one confirmation.',
       },
       icon: DogecoinIcon,
-      requireAccountBalance: false,
       paymentMode: 'dogecoin',
       color: '#b99e31',
     },
@@ -127,7 +122,6 @@ export default function getPaymentMethods() {
           'Regular Dash transaction. Transactions are accepted after maximum one confirmation, or instantly using InstantSend.',
       },
       icon: DashIcon,
-      requireAccountBalance: false,
       paymentMode: 'dash',
       color: '#008de4',
     },
@@ -142,7 +136,6 @@ export default function getPaymentMethods() {
           'Pay directly with your Coinbase account in BTC, LTC, BCH or ETH. Instant delivery and no fees.',
       },
       icon: CoinbaseIcon,
-      requireAccountBalance: false,
       paymentMode: 'coinbase',
       paymentModeOptions: {
         title: {
@@ -164,7 +157,6 @@ export default function getPaymentMethods() {
       },
       notice: 'Minimum 0.001 BTC',
       icon: LocalBitcoinsIcon,
-      requireAccountBalance: false,
       paymentMode: 'localbitcoins',
       paymentModeOptions: {
         title: {

@@ -110,8 +110,8 @@ class PaymentMethod extends React.Component {
               []
             )
             .map(method => {
-              const affordable = this.canAfford(method);
-
+              const affordable =
+                (method.canAfford && method.canAfford()) || true;
               return (
                 <PaymentItem
                   key={method.title.id || method.title}
