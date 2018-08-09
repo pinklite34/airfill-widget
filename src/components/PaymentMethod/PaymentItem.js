@@ -12,11 +12,11 @@ const Container = styled('div')`
   width: 100%;
   padding: 0 16px;
 
-  background-color: ${p => (p.selected ? '#d8d8d8' : '#fff')};
+  background-color: ${p => (p.selected ? '#3e8fe4' : '#fff')};
   border-bottom: ${p => p.theme.bd.primary};
 
   &:hover {
-    background-color: ${p => (p.selected ? '#d8d8d8' : '#fafafa')};
+    background-color: ${p => !p.selected && '#fafafa'};
   }
 
   &:last-of-type {
@@ -47,6 +47,8 @@ const TextContainer = styled('div')`
 const PaymentItem = ({ method, onClick, selected, disabled }) => {
   const { icon, title, description, notice } = method;
 
+  const color = selected && 'white';
+
   return (
     <Container onClick={onClick} selected={selected} disabled={disabled}>
       <Icon src={icon} alt={(title && title.id) || title} />
@@ -54,25 +56,33 @@ const PaymentItem = ({ method, onClick, selected, disabled }) => {
         {title && title.id ? (
           <Text
             type="h3"
-            color={theme.tx.primary}
+            color={color || theme.tx.primary}
             weight={500}
             margin="8px 0"
             {...title}
           />
         ) : (
-          <Text type="h3" color={theme.tx.primary} weight={500} margin="8px 0">
+          <Text
+            type="h3"
+            color={color || theme.tx.primary}
+            weight={500}
+            margin="8px 0">
             {title}
           </Text>
         )}
         {typeof description === 'function' ? (
-          <Text type="p">{description(!disabled)}</Text>
+          <Text color={color} type="p">
+            {description(!disabled)}
+          </Text>
         ) : description && description.id ? (
-          <Text type="p" {...description} />
+          <Text color={color} type="p" {...description} />
         ) : (
-          <Text type="p">{description}</Text>
+          <Text color={color} type="p">
+            {description}
+          </Text>
         )}
         {notice && (
-          <Text type="p" weight={700}>
+          <Text color={color} type="p" weight={700}>
             {notice}
           </Text>
         )}
