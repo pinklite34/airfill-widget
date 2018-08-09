@@ -91,7 +91,7 @@ export default class CopyField extends React.Component {
           padding={padding}
           width={width}
           onClick={this.onClick}
-          readonly
+          readOnly
           fontSize={fontSize}
           value={children}
         />
