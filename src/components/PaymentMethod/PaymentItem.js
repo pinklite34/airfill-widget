@@ -76,7 +76,7 @@ const PaymentItem = ({ method, onClick, affordable, selected }) => {
         )}
         {typeof description === 'function' ? (
           <Text color={color} type="p">
-            {description(!disabled)}
+            {description(affordable)}
           </Text>
         ) : description && description.id ? (
           <Text color={color} type="p" {...description} />
