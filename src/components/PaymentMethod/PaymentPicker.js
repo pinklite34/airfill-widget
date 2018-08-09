@@ -1,38 +1,36 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import styled from 'react-emotion';
-import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { compose } from 'recompose';
 
 import {
-  selectPaymentMethod,
-  selectNumber,
-  selectEmail,
-  selectAmount,
-  selectOperator,
-  selectCountry,
-} from '../../store';
-import {
-  setPaymentMethod,
   createOrder,
-  setNumber,
   setEmail,
+  setNumber,
+  setPaymentMethod,
   trigger,
 } from '../../actions';
 import {
-  historyProp,
-  configProp,
   amountProp,
+  configProp,
+  historyProp,
   operatorProp,
   paymentProp,
 } from '../../lib/prop-types';
-
-import { getPreOrderProps } from '../../lib/currency-helpers';
-
-import PaymentItem from './PaymentItem';
-import NextButton from '../UI/NextButton';
+import { canAfford } from '../../payment-methods';
+import {
+  selectAmount,
+  selectCountry,
+  selectEmail,
+  selectNumber,
+  selectOperator,
+  selectPaymentMethod,
+} from '../../store';
 import ActiveSection from '../UI/ActiveSection';
+import NextButton from '../UI/NextButton';
+import PaymentItem from './PaymentItem';
 
 const MethodContainer = styled('div')`
   background-color: #fff;
@@ -79,7 +77,6 @@ class PaymentMethod extends React.Component {
   render() {
     const { config, selectedMethod, operator, amount } = this.props;
     const { isLoading, error } = this.state;
-    const billingCurrency = config.billingCurrency;
 
     return (
       <ActiveSection
@@ -101,17 +98,10 @@ class PaymentMethod extends React.Component {
               []
             )
             .map(method => {
-              let affordable = true;
-
-              if (typeof method.canAfford === 'function') {
-                affordable = method.canAfford(
-                  getPreOrderProps({
-                    operator: operator.result,
-                    billingCurrency,
-                    amount,
-                  })
-                );
-              }
+              let affordable =
+                typeof method.canAfford === 'function'
+                  ? canAfford(method, operator, amount, config.billingCurrency)
+                  : true;
 
               return (
                 <PaymentItem

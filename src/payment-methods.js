@@ -1,14 +1,14 @@
-import { PUSHER_API_KEY } from './constants';
-
 import {
   BitcoinIcon,
-  LitecoinIcon,
-  DogecoinIcon,
-  DashIcon,
-  LocalBitcoinsIcon,
   CoinbaseIcon,
+  DashIcon,
+  DogecoinIcon,
   EthereumIcon,
+  LitecoinIcon,
+  LocalBitcoinsIcon,
 } from './assets';
+import { PUSHER_API_KEY } from './constants';
+import { getPreOrderProps } from './lib/currency-helpers';
 
 const baseUrl =
   process.env.NODE_ENV === 'development' ? '/api' : 'https://api.bitrefill.com';
@@ -38,6 +38,16 @@ function openWindow(method, order) {
         })
       );
     }
+  );
+}
+
+export function canAfford(method, operator, amount, billingCurrency) {
+  return method.canAfford(
+    getPreOrderProps({
+      operator: operator.result,
+      billingCurrency,
+      amount,
+    })
   );
 }
 
