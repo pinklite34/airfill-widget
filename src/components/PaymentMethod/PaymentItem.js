@@ -44,13 +44,17 @@ const TextContainer = styled('div')`
   }
 `;
 
-const PaymentItem = ({ method, onClick, selected, disabled }) => {
+const PaymentItem = ({ method, onClick, affordable, selected }) => {
   const { icon, title, description, notice } = method;
 
+  const disabled = !affordable;
   const color = selected && 'white';
 
   return (
-    <Container onClick={onClick} selected={selected} disabled={disabled}>
+    <Container
+      onClick={() => !disabled && onClick()}
+      selected={selected}
+      disabled={disabled}>
       <Icon src={icon} alt={(title && title.id) || title} />
       <TextContainer>
         {title && title.id ? (
@@ -96,6 +100,7 @@ PaymentItem.propTypes = {
   onClick: PropTypes.func,
   selected: PropTypes.bool,
   disabled: PropTypes.bool,
+  affordable: PropTypes.bool,
 };
 
 export default PaymentItem;

@@ -30,13 +30,7 @@ export const isDirectPayment = method => supportedCoins.some(x => x === method);
 export const isLightningPayment = method =>
   lightningCoins.some(x => x === method);
 
-export const canAfford = ({
-  // user account balance (in user currency)
-  accountBalance = Number.POSITIVE_INFINITY,
-
-  // require account balance to use this method?
-  requireAccountBalance,
-
+export const getPreOrderProps = ({
   // user billing currency
   billingCurrency,
 
@@ -45,21 +39,7 @@ export const canAfford = ({
 
   // picked amount (package amount or ranged)
   amount,
-
-  // payment mode
-  mode,
 }) => {
-  if (isDirectPayment(mode)) {
-    return true;
-  }
-
-  if (!operator) return false;
-
-  // if account balance is NaN, it's loading
-  if (accountBalance !== undefined && isNaN(accountBalance)) {
-    return false;
-  }
-
   let price = 0;
   let btcPrice = 0;
 
@@ -87,13 +67,5 @@ export const canAfford = ({
     btcPrice = getPrice(pkg, 'XBT');
   }
 
-
-  if (btcPrice < 0.001 && mode === 'localbitcoins') return false;
-  if (btcPrice > 0.04294967 && mode === 'lightning') return false;
-
-  if (!requireAccountBalance) {
-    return true;
-  }
-
-  return price <= accountBalance;
+  return { btcPrice, price }
 };

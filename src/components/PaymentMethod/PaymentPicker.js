@@ -28,7 +28,7 @@ import {
   paymentProp,
 } from '../../lib/prop-types';
 
-import { canAfford } from '../../lib/currency-helpers';
+import { getPreOrderProps } from '../../lib/currency-helpers';
 
 import PaymentItem from './PaymentItem';
 import NextButton from '../UI/NextButton';
@@ -59,16 +59,6 @@ class PaymentMethod extends React.Component {
     }
   }
 
-  canAfford = btn =>
-    canAfford({
-      mode: btn.paymentMode,
-      accountBalance: this.props.config.accountBalance,
-      amount: this.props.amount,
-      billingCurrency: this.props.config.billingCurrency,
-      operator: this.props.operator.result,
-      requireAccountBalance: btn.requireAccountBalance,
-    });
-
   select = method => this.props.setPaymentMethod(method);
 
   createOrder = () => {
@@ -87,8 +77,9 @@ class PaymentMethod extends React.Component {
   };
 
   render() {
-    const { config, selectedMethod } = this.props;
+    const { config, selectedMethod, operator, amount } = this.props;
     const { isLoading, error } = this.state;
+    const billingCurrency = config.billingCurrency;
 
     return (
       <ActiveSection
@@ -110,15 +101,25 @@ class PaymentMethod extends React.Component {
               []
             )
             .map(method => {
-              const affordable =
-                (method.canAfford && method.canAfford()) || true;
+              let affordable = true;
+
+              if (typeof method.canAfford === 'function') {
+                affordable = method.canAfford(
+                  getPreOrderProps({
+                    operator: operator.result,
+                    billingCurrency,
+                    amount,
+                  })
+                );
+              }
+
               return (
                 <PaymentItem
                   key={method.title.id || method.title}
                   method={method}
-                  onClick={() => affordable && this.select(method)}
+                  onClick={() => this.select(method)}
+                  affordable={affordable}
                   selected={method === selectedMethod}
-                  disabled={!affordable}
                 />
               );
             })}

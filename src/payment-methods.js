@@ -70,6 +70,7 @@ export default function getPaymentMethods() {
       icon: BitcoinIcon,
       paymentMode: 'lightning',
       color: '#e48718',
+      canAfford: ({ btcPrice }) => btcPrice < 0.04294967,
     },
     {
       title: {
@@ -165,6 +166,7 @@ export default function getPaymentMethods() {
         },
         callback: order => openWindow('localbitcoins', order),
       },
+      canAfford: ({ btcPrice }) => btcPrice < 0.001,
     },
   ];
 }
