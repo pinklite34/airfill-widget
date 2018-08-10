@@ -48,7 +48,7 @@ export default (state = initialState, { type, payload }) => {
     }
     case 'SET_EMAIL': {
       const { value, inFocus } = payload;
-      const valid = isValidEmail(value.trim());
+      const valid = isValidEmail((value && value.trim()) || value);
 
       // Only update error value if inFocus and valid,
       // otherwise hold of the error until blur
