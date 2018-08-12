@@ -27,8 +27,9 @@ export function getPaymentInfo(method, paymentStatus, order) {
 
   let prefix = method === 'bcash' ? 'bitcoincash' : method;
 
-  let paymentAddress;
-  let uri;
+  let paymentAddress = order.payment.address;
+  let uri = `${prefix}:${paymentAddress}?amount=${remaining || price}`;
+
   if (isLightningPayment(method)) {
     prefix = 'lightning';
     if (method === 'lightning') {
@@ -39,17 +40,15 @@ export function getPaymentInfo(method, paymentStatus, order) {
       unit = 'lites';
       price = order.payment.litesPrice;
     }
+    // lightning orders can be paid on chain
+    // if so payment method changed to bitcoin
+    // but all wallets that pay these will
+    // pay the full amount automatically
+    // avoiding the need to have ?amount for the uri
     paymentAddress = order.payment.lightningInvoice;
     uri = `${prefix}:${paymentAddress}`.toUpperCase();
-  } else if (method === 'ethereum') {
-    paymentAddress = order.payment.altcoinAddress;
-    uri = `${prefix}:${paymentAddress}?amount=${remaining || price}`;
   } else if (method === 'dash') {
-    paymentAddress = order.payment.altcoinAddress;
-    uri = `${prefix}:${paymentAddress}?amount=${remaining || price}&IS=1`;
-  } else {
-    paymentAddress = order.payment.address;
-    uri = `${prefix}:${paymentAddress}?amount=${remaining || price}`;
+    uri += `&IS=1`;
   }
 
   return {
