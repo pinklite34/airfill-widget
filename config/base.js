@@ -21,7 +21,7 @@ module.exports = {
     noInfo: false,
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
+    extensions: ['.js', '.jsx', '.json', '.tsx', '.ts'],
     alias: {},
   },
   module: {
