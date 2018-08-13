@@ -20,6 +20,7 @@ class PaymentTwoFactor extends React.Component {
     }`;
     fetch(uri, {
       method: 'GET',
+      credentials: 'include',
     })
       .then(e => console.log(e))
       .catch(e => console.error(e));
