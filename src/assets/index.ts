@@ -1,10 +1,10 @@
-import BitcoinIcon from './bitcoin.png';
-import DashIcon from './dash.png';
-import DogecoinIcon from './dogecoin.png';
-import LitecoinIcon from './litecoin.png';
-import CoinbaseIcon from './coinbase.png';
-import LocalBitcoinsIcon from './localbitcoins.png';
-import EthereumIcon from './ethereum.png';
+import * as BitcoinIcon from './bitcoin.png';
+import * as DashIcon from './dash.png';
+import * as DogecoinIcon from './dogecoin.png';
+import * as LitecoinIcon from './litecoin.png';
+import * as CoinbaseIcon from './coinbase.png';
+import * as LocalBitcoinsIcon from './localbitcoins.png';
+import * as EthereumIcon from './ethereum.png';
 
 export {
   BitcoinIcon,

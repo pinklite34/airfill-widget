@@ -1,7 +1,6 @@
+import * as QRious from 'qrious';
 import * as React from 'react';
 import styled from 'react-emotion';
-import * as PropTypes from 'prop-types';
-import QRious from 'qrious';
 
 const QrContainer = styled('div')`
   background-image: url(${(p: any) =>  p.src});

@@ -19,6 +19,7 @@
     "./src",
     "./node_modules/libphonenumber-js/examples.mobile.json",
     "./src/modules.d.ts",
-    "./src/**/*.json"
+    "./src/**/*.json",
+    "./node_modules/flag-icons"
   ]
 }
