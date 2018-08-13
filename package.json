@@ -123,12 +123,15 @@
     ]
   },
   "jest": {
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?|ts?)$",
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?|ts|js)$",
     "transform": {
       ".(ts)": "<rootDir>/node_modules/ts-jest"
     },
     "moduleFileExtensions": [
       "ts",
+      "js",
+      "tsx",
+      "jsx",
       "json"
     ]
   },

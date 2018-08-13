@@ -4,7 +4,7 @@ import {
   formatDefaultValue,
   formatDisplayValue,
   parseNumber,
-} from './number-helpers.js';
+} from './number-helpers';
 
 const SE = {
   alpha2: 'SE',
