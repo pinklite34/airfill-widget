@@ -8,29 +8,31 @@ import OrderHeader from '../UI/OrderHeader';
 import Text from '../UI/Text';
 import PaymentLayout from './PaymentLayout';
 import { fetch } from '../../lib/api-client';
+import PaymentError from './PaymentError';
 
 class PaymentTwoFactor extends React.Component {
   state = {
     code: '',
+    error: null,
   };
 
   onClick = () => {
     const uri = `/coinbase/2fa?order=${this.props.order.id}&twoFactorCode=${
       this.state.code
     }`;
-    fetch(uri, {
-      method: 'GET',
-      credentials: 'include',
-    })
-      .then(e => console.log(e))
-      .catch(e => console.error(e));
+
+    fetch(uri, { method: 'GET', credentials: 'include' }).catch(e =>
+      this.setState({ error: e })
+    );
   };
 
   render() {
     const { order } = this.props;
-    const { code } = this.state;
+    const { code, error } = this.state;
 
-    return (
+    return error ? (
+      <PaymentError order={order} paymentStatus={error} />
+    ) : (
       <Fragment>
         <OrderHeader
           order={order}
