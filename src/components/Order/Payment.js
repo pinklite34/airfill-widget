@@ -14,6 +14,7 @@ import RefillFailed from './RefillFailed';
 import RefillDelivered from './RefillDelivered';
 import BalanceTooLow from './BalanceTooLow';
 import PaymentError from './PaymentError';
+import PaymentTwoFactor from './PaymentTwoFactor';
 import Spinner from '../UI/Spinner';
 
 import {
@@ -51,6 +52,8 @@ const componentForStatus = status => {
       return RefillFailed;
     case 'payment_error':
       return PaymentError;
+    case '2fa_required':
+      return PaymentTwoFactor;
     case 'delivered':
       return RefillDelivered;
     case 'balance-too-low':
@@ -100,6 +103,7 @@ function Payment({
           'delivered',
           'expired',
           'payment_error',
+          '2fa_required',
         ]}
         onUpdate={(event, data) =>
           updatePaymentStatus({
