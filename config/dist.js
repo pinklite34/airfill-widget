@@ -5,7 +5,7 @@ const baseConfig = require('./base');
 const nodeExternals = require('webpack-node-externals');
 
 const config = Object.assign({}, baseConfig, {
-  entry: [require.resolve('./polyfills'), require.resolve('../src/index')],
+  entry: [require.resolve('./polyfills'), require.resolve('../src/index.tsx')],
   mode: 'production',
   cache: false,
   optimization: {
