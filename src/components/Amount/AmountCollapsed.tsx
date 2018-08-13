@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { selectAmount, selectOperator } from '../../store';
 import {
-  operatorResultProp,
-  historyProp,
   amountProp,
+  historyProp,
+  operatorResultProp,
 } from '../../lib/prop-types';
+import { selectAmount, selectOperator } from '../../store';
 
-import Icon from './icon.svg';
 import Collapsed from '../UI/Collapsed';
+import Icon from './icon.svg';
 
 function AmountCollapsed({ history, amount, operator }) {
   return (

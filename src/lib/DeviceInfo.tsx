@@ -1,12 +1,11 @@
-import * as React from 'react';
 import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import Media from 'react-media';
 
-import { fromWindow } from './globals';
 import theme from '../theme';
+import { fromWindow } from './globals';
 
 export default class DeviceInfo extends React.PureComponent<any> {
-
   state = {
     width: 0,
     height: 0,
@@ -53,7 +52,9 @@ export default class DeviceInfo extends React.PureComponent<any> {
 
   setDeviceType() {
     const navigator = fromWindow('navigator');
-    if (!navigator) return;
+    if (!navigator) {
+      return;
+    }
     const { userAgent } = navigator;
 
     if (userAgent.match(/iPhone|iPad|iPod/)) {

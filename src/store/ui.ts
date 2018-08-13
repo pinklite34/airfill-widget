@@ -1,7 +1,7 @@
-import { parse, format } from 'libphonenumber-js';
+import { format, parse } from 'libphonenumber-js';
 import { REHYDRATE } from 'redux-persist/constants';
-import { selectCountry } from './inventory';
 import { isValidEmail } from '../lib/email-validation';
+import { selectCountry } from './inventory';
 
 const initialState = {
   number: '',

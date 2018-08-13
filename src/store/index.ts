@@ -1,32 +1,32 @@
 import { combineReducers } from 'redux';
-import ui, {
-  selectUiState,
-  selectNumber,
-  selectAmount,
-  selectEmail,
-  selectValidEmail,
-  selectComboInputOpen,
-  selectComboInputFocus,
-  selectPaymentMethod,
-  selectSubscribeNewsletter,
-} from './ui';
-import paymentStatus, { selectPaymentStatus } from './paymentStatus';
 import inventory, {
-  selectCountry,
-  selectCountryList,
-  selectCountryCode,
   selectAvailableOperators,
-  selectSelectedOperator,
+  selectCountry,
+  selectCountryCode,
+  selectCountryList,
   selectInventory,
+  selectSelectedOperator,
 } from './inventory';
-import operator, { selectOperator } from './operator';
-import order, { selectOrder } from './order';
-import recentNumbers, { selectRecentNumbers } from './recentNumbers';
 import numberLookup, {
-  selectNumberLookup,
   selectIsNumberLookup,
+  selectNumberLookup,
   selectNumberLookupError,
 } from './numberLookup';
+import operator, { selectOperator } from './operator';
+import order, { selectOrder } from './order';
+import paymentStatus, { selectPaymentStatus } from './paymentStatus';
+import recentNumbers, { selectRecentNumbers } from './recentNumbers';
+import ui, {
+  selectAmount,
+  selectComboInputFocus,
+  selectComboInputOpen,
+  selectEmail,
+  selectNumber,
+  selectPaymentMethod,
+  selectSubscribeNewsletter,
+  selectUiState,
+  selectValidEmail,
+} from './ui';
 
 // Export the reducer for use within other redux apps
 export default combineReducers({

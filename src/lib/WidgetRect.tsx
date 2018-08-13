@@ -1,20 +1,20 @@
-import * as React from 'react';
 import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import { isMobileApp } from './globals';
 
 export const WidgetRectContext = React.createContext<any>('widgetRect');
 
 export default class WidgetRect extends React.PureComponent<any> {
+
+  state = {
+    rect: {},
+  };
   private childRef;
 
   constructor(props) {
     super(props);
     this.childRef = React.createRef();
   }
-
-  state = {
-    rect: {},
-  };
 
   componentDidMount() {
     this.onUpdate();

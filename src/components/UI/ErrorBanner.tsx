@@ -20,7 +20,7 @@ const Container = styled('div')`
 
 const Icon = styled(ErrorIcon)`
   margin-right: 16px;
-  fill: ${(p: any) =>  p.theme.white};
+  fill: ${(p: any) => p.theme.white};
 `;
 
 interface ErrorBannerProps {

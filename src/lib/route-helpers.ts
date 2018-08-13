@@ -1,5 +1,5 @@
-import { fromWindow } from './globals';
 import * as i18n from '../../config/i18n';
+import { fromWindow } from './globals';
 import { includes } from './string';
 
 const isProd = process.env.NODE_ENV === 'production';
@@ -16,7 +16,9 @@ export function getLocation() {
 
   const useLngQuery = !isProd || includes(host, 'herokuapp');
   const firstSub = sub.split('-').length > 1 ? sub.split('-')[0] : sub;
-  const hostEnv = (i18n.supportedLanguageKeys as any).includes(firstSub) ? '' : firstSub;
+  const hostEnv = (i18n.supportedLanguageKeys as any).includes(firstSub)
+    ? ''
+    : firstSub;
   const hostLng = useLngQuery ? '' : hostEnv ? sub.split('-')[1] : firstSub;
 
   return {

@@ -1,5 +1,5 @@
-import * as React from 'react';
 import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import styled from 'react-emotion';
 
 import Card from '../UI/Card';
@@ -30,7 +30,7 @@ const Content = styled('div')`
   }
 
   a {
-    color: ${(p: any) =>  p.theme.tx.link};
+    color: ${(p: any) => p.theme.tx.link};
     text-decoration: none;
 
     &:hover,

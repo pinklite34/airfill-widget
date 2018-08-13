@@ -31,7 +31,7 @@ export const createCollectionReducer = (name, clearStateOnLoad = false) => {
       }
 
       case baseType + '_SUCCESS': {
-        let items = Array.isArray(payload) ? payload : [payload];
+        const items = Array.isArray(payload) ? payload : [payload];
         return { ...state, items, isLoading: false, error: null };
       }
 
@@ -133,11 +133,11 @@ export const createLoadAction = options => {
           return response;
         })
         .catch(error => {
-          if (props.silent) return Promise.resolve();
+          if (props.silent) { return Promise.resolve(); }
 
           dispatch(loadError({ props, response: error }));
 
-          if (errorHandler) dispatch(errorHandler(error.response));
+          if (errorHandler) { dispatch(errorHandler(error.response)); }
 
           return Promise.reject(error);
         });

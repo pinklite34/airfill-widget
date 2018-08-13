@@ -41,7 +41,7 @@ export const selectValidPackage = ({ packages, maxCost, currency, amount }) => {
 };
 
 const rangedCostForAmount = (conversionRate, currency, amount) => {
-  let amountCost = amount * conversionRate;
+  const amountCost = amount * conversionRate;
   // BTC
   if (currency === 'XBT') {
     return Math.ceil(amountCost / 100) / 1000000;

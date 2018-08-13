@@ -2,7 +2,7 @@
 // This boilerplate file is likely to be the same for each project that uses Redux.
 // With Redux, the actual stores are in /reducers.
 
-import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import airfillWidget from './index';
 

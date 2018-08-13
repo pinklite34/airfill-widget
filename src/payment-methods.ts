@@ -19,7 +19,7 @@ function openWindow(method, order) {
   import(/* webpackChunkName: "module__react-pusher" */ '@bitrefill/react-pusher').then(
     ({ getPusherClient }) => {
       const pusher = getPusherClient(PUSHER_API_KEY, {});
-      if (!pusher) return console.error('No Pusher instance');
+      if (!pusher) { return console.error('No Pusher instance'); }
 
       const channel = pusher.subscribe(`${order.id}-${order.payment.address}`);
 

@@ -5,8 +5,8 @@ import * as i18nConfig from '../../config/i18n';
 
 // @ts-ignore
 import resources from '@alienfast/i18next-loader?basenameAsNamespace=true!../translations';
-import { getLocation } from './route-helpers';
 import { getLanguage } from './globals';
+import { getLocation } from './route-helpers';
 
 declare const window: any;
 

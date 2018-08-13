@@ -1,13 +1,13 @@
+import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import styled from 'react-emotion';
-import * as PropTypes from 'prop-types';
 
 import DeviceInfo from '../../lib/DeviceInfo';
 
-import Button from './Button';
-import Text from './Text';
-import Icon from './Icon';
 import { transProp } from '../../lib/prop-types';
+import Button from './Button';
+import Icon from './Icon';
+import Text from './Text';
 
 const Container = styled('div')`
   padding: 0 16px;
@@ -15,7 +15,7 @@ const Container = styled('div')`
   justify-content: space-between;
   align-items: center;
   background-color: #efefef;
-  border-bottom: ${(p: any) =>  p.theme.bd.primary};
+  border-bottom: ${(p: any) => p.theme.bd.primary};
   min-height: 60px;
 `;
 

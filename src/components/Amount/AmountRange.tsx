@@ -5,16 +5,16 @@ import Input from 'material-ui/Input';
 
 import { getDisplayName, satoshiToBTC } from '../../lib/currency-helpers';
 import {
-  rangeProp,
-  currencyProp,
   amountProp,
-  fnProp,
   configProp,
+  currencyProp,
+  fnProp,
+  rangeProp,
 } from '../../lib/prop-types';
 
-import AmountPackage from './AmountPackage';
 import SectionTitle from '../UI/SectionTitle';
 import Text from '../UI/Text';
+import AmountPackage from './AmountPackage';
 
 const Container = styled('div')`
   margin-top: 16px;
@@ -34,8 +34,8 @@ const Row = styled('div')`
   align-items: center;
   background-color: #fff;
   margin: 0;
-  border-top: ${(p: any) =>  p.theme.bd.primary};
-  border-bottom: ${(p: any) =>  p.theme.bd.primary};
+  border-top: ${(p: any) => p.theme.bd.primary};
+  border-bottom: ${(p: any) => p.theme.bd.primary};
   padding: 8px 16px;
 `;
 

@@ -7,13 +7,13 @@ const Container = styled('div')`
   display: flex;
   justify-content: flex-end;
 
-  @media (max-width: ${(p: any) =>  p.theme.bp.mobile}) {
+  @media (max-width: ${(p: any) => p.theme.bp.mobile}) {
     width: 100%;
   }
 `;
 
 const StyledButton = styled(Button)`
-  @media (max-width: ${(p: any) =>  p.theme.bp.mobile}) {
+  @media (max-width: ${(p: any) => p.theme.bp.mobile}) {
     width: 100%;
   }
 `;

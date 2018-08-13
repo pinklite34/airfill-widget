@@ -46,8 +46,8 @@ export const createClient = (conf: any = {}) => {
 
     options.method = options.method || (options.body ? 'post' : 'get');
 
-    let user = options.username || username;
-    let pass = options.password || password;
+    const user = options.username || username;
+    const pass = options.password || password;
 
     // Add auth if provided
     if (user && pass) {

@@ -66,8 +66,12 @@ const processOperatorPackages = operator => {
   if (operator && operator.packages) {
     // Sort packages by price (asc)
     operator.packages.sort((a, b) => {
-      if (a.satoshiPrice < b.satoshiPrice) return -1;
-      if (a.satoshiPrice > b.satoshiPrice) return 1;
+      if (a.satoshiPrice < b.satoshiPrice) {
+        return -1;
+      }
+      if (a.satoshiPrice > b.satoshiPrice) {
+        return 1;
+      }
       return 0;
     });
 
@@ -271,10 +275,9 @@ const prefillNumber = number => (dispatch, getState) => {
   }
 };
 
-export const init = ({ defaultNumber, shouldLookupLocation = true } = {} as any) => (
-  dispatch,
-  getState
-) => {
+export const init = (
+  { defaultNumber, shouldLookupLocation = true } = {} as any
+) => (dispatch, getState) => {
   const inventoryPromise = dispatch(loadInventory());
 
   const state = getState();

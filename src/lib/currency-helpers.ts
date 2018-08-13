@@ -67,5 +67,5 @@ export const getPreOrderProps = ({
     btcPrice = getPrice(pkg, 'XBT');
   }
 
-  return { btcPrice, price }
+  return { btcPrice, price };
 };

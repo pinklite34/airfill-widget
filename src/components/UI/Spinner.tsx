@@ -1,5 +1,5 @@
-import * as React from 'react';
 import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import styled from 'react-emotion';
 
 const duration = '0.7s';
@@ -8,11 +8,11 @@ const Container = styled('div')`
   display: flex;
   width: 100%;
   height: 100%;
-  min-height: ${(p: any) =>  (p.tight ? 0 : '100px')};
+  min-height: ${(p: any) => (p.tight ? 0 : '100px')};
   align-items: center;
   justify-content: center;
 
-  animation: ${(p: any) =>  p.fadeIn && `fadein ${p.fadeIn}s`};
+  animation: ${(p: any) => p.fadeIn && `fadein ${p.fadeIn}s`};
 
   @keyframes fadein {
     0% {
@@ -52,14 +52,14 @@ const Outer = styled('div')`
 `;
 
 const Circle1 = styled('div')`
-  width: ${(p: any) =>  p.size}em;
-  height: ${(p: any) =>  p.size / 2}em;
+  width: ${(p: any) => p.size}em;
+  height: ${(p: any) => p.size / 2}em;
   overflow: hidden;
 `;
 
 const Circle2 = styled('div')`
-  width: ${(p: any) =>  p.size}em;
-  height: ${(p: any) =>  p.size / 2}em;
+  width: ${(p: any) => p.size}em;
+  height: ${(p: any) => p.size / 2}em;
   overflow: hidden;
   transform: rotate(180deg);
 `;
@@ -85,13 +85,13 @@ const Inner = styled('div')`
 
   transform: rotate(45deg);
   border-radius: 50%;
-  border: ${(p: any) =>  p.size / 8}em solid
-    ${(p: any) =>  (p.white ? p.theme.white : p.theme.brand)};
-  border-right: ${(p: any) =>  p.size / 8}em solid transparent;
-  border-bottom: ${(p: any) =>  p.size / 8}em solid transparent;
+  border: ${(p: any) => p.size / 8}em solid
+    ${(p: any) => (p.white ? p.theme.white : p.theme.brand)};
+  border-right: ${(p: any) => p.size / 8}em solid transparent;
+  border-bottom: ${(p: any) => p.size / 8}em solid transparent;
   width: 100%;
   height: 200%;
-  animation-name: ${(p: any) =>  (p.second ? 'anim-circle-2' : 'anim-circle-1')};
+  animation-name: ${(p: any) => (p.second ? 'anim-circle-2' : 'anim-circle-1')};
   animation-duration: ${duration};
   animation-iteration-count: infinite;
   animation-direction: alternate;

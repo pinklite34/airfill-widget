@@ -1,5 +1,5 @@
-import * as worldCountries from '../countries.json';
 import { getCountryCallingCode } from 'libphonenumber-js';
+import * as worldCountries from '../countries.json';
 
 const selectInternational = countryList =>
   countryList.find(x => x.name === 'International');

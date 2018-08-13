@@ -1,10 +1,10 @@
-import * as React from 'react';
 import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import styled from 'react-emotion';
 
+import DeviceInfo from '../../lib/DeviceInfo';
 import { fromWindow, isMobileApp } from '../../lib/globals';
 import { WidgetRectContext } from '../../lib/WidgetRect';
-import DeviceInfo from '../../lib/DeviceInfo';
 
 import ErrorBanner from './ErrorBanner';
 
@@ -13,7 +13,7 @@ const Container = styled('div')`
 `;
 
 const Content = styled('div')`
-  padding: ${(p: any) =>  p.padding};
+  padding: ${(p: any) => p.padding};
 `;
 
 function isFixed({ top, height }) {
@@ -27,16 +27,16 @@ function getNextHeight(tight) {
 
 const NextContainer = styled('div')`
   background-color: #fafafa;
-  padding: ${(p: any) =>  (p.tight ? '8px' : '16px')};
-  border-top: ${(p: any) =>  p.theme.bd.primary};
-  position: ${(p: any) =>  (p.fixed ? 'fixed' : 'absolute')};
+  padding: ${(p: any) => (p.tight ? '8px' : '16px')};
+  border-top: ${(p: any) => p.theme.bd.primary};
+  position: ${(p: any) => (p.fixed ? 'fixed' : 'absolute')};
   bottom: 0;
-  left: ${(p: any) =>  p.isMobile && 0};
-  width: ${(p: any) =>  p.width || '100%'};
-  max-height: ${(p: any) =>  p.height};
-  height: ${(p: any) =>  p.height};
+  left: ${(p: any) => p.isMobile && 0};
+  width: ${(p: any) => p.width || '100%'};
+  max-height: ${(p: any) => p.height};
+  height: ${(p: any) => p.height};
 
-  @media (max-width: ${(p: any) =>  p.theme.bp.mobile}) {
+  @media (max-width: ${(p: any) => p.theme.bp.mobile}) {
     padding: 8px;
   }
 `;
@@ -74,7 +74,8 @@ class ActiveSectionNext extends React.PureComponent<any> {
           tight={tight}
           fixed={fixed}
           heigh={height}
-          width={width}>
+          width={width}
+        >
           {children}
         </NextContainer>
         {!isMobile && <div style={{ height }} />}
@@ -103,7 +104,8 @@ export default function ActiveSection({
               fixed={true}
               isMobile
               tight={lessThan.tablet}
-              height={getNextHeight(lessThan.tablet)}>
+              height={getNextHeight(lessThan.tablet)}
+            >
               {renderNextButton()}
             </ActiveSectionNext>
           ) : renderNextButton ? (
@@ -114,7 +116,8 @@ export default function ActiveSection({
                   onUpdate={onUpdate}
                   tight={lessThan.tablet}
                   width={rect && `${rect.width - 1}px`}
-                  height={getNextHeight(lessThan.tablet)}>
+                  height={getNextHeight(lessThan.tablet)}
+                >
                   {renderNextButton()}
                 </ActiveSectionNext>
               )}
