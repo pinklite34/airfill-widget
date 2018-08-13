@@ -18,8 +18,8 @@ const config = Object.assign({}, baseConfig, {
       patterns: ['src/**/*.*'],
       globOptions: {
         ignore: [
-          'src/lib/test-helpers.js',
-          'src/**/*.test.js',
+          'src/lib/test-helpers.ts',
+          'src/**/*.test.ts',
           'src/index.html',
           '/translations/',
         ],
