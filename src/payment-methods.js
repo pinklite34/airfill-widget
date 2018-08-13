@@ -10,9 +10,8 @@ import {
   EthereumIcon,
 } from './assets';
 
-const baseUrl = 'http://localhost:3002';
-// const baseUrl =
-//  process.env.NODE_ENV === 'development' ? '/api' : 'https://api.bitrefill.com';
+const baseUrl =
+  process.env.NODE_ENV === 'development' ? '/api' : 'https://api.bitrefill.com';
 
 function openWindow(method, order) {
   const win = window.open(`${baseUrl}/widget/${method}?order=${order.id}`);
