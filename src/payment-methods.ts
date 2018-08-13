@@ -1,3 +1,5 @@
+import { PaymentButton } from './lib/prop-types';
+
 import {
   BitcoinIcon,
   CoinbaseIcon,
@@ -53,7 +55,7 @@ export function canAfford(method, operator, amount, billingCurrency) {
   );
 }
 
-export default function getPaymentMethods() {
+export default function getPaymentMethods(): PaymentButton[] {
   return [
     {
       title: {

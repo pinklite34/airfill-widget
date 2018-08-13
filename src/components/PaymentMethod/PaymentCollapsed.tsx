@@ -17,7 +17,7 @@ interface PaymentCollapsedProps {
 function PaymentCollapsed({
   operator,
   history,
-  selectedMethod = {},
+  selectedMethod,
 }: PaymentCollapsedProps) {
   const icon = selectedMethod && selectedMethod.icon;
   return (

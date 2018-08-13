@@ -89,7 +89,7 @@ class PaymentMode extends React.PureComponent<PaymentModeProps> {
   };
 
   render() {
-    const { paymentStatus, paymentMethod = {}, order } = this.props;
+    const { paymentStatus, paymentMethod, order } = this.props;
     const title =
       paymentMethod.paymentModeOptions &&
       paymentMethod.paymentModeOptions.title;

@@ -6,7 +6,17 @@ interface TranslationObject {
 export type TransProp = TranslationObject | any;
 
 export interface PaymentButton {
-  [x: string]: any;
+  title: TransProp;
+  description: TransProp;
+  icon: any;
+  paymentMode: PaymentMode;
+  color?: string;
+  notice?: string;
+  canAfford?: (o: { btcPrice: Amount; price: Amount }) => boolean;
+  paymentModeOptions?: {
+    title: TransProp;
+    callback: (order: Order) => void;
+  };
 }
 
 export type Amount = string | number;
