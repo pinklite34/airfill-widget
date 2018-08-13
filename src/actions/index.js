@@ -166,16 +166,6 @@ const postOrder = createLoadAction({
   uri: '/order',
 });
 
-export const post2faCode = (orderId, code) => (dispatch, getState) => {
-  const load = createLoadAction({
-    name: 'airfillWidget.s',
-    uri: `/coinbase/2fa?order=${orderId}&twoFactorCode=${code}`,
-    method: 'GET',
-  });
-
-  dispatch(load());
-};
-
 export const loadOrder = (id, methods) => (dispatch, getState) => {
   const load = createLoadAction({
     name: 'airfillWidget.order',

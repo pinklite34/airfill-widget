@@ -1,22 +1,29 @@
 import Input from 'material-ui/Input';
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
-import { connect } from 'react-redux';
-
-import { post2faCode } from '../../actions';
 import { fnProp, orderProp } from '../../lib/prop-types';
 import Button from '../UI/Button';
 import Info from '../UI/info.svg';
 import OrderHeader from '../UI/OrderHeader';
 import Text from '../UI/Text';
 import PaymentLayout from './PaymentLayout';
+import { fetch } from '../../lib/api-client';
 
 class PaymentTwoFactor extends React.Component {
   state = {
     code: '',
   };
 
-  onClick = () => this.props.post2faCode(this.props.order.id, this.state.code);
+  onClick = () => {
+    const uri = `/coinbase/2fa?order=${this.props.order.id}&twoFactorCode=${
+      this.state.code
+    }`;
+    fetch(uri, {
+      method: 'GET',
+    })
+      .then(e => console.log(e))
+      .catch(e => console.error(e));
+  };
 
   render() {
     const { order } = this.props;
@@ -65,9 +72,4 @@ PaymentTwoFactor.propTypes = {
   post2faCode: PropTypes.func.isRequired,
 };
 
-export default connect(
-  null,
-  dispatch => ({
-    post2faCode: (orderId, code) => dispatch(post2faCode(orderId, code)),
-  })
-)(PaymentTwoFactor);
+export default PaymentTwoFactor;
