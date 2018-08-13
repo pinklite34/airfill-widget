@@ -114,7 +114,7 @@
     }
   },
   "lint-staged": {
-    "**/*.js": [
+    "*.{ts,js,tsx,jsx}": [
       "yarn lint",
       "git add"
     ]
