@@ -104,20 +104,6 @@
     "webpack-dev-server": "3.1.5",
     "webpack-node-externals": "^1.7.2"
   },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
-  },
-  "eslintConfig": {
-    "extends": "bitrefill",
-    "globals": {
-      "btoa": true
-    },
-    "rules": {
-      "import/no-webpack-loader-syntax": 0
-    }
-  },
   "lint-staged": {
     "*.{ts,js,tsx,jsx}": [
       "yarn lint",
