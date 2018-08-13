@@ -1,5 +1,5 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import styled from 'react-emotion';
 
 import Card from '../UI/Card';
@@ -30,7 +30,7 @@ const Content = styled('div')`
   }
 
   a {
-    color: ${p => p.theme.tx.link};
+    color: ${(p: any) =>  p.theme.tx.link};
     text-decoration: none;
 
     &:hover,
@@ -41,7 +41,7 @@ const Content = styled('div')`
   }
 `;
 
-export default class ExtraInfo extends PureComponent {
+export default class ExtraInfo extends React.PureComponent<any> {
   static propTypes = {
     info: PropTypes.string,
     operator: operatorProp,

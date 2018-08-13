@@ -1,12 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import styled from 'react-emotion';
 
-import { transProp } from '../../lib/prop-types';
-
-import Text from './Text';
-
 import ErrorIcon from './error-small.svg';
+import Text from './Text';
 
 const Container = styled('div')`
   background-color: #e1283c;
@@ -24,10 +20,15 @@ const Container = styled('div')`
 
 const Icon = styled(ErrorIcon)`
   margin-right: 16px;
-  fill: ${p => p.theme.white};
+  fill: ${(p: any) =>  p.theme.white};
 `;
 
-export default function ErrorBanner({ text }) {
+interface ErrorBannerProps {
+  text: any;
+  [x: string]: any;
+}
+
+export default function ErrorBanner({ text }: ErrorBannerProps) {
   return (
     <Container>
       <Icon />
@@ -35,7 +36,8 @@ export default function ErrorBanner({ text }) {
     </Container>
   );
 }
-
+/*
 ErrorBanner.propTypes = {
   text: PropTypes.oneOfType([transProp, PropTypes.string]).isRequired,
 };
+ */

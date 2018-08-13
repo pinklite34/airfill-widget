@@ -1,4 +1,4 @@
-import ponyFetch from 'fetch-ponyfill';
+import * as ponyFetch from 'fetch-ponyfill';
 const { fetch: _fetch } = ponyFetch();
 
 export function encodeQueryString(obj) {
@@ -13,7 +13,7 @@ export function encodeQueryString(obj) {
   return queryString ? '?' + queryString : '';
 }
 
-export const createClient = (conf = {}) => {
+export const createClient = (conf: any = {}) => {
   let baseUrl = conf.baseUrl || '/api';
   let { username, password, defaultHeaders, token } = conf;
 
@@ -94,7 +94,7 @@ export const createClient = (conf = {}) => {
             })
             .then(message => {
               const err = new Error(message);
-              err.response = error;
+              (err as any).response = error;
               throw err;
             });
         } else {

@@ -1,5 +1,5 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'react-emotion';
 
@@ -51,7 +51,7 @@ const ErrorIcon = styled(Info)`
   flex: 0 0 auto;
 `;
 
-class HeaderIntroduction extends PureComponent {
+class HeaderIntroduction extends React.PureComponent<any> {
   static propTypes = {
     isMobile: PropTypes.bool,
     resetNumberLookup: fnProp,

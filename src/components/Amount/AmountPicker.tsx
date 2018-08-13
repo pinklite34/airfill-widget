@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import * as React from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -42,7 +42,7 @@ const Packages = styled('div')`
     padding-right: 2px;
     height: auto;
     margin: 0;
-    border-top: ${p => p.theme.bd.primary};
+    border-top: ${(p: any) =>  p.theme.bd.primary};
   }
 `;
 
@@ -52,7 +52,7 @@ const RadioWrapper = styled('div')`
   justify-content: center;
 `;
 
-class AmountPicker extends PureComponent {
+class AmountPicker extends React.PureComponent<any> {
   static propTypes = {
     config: configProp,
     operator: operatorResultProp,
@@ -63,20 +63,20 @@ class AmountPicker extends PureComponent {
 
   componentDidMount() {
     if (!this.props.operator.isLoading) {
-      this.onAmountChange(this.props);
+      this.onAmountChange(this.props as any);
     }
   }
 
   componentDidUpdate(prevProps) {
     const { operator } = this.props;
     if (!operator.isLoading && prevProps.operator.isLoading) {
-      this.onAmountChange(this.props);
+      this.onAmountChange(this.props as any);
     }
   }
 
   onAmountChange = ({ setAmount, config, operator }) => {
     const { packages, isRanged, range, currency, amount } =
-      operator.result || {};
+      operator.result || {} as any;
 
     if (packages && !amount) {
       setAmount(

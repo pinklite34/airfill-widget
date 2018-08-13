@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import Row from './Row';
 import Flag from '../Flag';
@@ -10,7 +10,8 @@ export default function CountryRow({ item, ...props }) {
   );
 }
 
-CountryRow.propTypes = {
+/* CountryRow.propTypes = {
   item: countryProp,
   ...rowProps,
 };
+ */

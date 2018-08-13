@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import styled from 'react-emotion';
 
 import Button from '../Button';
@@ -45,7 +44,7 @@ const IconContainer = styled('div')`
 
 const StyledButton = styled(Button)`
   background-color: #f0f6fa !important;
-  color: ${props => (props.disabled ? '#cccccc' : '#3e8fe4')} !important;
+  color: ${(props: any) => (props.disabled ? '#cccccc' : '#3e8fe4')} !important;
   min-width: 48px !important;
   height: auto !important;
   display: flex !important;
@@ -79,7 +78,7 @@ function InputRow({
   placeholder,
   value,
   icon,
-}) {
+}: any) {
   return (
     <Container>
       <form
@@ -104,7 +103,7 @@ function InputRow({
     </Container>
   );
 }
-
+/*
 InputRow.defaultProps = {
   placeholder: '',
 };
@@ -116,6 +115,6 @@ InputRow.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   icon: PropTypes.any.isRequired,
-};
+}; */
 
 export default InputRow;

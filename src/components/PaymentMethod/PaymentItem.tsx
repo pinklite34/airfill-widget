@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import styled from 'react-emotion';
 
 import { paymentProp } from '../../lib/prop-types';
@@ -12,11 +12,11 @@ const Container = styled('div')`
   width: 100%;
   padding: 0 16px;
 
-  background-color: ${p => (p.selected ? '#3e8fe4' : '#fff')};
-  border-bottom: ${p => p.theme.bd.primary};
+  background-color: ${(p: any) =>  (p.selected ? '#3e8fe4' : '#fff')};
+  border-bottom: ${(p: any) =>  p.theme.bd.primary};
 
   &:hover {
-    background-color: ${p => !p.selected && '#fafafa'};
+    background-color: ${(p: any) =>  !p.selected && '#fafafa'};
   }
 
   &:last-of-type {
@@ -30,11 +30,11 @@ const Container = styled('div')`
   text-decoration: none;
   box-sizing: border-box;
   text-align: left;
-  cursor: ${p => (p.disabled ? 'normal' : 'pointer')};
+  cursor: ${(p: any) =>  (p.disabled ? 'normal' : 'pointer')};
 
   * {
-    ${p => (p.disabled ? 'color: gray !important' : '')};
-    ${p => (p.disabled ? 'filter: grayscale(100%)' : '')};
+    ${(p: any) =>  (p.disabled ? 'color: gray !important' : '')};
+    ${(p: any) =>  (p.disabled ? 'filter: grayscale(100%)' : '')};
   }
 `;
 
@@ -94,7 +94,7 @@ const PaymentItem = ({ method, onClick, affordable, selected }) => {
     </Container>
   );
 };
-
+/*
 PaymentItem.propTypes = {
   method: paymentProp,
   onClick: PropTypes.func,
@@ -102,5 +102,5 @@ PaymentItem.propTypes = {
   disabled: PropTypes.bool,
   affordable: PropTypes.bool,
 };
-
+ */
 export default PaymentItem;

@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -37,7 +37,7 @@ const MethodContainer = styled('div')`
   width: 100%;
 `;
 
-class PaymentMethod extends React.Component {
+class PaymentMethod extends React.Component<any, any> {
   constructor(props) {
     super(props);
 
@@ -119,7 +119,7 @@ class PaymentMethod extends React.Component {
   }
 }
 
-PaymentMethod.propTypes = {
+/* PaymentMethod.propTypes = {
   history: historyProp,
   selectedMethod: paymentProp,
   setPaymentMethod: PropTypes.func.isRequired,
@@ -128,7 +128,7 @@ PaymentMethod.propTypes = {
   trigger: PropTypes.func.isRequired,
   amount: amountProp,
   operator: operatorProp,
-};
+}; */
 
 export default compose(
   withRouter,

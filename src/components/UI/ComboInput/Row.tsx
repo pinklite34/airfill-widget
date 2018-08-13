@@ -1,14 +1,12 @@
-import React from 'react';
+import * as React from 'react';
 import styled from 'react-emotion';
 
-import { rowProps } from '../../../lib/prop-types';
-
 const Container = styled('div')`
-  border-top: ${p => p.theme.bd.primary};
+  border-top: ${(p: any) =>  p.theme.bd.primary};
   display: flex;
   align-items: stretch;
   cursor: pointer;
-  background: ${p => p.isActive && 'rgba(0, 0, 0, 0.08)'};
+  background: ${(p: any) =>  p.isActive && 'rgba(0, 0, 0, 0.08)'};
 `;
 
 const Icon = styled('div')`
@@ -25,7 +23,7 @@ const Content = styled('div')`
   padding: 12px;
 `;
 
-export default function Row({ operatorProps, isActive, icon, content }) {
+export default function Row({ operatorProps, isActive, icon, content }: any) {
   return (
     <Container {...operatorProps} isActive={isActive}>
       <Icon>{icon}</Icon>
@@ -34,4 +32,5 @@ export default function Row({ operatorProps, isActive, icon, content }) {
   );
 }
 
-Row.propTypes = rowProps;
+/* Row.propTypes = rowProps;
+ */

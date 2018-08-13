@@ -1,29 +1,21 @@
-import React from 'react';
-import { css } from 'react-emotion';
+import * as React from 'react';
+import styled from 'react-emotion';
 import Row from './Row';
-import { operatorProp, rowProps } from '../../../lib/prop-types';
 
-const styles = {
-  icon: css`
-    max-width: 24px;
-    max-height: 18px;
-    display: block;
-  `,
-};
+const Icon = styled('img')`
+  max-width: 24px;
+  max-height: 18px;
+  display: block;
+`
 
-export default function ProviderRow({ item, ...props }) {
+export default function ProviderRow({ item, ...props }: any) {
   return (
     <Row
       {...props}
       icon={
-        <img src={item.logoImage} alt={item.name} className={styles.icon} />
+        <Icon src={item.logoImage} alt={item.name} />
       }
       content={item.name}
     />
   );
 }
-
-ProviderRow.propTypes = {
-  item: operatorProp,
-  ...rowProps,
-};

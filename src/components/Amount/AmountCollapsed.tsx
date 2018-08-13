@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { selectAmount, selectOperator } from '../../store';
@@ -22,12 +22,12 @@ function AmountCollapsed({ history, amount, operator }) {
   );
 }
 
-AmountCollapsed.propTypes = {
+/* AmountCollapsed.propTypes = {
   history: historyProp,
   amount: amountProp,
   operator: operatorResultProp,
 };
-
+ */
 export default connect(state => ({
   amount: selectAmount(state),
   operator: selectOperator(state),

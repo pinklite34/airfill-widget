@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import { orderProp, transProp } from '../../lib/prop-types';
 
@@ -26,8 +26,9 @@ export default function OrderStatusButton(props) {
     </Link>
   );
 }
-
+/*
 OrderStatusButton.propTypes = {
   order: orderProp,
   text: transProp,
 };
+ */

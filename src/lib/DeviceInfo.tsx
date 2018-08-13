@@ -1,14 +1,11 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import Media from 'react-media';
 
 import { fromWindow } from './globals';
 import theme from '../theme';
 
-export default class DeviceInfo extends PureComponent {
-  static propTypes = {
-    children: PropTypes.func.isRequired,
-  };
+export default class DeviceInfo extends React.PureComponent<any> {
 
   state = {
     width: 0,
@@ -69,10 +66,12 @@ export default class DeviceInfo extends PureComponent {
   render() {
     const { width, height, lessThan, greaterThan, deviceType, is } = this.state;
 
+    const func = this.props.children as (opts: any) => void;
+
     return (
       <Media query="(-moz-touch-enabled: 1), (pointer: coarse)">
         {isMobile =>
-          this.props.children({
+          func({
             width,
             height,
             is,

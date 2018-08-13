@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -19,12 +19,12 @@ function StautsEmailCollapsed({ operator, history, email }) {
     />
   );
 }
-
+/*
 StautsEmailCollapsed.propTypes = {
   operator: operatorProp,
   history: historyProp,
   email: emailProp,
-};
+}; */
 
 export default compose(
   withRouter,

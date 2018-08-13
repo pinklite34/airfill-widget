@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Switch, Route } from 'react-router';
 
 import { configProp } from '../../lib/prop-types';
@@ -20,6 +20,7 @@ export default function AmountRoutes({ config }) {
   );
 }
 
-AmountRoutes.propTypes = {
+/* AmountRoutes.propTypes = {
   config: configProp,
 };
+ */

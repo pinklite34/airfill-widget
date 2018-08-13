@@ -1,5 +1,5 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
 
@@ -29,7 +29,7 @@ const InputContainer = styled('div')`
   }
 `;
 
-class StatusEmail extends PureComponent {
+class StatusEmail extends React.PureComponent<any> {
   static propTypes = {
     config: configProp,
     history: historyProp,

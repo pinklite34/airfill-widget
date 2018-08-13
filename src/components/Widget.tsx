@@ -4,8 +4,8 @@ import createHistory from 'history/createMemoryHistory';
 import blue from 'material-ui/colors/blue';
 import createMuiTheme from 'material-ui/styles/createMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import PropTypes from 'prop-types';
-import React, { Component, Fragment } from 'react';
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import { I18nextProvider } from 'react-i18next';
 import Media from 'react-media';
 import { connect, Provider } from 'react-redux';
@@ -60,7 +60,7 @@ injectGlobal`
   }
 `;
 
-class AirfillWidget extends Component {
+class AirfillWidget extends React.Component<any> {
   static propTypes = {
     init: fnProp,
     setOperator: PropTypes.func.isRequired,
@@ -199,7 +199,7 @@ class AirfillWidget extends Component {
               <WidgetRect>
                 <Card alwaysBorder style={{ overflow: 'hidden' }}>
                   {hasLoaded ? (
-                    <Fragment>
+                     <React.Fragment>
                       <Header
                         config={config}
                         isMobile={isMobile}
@@ -216,10 +216,10 @@ class AirfillWidget extends Component {
                         <Route
                           path="/refill"
                           exact
-                          render={() => <Instructions config={config} />}
+                          render={() => <Instructions />}
                         />
                       )}
-                    </Fragment>
+                     </React.Fragment>
                   ) : (
                     <Spinner />
                   )}

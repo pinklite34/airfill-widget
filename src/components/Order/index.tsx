@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Switch, Route } from 'react-router';
 
 import Payment from './Payment';
@@ -20,6 +20,6 @@ export default function Order({ config }) {
   );
 }
 
-Order.propTypes = {
+/* Order.propTypes = {
   config: configProp,
-};
+}; */

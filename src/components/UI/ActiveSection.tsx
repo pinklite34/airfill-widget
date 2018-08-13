@@ -1,5 +1,5 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import styled from 'react-emotion';
 
 import { fromWindow, isMobileApp } from '../../lib/globals';
@@ -13,7 +13,7 @@ const Container = styled('div')`
 `;
 
 const Content = styled('div')`
-  padding: ${p => p.padding};
+  padding: ${(p: any) =>  p.padding};
 `;
 
 function isFixed({ top, height }) {
@@ -27,21 +27,21 @@ function getNextHeight(tight) {
 
 const NextContainer = styled('div')`
   background-color: #fafafa;
-  padding: ${p => (p.tight ? '8px' : '16px')};
-  border-top: ${p => p.theme.bd.primary};
-  position: ${p => (p.fixed ? 'fixed' : 'absolute')};
+  padding: ${(p: any) =>  (p.tight ? '8px' : '16px')};
+  border-top: ${(p: any) =>  p.theme.bd.primary};
+  position: ${(p: any) =>  (p.fixed ? 'fixed' : 'absolute')};
   bottom: 0;
-  left: ${p => p.isMobile && 0};
-  width: ${p => p.width || '100%'};
-  max-height: ${p => p.height};
-  height: ${p => p.height};
+  left: ${(p: any) =>  p.isMobile && 0};
+  width: ${(p: any) =>  p.width || '100%'};
+  max-height: ${(p: any) =>  p.height};
+  height: ${(p: any) =>  p.height};
 
-  @media (max-width: ${p => p.theme.bp.mobile}) {
+  @media (max-width: ${(p: any) =>  p.theme.bp.mobile}) {
     padding: 8px;
   }
 `;
 
-class ActiveSectionNext extends PureComponent {
+class ActiveSectionNext extends React.PureComponent<any> {
   static propTypes = {
     children: PropTypes.node,
     fixed: PropTypes.bool,
@@ -67,7 +67,7 @@ class ActiveSectionNext extends PureComponent {
       isMobile,
     } = this.props;
     return (
-      <div style={{ position: !fixed && !isMobile && 'relative' }}>
+      <div style={{ position: !fixed && !isMobile && 'relative' } as any}>
         <NextContainer
           isMobile={isMobile}
           onClick={onUpdate}
@@ -89,7 +89,7 @@ export default function ActiveSection({
   padding,
   error,
   ...props
-}) {
+}: any) {
   const errorMsg = error && (error.message || error);
 
   return (
@@ -126,11 +126,10 @@ export default function ActiveSection({
   );
 }
 
-ActiveSection.displayName = 'ActiveSection';
-
-ActiveSection.propTypes = {
+/* ActiveSection.propTypes = {
   children: PropTypes.node,
   renderNextButton: PropTypes.func,
   padding: PropTypes.string,
   error: PropTypes.any,
 };
+ */

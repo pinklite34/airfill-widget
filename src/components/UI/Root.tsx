@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { css } from 'react-emotion';
 
 const style = css`
@@ -52,11 +52,11 @@ const style = css`
   }
 `;
 
-export default function Root({ children, className }) {
-  return <div className={`${className} ${style}`}>{children}</div>;
+interface RootProps {
+  className: string;
+  children: any;
 }
 
-Root.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node.isRequired,
-};
+export default function Root({ children, className }: RootProps) {
+  return <div className={`${className} ${style}`}>{children}</div>;
+}

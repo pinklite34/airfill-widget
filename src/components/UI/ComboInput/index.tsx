@@ -1,5 +1,5 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { css } from 'react-emotion';
@@ -78,7 +78,7 @@ const getInitialInputValue = (country, number) => {
   }
 };
 
-class ComboInput extends PureComponent {
+class ComboInput extends React.PureComponent<any> {
   static propTypes = {
     closeComboInput: fnProp,
     country: countryProp,
@@ -99,6 +99,8 @@ class ComboInput extends PureComponent {
     shouldFocus: PropTypes.bool,
     useRecentRefill: fnProp,
   };
+
+  private input: any;
 
   state = {
     inputValue: this.props.countryOnly

@@ -1,5 +1,5 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { css } from 'react-emotion';
 
 import SectionTitle from '../UI/SectionTitle';
@@ -19,7 +19,7 @@ const styles = {
   `,
 };
 
-export default class ProviderGrid extends PureComponent {
+export default class ProviderGrid extends React.PureComponent<any> {
   static propTypes = {
     defaultShowAll: PropTypes.bool,
     providers: providersProp,

@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import styled from 'react-emotion';
 
 import { transProp } from '../lib/prop-types';
@@ -19,7 +19,7 @@ const Container = styled('div')`
     margin-top: 20px;
   }
 
-  @media (min-width: ${p => p.theme.bp.tablet}) {
+  @media (min-width: ${(p: any) =>  p.theme.bp.tablet}) {
     flex-direction: column;
     align-items: center;
     text-align: center;
@@ -45,7 +45,7 @@ const Badge = styled('div')`
   align-items: center;
   margin-right: 20px;
 
-  @media (min-width: ${p => p.theme.bp.tablet}) {
+  @media (min-width: ${(p: any) =>  p.theme.bp.tablet}) {
     margin-right: 0;
   }
 `;
@@ -57,7 +57,7 @@ const Content = styled('div')`
 
 const Title = styled(Text)`
   margin: 0;
-  @media (min-width: ${p => p.theme.bp.tablet}) {
+  @media (min-width: ${(p: any) =>  p.theme.bp.tablet}) {
     margin: 8px 0;
   }
 `;
@@ -88,8 +88,9 @@ export default function Instruction({ number, title, description }) {
   );
 }
 
-Instruction.propTypes = {
+/* Instruction.propTypes = {
   number: PropTypes.number,
   title: transProp,
   description: transProp,
 };
+ */

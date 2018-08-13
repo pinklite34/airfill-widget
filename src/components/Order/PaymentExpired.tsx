@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import * as React  from 'react';
 import Button from '../UI/Button';
 
 import { orderProp, fnProp } from '../../lib/prop-types';
@@ -8,7 +8,7 @@ import PaymentLayout from './PaymentLayout';
 
 export default function PaymentExpired(props) {
   return (
-    <Fragment>
+     <React.Fragment>
       <OrderHeader
         order={props.order}
         title={{ id: 'order.expired.title', children: 'Order expired' }}
@@ -25,11 +25,11 @@ export default function PaymentExpired(props) {
           text={{ id: 'button.neworder', children: 'New order' }}
         />
       </PaymentLayout>
-    </Fragment>
+     </React.Fragment>
   );
 }
 
-PaymentExpired.propTypes = {
+/* PaymentExpired.propTypes = {
   order: orderProp,
   onReset: fnProp,
-};
+}; */

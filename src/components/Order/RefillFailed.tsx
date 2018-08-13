@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
+import * as React  from 'react';
+import * as PropTypes from 'prop-types';
 
 import { orderProp, paymentStatusProp } from '../../lib/prop-types';
 
@@ -20,7 +20,7 @@ My order (ID ${
     order.id
   }) failed to process. I'd like a refund to be sent to ${refundAddress ||
     '<Replace This With Your Refund Address>'}.
-  
+
 Thanks!`);
 
   return `mailto:support@bitrefill.com?subject=${subject}&body=${body}`;
@@ -43,7 +43,7 @@ export default function RefillFailed(props) {
     !refundAddress && (needRefund === false || order.refunded === true);
 
   return (
-    <Fragment>
+     <React.Fragment>
       <OrderHeader
         order={order}
         title={{ id: 'order.failed.title', children: 'Delivery error' }}
@@ -101,12 +101,13 @@ export default function RefillFailed(props) {
           </Link>
         )}
       </PaymentLayout>
-    </Fragment>
+     </React.Fragment>
   );
 }
 
-RefillFailed.propTypes = {
+/* RefillFailed.propTypes = {
   order: orderProp,
   paymentStatus: paymentStatusProp,
   refundAddress: PropTypes.string,
 };
+ */

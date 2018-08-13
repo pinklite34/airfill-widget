@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router';
 import styled from 'react-emotion';
 
@@ -17,7 +17,7 @@ const Container = styled('div')`
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
   position: relative;
 
-  @media (max-width: ${p => p.theme.bp.mobile}) {
+  @media (max-width: ${(p: any) =>  p.theme.bp.mobile}) {
     & {
       padding: 12px;
     }
@@ -55,8 +55,8 @@ export default function Header({ branded, isMobile, config }) {
   );
 }
 
-Header.propTypes = {
+/* Header.propTypes = {
   branded: PropTypes.bool,
   isMobile: PropTypes.bool,
   config: configProp,
-};
+}; */

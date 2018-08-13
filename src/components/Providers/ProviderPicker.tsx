@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { setOperator } from '../../actions';
@@ -50,7 +50,7 @@ const getDisplayText = key => {
   }
 };
 
-class ProviderPicker extends PureComponent {
+class ProviderPicker extends React.PureComponent<any> {
   static propTypes = {
     numberLookup: numberLookupProp,
     history: historyProp,
@@ -111,7 +111,7 @@ class ProviderPicker extends PureComponent {
                 return 1;
               }
 
-              return displayOrder.includes(a) && displayOrder.includes(b)
+              return (displayOrder as any).includes(a) && (displayOrder as any).includes(b)
                 ? displayOrder.indexOf(a) - displayOrder.indexOf(b)
                 : displayOrder.indexOf(b) - displayOrder.indexOf(a);
             })

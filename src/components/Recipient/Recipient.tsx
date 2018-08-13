@@ -1,6 +1,6 @@
 import { formatNumber } from 'libphonenumber-js';
-import PropTypes from 'prop-types';
-import React, { PureComponent } from 'react';
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
 
@@ -43,7 +43,7 @@ const InputContainer = styled('div')`
   }
 `;
 
-class Recipient extends PureComponent {
+class Recipient extends React.PureComponent<any> {
   static propTypes = {
     config: configProp,
     amount: amountProp,

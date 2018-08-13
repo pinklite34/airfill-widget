@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -17,12 +17,12 @@ function ProviderCollapsed({ operator, history }) {
     />
   );
 }
-
+/*
 ProviderCollapsed.propTypes = {
   operator: operatorProp,
   history: historyProp,
 };
-
+ */
 export default compose(
   withRouter,
   connect(state => ({

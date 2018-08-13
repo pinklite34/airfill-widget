@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
+import * as React  from 'react';
+import * as PropTypes from 'prop-types';
 import styled from 'react-emotion';
 
 import { paymentStatusProp, orderProp, fnProp } from '../../lib/prop-types';
@@ -13,7 +13,7 @@ import Text from '../UI/Text';
 import Confirmed from './confirmed.svg';
 
 const PinContainer = styled('div')`
-  border: ${p => p.theme.bd.dotted};
+  border: ${(p: any) =>  p.theme.bd.dotted};
   cursor: pointer;
   padding: 6px 32px;
 `;
@@ -24,9 +24,9 @@ const PinLabel = ({ children, ...props }) => (
   </Text>
 );
 
-PinLabel.propTypes = {
+/* PinLabel.propTypes = {
   children: PropTypes.any,
-};
+}; */
 
 export default function RefillDelivered(props) {
   const { paymentStatus } = props;
@@ -43,7 +43,7 @@ export default function RefillDelivered(props) {
     paymentStatus.deliveryData && paymentStatus.deliveryData.pinInfo;
 
   return (
-    <Fragment>
+     <React.Fragment>
       <OrderHeader
         order={props.order}
         title={{ id: 'order.delivered.title', children: 'Refill delivered' }}
@@ -65,7 +65,7 @@ export default function RefillDelivered(props) {
 
       <PaymentLayout {...props}>
         {pinInfo && (
-          <Fragment>
+           <React.Fragment>
             {pinInfo.pin && (
               <PinContainer>
                 <PinLabel
@@ -106,7 +106,7 @@ export default function RefillDelivered(props) {
                 />
               </div>
             )}
-          </Fragment>
+           </React.Fragment>
         )}
 
         <Link href="https://www.bitrefill.com/faq/#my-topup-did-not-arrive">
@@ -122,12 +122,13 @@ export default function RefillDelivered(props) {
           }}
         />
       </PaymentLayout>
-    </Fragment>
+     </React.Fragment>
   );
 }
 
-RefillDelivered.propTypes = {
+/* RefillDelivered.propTypes = {
   paymentStatus: paymentStatusProp,
   order: orderProp,
   onReset: fnProp,
 };
+ */

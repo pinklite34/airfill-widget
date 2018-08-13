@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
+import * as React  from 'react';
+import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
@@ -88,7 +88,7 @@ function Payment({
   } = order.result;
 
   return (
-    <Fragment>
+     <React.Fragment>
       <Pusher
         apiKey={PUSHER_API_KEY}
         channel={[orderId, address].join('-')}
@@ -126,10 +126,10 @@ function Payment({
         onReset={reset}
         onExternalUrl={onExternalUrl}
       />
-    </Fragment>
+     </React.Fragment>
   );
 }
-
+/*
 Payment.propTypes = {
   history: historyProp,
   accountBalance: amountProp,
@@ -147,7 +147,7 @@ Payment.propTypes = {
   updatePaymentStatus: fnProp,
   reset: fnProp,
   onExternalUrl: PropTypes.func,
-};
+}; */
 
 export default connect(
   state => ({

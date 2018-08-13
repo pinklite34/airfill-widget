@@ -1,16 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import styled from 'react-emotion';
 
 import defaultFlag from '../../unknown-flag.png';
 
 const Img = styled('img')`
   margin: -3px 0;
-  max-width: ${p => p.maxWidth || '24px'};
-  max-height: ${p => p.maxHeight || '24px'};
+  max-width: ${(p: any) =>  p.maxWidth || '24px'};
+  max-height: ${(p: any) =>  p.maxHeight || '24px'};
 `;
 
-export default function Flag({ country, width, height }) {
+interface FlagProps {
+  country: string;
+  width?: string;
+  height?: string;
+}
+
+export default function Flag({ country, width, height }: FlagProps) {
   let flag;
 
   try {
@@ -26,9 +31,3 @@ export default function Flag({ country, width, height }) {
     />
   );
 }
-
-Flag.propTypes = {
-  country: PropTypes.string,
-  width: PropTypes.string,
-  height: PropTypes.string,
-};

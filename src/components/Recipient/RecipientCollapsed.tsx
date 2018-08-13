@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -21,11 +21,11 @@ function RecipientCollapsed({ operator, history, number }) {
   );
 }
 
-RecipientCollapsed.propTypes = {
+/* RecipientCollapsed.propTypes = {
   operator: operatorProp,
   history: historyProp,
   number: numberProp,
-};
+}; */
 
 export default compose(
   withRouter,

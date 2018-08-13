@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import styled from 'react-emotion';
 
 import Input from 'material-ui/Input';
@@ -34,8 +34,8 @@ const Row = styled('div')`
   align-items: center;
   background-color: #fff;
   margin: 0;
-  border-top: ${p => p.theme.bd.primary};
-  border-bottom: ${p => p.theme.bd.primary};
+  border-top: ${(p: any) =>  p.theme.bd.primary};
+  border-bottom: ${(p: any) =>  p.theme.bd.primary};
   padding: 8px 16px;
 `;
 
@@ -50,7 +50,7 @@ const StyledInput = styled(Input)`
     color: #000;
     font-weight: 500;
   }
-`;
+` as any;
 
 const Label = styled('label')`
   position: relative;
@@ -157,7 +157,7 @@ export default function AmountRange({
   );
 }
 
-AmountRange.propTypes = {
+/* AmountRange.propTypes = {
   amount: amountProp,
   range: rangeProp,
   currency: currencyProp,
@@ -165,3 +165,4 @@ AmountRange.propTypes = {
   onChange: fnProp,
   config: configProp,
 };
+ */

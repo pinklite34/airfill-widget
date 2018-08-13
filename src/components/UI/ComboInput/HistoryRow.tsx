@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { css } from 'react-emotion';
 
@@ -45,12 +45,12 @@ function HistoryRow({ item, countryList, ...props }) {
     return null;
   }
 }
-
+/*
 HistoryRow.propTypes = {
   item: operatorProp,
   countryList: countriesProp,
   ...rowProps,
-};
+}; */
 
 export default connect(state => ({
   countryList: selectCountryList(state),

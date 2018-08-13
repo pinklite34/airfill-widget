@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import styled from 'react-emotion';
 
 const Name = styled('div')`
@@ -22,7 +22,8 @@ export default function AmountPackage({ name, price }) {
   );
 }
 
-AmountPackage.propTypes = {
+/* AmountPackage.propTypes = {
   name: PropTypes.node,
   price: PropTypes.node,
 };
+ */

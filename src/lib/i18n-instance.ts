@@ -1,10 +1,14 @@
 import i18n from 'i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
+import * as LanguageDetector from 'i18next-browser-languagedetector';
 
-import i18nConfig from '../../config/i18n';
+import * as i18nConfig from '../../config/i18n';
+
+// @ts-ignore
 import resources from '@alienfast/i18next-loader?basenameAsNamespace=true!../translations';
 import { getLocation } from './route-helpers';
 import { getLanguage } from './globals';
+
+declare const window: any;
 
 const lng = process.env.LNG || getLanguage() || getLocation().hostLng;
 

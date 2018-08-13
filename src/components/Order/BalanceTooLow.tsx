@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import Button from '../UI/Button';
 
 import { historyProp, orderProp } from '../../lib/prop-types';
@@ -24,7 +24,7 @@ export default function BalanceTooLow({ order, history }) {
   );
 }
 
-BalanceTooLow.propTypes = {
+/* BalanceTooLow.propTypes = {
   history: historyProp,
   order: orderProp,
-};
+}; */

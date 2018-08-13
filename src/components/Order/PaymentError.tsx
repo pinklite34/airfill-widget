@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import * as React  from 'react';
 
 import OrderHeader from '../UI/OrderHeader';
 import PaymentLayout from './PaymentLayout';
@@ -13,7 +13,7 @@ const PaymentError = props => {
     (paymentStatus && paymentStatus.message) || (order && order.errorMessage);
 
   return (
-    <Fragment>
+     <React.Fragment>
       <OrderHeader
         order={order}
         title={{ id: 'order.error.title', children: 'Payment error' }}
@@ -24,13 +24,13 @@ const PaymentError = props => {
       <PaymentLayout {...props}>
         <OrderStatusButton {...props} />
       </PaymentLayout>
-    </Fragment>
+     </React.Fragment>
   );
 };
 
-PaymentError.propTypes = {
+/* PaymentError.propTypes = {
   order: orderProp,
   paymentStatus: paymentStatusProp,
-};
+}; */
 
 export default PaymentError;

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Switch, Route } from 'react-router';
 import PaymentCollapsed from './PaymentCollapsed';
 import PaymentPicker from './PaymentPicker';
@@ -21,6 +21,7 @@ export default function PaymentMethod({ config }) {
   );
 }
 
-PaymentMethod.propTypes = {
+/* PaymentMethod.propTypes = {
   config: configProp,
 };
+ */

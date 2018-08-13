@@ -117,7 +117,7 @@ export const createLoadAction = options => {
   const isLoadingSelector = createIsLoadingSelector(name);
 
   // Create final thunk action
-  return (payload = {}) => (dispatch, getState) => {
+  return (payload: any = {}) => (dispatch, getState) => {
     const props = { ...payload }; // avoid mutating original object to prevent nasty side effects
     const isLoading = isLoadingSelector(getState());
 

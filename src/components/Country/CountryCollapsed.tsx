@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { openComboInput, setComboInputFocus, setCountry } from '../../actions';
@@ -47,7 +47,7 @@ function CountryCollapsed({
   );
 }
 
-CountryCollapsed.propTypes = {
+/* CountryCollapsed.propTypes = {
   home: PropTypes.bool,
   country: countryProp,
   isNumberLookup: PropTypes.bool,
@@ -55,7 +55,7 @@ CountryCollapsed.propTypes = {
   setComboInputFocus: fnProp,
   setCountry: fnProp,
   history: historyProp,
-};
+}; */
 
 export default connect(
   state => ({

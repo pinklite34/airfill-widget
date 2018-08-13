@@ -1,20 +1,20 @@
 import styled from 'react-emotion';
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 
 const Flex = styled('div')`
   display: flex;
-  flex-direction: ${p => p.direction || (p.row ? 'row' : 'column')};
-  flex-wrap: ${p => p.wrap};
+  flex-direction: ${(p: any) =>  p.direction || (p.row ? 'row' : 'column')};
+  flex-wrap: ${(p: any) =>  p.wrap};
 
-  align-items: ${p =>
+  align-items: ${(p: any) =>
     p.alignItems || (p.centered ? 'center' : 'space-between')};
-  justify-content: ${p =>
+  justify-content: ${(p: any) =>
     p.justifyContent || (p.centered ? 'center' : 'space-between')};
-  text-align: ${p => (p.centered ? 'center' : 'left')};
+  text-align: ${(p: any) =>  (p.centered ? 'center' : 'left')};
 
-  padding: ${p => p.padding};
-  margin: ${p => p.margin};
-  width: ${p => p.width};
+  padding: ${(p: any) =>  p.padding};
+  margin: ${(p: any) =>  p.margin};
+  width: ${(p: any) =>  p.width};
 `;
 
 Flex.propTypes = {

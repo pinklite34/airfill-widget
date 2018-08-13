@@ -1,3 +1,5 @@
+declare const window: any;
+
 export function fromWindow(prop) {
   try {
     return window && window[prop];

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import * as React  from 'react';
 
 import { orderProp, fnProp } from '../../lib/prop-types';
 
@@ -12,7 +12,7 @@ import Text from '../UI/Text';
 export default function PaymentDetected(props) {
   const { order, onReset } = props;
   return (
-    <Fragment>
+     <React.Fragment>
       <OrderHeader
         order={props.order}
         title={{ id: 'order.detected.title', children: 'Payment detected' }}
@@ -54,11 +54,12 @@ export default function PaymentDetected(props) {
           }}
         />
       </PaymentLayout>
-    </Fragment>
+     </React.Fragment>
   );
 }
 
-PaymentDetected.propTypes = {
+/* PaymentDetected.propTypes = {
   order: orderProp,
   onReset: fnProp,
 };
+ */

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import styled from 'react-emotion';
 
 import Instruction from './Instruction';
@@ -9,7 +9,7 @@ const Container = styled('div')`
   flex-wrap: wrap;
   justify-content: space-around;
   padding: 20px;
-  border-top: ${p => p.theme.bd.primary};
+  border-top: ${(p: any) =>  p.theme.bd.primary};
 `;
 
 export default function Instructions() {

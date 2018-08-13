@@ -12,9 +12,13 @@
     "moduleResolution": "node"
   },
   "exclude": [
-    "./src/**/*.test.*"
+    "./src/**/*.test.*",
+    "./src/lib/test-helpers.ts"
   ],
   "include": [
-    "./src/**/*.ts?"
+    "./src",
+    "./node_modules/libphonenumber-js/examples.mobile.json",
+    "./src/modules.d.ts",
+    "./src/**/*.json"
   ]
 }

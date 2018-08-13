@@ -1,15 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import styled from 'react-emotion';
 
 import { startsWith } from '../../lib/string';
 
 const StyledLink = styled('p')`
-  color: ${p => p.theme.tx.link};
+  color: ${(p: any) =>  p.theme.tx.link};
   text-decoration: none;
   cursor: pointer;
 
-  width: ${p => p.width};
+  width: ${(p: any) =>  p.width};
 
   &:hover,
   &:focus,
@@ -20,13 +20,19 @@ const StyledLink = styled('p')`
   svg {
     vertical-align: middle;
     margin: 0 12px 0 6px;
-    fill: ${p => p.theme.tx.link};
+    fill: ${(p: any) =>  p.theme.tx.link};
   }
 `;
 
 const ExternalLink = StyledLink.withComponent('a');
 
-export default function Link({ href, children, ...props }) {
+interface LinkProps {
+  href: string;
+  children: any;
+  [x: string]: any;
+}
+
+export default function Link({ href, children, ...props }: LinkProps) {
   const isExternal =
     Boolean(href) && !startsWith(href, '#') && !startsWith(href, 'mailto');
   const Component = href ? ExternalLink : StyledLink;
@@ -41,7 +47,8 @@ export default function Link({ href, children, ...props }) {
   );
 }
 
-Link.propTypes = {
+/* Link.propTypes = {
   href: PropTypes.string,
   children: PropTypes.node.isRequired,
 };
+ */

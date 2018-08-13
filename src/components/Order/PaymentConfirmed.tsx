@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import * as React  from 'react';
 
 import { orderProp } from '../../lib/prop-types';
 
@@ -9,7 +9,7 @@ import Text from '../UI/Text';
 
 export default function PaymentConfirmed(props) {
   return (
-    <Fragment>
+     <React.Fragment>
       <OrderHeader
         order={props.order}
         title={{ id: 'order.confirmed.title', children: 'Refill sent!' }}
@@ -24,10 +24,10 @@ export default function PaymentConfirmed(props) {
           The refill should arrive on the target account any minute now.
         </Text>
       </PaymentLayout>
-    </Fragment>
+     </React.Fragment>
   );
 }
 
-PaymentConfirmed.propTypes = {
+/* PaymentConfirmed.propTypes = {
   order: orderProp,
-};
+}; */

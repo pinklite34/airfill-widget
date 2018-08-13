@@ -1,4 +1,4 @@
-import Color from 'color';
+import * as Color from 'color';
 
 export function colorToString(color) {
   return Color(color)

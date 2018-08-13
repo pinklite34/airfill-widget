@@ -1,10 +1,10 @@
-import React, { PureComponent } from 'react';
+import * as React from 'react';
 import styled from 'react-emotion';
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 import QRious from 'qrious';
 
 const QrContainer = styled('div')`
-  background-image: url(${p => p.src});
+  background-image: url(${(p: any) =>  p.src});
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
@@ -15,7 +15,19 @@ const QrContainer = styled('div')`
   min-height: 200px;
 `;
 
-class QrCode extends PureComponent {
+interface QrCodeProps {
+  mime?: string;
+  [x: string]: any;
+}
+
+interface QrCodeState {
+  qr: QRious;
+  src: string;
+}
+
+class QrCode extends React.PureComponent<QrCodeProps, QrCodeState> {
+  state: QrCodeState;
+
   constructor(props) {
     super(props);
 
@@ -40,9 +52,5 @@ class QrCode extends PureComponent {
     return <QrContainer src={this.state.src} />;
   }
 }
-
-QrCode.propTypes = {
-  mime: PropTypes.string,
-};
 
 export default QrCode;

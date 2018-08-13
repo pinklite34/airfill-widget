@@ -1,4 +1,4 @@
-import worldCountries from '../countries.json';
+import * as worldCountries from '../countries.json';
 import { getCountryCallingCode } from 'libphonenumber-js';
 
 const selectInternational = countryList =>
@@ -6,7 +6,7 @@ const selectInternational = countryList =>
 
 // returns missing countries (no providers)
 export const getMissingCountries = countryList =>
-  worldCountries
+  (worldCountries as any)
     .filter(x => !countryList.some(x1 => x1.alpha2 === x.alpha2))
     .map(country => {
       let code;

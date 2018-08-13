@@ -1,11 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import styled from 'react-emotion';
 import Text from './Text';
 
 const Container = styled('div')`
   position: relative;
-  font-size: ${p => p.size || '16px'};
+  font-size: ${(p: any) =>  p.size || '16px'};
   margin-top: 48px;
 `;
 
@@ -15,15 +15,15 @@ const Address = styled('input')`
   font-weight: normal;
   border-radius: 2px;
 
-  padding: ${p => p.padding || '8px'};
-  width: ${p => p.width};
+  padding: ${(p: any) =>  p.padding || '8px'};
+  width: ${(p: any) =>  p.width};
   line-height: 1;
   cursor: pointer;
 
   text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: ${p => p.fontSize};
+  font-size: ${(p: any) =>  p.fontSize};
 
   :focus {
     outline: none;
@@ -31,8 +31,8 @@ const Address = styled('input')`
 `;
 
 const LabelContainer = styled('div')`
-  opacity: ${p => (p.show ? 0 : 1)};
-  transition: opacity 0.6s ease ${p => !p.show && '0.3s'};
+  opacity: ${(p: any) =>  (p.show ? 0 : 1)};
+  transition: opacity 0.6s ease ${(p: any) =>  !p.show && '0.3s'};
   position: absolute;
   top: -32px;
   left: 0;
@@ -46,7 +46,7 @@ const LabelContainer = styled('div')`
   white-space: nowrap;
 `;
 
-export default class CopyField extends React.Component {
+export default class CopyField extends React.Component<any> {
   state = {
     timeout: null,
     animating: false,
@@ -100,7 +100,7 @@ export default class CopyField extends React.Component {
   }
 }
 
-CopyField.propTypes = {
+/* CopyField.propTypes = {
   label: PropTypes.any,
   padding: PropTypes.string,
   width: PropTypes.string,
@@ -109,3 +109,4 @@ CopyField.propTypes = {
   fontSize: PropTypes.string,
   copyLength: PropTypes.number,
 };
+ */

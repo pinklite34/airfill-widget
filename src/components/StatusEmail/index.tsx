@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Switch, Route } from 'react-router';
 import { connect } from 'react-redux';
 
@@ -27,10 +27,10 @@ function StatusEmail({ config, operator }) {
   );
 }
 
-StatusEmail.propTypes = {
+/* StatusEmail.propTypes = {
   config: configProp,
   operator: operatorProp,
-};
+}; */
 
 export default connect(state => ({ operator: selectOperator(state) }))(
   StatusEmail

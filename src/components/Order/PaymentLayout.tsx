@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import React, { Fragment, PureComponent } from 'react';
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
 
@@ -44,7 +44,7 @@ const RowTitle = styled('div')`
     height: auto;
   }
 
-  @media (max-width: ${p => p.theme.bp.mobile}) {
+  @media (max-width: ${(p: any) =>  p.theme.bp.mobile}) {
     display: none;
   }
 `;
@@ -54,7 +54,7 @@ const RowContent = styled(Flex)`
   font-size: 16px;
   color: #323232;
   padding: 14px 16px 14px 0;
-  border-bottom: ${p => p.theme.bd.primary};
+  border-bottom: ${(p: any) =>  p.theme.bd.primary};
   font-weight: 500;
 
   & > p {
@@ -62,7 +62,7 @@ const RowContent = styled(Flex)`
     margin: 0px;
   }
 
-  @media (max-width: ${p => p.theme.bp.mobile}) {
+  @media (max-width: ${(p: any) =>  p.theme.bp.mobile}) {
     padding: 14px 16px;
   }
 `;
@@ -72,14 +72,14 @@ const ChildContainer = styled(Flex)`
   width: 100%;
   align-items: flex-start;
 
-  @media (max-width: ${p => p.theme.bp.mobile}) {
-    padding: ${p => p.padding || '14px 16px 0'};
+  @media (max-width: ${(p: any) =>  p.theme.bp.mobile}) {
+    padding: ${(p: any) =>  p.padding || '14px 16px 0'};
   }
 
-  padding: ${p => p.padding};
+  padding: ${(p: any) =>  p.padding};
 `;
 
-class PaymentLayout extends PureComponent {
+class PaymentLayout extends React.PureComponent<any> {
   static propTypes = {
     order: orderProp,
     updatePaymentStatus: fnProp,
@@ -100,6 +100,8 @@ class PaymentLayout extends PureComponent {
     fullWidth: false,
   };
 
+  private mounted;
+
   state = {
     countdownInterval: null,
     timeLeft: '15:00',
@@ -115,9 +117,10 @@ class PaymentLayout extends PureComponent {
           const { invoiceTime } = this.state;
 
           let diff = new Date(invoiceTime);
+          let time;
 
           if (!order.paid && (invoiceTime < 0 || order.expired)) {
-            diff = '00:00';
+            time = '00:00';
 
             updatePaymentStatus({
               status: 'expired',
@@ -125,18 +128,18 @@ class PaymentLayout extends PureComponent {
               data: {},
             });
           } else {
-            let minutes = diff.getMinutes();
-            let seconds = diff.getSeconds();
+            let minutes = String(diff.getMinutes());
+            let seconds = String(diff.getSeconds());
 
-            if (minutes < 10) minutes = '0' + minutes;
+            if (diff.getMinutes() < 10) minutes = '0' + minutes;
 
-            if (seconds < 10) seconds = '0' + seconds;
+            if (diff.getSeconds() < 10) seconds = '0' + seconds;
 
-            diff = `${minutes}:${seconds}`;
+            time = `${minutes}:${seconds}`;
           }
 
           this.mounted &&
-            this.setState({ timeLeft: diff, invoiceTime: invoiceTime - 1000 });
+            this.setState({ timeLeft: time, invoiceTime: invoiceTime - 1000 });
         }, 1000),
       });
     }
@@ -169,7 +172,7 @@ class PaymentLayout extends PureComponent {
     const { timeLeft } = this.state;
 
     const { recipientType, logoImage, name, currency, slug } =
-      (operator && operator.result) || {};
+      (operator && operator.result) || {} as any;
 
     const showRecipient = recipientType !== 'none';
     const isDelivered = paymentStatus && paymentStatus.status === 'delivered';
@@ -183,9 +186,9 @@ class PaymentLayout extends PureComponent {
     const productName = slug === 'reddit-gold' ? ' Reddit Gold' : '';
 
     return (
-      <Fragment>
+       <React.Fragment>
         {paymentStatus && (
-          <Fragment>
+           <React.Fragment>
             <Row>
               <RowTitle>
                 <Icon src={logoImage} alt={name} />
@@ -221,7 +224,7 @@ class PaymentLayout extends PureComponent {
                   />
                 </RowTitle>
                 <RowContent>
-                  <Text onClick={() => this.onCopy(formattedPrice)}>
+                  <Text>
                     {formattedPrice}
                   </Text>
                   {this.shouldShowCountdown() && (
@@ -232,7 +235,7 @@ class PaymentLayout extends PureComponent {
                 </RowContent>
               </Row>
             ) : null}
-          </Fragment>
+           </React.Fragment>
         )}
 
         {children && (
@@ -243,7 +246,7 @@ class PaymentLayout extends PureComponent {
             </ChildContainer>
           </Flex>
         )}
-      </Fragment>
+       </React.Fragment>
     );
   }
 }

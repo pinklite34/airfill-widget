@@ -5,7 +5,7 @@ import {
 
 import { getMissingCountries } from '../lib/countries';
 
-const sortBy = (field, reverse, primer) => {
+const sortBy = (field, reverse?, primer?) => {
   const key = x => (primer ? primer(x[field]) : x[field]);
   return (a, b) => {
     const A = key(a);

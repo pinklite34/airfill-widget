@@ -1,23 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import styled from 'react-emotion';
 
 const Container = styled('div')`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: ${p => p.margin || '0 16px 0 0'};
-  padding: ${p => p.padding};
-  min-width: ${p => p.width || '40px'};
-  min-height: ${p => p.height || '30px'};
+  margin: ${(p: any) =>  p.margin || '0 16px 0 0'};
+  padding: ${(p: any) =>  p.padding};
+  min-width: ${(p: any) =>  p.width || '40px'};
+  min-height: ${(p: any) =>  p.height || '30px'};
 `;
 
 const Img = styled('img')`
-  max-width: ${p => p.width || '40px'};
-  max-height: ${p => p.height || '30px'};
+  max-width: ${(p: any) =>  p.width || '40px'};
+  max-height: ${(p: any) =>  p.height || '30px'};
 `;
 
-export default function Icon({ src, alt, width, height, ...props }) {
+export default function Icon({ src, alt, width, height, ...props }: any) {
   return (
     <Container {...props}>
       {typeof src === 'string' ? (
@@ -28,7 +28,7 @@ export default function Icon({ src, alt, width, height, ...props }) {
     </Container>
   );
 }
-
+/*
 Icon.propTypes = {
   src: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   alt: PropTypes.string,
@@ -37,3 +37,4 @@ Icon.propTypes = {
   margin: PropTypes.string,
   padding: PropTypes.string,
 };
+ */

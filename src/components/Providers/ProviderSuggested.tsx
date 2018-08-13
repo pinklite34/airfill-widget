@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import styled from 'react-emotion';
 
 import { operatorProp, fnProp } from '../../lib/prop-types';
@@ -10,7 +10,7 @@ import Info from '../UI/info.svg';
 import Flex from '../UI/Flex';
 
 const Container = styled('div')`
-  background-color: ${p => p.theme.white};
+  background-color: ${(p: any) =>  p.theme.white};
   margin: -16px;
   margin-bottom: 20px;
   padding: 20px;
@@ -27,7 +27,7 @@ const Logo = styled('img')`
   flex: 0 0 auto;
   margin-right: 20px;
 
-  @media (max-width: ${p => p.theme.bp.mobile}) {
+  @media (max-width: ${(p: any) =>  p.theme.bp.mobile}) {
     margin-bottom: 20px;
   }
 `;
@@ -36,7 +36,7 @@ const Content = styled('div')`
   flex: 0 1 auto;
   width: 100%;
 
-  @media (max-width: ${p => p.theme.bp.mobile}) {
+  @media (max-width: ${(p: any) =>  p.theme.bp.mobile}) {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -100,8 +100,9 @@ export default function ProviderSuggested({ operator, onAccept, onReject }) {
   );
 }
 
-ProviderSuggested.propTypes = {
+/* ProviderSuggested.propTypes = {
   operator: operatorProp,
   onAccept: fnProp,
   onReject: fnProp,
 };
+ */

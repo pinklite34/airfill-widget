@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 import styled from 'react-emotion';
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 
 import DeviceInfo from '../../lib/DeviceInfo';
 
@@ -15,7 +15,7 @@ const Container = styled('div')`
   justify-content: space-between;
   align-items: center;
   background-color: #efefef;
-  border-bottom: ${p => p.theme.bd.primary};
+  border-bottom: ${(p: any) =>  p.theme.bd.primary};
   min-height: 60px;
 `;
 
@@ -35,7 +35,7 @@ export default function Collapsed({
   type,
   hideButton,
   alt,
-}) {
+}: any) {
   return (
     <DeviceInfo>
       {({ lessThan }) => (
@@ -80,7 +80,7 @@ export default function Collapsed({
   );
 }
 
-Collapsed.propTypes = {
+/* Collapsed.propTypes = {
   onClick: PropTypes.func,
   type: PropTypes.string,
   hideButton: PropTypes.bool,
@@ -88,3 +88,4 @@ Collapsed.propTypes = {
   title: PropTypes.oneOfType([transProp, PropTypes.node]),
   alt: PropTypes.string,
 };
+ */

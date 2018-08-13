@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { css } from 'react-emotion';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
@@ -27,10 +27,10 @@ function HeaderLogo({ goHome }) {
   );
 }
 
-HeaderLogo.propTypes = {
+/* HeaderLogo.propTypes = {
   goHome: fnProp,
 };
-
+ */
 export default connect(
   null,
   dispatch => ({

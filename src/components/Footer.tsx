@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import styled from 'react-emotion';
 
 import Text from './UI/Text';
@@ -7,7 +7,7 @@ import Text from './UI/Text';
 const Container = styled('div')`
   padding: 16px;
   display: flex;
-  justify-content: ${p => (p.branded ? 'space-between' : 'center')};
+  justify-content: ${(p: any) =>  (p.branded ? 'space-between' : 'center')};
   font-size: 12px;
   color: #999;
 
@@ -39,7 +39,11 @@ const Link = styled('a')`
   }
 `;
 
-export default function Footer({ branded }) {
+interface FooterProps {
+  branded?: boolean;
+}
+
+export default function Footer({ branded }: FooterProps) {
   return (
     <Container branded={branded}>
       {branded && (
@@ -79,7 +83,8 @@ export default function Footer({ branded }) {
     </Container>
   );
 }
-
+/*
 Footer.propTypes = {
   branded: PropTypes.bool,
 };
+ */

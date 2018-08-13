@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import React, { PureComponent } from 'react';
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
 
@@ -36,7 +36,7 @@ const PartialWarning = styled('div')`
   background: #ffdfdf;
 `;
 
-class PaymentMode extends PureComponent {
+class PaymentMode extends React.PureComponent<any> {
   static propTypes = {
     order: orderProp,
     showBTCAddress: PropTypes.bool,

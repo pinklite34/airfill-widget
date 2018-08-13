@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import React, { PureComponent } from 'react';
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import styled from 'react-emotion';
 
 import DeviceInfo from '../../lib/DeviceInfo';
@@ -20,7 +20,7 @@ const Icon = styled('div')`
   margin-top: 8px;
   margin-left: 10px;
 
-  @media (max-width: ${p => p.theme.bp.mobile}) {
+  @media (max-width: ${(p: any) =>  p.theme.bp.mobile}) {
     margin-left: 0px;
   }
 `;
@@ -38,7 +38,7 @@ const Header = styled('div')`
   width: 100%;
 `;
 
-export default class OrderHeader extends PureComponent {
+export default class OrderHeader extends React.PureComponent<any> {
   state = {
     open: false,
   };
@@ -67,9 +67,9 @@ export default class OrderHeader extends PureComponent {
   }
 }
 
-OrderHeader.propTypes = {
+/* OrderHeader.propTypes = {
   title: transProp,
   subtitle: transProp,
   icon: PropTypes.node,
   order: orderProp,
-};
+}; */

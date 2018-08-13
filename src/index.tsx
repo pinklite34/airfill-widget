@@ -1,6 +1,6 @@
 /* eslint-disable import/default */
 
-import React from 'react';
+import * as React from 'react';
 import { render } from 'react-dom';
 import createHistory from 'history/createMemoryHistory';
 import { Provider } from 'react-redux';
@@ -100,4 +100,5 @@ function AirfillWidget(ele, opt) {
   );
 }
 
+declare const window: any;
 window.AirfillWidget = window.BitRefillWidget = AirfillWidget;

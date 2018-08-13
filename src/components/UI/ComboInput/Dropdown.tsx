@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import VirtualList from 'react-tiny-virtual-list';
 
 import styled from 'react-emotion';
@@ -34,7 +34,7 @@ const Content = styled('div')`
 const Title = styled(SectionTitle)`
   padding-left: 60px;
   padding-top: 6px;
-  border-top: ${p => p.theme.bd.primary};
+  border-top: ${(p: any) =>  p.theme.bd.primary};
 
   &:first-of-type {
     border-top: 0;
@@ -45,10 +45,10 @@ function SectionTitleRow({ item, style }) {
   return <div style={style}>{item.title}</div>;
 }
 
-SectionTitleRow.propTypes = {
+/* SectionTitleRow.propTypes = {
   item: operatorProp,
   style: PropTypes.object,
-};
+}; */
 
 const rowComponents = {
   country: CountryRow,
@@ -88,7 +88,7 @@ const Dropdown = ({ getItemProps, countryList, items, highlightedIndex }) => {
           <VirtualList
             width="100%"
             height={height}
-            scrollToAlignment="auto"
+            scrollToAlignment={"auto" as any}
             scrollToIndex={highlightedIndex || undefined}
             itemSize={i => getRowHeight(items[i], countryList)}
             itemCount={itemCount}
@@ -124,14 +124,14 @@ const Dropdown = ({ getItemProps, countryList, items, highlightedIndex }) => {
     </Container>
   );
 };
-
+/*
 Dropdown.propTypes = {
   getItemProps: fnProp,
   countryList: countriesProp,
   items: PropTypes.arrayOf(operatorProp),
   highlightedIndex: PropTypes.number,
 };
-
+ */
 export default connect(state => ({
   countryList: selectCountryList(state),
 }))(Dropdown);

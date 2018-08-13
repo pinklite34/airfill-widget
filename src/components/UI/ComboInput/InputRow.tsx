@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { css } from 'react-emotion';
 
 import { inputTypeProp, fnProp } from '../../../lib/prop-types';
@@ -126,7 +126,7 @@ export default function InputRow({
     </Card>
   );
 }
-
+/*
 InputRow.propTypes = {
   country: PropTypes.string,
   getInputProps: fnProp,
@@ -141,3 +141,4 @@ InputRow.propTypes = {
   countryOnly: PropTypes.bool,
   type: inputTypeProp,
 };
+ */

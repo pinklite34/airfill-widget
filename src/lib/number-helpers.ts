@@ -77,7 +77,7 @@ export const parseNumber = (number, country) => {
     return parsedNumber.phone;
   } else if (number.charAt(0) !== '+') {
     // Number lacks country code - add it and try again
-    return parseNumber(countryCode + number);
+    return parseNumber(countryCode + number, null);
   }
 
   // Number is not valid
