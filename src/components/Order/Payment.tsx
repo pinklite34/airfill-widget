@@ -33,6 +33,7 @@ import PaymentExpired from './PaymentExpired';
 import PaymentMode from './PaymentMode';
 import RefillDelivered from './RefillDelivered';
 import RefillFailed from './RefillFailed';
+import PaymentTwoFactor from './PaymentTwoFactor';
 
 const componentForStatus = status => {
   switch (status) {
@@ -46,6 +47,8 @@ const componentForStatus = status => {
       return RefillFailed;
     case 'payment_error':
       return PaymentError;
+    case '2fa_required':
+      return PaymentTwoFactor;
     case 'delivered':
       return RefillDelivered;
     case 'balance-too-low':
@@ -116,6 +119,7 @@ function Payment({
           'delivered',
           'expired',
           'payment_error',
+          '2fa_required',
         ]}
         onUpdate={(event, data) =>
           updatePaymentStatus({

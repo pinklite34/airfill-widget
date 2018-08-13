@@ -35,10 +35,10 @@ function openWindow(method, order) {
         'delivered',
         'expired',
         'payment_error',
+        '2fa_required',
       ].forEach(e =>
         channel.bind(e, () => {
           win.close();
-          pusher.disconnect();
         })
       );
     }
