@@ -16,8 +16,7 @@ class PaymentTwoFactor extends React.Component {
     code: '',
   };
 
-  onClick = () =>
-    this.props.dispatch(post2faCode(this.props.order.id, this.state.code));
+  onClick = () => this.props.post2faCode(this.props.order.id, this.state.code);
 
   render() {
     const { order } = this.props;
@@ -63,6 +62,12 @@ PaymentTwoFactor.propTypes = {
   order: orderProp,
   onReset: fnProp,
   dispatch: PropTypes.func.isRequired,
+  post2faCode: PropTypes.func.isRequired,
 };
 
-export default connect(state => ({}))(PaymentTwoFactor);
+export default connect(
+  null,
+  dispatch => ({
+    post2faCode: (orderId, code) => dispatch(post2faCode(orderId, code)),
+  })
+)(PaymentTwoFactor);

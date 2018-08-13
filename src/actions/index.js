@@ -166,12 +166,15 @@ const postOrder = createLoadAction({
   uri: '/order',
 });
 
-export const post2faCode = (orderId, code) =>
-  createLoadAction({
-    name: 'airfillWidget.twofactorCode',
+export const post2faCode = (orderId, code) => (dispatch, getState) => {
+  const load = createLoadAction({
+    name: 'airfillWidget.s',
     uri: `/coinbase/2fa?order=${orderId}&twoFactorCode=${code}`,
     method: 'GET',
   });
+
+  dispatch(load());
+};
 
 export const loadOrder = (id, methods) => (dispatch, getState) => {
   const load = createLoadAction({
@@ -183,7 +186,6 @@ export const loadOrder = (id, methods) => (dispatch, getState) => {
   return new Promise((resolve, reject) =>
     dispatch(load())
       .then(data => {
-        console.log(data);
         dispatch(setOperator(data.operatorSlug));
         dispatch(setAmount(data.valuePackage));
         if (data.number) {
