@@ -1,31 +1,23 @@
+import { History } from 'history';
+import Radio from 'material-ui/Radio';
 import * as React from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { compose } from 'recompose';
 
-import { selectAmount, selectOperator } from '../../store';
 import { setAmount } from '../../actions';
 import { selectValidAmount } from '../../lib/amount-validation';
-import { getPrice, getDisplayName } from '../../lib/currency-helpers';
-import {
-  amountProp,
-  configProp,
-  fnProp,
-  historyProp,
-  operatorResultProp,
-} from '../../lib/prop-types';
-
-import Radio from 'material-ui/Radio';
-
+import { getDisplayName, getPrice } from '../../lib/currency-helpers';
+import { isValidEmail } from '../../lib/email-validation';
+import { Amount, Config, OperatorResult } from '../../lib/prop-types';
+import { selectAmount, selectOperator } from '../../store';
 import ActiveSection from '../UI/ActiveSection';
 import NextButton from '../UI/NextButton';
 import SectionTitle from '../UI/SectionTitle';
 import Spinner from '../UI/Spinner';
 import AmountPackage from './AmountPackage';
 import AmountRange from './AmountRange';
-
-import { isValidEmail } from '../../lib/email-validation';
 import ExtraInfo from './ExtraInfo';
 
 const Title = styled(SectionTitle)`
@@ -42,7 +34,7 @@ const Packages = styled('div')`
     padding-right: 2px;
     height: auto;
     margin: 0;
-    border-top: ${(p: any) =>  p.theme.bd.primary};
+    border-top: ${(p: any) => p.theme.bd.primary};
   }
 `;
 
@@ -52,15 +44,15 @@ const RadioWrapper = styled('div')`
   justify-content: center;
 `;
 
-class AmountPicker extends React.PureComponent<any> {
-  static propTypes = {
-    config: configProp,
-    operator: operatorResultProp,
-    amount: amountProp,
-    setAmount: fnProp,
-    history: historyProp,
-  };
+interface AmountPickerProps {
+  config: Config;
+  operator: OperatorResult;
+  amount: Amount;
+  setAmount: typeof setAmount;
+  history: History;
+}
 
+class AmountPicker extends React.PureComponent<AmountPickerProps> {
   componentDidMount() {
     if (!this.props.operator.isLoading) {
       this.onAmountChange(this.props as any);
@@ -76,7 +68,7 @@ class AmountPicker extends React.PureComponent<any> {
 
   onAmountChange = ({ setAmount, config, operator }) => {
     const { packages, isRanged, range, currency, amount } =
-      operator.result || {} as any;
+      operator.result || ({} as any);
 
     if (packages && !amount) {
       setAmount(
@@ -159,7 +151,8 @@ class AmountPicker extends React.PureComponent<any> {
         padding="16px 0 0"
         renderNextButton={() => (
           <NextButton disabled={disabled} onClick={this.next} />
-        )}>
+        )}
+      >
         <ExtraInfo info={operator.result.extraInfo} operator={operator} />
 
         <Title text={{ id: 'title.selectamount', children: 'Select amount' }} />

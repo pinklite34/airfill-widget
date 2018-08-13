@@ -1,19 +1,25 @@
-import * as React  from 'react';
+import * as React from 'react';
 
+import { Order, PaymentStatus } from '../../lib/prop-types';
 import OrderHeader from '../UI/OrderHeader';
-import PaymentLayout from './PaymentLayout';
-import Error from './error.svg';
-import { orderProp, paymentStatusProp } from '../../lib/prop-types';
 import OrderStatusButton from '../UI/OrderStatusButton';
+import Error from './error.svg';
+import PaymentLayout from './PaymentLayout';
 
-const PaymentError = props => {
-  const { order, paymentStatus } = props;
+interface PaymentErrorProps {
+  order: Order;
+  paymentStatus: PaymentStatus;
+  text: any;
+}
+
+function PaymentError(props: PaymentErrorProps) {
+  const { order, paymentStatus, text } = props;
 
   const error =
     (paymentStatus && paymentStatus.message) || (order && order.errorMessage);
 
   return (
-     <React.Fragment>
+    <React.Fragment>
       <OrderHeader
         order={order}
         title={{ id: 'order.error.title', children: 'Payment error' }}
@@ -22,15 +28,10 @@ const PaymentError = props => {
       />
 
       <PaymentLayout {...props}>
-        <OrderStatusButton {...props} />
+        <OrderStatusButton order={order} text={text} />
       </PaymentLayout>
-     </React.Fragment>
+    </React.Fragment>
   );
-};
-
-/* PaymentError.propTypes = {
-  order: orderProp,
-  paymentStatus: paymentStatusProp,
-}; */
+}
 
 export default PaymentError;

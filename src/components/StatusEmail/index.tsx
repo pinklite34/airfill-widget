@@ -1,15 +1,16 @@
 import * as React from 'react';
-import { Switch, Route } from 'react-router';
-import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router';
 
-import RecipientCollapsed from './StatusEmailCollapsed';
-import RecipientPicker from './StatusEmail';
-import { configProp, operatorProp } from '../../lib/prop-types';
-
-import { selectOperator } from '../../store';
 import { isValidEmail } from '../../lib/email-validation';
+import { Config } from '../../lib/prop-types';
+import RecipientPicker from './StatusEmail';
+import RecipientCollapsed from './StatusEmailCollapsed';
 
-function StatusEmail({ config, operator }) {
+interface StatusEmailProps {
+  config: Config;
+}
+
+function StatusEmail({ config }: StatusEmailProps) {
   const show = !isValidEmail(config.orderOptions.email);
 
   return (
@@ -27,11 +28,4 @@ function StatusEmail({ config, operator }) {
   );
 }
 
-/* StatusEmail.propTypes = {
-  config: configProp,
-  operator: operatorProp,
-}; */
-
-export default connect(state => ({ operator: selectOperator(state) }))(
-  StatusEmail
-);
+export default StatusEmail;

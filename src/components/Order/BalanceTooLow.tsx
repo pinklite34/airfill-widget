@@ -1,9 +1,15 @@
+import { History } from 'history';
 import * as React from 'react';
-import Button from '../UI/Button';
 
-import { historyProp, orderProp } from '../../lib/prop-types';
+import { Order } from '../../lib/prop-types';
+import Button from '../UI/Button';
 import Text from '../UI/Text';
 import PaymentLayout from './PaymentLayout';
+
+interface BalanceTooLow {
+  order: Order;
+  history: History;
+}
 
 export default function BalanceTooLow({ order, history }) {
   const description = order && order.itemDesc;
@@ -23,8 +29,3 @@ export default function BalanceTooLow({ order, history }) {
     </PaymentLayout>
   );
 }
-
-/* BalanceTooLow.propTypes = {
-  history: historyProp,
-  order: orderProp,
-}; */

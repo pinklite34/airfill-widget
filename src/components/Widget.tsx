@@ -4,7 +4,6 @@ import createHistory from 'history/createMemoryHistory';
 import blue from 'material-ui/colors/blue';
 import createMuiTheme from 'material-ui/styles/createMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { I18nextProvider } from 'react-i18next';
 import Media from 'react-media';
@@ -17,6 +16,7 @@ import {
 } from 'react-router-redux';
 import { compose } from 'recompose';
 
+import { History } from 'history';
 import {
   init,
   loadOrder,
@@ -28,7 +28,7 @@ import {
 } from '../actions';
 import { client } from '../lib/api-client';
 import i18n from '../lib/i18n-instance';
-import { configProps, fnProp, inventoryProp } from '../lib/prop-types';
+import { Config, Inventory, Operator } from '../lib/prop-types';
 import WidgetRect from '../lib/WidgetRect';
 import getMethods from '../payment-methods';
 import { selectInventory, selectOperator, selectOrder } from '../store';
@@ -60,15 +60,26 @@ injectGlobal`
   }
 `;
 
-class AirfillWidget extends React.Component<any> {
-  static propTypes = {
-    init: fnProp,
-    setOperator: PropTypes.func.isRequired,
-    inventory: inventoryProp,
-    className: PropTypes.string,
-    ...configProps,
-  };
+interface AirfillWidgetProps {
+  init: typeof init;
+  setOperator: (operator: string) => Promise<Operator>;
+  inventory: Inventory;
+  className: string;
 
+  apiKey?: string;
+  baseUrl?: string;
+  orderId?: string;
+  operator?: string;
+  repeatOrder?: string;
+
+  history: History;
+  useRecentRefill: typeof useRecentRefill;
+  loadOrder: () => Promise<any>;
+  openDropdown: boolean;
+  onChange?: ({ operator: Operator, order: Order }) => void;
+}
+
+class AirfillWidget extends React.Component<AirfillWidgetProps & Config> {
   static defaultProps = {
     defaultNumber: '',
     userEmail: null,
@@ -169,8 +180,9 @@ class AirfillWidget extends React.Component<any> {
     const prev = prevProps[toCompare] && prevProps[toCompare].result;
     const curr = this.props[toCompare] && this.props[toCompare].result;
 
-    if ((curr && !prev) || (curr && prev[toCompare2] !== curr[toCompare2]))
+    if ((curr && !prev) || (curr && prev[toCompare2] !== curr[toCompare2])) {
       return this.props[toCompare].result;
+    }
   };
 
   render() {
@@ -199,7 +211,7 @@ class AirfillWidget extends React.Component<any> {
               <WidgetRect>
                 <Card alwaysBorder style={{ overflow: 'hidden' }}>
                   {hasLoaded ? (
-                     <React.Fragment>
+                    <React.Fragment>
                       <Header
                         config={config}
                         isMobile={isMobile}
@@ -219,7 +231,7 @@ class AirfillWidget extends React.Component<any> {
                           render={() => <Instructions />}
                         />
                       )}
-                     </React.Fragment>
+                    </React.Fragment>
                   ) : (
                     <Spinner />
                   )}

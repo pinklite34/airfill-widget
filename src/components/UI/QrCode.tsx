@@ -3,7 +3,7 @@ import * as React from 'react';
 import styled from 'react-emotion';
 
 const QrContainer = styled('div')`
-  background-image: url(${(p: any) =>  p.src});
+  background-image: url(${(p: any) => p.src});
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;

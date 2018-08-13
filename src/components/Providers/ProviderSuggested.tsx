@@ -1,16 +1,14 @@
 import * as React from 'react';
 import styled from 'react-emotion';
 
-import { operatorProp, fnProp } from '../../lib/prop-types';
-
+import { Operator } from 'lib/prop-types';
 import Button from '../UI/Button';
+import Flex from '../UI/Flex';
+import Info from '../UI/info.svg';
 import Text from '../UI/Text';
 
-import Info from '../UI/info.svg';
-import Flex from '../UI/Flex';
-
 const Container = styled('div')`
-  background-color: ${(p: any) =>  p.theme.white};
+  background-color: ${(p: any) => p.theme.white};
   margin: -16px;
   margin-bottom: 20px;
   padding: 20px;
@@ -27,7 +25,7 @@ const Logo = styled('img')`
   flex: 0 0 auto;
   margin-right: 20px;
 
-  @media (max-width: ${(p: any) =>  p.theme.bp.mobile}) {
+  @media (max-width: ${(p: any) => p.theme.bp.mobile}) {
     margin-bottom: 20px;
   }
 `;
@@ -36,7 +34,7 @@ const Content = styled('div')`
   flex: 0 1 auto;
   width: 100%;
 
-  @media (max-width: ${(p: any) =>  p.theme.bp.mobile}) {
+  @media (max-width: ${(p: any) => p.theme.bp.mobile}) {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -57,7 +55,17 @@ const StyledButton = styled(Button)`
   margin-top: 8px;
 `;
 
-export default function ProviderSuggested({ operator, onAccept, onReject }) {
+interface ProviderSuggestedProps {
+  operator: Operator;
+  onAccept: () => void;
+  onReject: () => void;
+}
+
+export default function ProviderSuggested({
+  operator,
+  onAccept,
+  onReject,
+}: ProviderSuggestedProps) {
   const name = operator && operator.name;
   return operator ? (
     <Container>

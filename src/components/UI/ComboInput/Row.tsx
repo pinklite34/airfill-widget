@@ -2,11 +2,11 @@ import * as React from 'react';
 import styled from 'react-emotion';
 
 const Container = styled('div')`
-  border-top: ${(p: any) =>  p.theme.bd.primary};
+  border-top: ${(p: any) => p.theme.bd.primary};
   display: flex;
   align-items: stretch;
   cursor: pointer;
-  background: ${(p: any) =>  p.isActive && 'rgba(0, 0, 0, 0.08)'};
+  background: ${(p: any) => p.isActive && 'rgba(0, 0, 0, 0.08)'};
 `;
 
 const Icon = styled('div')`

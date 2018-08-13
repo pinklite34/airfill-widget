@@ -1,19 +1,23 @@
 import * as React from 'react';
 
-import { orderProp, transProp } from '../../lib/prop-types';
-
+import { Order, TransProp } from '../../lib/prop-types';
+import Button from './Button';
 import Link from './Link';
 
-import Button from './Button';
+interface OrderStatusButtonProps {
+  order: Order;
+  text: TransProp;
+}
 
-export default function OrderStatusButton(props) {
+export default function OrderStatusButton(props: OrderStatusButtonProps) {
   const { order, text } = props;
 
   return (
     <Link
       href={`https://www.bitrefill.com/support/${
         order.orderId
-      }/${order.payment && order.payment.address}`}>
+      }/${order.payment && order.payment.address}`}
+    >
       <Button
         style={{ textDecoration: 'none', margin: '10px 0' }}
         text={
@@ -26,9 +30,3 @@ export default function OrderStatusButton(props) {
     </Link>
   );
 }
-/*
-OrderStatusButton.propTypes = {
-  order: orderProp,
-  text: transProp,
-};
- */

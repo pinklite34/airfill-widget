@@ -85,7 +85,8 @@ function InputRow({
         onSubmit={e => {
           e.preventDefault();
           onSubmit();
-        }}>
+        }}
+      >
         <Row>
           <IconContainer>{icon}</IconContainer>
           <InputContainer>

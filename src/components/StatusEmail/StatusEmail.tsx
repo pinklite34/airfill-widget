@@ -1,27 +1,18 @@
+import { History } from 'history';
+import Checkbox from 'material-ui/Checkbox';
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
 
 import { setEmail, setSubscribeNewsletter } from '../../actions';
+import EmailIcon from '../../assets/email.svg';
+import { Config, Email } from '../../lib/prop-types';
 import { selectEmail, selectSubscribeNewsletter } from '../../store';
-
-import {
-  historyProp,
-  configProp,
-  fnProp,
-  emailProp,
-} from '../../lib/prop-types';
-
-import Checkbox from 'material-ui/Checkbox';
-
+import ActiveSection from '../UI/ActiveSection';
+import Flex from '../UI/Flex';
 import NextButton from '../UI/NextButton';
 import NumberInput from '../UI/NumberInput';
-
-import EmailIcon from '../../assets/email.svg';
-import ActiveSection from '../UI/ActiveSection';
 import Text from '../UI/Text';
-import Flex from '../UI/Flex';
 
 const InputContainer = styled('div')`
   @media (min-width: 460px) {
@@ -29,16 +20,16 @@ const InputContainer = styled('div')`
   }
 `;
 
-class StatusEmail extends React.PureComponent<any> {
-  static propTypes = {
-    config: configProp,
-    history: historyProp,
-    setEmail: fnProp,
-    email: emailProp,
-    setSubscribeNewsletter: fnProp,
-    subscribing: PropTypes.bool.isRequired,
-  };
+interface StatusEmailProps {
+  config: Config;
+  history: History;
+  setEmail: typeof setEmail;
+  email: Email;
+  setSubscribeNewsletter: typeof setSubscribeNewsletter;
+  subscribing: boolean;
+}
 
+class StatusEmail extends React.PureComponent<StatusEmailProps> {
   onChange = email => this.props.setEmail({ value: email, inFocus: true });
 
   validateInput = () => this.props.email.valid;
@@ -63,7 +54,8 @@ class StatusEmail extends React.PureComponent<any> {
             onClick={this.continue}
           />
         )}
-        error={email.error}>
+        error={email.error}
+      >
         <Text type="h3" id="email.description">
           Email address for order status updates
         </Text>
@@ -85,7 +77,8 @@ class StatusEmail extends React.PureComponent<any> {
             type="p"
             onClick={() => setSubscribeNewsletter(!subscribing)}
             style={{ cursor: 'pointer' }}
-            id="email.newsletter">
+            id="email.newsletter"
+          >
             Add me to the newsletter to receive news about new products and
             features
           </Text>

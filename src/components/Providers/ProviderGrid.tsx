@@ -1,10 +1,9 @@
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
 import { css } from 'react-emotion';
 
+import { ProviderObject, TransProp } from '../../lib/prop-types';
 import SectionTitle from '../UI/SectionTitle';
 import Provider, { ShowAll } from './Provider';
-import { providersProp, fnProp, transProp } from '../../lib/prop-types';
 
 const styles = {
   container: css`
@@ -19,14 +18,16 @@ const styles = {
   `,
 };
 
-export default class ProviderGrid extends React.PureComponent<any> {
-  static propTypes = {
-    defaultShowAll: PropTypes.bool,
-    providers: providersProp,
-    title: PropTypes.oneOfType([transProp, PropTypes.string]).isRequired,
-    onSelect: fnProp,
-  };
+interface ProvidersGridProps {
+  defaultShowAll?: boolean;
+  providers: ProviderObject[];
+  title: TransProp;
+  onSelect: (slug: string) => void;
+}
 
+export default class ProviderGrid extends React.PureComponent<
+  ProvidersGridProps
+> {
   state = {
     showAll: this.props.defaultShowAll || false,
   };

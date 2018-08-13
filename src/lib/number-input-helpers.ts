@@ -1,5 +1,5 @@
+import { format, parse } from 'input-format';
 import { AsYouType } from 'libphonenumber-js';
-import { parse, format } from 'input-format';
 
 const SINGLE_PHONENUMBER_CHAR = /(\d|\+)/;
 const PHONENUMBER = /^[+\-0-9 ()]+/;

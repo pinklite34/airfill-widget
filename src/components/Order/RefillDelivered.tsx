@@ -1,19 +1,16 @@
-import * as React  from 'react';
-import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import styled from 'react-emotion';
 
-import { paymentStatusProp, orderProp, fnProp } from '../../lib/prop-types';
-
-import PaymentLayout from './PaymentLayout';
-import OrderHeader from '../UI/OrderHeader';
+import { Order, PaymentStatus } from '../../lib/prop-types';
 import Button from '../UI/Button';
 import Link from '../UI/Link';
+import OrderHeader from '../UI/OrderHeader';
 import Text from '../UI/Text';
-
 import Confirmed from './confirmed.svg';
+import PaymentLayout from './PaymentLayout';
 
 const PinContainer = styled('div')`
-  border: ${(p: any) =>  p.theme.bd.dotted};
+  border: ${(p: any) => p.theme.bd.dotted};
   cursor: pointer;
   padding: 6px 32px;
 `;
@@ -24,11 +21,13 @@ const PinLabel = ({ children, ...props }) => (
   </Text>
 );
 
-/* PinLabel.propTypes = {
-  children: PropTypes.any,
-}; */
+interface RefillDeliveredProps {
+  paymentStatus: PaymentStatus;
+  order: Order;
+  onReset: () => void;
+}
 
-export default function RefillDelivered(props) {
+export default function RefillDelivered(props: RefillDeliveredProps) {
   const { paymentStatus } = props;
 
   /* let pinInfo = {
@@ -43,7 +42,7 @@ export default function RefillDelivered(props) {
     paymentStatus.deliveryData && paymentStatus.deliveryData.pinInfo;
 
   return (
-     <React.Fragment>
+    <React.Fragment>
       <OrderHeader
         order={props.order}
         title={{ id: 'order.delivered.title', children: 'Refill delivered' }}
@@ -65,13 +64,14 @@ export default function RefillDelivered(props) {
 
       <PaymentLayout {...props}>
         {pinInfo && (
-           <React.Fragment>
+          <React.Fragment>
             {pinInfo.pin && (
               <PinContainer>
                 <PinLabel
                   type="h1"
                   id="order.delivered.giftcard"
-                  margin="8px 0">
+                  margin="8px 0"
+                >
                   Gift card code
                 </PinLabel>
                 <p style={{ fontFamily: 'monospace' }}>{pinInfo.pin}</p>
@@ -82,7 +82,8 @@ export default function RefillDelivered(props) {
                 <PinLabel
                   type="h1"
                   id="order.delivered.instructions"
-                  margin="8px 0">
+                  margin="8px 0"
+                >
                   Instructions
                 </PinLabel>
                 <Text
@@ -97,7 +98,8 @@ export default function RefillDelivered(props) {
                   type="h1"
                   id="order.delivered.other"
                   margin="8px 0"
-                  weight="600">
+                  weight="600"
+                >
                   Other Info
                 </PinLabel>
                 <Text
@@ -106,7 +108,7 @@ export default function RefillDelivered(props) {
                 />
               </div>
             )}
-           </React.Fragment>
+          </React.Fragment>
         )}
 
         <Link href="https://www.bitrefill.com/faq/#my-topup-did-not-arrive">
@@ -122,7 +124,7 @@ export default function RefillDelivered(props) {
           }}
         />
       </PaymentLayout>
-     </React.Fragment>
+    </React.Fragment>
   );
 }
 

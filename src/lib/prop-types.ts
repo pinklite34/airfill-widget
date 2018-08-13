@@ -1,93 +1,91 @@
-import * as PropTypes from 'prop-types';
+interface TranslationObject {
+  id: string;
+  children: string;
+}
 
-export const transProp = PropTypes.oneOfType([
-  PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    children: PropTypes.string.isRequired,
-  }),
-  PropTypes.shape({
-    children: PropTypes.node.isRequired,
-  }),
-]);
+export type TransProp = TranslationObject | any;
 
-export const fnProp = PropTypes.func.isRequired;
-export const amountProp = PropTypes.oneOfType([
-  PropTypes.string,
-  PropTypes.number,
-]);
-export const numberProp = PropTypes.string;
-export const elementProp = PropTypes.object;
-export const errorProp = PropTypes.any;
+export interface PaymentButton {
+  [x: string]: any;
+}
 
-export const historyProp = PropTypes.shape({
-  replace: fnProp,
-  push: fnProp,
-}).isRequired;
+export type Amount = string | number;
+export type Number = string;
+export type Element = any;
+export type ErrorProp = any;
+export type Recipient = RecipientType;
 
-export const inputTypeProp = PropTypes.oneOf(['text', 'tel']);
+export interface CountryProp {
+  name: string;
+  alpha2: string;
+  operators: Operator[];
+}
 
-export const currencyProp = PropTypes.string;
+export type InputType = 'text' | 'tel';
 
-export const coinCurrencyProp = PropTypes.oneOf([
-  'BTC',
-  'XBT',
-  'LTC',
-  'ETH',
-  'DASH',
-  'DOGE',
-  'LNBC',
-  'LNLTC',
-]);
+export type Currency = string;
+export type BillingCurrency = 'XBT' | 'EUR' | 'USD';
+export type RecipientType = 'phone_number' | 'none' | 'email' | 'username';
 
-export const paymentModeProp = PropTypes.oneOf([
-  'dashboard',
-  'bitcoin',
-  'litecoin',
-  'ethereum',
-  'dogecoin',
-  'dash',
-  'button',
-  'lightning',
-  'lightning-ltc',
-  'coinbase',
-  'localbitcoins',
-]);
+export type CoinCurrency =
+  | 'BTC'
+  | 'XBT'
+  | 'LTC'
+  | 'ETH'
+  | 'DASH'
+  | 'DOGE'
+  | 'LNBC'
+  | 'LNLTC';
 
-export const coinPageProp = PropTypes.oneOfType([
-  PropTypes.bool,
-  PropTypes.oneOf([
-    'bitcoin',
-    'litecoin',
-    'ethereum',
-    'dash',
-    'lightning',
-    'dogecoin',
-  ]),
-]);
+export type PaymentMode =
+  | 'dashboard'
+  | 'bitcoin'
+  | 'litecoin'
+  | 'ethereum'
+  | 'dogecoin'
+  | 'dash'
+  | 'button'
+  | 'lightning'
+  | 'lightning-ltc'
+  | 'coinbase'
+  | 'localbitcoins';
 
-export const configProps = {
+export type CoinPage =
+  | boolean
+  | 'bitcoin'
+  | 'litecoin'
+  | 'ethereum'
+  | 'dash'
+  | 'lightning'
+  | 'dogecoin';
+
+export interface Config {
   // User data
-  defaultNumber: numberProp,
-  userAccountBalance: amountProp,
+  defaultNumber: Recipient;
+  userAccountBalance: Amount;
   // userEmail: PropTypes.string,
 
   // Payment
   // showBTCAddress: PropTypes.bool,
-  billingCurrency: currencyProp,
-  requireAccountBalance: PropTypes.bool,
+  billingCurrency: BillingCurrency;
+  requireAccountBalance: boolean;
 
   // Receipt
   // sendEmail: PropTypes.bool,
   // sendSMS: PropTypes.bool,
 
   // Widget appearance
-  showInstructions: PropTypes.bool,
-  showLogo: PropTypes.bool,
-  showPoweredBy: PropTypes.bool,
-  showFooter: PropTypes.bool,
-  isMobile: PropTypes.bool,
+  showInstructions: boolean;
+  showLogo: boolean;
+  showPoweredBy: boolean;
+  showFooter: boolean;
+  isMobile: boolean;
 
-  forceOperator: PropTypes.string,
+  forceOperator: string;
+
+  orderOptions: OrderOptions;
+
+  paymentButtons: PaymentButton[];
 
   // Refill history
   // refillHistory: PropTypes.arrayOf(
@@ -97,182 +95,163 @@ export const configProps = {
   //   })
   // ),
 
-  onExternalUrl: PropTypes.func,
+  onExternalUrl: (uri) => void;
 
-  coin: coinPageProp,
-};
+  coin: CoinPage;
+}
 
-export const configProp = PropTypes.shape(configProps);
+export interface RangeProp {
+  min: number;
+  max: number;
+  step: number;
+  userPriceRate: number;
+}
 
-export const rangeProp = PropTypes.shape({
-  min: PropTypes.number,
-  max: PropTypes.number,
-  step: PropTypes.number,
-  userPriceRate: PropTypes.number,
-});
+export interface Package {
+  value: Amount;
+}
 
-export const packageProp = PropTypes.shape({
-  value: amountProp,
-});
+export interface Operator {
+  type: string;
+  packages: any[];
+  isRanged: boolean;
+  range: RangeProp;
+  currency: Currency;
+  extraInfo: string;
+  logoImage: string;
+  isPinBased: boolean;
+  name: string;
+  slug: string;
+  recipientType: RecipientType;
+}
 
-export const packagesProp = PropTypes.arrayOf(packageProp);
+export interface Result<T> {
+  isLoading: boolean;
+  result?: T;
+  error?: ErrorProp;
+}
 
-export const operatorProp = PropTypes.shape({
-  type: PropTypes.string,
-  packages: packagesProp,
-  isRanged: PropTypes.bool,
-  range: rangeProp,
-  currency: currencyProp,
-  extraInfo: PropTypes.string,
-  logoImage: PropTypes.string,
-  name: PropTypes.string,
-  slug: PropTypes.string,
-});
+export type OperatorResult = Result<Operator>;
 
-export const operatorResultProp = PropTypes.shape({
-  isLoading: PropTypes.bool,
-  result: operatorProp,
-  error: errorProp,
-});
+export interface PaymentStatus {
+  message: string;
+  status: string;
+  failureData: any;
+  deliveryData?: any;
+}
 
-export const operatorsProp = PropTypes.object;
+export interface Payment {
+  address: string;
+  altcoinCode: CoinCurrency;
+  altcoinAddress: string;
+  altcoinPrice: Amount;
+  title: string | TransProp;
+  description: any;
+  icon: JSX.Element;
+  requireAccountBalance: boolean;
+  paymentMode: PaymentMode;
+  paymentModeOptions: {
+    title: string | TransProp;
+    callback: (...args) => any;
+  };
+  altBasePrice: Amount;
+  satoshiPrice: Amount;
+}
 
-export const countryProp = PropTypes.shape({
-  name: PropTypes.string,
-  alpha2: PropTypes.string,
-  operators: operatorsProp,
-});
+export interface OrderOptions {
+  email: string;
+  sendEmail: boolean;
+  sendSMS: boolean;
+  refundAddress: string;
+}
 
-export const countriesProp = PropTypes.arrayOf(countryProp);
+export interface Order {
+  accessToken: string;
+  allowRetry: boolean;
+  btcPrice: Amount;
+  coinCurrency: CoinCurrency;
+  country: string;
+  currency: Currency;
+  delivered: boolean;
+  email: string;
+  eurPrice: Amount;
+  expirationTime: number;
+  expired: boolean;
+  id: string;
+  invoiceTime: number;
+  itemDesc: string;
+  merchant_price: Amount;
+  needRefund: boolean;
+  paid: boolean;
+  number: string;
+  operator: string;
+  operatorResponse: string;
+  operatorSlug: string;
+  orderId: string;
+  paidAmount: Amount;
+  partialPayment: boolean;
+  payment: Payment;
+  paymentMethod: PaymentMode;
+  paymentReceived: boolean;
+  price: Amount;
+  priciness: Amount;
+  refunded: boolean;
+  satoshiPrice: Amount;
+  sent: boolean;
+  summary: string;
+  usdPrice: Amount;
+  value: Amount;
+  valuePackage: Amount;
+  willRetry: boolean;
+  errorMessage?: string;
+}
 
-export const paymentStatusProp = PropTypes.shape({
-  message: PropTypes.string,
-  status: PropTypes.string,
-  failureData: PropTypes.object,
-});
+export type OrderResult = Result<Order>;
 
-export const paymentProps = {
-  address: PropTypes.string,
-  altcoinCode: coinCurrencyProp,
-  altcoinPrice: amountProp,
-  title: PropTypes.oneOfType([PropTypes.string, transProp]),
-  description: PropTypes.any,
-  icon: PropTypes.node,
-  requireAccountBalance: PropTypes.bool,
-  paymentMode: paymentModeProp,
-  paymentModeOptions: PropTypes.shape({
-    title: PropTypes.oneOfType([PropTypes.string, transProp]),
-    callback: PropTypes.func,
-  }),
-  altBasePrice: amountProp,
-  satoshiPrice: amountProp,
-};
+export type ProviderObject = any;
 
-export const paymentProp = PropTypes.shape(paymentProps);
+export interface NumberLookup {
+  operator: Operator;
+  altOperators: any[];
+}
 
-export const paymentsProp = PropTypes.arrayOf(paymentProp);
+export type NumberLookupResult = Result<NumberLookup>;
 
-export const orderOptionsProp = PropTypes.shape({
-  email: PropTypes.string,
-  sendEmail: PropTypes.bool,
-  sendSMS: PropTypes.bool,
-  refundAddress: PropTypes.string,
-});
+export interface RecentNumber {
+  operator: string;
+  number: RecipientType;
+}
 
-export const orderProp = PropTypes.shape({
-  accessToken: PropTypes.string,
-  allowRetry: PropTypes.bool,
-  btcPrice: amountProp,
-  coinCurrency: coinCurrencyProp,
-  country: PropTypes.string,
-  currency: currencyProp,
-  delivered: PropTypes.bool,
-  email: PropTypes.string,
-  eurPrice: amountProp,
-  expirationTime: PropTypes.number,
-  expired: PropTypes.bool,
-  id: PropTypes.string.isRequired,
-  invoiceTime: PropTypes.number,
-  itemDesc: PropTypes.string,
-  merchant_price: amountProp,
-  needRefund: PropTypes.bool,
-  number: PropTypes.string,
-  operator: PropTypes.string,
-  operatorResponse: PropTypes.string,
-  operatorSlug: PropTypes.string,
-  orderId: PropTypes.string,
-  paidAmount: amountProp,
-  partialPayment: PropTypes.bool,
-  payment: paymentProp,
-  paymentMethod: paymentModeProp,
-  paymentReceived: PropTypes.bool,
-  price: amountProp,
-  priciness: amountProp,
-  refunded: PropTypes.bool,
-  satoshiPrice: amountProp,
-  sent: PropTypes.bool,
-  summary: PropTypes.string,
-  usdPrice: amountProp,
-  value: amountProp,
-  valuePackage: amountProp,
-  willRetry: PropTypes.bool,
-});
+export interface AffordProps {
+  amount: Amount;
+  btcPrice: Amount;
+  accountBalance: Amount;
+}
 
-export const orderResultProp = PropTypes.shape({
-  result: orderProp,
-});
+export interface Inventory {
+  result?: any;
+}
 
-export const providerProp = PropTypes.shape({});
+export interface Email {
+  valid: boolean;
+  value?: string;
+  error?: any;
+}
 
-export const providersProp = PropTypes.arrayOf(providerProp);
+type DeviceType = 'ios' | 'android';
 
-export const numberLookupProp = PropTypes.shape({
-  operator: operatorProp,
-});
+interface Devices {
+  tablet: boolean;
+  mobile: boolean;
+}
 
-export const rowProps = {
-  operatorProps: PropTypes.object,
-  isActive: PropTypes.bool,
-  icon: PropTypes.node,
-  content: PropTypes.node,
-};
-
-export const recentNumberProp = PropTypes.shape({
-  operator: PropTypes.string,
-  number: numberProp,
-});
-
-export const recentNumbersProp = PropTypes.arrayOf(recentNumberProp);
-
-export const affordProps = PropTypes.shape({
-  amount: amountProp,
-  btcPrice: amountProp,
-  accountBalance: amountProp,
-});
-
-export const inventoryProp = PropTypes.shape({
-  result: PropTypes.object,
-});
-
-export const emailProp = PropTypes.shape({
-  valid: PropTypes.bool,
-  value: PropTypes.string,
-  error: errorProp,
-});
-
-export const deviceInfoProp = PropTypes.shape({
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  is: PropTypes.shape({
-    mobile: PropTypes.bool,
-    tablet: PropTypes.bool,
-    desktop: PropTypes.bool,
-  }).isRequired,
-  lessThan: PropTypes.shape({ mobile: PropTypes.bool, tablet: PropTypes.bool })
-    .isRequired,
-  greaterThan: PropTypes.shape({
-    mobile: PropTypes.bool,
-    tablet: PropTypes.bool,
-  }).isRequired,
-  deviceType: PropTypes.oneOf(['ios', 'android']),
-}).isRequired;
+export interface DeviceInfoProps {
+  width: number;
+  height: number;
+  is: Devices & {
+    desktop: boolean;
+  };
+  lessThan: Devices;
+  greaterThan: Devices;
+  deviceType: DeviceType;
+}

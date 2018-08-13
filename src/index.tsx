@@ -1,13 +1,13 @@
 /* eslint-disable import/default */
 
+import createHistory from 'history/createMemoryHistory';
 import * as React from 'react';
 import { render } from 'react-dom';
-import createHistory from 'history/createMemoryHistory';
 import { Provider } from 'react-redux';
 import {
   ConnectedRouter,
-  routerReducer,
   routerMiddleware,
+  routerReducer,
 } from 'react-router-redux';
 
 import { client } from './lib/api-client';

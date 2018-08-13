@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
 import BitrefillLogo from './logo.svg';
-import { fnProp } from '../../lib/prop-types';
 
 const styles = {
   logo: css`
@@ -16,7 +15,7 @@ const styles = {
   `,
 };
 
-function HeaderLogo({ goHome }) {
+function HeaderLogo({ goHome }: { goHome: () => void }) {
   return (
     <BitrefillLogo
       fill="#fff"
@@ -27,10 +26,6 @@ function HeaderLogo({ goHome }) {
   );
 }
 
-/* HeaderLogo.propTypes = {
-  goHome: fnProp,
-};
- */
 export default connect(
   null,
   dispatch => ({

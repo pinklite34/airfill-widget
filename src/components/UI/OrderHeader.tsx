@@ -1,9 +1,8 @@
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import styled from 'react-emotion';
 
 import DeviceInfo from '../../lib/DeviceInfo';
-import { orderProp, transProp } from '../../lib/prop-types';
+import { Order, TransProp } from '../../lib/prop-types';
 import Text from './Text';
 
 const Container = styled('div')`
@@ -20,7 +19,7 @@ const Icon = styled('div')`
   margin-top: 8px;
   margin-left: 10px;
 
-  @media (max-width: ${(p: any) =>  p.theme.bp.mobile}) {
+  @media (max-width: ${(p: any) => p.theme.bp.mobile}) {
     margin-left: 0px;
   }
 `;
@@ -38,7 +37,14 @@ const Header = styled('div')`
   width: 100%;
 `;
 
-export default class OrderHeader extends React.PureComponent<any> {
+interface OrderHeaderProps {
+  title: TransProp;
+  subtitle: TransProp;
+  icon?: JSX.Element;
+  order: Order;
+}
+
+export default class OrderHeader extends React.PureComponent<OrderHeaderProps> {
   state = {
     open: false,
   };
@@ -66,10 +72,3 @@ export default class OrderHeader extends React.PureComponent<any> {
     );
   }
 }
-
-/* OrderHeader.propTypes = {
-  title: transProp,
-  subtitle: transProp,
-  icon: PropTypes.node,
-  order: orderProp,
-}; */

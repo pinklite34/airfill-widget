@@ -1,17 +1,15 @@
+import Input from 'material-ui/Input';
 import * as React from 'react';
 import styled from 'react-emotion';
 
-import Input from 'material-ui/Input';
-
-import { getDisplayName, satoshiToBTC } from '../../lib/currency-helpers';
 import {
-  amountProp,
-  configProp,
-  currencyProp,
-  fnProp,
-  rangeProp,
-} from '../../lib/prop-types';
-
+  Amount,
+  BillingCurrency,
+  Config,
+  Currency,
+  RangeProp,
+} from 'lib/prop-types';
+import { getDisplayName, satoshiToBTC } from '../../lib/currency-helpers';
 import SectionTitle from '../UI/SectionTitle';
 import Text from '../UI/Text';
 import AmountPackage from './AmountPackage';
@@ -26,7 +24,7 @@ const RangeContainer = styled('div')`
 
 const Title = styled(SectionTitle)`
   margin-left: 36px;
-`;
+` as any;
 
 const Row = styled('div')`
   display: flex;
@@ -78,6 +76,15 @@ const Meta = styled('div')`
   margin-left: 16px;
 `;
 
+interface AmountRangeProps {
+  amount: Amount;
+  range: RangeProp;
+  currency: Currency;
+  billingCurrency: BillingCurrency;
+  onChange: (amount: number) => void;
+  config: Config;
+}
+
 export default function AmountRange({
   amount,
   range,
@@ -85,12 +92,12 @@ export default function AmountRange({
   billingCurrency,
   onChange,
   config,
-}) {
+}: AmountRangeProps) {
   const min = Math.ceil(range.min);
   const max = Math.floor(range.max);
   const step = range.step;
 
-  const cost = amount * range.userPriceRate;
+  const cost = Number(amount) * range.userPriceRate;
   const displayableCost =
     billingCurrency === 'XBT' ? satoshiToBTC(cost) : cost.toFixed(2);
 
@@ -156,13 +163,3 @@ export default function AmountRange({
     </Container>
   );
 }
-
-/* AmountRange.propTypes = {
-  amount: amountProp,
-  range: rangeProp,
-  currency: currencyProp,
-  billingCurrency: currencyProp,
-  onChange: fnProp,
-  config: configProp,
-};
- */

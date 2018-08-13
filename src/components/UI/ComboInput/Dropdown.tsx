@@ -1,18 +1,15 @@
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
+import styled from 'react-emotion';
+import { connect } from 'react-redux';
 import VirtualList from 'react-tiny-virtual-list';
 
-import styled from 'react-emotion';
-import Card from '../../UI/Card';
-
-import CountryRow from './CountryRow';
-import ProviderRow from './ProviderRow';
-import HistoryRow from './HistoryRow';
-import SectionTitle from '../SectionTitle';
-import { operatorProp, fnProp, countriesProp } from '../../../lib/prop-types';
-
-import { connect } from 'react-redux';
+import { CountryProp } from '../../../lib/prop-types';
 import { selectCountryList } from '../../../store';
+import Card from '../../UI/Card';
+import SectionTitle from '../SectionTitle';
+import CountryRow from './CountryRow';
+import HistoryRow from './HistoryRow';
+import ProviderRow from './ProviderRow';
 
 const Container = styled('div')`
   position: absolute;
@@ -34,7 +31,7 @@ const Content = styled('div')`
 const Title = styled(SectionTitle)`
   padding-left: 60px;
   padding-top: 6px;
-  border-top: ${(p: any) =>  p.theme.bd.primary};
+  border-top: ${(p: any) => p.theme.bd.primary};
 
   &:first-of-type {
     border-top: 0;
@@ -71,7 +68,35 @@ const getRowHeight = (item, countryList) => {
   }
 };
 
-const Dropdown = ({ getItemProps, countryList, items, highlightedIndex }) => {
+/*
+Dropdown.propTypes = {
+  getItemProps: fnProp,
+  countryList: countriesProp,
+  items: PropTypes.arrayOf(operatorProp),
+  highlightedIndex: PropTypes.number,
+};
+ */
+
+interface Item {
+  __type: string;
+  title: string;
+  index: number;
+  key: number;
+}
+
+interface DropdownProps {
+  getItemProps: (item: any) => any;
+  countryList: CountryProp[];
+  items: Item[];
+  highlightedIndex: number;
+}
+
+const Dropdown = ({
+  getItemProps,
+  countryList,
+  items,
+  highlightedIndex,
+}: DropdownProps) => {
   const itemCount = items.length;
   const height =
     itemCount < 6
@@ -88,7 +113,7 @@ const Dropdown = ({ getItemProps, countryList, items, highlightedIndex }) => {
           <VirtualList
             width="100%"
             height={height}
-            scrollToAlignment={"auto" as any}
+            scrollToAlignment={'auto' as any}
             scrollToIndex={highlightedIndex || undefined}
             itemSize={i => getRowHeight(items[i], countryList)}
             itemCount={itemCount}
@@ -124,14 +149,7 @@ const Dropdown = ({ getItemProps, countryList, items, highlightedIndex }) => {
     </Container>
   );
 };
-/*
-Dropdown.propTypes = {
-  getItemProps: fnProp,
-  countryList: countriesProp,
-  items: PropTypes.arrayOf(operatorProp),
-  highlightedIndex: PropTypes.number,
-};
- */
+
 export default connect(state => ({
   countryList: selectCountryList(state),
 }))(Dropdown);

@@ -5,8 +5,8 @@ import * as defaultFlag from '../../unknown-flag.png';
 
 const Img = styled('img')`
   margin: -3px 0;
-  max-width: ${(p: any) =>  p.maxWidth || '24px'};
-  max-height: ${(p: any) =>  p.maxHeight || '24px'};
+  max-width: ${(p: any) => p.maxWidth || '24px'};
+  max-height: ${(p: any) => p.maxHeight || '24px'};
 `;
 
 interface FlagProps {

@@ -1,17 +1,15 @@
 import * as React from 'react';
 
-import Row from './Row';
+import { CountryProp } from '../../../lib/prop-types';
 import Flag from '../Flag';
-import { countryProp, rowProps } from '../../../lib/prop-types';
+import Row from './Row';
 
-export default function CountryRow({ item, ...props }) {
+interface CountryRowProps {
+  item: CountryProp;
+}
+
+export default function CountryRow({ item, ...props }: CountryRowProps) {
   return (
     <Row {...props} icon={<Flag country={item.alpha2} />} content={item.name} />
   );
 }
-
-/* CountryRow.propTypes = {
-  item: countryProp,
-  ...rowProps,
-};
- */

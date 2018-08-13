@@ -1,4 +1,4 @@
-import { parse, format } from 'libphonenumber-js';
+import { format, parse } from 'libphonenumber-js';
 import * as examples from 'libphonenumber-js/examples.mobile.json';
 
 const getCountryData = country => {

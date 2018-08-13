@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Switch, Route } from 'react-router';
+import { Route, Switch } from 'react-router';
+
+import { Config } from '../../lib/prop-types';
 import PaymentCollapsed from './PaymentCollapsed';
 import PaymentPicker from './PaymentPicker';
-import { configProp } from '../../lib/prop-types';
 
-export default function PaymentMethod({ config }) {
+export default function PaymentMethod({ config }: { config: Config }) {
   return (
     <Switch>
       <Route path="/refill" exact />
@@ -20,8 +21,3 @@ export default function PaymentMethod({ config }) {
     </Switch>
   );
 }
-
-/* PaymentMethod.propTypes = {
-  config: configProp,
-};
- */

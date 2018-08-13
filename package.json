@@ -13,7 +13,7 @@
     "copy": "cp -f ./src/index.html ./dist",
     "prebuild": "npm run clean && npm run copy",
     "build:standalone": "webpack --config config/standalone.js --json > stats.json",
-    "build:module": "webpack --config config/dist.js --json > stats.json",
+    "build:module": "webpack --config config/dist.js > stats.json",
     "build": "npm run build:translations && npm run prebuild && npm run build:module && npm run build:standalone",
     "build:watch": "npm run prebuild && npm run build:module -- --mode=development -w",
     "build:translations": "NODE_ENV=production node scripts/translations.js",
@@ -75,6 +75,7 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
+    "@types/history": "^4.7.0",
     "@types/node": "^10.5.8",
     "@types/react": "^16.4.9",
     "@types/react-dom": "^16.0.7",

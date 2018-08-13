@@ -1,11 +1,11 @@
-import * as React from 'react';
 import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import styled from 'react-emotion';
 import Text from './Text';
 
 const Container = styled('div')`
   position: relative;
-  font-size: ${(p: any) =>  p.size || '16px'};
+  font-size: ${(p: any) => p.size || '16px'};
   margin-top: 48px;
 `;
 
@@ -15,15 +15,15 @@ const Address = styled('input')`
   font-weight: normal;
   border-radius: 2px;
 
-  padding: ${(p: any) =>  p.padding || '8px'};
-  width: ${(p: any) =>  p.width};
+  padding: ${(p: any) => p.padding || '8px'};
+  width: ${(p: any) => p.width};
   line-height: 1;
   cursor: pointer;
 
   text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: ${(p: any) =>  p.fontSize};
+  font-size: ${(p: any) => p.fontSize};
 
   :focus {
     outline: none;
@@ -31,8 +31,8 @@ const Address = styled('input')`
 `;
 
 const LabelContainer = styled('div')`
-  opacity: ${(p: any) =>  (p.show ? 0 : 1)};
-  transition: opacity 0.6s ease ${(p: any) =>  !p.show && '0.3s'};
+  opacity: ${(p: any) => (p.show ? 0 : 1)};
+  transition: opacity 0.6s ease ${(p: any) => !p.show && '0.3s'};
   position: absolute;
   top: -32px;
   left: 0;

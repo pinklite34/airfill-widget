@@ -1,4 +1,3 @@
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
@@ -13,12 +12,11 @@ import { getEthInstance, toWei } from '../../lib/eth';
 import { fromWindow } from '../../lib/globals';
 import { getPaymentInfo } from '../../lib/price';
 import {
-  amountProp,
-  orderOptionsProp,
-  orderProp,
-  paymentProp,
-  paymentsProp,
-  paymentStatusProp,
+  Amount,
+  Order,
+  OrderOptions,
+  PaymentButton,
+  PaymentStatus,
 } from '../../lib/prop-types';
 import { selectAmount, selectPaymentMethod } from '../../store';
 import theme from '../../theme';
@@ -36,20 +34,20 @@ const PartialWarning = styled('div')`
   background: #ffdfdf;
 `;
 
-class PaymentMode extends React.PureComponent<any> {
-  static propTypes = {
-    order: orderProp,
-    showBTCAddress: PropTypes.bool,
-    paymentButtons: paymentsProp,
-    amount: amountProp,
-    accountBalance: amountProp,
-    orderOptions: orderOptionsProp,
-    paymentStatus: paymentStatusProp,
-    paymentMethod: paymentProp,
-    setPaymentMethod: PropTypes.func.isRequired,
-    onExternalUrl: PropTypes.func,
-  };
+interface PaymentModeProps {
+  order: Order;
+  showBTCAddress: boolean;
+  paymentButtons: PaymentButton[];
+  amount: Amount;
+  accountBalance: Amount;
+  orderOptions: OrderOptions;
+  paymentStatus: PaymentStatus;
+  paymentMethod: PaymentButton;
+  setPaymentMethod: typeof setPaymentMethod;
+  onExternalUrl: (uri: string) => void;
+}
 
+class PaymentMode extends React.PureComponent<PaymentModeProps> {
   static defaultProps = {
     onExternalUrl: uri => window.open(uri, '_blank'),
   };
@@ -69,7 +67,9 @@ class PaymentMode extends React.PureComponent<any> {
       const toAccount = order.payment.altcoinAddress;
       const value = await toWei(order.payment.altcoinPrice);
 
-      if (!fromAccount) return onExternalUrl(uri);
+      if (!fromAccount) {
+        return onExternalUrl(uri);
+      }
 
       eth.sendTransaction(
         {
@@ -116,12 +116,14 @@ class PaymentMode extends React.PureComponent<any> {
         justifyContent="center"
         alignItems="center"
         padding="6px"
-        width="100%">
+        width="100%"
+      >
         <Link
           href={`https://www.bitrefill.com/support/${order.orderId}/${
             order.payment.address
           }`}
-          width="fit-content">
+          width="fit-content"
+        >
           <Text id="order.help">Need help?</Text>
         </Link>
       </Flex>
@@ -159,7 +161,8 @@ class PaymentMode extends React.PureComponent<any> {
                 <Button
                   onClick={() =>
                     paymentMethod.paymentModeOptions.callback(order)
-                  }>
+                  }
+                >
                   {}
                   {title && title.id ? (
                     <Text {...title} />
@@ -172,14 +175,14 @@ class PaymentMode extends React.PureComponent<any> {
                   <Flex
                     style={{ flex: 1 }}
                     justifyContent="flex-start"
-                    width="100%">
+                    width="100%"
+                  >
                     {isPartial && (
                       <PartialWarning>
                         We have received a partial payment from you.
                         <br /> You paid <strong>{paid + ' ' + unit}</strong>,
                         but the invoice was for{' '}
-                        <strong>{price + ' ' + unit}</strong>.
-                        <br />
+                        <strong>{price + ' ' + unit}</strong>.<br />
                         Please send the remaining{' '}
                         <strong>{remaining + ' ' + unit}</strong>
                       </PartialWarning>
@@ -187,14 +190,16 @@ class PaymentMode extends React.PureComponent<any> {
 
                     <Flex
                       direction={is.mobile ? 'column-reverse' : 'row'}
-                      padding="14px">
+                      padding="14px"
+                    >
                       <Flex
                         direction={is.mobile ? 'column-reverse' : 'column'}
                         alignItems="center"
                         justifyContent="center"
                         style={{
                           flex: 2,
-                        }}>
+                        }}
+                      >
                         <QrCode
                           value={uri}
                           foreground={theme.tx.primary}
@@ -219,7 +224,8 @@ class PaymentMode extends React.PureComponent<any> {
                           marginLeft: !is.mobile && '12px',
                           justifyContent: 'center',
                           overflow: 'hidden',
-                        }}>
+                        }}
+                      >
                         <Flex row margin="0 auto" centered>
                           <CopyField
                             copyLength={String(displayPrice).length}
@@ -229,7 +235,8 @@ class PaymentMode extends React.PureComponent<any> {
                               <Text type="p" centered>
                                 SEND THIS AMOUNT
                               </Text>
-                            }>
+                            }
+                          >
                             {displayPrice + ' ' + unit}
                           </CopyField>
                         </Flex>
@@ -249,7 +256,8 @@ class PaymentMode extends React.PureComponent<any> {
                               <Text
                                 type="p"
                                 centered
-                                id="order.payment.toLightning">
+                                id="order.payment.toLightning"
+                              >
                                 COPY THE LIGHTNING INVOICE
                               </Text>
                             ) : (
@@ -262,7 +270,8 @@ class PaymentMode extends React.PureComponent<any> {
                                 ADDRESS
                               </Text>
                             )
-                          }>
+                          }
+                        >
                           {paymentAddress}
                         </CopyField>
                         {!is.mobile && isPartial && SupportLink}

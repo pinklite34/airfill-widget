@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Switch, Route } from 'react-router';
+import { Route, Switch } from 'react-router';
 
+import { Config } from '../../lib/prop-types';
 import Payment from './Payment';
-import { configProp } from '../../lib/prop-types';
 
-export default function Order({ config }) {
+export default function Order({ config }: { config: Config }) {
   return (
     <Switch>
       <Route path="/refill" exact />
@@ -19,7 +19,3 @@ export default function Order({ config }) {
     </Switch>
   );
 }
-
-/* Order.propTypes = {
-  config: configProp,
-}; */

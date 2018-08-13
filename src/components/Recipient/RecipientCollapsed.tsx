@@ -1,15 +1,25 @@
+import { History } from 'history';
 import * as React from 'react';
-import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { compose } from 'recompose';
 
-import Collapsed from '../UI/Collapsed';
-import { selectSelectedOperator, selectNumber } from '../../store';
-import { historyProp, operatorProp, numberProp } from '../../lib/prop-types';
-
 import { getRecipientIcon } from '../../lib/icon-picker';
+import { Operator, OperatorResult, Recipient } from '../../lib/prop-types';
+import { selectNumber, selectSelectedOperator } from '../../store';
+import Collapsed from '../UI/Collapsed';
 
-function RecipientCollapsed({ operator, history, number }) {
+interface RecipientCollapsedProps {
+  operator: Operator;
+  history: History;
+  number: Recipient;
+}
+
+function RecipientCollapsed({
+  operator,
+  history,
+  number,
+}: RecipientCollapsedProps) {
   const Icon = getRecipientIcon(operator);
   return (
     <Collapsed
@@ -20,12 +30,6 @@ function RecipientCollapsed({ operator, history, number }) {
     />
   );
 }
-
-/* RecipientCollapsed.propTypes = {
-  operator: operatorProp,
-  history: historyProp,
-  number: numberProp,
-}; */
 
 export default compose(
   withRouter,

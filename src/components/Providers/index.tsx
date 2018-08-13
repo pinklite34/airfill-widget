@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Switch, Route } from 'react-router';
+import { Route, Switch } from 'react-router';
 import ProviderCollapsed from './ProviderCollapsed';
 import ProviderPicker from './ProviderPicker';
 

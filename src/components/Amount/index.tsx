@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { Switch, Route } from 'react-router';
+import { Route, Switch } from 'react-router';
 
-import { configProp } from '../../lib/prop-types';
-
+import { Config } from '../../lib/prop-types';
 import AmountCollapsed from './AmountCollapsed';
 import AmountPicker from './AmountPicker';
 
-export default function AmountRoutes({ config }) {
+export default function AmountRoutes({ config }: { config: Config }) {
   return (
     <Switch>
       <Route path="/refill" exact />
@@ -19,8 +18,3 @@ export default function AmountRoutes({ config }) {
     </Switch>
   );
 }
-
-/* AmountRoutes.propTypes = {
-  config: configProp,
-};
- */

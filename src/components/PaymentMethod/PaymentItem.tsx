@@ -1,22 +1,19 @@
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
 import styled from 'react-emotion';
 
-import { paymentProp } from '../../lib/prop-types';
-
+import theme from '../../theme';
 import Icon from '../UI/Icon';
 import Text from '../UI/Text';
-import theme from '../../theme';
 
 const Container = styled('div')`
   width: 100%;
   padding: 0 16px;
 
-  background-color: ${(p: any) =>  (p.selected ? '#3e8fe4' : '#fff')};
-  border-bottom: ${(p: any) =>  p.theme.bd.primary};
+  background-color: ${(p: any) => (p.selected ? '#3e8fe4' : '#fff')};
+  border-bottom: ${(p: any) => p.theme.bd.primary};
 
   &:hover {
-    background-color: ${(p: any) =>  !p.selected && '#fafafa'};
+    background-color: ${(p: any) => !p.selected && '#fafafa'};
   }
 
   &:last-of-type {
@@ -30,11 +27,11 @@ const Container = styled('div')`
   text-decoration: none;
   box-sizing: border-box;
   text-align: left;
-  cursor: ${(p: any) =>  (p.disabled ? 'normal' : 'pointer')};
+  cursor: ${(p: any) => (p.disabled ? 'normal' : 'pointer')};
 
   * {
-    ${(p: any) =>  (p.disabled ? 'color: gray !important' : '')};
-    ${(p: any) =>  (p.disabled ? 'filter: grayscale(100%)' : '')};
+    ${(p: any) => (p.disabled ? 'color: gray !important' : '')};
+    ${(p: any) => (p.disabled ? 'filter: grayscale(100%)' : '')};
   }
 `;
 
@@ -54,7 +51,8 @@ const PaymentItem = ({ method, onClick, affordable, selected }) => {
     <Container
       onClick={() => !disabled && onClick()}
       selected={selected}
-      disabled={disabled}>
+      disabled={disabled}
+    >
       <Icon src={icon} alt={(title && title.id) || title} />
       <TextContainer>
         {title && title.id ? (
@@ -70,7 +68,8 @@ const PaymentItem = ({ method, onClick, affordable, selected }) => {
             type="h3"
             color={color || theme.tx.primary}
             weight={500}
-            margin="8px 0">
+            margin="8px 0"
+          >
             {title}
           </Text>
         )}

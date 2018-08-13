@@ -1,17 +1,19 @@
+import { History } from 'history';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import {
-  amountProp,
-  historyProp,
-  operatorResultProp,
-} from '../../lib/prop-types';
+import { Amount, OperatorResult } from '../../lib/prop-types';
 import { selectAmount, selectOperator } from '../../store';
-
 import Collapsed from '../UI/Collapsed';
 import Icon from './icon.svg';
 
-function AmountCollapsed({ history, amount, operator }) {
+interface AmountCollapsedProps {
+  amount: Amount;
+  operator: OperatorResult;
+  history: History;
+}
+
+function AmountCollapsed({ history, amount, operator }: AmountCollapsedProps) {
   return (
     <Collapsed
       onClick={() => history.push('/refill/selectAmount')}
@@ -22,12 +24,6 @@ function AmountCollapsed({ history, amount, operator }) {
   );
 }
 
-/* AmountCollapsed.propTypes = {
-  history: historyProp,
-  amount: amountProp,
-  operator: operatorResultProp,
-};
- */
 export default connect(state => ({
   amount: selectAmount(state),
   operator: selectOperator(state),

@@ -1,18 +1,22 @@
-import * as React  from 'react';
+import * as React from 'react';
 
-import { orderProp, fnProp } from '../../lib/prop-types';
-
-import PaymentLayout from './PaymentLayout';
-import OrderHeader from '../UI/OrderHeader';
+import { Order } from '../../lib/prop-types';
 import Button from '../UI/Button';
-import Spinner from '../UI/Spinner';
 import Link from '../UI/Link';
+import OrderHeader from '../UI/OrderHeader';
+import Spinner from '../UI/Spinner';
 import Text from '../UI/Text';
+import PaymentLayout from './PaymentLayout';
 
-export default function PaymentDetected(props) {
+interface PaymentDetectedProps {
+  order: Order;
+  onReset: () => void;
+}
+
+export default function PaymentDetected(props: PaymentDetectedProps) {
   const { order, onReset } = props;
   return (
-     <React.Fragment>
+    <React.Fragment>
       <OrderHeader
         order={props.order}
         title={{ id: 'order.detected.title', children: 'Payment detected' }}
@@ -38,7 +42,8 @@ export default function PaymentDetected(props) {
           <Link
             href={`https://transactioncheck.bitrefill.com/lookup/${
               order.payment.address
-            }`}>
+            }`}
+          >
             <Text id="order.detected.link">
               Click here to see how it&apos;s going
             </Text>
@@ -54,7 +59,7 @@ export default function PaymentDetected(props) {
           }}
         />
       </PaymentLayout>
-     </React.Fragment>
+    </React.Fragment>
   );
 }
 

@@ -1,43 +1,38 @@
-import * as React  from 'react';
-import * as PropTypes from 'prop-types';
+import { History } from 'history';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
+import { updatePaymentStatus } from '../../actions';
 import { PUSHER_API_KEY } from '../../constants';
-
-import Pusher from '../Pusher';
-import PaymentMode from './PaymentMode';
-import PaymentDetected from './PaymentDetected';
-import PaymentConfirmed from './PaymentConfirmed';
-import PaymentExpired from './PaymentExpired';
-import RefillFailed from './RefillFailed';
-import RefillDelivered from './RefillDelivered';
-import BalanceTooLow from './BalanceTooLow';
-import PaymentError from './PaymentError';
-import Spinner from '../UI/Spinner';
-
 import {
-  selectOrder,
-  selectOperator,
-  selectNumber,
+  Amount,
+  BillingCurrency,
+  CountryProp,
+  Number,
+  OperatorResult,
+  OrderOptions,
+  OrderResult,
+  PaymentStatus,
+  Recipient,
+} from '../../lib/prop-types';
+import Pusher from '../Pusher';
+import Spinner from '../UI/Spinner';
+import {
   selectCountry,
+  selectNumber,
+  selectOperator,
+  selectOrder,
   selectPaymentStatus,
 } from './../../store';
-
-import { updatePaymentStatus } from '../../actions';
-import {
-  historyProp,
-  currencyProp,
-  operatorResultProp,
-  countryProp,
-  orderOptionsProp,
-  orderResultProp,
-  paymentStatusProp,
-  fnProp,
-  amountProp,
-  numberProp,
-  paymentsProp,
-} from '../../lib/prop-types';
+import BalanceTooLow from './BalanceTooLow';
+import PaymentConfirmed from './PaymentConfirmed';
+import PaymentDetected from './PaymentDetected';
+import PaymentError from './PaymentError';
+import PaymentExpired from './PaymentExpired';
+import PaymentMode from './PaymentMode';
+import RefillDelivered from './RefillDelivered';
+import RefillFailed from './RefillFailed';
 
 const componentForStatus = status => {
   switch (status) {
@@ -61,6 +56,25 @@ const componentForStatus = status => {
   }
 };
 
+interface PaymentProps {
+  history: History;
+  accountBalance: Amount;
+  requireAccountBalance: boolean;
+  paymentButtons: any[];
+  showBTCAddress: boolean;
+  refundAddress: string;
+  billingCurrency: BillingCurrency;
+  orderOptions: OrderOptions;
+  operator: OperatorResult;
+  order: OrderResult;
+  number: Recipient;
+  country: CountryProp;
+  paymentStatus: PaymentStatus;
+  updatePaymentStatus: (...args) => void;
+  onExternalUrl: () => void;
+  reset: () => void;
+}
+
 function Payment({
   history,
   accountBalance = Number.POSITIVE_INFINITY,
@@ -78,8 +92,10 @@ function Payment({
   updatePaymentStatus,
   onExternalUrl,
   reset,
-}) {
-  if (!order.result) return <Spinner />;
+}: PaymentProps) {
+  if (!order.result) {
+    return <Spinner />;
+  }
 
   const PaymentComponent = componentForStatus(paymentStatus.status);
   const {
@@ -88,7 +104,7 @@ function Payment({
   } = order.result;
 
   return (
-     <React.Fragment>
+    <React.Fragment>
       <Pusher
         apiKey={PUSHER_API_KEY}
         channel={[orderId, address].join('-')}
@@ -126,7 +142,7 @@ function Payment({
         onReset={reset}
         onExternalUrl={onExternalUrl}
       />
-     </React.Fragment>
+    </React.Fragment>
   );
 }
 /*

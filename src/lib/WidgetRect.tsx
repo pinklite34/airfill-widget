@@ -5,7 +5,6 @@ import { isMobileApp } from './globals';
 export const WidgetRectContext = React.createContext<any>('widgetRect');
 
 export default class WidgetRect extends React.PureComponent<any> {
-
   state = {
     rect: {},
   };

@@ -1,49 +1,45 @@
+import Downshift from 'downshift';
+import { History } from 'history';
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
+import { css } from 'react-emotion';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { css } from 'react-emotion';
-import Downshift from 'downshift';
 
 import {
-  selectCountryList,
-  selectCountry,
-  selectNumber,
-  selectAvailableOperators,
-  selectRecentNumbers,
-  selectComboInputOpen,
-  selectComboInputFocus,
-} from '../../../store';
-import {
+  closeComboInput,
+  openComboInput,
+  setComboInputFocus,
   setCountry,
   setNumber,
   setOperator,
   useRecentRefill,
-  openComboInput,
-  closeComboInput,
-  setComboInputFocus,
 } from '../../../actions';
-import {
-  isPhoneNumber,
-  removeNextDigit,
-  formatNumber,
-} from '../../../lib/number-input-helpers';
 import {
   sectionsToItemList,
   virtualIndexToItemIndex,
 } from '../../../lib/comboinput-helpers';
-
+import {
+  formatNumber,
+  isPhoneNumber,
+  removeNextDigit,
+} from '../../../lib/number-input-helpers';
+import {
+  CountryProp,
+  Operator,
+  RecentNumber,
+  Recipient,
+} from '../../../lib/prop-types';
+import {
+  selectAvailableOperators,
+  selectComboInputFocus,
+  selectComboInputOpen,
+  selectCountry,
+  selectCountryList,
+  selectNumber,
+  selectRecentNumbers,
+} from '../../../store';
 import Dropdown from './Dropdown';
 import InputRow from './InputRow';
-import {
-  historyProp,
-  countriesProp,
-  countryProp,
-  recentNumbersProp,
-  operatorsProp,
-  fnProp,
-  numberProp,
-} from '../../../lib/prop-types';
 
 const styles = {
   container: css`
@@ -78,30 +74,28 @@ const getInitialInputValue = (country, number) => {
   }
 };
 
-class ComboInput extends React.PureComponent<any> {
-  static propTypes = {
-    closeComboInput: fnProp,
-    country: countryProp,
-    countryOnly: PropTypes.bool,
-    countryList: countriesProp,
-    history: historyProp,
-    operators: operatorsProp,
-    number: numberProp,
-    onSubmit: fnProp,
-    openComboInput: fnProp,
-    loading: PropTypes.bool,
-    isOpen: PropTypes.bool,
-    recentNumbers: recentNumbersProp,
-    setComboInputFocus: fnProp,
-    setCountry: fnProp,
-    setNumber: fnProp,
-    setOperator: fnProp,
-    shouldFocus: PropTypes.bool,
-    useRecentRefill: fnProp,
-  };
+interface ComboInputProps {
+  closeComboInput: typeof closeComboInput;
+  country: CountryProp;
+  countryOnly: boolean;
+  countryList: CountryProp[];
+  history: History;
+  operators: Operator[];
+  number: Recipient;
+  onSubmit: () => void;
+  openComboInput: typeof openComboInput;
+  loading: boolean;
+  isOpen: boolean;
+  recentNumbers: RecentNumber[];
+  setComboInputFocus: typeof setComboInputFocus;
+  setCountry: typeof setCountry;
+  setNumber: typeof setNumber;
+  setOperator: typeof setOperator;
+  shouldFocus: boolean;
+  useRecentRefill: typeof useRecentRefill;
+}
 
-  private input: any;
-
+class ComboInput extends React.PureComponent<ComboInputProps> {
   state = {
     inputValue: this.props.countryOnly
       ? ''
@@ -109,15 +103,21 @@ class ComboInput extends React.PureComponent<any> {
     caret: 0,
   };
 
+  private input: any;
+
   componentDidMount() {
-    if (this.props.shouldFocus) this.focusInput();
+    if (this.props.shouldFocus) {
+      this.focusInput();
+    }
   }
 
   componentDidUpdate() {
     const { shouldFocus } = this.props;
     const { inputValue, caret } = this.state;
 
-    if (shouldFocus) this.focusInput();
+    if (shouldFocus) {
+      this.focusInput();
+    }
 
     if (this.input && isPhoneNumber(inputValue)) {
       this.input.setSelectionRange(caret, caret);
@@ -130,7 +130,9 @@ class ComboInput extends React.PureComponent<any> {
 
     if (e.keyCode === 8) {
       // Handle backspace
-      if (!e.target.value.length) this.resetCountry();
+      if (!e.target.value.length) {
+        this.resetCountry();
+      }
     } else if (e.keyCode === 46) {
       // Delete key
       if (!selectionRange) {
@@ -163,7 +165,9 @@ class ComboInput extends React.PureComponent<any> {
   };
 
   handleSubmit = () => {
-    if (isPhoneNumber(this.state.inputValue)) this.props.onSubmit();
+    if (isPhoneNumber(this.state.inputValue)) {
+      this.props.onSubmit();
+    }
   };
 
   handleStateChange = changes => {
@@ -326,7 +330,8 @@ class ComboInput extends React.PureComponent<any> {
         selectedItem={null}
         itemCount={itemCount}
         isOpen={isOpen}
-        onStateChange={this.handleStateChange}>
+        onStateChange={this.handleStateChange}
+      >
         {({ getInputProps, getItemProps, inputValue, highlightedIndex }) => (
           <div className={styles.container}>
             <InputRow

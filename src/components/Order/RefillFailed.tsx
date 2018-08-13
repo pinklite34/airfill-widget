@@ -1,16 +1,12 @@
-import * as React  from 'react';
-import * as PropTypes from 'prop-types';
+import * as React from 'react';
 
-import { orderProp, paymentStatusProp } from '../../lib/prop-types';
-
-import PaymentLayout from './PaymentLayout';
-
+import { Order, PaymentStatus } from '../../lib/prop-types';
 import Link from '../UI/Link';
-import Text from '../UI/Text';
 import OrderHeader from '../UI/OrderHeader';
-
-import Error from './error.svg';
 import OrderStatusButton from '../UI/OrderStatusButton';
+import Text from '../UI/Text';
+import Error from './error.svg';
+import PaymentLayout from './PaymentLayout';
 
 function getMailTo({ order, refundAddress }) {
   const subject = encodeURIComponent(`Failed Order (ID ${order.id})`);
@@ -26,7 +22,13 @@ Thanks!`);
   return `mailto:support@bitrefill.com?subject=${subject}&body=${body}`;
 }
 
-export default function RefillFailed(props) {
+interface RefillFailedProps {
+  order: Order;
+  paymentStatus: PaymentStatus;
+  refundAddress: string;
+}
+
+export default function RefillFailed(props: RefillFailedProps) {
   const {
     order,
     paymentStatus: { failureData = {} },
@@ -43,7 +45,7 @@ export default function RefillFailed(props) {
     !refundAddress && (needRefund === false || order.refunded === true);
 
   return (
-     <React.Fragment>
+    <React.Fragment>
       <OrderHeader
         order={order}
         title={{ id: 'order.failed.title', children: 'Delivery error' }}
@@ -88,7 +90,8 @@ export default function RefillFailed(props) {
         {refundAddress ? (
           <Text type="p" id="order.failed.transaction">
             <Link
-              href={`https://live.blockcypher.com/btc/address/${refundAddress}/`}>
+              href={`https://live.blockcypher.com/btc/address/${refundAddress}/`}
+            >
               Click here to see how it&apos;s going
             </Link>{' '}
             or <Link href={mailTo}>contact support@bitefill.com</Link>.
@@ -101,7 +104,7 @@ export default function RefillFailed(props) {
           </Link>
         )}
       </PaymentLayout>
-     </React.Fragment>
+    </React.Fragment>
   );
 }
 

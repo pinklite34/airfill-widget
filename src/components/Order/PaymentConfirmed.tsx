@@ -1,15 +1,18 @@
-import * as React  from 'react';
+import * as React from 'react';
 
-import { orderProp } from '../../lib/prop-types';
-
-import PaymentLayout from './PaymentLayout';
+import { Order } from '../../lib/prop-types';
 import OrderHeader from '../UI/OrderHeader';
 import Spinner from '../UI/Spinner';
 import Text from '../UI/Text';
+import PaymentLayout from './PaymentLayout';
 
-export default function PaymentConfirmed(props) {
+interface PaymentConfirmedProps {
+  order: Order;
+}
+
+export default function PaymentConfirmed(props: PaymentConfirmedProps) {
   return (
-     <React.Fragment>
+    <React.Fragment>
       <OrderHeader
         order={props.order}
         title={{ id: 'order.confirmed.title', children: 'Refill sent!' }}
@@ -24,10 +27,6 @@ export default function PaymentConfirmed(props) {
           The refill should arrive on the target account any minute now.
         </Text>
       </PaymentLayout>
-     </React.Fragment>
+    </React.Fragment>
   );
 }
-
-/* PaymentConfirmed.propTypes = {
-  order: orderProp,
-}; */

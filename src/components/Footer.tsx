@@ -1,5 +1,5 @@
-import * as React from 'react';
 import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import styled from 'react-emotion';
 
 import Text from './UI/Text';
@@ -7,7 +7,7 @@ import Text from './UI/Text';
 const Container = styled('div')`
   padding: 16px;
   display: flex;
-  justify-content: ${(p: any) =>  (p.branded ? 'space-between' : 'center')};
+  justify-content: ${(p: any) => (p.branded ? 'space-between' : 'center')};
   font-size: 12px;
   color: #999;
 
@@ -50,7 +50,8 @@ export default function Footer({ branded }: FooterProps) {
         <Link
           href="https://www.bitrefill.com/"
           target="_blank"
-          rel="noopener noreferrer">
+          rel="noopener noreferrer"
+        >
           <Text type="p" id="footer.powered" tight>
             Powered by <strong>bitrefill</strong>
           </Text>
@@ -62,7 +63,8 @@ export default function Footer({ branded }: FooterProps) {
             <Link
               href="https://www.bitrefill.com/privacy/"
               target="_blank"
-              rel="noopener noreferrer">
+              rel="noopener noreferrer"
+            >
               <Text type="p" tight id="footer.privacy">
                 Privacy Policy
               </Text>
@@ -72,7 +74,8 @@ export default function Footer({ branded }: FooterProps) {
             <Link
               href="https://www.bitrefill.com/terms/"
               target="_blank"
-              rel="noopener noreferrer">
+              rel="noopener noreferrer"
+            >
               <Text type="p" tight id="footer.terms">
                 Terms of Service
               </Text>

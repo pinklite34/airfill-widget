@@ -1,24 +1,18 @@
+import { History } from 'history';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { setOperator } from '../../actions';
+import { CountryProp, NumberLookup, Operator } from '../../lib/prop-types';
 import {
   selectAvailableOperators,
-  selectSelectedOperator,
   selectCountry,
   selectNumberLookup,
+  selectSelectedOperator,
 } from '../../store';
-
 import ActiveSection from '../UI/ActiveSection';
 import ProviderGrid from './ProviderGrid';
 import ProviderSuggested from './ProviderSuggested';
-import {
-  numberLookupProp,
-  historyProp,
-  operatorsProp,
-  countryProp,
-  fnProp,
-} from '../../lib/prop-types';
 
 const displayOrder = ['refill', 'pin'];
 
@@ -50,15 +44,15 @@ const getDisplayText = key => {
   }
 };
 
-class ProviderPicker extends React.PureComponent<any> {
-  static propTypes = {
-    numberLookup: numberLookupProp,
-    history: historyProp,
-    setOperator: fnProp,
-    operators: operatorsProp,
-    country: countryProp,
-  };
+interface ProviderPickerProps {
+  numberLookup: NumberLookup;
+  history: History;
+  setOperator: typeof setOperator;
+  operators: Operator[];
+  country: CountryProp;
+}
 
+class ProviderPicker extends React.PureComponent<ProviderPickerProps> {
   state = {
     showSuggestedOperator: true,
   };
@@ -111,7 +105,8 @@ class ProviderPicker extends React.PureComponent<any> {
                 return 1;
               }
 
-              return (displayOrder as any).includes(a) && (displayOrder as any).includes(b)
+              return (displayOrder as any).includes(a) &&
+                (displayOrder as any).includes(b)
                 ? displayOrder.indexOf(a) - displayOrder.indexOf(b)
                 : displayOrder.indexOf(b) - displayOrder.indexOf(a);
             })

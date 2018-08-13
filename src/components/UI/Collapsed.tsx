@@ -1,10 +1,8 @@
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import styled from 'react-emotion';
 
 import DeviceInfo from '../../lib/DeviceInfo';
-
-import { transProp } from '../../lib/prop-types';
+import { TransProp } from '../../lib/prop-types';
 import Button from './Button';
 import Icon from './Icon';
 import Text from './Text';
@@ -28,6 +26,15 @@ const Left = styled('div')`
   margin-right: 10px;
 `;
 
+interface CollapsedProps {
+  title: TransProp;
+  type: string;
+  icon?: string | any;
+  hideButton?: boolean;
+  onClick?: () => void;
+  alt?: string;
+}
+
 export default function Collapsed({
   icon,
   title,
@@ -35,7 +42,7 @@ export default function Collapsed({
   type,
   hideButton,
   alt,
-}: any) {
+}: CollapsedProps) {
   return (
     <DeviceInfo>
       {({ lessThan }) => (
@@ -79,13 +86,3 @@ export default function Collapsed({
     </DeviceInfo>
   );
 }
-
-/* Collapsed.propTypes = {
-  onClick: PropTypes.func,
-  type: PropTypes.string,
-  hideButton: PropTypes.bool,
-  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  title: PropTypes.oneOfType([transProp, PropTypes.node]),
-  alt: PropTypes.string,
-};
- */

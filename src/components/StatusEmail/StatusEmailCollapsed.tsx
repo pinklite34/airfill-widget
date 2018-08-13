@@ -1,15 +1,20 @@
+import { History } from 'history';
 import * as React from 'react';
-import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { compose } from 'recompose';
 
-import Collapsed from '../UI/Collapsed';
-import { selectSelectedOperator, selectEmail } from '../../store';
-import { historyProp, operatorProp, emailProp } from '../../lib/prop-types';
-
 import Icon from '../../assets/email.svg';
+import { Email } from '../../lib/prop-types';
+import { selectEmail, selectSelectedOperator } from '../../store';
+import Collapsed from '../UI/Collapsed';
 
-function StautsEmailCollapsed({ operator, history, email }) {
+interface StatusEmailCollapsedProps {
+  history: History;
+  email: Email;
+}
+
+function StautsEmailCollapsed({ history, email }: StatusEmailCollapsedProps) {
   return (
     <Collapsed
       onClick={() => history.push('/refill/selectStatusEmail')}
@@ -19,12 +24,6 @@ function StautsEmailCollapsed({ operator, history, email }) {
     />
   );
 }
-/*
-StautsEmailCollapsed.propTypes = {
-  operator: operatorProp,
-  history: historyProp,
-  email: emailProp,
-}; */
 
 export default compose(
   withRouter,

@@ -1,25 +1,22 @@
+import { History } from 'history';
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import styled from 'react-emotion';
+import { connect } from 'react-redux';
 
-import { selectNumber, selectNumberLookup } from '../../store';
 import { lookupNumber, resetNumberLookup, setOperator } from '../../actions';
 import {
-  historyProp,
-  fnProp,
-  numberProp,
-  numberLookupProp,
-  configProp,
+  Config,
+  NumberLookup,
+  NumberLookupResult,
+  RecipientType,
 } from '../../lib/prop-types';
-
-import Text from '../UI/Text';
-import ComboInput from '../UI/ComboInput';
-
-import Info from '../UI/info.svg';
+import { capitalize, startsWith } from '../../lib/string';
+import { selectNumber, selectNumberLookup } from '../../store';
 import theme from '../../theme';
+import ComboInput from '../UI/ComboInput';
 import Flex from '../UI/Flex';
-import { startsWith, capitalize } from '../../lib/string';
+import Info from '../UI/info.svg';
+import Text from '../UI/Text';
 
 const Error = styled('div')`
   display: flex;
@@ -51,19 +48,19 @@ const ErrorIcon = styled(Info)`
   flex: 0 0 auto;
 `;
 
-class HeaderIntroduction extends React.PureComponent<any> {
-  static propTypes = {
-    isMobile: PropTypes.bool,
-    resetNumberLookup: fnProp,
-    lookupNumber: fnProp,
-    numberLookup: numberLookupProp,
-    history: historyProp,
-    number: numberProp,
-    branded: PropTypes.bool,
-    config: configProp,
-    setOperator: PropTypes.func.isRequired,
-  };
+interface HeaderIntroductionProps {
+  isMobile: boolean;
+  resetNumberLookup: typeof resetNumberLookup;
+  lookupNumber: (number) => Promise<NumberLookup>;
+  numberLookup: NumberLookupResult;
+  history: History;
+  number: RecipientType;
+  branded: boolean;
+  config: Config;
+  setOperator: typeof setOperator;
+}
 
+class HeaderIntroduction extends React.PureComponent<HeaderIntroductionProps> {
   state = {
     error: null,
   };
@@ -117,7 +114,8 @@ class HeaderIntroduction extends React.PureComponent<any> {
               id="introduction.title.branded"
               size="16px"
               weight={700}
-              color={theme.white}>
+              color={theme.white}
+            >
               Send Global Top Ups With {{ coin }}
             </Text>
             <Text
@@ -126,7 +124,8 @@ class HeaderIntroduction extends React.PureComponent<any> {
               size="12px"
               margin="8px 0"
               id="introduction.subtitle"
-              color={'rgba(255, 255, 255, 0.8)'}>
+              color={'rgba(255, 255, 255, 0.8)'}
+            >
               Trusted by More Than 500 000 People
             </Text>
           </Flex>
@@ -137,7 +136,8 @@ class HeaderIntroduction extends React.PureComponent<any> {
               centered
               tight
               id="introduction.title.unbranded"
-              color={theme.white}>
+              color={theme.white}
+            >
               Top Up Anything With {{ coin }}
             </Text>
           </Flex>
@@ -169,7 +169,8 @@ class HeaderIntroduction extends React.PureComponent<any> {
             id={`widget.introduction.description.${
               isMobile ? 'country' : 'phone'
             }`}
-            color={'rgba(255, 255, 255, 0.9)'}>
+            color={'rgba(255, 255, 255, 0.9)'}
+          >
             Enter {isMobile ? 'your country' : 'a phone number'} to see
             available services or select a service below for more information
           </Text>

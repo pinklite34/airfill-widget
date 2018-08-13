@@ -1,5 +1,5 @@
+import { History } from 'history';
 import { formatNumber } from 'libphonenumber-js';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
@@ -15,14 +15,12 @@ import { getRecipientIcon } from '../../lib/icon-picker';
 import { getPlaceholder } from '../../lib/number-helpers';
 import { isPhoneNumber } from '../../lib/number-input-helpers';
 import {
-  amountProp,
-  configProp,
-  countryProp,
-  emailProp,
-  fnProp,
-  historyProp,
-  numberProp,
-  operatorResultProp,
+  Amount,
+  Config,
+  CountryProp,
+  Email,
+  OperatorResult,
+  PaymentMode,
 } from '../../lib/prop-types';
 import {
   selectAmount,
@@ -43,24 +41,24 @@ const InputContainer = styled('div')`
   }
 `;
 
-class Recipient extends React.PureComponent<any> {
-  static propTypes = {
-    config: configProp,
-    amount: amountProp,
-    operator: operatorResultProp,
-    history: historyProp,
-    trigger: fnProp,
-    setNumber: fnProp,
-    setEmail: fnProp,
-    classes: PropTypes.object,
-    number: numberProp,
-    email: emailProp,
-    paymentMethod: PropTypes.object,
-    country: countryProp,
-    setSubscribeNewsletter: fnProp,
-    subscribing: PropTypes.bool.isRequired,
-  };
+interface RecipientProps {
+  config: Config;
+  amount: Amount;
+  operator: OperatorResult;
+  history: History;
+  trigger: () => void;
+  setNumber: typeof setNumber;
+  setEmail: typeof setEmail;
+  classes: any;
+  number: Recipient;
+  email: Email;
+  paymentMethod: PaymentMode;
+  country: CountryProp;
+  setSubscribeNewsletter: typeof setSubscribeNewsletter;
+  subscribing: boolean;
+}
 
+class Recipient extends React.PureComponent<RecipientProps> {
   state = {
     error: null,
     placeholder: '',
@@ -73,7 +71,10 @@ class Recipient extends React.PureComponent<any> {
     switch (operator.result && operator.result.recipientType) {
       case 'phone_number':
         placeholder = formatNumber(
-          { country: country.alpha2, phone: getPlaceholder(country.alpha2) },
+          {
+            country: country.alpha2 as any,
+            phone: getPlaceholder(country.alpha2),
+          },
           'National'
         );
         break;
@@ -87,12 +88,10 @@ class Recipient extends React.PureComponent<any> {
     });
   }
 
-  onChange = number => this.props.setNumber(number);
+  onChange = (e: Recipient) => this.props.setNumber(e);
 
   getNumberLabel = () => {
     const { operator } = this.props;
-
-    console.log(operator.result && operator.result.recipientType);
 
     if (operator.result) {
       switch (operator.result && operator.result.recipientType) {
@@ -176,16 +175,7 @@ class Recipient extends React.PureComponent<any> {
   };
 
   render() {
-    const {
-      // config,
-      // setEmail,
-      country,
-      number,
-      operator,
-      // email,
-      // setSubscribeNewsletter,
-      // subscribing,
-    } = this.props;
+    const { country, number, operator } = this.props;
     const { error } = this.state;
 
     const Icon = getRecipientIcon(operator.result);
@@ -196,7 +186,8 @@ class Recipient extends React.PureComponent<any> {
         renderNextButton={() => (
           <NextButton disabled={!number} onClick={this.continue} />
         )}
-        error={error}>
+        error={error}
+      >
         <Text type="h3" {...this.getNumberLabel()} />
         <InputContainer>
           <InputRow

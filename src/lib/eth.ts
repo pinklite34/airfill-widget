@@ -8,7 +8,9 @@ export async function getEth() {
 }
 
 export async function getEthInstance() {
-  if (ethInstance) return ethInstance;
+  if (ethInstance) {
+    return ethInstance;
+  }
 
   const web3 = fromWindow('web3');
   const Eth = await getEth();

@@ -1,15 +1,15 @@
-import * as React from 'react';
 import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import styled from 'react-emotion';
 
 import { startsWith } from '../../lib/string';
 
 const StyledLink = styled('p')`
-  color: ${(p: any) =>  p.theme.tx.link};
+  color: ${(p: any) => p.theme.tx.link};
   text-decoration: none;
   cursor: pointer;
 
-  width: ${(p: any) =>  p.width};
+  width: ${(p: any) => p.width};
 
   &:hover,
   &:focus,
@@ -20,7 +20,7 @@ const StyledLink = styled('p')`
   svg {
     vertical-align: middle;
     margin: 0 12px 0 6px;
-    fill: ${(p: any) =>  p.theme.tx.link};
+    fill: ${(p: any) => p.theme.tx.link};
   }
 `;
 
@@ -41,7 +41,8 @@ export default function Link({ href, children, ...props }: LinkProps) {
     <Component
       href={href}
       {...(isExternal ? { target: '_blank', rel: 'noopener' } : {})}
-      {...props}>
+      {...props}
+    >
       {children}
     </Component>
   );

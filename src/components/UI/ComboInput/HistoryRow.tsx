@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { css } from 'react-emotion';
+import { connect } from 'react-redux';
 
+import { CountryProp } from '../../../lib/prop-types';
 import { selectCountryList } from '../../../store';
 import Row from './Row';
-import { operatorProp, countriesProp, rowProps } from '../../../lib/prop-types';
 
 const styles = {
   icon: css`
@@ -14,7 +14,12 @@ const styles = {
   `,
 };
 
-function HistoryRow({ item, countryList, ...props }) {
+interface HistoryRowProps {
+  item: any;
+  countryList: CountryProp[];
+}
+
+function HistoryRow({ item, countryList, ...props }: HistoryRowProps) {
   const country = countryList.find(c => !!c.operators[item.operator]);
 
   if (country) {
@@ -45,12 +50,6 @@ function HistoryRow({ item, countryList, ...props }) {
     return null;
   }
 }
-/*
-HistoryRow.propTypes = {
-  item: operatorProp,
-  countryList: countriesProp,
-  ...rowProps,
-}; */
 
 export default connect(state => ({
   countryList: selectCountryList(state),

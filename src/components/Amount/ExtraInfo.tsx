@@ -1,11 +1,8 @@
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import styled from 'react-emotion';
 
+import { OperatorResult } from '../../lib/prop-types';
 import Card from '../UI/Card';
-
-import { operatorProp } from '../../lib/prop-types';
-
 import Info from '../UI/info.svg';
 
 const Container = styled(Card)`
@@ -41,12 +38,12 @@ const Content = styled('div')`
   }
 `;
 
-export default class ExtraInfo extends React.PureComponent<any> {
-  static propTypes = {
-    info: PropTypes.string,
-    operator: operatorProp,
-  };
+interface ExtraInfoProps {
+  info: string;
+  operator: OperatorResult;
+}
 
+export default class ExtraInfo extends React.PureComponent<ExtraInfoProps> {
   render() {
     const { info, operator } = this.props;
     return info ? (

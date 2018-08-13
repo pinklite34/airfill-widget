@@ -1,14 +1,19 @@
-import * as React  from 'react';
-import Button from '../UI/Button';
+import * as React from 'react';
 
-import { orderProp, fnProp } from '../../lib/prop-types';
+import { Order } from '../../lib/prop-types';
+import Button from '../UI/Button';
 import OrderHeader from '../UI/OrderHeader';
 import Error from './error.svg';
 import PaymentLayout from './PaymentLayout';
 
-export default function PaymentExpired(props) {
+interface PaymentExpiredProps {
+  order: Order;
+  onReset: () => void;
+}
+
+export default function PaymentExpired(props: PaymentExpiredProps) {
   return (
-     <React.Fragment>
+    <React.Fragment>
       <OrderHeader
         order={props.order}
         title={{ id: 'order.expired.title', children: 'Order expired' }}
@@ -25,11 +30,6 @@ export default function PaymentExpired(props) {
           text={{ id: 'button.neworder', children: 'New order' }}
         />
       </PaymentLayout>
-     </React.Fragment>
+    </React.Fragment>
   );
 }
-
-/* PaymentExpired.propTypes = {
-  order: orderProp,
-  onReset: fnProp,
-}; */

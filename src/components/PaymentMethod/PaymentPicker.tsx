@@ -1,4 +1,4 @@
-import * as PropTypes from 'prop-types';
+import { History } from 'history';
 import * as React from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
@@ -13,11 +13,11 @@ import {
   trigger,
 } from '../../actions';
 import {
-  amountProp,
-  configProp,
-  historyProp,
-  operatorProp,
-  paymentProp,
+  Amount,
+  Config,
+  OperatorResult,
+  OrderOptions,
+  PaymentButton,
 } from '../../lib/prop-types';
 import { canAfford } from '../../payment-methods';
 import {
@@ -37,14 +37,25 @@ const MethodContainer = styled('div')`
   width: 100%;
 `;
 
-class PaymentMethod extends React.Component<any, any> {
+interface PaymentMethodProps {
+  history: History;
+  selectedMethod: PaymentButton;
+  setPaymentMethod: typeof setPaymentMethod;
+  config: Config;
+  createOrder: (options: OrderOptions) => Promise<any>;
+  trigger: () => void;
+  amount: Amount;
+  operator: OperatorResult;
+}
+
+class PaymentMethod extends React.Component<PaymentMethodProps> {
+  state = {
+    isLoading: false,
+    error: null,
+  };
+
   constructor(props) {
     super(props);
-
-    this.state = {
-      isLoading: false,
-      error: null,
-    };
 
     const { config } = this.props;
 
@@ -87,18 +98,19 @@ class PaymentMethod extends React.Component<any, any> {
             loading={isLoading}
           />
         )}
-        error={error}>
+        error={error}
+      >
         <MethodContainer>
           {config.paymentButtons
             .reduce(
               (prev, curr) =>
                 curr.paymentMode === config.coin
-                  ? [curr, ...prev]
-                  : [...prev, curr],
+                  ? [curr, ...(prev as any)]
+                  : [...(prev as any), curr],
               []
             )
             .map(method => {
-              let affordable =
+              const affordable =
                 typeof method.canAfford === 'function'
                   ? canAfford(method, operator, amount, config.billingCurrency)
                   : true;
@@ -118,17 +130,6 @@ class PaymentMethod extends React.Component<any, any> {
     );
   }
 }
-
-/* PaymentMethod.propTypes = {
-  history: historyProp,
-  selectedMethod: paymentProp,
-  setPaymentMethod: PropTypes.func.isRequired,
-  config: configProp,
-  createOrder: PropTypes.func.isRequired,
-  trigger: PropTypes.func.isRequired,
-  amount: amountProp,
-  operator: operatorProp,
-}; */
 
 export default compose(
   withRouter,

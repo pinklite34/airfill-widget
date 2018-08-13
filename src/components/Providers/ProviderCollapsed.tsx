@@ -1,13 +1,19 @@
+import { History } from 'history';
 import * as React from 'react';
-import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { compose } from 'recompose';
 
-import Collapsed from '../UI/Collapsed';
+import { Operator } from '../../lib/prop-types';
 import { selectSelectedOperator } from '../../store';
-import { historyProp, operatorProp } from '../../lib/prop-types';
+import Collapsed from '../UI/Collapsed';
 
-function ProviderCollapsed({ operator, history }) {
+interface ProviderCollapsedProps {
+  operator: Operator;
+  history: History;
+}
+
+function ProviderCollapsed({ operator, history }: ProviderCollapsedProps) {
   return (
     <Collapsed
       onClick={() => history.push('/refill/selectProvider')}
@@ -17,12 +23,7 @@ function ProviderCollapsed({ operator, history }) {
     />
   );
 }
-/*
-ProviderCollapsed.propTypes = {
-  operator: operatorProp,
-  history: historyProp,
-};
- */
+
 export default compose(
   withRouter,
   connect(state => ({

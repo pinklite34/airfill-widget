@@ -1,14 +1,10 @@
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
 import { css } from 'react-emotion';
-
-import { inputTypeProp, fnProp } from '../../../lib/prop-types';
 
 import Button from '../../UI/Button';
 import Card from '../../UI/Card';
-import Flag from '../Flag';
-
 import Check from '../check.svg';
+import Flag from '../Flag';
 
 const styles = {
   container: css`
@@ -84,12 +80,14 @@ export default function InputRow({
         onSubmit={e => {
           e.preventDefault();
           onSubmit();
-        }}>
+        }}
+      >
         <div className={styles.row}>
           <Button
             className={styles.flag}
             background="#f0f6fa"
-            onClick={resetCountry}>
+            onClick={resetCountry}
+          >
             <Flag country={country} />
           </Button>
           <div className={styles.inputContainer}>
@@ -100,7 +98,7 @@ export default function InputRow({
                 onChange: e =>
                   onChange(e.target.value, e.target.selectionStart),
                 ref: inputRef,
-                type: type,
+                type,
                 placeholder: countryOnly
                   ? 'Enter country'
                   : country
@@ -114,7 +112,8 @@ export default function InputRow({
             className={styles.button}
             type="submit"
             background="#f0f6fa"
-            loading={loading}>
+            loading={loading}
+          >
             <Check
               className={`${
                 submitEnabled ? styles.check : styles.checkDisabled

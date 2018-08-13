@@ -1,14 +1,18 @@
 import * as React from 'react';
-import { Switch, Route } from 'react-router';
 import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router';
 
-import RecipientCollapsed from './RecipientCollapsed';
-import RecipientPicker from './Recipient';
-import { configProp, operatorProp } from '../../lib/prop-types';
-
+import { Config, OperatorResult } from '../../lib/prop-types';
 import { selectOperator } from '../../store';
+import RecipientPicker from './Recipient';
+import RecipientCollapsed from './RecipientCollapsed';
 
-function Recipient({ config, operator }) {
+interface RecipientProps {
+  config: Config;
+  operator: OperatorResult;
+}
+
+function Recipient({ config, operator }: RecipientProps) {
   const show = operator.result && operator.result.recipientType !== 'none';
 
   return (
@@ -25,11 +29,6 @@ function Recipient({ config, operator }) {
   );
 }
 
-/* Recipient.propTypes = {
-  config: configProp,
-  operator: operatorProp,
-};
- */
 export default connect(state => ({ operator: selectOperator(state) }))(
   Recipient
 );
