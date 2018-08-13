@@ -24,7 +24,10 @@
     "jsx-boolean-value": false,
     "jsx-no-multiline-js": false,
     "jsx-no-lambda": false,
-    "no-shadowed-variable": false
+    "no-shadowed-variable": false,
+    "no-empty": false,
+    "variable-name": false,
+    "no-console": false
   },
   "rulesDirectory": []
 }

@@ -1,3 +1,5 @@
+import { PaymentMode } from './prop-types';
+
 // Internally we use XBT, however the correct display name is BTC
 export const getDisplayName = currency =>
   currency === 'XBT' ? 'BTC' : currency;
@@ -13,7 +15,7 @@ export const getPrice = (pkg, currency) => pkg[getPriceKey(currency)];
 export const satoshiToBTC = amount => Math.ceil(amount / 100) / 1000000;
 
 // All altcoins that requires a watched address from the server
-const supportedCoins = [
+const supportedCoins: PaymentMode[] = [
   'bitcoin',
   'litecoin',
   'ethereum',
@@ -53,15 +55,14 @@ export const getPreOrderProps = ({
 
     price = amount * rate;
 
-    if (billingCurrency === 'XBT') {
-      btcPrice = price;
-    } else {
-      btcPrice = amount * (operator.range.customerSatoshiPriceRate / 100000000);
-    }
+    btcPrice =
+      billingCurrency === 'XBT'
+        ? price
+        : amount * (operator.range.customerSatoshiPriceRate / 100000000);
   } else {
     // no range, only static packages. find matching with picked amount
     // amount is set as string, and value is number, therefor no ===
-    /* eslint-disable */
+    /* tslint:disable */
     const pkg = operator.packages.find(x => x.value == amount);
     price = getPrice(pkg, billingCurrency);
     btcPrice = getPrice(pkg, 'XBT');

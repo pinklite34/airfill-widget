@@ -10,8 +10,8 @@ const isPhoneNumberChar = char =>
 export const isPhoneNumber = value => PHONENUMBER.test(value);
 
 // Removes the closest digit before index
-export const removePreviousDigit = (string, index) => {
-  const characters = string.split('');
+export const removePreviousDigit = (s: string, index: number) => {
+  const characters = s.split('');
   const previousDigitIndex = characters.reduce(
     (lastIndex, curVal, curIndex) =>
       SINGLE_PHONENUMBER_CHAR.test(curVal) && curIndex < index
@@ -21,15 +21,15 @@ export const removePreviousDigit = (string, index) => {
   );
 
   return previousDigitIndex !== null
-    ? string
-        .slice(0, previousDigitIndex)
-        .concat(string.slice(previousDigitIndex + 1))
-    : string.slice(index); // Remove everything before index
+    ? s
+        .slice(0, Number(previousDigitIndex))
+        .concat(s.slice(Number(previousDigitIndex) + 1))
+    : s.slice(index); // Remove everything before index
 };
 
 // Removes the closest digit after index
-export const removeNextDigit = (string, index) => {
-  const characters = string.slice(index).split('');
+export const removeNextDigit = (s, index) => {
+  const characters = s.slice(index).split('');
   const nextDigitIndex = characters.reduce(
     (nextIndex, curVal, curIndex) =>
       nextIndex === null && SINGLE_PHONENUMBER_CHAR.test(curVal)
@@ -39,10 +39,10 @@ export const removeNextDigit = (string, index) => {
   );
 
   return nextDigitIndex !== null
-    ? string
+    ? s
         .slice(0, index + nextDigitIndex)
-        .concat(string.slice(index + nextDigitIndex + 1))
-    : string.slice(0, index); // Remove everything after index
+        .concat(s.slice(index + nextDigitIndex + 1))
+    : s.slice(0, index); // Remove everything after index
 };
 
 export const formatNumber = (country, inputValue, currentCaret) => {

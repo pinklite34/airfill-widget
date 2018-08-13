@@ -41,7 +41,16 @@ const NextContainer = styled('div')`
   }
 `;
 
-class ActiveSectionNext extends React.PureComponent<any> {
+interface ActiveSectionNextProps {
+  fixed: boolean;
+  tight: boolean;
+  onUpdate?: () => void;
+  width?: string;
+  height?: string;
+  isMobile?: boolean;
+}
+
+class ActiveSectionNext extends React.PureComponent<ActiveSectionNextProps> {
   static propTypes = {
     children: PropTypes.node,
     fixed: PropTypes.bool,
@@ -53,7 +62,10 @@ class ActiveSectionNext extends React.PureComponent<any> {
   };
 
   componentDidMount() {
-    this.props.onUpdate && this.props.onUpdate();
+    const { onUpdate } = this.props;
+    if (onUpdate) {
+      onUpdate();
+    }
   }
 
   render() {
