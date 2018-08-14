@@ -180,7 +180,7 @@ export default function getPaymentMethods(): PaymentButton[] {
         },
         callback: order => openWindow('localbitcoins', order),
       },
-      canAfford: ({ btcPrice }) => btcPrice < 0.001,
+      canAfford: ({ btcPrice }) => btcPrice > 0.001,
     },
   ];
 }
