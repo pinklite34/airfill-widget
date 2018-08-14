@@ -182,7 +182,11 @@ export const loadOrder = (id, methods) => (dispatch, getState) => {
       .then(data => {
         dispatch(setOperator(data.operatorSlug));
         dispatch(setAmount(data.valuePackage));
-        dispatch(setEmail(data.email));
+        dispatch(
+          setEmail({
+            value: data.email,
+          })
+        );
         if (data.number) {
           dispatch(prefillNumber('+' + data.number));
         }
