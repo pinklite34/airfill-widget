@@ -2,7 +2,7 @@ const isProd = process.env.NODE_ENV === 'production';
 
 const defaultLngKey = 'en';
 const defaultNamespace = 'widget';
-const namespaces = [defaultNamespace];
+const namespaces = [defaultNamespace, 'website'];
 
 const supportedLanguages = [
   { lng: 'en', name: 'English' },
