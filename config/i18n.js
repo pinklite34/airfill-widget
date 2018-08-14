@@ -24,8 +24,8 @@ function createI18nConfig(lng) {
     whitelist: supportedLanguageKeys,
 
     appendNamespaceToCIMode: true,
-    saveMissing: isProd,
-    updateMissing: isProd,
+    // saveMissing: isProd,
+    // updateMissing: isProd,
 
     ns: namespaces,
     defaultNS: defaultNamespace,
