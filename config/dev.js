@@ -21,7 +21,7 @@ const config = Object.assign({}, baseConfig, {
           'src/lib/test-helpers.ts',
           'src/**/*.test.ts',
           'src/index.html',
-          'src/translations/',
+          'src/translations/**/*.*',
         ],
       },
     }),

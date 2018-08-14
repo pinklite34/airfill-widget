@@ -16,14 +16,6 @@ const supportedLanguageKeys = supportedLanguages.map(function(x) {
   return x.lng;
 });
 
-const resources = supportedLanguageKeys.reduce((acc, lng) => {
-  acc[lng] = namespaces.reduce((acc, ns) => {
-    acc[ns] = require(`../src/translations/${lng}/${ns}.json`);
-    return acc;
-  }, {});
-  return acc;
-}, {});
-
 function createI18nConfig(lng) {
   return {
     fallbackLng: defaultLngKey,
@@ -37,10 +29,13 @@ function createI18nConfig(lng) {
 
     ns: namespaces,
     defaultNS: defaultNamespace,
-    resources: resources,
 
     debug: !isProd,
     keySeparator: '### not used ###',
+
+    backend: {
+      loadPath: '/translations/{{lng}}/{{ns}}.json',
+    },
 
     interpolation: {
       escapeValue: false,

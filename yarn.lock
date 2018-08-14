@@ -3397,6 +3397,10 @@ i18next-conv@6.0.1:
     mkdirp "^0.5.1"
     node-gettext "^2.0.0"
 
+i18next-xhr-backend@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/i18next-xhr-backend/-/i18next-xhr-backend-1.5.1.tgz#50282610780c6a696d880dfa7f4ac1d01e8c3ad5"
+
 i18next@^11.5.0:
   version "11.6.0"
   resolved "https://registry.yarnpkg.com/i18next/-/i18next-11.6.0.tgz#e0047aa3e3a0080f6f318426f90597cbb0d6ddd5"
