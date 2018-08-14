@@ -9,7 +9,7 @@ import PaymentLayout from './PaymentLayout';
 interface PaymentErrorProps {
   order: Order;
   paymentStatus: PaymentStatus;
-  text: any;
+  text?: any;
 }
 
 function PaymentError(props: PaymentErrorProps) {

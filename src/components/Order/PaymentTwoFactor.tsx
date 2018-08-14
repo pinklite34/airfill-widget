@@ -1,16 +1,21 @@
-import Input from 'material-ui/Input';
-import PropTypes from 'prop-types';
+import { Order } from 'lib/prop-types';
+import MaterialInput from 'material-ui/Input';
 import React, { Fragment } from 'react';
-import { fnProp, orderProp } from '../../lib/prop-types';
+import { fetch } from '../../lib/api-client';
 import Button from '../UI/Button';
 import Info from '../UI/info.svg';
 import OrderHeader from '../UI/OrderHeader';
 import Text from '../UI/Text';
-import PaymentLayout from './PaymentLayout';
-import { fetch } from '../../lib/api-client';
 import PaymentError from './PaymentError';
+import PaymentLayout from './PaymentLayout';
 
-class PaymentTwoFactor extends React.Component {
+interface PaymentTwoFactorProps {
+  order: Order;
+}
+
+const Input = MaterialInput as any;
+
+class PaymentTwoFactor extends React.Component<PaymentTwoFactorProps> {
   state = {
     code: '',
     error: null,
@@ -67,12 +72,5 @@ class PaymentTwoFactor extends React.Component {
     );
   }
 }
-
-PaymentTwoFactor.propTypes = {
-  order: orderProp,
-  onReset: fnProp,
-  dispatch: PropTypes.func.isRequired,
-  post2faCode: PropTypes.func.isRequired,
-};
 
 export default PaymentTwoFactor;
