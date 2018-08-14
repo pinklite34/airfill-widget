@@ -1,6 +1,6 @@
 import { Order } from 'lib/prop-types';
 import MaterialInput from 'material-ui/Input';
-import React, { Fragment } from 'react';
+import * as React from 'react';
 import { fetch } from '../../lib/api-client';
 import Button from '../UI/Button';
 import Info from '../UI/info.svg';
@@ -38,7 +38,7 @@ class PaymentTwoFactor extends React.Component<PaymentTwoFactorProps> {
     return error ? (
       <PaymentError order={order} paymentStatus={error} />
     ) : (
-      <Fragment>
+      <React.Fragment>
         <OrderHeader
           order={order}
           title={{ id: 'order.2farequired.title', children: '2FA Required' }}
@@ -68,7 +68,7 @@ class PaymentTwoFactor extends React.Component<PaymentTwoFactorProps> {
             }}
           />
         </PaymentLayout>
-      </Fragment>
+      </React.Fragment>
     );
   }
 }
