@@ -141,8 +141,9 @@ class PaymentLayout extends React.PureComponent<PaymentLayoutProps> {
             time = `${minutes}:${seconds}`;
           }
 
-          this.mounted &&
+          if (this.mounted) {
             this.setState({ timeLeft: time, invoiceTime: invoiceTime - 1000 });
+          }
         }, 1000),
       });
     }

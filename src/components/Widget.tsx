@@ -54,11 +54,13 @@ const muiTheme = createMuiTheme({
   },
 });
 
+/* tslint:disable */
 injectGlobal`
   * {
     box-sizing: border-box;
   }
 `;
+/* tslint:enable */
 
 interface AirfillWidgetProps {
   init: typeof init;

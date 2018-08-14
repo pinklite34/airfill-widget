@@ -23,7 +23,7 @@
     "release:major": "npm version major && npm publish && git push --follow-tags",
     "release:minor": "npm version minor && npm publish && git push --follow-tags",
     "release:patch": "npm version patch && npm publish && git push --follow-tags",
-    "start": "webpack-dev-server --config config/dev.js --open",
+    "start": "webpack-dev-server --config config/dev.js",
     "test": "jest",
     "test:watch": "npm test -- --watch",
     "webpack-stats": "webpack-bundle-analyzer stats.json",
@@ -38,7 +38,6 @@
     "react-dom": "^16.2.0"
   },
   "dependencies": {
-    "@alienfast/i18next-loader": "^1.0.16",
     "@bitrefill/react-pusher": "^2.3.2",
     "color": "^3.0.0",
     "core-js": "^2.5.7",

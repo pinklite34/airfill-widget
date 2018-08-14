@@ -1,4 +1,3 @@
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { isMobileApp } from './globals';
 
@@ -30,7 +29,9 @@ export default class WidgetRect extends React.PureComponent<any> {
     const ref = this.childRef.current;
     const rect =
       ref && ref.getBoundingClientRect && ref.getBoundingClientRect();
-    rect && this.setState({ rect });
+    if (rect) {
+      this.setState({ rect });
+    }
   };
 
   render() {

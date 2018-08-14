@@ -32,7 +32,9 @@ function CountryCollapsed({
     setCountry('');
     openComboInput();
     setComboInputFocus(true);
-    !home && history.push('/refill');
+    if (!home) {
+      history.push('/refill');
+    }
   };
 
   return country && country.alpha2 ? (

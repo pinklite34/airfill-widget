@@ -16,7 +16,21 @@ const supportedLanguageKeys = supportedLanguages.map(function(x) {
   return x.lng;
 });
 
-function createI18nConfig(resources, lng) {
+const resources = supportedLanguageKeys.reduce(
+  (acc, lng) => ({
+    ...acc,
+    [lng]: namespaces.reduce(
+      (acc2, ns) => ({
+        ...acc2,
+        [ns]: require(`../src/translations/${lng}/${ns}.json`),
+      }),
+      {}
+    ),
+  }),
+  {}
+);
+
+function createI18nConfig(lng) {
   return {
     fallbackLng: defaultLngKey,
     lng: lng,
@@ -27,8 +41,8 @@ function createI18nConfig(resources, lng) {
     saveMissing: isProd,
     updateMissing: isProd,
 
-    ns: namespaces,
     defaultNS: defaultNamespace,
+    ns: namespaces,
     resources: resources,
 
     debug: !isProd,
@@ -45,10 +59,10 @@ function createI18nConfig(resources, lng) {
 }
 
 module.exports = {
+  createI18nConfig: createI18nConfig,
   defaultLngKey: defaultLngKey,
   defaultNamespace: defaultNamespace,
   namespaces: namespaces,
-  createI18nConfig: createI18nConfig,
-  supportedLanguages: supportedLanguages,
   supportedLanguageKeys: supportedLanguageKeys,
+  supportedLanguages: supportedLanguages,
 };
