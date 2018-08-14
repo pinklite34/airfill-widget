@@ -105,7 +105,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "lint-staged": {
-    "*.{ts,js,tsx,jsx}": [
+    "*.{ts,tsx}": [
       "yarn lint",
       "git add"
     ]

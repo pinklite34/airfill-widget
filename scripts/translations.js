@@ -23,7 +23,6 @@ function downloadTranslations({ lng, namespace }) {
 
 function downloadAllTranslations() {
   fs.emptyDirSync(translationPath);
-  fs.writeFileSync(`${translationPath}/index.js`, '');
 
   i18n.supportedLanguageKeys.map(lng => {
     i18n.namespaces.map(namespace => downloadTranslations({ lng, namespace }));

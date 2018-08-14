@@ -6,29 +6,23 @@ const namespaces = [defaultNamespace, 'website'];
 
 const supportedLanguages = [
   { lng: 'en', name: 'English' },
-  { lng: 'ru', name: 'Russian' },
-  { lng: 'fr', name: 'French' },
-  { lng: 'es', name: 'Spanish' },
-  { lng: 'de', name: 'German' },
+  { lng: 'ru', name: 'Русский' },
+  { lng: 'fr', name: 'Français' },
+  { lng: 'es', name: 'Español' },
+  { lng: 'de', name: 'Deutsch' },
 ];
 
 const supportedLanguageKeys = supportedLanguages.map(function(x) {
   return x.lng;
 });
 
-const resources = supportedLanguageKeys.reduce(
-  (acc, lng) => ({
-    ...acc,
-    [lng]: namespaces.reduce(
-      (acc2, ns) => ({
-        ...acc2,
-        [ns]: require(`../src/translations/${lng}/${ns}.json`),
-      }),
-      {}
-    ),
-  }),
-  {}
-);
+const resources = supportedLanguageKeys.reduce((acc, lng) => {
+  acc[lng] = namespaces.reduce((acc, ns) => {
+    acc[ns] = require(`../src/translations/${lng}/${ns}.json`);
+    return acc;
+  }, {});
+  return acc;
+}, {});
 
 function createI18nConfig(lng) {
   return {
@@ -41,8 +35,8 @@ function createI18nConfig(lng) {
     saveMissing: isProd,
     updateMissing: isProd,
 
-    defaultNS: defaultNamespace,
     ns: namespaces,
+    defaultNS: defaultNamespace,
     resources: resources,
 
     debug: !isProd,
@@ -59,10 +53,10 @@ function createI18nConfig(lng) {
 }
 
 module.exports = {
-  createI18nConfig: createI18nConfig,
   defaultLngKey: defaultLngKey,
   defaultNamespace: defaultNamespace,
   namespaces: namespaces,
-  supportedLanguageKeys: supportedLanguageKeys,
+  createI18nConfig: createI18nConfig,
   supportedLanguages: supportedLanguages,
+  supportedLanguageKeys: supportedLanguageKeys,
 };
