@@ -40,7 +40,7 @@ dotenvFiles.forEach(dotenvFile => {
 // injected into the application via DefinePlugin in Webpack configuration.
 const REACT_APP = /^REACT_APP_/i;
 
-function getClientEnvironment(publicUrl, target) {
+function getClientEnvironment() {
   const raw = Object.keys(process.env)
     .filter(key => REACT_APP.test(key))
     .reduce(
