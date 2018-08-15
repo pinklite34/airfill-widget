@@ -2,6 +2,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 const distConfig = require('./dist');
 
@@ -14,14 +15,15 @@ const config = Object.assign({}, distConfig, {
     libraryTarget: 'umd',
     chunkFilename: '[name].bundle.js',
   },
-  plugins: baseConfig.plugins.concat([
+  plugins: [
+    new FriendlyErrorsWebpackPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-  ]),
+  ],
   externals: {},
 });
 
