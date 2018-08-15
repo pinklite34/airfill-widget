@@ -3,7 +3,8 @@ const path = require('path');
 const fs = require('fs-extra');
 
 const i18n = require('../config/i18n');
-const { LOCIZE_PROJECT_ID } = require('../constants');
+
+const LOCIZE_PROJECT_ID = process.env.LOCIZE_PROJECT_ID;
 
 const translationPath = path.relative(process.cwd(), './src/translations');
 

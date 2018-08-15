@@ -1,6 +1,6 @@
-const { LOCIZE_PROJECT_ID } = require('../constants');
-
+const LOCIZE_PROJECT_ID = process.env.LOCIZE_PROJECT_ID
 const isProd = process.env.NODE_ENV === 'production';
+
 const defaultLngKey = 'en';
 const defaultNamespace = 'widget';
 const namespaces = [defaultNamespace, 'website'];

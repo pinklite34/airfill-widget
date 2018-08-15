@@ -3,7 +3,6 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import { PUSHER_API_KEY } from '../../../constants';
 import { updatePaymentStatus } from '../../actions';
 import {
   Amount,
@@ -34,6 +33,8 @@ import PaymentMode from './PaymentMode';
 import PaymentTwoFactor from './PaymentTwoFactor';
 import RefillDelivered from './RefillDelivered';
 import RefillFailed from './RefillFailed';
+
+const PUSHER_API_KEY = process.env.PUSHER_API_KEY;
 
 const componentForStatus = status => {
   switch (status) {

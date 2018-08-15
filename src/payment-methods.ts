@@ -1,6 +1,5 @@
 import { PaymentButton } from './lib/prop-types';
 
-import { PUSHER_API_KEY } from '../constants';
 import {
   BitcoinIcon,
   CoinbaseIcon,
@@ -11,6 +10,8 @@ import {
   LocalBitcoinsIcon,
 } from './assets';
 import { getPreOrderProps } from './lib/currency-helpers';
+
+const PUSHER_API_KEY = process.env.PUSHER_API_KEY;
 
 const baseUrl =
   process.env.NODE_ENV === 'development' ? '/api' : 'https://api.bitrefill.com';
