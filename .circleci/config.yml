@@ -1,0 +1,16 @@
+version: 2
+
+## Customize the test machine
+jobs:
+  build:
+    working_directory: ~/bitrefill/airfill-widget
+    environment:
+      NODE_ENV: test
+    docker:
+      - image: circleci/node:8.11.3-jessie
+    steps:
+      - checkout
+      # Install deps
+      - run: sudo npm install -g yarn; yarn install;
+      # Run tests
+      - run: yarn test
