@@ -2,7 +2,6 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 const webpack = require('webpack');
 const { UnusedFilesWebpackPlugin } = require('unused-files-webpack-plugin');
-const WebpackBar = require('webpackbar');
 
 const baseConfig = require('./base');
 
@@ -14,8 +13,6 @@ const config = Object.assign({}, baseConfig, {
   cache: true,
   devtool: 'cheap-module-source-map',
   plugins: baseConfig.plugins.concat([
-    new webpack.NoEmitOnErrorsPlugin(),
-    new WebpackBar(),
     new UnusedFilesWebpackPlugin({
       patterns: ['src/**/*.*'],
       globOptions: {

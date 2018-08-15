@@ -16,15 +16,6 @@ const config = Object.assign({}, distConfig, {
     libraryTarget: 'umd',
     chunkFilename: '[name].bundle.js',
   },
-  plugins: [
-    new FriendlyErrorsWebpackPlugin(),
-    new webpack.DefinePlugin(Object.assign({}, env.stringified, {
-      'process.env.NODE_ENV': '"production"',
-    })),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.AggressiveMergingPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-  ],
   externals: {},
 });
 
