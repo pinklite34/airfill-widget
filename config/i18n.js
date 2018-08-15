@@ -33,7 +33,7 @@ function createI18nConfig(lng) {
 
     backend: {
       loadPath: '/translations/{{lng}}/{{ns}}.json',
-      addPath: 'https://api.locize.io/missing/' + LOCIZE_PROJECT_ID + '/latest/{{lng}}/{{ns}}`,
+      addPath: 'https://api.locize.io/missing/' + LOCIZE_PROJECT_ID + '/latest/{{lng}}/{{ns}}',
     },
 
     debug: !isProd,
