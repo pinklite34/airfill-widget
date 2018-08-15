@@ -3,6 +3,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const env = require('./env');
 
 const distConfig = require('./dist');
 
@@ -17,9 +18,9 @@ const config = Object.assign({}, distConfig, {
   },
   plugins: [
     new FriendlyErrorsWebpackPlugin(),
-    new webpack.DefinePlugin({
+    new webpack.DefinePlugin(Object.assign({}, env.stringified, {
       'process.env.NODE_ENV': '"production"',
-    }),
+    })),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),

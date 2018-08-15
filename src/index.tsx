@@ -1,8 +1,5 @@
 /* eslint-disable import/default */
 
-import dotenv from 'dotenv';
-dotenv.config();
-
 import createHistory from 'history/createMemoryHistory';
 import * as React from 'react';
 import { render } from 'react-dom';
