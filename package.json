@@ -43,6 +43,7 @@
     "color": "^3.0.0",
     "core-js": "^2.5.7",
     "dotenv": "^6.0.0",
+    "dotenv-expand": "^4.2.0",
     "downshift": "^1.31.7",
     "emotion": "^9.2.6",
     "emotion-theming": "^9.2.6",

@@ -6,3 +6,4 @@ dist/*
 stats.json
 package-lock.json
 src/translations/*/*.json
+.env.local

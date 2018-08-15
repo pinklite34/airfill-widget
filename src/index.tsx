@@ -11,6 +11,7 @@ import {
 } from 'react-router-redux';
 
 import { client } from './lib/api-client';
+import initAnalytics from './lib/init-analytics';
 import configureStore from './store/configureStore';
 
 import Widget from './components/Widget';
@@ -98,6 +99,8 @@ function AirfillWidget(ele, opt) {
     </Provider>,
     element
   );
+
+  setTimeout(initAnalytics, 0);
 }
 
 declare const window: any;

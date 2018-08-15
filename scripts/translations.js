@@ -2,8 +2,10 @@ const { exec } = require('child_process');
 const path = require('path');
 const fs = require('fs-extra');
 
-const { LOCIZE_PROJECT_ID } = require('../config/env').parsed;
+const getClientEnv = require('../config/env');
 const i18n = require('../config/i18n');
+
+const { LOCIZE_PROJECT_ID } = getClientEnv().raw
 
 const translationPath = path.relative(process.cwd(), './src/translations');
 

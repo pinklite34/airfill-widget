@@ -21,7 +21,7 @@ export function getPlatform() {
 }
 
 export function isMobileApp() {
-  return getSource() === 'app' || Boolean(window && window.originalPostMessage);
+  return getSource() === 'app' || Boolean(fromWindow('originalPostMessage'));
 }
 
 export function isIos() {

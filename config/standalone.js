@@ -3,7 +3,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
-const env = require('./env');
 
 const distConfig = require('./dist');
 

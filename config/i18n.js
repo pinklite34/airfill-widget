@@ -1,5 +1,6 @@
-const LOCIZE_PROJECT_ID = process.env.LOCIZE_PROJECT_ID
 const isProd = process.env.NODE_ENV === 'production';
+const LOCIZE_PROJECT_ID = process.env.LOCIZE_PROJECT_ID;
+const LOCIZE_API_KEY = process.env.LOCIZE_API_KEY;
 
 const defaultLngKey = 'en';
 const defaultNamespace = 'widget';
@@ -25,8 +26,8 @@ function createI18nConfig(lng) {
     whitelist: supportedLanguageKeys,
 
     appendNamespaceToCIMode: true,
-    saveMissing: isProd,
-    updateMissing: isProd,
+    saveMissing: LOCIZE_API_KEY && isProd,
+    updateMissing: LOCIZE_API_KEY && isProd,
 
     ns: namespaces,
     defaultNS: defaultNamespace,

@@ -3,15 +3,15 @@
 // With Redux, the actual stores are in /reducers.
 
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
-// import { createTracker } from 'redux-segment';
+import { createTracker } from 'redux-segment';
 import thunk from 'redux-thunk';
 
-// import analyticsEventMap from './analytics-event-map';
+import analyticsEventMap from './analytics-event-map';
 import airfillWidget from './index';
 
 declare const window: any;
 
-// const tracker = createTracker(analyticsEventMap);
+const tracker = createTracker(analyticsEventMap);
 
 export default function configureStore(routerReducer, middleware) {
   const store = createStore(
@@ -20,11 +20,7 @@ export default function configureStore(routerReducer, middleware) {
       router: routerReducer,
     }),
     compose(
-      applyMiddleware(
-        thunk,
-        // tracker,
-        middleware
-      ),
+      applyMiddleware(thunk, tracker, middleware),
       process.env.NODE_ENV !== 'production' && window.devToolsExtension
         ? window.devToolsExtension()
         : f => f // add support for Redux dev tools
