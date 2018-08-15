@@ -8,9 +8,7 @@ declare const window: any;
 const analytics = (window.analytics = window.analytics || []);
 if (!analytics.initialize) {
   if (analytics.invoked) {
-    window.console &&
-      console.error &&
-      console.error('Segment snippet included twice.');
+    window.console && console.log('Using existing segment snippet');
   } else {
     analytics.invoked = !0;
     analytics.methods = [
