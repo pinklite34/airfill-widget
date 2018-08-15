@@ -1,4 +1,5 @@
 const path = require('path');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 const defaultPort = process.env.PORT || 8000;
 const publicPath = '/';
@@ -44,4 +45,7 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new FriendlyErrorsWebpackPlugin(),
+  ]
 };

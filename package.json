@@ -14,12 +14,12 @@
     "copy:translations": "cp -R ./src/translations ./dist",
     "build": "npm run build:pre && npm run build:module && npm run build:standalone",
     "build:pre": "npm run clean && npm run copy:index && npm run build:translations && npm run copy:translations",
-    "build:standalone": "webpack --config config/standalone.js --json > stats.json",
-    "build:module": "webpack --config config/dist.js --json > stats.json",
+    "build:standalone": "webpack --config config/standalone.js",
+    "build:module": "webpack --config config/dist.js",
     "build:watch": "npm run build:pre && npm run build:module -- --mode=development -w",
     "build:translations": "NODE_ENV=production node scripts/translations.js",
-    "dist": "webpack --env=dist --json > stats.json",
-    "standalone": "npm run copy && webpack --env=standalone --json > stats.json",
+    "dist": "webpack --env=dist",
+    "standalone": "npm run copy && webpack --env=standalone",
     "lint": "tslint -p .",
     "release:major": "npm version major && npm publish && git push --follow-tags",
     "release:minor": "npm version minor && npm publish && git push --follow-tags",
@@ -88,6 +88,7 @@
     "babel-core": "^6.26.3",
     "babel-jest": "^23.4.2",
     "eslint-config-bitrefill": "^1.1.1",
+    "friendly-errors-webpack-plugin": "^1.7.0",
     "husky": "^0.14.3",
     "jest": "23.5.0",
     "lint-staged": "^7.2.2",
@@ -109,7 +110,8 @@
     "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "3.1.5",
-    "webpack-node-externals": "^1.7.2"
+    "webpack-node-externals": "^1.7.2",
+    "webpackbar": "^2.6.2"
   },
   "lint-staged": {
     "*.{ts,tsx}": [

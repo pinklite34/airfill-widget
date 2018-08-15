@@ -11,14 +11,14 @@ const config = Object.assign({}, baseConfig, {
   optimization: {
     minimize: true,
   },
-  plugins: [
+  plugins: baseConfig.plugins.concat([
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-  ],
+  ]),
   externals: [nodeExternals()],
 });
 

@@ -14,14 +14,14 @@ const config = Object.assign({}, distConfig, {
     libraryTarget: 'umd',
     chunkFilename: '[name].bundle.js',
   },
-  plugins: [
+  plugins: baseConfig.plugins.concat([
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-  ],
+  ]),
   externals: {},
 });
 
