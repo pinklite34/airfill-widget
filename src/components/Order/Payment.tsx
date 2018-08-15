@@ -3,8 +3,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
+import { PUSHER_API_KEY } from '../../../constants';
 import { updatePaymentStatus } from '../../actions';
-import { PUSHER_API_KEY } from '../../constants';
 import {
   Amount,
   BillingCurrency,

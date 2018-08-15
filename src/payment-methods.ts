@@ -1,5 +1,6 @@
 import { PaymentButton } from './lib/prop-types';
 
+import { PUSHER_API_KEY } from '../constants';
 import {
   BitcoinIcon,
   CoinbaseIcon,
@@ -9,7 +10,6 @@ import {
   LitecoinIcon,
   LocalBitcoinsIcon,
 } from './assets';
-import { PUSHER_API_KEY } from './constants';
 import { getPreOrderProps } from './lib/currency-helpers';
 
 const baseUrl =

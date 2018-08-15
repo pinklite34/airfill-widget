@@ -1,5 +1,6 @@
-const isProd = process.env.NODE_ENV === 'production';
+const { LOCIZE_PROJECT_ID } = require('../constants');
 
+const isProd = process.env.NODE_ENV === 'production';
 const defaultLngKey = 'en';
 const defaultNamespace = 'widget';
 const namespaces = [defaultNamespace, 'website'];
@@ -24,18 +25,19 @@ function createI18nConfig(lng) {
     whitelist: supportedLanguageKeys,
 
     appendNamespaceToCIMode: true,
-    // saveMissing: isProd,
-    // updateMissing: isProd,
+    saveMissing: isProd,
+    updateMissing: isProd,
 
     ns: namespaces,
     defaultNS: defaultNamespace,
 
-    debug: !isProd,
-    keySeparator: '### not used ###',
-
     backend: {
       loadPath: '/translations/{{lng}}/{{ns}}.json',
+      addPath: `https://api.locize.io/missing/${LOCIZE_PROJECT_ID}/latest/{{lng}}/{{ns}}`,
     },
+
+    debug: !isProd,
+    keySeparator: '### not used ###',
 
     interpolation: {
       escapeValue: false,
