@@ -1,4 +1,3 @@
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import styled from 'react-emotion';
 import Text from './Text';
@@ -99,14 +98,3 @@ export default class CopyField extends React.Component<any> {
     );
   }
 }
-
-/* CopyField.propTypes = {
-  label: PropTypes.any,
-  padding: PropTypes.string,
-  width: PropTypes.string,
-  address: PropTypes.string,
-  children: PropTypes.any,
-  fontSize: PropTypes.string,
-  copyLength: PropTypes.number,
-};
- */

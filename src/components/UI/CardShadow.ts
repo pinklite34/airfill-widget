@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types';
 import styled from 'react-emotion';
 
 const CardShadow = styled('div')`
-  pointer: ${(p: any) => p.onClick && 'cursor'};
+  cursor: ${(p: any) => p.onClick && 'pointer'};
   transition: box-shadow 0.3s ease;
   box-shadow: ${(p: any) =>
     !p.noBorder &&
