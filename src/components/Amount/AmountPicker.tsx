@@ -96,7 +96,7 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
     }
   };
 
-  renderPackage = (pkg, i) => {
+  renderPackage = (pkg, canAffordAny) => {
     const { amount, operator, setAmount, config } = this.props;
     const {
       userAccountBalance,
@@ -116,8 +116,12 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
         <RadioWrapper>
           <Radio
             checked={amount === pkg.value}
-            onChange={e => setAmount(pkg.value)}
-            disabled={requireAccountBalance && price > userAccountBalance}
+            onChange={() => setAmount(pkg.value)}
+            disabled={
+              canAffordAny &&
+              requireAccountBalance &&
+              price > userAccountBalance
+            }
           />
         </RadioWrapper>
         <AmountPackage
@@ -141,6 +145,14 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
     const disabled =
       amount === 'NaN' || (typeof amount !== 'string' && isNaN(amount));
 
+    // can afford any listed package
+    const canAffordAny =
+      operator.result &&
+      config.requireAccountBalance &&
+      operator.result.packages.some(
+        pkg => getPrice(pkg, billingCurrency) <= config.userAccountBalance
+      );
+
     return operator.isLoading ||
       !(operator.result && operator.result.packages) ? (
       <ActiveSection>
@@ -157,7 +169,11 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
 
         <Title text={{ id: 'title.selectamount', children: 'Select amount' }} />
 
-        <Packages>{operator.result.packages.map(this.renderPackage)}</Packages>
+        <Packages>
+          {operator.result.packages.map(pkg =>
+            this.renderPackage(pkg, canAffordAny)
+          )}
+        </Packages>
 
         {operator.result.isRanged && (
           <AmountRange
