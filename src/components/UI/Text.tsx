@@ -83,6 +83,29 @@ function getComponent(type) {
   }[type];
 }
 
+interface TextProps {
+  id: string;
+  type: 'h1' | 'h3' | 'p' | 'link';
+  color?: string;
+  error?: any;
+  success?: boolean;
+  small?: boolean;
+  size?: string;
+  centered?: boolean;
+  margin?: string;
+  padding?: string;
+  tight?: boolean;
+  underline?: boolean;
+  style?: React.CSSProperties;
+  className?: string;
+  width?: string;
+  weight?: number;
+  dangerouslySetInnerHTML?: {
+    __html: string;
+  };
+  children?: any;
+}
+
 export default function Text({
   id,
   type,
@@ -102,7 +125,7 @@ export default function Text({
   className,
   dangerouslySetInnerHTML,
   ...transProps
-}) {
+}: TextProps) {
   const TextComponent = getComponent(type);
   const textProps = {
     color,
@@ -128,6 +151,8 @@ export default function Text({
     transProps.children
   );
 
+  const s = <p style={{}} />;
+
   return TextComponent ? (
     <TextComponent {...textProps} style={{ color: 'red !important' }}>
       {children}
@@ -136,26 +161,3 @@ export default function Text({
     children || null
   );
 }
-
-/* Text.propTypes = {
-  id: PropTypes.string,
-  type: PropTypes.oneOf(['h1', 'h3', 'p', 'link']),
-  color: PropTypes.string,
-  error: PropTypes.any,
-  success: PropTypes.bool,
-  small: PropTypes.bool,
-  size: PropTypes.string,
-  centered: PropTypes.bool,
-  margin: PropTypes.string,
-  padding: PropTypes.string,
-  tight: PropTypes.bool,
-  underline: PropTypes.bool,
-  style: PropTypes.object,
-  className: PropTypes.string,
-  width: PropTypes.string,
-  weight: PropTypes.number,
-  dangerouslySetInnerHTML: PropTypes.shape({
-    __html: PropTypes.string.isRequired,
-  }),
-};
- */

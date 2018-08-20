@@ -2,7 +2,6 @@ import * as React from 'react';
 import styled from 'react-emotion';
 
 import Button from '../Button';
-
 import Check from '../check.svg';
 import Cross from '../error.svg';
 
@@ -71,6 +70,15 @@ const Icon = styled(Check)`
   fill: #3e8fe3;
 `;
 
+interface InputRowProps {
+  onChange: (email: string) => void;
+  submitEnabled?: boolean;
+  placeholder?: string;
+  onSubmit: () => void;
+  value: string;
+  icon: any;
+}
+
 function InputRow({
   onChange,
   submitEnabled,
@@ -78,7 +86,7 @@ function InputRow({
   placeholder,
   value,
   icon,
-}: any) {
+}: InputRowProps) {
   return (
     <Container>
       <form
@@ -104,18 +112,5 @@ function InputRow({
     </Container>
   );
 }
-/*
-InputRow.defaultProps = {
-  placeholder: '',
-};
-
-InputRow.propTypes = {
-  onChange: PropTypes.any,
-  submitEnabled: PropTypes.any,
-  placeholder: PropTypes.string,
-  onSubmit: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
-  icon: PropTypes.any.isRequired,
-}; */
 
 export default InputRow;

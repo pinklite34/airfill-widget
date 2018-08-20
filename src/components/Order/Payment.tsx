@@ -150,25 +150,6 @@ function Payment({
     </React.Fragment>
   );
 }
-/*
-Payment.propTypes = {
-  history: historyProp,
-  accountBalance: amountProp,
-  requireAccountBalance: PropTypes.bool,
-  refundAddress: PropTypes.string,
-  paymentButtons: paymentsProp,
-  showBTCAddress: PropTypes.bool,
-  billingCurrency: currencyProp,
-  orderOptions: orderOptionsProp,
-  order: orderResultProp,
-  operator: operatorResultProp,
-  number: numberProp,
-  country: countryProp,
-  paymentStatus: paymentStatusProp,
-  updatePaymentStatus: fnProp,
-  reset: fnProp,
-  onExternalUrl: PropTypes.func,
-}; */
 
 export default connect(
   state => ({

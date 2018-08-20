@@ -127,10 +127,3 @@ export default function RefillDelivered(props: RefillDeliveredProps) {
     </React.Fragment>
   );
 }
-
-/* RefillDelivered.propTypes = {
-  paymentStatus: paymentStatusProp,
-  order: orderProp,
-  onReset: fnProp,
-};
- */

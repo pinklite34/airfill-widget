@@ -107,10 +107,3 @@ export default function ProviderSuggested({
     </Container>
   );
 }
-
-/* ProviderSuggested.propTypes = {
-  operator: operatorProp,
-  onAccept: fnProp,
-  onReject: fnProp,
-};
- */

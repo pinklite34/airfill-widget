@@ -4,24 +4,12 @@ import * as React from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
 
-import {
-  setEmail,
-  setNumber,
-  setSubscribeNewsletter,
-  trigger,
-} from '../../actions';
+import { setEmail, setNumber, setSubscribeNewsletter, trigger } from '../../actions';
 import { isValidEmail } from '../../lib/email-validation';
 import { getRecipientIcon } from '../../lib/icon-picker';
 import { getPlaceholder } from '../../lib/number-helpers';
 import { isPhoneNumber } from '../../lib/number-input-helpers';
-import {
-  Amount,
-  Config,
-  CountryProp,
-  Email,
-  OperatorResult,
-  PaymentMode,
-} from '../../lib/prop-types';
+import { Amount, Config, CountryProp, Email, OperatorResult, PaymentMode } from '../../lib/prop-types';
 import {
   selectAmount,
   selectCountry,
@@ -50,7 +38,7 @@ interface RecipientProps {
   setNumber: typeof setNumber;
   setEmail: typeof setEmail;
   classes: any;
-  number: Recipient;
+  number: string;
   email: Email;
   paymentMethod: PaymentMode;
   country: CountryProp;
@@ -88,7 +76,7 @@ class Recipient extends React.PureComponent<RecipientProps> {
     });
   }
 
-  onChange = (e: Recipient) => this.props.setNumber(e);
+  onChange = (e: string) => this.props.setNumber(e);
 
   getNumberLabel = () => {
     const { operator } = this.props;
@@ -191,7 +179,6 @@ class Recipient extends React.PureComponent<RecipientProps> {
         <Text type="h3" {...this.getNumberLabel()} />
         <InputContainer>
           <InputRow
-            country={country}
             value={number}
             placeholder={this.state.placeholder}
             onChange={this.onChange}

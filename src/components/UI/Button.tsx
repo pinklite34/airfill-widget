@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'react-emotion';
 
+import { TransProp } from 'lib/prop-types';
 import { colorDarken, colorToString } from '../../lib/color';
 import Spinner from './Spinner';
 import Text from './Text';
@@ -52,7 +53,26 @@ const StyledButton = styled('button')`
 
 const StyledA = StyledButton.withComponent('a');
 
-function Button({ text, loading, children, white, ...props }: any) {
+interface ButtonProps {
+  children?: any;
+  text?: TransProp;
+  href?: string;
+  disabled?: boolean;
+  loading?: boolean;
+  color?: string;
+  small?: boolean;
+  white?: boolean;
+  background?: string;
+  margin?: string;
+  padding?: string;
+  onClick?: any;
+  className?: string;
+  type?: string;
+  style?: any;
+  width?: any;
+}
+
+function Button({ text, loading, children, white, ...props }: ButtonProps) {
   const Component = props.href ? StyledA : StyledButton;
 
   return (
@@ -68,19 +88,5 @@ function Button({ text, loading, children, white, ...props }: any) {
     </Component>
   );
 }
-
-/* Button.propTypes = {
-  children: PropTypes.node,
-  text: transProp,
-  href: PropTypes.string,
-  disabled: PropTypes.bool,
-  loading: PropTypes.bool,
-  color: PropTypes.string,
-  small: PropTypes.bool,
-  white: PropTypes.bool,
-  background: PropTypes.string,
-  margin: PropTypes.string,
-  padding: PropTypes.string,
-}; */
 
 export default Button;

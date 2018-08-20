@@ -1,4 +1,3 @@
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import styled from 'react-emotion';
 
@@ -13,7 +12,12 @@ const Price = styled('div')`
   font-weight: 500;
 `;
 
-export default function AmountPackage({ name, price }) {
+interface AmountPackageProps {
+  name: any;
+  price: any;
+}
+
+export default function AmountPackage({ name, price }: AmountPackageProps) {
   return (
     <div>
       <Name>{name}</Name>
@@ -21,9 +25,3 @@ export default function AmountPackage({ name, price }) {
     </div>
   );
 }
-
-/* AmountPackage.propTypes = {
-  name: PropTypes.node,
-  price: PropTypes.node,
-};
- */

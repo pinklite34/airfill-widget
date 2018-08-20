@@ -36,8 +36,3 @@ export default function ErrorBanner({ text }: ErrorBannerProps) {
     </Container>
   );
 }
-/*
-ErrorBanner.propTypes = {
-  text: PropTypes.oneOfType([transProp, PropTypes.string]).isRequired,
-};
- */

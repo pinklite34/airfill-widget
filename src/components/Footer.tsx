@@ -86,8 +86,3 @@ export default function Footer({ branded }: FooterProps) {
     </Container>
   );
 }
-/*
-Footer.propTypes = {
-  branded: PropTypes.bool,
-};
- */

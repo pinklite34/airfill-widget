@@ -95,10 +95,3 @@ export default function Instruction({
     </DeviceInfo>
   );
 }
-
-/* Instruction.propTypes = {
-  number: PropTypes.number,
-  title: transProp,
-  description: transProp,
-};
- */

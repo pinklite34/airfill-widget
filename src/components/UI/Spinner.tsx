@@ -1,4 +1,3 @@
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import styled from 'react-emotion';
 
@@ -98,12 +97,19 @@ const Inner = styled('div')`
   animation-timing-function: cubic-bezier(0.25, 0.1, 0.5, 1);
 `;
 
-export default function Spinner({ small, ...props }: any) {
+interface SpinnerProps {
+  tight?: boolean;
+  white?: boolean;
+  small?: boolean;
+  fadeIn?: number;
+}
+
+export default function Spinner({ small, ...props }: SpinnerProps) {
   const size = small ? 1 : 2;
   props.fadeIn = props.fadeIn || 1;
   return (
     <Container size={size} {...props}>
-      <Outer size={size} {...props}>
+      <Outer {...props}>
         <Circle1 size={size} {...props}>
           <Inner size={size} {...props} />
         </Circle1>
@@ -114,15 +120,3 @@ export default function Spinner({ small, ...props }: any) {
     </Container>
   );
 }
-/*
-Spinner.propTypes = {
-  tight: PropTypes.bool,
-  white: PropTypes.bool,
-  small: PropTypes.bool,
-  fadeIn: PropTypes.number,
-};
-
-Spinner.defaultProps = {
-  fadeIn: 1,
-};
- */

@@ -1,4 +1,3 @@
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import styled from 'react-emotion';
 
@@ -6,6 +5,7 @@ import DeviceInfo from '../../lib/DeviceInfo';
 import { fromWindow, isMobileApp } from '../../lib/globals';
 import { WidgetRectContext } from '../../lib/WidgetRect';
 
+import { ErrorProp } from 'lib/prop-types';
 import ErrorBanner from './ErrorBanner';
 
 const Container = styled('div')`
@@ -48,19 +48,10 @@ interface ActiveSectionNextProps {
   width?: string;
   height?: string;
   isMobile?: boolean;
+  children?: any;
 }
 
 class ActiveSectionNext extends React.PureComponent<ActiveSectionNextProps> {
-  static propTypes = {
-    children: PropTypes.node,
-    fixed: PropTypes.bool,
-    tight: PropTypes.bool,
-    onUpdate: PropTypes.func,
-    width: PropTypes.string,
-    height: PropTypes.string,
-    isMobile: PropTypes.bool,
-  };
-
   componentDidMount() {
     const { onUpdate } = this.props;
     if (onUpdate) {
@@ -96,13 +87,20 @@ class ActiveSectionNext extends React.PureComponent<ActiveSectionNextProps> {
   }
 }
 
+interface ActiveSectionProps {
+  children?: any;
+  renderNextButton?: () => any;
+  padding?: string;
+  error?: ErrorProp;
+}
+
 export default function ActiveSection({
   children,
   renderNextButton,
   padding,
   error,
   ...props
-}: any) {
+}: ActiveSectionProps) {
   const errorMsg = error && (error.message || error);
 
   return (
@@ -140,11 +138,3 @@ export default function ActiveSection({
     </DeviceInfo>
   );
 }
-
-/* ActiveSection.propTypes = {
-  children: PropTypes.node,
-  renderNextButton: PropTypes.func,
-  padding: PropTypes.string,
-  error: PropTypes.any,
-};
- */

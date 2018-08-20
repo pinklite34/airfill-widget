@@ -1,3 +1,4 @@
+import { PaymentButton } from 'lib/prop-types';
 import * as React from 'react';
 import styled from 'react-emotion';
 
@@ -41,7 +42,19 @@ const TextContainer = styled('div')`
   }
 `;
 
-const PaymentItem = ({ method, onClick, affordable, selected }) => {
+interface PaymentItemProps {
+  method: PaymentButton;
+  onClick: () => void;
+  selected: boolean;
+  affordable: boolean;
+}
+
+const PaymentItem = ({
+  method,
+  onClick,
+  affordable,
+  selected,
+}: PaymentItemProps) => {
   const { icon, title, description, notice } = method;
 
   const disabled = !affordable;
@@ -93,13 +106,5 @@ const PaymentItem = ({ method, onClick, affordable, selected }) => {
     </Container>
   );
 };
-/*
-PaymentItem.propTypes = {
-  method: paymentProp,
-  onClick: PropTypes.func,
-  selected: PropTypes.bool,
-  disabled: PropTypes.bool,
-  affordable: PropTypes.bool,
-};
- */
+
 export default PaymentItem;

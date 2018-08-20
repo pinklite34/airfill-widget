@@ -47,9 +47,3 @@ export default function Link({ href, children, ...props }: LinkProps) {
     </Component>
   );
 }
-
-/* Link.propTypes = {
-  href: PropTypes.string,
-  children: PropTypes.node.isRequired,
-};
- */

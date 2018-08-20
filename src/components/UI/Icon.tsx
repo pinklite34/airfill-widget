@@ -17,7 +17,16 @@ const Img = styled('img')`
   max-height: ${(p: any) => p.height || '30px'};
 `;
 
-export default function Icon({ src, alt, width, height, ...props }: any) {
+interface IconProps {
+  src: string | object;
+  alt?: string;
+  width?: string;
+  height?: string;
+  margin?: string;
+  padding?: string;
+}
+
+export default function Icon({ src, alt, width, height, ...props }: IconProps) {
   return (
     <Container {...props}>
       {typeof src === 'string' ? (
@@ -28,13 +37,3 @@ export default function Icon({ src, alt, width, height, ...props }: any) {
     </Container>
   );
 }
-/*
-Icon.propTypes = {
-  src: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  alt: PropTypes.string,
-  width: PropTypes.string,
-  height: PropTypes.string,
-  margin: PropTypes.string,
-  padding: PropTypes.string,
-};
- */

@@ -42,11 +42,6 @@ function SectionTitleRow({ item, style }) {
   return <div style={style}>{item.title}</div>;
 }
 
-/* SectionTitleRow.propTypes = {
-  item: operatorProp,
-  style: PropTypes.object,
-}; */
-
 const rowComponents = {
   country: CountryRow,
   provider: ProviderRow,
@@ -67,15 +62,6 @@ const getRowHeight = (item, countryList) => {
       return 44;
   }
 };
-
-/*
-Dropdown.propTypes = {
-  getItemProps: fnProp,
-  countryList: countriesProp,
-  items: PropTypes.arrayOf(operatorProp),
-  highlightedIndex: PropTypes.number,
-};
- */
 
 interface Item {
   __type: string;

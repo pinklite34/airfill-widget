@@ -31,6 +31,3 @@ export default function Row({ operatorProps, isActive, icon, content }: any) {
     </Container>
   );
 }
-
-/* Row.propTypes = rowProps;
- */

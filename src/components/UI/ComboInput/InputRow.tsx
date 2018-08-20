@@ -125,19 +125,3 @@ export default function InputRow({
     </Card>
   );
 }
-/*
-InputRow.propTypes = {
-  country: PropTypes.string,
-  getInputProps: fnProp,
-  onChange: fnProp,
-  resetCountry: fnProp,
-  inputRef: fnProp,
-  onFocus: fnProp,
-  onKeyDown: fnProp,
-  loading: PropTypes.bool,
-  onSubmit: fnProp,
-  submitEnabled: PropTypes.bool,
-  countryOnly: PropTypes.bool,
-  type: inputTypeProp,
-};
- */

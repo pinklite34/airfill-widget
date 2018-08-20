@@ -107,10 +107,3 @@ export default function RefillFailed(props: RefillFailedProps) {
     </React.Fragment>
   );
 }
-
-/* RefillFailed.propTypes = {
-  order: orderProp,
-  paymentStatus: paymentStatusProp,
-  refundAddress: PropTypes.string,
-};
- */

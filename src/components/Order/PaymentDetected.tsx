@@ -62,9 +62,3 @@ export default function PaymentDetected(props: PaymentDetectedProps) {
     </React.Fragment>
   );
 }
-
-/* PaymentDetected.propTypes = {
-  order: orderProp,
-  onReset: fnProp,
-};
- */
