@@ -16,8 +16,13 @@ const Container = styled(CardShadow)`
 
   cursor: ${(p: any) => p.disabled || 'pointer'};
 
+  background-color: ${p => p.disabled && p.theme.bg.disabled};
+
   border-radius: 4px;
-  border: 2px ${(p: any) => (p.selected ? '#3E8FE4' : '#fff')} solid;
+  border: 2px
+    ${(p: any) =>
+      p.disabled ? p.theme.bg.disabled : p.selected ? p.theme.brand : '#fff'}
+    solid;
 
   transition: border 0.2s ease;
 
