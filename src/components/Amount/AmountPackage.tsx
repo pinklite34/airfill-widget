@@ -32,13 +32,14 @@ const Name = styled('p')`
 `;
 
 interface AmountPackageProps {
-  // currency: string;
-  // price: number;
-  // disabled?: boolean;
-  // name: string;
-  // selected: boolean;
-  // hidePrice?: boolean;
-  [x: string]: any;
+  currency: string;
+  price: number;
+  disabled?: boolean;
+  name: string;
+  selected: boolean;
+  hidePrice?: boolean;
+  onClick?: (...a) => any;
+  showPrice?: boolean;
 }
 
 export default function AmountPackage({

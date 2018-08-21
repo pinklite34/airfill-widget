@@ -158,13 +158,7 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
 
         <Title text={{ id: 'title.selectamount', children: 'Select amount' }} />
 
-        <Packages>
-          {operator.result.packages.map(pkg =>
-            this.renderPackage(pkg, canAffordAny)
-          )}
-        </Packages>
-
-        {operator.result.isRanged && (
+        {operator.result.isRanged ? (
           <AmountRange
             amount={amount}
             range={operator.result.range}
@@ -173,6 +167,12 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
             onChange={setAmount}
             config={config}
           />
+        ) : (
+          <Packages>
+            {operator.result.packages.map(pkg =>
+              this.renderPackage(pkg, canAffordAny)
+            )}
+          </Packages>
         )}
       </ActiveSection>
     );

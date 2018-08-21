@@ -1,7 +1,3 @@
-import Input from 'material-ui/Input';
-import * as React from 'react';
-import styled from 'react-emotion';
-
 import {
   Amount,
   BillingCurrency,
@@ -9,32 +5,17 @@ import {
   Currency,
   RangeProp,
 } from 'lib/prop-types';
+import Input from 'material-ui/Input';
+import * as React from 'react';
+import styled from 'react-emotion';
+
 import { getDisplayName, satoshiToBTC } from '../../lib/currency-helpers';
+import Flex from '../UI/Flex';
 import SectionTitle from '../UI/SectionTitle';
 import Text from '../UI/Text';
-import AmountPackage from './AmountPackage';
 
 const Container = styled('div')`
   margin-top: 16px;
-`;
-
-const RangeContainer = styled('div')`
-  margin-left: 32px;
-`;
-
-const Title = styled(SectionTitle)`
-  margin-left: 36px;
-` as any;
-
-const Row = styled('div')`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  background-color: #fff;
-  margin: 0;
-  border-top: ${(p: any) => p.theme.bd.primary};
-  border-bottom: ${(p: any) => p.theme.bd.primary};
-  padding: 8px 16px;
 `;
 
 const StyledInput = styled(Input)`
@@ -50,32 +31,6 @@ const StyledInput = styled(Input)`
   }
 ` as any;
 
-const Label = styled('label')`
-  position: relative;
-  display: inline-block;
-  color: #000;
-  width: 48px;
-  left: -48px;
-  margin-right: -48px;
-  background-color: #fff;
-  text-align: right;
-  font-size: 16px;
-  line-height: 1;
-`;
-
-const Cost = styled('span')`
-  line-height: 20px;
-`;
-
-const Meta = styled('div')`
-  background: rgba(0, 0, 0, 0.1);
-  padding: 4px;
-  font-size: 12px;
-  line-height: 16px;
-  color: #333;
-  margin-left: 16px;
-`;
-
 interface AmountRangeProps {
   amount: Amount;
   range: RangeProp;
@@ -83,16 +38,11 @@ interface AmountRangeProps {
   billingCurrency: BillingCurrency;
   onChange: (amount: number) => void;
   config: Config;
+  [x: string]: any;
 }
 
-export default function AmountRange({
-  amount,
-  range,
-  currency,
-  billingCurrency,
-  onChange,
-  config,
-}: AmountRangeProps) {
+export default function AmountRange(props: AmountRangeProps) {
+  const { amount, range, currency, billingCurrency, onChange, config } = props;
   const min = Math.ceil(range.min);
   const max = Math.floor(range.max);
   const step = range.step;
@@ -106,6 +56,25 @@ export default function AmountRange({
 
   return (
     <Container>
+      <Text type="p" id="title.customamount">
+        Select custom amount
+      </Text>
+      <Flex row>
+        <div>
+          <Text type="p">
+            Min {min} {displayedCurrency}
+          </Text>
+          <Text type="p">
+            Max {max} {displayedCurrency}
+          </Text>
+        </div>
+        <input />
+      </Flex>
+    </Container>
+  );
+
+  /*  return (
+    <Container>
       <Title
         text={{
           id: 'title.customamount',
@@ -115,6 +84,7 @@ export default function AmountRange({
       <Row>
         <RangeContainer>
           <AmountPackage
+            // @ts-ignore
             name={
               <div>
                 <StyledInput
@@ -136,6 +106,7 @@ export default function AmountRange({
                 <Label htmlFor="custom_amount">{currency}</Label>
               </div>
             }
+            // @ts-ignore
             price={
               showPrice && (
                 <Cost>
@@ -161,5 +132,5 @@ export default function AmountRange({
         </Meta>
       </Row>
     </Container>
-  );
+  ); */
 }
