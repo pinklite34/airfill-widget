@@ -105,8 +105,6 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
       billingCurrency
     ).toUpperCase();
 
-    const showPrice = !config.coin || config.coin === 'bitcoin';
-
     return (
       <AmountPackage
         key={pkg.value}
@@ -115,33 +113,16 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
             ? pkg.value
             : `${pkg.value} ${operator.result.currency}`
         }
+        showPrice={!config.coin || config.coin === 'bitcoin'}
         price={price}
         currency={formattedBillingCurrency}
         selected={amount === pkg.value}
         onClick={() => setAmount(pkg.value)}
+        disabled={
+          canAffordAny && requireAccountBalance && price > userAccountBalance
+        }
       />
     );
-    /*  <label key={pkg.value}>
-        <RadioWrapper>
-          <Radio
-            checked={amount === pkg.value}
-            onChange={() => setAmount(pkg.value)}
-            disabled={
-              canAffordAny &&
-              requireAccountBalance &&
-              price > userAccountBalance
-            }
-          />
-        </RadioWrapper>
-        <AmountPackage
-          name={
-            isNaN(Number(pkg.value))
-              ? pkg.value
-              : `${pkg.value} ${operator.result.currency}`
-          }
-          price={showPrice && `${price} ${formattedBillingCurrency}`}
-        />
-      </label> */
   };
 
   render() {

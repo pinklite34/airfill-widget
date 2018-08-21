@@ -36,6 +36,7 @@ interface AmountPackageProps {
   // disabled?: boolean;
   // name: string;
   // selected: boolean;
+  // hidePrice?: boolean;
   [x: string]: any;
 }
 
@@ -46,18 +47,21 @@ export default function AmountPackage({
   disabled,
   selected,
   onClick,
-  ...props
+  showPrice = true,
 }: AmountPackageProps) {
-  console.log(props);
   return (
     <Container disabled={disabled} selected={selected} onClick={onClick}>
       <Text type="p" size="26px">
         {name}
       </Text>
-      <Text type="p" size="12px" margin="0">
-        You pay
-      </Text>
-      <Text type="p">{`${price} ${currency}`}</Text>
+      {showPrice && (
+        <React.Fragment>
+          <Text type="p" size="12px" margin="0">
+            You pay
+          </Text>
+          <Text type="p">{`${price} ${currency}`}</Text>
+        </React.Fragment>
+      )}
     </Container>
   );
 }
