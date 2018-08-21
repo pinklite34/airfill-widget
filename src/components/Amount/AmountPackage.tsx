@@ -25,10 +25,6 @@ const Container = styled(CardShadow)`
     solid;
 
   transition: border 0.2s ease;
-
-  &:hover {
-    border: 2px #3e8fe4 solid;
-  }
 `;
 
 const Name = styled('p')`
