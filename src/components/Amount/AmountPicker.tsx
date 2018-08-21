@@ -110,8 +110,15 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
     return (
       <AmountPackage
         key={pkg.value}
+        name={
+          isNaN(Number(pkg.value))
+            ? pkg.value
+            : `${pkg.value} ${operator.result.currency}`
+        }
+        price={price}
         currency={formattedBillingCurrency}
-        {...pkg}
+        selected={amount === pkg.value}
+        onClick={() => setAmount(pkg.value)}
       />
     );
     /*  <label key={pkg.value}>
