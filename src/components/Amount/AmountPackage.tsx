@@ -1,27 +1,36 @@
 import * as React from 'react';
 import styled from 'react-emotion';
+import Card from '../UI/Card';
+import CardShadow from '../UI/CardShadow';
 
-const Name = styled('div')`
-  font-size: 16px;
-  font-weight: 500;
-`;
+const Container = styled(CardShadow)`
+  width: 140px;
+  height: 140px;
+  margin: 6px;
 
-const Price = styled('div')`
-  font-size: 12px;
-  color: #777777;
-  font-weight: 500;
+  border-radius: 4px;
+  border: 2px ${(p: any) => (p.selected ? '#3E8FE4' : '#fff')} solid;
+
+  transition: border 0.2s ease;
+
+  &:hover {
+    border: 2px #3e8fe4 solid;
+  }
 `;
 
 interface AmountPackageProps {
-  name: any;
-  price: any;
+  // currency: string;
+  [x: string]: any;
 }
 
-export default function AmountPackage({ name, price }: AmountPackageProps) {
+export default function AmountPackage({
+  currency,
+  ...props
+}: AmountPackageProps) {
+  console.log(props);
   return (
-    <div>
-      <Name>{name}</Name>
-      <Price>{price}</Price>
-    </div>
+    <Container>
+      <p>{currency}</p>
+    </Container>
   );
 }

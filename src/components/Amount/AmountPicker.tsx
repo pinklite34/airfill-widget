@@ -27,15 +27,11 @@ const Title = styled(SectionTitle)`
 const Packages = styled('div')`
   background-color: #fff;
 
-  & > label {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    padding-right: 2px;
-    height: auto;
-    margin: 0;
-    border-top: ${(p: any) => p.theme.bd.primary};
-  }
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 `;
 
 const RadioWrapper = styled('div')`
@@ -112,7 +108,13 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
     const showPrice = !config.coin || config.coin === 'bitcoin';
 
     return (
-      <label key={pkg.value}>
+      <AmountPackage
+        key={pkg.value}
+        currency={formattedBillingCurrency}
+        {...pkg}
+      />
+    );
+    /*  <label key={pkg.value}>
         <RadioWrapper>
           <Radio
             checked={amount === pkg.value}
@@ -132,8 +134,7 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
           }
           price={showPrice && `${price} ${formattedBillingCurrency}`}
         />
-      </label>
-    );
+      </label> */
   };
 
   render() {
