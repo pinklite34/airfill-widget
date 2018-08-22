@@ -9,6 +9,7 @@ import * as React from 'react';
 import styled from 'react-emotion';
 
 import { getDisplayName, satoshiToBTC } from '../../lib/currency-helpers';
+import DeviceInfo from '../../lib/DeviceInfo';
 import Flex from '../UI/Flex';
 import Text from '../UI/Text';
 
@@ -19,12 +20,23 @@ const Container = styled(Flex)`
 
 const PriceLabel = styled(Text)`
   text-align: left;
-  padding: 6px 0 6px 12px;
-  font-size: 16px;
+  font-size: 14px;
 
   & > strong {
     text-align: left;
   }
+
+  padding: 6px;
+
+  @media (max-width: ${p => p.theme.bp.mobile}) {
+    padding: 0;
+    text-align: center;
+    & > strong {
+      text-align: center;
+    }
+  }
+
+  width: 100%;
 `;
 
 const InputContainer = styled(Flex)`
@@ -38,6 +50,7 @@ const InputContainer = styled(Flex)`
 const Input = styled('input')`
   border: none;
   width: 100%;
+  font-size: 16px;
 `;
 
 interface AmountRangeProps {
@@ -64,45 +77,54 @@ export default function AmountRange(props: AmountRangeProps) {
   const showPrice = !config.coin || config.coin === 'bitcoin';
 
   return (
-    <Container row centered>
-      <div style={{ flex: 3 }}>
-        <Flex>
-          <Flex row justifyContent="none">
-            <InputContainer row>
-              <Input
-                value={amount}
-                onChange={e => onChange(Number(e.target.value))}
-              />
-              <Text type="p" size="12px">
-                {displayedCurrency}
-              </Text>
-            </InputContainer>
-          </Flex>
-          <Flex row justifyContent="none">
-            <Text type="p" padding="0 12px 0 0">
-              <strong>Min:</strong> {min} {displayedCurrency}
-            </Text>
-            <Text type="p">
-              <strong>Max:</strong> {max} {displayedCurrency}
-            </Text>
-          </Flex>
-        </Flex>
-      </div>
-      {showPrice && (
-        <div
-          style={{
-            flex: 2,
-            alignSelf: 'flex-start',
-          }}
-        >
-          <PriceLabel type="p" id="package.userprice">
-            You pay{' '}
-            <strong>{displayableCost > 0 ? displayableCost : '0'} </strong>
-            {getDisplayName(billingCurrency)}
-          </PriceLabel>
-        </div>
+    <DeviceInfo>
+      {({ is }) => (
+        <Container row={!is.mobile} centered>
+          <div style={{ flex: 3 }}>
+            <Flex>
+              <Flex row justifyContent="none">
+                <InputContainer row>
+                  <Input
+                    value={amount}
+                    onChange={e => onChange(Number(e.target.value))}
+                  />
+                  <Text type="p" size="16px">
+                    {displayedCurrency}
+                  </Text>
+                </InputContainer>
+              </Flex>
+              <Flex
+                row
+                justifyContent={!is.mobile && 'unset'}
+                centered={is.mobile}
+              >
+                <Text type="p" padding="0 12px 0 0">
+                  <strong>Min:</strong> {min} {displayedCurrency}
+                </Text>
+                <Text type="p">
+                  <strong>Max:</strong> {max} {displayedCurrency}
+                </Text>
+              </Flex>
+            </Flex>
+          </div>
+          {showPrice && (
+            <div
+              style={{
+                flex: 2,
+                width: '100%',
+                alignSelf: 'flex-start',
+              }}
+            >
+              <PriceLabel type="p" id="package.userprice">
+                You pay{' '}
+                <strong>{displayableCost > 0 ? displayableCost : '0'} </strong>
+                {getDisplayName(billingCurrency)}
+              </PriceLabel>
+            </div>
+          )}
+        </Container>
       )}
-    </Container>
+    </DeviceInfo>
   );
 
   /*  return (
