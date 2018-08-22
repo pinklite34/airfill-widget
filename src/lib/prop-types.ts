@@ -115,6 +115,9 @@ export interface RangeProp {
   max: number;
   step: number;
   userPriceRate: number;
+  customerPriceRate: number;
+  customerSatoshiPriceRate: number;
+  customerEurPriceRate: number;
 }
 
 export interface Package {
