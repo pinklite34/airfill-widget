@@ -21,7 +21,7 @@ const Container = styled(CardShadow)`
   border-radius: 4px;
   border: 2px
     ${(p: any) =>
-      p.disabled ? p.theme.bg.disabled : p.selected ? p.theme.brand : '#fff'}
+      p.disabled ? p.theme.bg.disabled : p.selected ? p.theme.brand : '#fafafa'}
     solid;
 
   transition: border 0.2s ease;

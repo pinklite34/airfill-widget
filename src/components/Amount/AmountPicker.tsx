@@ -16,28 +16,17 @@ import ActiveSection from '../UI/ActiveSection';
 import NextButton from '../UI/NextButton';
 import SectionTitle from '../UI/SectionTitle';
 import Spinner from '../UI/Spinner';
+import Text from '../UI/Text';
 import AmountPackage from './AmountPackage';
 import AmountRange from './AmountRange';
 import ExtraInfo from './ExtraInfo';
 
-const Title = styled(SectionTitle)`
-  margin-left: 72px;
-`;
-
 const Packages = styled('div')`
-  background-color: #fff;
-
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-`;
-
-const RadioWrapper = styled('div')`
-  width: 72px;
-  display: flex;
-  justify-content: center;
 `;
 
 interface AmountPickerProps {
@@ -156,7 +145,14 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
       >
         <ExtraInfo info={operator.result.extraInfo} operator={operator} />
 
-        <Title text={{ id: 'title.selectamount', children: 'Select amount' }} />
+        <Text
+          type="p"
+          id="title.selectpackage"
+          padding="0 0 0 16px"
+          size="16px"
+        >
+          Click to select package
+        </Text>
 
         {operator.result.isRanged ? (
           <AmountRange
