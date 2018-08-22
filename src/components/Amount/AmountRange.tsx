@@ -13,8 +13,18 @@ import Flex from '../UI/Flex';
 import Text from '../UI/Text';
 
 const Container = styled(Flex)`
-  margin: 16px;
-  width: 100%;
+  margin: 0 auto;
+  width: 70%;
+`;
+
+const PriceLabel = styled(Text)`
+  text-align: left;
+  padding: 6px 0 6px 12px;
+  font-size: 16px;
+
+  & > strong {
+    text-align: left;
+  }
 `;
 
 const InputContainer = styled(Flex)`
@@ -22,10 +32,12 @@ const InputContainer = styled(Flex)`
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 2px;
   padding: 6px;
+  width: 100%;
 `;
 
 const Input = styled('input')`
   border: none;
+  width: 100%;
 `;
 
 interface AmountRangeProps {
@@ -52,41 +64,44 @@ export default function AmountRange(props: AmountRangeProps) {
   const showPrice = !config.coin || config.coin === 'bitcoin';
 
   return (
-    <Container centered>
-      <Flex row centered>
-        <div style={{ flex: 3 }}>
-          <Flex>
-            <Flex row justifyContent="none">
-              <InputContainer row>
-                <Input
-                  value={amount}
-                  onChange={e => onChange(Number(e.target.value))}
-                />
-                <Text type="p" size="12px">
-                  {displayedCurrency}
-                </Text>
-              </InputContainer>
-            </Flex>
-            <Flex row justifyContent="none">
-              <Text type="p" padding="0 12px 0 0">
-                <strong>Min:</strong> {min} {displayedCurrency}
+    <Container row centered>
+      <div style={{ flex: 3 }}>
+        <Flex>
+          <Flex row justifyContent="none">
+            <InputContainer row>
+              <Input
+                value={amount}
+                onChange={e => onChange(Number(e.target.value))}
+              />
+              <Text type="p" size="12px">
+                {displayedCurrency}
               </Text>
-              <Text type="p">
-                <strong>Max:</strong> {max} {displayedCurrency}
-              </Text>
-            </Flex>
+            </InputContainer>
           </Flex>
+          <Flex row justifyContent="none">
+            <Text type="p" padding="0 12px 0 0">
+              <strong>Min:</strong> {min} {displayedCurrency}
+            </Text>
+            <Text type="p">
+              <strong>Max:</strong> {max} {displayedCurrency}
+            </Text>
+          </Flex>
+        </Flex>
+      </div>
+      {showPrice && (
+        <div
+          style={{
+            flex: 2,
+            alignSelf: 'flex-start',
+          }}
+        >
+          <PriceLabel type="p" id="package.userprice">
+            You pay{' '}
+            <strong>{displayableCost > 0 ? displayableCost : '0'} </strong>
+            {getDisplayName(billingCurrency)}
+          </PriceLabel>
         </div>
-        {showPrice && (
-          <div style={{ flex: 2, width: '100%', height: '100%' }}>
-            <p style={{ maxWidth: '100%' }}>
-              You pay{' '}
-              <strong>{displayableCost > 0 ? displayableCost : '0'} </strong>
-              {getDisplayName(billingCurrency)}
-            </p>
-          </div>
-        )}
-      </Flex>
+      )}
     </Container>
   );
 
