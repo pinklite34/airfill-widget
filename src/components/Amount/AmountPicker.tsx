@@ -120,8 +120,9 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
 
     // no package or custom amount selected
     // amount might be string (like reddit gold)
-    const disabled =
-      amount === 'NaN' || (typeof amount !== 'string' && isNaN(amount));
+    const disabled = operator.result.isRanged
+      ? amount < operator.result.range.min || amount > operator.result.range.max
+      : amount === 'NaN' || (typeof amount !== 'string' && isNaN(amount));
 
     // can afford any listed package
     const canAffordAny =

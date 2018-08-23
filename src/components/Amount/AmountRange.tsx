@@ -67,7 +67,6 @@ export default function AmountRange(props: AmountRangeProps) {
   const { amount, range, currency, billingCurrency, onChange, config } = props;
   const min = Math.ceil(range.min);
   const max = Math.floor(range.max);
-  const step = range.step;
 
   const cost = Number(amount) * range.userPriceRate;
   const displayableCost =
@@ -86,7 +85,15 @@ export default function AmountRange(props: AmountRangeProps) {
                 <InputContainer row>
                   <Input
                     value={amount}
-                    onChange={e => onChange(Number(e.target.value))}
+                    required
+                    autoFocus
+                    onChange={e => {
+                      const val = Number(e.target.value);
+
+                      if (!isNaN(val)) {
+                        onChange(val);
+                      }
+                    }}
                   />
                   <Text type="p" size="16px">
                     {displayedCurrency}
@@ -126,65 +133,4 @@ export default function AmountRange(props: AmountRangeProps) {
       )}
     </DeviceInfo>
   );
-
-  /*  return (
-    <Container>
-      <Title
-        text={{
-          id: 'title.customamount',
-          children: '...or select custom amount',
-        }}
-      />
-      <Row>
-        <RangeContainer>
-          <AmountPackage
-            // @ts-ignore
-            name={
-              <div>
-                <StyledInput
-                  type="number"
-                  min={min}
-                  max={max}
-                  step={step}
-                  value={amount}
-                  onChange={e => onChange(e.target.value)}
-                  onBlur={() =>
-                    amount > range.max
-                      ? onChange(range.max)
-                      : amount < range.min
-                        ? onChange(range.min)
-                        : null
-                  }
-                  id="custom_amount"
-                />
-                <Label htmlFor="custom_amount">{currency}</Label>
-              </div>
-            }
-            // @ts-ignore
-            price={
-              showPrice && (
-                <Cost>
-                  {displayableCost > 0 ? displayableCost : '0'}{' '}
-                  {getDisplayName(billingCurrency)}
-                </Cost>
-              )
-            }
-          />
-        </RangeContainer>
-
-        <Meta>
-          <div>
-            <Text id="amount.min">
-              <strong>Min:</strong> {{ min }} {{ displayedCurrency }}
-            </Text>
-          </div>
-          <div>
-            <Text id="amount.max">
-              <strong>Max:</strong> {{ max }} {{ displayedCurrency }}
-            </Text>
-          </div>
-        </Meta>
-      </Row>
-    </Container>
-  ); */
 }
