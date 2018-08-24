@@ -4,7 +4,7 @@ let ethInstance = null;
 
 export async function getEth() {
   const eth = await import(/* webpackChunkName: "module__ethjs" */ 'ethjs');
-  return eth.default;
+  return eth;
 }
 
 export async function getEthInstance() {
