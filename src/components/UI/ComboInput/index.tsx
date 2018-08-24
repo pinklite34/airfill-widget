@@ -12,6 +12,7 @@ import {
   setCountry,
   setNumber,
   setOperator,
+  trackEvent,
   useRecentRefill,
 } from '../../../actions';
 import {
@@ -91,6 +92,7 @@ interface ComboInputProps {
   setCountry: typeof setCountry;
   setNumber: typeof setNumber;
   setOperator: typeof setOperator;
+  trackEvent: typeof trackEvent;
   shouldFocus: boolean;
   useRecentRefill: typeof useRecentRefill;
 }
@@ -148,19 +150,29 @@ class ComboInput extends React.PureComponent<ComboInputProps> {
   };
 
   handleSelect = item => {
+    const {
+      trackEvent,
+      setCountry,
+      number,
+      setOperator,
+      useRecentRefill,
+      history,
+    } = this.props;
     if (item.__type === 'country') {
-      this.props.setCountry(item.alpha2);
-      const newValue = this.props.number || '';
+      trackEvent('Products Searched', { query: `Country - ${item.alpha2}` });
+      setCountry(item.alpha2);
+      const newValue = number || '';
       this.setState({
         inputValue: newValue,
         caretStart: newValue.length,
       });
     } else if (item.__type === 'provider') {
-      this.props.setOperator(item.slug);
-      this.props.history.push('/refill/selectAmount');
+      trackEvent('Products Searched', { query: `Operator - ${item.slug}` });
+      setOperator(item.slug);
+      history.push('/refill/selectAmount');
     } else if (item.__type === 'history') {
-      this.props.useRecentRefill(item);
-      this.props.history.push('/refill/selectAmount');
+      useRecentRefill(item);
+      history.push('/refill/selectAmount');
     }
   };
 
@@ -380,5 +392,6 @@ export default connect(
     setNumber,
     setOperator,
     useRecentRefill,
+    trackEvent,
   }
 )(ComboInput);

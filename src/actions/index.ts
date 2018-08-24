@@ -1,5 +1,6 @@
 import { format, parse } from 'libphonenumber-js';
 import { createAction } from 'redux-actions';
+import { EventTypes } from 'redux-segment';
 
 import { history } from '../components/Widget';
 import { fetch } from '../lib/api-client';
@@ -237,6 +238,8 @@ export const createOrder = orderOptions => (dispatch, getState) => {
     options.body.number = number;
   }
 
+  console.log(options);
+
   return dispatch(postOrder(options));
 };
 
@@ -310,3 +313,17 @@ export const useRecentRefill = recentRefill => dispatch => {
     );
   }
 };
+
+export const trackEvent = (event, payload) => ({
+  type: 'SEGMENT_TRACK',
+  payload: {},
+  meta: {
+    analytics: {
+      eventType: EventTypes.track,
+      eventPayload: {
+        event,
+        properties: payload,
+      },
+    },
+  },
+});
