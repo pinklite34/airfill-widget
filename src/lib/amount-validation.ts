@@ -65,15 +65,13 @@ const selectValidRangedAmount = ({
 
   if (selectedAmountCost <= maxCost) {
     return String(amount); // Return amount as is for ranged operators
+  } else if (currency === 'XBT') {
+    const amountForMaxCost = Math.floor(
+      (maxCost * 100000000) / costConversionRate
+    );
+    return String(amountForMaxCost); // Return the maximum amount allowed
   } else {
-    if (currency === 'XBT') {
-      const amountForMaxCost = Math.floor(
-        (maxCost * 100000000) / costConversionRate
-      );
-      return String(amountForMaxCost); // Return the maximum amount allowed
-    } else {
-      return String(maxCost / costConversionRate);
-    }
+    return String(maxCost);
   }
 };
 

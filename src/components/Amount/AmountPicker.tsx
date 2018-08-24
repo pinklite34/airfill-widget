@@ -56,16 +56,15 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
       operator.result || ({} as any);
 
     if (packages && !amount) {
-      setAmount(
-        selectValidAmount({
-          amount,
-          ranged: isRanged,
-          maxCost: config.userAccountBalance,
-          costConversionRate: isRanged && range.userPriceRate,
-          currency,
-          packages,
-        })
-      );
+      const a = selectValidAmount({
+        amount,
+        ranged: isRanged,
+        maxCost: config.userAccountBalance || range.max,
+        costConversionRate: isRanged && range.userPriceRate,
+        currency,
+        packages,
+      });
+      setAmount(a);
     }
   };
 
