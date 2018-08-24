@@ -10,12 +10,14 @@ import styled from 'react-emotion';
 
 import { getDisplayName, satoshiToBTC } from '../../lib/currency-helpers';
 import DeviceInfo from '../../lib/DeviceInfo';
+import CardShadow from '../UI/CardShadow';
 import Flex from '../UI/Flex';
 import Text from '../UI/Text';
 
 const Container = styled(Flex)`
   margin: 0 auto;
   width: 70%;
+  padding-top: 16px;
 `;
 
 const PriceLabel = styled(Text)`
@@ -78,58 +80,62 @@ export default function AmountRange(props: AmountRangeProps) {
   return (
     <DeviceInfo>
       {({ is }) => (
-        <Container row={!is.mobile} centered>
-          <div style={{ flex: 3 }}>
-            <Flex>
-              <Flex row justifyContent="none">
-                <InputContainer row>
-                  <Input
-                    value={amount}
-                    required
-                    autoFocus
-                    onChange={e => {
-                      const val = Number(e.target.value);
+        <CardShadow color="white">
+          <Container row={!is.mobile} centered>
+            <div style={{ flex: 3 }}>
+              <Flex>
+                <Flex row justifyContent="none">
+                  <InputContainer row>
+                    <Input
+                      value={amount}
+                      required
+                      autoFocus
+                      onChange={e => {
+                        const val = Number(e.target.value);
 
-                      if (!isNaN(val)) {
-                        onChange(val);
-                      }
-                    }}
-                  />
-                  <Text type="p" size="16px">
-                    {displayedCurrency}
+                        if (!isNaN(val)) {
+                          onChange(val);
+                        }
+                      }}
+                    />
+                    <Text type="p" size="16px">
+                      {displayedCurrency}
+                    </Text>
+                  </InputContainer>
+                </Flex>
+                <Flex
+                  row
+                  justifyContent={!is.mobile && 'unset'}
+                  centered={is.mobile}
+                >
+                  <Text type="p" padding="0 12px 0 0">
+                    <strong>Min:</strong> {min} {displayedCurrency}
                   </Text>
-                </InputContainer>
+                  <Text type="p">
+                    <strong>Max:</strong> {max} {displayedCurrency}
+                  </Text>
+                </Flex>
               </Flex>
-              <Flex
-                row
-                justifyContent={!is.mobile && 'unset'}
-                centered={is.mobile}
-              >
-                <Text type="p" padding="0 12px 0 0">
-                  <strong>Min:</strong> {min} {displayedCurrency}
-                </Text>
-                <Text type="p">
-                  <strong>Max:</strong> {max} {displayedCurrency}
-                </Text>
-              </Flex>
-            </Flex>
-          </div>
-          {showPrice && (
-            <div
-              style={{
-                flex: 2,
-                width: '100%',
-                alignSelf: 'flex-start',
-              }}
-            >
-              <PriceLabel type="p" id="package.userprice">
-                You pay{' '}
-                <strong>{displayableCost > 0 ? displayableCost : '0'} </strong>
-                {getDisplayName(billingCurrency)}
-              </PriceLabel>
             </div>
-          )}
-        </Container>
+            {showPrice && (
+              <div
+                style={{
+                  flex: 2,
+                  width: '100%',
+                  alignSelf: 'flex-start',
+                }}
+              >
+                <PriceLabel type="p" id="package.userprice">
+                  You pay{' '}
+                  <strong>
+                    {displayableCost > 0 ? displayableCost : '0'}{' '}
+                  </strong>
+                  {getDisplayName(billingCurrency)}
+                </PriceLabel>
+              </div>
+            )}
+          </Container>
+        </CardShadow>
       )}
     </DeviceInfo>
   );
