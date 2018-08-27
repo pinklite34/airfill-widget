@@ -156,30 +156,41 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
       >
         <ExtraInfo info={operator.result.extraInfo} operator={operator} />
 
-        <Text
-          type="p"
-          id="title.selectpackage"
-          padding="0 0 0 16px"
-          size="16px"
-        >
-          Click to select package
-        </Text>
-
         {operator.result.isRanged ? (
-          <AmountRange
-            amount={amount}
-            range={operator.result.range}
-            currency={operator.result.currency}
-            billingCurrency={billingCurrency}
-            onChange={setAmount}
-            config={config}
-          />
+          <React.Fragment>
+            <Text
+              type="p"
+              id="title.selectamount"
+              padding="0 0 0 16px"
+              size="16px"
+            >
+              Select amount
+            </Text>
+            <AmountRange
+              amount={amount}
+              range={operator.result.range}
+              currency={operator.result.currency}
+              billingCurrency={billingCurrency}
+              onChange={setAmount}
+              config={config}
+            />
+          </React.Fragment>
         ) : (
-          <Packages>
-            {operator.result.packages.map(pkg =>
-              this.renderPackage(pkg, canAffordAny)
-            )}
-          </Packages>
+          <React.Fragment>
+            <Text
+              type="p"
+              id="title.selectpackage"
+              padding="0 0 0 16px"
+              size="16px"
+            >
+              Click to select package
+            </Text>
+            <Packages>
+              {operator.result.packages.map(pkg =>
+                this.renderPackage(pkg, canAffordAny)
+              )}
+            </Packages>
+          </React.Fragment>
         )}
       </ActiveSection>
     );
