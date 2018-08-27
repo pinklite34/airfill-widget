@@ -7,7 +7,7 @@ import { withRouter } from 'react-router';
 import { compose } from 'recompose';
 
 import { setAmount } from '../../actions';
-import { selectValidAmount } from '../../lib/amount-validation';
+import { isAffordable, selectValidAmount } from '../../lib/amount-validation';
 import { getDisplayName, getPrice } from '../../lib/currency-helpers';
 import { isValidEmail } from '../../lib/email-validation';
 import { Amount, Config, OperatorResult } from '../../lib/prop-types';
@@ -66,7 +66,7 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
       }); */
       const a = selectValidAmount(
         packages,
-        currency,
+        config.billingCurrency,
         config.userAccountBalance,
         range
       );
@@ -114,7 +114,9 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
         selected={amount === pkg.value}
         onClick={() => setAmount(pkg.value)}
         disabled={
-          canAffordAny && requireAccountBalance && price > userAccountBalance
+          canAffordAny &&
+          requireAccountBalance &&
+          !isAffordable(pkg, billingCurrency, userAccountBalance)
         }
       />
     );
@@ -136,8 +138,8 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
     const canAffordAny =
       operator.result &&
       config.requireAccountBalance &&
-      operator.result.packages.some(
-        pkg => getPrice(pkg, billingCurrency) <= config.userAccountBalance
+      operator.result.packages.some(pkg =>
+        isAffordable(pkg, config.billingCurrency, config.userAccountBalance)
       );
 
     return operator.isLoading ||

@@ -1,5 +1,5 @@
 import { getDisplayName } from './currency-helpers';
-import { Amount, Package, RangeProp } from './prop-types';
+import { Amount, BillingCurrency, Package, RangeProp } from './prop-types';
 
 /*
 const pickMiddlePackage = ({ packages }) => {
@@ -88,9 +88,21 @@ export const selectValidAmount = args => {
 };
  */
 
+// if package is affordable with current user balance
+// is affordable if no balance is set
+export function isAffordable(
+  pkg: Package,
+  userCurrency: BillingCurrency,
+  balance: Amount
+) {
+  const costKey = getDisplayName(userCurrency).toLowerCase() + 'Price';
+
+  return !balance || pkg[costKey] <= balance;
+}
+
 export function selectValidAmount(
   packages: Package[],
-  userCurrency: any,
+  userCurrency: BillingCurrency,
   max?: Amount,
   range?: RangeProp
 ) {
@@ -102,8 +114,9 @@ export function selectValidAmount(
 
     const f = packages
       .sort((a, b) => (a[costKey] < b[costKey] ? 1 : -1))
-      .filter(pkg => !max || pkg[costKey] <= max);
+      .filter(pkg => isAffordable(pkg, userCurrency, max));
 
-    return f.length > 0 && f[0].value;
+    // pick highest affordable or most expensive, if no affordable
+    return f.length > 0 ? f[0].value : packages[0].value;
   }
 }
