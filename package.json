@@ -120,27 +120,15 @@
     ]
   },
   "babel": {
+    "plugins": [
+      [
+        "emotion",
+        {
+          "hoist": true
+        }
+      ]
+    ],
     "env": {
-      "production": {
-        "plugins": [
-          [
-            "emotion",
-            {
-              "hoist": true
-            }
-          ]
-        ]
-      },
-      "test": {
-        "plugins": [
-          [
-            "emotion",
-            {
-              "hoist": true
-            }
-          ]
-        ]
-      },
       "development": {
         "plugins": [
           [
