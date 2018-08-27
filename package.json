@@ -131,6 +131,16 @@
           ]
         ]
       },
+      "test": {
+        "plugins": [
+          [
+            "emotion",
+            {
+              "hoist": true
+            }
+          ]
+        ]
+      },
       "development": {
         "plugins": [
           [
