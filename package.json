@@ -1,6 +1,6 @@
 {
   "name": "@bitrefill/airfill-widget",
-  "version": "4.5.20",
+  "version": "4.5.21",
   "description": "Airfill Embeddable Refill Widget",
   "main": "dist/index.js",
   "engines": {
@@ -122,10 +122,25 @@
   "babel": {
     "env": {
       "production": {
-        "plugins": [["emotion", { "hoist": true }]]
+        "plugins": [
+          [
+            "emotion",
+            {
+              "hoist": true
+            }
+          ]
+        ]
       },
       "development": {
-        "plugins": [["emotion", { "sourceMap": true, "autoLabel": true }]]
+        "plugins": [
+          [
+            "emotion",
+            {
+              "sourceMap": true,
+              "autoLabel": true
+            }
+          ]
+        ]
       }
     }
   },
