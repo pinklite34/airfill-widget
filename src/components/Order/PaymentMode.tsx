@@ -175,7 +175,7 @@ class PaymentMode extends React.PureComponent<PaymentModeProps> {
               ) : (
                 <Flex row={greaterThan.tablet} width="100%">
                   <Flex
-                    style={{ flex: 1 }}
+                    css={{ flex: 1 }}
                     justifyContent="flex-start"
                     width="100%"
                   >
@@ -198,7 +198,7 @@ class PaymentMode extends React.PureComponent<PaymentModeProps> {
                         direction={is.mobile ? 'column-reverse' : 'column'}
                         alignItems="center"
                         justifyContent="center"
-                        style={{
+                        css={{
                           flex: 2,
                         }}
                       >
@@ -221,7 +221,7 @@ class PaymentMode extends React.PureComponent<PaymentModeProps> {
                         {is.mobile && isPartial && SupportLink}
                       </Flex>
                       <div
-                        style={{
+                        css={{
                           flex: 5,
                           marginLeft: !is.mobile && '12px',
                           justifyContent: 'center',
@@ -243,7 +243,7 @@ class PaymentMode extends React.PureComponent<PaymentModeProps> {
                           </CopyField>
                         </Flex>
                         <div
-                          style={{
+                          css={{
                             width: '100%',
                             height: '1px',
                             borderTop: '1px solid rgba(0, 0, 0, 0.08)',

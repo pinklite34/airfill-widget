@@ -211,7 +211,7 @@ class AirfillWidget extends React.Component<AirfillWidgetProps & Config> {
           <MuiThemeProvider theme={muiTheme}>
             <Root className={className}>
               <WidgetRect>
-                <Card alwaysBorder style={{ overflow: 'hidden' }}>
+                <Card alwaysBorder css={{ overflow: 'hidden' }}>
                   {hasLoaded ? (
                     <React.Fragment>
                       <Header

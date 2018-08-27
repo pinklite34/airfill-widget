@@ -38,8 +38,8 @@ const Title = styled(SectionTitle)`
   }
 `;
 
-function SectionTitleRow({ item, style }) {
-  return <div style={style}>{item.title}</div>;
+function SectionTitleRow({ item, css }) {
+  return <div css={css}>{item.title}</div>;
 }
 
 const rowComponents = {
@@ -108,7 +108,7 @@ const Dropdown = ({
 
               if (item.__type === 'sectionTitle') {
                 return (
-                  <Title key={item.key} style={style}>
+                  <Title key={item.key} css={style}>
                     {item.title}
                   </Title>
                 );
@@ -119,7 +119,7 @@ const Dropdown = ({
                   <Row
                     key={item.key}
                     operatorProps={getItemProps({
-                      style,
+                      css: style,
                       index: item.index,
                       item,
                     })}

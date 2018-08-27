@@ -87,6 +87,7 @@
     "@types/react-router-redux": "^5.0.15",
     "babel-core": "^6.26.3",
     "babel-jest": "^23.4.2",
+    "babel-plugin-emotion": "^9.2.6",
     "eslint-config-bitrefill": "^1.1.1",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "husky": "^0.14.3",
@@ -117,6 +118,16 @@
       "yarn lint",
       "git add"
     ]
+  },
+  "babel": {
+    "env": {
+      "production": {
+        "plugins": [["emotion", { "hoist": true }]]
+      },
+      "development": {
+        "plugins": [["emotion", { "sourceMap": true, "autoLabel": true }]]
+      }
+    }
   },
   "jest": {
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?|ts|js)$",
