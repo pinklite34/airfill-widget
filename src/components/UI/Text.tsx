@@ -96,7 +96,7 @@ interface TextProps {
   padding?: string;
   tight?: boolean;
   underline?: boolean;
-  css?: React.CSSProperties;
+  style?: React.CSSProperties;
   className?: string;
   width?: string;
   weight?: number;
@@ -119,7 +119,7 @@ export default function Text({
   padding,
   tight,
   underline,
-  css,
+  style,
   width,
   weight,
   className,
@@ -138,7 +138,7 @@ export default function Text({
     padding,
     tight,
     underline,
-    css,
+    style,
     width,
     weight,
     className,
@@ -151,12 +151,8 @@ export default function Text({
     transProps.children
   );
 
-  const s = <p css={{}} />;
-
   return TextComponent ? (
-    <TextComponent {...textProps} css={{ color: 'red !important' }}>
-      {children}
-    </TextComponent>
+    <TextComponent {...textProps}>{children}</TextComponent>
   ) : (
     children || null
   );

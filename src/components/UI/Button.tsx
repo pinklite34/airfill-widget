@@ -68,7 +68,7 @@ interface ButtonProps {
   onClick?: any;
   className?: string;
   type?: string;
-  css?: any;
+  style?: React.CSSProperties;
   width?: any;
 }
 

@@ -19,7 +19,7 @@ export default function OrderStatusButton(props: OrderStatusButtonProps) {
       }/${order.payment && order.payment.address}`}
     >
       <Button
-        css={{ textDecoration: 'none', margin: '10px 0' }}
+        style={{ textDecoration: 'none', margin: '10px 0' }}
         text={
           text || {
             id: 'order.failed.orderstatus',

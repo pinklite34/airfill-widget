@@ -76,7 +76,7 @@ class StatusEmail extends React.PureComponent<StatusEmailProps> {
           <Text
             type="p"
             onClick={() => setSubscribeNewsletter(!subscribing)}
-            css={{ cursor: 'pointer' }}
+            style={{ cursor: 'pointer' }}
             id="email.newsletter"
           >
             Add me to the newsletter to receive news about new products and

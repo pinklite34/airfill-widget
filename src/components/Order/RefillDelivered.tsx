@@ -74,7 +74,7 @@ export default function RefillDelivered(props: RefillDeliveredProps) {
                 >
                   Gift card code
                 </PinLabel>
-                <p css={{ fontFamily: 'monospace' }}>{pinInfo.pin}</p>
+                <p style={{ fontFamily: 'monospace' }}>{pinInfo.pin}</p>
               </PinContainer>
             )}
             {pinInfo.instructions && (
