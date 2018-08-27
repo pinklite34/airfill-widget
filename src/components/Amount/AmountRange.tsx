@@ -126,10 +126,7 @@ export default function AmountRange(props: AmountRangeProps) {
                 }}
               >
                 <PriceLabel type="p" id="package.userprice">
-                  You pay{' '}
-                  <strong>
-                    {displayableCost > 0 ? displayableCost : '0'}{' '}
-                  </strong>
+                  You pay <strong>{{ displayableCost }} </strong>
                   {getDisplayName(billingCurrency)}
                 </PriceLabel>
               </div>
