@@ -106,9 +106,8 @@ export function selectValidAmount(
   max?: Amount,
   range?: RangeProp
 ) {
-  // if ranged, pick max range amount or user acc balance
   if (range) {
-    return max > range.max ? range.max : max || range.max;
+    return range.max;
   } else {
     const costKey = getDisplayName(userCurrency).toLowerCase() + 'Price';
 
