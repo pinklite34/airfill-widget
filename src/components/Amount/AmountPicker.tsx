@@ -56,14 +56,21 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
       operator.result || ({} as any);
 
     if (packages && !amount) {
-      const a = selectValidAmount({
+      /*  const a = selectValidAmount({
         amount,
         ranged: isRanged,
-        maxCost: config.userAccountBalance || range.max,
+        maxCost: config.userAccountBalance || (isRanged && range.max),
         costConversionRate: isRanged && range.userPriceRate,
         currency,
         packages,
-      });
+      }); */
+      const a = selectValidAmount(
+        packages,
+        currency,
+        config.userAccountBalance,
+        range
+      );
+      console.log('setamount', a);
       setAmount(a);
     }
   };
@@ -119,9 +126,11 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
 
     // no package or custom amount selected
     // amount might be string (like reddit gold)
-    const disabled = operator.result.isRanged
-      ? amount < operator.result.range.min || amount > operator.result.range.max
-      : amount === 'NaN' || (typeof amount !== 'string' && isNaN(amount));
+    const disabled =
+      operator.result && operator.result.isRanged
+        ? amount < operator.result.range.min ||
+          amount > operator.result.range.max
+        : amount === 'NaN' || (typeof amount !== 'string' && isNaN(amount));
 
     // can afford any listed package
     const canAffordAny =

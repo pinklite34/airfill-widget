@@ -1,9 +1,7 @@
 import { getDisplayName } from './currency-helpers';
+import { Amount, Package, RangeProp } from './prop-types';
 
-// Handle XBT
-export const getCostForAmount = (conversionRate, amount) =>
-  Number(amount * conversionRate).toFixed(2);
-
+/*
 const pickMiddlePackage = ({ packages }) => {
   const middle = Math.round((packages.length - 1) * 0.6);
   const pkg = packages[middle];
@@ -88,3 +86,24 @@ export const selectValidAmount = args => {
     return validPackageAmount;
   }
 };
+ */
+
+export function selectValidAmount(
+  packages: Package[],
+  userCurrency: any,
+  max?: Amount,
+  range?: RangeProp
+) {
+  // if ranged, pick max range amount or user acc balance
+  if (range) {
+    return max > range.max ? range.max : max || range.max;
+  } else {
+    const costKey = getDisplayName(userCurrency).toLowerCase() + 'Price';
+
+    const f = packages
+      .sort((a, b) => (a[costKey] < b[costKey] ? 1 : -1))
+      .filter(pkg => !max || pkg[costKey] <= max);
+
+    return f.length > 0 && f[0].value;
+  }
+}
