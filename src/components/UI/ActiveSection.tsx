@@ -70,7 +70,7 @@ class ActiveSectionNext extends React.PureComponent<ActiveSectionNextProps> {
       isMobile,
     } = this.props;
     return (
-      <div css={{ position: !fixed && !isMobile && 'relative' } as any}>
+      <div style={{ position: !fixed && !isMobile && 'relative' } as any}>
         <NextContainer
           isMobile={isMobile}
           onClick={onUpdate}
@@ -81,7 +81,7 @@ class ActiveSectionNext extends React.PureComponent<ActiveSectionNextProps> {
         >
           {children}
         </NextContainer>
-        {!isMobile && <div css={{ height }} />}
+        {!isMobile && <div style={{ height }} />}
       </div>
     );
   }
