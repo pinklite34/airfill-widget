@@ -80,7 +80,9 @@ class PaymentMode extends React.PureComponent<PaymentModeProps> {
         },
         err => {
           console.error(err);
-          onExternalUrl(uri);
+          // onExternalUrl(uri);
+          // this is called when there is no balance
+          // automatically on toshi and causes issues
         }
       );
     } else {

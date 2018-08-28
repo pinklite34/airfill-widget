@@ -151,12 +151,8 @@ export default function Text({
     transProps.children
   );
 
-  const s = <p style={{}} />;
-
   return TextComponent ? (
-    <TextComponent {...textProps} style={{ color: 'red !important' }}>
-      {children}
-    </TextComponent>
+    <TextComponent {...textProps}>{children}</TextComponent>
   ) : (
     children || null
   );
