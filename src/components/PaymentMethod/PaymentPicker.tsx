@@ -112,7 +112,13 @@ class PaymentMethod extends React.Component<PaymentMethodProps> {
             .map(method => {
               const affordable =
                 typeof method.canAfford === 'function'
-                  ? canAfford(method, operator, amount, config.billingCurrency)
+                  ? canAfford(
+                      method,
+                      operator,
+                      amount,
+                      config.billingCurrency,
+                      config.userAccountBalance
+                    )
                   : true;
 
               return (

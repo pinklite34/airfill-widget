@@ -56,21 +56,12 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
       operator.result || ({} as any);
 
     if (packages && !amount) {
-      /*  const a = selectValidAmount({
-        amount,
-        ranged: isRanged,
-        maxCost: config.userAccountBalance || (isRanged && range.max),
-        costConversionRate: isRanged && range.userPriceRate,
-        currency,
-        packages,
-      }); */
       const a = selectValidAmount(
         packages,
         config.billingCurrency,
         config.userAccountBalance,
         range
       );
-
       setAmount(a);
     }
   };
@@ -113,7 +104,11 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
             ? pkg.value
             : `${pkg.value} ${operator.result.currency}`
         }
-        showPrice={!config.coin || config.coin === 'bitcoin'}
+        showPrice={
+          !config.coin ||
+          config.coin === 'bitcoin' ||
+          config.coin === 'lightning'
+        }
         price={price}
         currency={formattedBillingCurrency}
         selected={amount === pkg.value}
