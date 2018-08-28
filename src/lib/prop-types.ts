@@ -217,6 +217,10 @@ export interface Order {
   valuePackage: Amount;
   willRetry: boolean;
   errorMessage?: string;
+  linkInfo?: {
+    link: string;
+    other: string;
+  };
 }
 
 export type OrderResult = Result<Order>;

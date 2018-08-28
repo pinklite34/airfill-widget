@@ -28,7 +28,7 @@ interface RefillDeliveredProps {
 }
 
 export default function RefillDelivered(props: RefillDeliveredProps) {
-  const { paymentStatus } = props;
+  const { paymentStatus, order } = props;
 
   /* let pinInfo = {
     pin: '1234 1234 5678 6666',
@@ -40,6 +40,10 @@ export default function RefillDelivered(props: RefillDeliveredProps) {
 
   const pinInfo =
     paymentStatus.deliveryData && paymentStatus.deliveryData.pinInfo;
+
+  const linkInfo = order.linkInfo;
+
+  console.log(props);
 
   return (
     <React.Fragment>
@@ -111,9 +115,28 @@ export default function RefillDelivered(props: RefillDeliveredProps) {
           </React.Fragment>
         )}
 
-        <Link href="https://www.bitrefill.com/faq/#my-topup-did-not-arrive">
-          <Text id="order.delivered.link">Can&apos;t see your refill?</Text>
-        </Link>
+        {linkInfo && (
+          <div>
+            <Text type="p">
+              <a href={linkInfo.link}>{linkInfo.link}</a>
+            </Text>
+
+            <PinLabel
+              type="p"
+              id="order.delivered.other"
+              margin="8px 0"
+              weight="600"
+            >
+              {linkInfo.other}
+            </PinLabel>
+          </div>
+        )}
+
+        {!linkInfo && (
+          <Link href="https://www.bitrefill.com/faq/#my-topup-did-not-arrive">
+            <Text id="order.delivered.link">Can&apos;t see your refill?</Text>
+          </Link>
+        )}
 
         <Button
           margin="12px 0 0"
