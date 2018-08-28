@@ -10,8 +10,8 @@ import {
   routerReducer,
 } from 'react-router-redux';
 
+import initAnalytics from './lib/analytics-init';
 import { client } from './lib/api-client';
-import initAnalytics from './lib/init-analytics';
 import configureStore from './store/configureStore';
 
 import Widget from './components/Widget';

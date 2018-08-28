@@ -58,7 +58,7 @@ const PaymentItem = ({
   const { icon, title, description, notice } = method;
 
   const disabled = !affordable;
-  const color = selected && 'white';
+  const color = selected ? 'white' : null;
 
   return (
     <Container

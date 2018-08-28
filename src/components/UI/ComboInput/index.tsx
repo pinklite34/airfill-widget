@@ -12,9 +12,9 @@ import {
   setCountry,
   setNumber,
   setOperator,
-  trackEvent,
   useRecentRefill,
 } from '../../../actions';
+import { trackEvent } from '../../../actions/analytics-actions';
 import {
   sectionsToItemList,
   virtualIndexToItemIndex,
