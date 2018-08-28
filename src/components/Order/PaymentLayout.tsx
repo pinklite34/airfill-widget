@@ -2,8 +2,6 @@ import * as React from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
 
-import { updatePaymentStatus } from '../../actions';
-import { getPaymentInfo } from '../../lib/price';
 import {
   Amount,
   BillingCurrency,
@@ -13,12 +11,16 @@ import {
   PaymentStatus,
   RecipientType,
 } from '../../types';
+
+import { updatePaymentStatus } from '../../actions';
+import { getPaymentInfo } from '../../lib/price';
 import {
   selectAmount,
   selectNumber,
   selectOperator,
   selectPaymentMethod,
 } from '../../store';
+
 import Flex from '../UI/Flex';
 import Icon from '../UI/Icon';
 import SectionTitle from '../UI/SectionTitle';

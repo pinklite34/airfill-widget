@@ -1,6 +1,8 @@
+import { Order, Product, RootState } from '../types';
+
 import { getPlatform, getSource, isMobileApp } from '../lib/globals';
 
-export function productPropertiesForOrder(order) {
+export function productPropertiesForOrder(order?: Order) {
   return order
     ? {
         product_id: order.operator,
@@ -14,7 +16,7 @@ export function productPropertiesForOrder(order) {
     : {};
 }
 
-export function eventPropertiesForOrder(order) {
+export function eventPropertiesForOrder(order?: Order) {
   return order
     ? {
         ...order,
@@ -29,7 +31,7 @@ export function eventPropertiesForOrder(order) {
     : null;
 }
 
-export function eventPropertiesForProduct(product) {
+export function eventPropertiesForProduct(product?: Product) {
   return product
     ? {
         ...product,
@@ -42,7 +44,11 @@ export function eventPropertiesForProduct(product) {
     : null;
 }
 
-export function createEvent(state, eventType, payload) {
+export function createEvent(
+  state: RootState,
+  eventType: string,
+  payload
+): object {
   payload = payload || { properties: {} };
 
   const source = getSource();

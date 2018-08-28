@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import VirtualList from 'react-tiny-virtual-list';
 
 import { CountryProp } from '../../../types';
+
 import { selectCountryList } from '../../../store';
+
 import Card from '../../UI/Card';
 import SectionTitle from '../SectionTitle';
 import CountryRow from './CountryRow';

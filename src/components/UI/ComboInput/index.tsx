@@ -5,6 +5,8 @@ import { css } from 'react-emotion';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 
+import { CountryProp, Operator, RecentNumber, Recipient } from '../../../types';
+
 import {
   closeComboInput,
   openComboInput,
@@ -25,12 +27,6 @@ import {
   removeNextDigit,
 } from '../../../lib/number-input-helpers';
 import {
-  CountryProp,
-  Operator,
-  RecentNumber,
-  Recipient,
-} from '../../../types';
-import {
   selectAvailableOperators,
   selectComboInputFocus,
   selectComboInputOpen,
@@ -39,6 +35,7 @@ import {
   selectNumber,
   selectRecentNumbers,
 } from '../../../store';
+
 import Dropdown from './Dropdown';
 import InputRow from './InputRow';
 

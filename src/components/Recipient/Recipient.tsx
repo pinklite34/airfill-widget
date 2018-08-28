@@ -4,12 +4,16 @@ import * as React from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
 
-import { setEmail, setNumber, setSubscribeNewsletter, trigger } from '../../actions';
+import {
+  setEmail,
+  setNumber,
+  setSubscribeNewsletter,
+  trigger,
+} from '../../actions';
 import { isValidEmail } from '../../lib/email-validation';
 import { getRecipientIcon } from '../../lib/icon-picker';
 import { getPlaceholder } from '../../lib/number-helpers';
 import { isPhoneNumber } from '../../lib/number-input-helpers';
-import { Amount, Config, CountryProp, Email, OperatorResult, PaymentMode } from '../../types';
 import {
   selectAmount,
   selectCountry,
@@ -18,6 +22,14 @@ import {
   selectOperator,
   selectSubscribeNewsletter,
 } from '../../store';
+import {
+  Amount,
+  Config,
+  CountryProp,
+  Email,
+  OperatorResult,
+  PaymentMode,
+} from '../../types';
 import ActiveSection from '../UI/ActiveSection';
 import NextButton from '../UI/NextButton';
 import InputRow from '../UI/NumberInput';

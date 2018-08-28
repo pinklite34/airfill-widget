@@ -3,12 +3,14 @@ import styled from 'react-emotion';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 
+import { Amount, Config, OperatorResult } from '../../types';
+
 import { setAmount } from '../../actions';
 import { isAffordable, selectValidAmount } from '../../lib/amount-validation';
 import { getDisplayName, getPrice } from '../../lib/currency-helpers';
 import { isValidEmail } from '../../lib/email-validation';
-import { Amount, Config, OperatorResult } from '../../types';
 import { selectAmount, selectOperator } from '../../store';
+
 import ActiveSection from '../UI/ActiveSection';
 import NextButton from '../UI/NextButton';
 import Spinner from '../UI/Spinner';

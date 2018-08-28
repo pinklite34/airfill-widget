@@ -2,15 +2,17 @@ import { History } from 'history';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
+import { CountryProp, NumberLookup, Operator } from '../../types';
+
 import { setOperator } from '../../actions';
 import { trackProductEvent } from '../../actions/analytics-actions';
-import { CountryProp, NumberLookup, Operator } from '../../types';
 import {
   selectAvailableOperators,
   selectCountry,
   selectNumberLookup,
   selectSelectedOperator,
 } from '../../store';
+
 import ActiveSection from '../UI/ActiveSection';
 import ProviderGrid from './ProviderGrid';
 import ProviderSuggested from './ProviderSuggested';

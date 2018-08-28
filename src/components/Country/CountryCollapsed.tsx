@@ -2,11 +2,10 @@ import { History } from 'history';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { OrderResult } from '../../types';
+import { CountryProp, OrderResult } from '../../types';
 
 import { openComboInput, setComboInputFocus, setCountry } from '../../actions';
 import { trackProductEvent } from '../../actions/analytics-actions';
-import { CountryProp } from '../../types';
 import { selectCountry, selectIsNumberLookup, selectOrder } from '../../store';
 
 import Collapsed from '../UI/Collapsed';

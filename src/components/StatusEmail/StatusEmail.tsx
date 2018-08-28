@@ -3,16 +3,19 @@ import * as React from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
 
-import { setEmail, setSubscribeNewsletter } from '../../actions';
-import EmailIcon from '../../assets/email.svg';
 import { Config, Email } from '../../types';
+
+import { setEmail, setSubscribeNewsletter } from '../../actions';
 import { selectEmail, selectSubscribeNewsletter } from '../../store';
+
 import ActiveSection from '../UI/ActiveSection';
 import Checkbox from '../UI/Checkbox';
 import Flex from '../UI/Flex';
 import NextButton from '../UI/NextButton';
 import NumberInput from '../UI/NumberInput';
 import Text from '../UI/Text';
+
+import EmailIcon from '../../assets/email.svg';
 
 const InputContainer = styled('div')`
   @media (min-width: 460px) {

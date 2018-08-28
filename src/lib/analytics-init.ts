@@ -57,7 +57,7 @@ if (!analytics.initialize) {
   }
 }
 
-export default function initialiseAnalytics() {
+export default function initialiseAnalytics() : void {
   analytics.load(process.env.SEGMENT_API_KEY);
   analytics.page();
 };

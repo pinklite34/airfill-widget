@@ -1,9 +1,11 @@
 import * as React from 'react';
 import styled from 'react-emotion';
 
-import DeviceInfo from '../lib/DeviceInfo';
 import { TransProp } from '../types';
+
+import DeviceInfo from '../lib/DeviceInfo';
 import theme from '../theme';
+
 import Text from './UI/Text';
 
 const Container = styled('div')`

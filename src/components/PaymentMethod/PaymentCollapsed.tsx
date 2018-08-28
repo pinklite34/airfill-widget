@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 
 import { PaymentButton } from '../../types';
+
 import { selectPaymentMethod } from '../../store';
+
 import Collapsed from '../UI/Collapsed';
 
 interface PaymentCollapsedProps extends RouteComponentProps<{}> {

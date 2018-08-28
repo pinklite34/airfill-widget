@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router';
 
 import { Config, OperatorResult } from '../../types';
+
 import { selectOperator } from '../../store';
+
 import RecipientPicker from './Recipient';
 import RecipientCollapsed from './RecipientCollapsed';
 

@@ -31,6 +31,11 @@ export interface DeviceInfo {
   deviceType: DeviceType;
 }
 
+export interface RootState {
+  airfillWidget: any;
+  ui: any;
+}
+
 export interface PaymentButton {
   title: TransProp;
   description: TransProp;
@@ -240,6 +245,7 @@ export interface Order {
   operator: string;
   operatorResponse: string;
   operatorSlug: string;
+  operatorType: string;
   orderId: string;
   paidAmount: Amount;
   partialPayment: boolean;

@@ -5,19 +5,20 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import {
-  createOrder,
-  setEmail,
-  setNumber,
-  setPaymentMethod,
-  trigger,
-} from '../../actions';
-import {
   Amount,
   Config,
   OperatorResult,
   OrderOptions,
   PaymentButton,
 } from '../../types';
+
+import {
+  createOrder,
+  setEmail,
+  setNumber,
+  setPaymentMethod,
+  trigger,
+} from '../../actions';
 import { canAfford } from '../../payment-methods';
 import {
   selectAmount,
@@ -27,6 +28,7 @@ import {
   selectOperator,
   selectPaymentMethod,
 } from '../../store';
+
 import ActiveSection from '../UI/ActiveSection';
 import NextButton from '../UI/NextButton';
 import PaymentItem from './PaymentItem';

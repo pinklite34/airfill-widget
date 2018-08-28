@@ -2,9 +2,11 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 
+import { Operator, Recipient } from '../../types';
+
 import { getRecipientIcon } from '../../lib/icon-picker';
-import { Operator, OperatorResult, Recipient } from '../../types';
 import { selectNumber, selectSelectedOperator } from '../../store';
+
 import Collapsed from '../UI/Collapsed';
 
 interface RecipientCollapsedProps extends RouteComponentProps<{}> {

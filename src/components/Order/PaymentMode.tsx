@@ -2,17 +2,6 @@ import * as React from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
 
-import { setPaymentMethod } from '../../actions';
-import { trackProductEvent } from '../../actions/analytics-actions';
-import { productPropertiesForOrder } from '../../lib/analytics';
-import {
-  isDirectPayment,
-  isLightningPayment,
-} from '../../lib/currency-helpers';
-import DeviceInfo from '../../lib/DeviceInfo';
-import { getEthInstance, toWei } from '../../lib/eth';
-import { fromWindow } from '../../lib/globals';
-import { getPaymentInfo } from '../../lib/price';
 import {
   Amount,
   Operator,
@@ -21,8 +10,20 @@ import {
   PaymentButton,
   PaymentStatus,
 } from '../../types';
+
+import { setPaymentMethod } from '../../actions';
+import { trackProductEvent } from '../../actions/analytics-actions';
+import {
+  isDirectPayment,
+  isLightningPayment,
+} from '../../lib/currency-helpers';
+import DeviceInfo from '../../lib/DeviceInfo';
+import { getEthInstance, toWei } from '../../lib/eth';
+import { fromWindow } from '../../lib/globals';
+import { getPaymentInfo } from '../../lib/price';
 import { selectAmount, selectPaymentMethod } from '../../store';
 import theme from '../../theme';
+
 import Button from '../UI/Button';
 import CopyField from '../UI/CopyField';
 import Flex from '../UI/Flex';

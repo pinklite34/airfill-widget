@@ -2,9 +2,11 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 
-import { trackProductEvent } from '../../actions/analytics-actions';
 import { Operator, OrderResult } from '../../types';
+
+import { trackProductEvent } from '../../actions/analytics-actions';
 import { selectOrder, selectSelectedOperator } from '../../store';
+
 import Collapsed from '../UI/Collapsed';
 
 interface ProviderCollapsedProps extends RouteComponentProps<{}> {

@@ -12,6 +12,12 @@ import {
   routerReducer,
 } from 'react-router-redux';
 
+import getMethods from '../payment-methods';
+import { selectInventory, selectOperator, selectOrder } from '../store';
+import configureStore from '../store/configureStore';
+import theme from '../theme';
+import { Config, Inventory, Operator } from '../types';
+
 import {
   init,
   loadOrder,
@@ -23,12 +29,8 @@ import {
 } from '../actions';
 import { client } from '../lib/api-client';
 import i18n from '../lib/i18n-instance';
-import { Config, Inventory, Operator } from '../types';
 import WidgetRect from '../lib/WidgetRect';
-import getMethods from '../payment-methods';
-import { selectInventory, selectOperator, selectOrder } from '../store';
-import configureStore from '../store/configureStore';
-import theme from '../theme';
+
 import Amount from './Amount';
 import Country from './Country';
 import Footer from './Footer';

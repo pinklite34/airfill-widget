@@ -1,15 +1,16 @@
 import { EventTypes } from 'redux-segment';
 import { selectOrder } from './../store/order';
+import { Product } from './../types';
 
 import {
   createEvent,
   eventPropertiesForProduct,
   productPropertiesForOrder,
 } from '../lib/analytics';
-import { OrderResult } from '../types';
 import { selectOperatorBySlug } from '../store/inventory';
+import { OrderResult } from '../types';
 
-export function trackEvent(event: string, payload: any) {
+export function trackEvent(event: string, payload: object) {
   return (dispatch, getState) =>
     dispatch({
       type: 'SEGMENT_TRACK',
@@ -23,7 +24,10 @@ export function trackEvent(event: string, payload: any) {
     });
 }
 
-export function trackProductEvent(event: string, productOrSlug) {
+export function trackProductEvent(
+  event: string,
+  productOrSlug: string | Product
+) {
   return (dispatch, getState) => {
     const state = getState();
 
