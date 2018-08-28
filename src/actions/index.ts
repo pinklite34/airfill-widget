@@ -126,7 +126,9 @@ export const setOperator = operatorSlug => (dispatch, getState) => {
   }
 
   dispatch(setAmount(''));
-  dispatch(loadOperator({ operatorSlug, uri: `/inventory/${operatorSlug}` }));
+  return dispatch(
+    loadOperator({ operatorSlug, uri: `/inventory/${operatorSlug}` })
+  );
 };
 
 const transformNumberLookupReponse = response => {
