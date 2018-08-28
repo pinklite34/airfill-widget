@@ -75,7 +75,8 @@ export default function AmountRange(props: AmountRangeProps) {
     billingCurrency === 'XBT' ? satoshiToBTC(cost) : cost.toFixed(2);
 
   const displayedCurrency = getDisplayName(currency);
-  const showPrice = !config.coin || config.coin === 'bitcoin';
+  const showPrice =
+    !config.coin || config.coin === 'bitcoin' || config.coin === 'lightning';
 
   return (
     <DeviceInfo>

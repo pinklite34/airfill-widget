@@ -113,7 +113,11 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
             ? pkg.value
             : `${pkg.value} ${operator.result.currency}`
         }
-        showPrice={!config.coin || config.coin === 'bitcoin'}
+        showPrice={
+          !config.coin ||
+          config.coin === 'bitcoin' ||
+          config.coin === 'lightning'
+        }
         price={price}
         currency={formattedBillingCurrency}
         selected={amount === pkg.value}
