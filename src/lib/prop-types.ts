@@ -25,6 +25,19 @@ export type Element = any;
 export type ErrorProp = any;
 export type Recipient = RecipientType;
 
+export interface Product {
+  countryCode: string;
+  logoImage: URL;
+  name: string;
+  recipientType: RecipientType;
+  slug: string;
+  stats: {
+    popularity: number;
+    packageSize: number;
+  };
+  type: ProductType;
+}
+
 export interface CountryProp {
   name: string;
   alpha2: string;
@@ -36,6 +49,7 @@ export type InputType = 'text' | 'tel';
 export type Currency = string;
 export type BillingCurrency = 'XBT' | 'EUR' | 'USD';
 export type RecipientType = 'phone_number' | 'none' | 'email' | 'username';
+export type ProductType = 'refill';
 
 export type CoinCurrency =
   | 'BTC'

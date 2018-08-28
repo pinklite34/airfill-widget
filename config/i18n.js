@@ -20,6 +20,8 @@ const supportedLanguageKeys = supportedLanguages.map(function(x) {
 
 function createI18nConfig(lng) {
   return {
+    // debug: !isProd,
+
     fallbackLng: defaultLngKey,
     lng: lng,
     preload: [lng || defaultLngKey],
@@ -37,7 +39,6 @@ function createI18nConfig(lng) {
       addPath: 'https://api.locize.io/missing/' + LOCIZE_PROJECT_ID + '/latest/{{lng}}/{{ns}}',
     },
 
-    debug: !isProd,
     keySeparator: '### not used ###',
 
     interpolation: {

@@ -2,9 +2,12 @@ import { History } from 'history';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
+import { OrderResult } from 'lib/prop-types';
 import { openComboInput, setComboInputFocus, setCountry } from '../../actions';
+import { trackProductEvent } from '../../actions/analytics-actions';
 import { CountryProp } from '../../lib/prop-types';
-import { selectCountry, selectIsNumberLookup } from '../../store';
+import { selectCountry, selectIsNumberLookup, selectOrder } from '../../store';
+
 import Collapsed from '../UI/Collapsed';
 import Flag from '../UI/Flag';
 import Text from '../UI/Text';
@@ -17,6 +20,8 @@ interface CountryCollapsedProps {
   setComboInputFocus: typeof setComboInputFocus;
   setCountry: typeof setCountry;
   history: History;
+  trackProductEvent: typeof trackProductEvent;
+  order: OrderResult;
 }
 
 function CountryCollapsed({
@@ -27,11 +32,16 @@ function CountryCollapsed({
   setComboInputFocus,
   setCountry,
   history,
+  order,
+  trackProductEvent,
 }: CountryCollapsedProps) {
   const openMenu = () => {
     setCountry('');
     openComboInput();
     setComboInputFocus(true);
+    if (order && order.result) {
+      trackProductEvent('Product Removed', order.result.operator);
+    }
     if (!home) {
       history.push('/refill');
     }
@@ -62,10 +72,12 @@ export default connect(
   state => ({
     country: selectCountry(state),
     isNumberLookup: selectIsNumberLookup(state),
+    order: selectOrder(state),
   }),
   {
     openComboInput,
     setComboInputFocus,
     setCountry,
+    trackProductEvent,
   }
 )(CountryCollapsed);

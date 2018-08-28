@@ -3,6 +3,8 @@ import styled from 'react-emotion';
 import { connect } from 'react-redux';
 
 import { setPaymentMethod } from '../../actions';
+import { trackProductEvent } from '../../actions/analytics-actions';
+import { productPropertiesForOrder } from '../../lib/analytics';
 import {
   isDirectPayment,
   isLightningPayment,
@@ -13,6 +15,7 @@ import { fromWindow } from '../../lib/globals';
 import { getPaymentInfo } from '../../lib/price';
 import {
   Amount,
+  Operator,
   Order,
   OrderOptions,
   PaymentButton,
@@ -45,6 +48,7 @@ interface PaymentModeProps {
   paymentMethod: PaymentButton;
   setPaymentMethod: typeof setPaymentMethod;
   onExternalUrl: (uri: string) => void;
+  trackProductEvent: typeof trackProductEvent;
 }
 
 class PaymentMode extends React.PureComponent<PaymentModeProps> {
@@ -55,6 +59,11 @@ class PaymentMode extends React.PureComponent<PaymentModeProps> {
   state = {
     open: false,
     isLoading: false,
+  };
+
+  componentDidMount = () => {
+    const { trackProductEvent, order } = this.props;
+    trackProductEvent('Product Added', order.operator);
   };
 
   onOpenWallet = uri => async () => {
@@ -297,5 +306,6 @@ export default connect(
   }),
   {
     setPaymentMethod,
+    trackProductEvent,
   }
 )(PaymentMode);

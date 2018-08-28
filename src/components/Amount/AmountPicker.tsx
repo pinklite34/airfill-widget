@@ -70,7 +70,7 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
         config.userAccountBalance,
         range
       );
-      console.log('setamount', a);
+
       setAmount(a);
     }
   };
