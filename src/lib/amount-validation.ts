@@ -107,7 +107,18 @@ export function selectValidAmount(
   range?: RangeProp
 ) {
   if (range) {
-    return range.max;
+    const correctMax =
+      userCurrency === 'XBT'
+        ? ((max as number) * 100000000) / range.userPriceRate
+        : (max as number) / range.userPriceRate;
+
+    if (correctMax < range.min) {
+      return 0;
+    } else if (correctMax < range.max) {
+      return correctMax.toFixed();
+    } else {
+      return range.max;
+    }
   } else {
     const costKey = getDisplayName(userCurrency).toLowerCase() + 'Price';
 
