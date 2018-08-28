@@ -3,25 +3,24 @@ import { selectOrder } from './../store/order';
 
 import { OrderResult } from 'lib/prop-types';
 import {
+  createEvent,
   eventPropertiesForProduct,
   productPropertiesForOrder,
 } from '../lib/analytics';
 import { selectOperatorBySlug } from '../store/inventory';
 
 export function trackEvent(event: string, payload: any) {
-  return {
-    type: 'SEGMENT_TRACK',
-    payload: {},
-    meta: {
-      analytics: {
-        eventType: EventTypes.track,
-        eventPayload: {
+  return (dispatch, getState) =>
+    dispatch({
+      type: 'SEGMENT_TRACK',
+      payload: {},
+      meta: {
+        analytics: createEvent(getState(), EventTypes.track, {
           event,
           properties: payload,
-        },
+        }),
       },
-    },
-  };
+    });
 }
 
 export function trackProductEvent(event: string, productOrSlug) {

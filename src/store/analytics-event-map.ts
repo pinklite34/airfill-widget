@@ -93,11 +93,11 @@ export default {
         isComplete
           ? createEvent(state, EventTypes.track, {
               event: 'Order Completed',
-              properties: eventPropertiesForOrder(order),
+              properties: { status, ...eventPropertiesForOrder(order) },
             })
           : createEvent(state, EventTypes.track, {
               event: 'Order Updated',
-              properties: eventPropertiesForOrder(order),
+              properties: { status, ...eventPropertiesForOrder(order) },
             }),
       ].filter(Boolean);
     },
