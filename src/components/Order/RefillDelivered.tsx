@@ -43,8 +43,6 @@ export default function RefillDelivered(props: RefillDeliveredProps) {
 
   const linkInfo = order.linkInfo;
 
-  console.log(props);
-
   return (
     <React.Fragment>
       <OrderHeader
