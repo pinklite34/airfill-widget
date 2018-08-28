@@ -1,17 +1,27 @@
 import * as React from 'react';
 import Media from 'react-media';
 
+import { DeviceInfo, DeviceType } from '../types';
+
 import theme from '../theme';
 import { fromWindow } from './globals';
 
-export default class DeviceInfo extends React.PureComponent<any> {
+interface DeviceInfoProps {
+  children: (state: DeviceInfo) => void;
+}
+
+export default class DeviceInfoProvider extends React.PureComponent<
+  DeviceInfoProps,
+  DeviceInfo
+> {
   state = {
     width: 0,
     height: 0,
     is: { mobile: false, tablet: false, desktop: false },
-    lessThan: { mobile: false, tablet: false },
+    lessThan: { tablet: false, desktop: false },
     greaterThan: { mobile: true, tablet: true },
-    deviceType: '',
+    deviceType: DeviceType.web,
+    isMobile: false,
   };
 
   componentDidMount() {
@@ -54,24 +64,21 @@ export default class DeviceInfo extends React.PureComponent<any> {
     if (!navigator) {
       return;
     }
-    const { userAgent } = navigator;
 
-    if (userAgent.match(/iPhone|iPad|iPod/)) {
-      this.setState({ deviceType: 'ios' });
-    } else if (userAgent.match(/Android/)) {
-      this.setState({ deviceType: 'android' });
+    if (navigator.userAgent.match(/iPhone|iPad|iPod/)) {
+      this.setState({ deviceType: DeviceType.ios });
+    } else if (navigator.userAgent.match(/Android/)) {
+      this.setState({ deviceType: DeviceType.android });
     }
   }
 
   render() {
     const { width, height, lessThan, greaterThan, deviceType, is } = this.state;
 
-    const func = this.props.children as (opts: any) => void;
-
     return (
       <Media query="(-moz-touch-enabled: 1), (pointer: coarse)">
         {isMobile =>
-          func({
+          this.props.children({
             width,
             height,
             is,

@@ -5,6 +5,32 @@ export interface Translatable {
 
 export type TransProp = Translatable | any;
 
+export enum DeviceType {
+  web,
+  ios,
+  android,
+}
+
+export interface DeviceInfo {
+  width: number;
+  height: number;
+  is: {
+    mobile: boolean;
+    tablet: boolean;
+    desktop: boolean;
+  };
+  lessThan: {
+    desktop: boolean;
+    tablet: boolean;
+  };
+  greaterThan: {
+    mobile: boolean;
+    tablet: boolean;
+  };
+  isMobile: boolean;
+  deviceType: DeviceType;
+}
+
 export interface PaymentButton {
   title: TransProp;
   description: TransProp;
@@ -268,8 +294,6 @@ export interface Email {
   value?: string;
   error?: any;
 }
-
-type DeviceType = 'ios' | 'android';
 
 interface Devices {
   tablet: boolean;
