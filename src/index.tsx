@@ -63,6 +63,7 @@ function AirfillWidget(ele, opt) {
     showLogo,
     showInstructions,
     forceOperator,
+    coin,
   } = options;
   const orderOptions = { email, sendEmail, sendSMS, refundAddress };
 
@@ -94,6 +95,7 @@ function AirfillWidget(ele, opt) {
           showPoweredBy={!showLogo}
           keepDefaultPayments={keepDefaultPayments}
           forceOperator={forceOperator}
+          coin={coin}
         />
       </ConnectedRouter>
     </Provider>,

@@ -1,9 +1,7 @@
 import { getDisplayName } from './currency-helpers';
+import { Amount, BillingCurrency, Package, RangeProp } from './prop-types';
 
-// Handle XBT
-export const getCostForAmount = (conversionRate, amount) =>
-  Number(amount * conversionRate).toFixed(2);
-
+/*
 const pickMiddlePackage = ({ packages }) => {
   const middle = Math.round((packages.length - 1) * 0.6);
   const pkg = packages[middle];
@@ -65,15 +63,13 @@ const selectValidRangedAmount = ({
 
   if (selectedAmountCost <= maxCost) {
     return String(amount); // Return amount as is for ranged operators
+  } else if (currency === 'XBT') {
+    const amountForMaxCost = Math.floor(
+      (maxCost * 100000000) / costConversionRate
+    );
+    return String(amountForMaxCost); // Return the maximum amount allowed
   } else {
-    if (currency === 'XBT') {
-      const amountForMaxCost = Math.floor(
-        (maxCost * 100000000) / costConversionRate
-      );
-      return String(amountForMaxCost); // Return the maximum amount allowed
-    } else {
-      return String(maxCost / costConversionRate);
-    }
+    return String(maxCost);
   }
 };
 
@@ -90,3 +86,47 @@ export const selectValidAmount = args => {
     return validPackageAmount;
   }
 };
+ */
+
+// if package is affordable with current user balance
+// is affordable if no balance is set
+export function isAffordable(
+  pkg: Package,
+  userCurrency: BillingCurrency,
+  balance: Amount
+) {
+  const costKey = getDisplayName(userCurrency).toLowerCase() + 'Price';
+
+  return !balance || pkg[costKey] <= balance;
+}
+
+export function selectValidAmount(
+  packages: Package[],
+  userCurrency: BillingCurrency,
+  max?: Amount,
+  range?: RangeProp
+) {
+  if (range) {
+    const correctMax =
+      userCurrency === 'XBT'
+        ? ((max as number) * 100000000) / range.userPriceRate
+        : (max as number) / range.userPriceRate;
+
+    if (correctMax < range.min) {
+      return 0;
+    } else if (correctMax < range.max) {
+      return correctMax.toFixed();
+    } else {
+      return range.max;
+    }
+  } else {
+    const costKey = getDisplayName(userCurrency).toLowerCase() + 'Price';
+
+    const f = packages
+      .sort((a, b) => (a[costKey] < b[costKey] ? 1 : -1))
+      .filter(pkg => isAffordable(pkg, userCurrency, max));
+
+    // pick highest affordable or most expensive, if no affordable
+    return f.length > 0 ? f[0].value : packages[0].value;
+  }
+}
