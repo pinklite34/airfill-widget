@@ -114,11 +114,7 @@ export default function RefillDelivered(props: RefillDeliveredProps) {
         )}
 
         {linkInfo && (
-          <div>
-            <Text type="p">
-              <a href={linkInfo.link}>{linkInfo.link}</a>
-            </Text>
-
+          <Link href={linkInfo.link}>
             <PinLabel
               type="p"
               id="order.delivered.other"
@@ -127,7 +123,7 @@ export default function RefillDelivered(props: RefillDeliveredProps) {
             >
               {linkInfo.other}
             </PinLabel>
-          </div>
+          </Link>
         )}
 
         {!linkInfo && (
