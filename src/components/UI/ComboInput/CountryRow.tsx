@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { CountryProp } from '../../../lib/prop-types';
+import { CountryProp } from '../../../types';
 import Flag from '../Flag';
 import Row from './Row';
 

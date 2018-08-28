@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'react-emotion';
 
-import { TransProp } from '../../lib/prop-types';
+import { TransProp } from '../../types';
 import Text from './Text';
 
 const Container = styled('div')`

@@ -1,22 +1,17 @@
 import { injectGlobal } from 'emotion';
 import { ThemeProvider } from 'emotion-theming';
 import createHistory from 'history/createMemoryHistory';
-import blue from 'material-ui/colors/blue';
-import createMuiTheme from 'material-ui/styles/createMuiTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import * as React from 'react';
 import { I18nextProvider } from 'react-i18next';
 import Media from 'react-media';
 import { connect, Provider } from 'react-redux';
-import { Route, withRouter } from 'react-router';
+import { Route, RouteComponentProps, withRouter } from 'react-router';
 import {
   ConnectedRouter,
   routerMiddleware,
   routerReducer,
 } from 'react-router-redux';
-import { compose } from 'recompose';
 
-import { History } from 'history';
 import {
   init,
   loadOrder,
@@ -28,7 +23,7 @@ import {
 } from '../actions';
 import { client } from '../lib/api-client';
 import i18n from '../lib/i18n-instance';
-import { Config, Inventory, Operator } from '../lib/prop-types';
+import { Config, Inventory, Operator } from '../types';
 import WidgetRect from '../lib/WidgetRect';
 import getMethods from '../payment-methods';
 import { selectInventory, selectOperator, selectOrder } from '../store';
@@ -48,12 +43,6 @@ import Card from './UI/Card';
 import Root from './UI/Root';
 import Spinner from './UI/Spinner';
 
-const muiTheme = createMuiTheme({
-  palette: {
-    primary: blue,
-  },
-});
-
 /* tslint:disable */
 injectGlobal`
   * {
@@ -62,7 +51,7 @@ injectGlobal`
 `;
 /* tslint:enable */
 
-interface AirfillWidgetProps {
+interface AirfillWidgetProps extends RouteComponentProps<{}> {
   init: typeof init;
   setOperator: (operator: string) => Promise<Operator>;
   inventory: Inventory;
@@ -74,7 +63,6 @@ interface AirfillWidgetProps {
   operator?: string;
   repeatOrder?: string;
 
-  history: History;
   useRecentRefill: typeof useRecentRefill;
   loadOrder: () => Promise<any>;
   openDropdown: boolean;
@@ -208,41 +196,39 @@ class AirfillWidget extends React.Component<AirfillWidgetProps & Config> {
     return (
       <I18nextProvider i18n={i18n}>
         <ThemeProvider theme={theme}>
-          <MuiThemeProvider theme={muiTheme}>
-            <Root className={className}>
-              <WidgetRect>
-                <Card alwaysBorder style={{ overflow: 'hidden' }}>
-                  {hasLoaded ? (
-                    <React.Fragment>
-                      <Header
-                        config={config}
-                        isMobile={isMobile}
-                        branded={showLogo}
+          <Root className={className}>
+            <WidgetRect>
+              <Card alwaysBorder style={{ overflow: 'hidden' }}>
+                {hasLoaded ? (
+                  <React.Fragment>
+                    <Header
+                      config={config}
+                      isMobile={isMobile}
+                      branded={showLogo}
+                    />
+                    <Country />
+                    <Providers />
+                    <Amount config={config} />
+                    <Recipient config={config} />
+                    <StatusEmail config={config} />
+                    <Payment config={config} />
+                    <Order config={config} />
+                    {showInstructions && (
+                      <Route
+                        path="/refill"
+                        exact
+                        render={() => <Instructions />}
                       />
-                      <Country />
-                      <Providers />
-                      <Amount config={config} />
-                      <Recipient config={config} />
-                      <StatusEmail config={config} />
-                      <Payment config={config} />
-                      <Order config={config} />
-                      {showInstructions && (
-                        <Route
-                          path="/refill"
-                          exact
-                          render={() => <Instructions />}
-                        />
-                      )}
-                    </React.Fragment>
-                  ) : (
-                    <Spinner />
-                  )}
-                </Card>
-              </WidgetRect>
+                    )}
+                  </React.Fragment>
+                ) : (
+                  <Spinner />
+                )}
+              </Card>
+            </WidgetRect>
 
-              {showFooter && <Footer branded={showPoweredBy} />}
-            </Root>
-          </MuiThemeProvider>
+            {showFooter && <Footer branded={showPoweredBy} />}
+          </Root>
         </ThemeProvider>
       </I18nextProvider>
     );
@@ -253,35 +239,32 @@ export const history = createHistory();
 const middleware = routerMiddleware(history);
 const store = configureStore(routerReducer, middleware);
 
-const StoreWidgetWrapper = compose(
-  connect(
-    state => ({
-      inventory: selectInventory(state),
-      selectedOperator: selectOperator(state),
-      order: selectOrder(state),
-    }),
-    (dispatch, props) => {
-      const paymentButtons = props.paymentButtons || [];
-      if (props.keepDefaultPayments) {
-        paymentButtons.push(...getMethods());
-      }
-
-      if (props.openDropdown) {
-        dispatch(setCountry(''));
-        dispatch(openComboInput());
-        dispatch(setComboInputFocus(true));
-      }
-
-      return {
-        init: c => dispatch(init(c)),
-        setOperator: operator => dispatch(setOperator(operator)),
-        useRecentRefill: order => dispatch(useRecentRefill(order)),
-        loadOrder: () => dispatch(loadOrder(props.orderId, paymentButtons)),
-      };
+const StoreWidgetWrapper = connect(
+  state => ({
+    inventory: selectInventory(state),
+    selectedOperator: selectOperator(state),
+    order: selectOrder(state),
+  }),
+  (dispatch, props) => {
+    const paymentButtons = props.paymentButtons || [];
+    if (props.keepDefaultPayments) {
+      paymentButtons.push(...getMethods());
     }
-  ),
-  withRouter
-)(AirfillWidget);
+
+    if (props.openDropdown) {
+      dispatch(setCountry(''));
+      dispatch(openComboInput());
+      dispatch(setComboInputFocus(true));
+    }
+
+    return {
+      init: c => dispatch(init(c)),
+      setOperator: operator => dispatch(setOperator(operator)),
+      useRecentRefill: order => dispatch(useRecentRefill(order)),
+      loadOrder: () => dispatch(loadOrder(props.orderId, paymentButtons)),
+    };
+  }
+)(withRouter(AirfillWidget));
 
 export default function Widget(props) {
   return (

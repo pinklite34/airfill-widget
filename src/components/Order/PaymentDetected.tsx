@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Order } from '../../lib/prop-types';
+import { Order } from '../../types';
 import Button from '../UI/Button';
 import Link from '../UI/Link';
 import OrderHeader from '../UI/OrderHeader';

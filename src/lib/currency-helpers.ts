@@ -1,4 +1,4 @@
-import { PaymentMode } from './prop-types';
+import { PaymentMode } from './types';
 
 // Internally we use XBT, however the correct display name is BTC
 export const getDisplayName = currency =>

@@ -1,6 +1,6 @@
 import EmailIcon from '../assets/email.svg';
 import PhoneIcon from '../assets/phone.svg';
-import { Operator } from './prop-types';
+import { Operator } from './types';
 
 export function getRecipientIcon(operator: Operator) {
   switch (operator.recipientType) {

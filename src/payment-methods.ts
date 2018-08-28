@@ -1,4 +1,4 @@
-import { PaymentButton } from './lib/prop-types';
+import { PaymentButton } from './types';
 
 import {
   BitcoinIcon,

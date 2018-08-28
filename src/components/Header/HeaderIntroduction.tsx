@@ -9,7 +9,7 @@ import {
   NumberLookup,
   NumberLookupResult,
   RecipientType,
-} from '../../lib/prop-types';
+} from '../../types';
 import { capitalize, startsWith } from '../../lib/string';
 import { selectNumber, selectNumberLookup } from '../../store';
 import theme from '../../theme';

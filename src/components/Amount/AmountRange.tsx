@@ -1,12 +1,13 @@
+import * as React from 'react';
+import styled from 'react-emotion';
+
 import {
   Amount,
   BillingCurrency,
   Config,
   Currency,
   RangeProp,
-} from 'lib/prop-types';
-import * as React from 'react';
-import styled from 'react-emotion';
+} from '../../types';
 
 import { getDisplayName, satoshiToBTC } from '../../lib/currency-helpers';
 import DeviceInfo from '../../lib/DeviceInfo';
@@ -85,7 +86,7 @@ export default function AmountRange(props: AmountRangeProps) {
           <Container row={!is.mobile} centered>
             <div style={{ flex: 3 }}>
               <Flex>
-                <Flex row justifyContent="none">
+                <Flex row justifyContent="unset">
                   <InputContainer row>
                     <Input
                       value={amount}

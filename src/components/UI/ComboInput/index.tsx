@@ -29,7 +29,7 @@ import {
   Operator,
   RecentNumber,
   Recipient,
-} from '../../../lib/prop-types';
+} from '../../../types';
 import {
   selectAvailableOperators,
   selectComboInputFocus,

@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'react-emotion';
 
 import DeviceInfo from '../lib/DeviceInfo';
-import { TransProp } from '../lib/prop-types';
+import { TransProp } from '../types';
 import theme from '../theme';
 import Text from './UI/Text';
 

@@ -2,7 +2,7 @@ import { History } from 'history';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { Amount, OperatorResult } from '../../lib/prop-types';
+import { Amount, OperatorResult } from '../../types';
 import { selectAmount, selectOperator } from '../../store';
 import Collapsed from '../UI/Collapsed';
 import Icon from './icon.svg';

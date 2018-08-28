@@ -9,7 +9,7 @@ import { isValidEmail } from '../../lib/email-validation';
 import { getRecipientIcon } from '../../lib/icon-picker';
 import { getPlaceholder } from '../../lib/number-helpers';
 import { isPhoneNumber } from '../../lib/number-input-helpers';
-import { Amount, Config, CountryProp, Email, OperatorResult, PaymentMode } from '../../lib/prop-types';
+import { Amount, Config, CountryProp, Email, OperatorResult, PaymentMode } from '../../types';
 import {
   selectAmount,
   selectCountry,

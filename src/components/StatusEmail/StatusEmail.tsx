@@ -1,14 +1,14 @@
 import { History } from 'history';
-import Checkbox from 'material-ui/Checkbox';
 import * as React from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
 
 import { setEmail, setSubscribeNewsletter } from '../../actions';
 import EmailIcon from '../../assets/email.svg';
-import { Config, Email } from '../../lib/prop-types';
+import { Config, Email } from '../../types';
 import { selectEmail, selectSubscribeNewsletter } from '../../store';
 import ActiveSection from '../UI/ActiveSection';
+import Checkbox from '../UI/Checkbox';
 import Flex from '../UI/Flex';
 import NextButton from '../UI/NextButton';
 import NumberInput from '../UI/NumberInput';
@@ -20,16 +20,14 @@ const InputContainer = styled('div')`
   }
 `;
 
-interface StatusEmailProps {
+class StatusEmail extends React.PureComponent<{
   config: Config;
   history: History;
   setEmail: typeof setEmail;
   email: Email;
   setSubscribeNewsletter: typeof setSubscribeNewsletter;
   subscribing: boolean;
-}
-
-class StatusEmail extends React.PureComponent<StatusEmailProps> {
+}> {
   onChange = email => this.props.setEmail({ value: email, inFocus: true });
 
   validateInput = () => this.props.email.valid;
@@ -41,6 +39,8 @@ class StatusEmail extends React.PureComponent<StatusEmailProps> {
       history.push('/refill/selectPayment');
     }
   };
+
+  onNewsletter = e => this.props.setSubscribeNewsletter(e.target.checked);
 
   render() {
     const { email, setSubscribeNewsletter, subscribing } = this.props;
@@ -70,18 +70,14 @@ class StatusEmail extends React.PureComponent<StatusEmailProps> {
         </InputContainer>
         <Flex row justifyContent="flex-start" alignItems="center">
           <Checkbox
-            onChange={e => setSubscribeNewsletter(e.target.checked)}
+            onChange={this.onNewsletter}
             checked={subscribing}
+            text={{
+              id: 'email.newsletter',
+              children:
+                'Add me to the newsletter to receive news about new products and features',
+            }}
           />
-          <Text
-            type="p"
-            onClick={() => setSubscribeNewsletter(!subscribing)}
-            style={{ cursor: 'pointer' }}
-            id="email.newsletter"
-          >
-            Add me to the newsletter to receive news about new products and
-            features
-          </Text>
         </Flex>
       </ActiveSection>
     );

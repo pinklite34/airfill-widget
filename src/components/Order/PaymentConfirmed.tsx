@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Order } from '../../lib/prop-types';
+import { Order } from '../../types';
 import OrderHeader from '../UI/OrderHeader';
 import Spinner from '../UI/Spinner';
 import Text from '../UI/Text';

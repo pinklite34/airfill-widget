@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { setOperator } from '../../actions';
 import { trackProductEvent } from '../../actions/analytics-actions';
-import { CountryProp, NumberLookup, Operator } from '../../lib/prop-types';
+import { CountryProp, NumberLookup, Operator } from '../../types';
 import {
   selectAvailableOperators,
   selectCountry,

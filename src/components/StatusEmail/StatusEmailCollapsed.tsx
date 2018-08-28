@@ -1,16 +1,13 @@
-import { History } from 'history';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { compose } from 'recompose';
+import { RouteComponentProps, withRouter } from 'react-router';
 
 import Icon from '../../assets/email.svg';
-import { Email } from '../../lib/prop-types';
+import { Email } from '../../types';
 import { selectEmail, selectSelectedOperator } from '../../store';
 import Collapsed from '../UI/Collapsed';
 
-interface StatusEmailCollapsedProps {
-  history: History;
+interface StatusEmailCollapsedProps extends RouteComponentProps<{}> {
   email: Email;
 }
 
@@ -25,10 +22,7 @@ function StautsEmailCollapsed({ history, email }: StatusEmailCollapsedProps) {
   );
 }
 
-export default compose(
-  withRouter,
-  connect(state => ({
-    operator: selectSelectedOperator(state),
-    email: selectEmail(state),
-  }))
-)(StautsEmailCollapsed);
+export default connect(state => ({
+  operator: selectSelectedOperator(state),
+  email: selectEmail(state),
+}))(withRouter(StautsEmailCollapsed));

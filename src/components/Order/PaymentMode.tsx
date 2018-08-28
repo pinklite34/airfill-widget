@@ -20,7 +20,7 @@ import {
   OrderOptions,
   PaymentButton,
   PaymentStatus,
-} from '../../lib/prop-types';
+} from '../../types';
 import { selectAmount, selectPaymentMethod } from '../../store';
 import theme from '../../theme';
 import Button from '../UI/Button';

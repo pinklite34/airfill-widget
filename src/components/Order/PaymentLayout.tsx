@@ -12,7 +12,7 @@ import {
   PaymentButton,
   PaymentStatus,
   RecipientType,
-} from '../../lib/prop-types';
+} from '../../types';
 import {
   selectAmount,
   selectNumber,

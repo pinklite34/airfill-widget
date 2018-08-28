@@ -3,7 +3,6 @@ import * as React from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { compose } from 'recompose';
 
 import {
   createOrder,
@@ -18,7 +17,7 @@ import {
   OperatorResult,
   OrderOptions,
   PaymentButton,
-} from '../../lib/prop-types';
+} from '../../types';
 import { canAfford } from '../../payment-methods';
 import {
   selectAmount,
@@ -137,23 +136,20 @@ class PaymentMethod extends React.Component<PaymentMethodProps> {
   }
 }
 
-export default compose(
-  withRouter,
-  connect(
-    state => ({
-      selectedMethod: selectPaymentMethod(state),
-      number: selectNumber(state),
-      email: selectEmail(state),
-      amount: selectAmount(state),
-      operator: selectOperator(state),
-      country: selectCountry(state),
-    }),
-    {
-      setPaymentMethod,
-      createOrder,
-      setNumber,
-      setEmail,
-      trigger,
-    }
-  )
-)(PaymentMethod);
+export default connect(
+  state => ({
+    selectedMethod: selectPaymentMethod(state),
+    number: selectNumber(state),
+    email: selectEmail(state),
+    amount: selectAmount(state),
+    operator: selectOperator(state),
+    country: selectCountry(state),
+  }),
+  {
+    setPaymentMethod,
+    createOrder,
+    setNumber,
+    setEmail,
+    trigger,
+  }
+)(withRouter(PaymentMethod));

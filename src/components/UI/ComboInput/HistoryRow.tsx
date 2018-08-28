@@ -2,7 +2,7 @@ import * as React from 'react';
 import { css } from 'react-emotion';
 import { connect } from 'react-redux';
 
-import { CountryProp } from '../../../lib/prop-types';
+import { CountryProp } from '../../../types';
 import { selectCountryList } from '../../../store';
 import Row from './Row';
 

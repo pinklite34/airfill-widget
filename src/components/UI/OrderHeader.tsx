@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'react-emotion';
 
 import DeviceInfo from '../../lib/DeviceInfo';
-import { Order, TransProp } from '../../lib/prop-types';
+import { Order, TransProp } from '../../types';
 import Text from './Text';
 
 const Container = styled('div')`

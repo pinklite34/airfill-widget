@@ -1,6 +1,7 @@
-import { PaymentButton } from 'lib/prop-types';
 import * as React from 'react';
 import styled from 'react-emotion';
+
+import { PaymentButton } from '../../types';
 
 import theme from '../../theme';
 import Icon from '../UI/Icon';

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
 
-import { Config } from '../../lib/prop-types';
+import { Config } from '../../types';
 import AmountCollapsed from './AmountCollapsed';
 import AmountPicker from './AmountPicker';
 

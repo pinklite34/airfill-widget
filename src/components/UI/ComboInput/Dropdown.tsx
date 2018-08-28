@@ -3,7 +3,7 @@ import styled from 'react-emotion';
 import { connect } from 'react-redux';
 import VirtualList from 'react-tiny-virtual-list';
 
-import { CountryProp } from '../../../lib/prop-types';
+import { CountryProp } from '../../../types';
 import { selectCountryList } from '../../../store';
 import Card from '../../UI/Card';
 import SectionTitle from '../SectionTitle';

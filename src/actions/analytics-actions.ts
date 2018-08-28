@@ -1,12 +1,12 @@
 import { EventTypes } from 'redux-segment';
 import { selectOrder } from './../store/order';
 
-import { OrderResult } from 'lib/prop-types';
 import {
   createEvent,
   eventPropertiesForProduct,
   productPropertiesForOrder,
 } from '../lib/analytics';
+import { OrderResult } from '../types';
 import { selectOperatorBySlug } from '../store/inventory';
 
 export function trackEvent(event: string, payload: any) {

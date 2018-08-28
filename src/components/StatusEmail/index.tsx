@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Route, Switch } from 'react-router';
 
 import { isValidEmail } from '../../lib/email-validation';
-import { Config } from '../../lib/prop-types';
+import { Config } from '../../types';
 import RecipientPicker from './StatusEmail';
 import RecipientCollapsed from './StatusEmailCollapsed';
 

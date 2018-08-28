@@ -1,5 +1,5 @@
 import { getDisplayName } from './currency-helpers';
-import { Amount, BillingCurrency, Package, RangeProp } from './prop-types';
+import { Amount, BillingCurrency, Package, RangeProp } from './types';
 
 // if package is affordable with current user balance
 // is affordable if no balance is set

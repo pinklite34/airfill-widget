@@ -1,5 +1,5 @@
 import { EventTypes } from 'redux-segment';
-import { OrderResult } from './../lib/prop-types';
+import { OrderResult } from './../types';
 
 import {
   createEvent,

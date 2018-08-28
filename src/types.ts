@@ -1,9 +1,9 @@
-interface TranslationObject {
+export interface Translatable {
   id: string;
   children: string;
 }
 
-export type TransProp = TranslationObject | any;
+export type TransProp = Translatable | any;
 
 export interface PaymentButton {
   title: TransProp;

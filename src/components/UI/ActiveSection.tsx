@@ -1,11 +1,12 @@
 import * as React from 'react';
 import styled from 'react-emotion';
 
+import { ErrorProp } from '../../types';
+
 import DeviceInfo from '../../lib/DeviceInfo';
 import { fromWindow, isMobileApp } from '../../lib/globals';
 import { WidgetRectContext } from '../../lib/WidgetRect';
 
-import { ErrorProp } from 'lib/prop-types';
 import ErrorBanner from './ErrorBanner';
 
 const Container = styled('div')`

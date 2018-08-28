@@ -1,7 +1,8 @@
 import * as React from 'react';
 import styled from 'react-emotion';
 
-import { TransProp } from 'lib/prop-types';
+import { TransProp } from '../../types';
+
 import { colorDarken, colorToString } from '../../lib/color';
 import Spinner from './Spinner';
 import Text from './Text';

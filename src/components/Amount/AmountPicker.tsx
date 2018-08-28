@@ -1,20 +1,16 @@
-import { History } from 'history';
-import Radio from 'material-ui/Radio';
 import * as React from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { compose } from 'recompose';
+import { RouteComponentProps, withRouter } from 'react-router';
 
 import { setAmount } from '../../actions';
 import { isAffordable, selectValidAmount } from '../../lib/amount-validation';
 import { getDisplayName, getPrice } from '../../lib/currency-helpers';
 import { isValidEmail } from '../../lib/email-validation';
-import { Amount, Config, OperatorResult } from '../../lib/prop-types';
+import { Amount, Config, OperatorResult } from '../../types';
 import { selectAmount, selectOperator } from '../../store';
 import ActiveSection from '../UI/ActiveSection';
 import NextButton from '../UI/NextButton';
-import SectionTitle from '../UI/SectionTitle';
 import Spinner from '../UI/Spinner';
 import Text from '../UI/Text';
 import AmountPackage from './AmountPackage';
@@ -29,12 +25,11 @@ const Packages = styled('div')`
   align-items: center;
 `;
 
-interface AmountPickerProps {
+interface AmountPickerProps extends RouteComponentProps<{}> {
   config: Config;
   operator: OperatorResult;
   amount: Amount;
   setAmount: typeof setAmount;
-  history: History;
 }
 
 class AmountPicker extends React.PureComponent<AmountPickerProps> {
@@ -197,15 +192,12 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
   }
 }
 
-export default compose(
-  withRouter,
-  connect(
-    state => ({
-      operator: selectOperator(state),
-      amount: selectAmount(state),
-    }),
-    {
-      setAmount,
-    }
-  )
-)(AmountPicker);
+export default connect(
+  state => ({
+    operator: selectOperator(state),
+    amount: selectAmount(state),
+  }),
+  {
+    setAmount,
+  }
+)(withRouter(AmountPicker));

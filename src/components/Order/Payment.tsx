@@ -14,7 +14,7 @@ import {
   OrderResult,
   PaymentStatus,
   Recipient,
-} from '../../lib/prop-types';
+} from '../../types';
 import Pusher from '../Pusher';
 import Spinner from '../UI/Spinner';
 import {

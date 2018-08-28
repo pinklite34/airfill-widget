@@ -1,18 +1,15 @@
-import { History } from 'history';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { compose } from 'recompose';
+import { RouteComponentProps, withRouter } from 'react-router';
 
 import { trackProductEvent } from '../../actions/analytics-actions';
-import { Operator, OrderResult } from '../../lib/prop-types';
+import { Operator, OrderResult } from '../../types';
 import { selectOrder, selectSelectedOperator } from '../../store';
 import Collapsed from '../UI/Collapsed';
 
-interface ProviderCollapsedProps {
+interface ProviderCollapsedProps extends RouteComponentProps<{}> {
   order: OrderResult;
   operator: Operator;
-  history: History;
   trackProductEvent: typeof trackProductEvent;
 }
 
@@ -37,13 +34,10 @@ function ProviderCollapsed({
   );
 }
 
-export default compose(
-  withRouter,
-  connect(
-    state => ({
-      order: selectOrder(state),
-      operator: selectSelectedOperator(state),
-    }),
-    { trackProductEvent }
-  )
-)(ProviderCollapsed);
+export default connect(
+  state => ({
+    order: selectOrder(state),
+    operator: selectSelectedOperator(state),
+  }),
+  { trackProductEvent }
+)(withRouter(ProviderCollapsed));
