@@ -95,7 +95,12 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
       billingCurrency,
     } = config;
 
-    const price = getPrice(pkg, billingCurrency);
+    let price = getPrice(pkg, billingCurrency);
+
+    if (billingCurrency !== 'XBT') {
+      price = price.toFixed(2);
+    }
+
     const formattedBillingCurrency = getDisplayName(
       billingCurrency
     ).toUpperCase();
