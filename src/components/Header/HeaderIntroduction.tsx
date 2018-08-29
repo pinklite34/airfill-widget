@@ -4,15 +4,15 @@ import styled from 'react-emotion';
 import { connect } from 'react-redux';
 
 import { lookupNumber, resetNumberLookup, setOperator } from '../../actions';
+import { capitalize, startsWith } from '../../lib/string';
+import { selectNumber, selectNumberLookup } from '../../store';
+import theme from '../../theme';
 import {
   Config,
   NumberLookup,
   NumberLookupResult,
   RecipientType,
-} from '../../lib/prop-types';
-import { capitalize, startsWith } from '../../lib/string';
-import { selectNumber, selectNumberLookup } from '../../store';
-import theme from '../../theme';
+} from '../../types';
 import ComboInput from '../UI/ComboInput';
 import Flex from '../UI/Flex';
 import Info from '../UI/info.svg';
@@ -101,7 +101,9 @@ class HeaderIntroduction extends React.PureComponent<HeaderIntroductionProps> {
       (numberLookup.error && numberLookup.error.message) || numberLookup.error;
     const displayedError = error || lookupError;
 
-    const coin = capitalize(config.coin || 'Bitcoin');
+    const coin = capitalize(
+      typeof config.coin === 'string' ? config.coin : 'Bitcoin'
+    );
 
     return (
       <Flex centered>

@@ -1,9 +1,14 @@
 import { EventTypes } from 'redux-segment';
+import { OrderResult } from './../types';
 
-import { getPlatform, getSource, isMobileApp } from '../lib/globals';
+import {
+  createEvent,
+  eventPropertiesForOrder,
+  eventPropertiesForProduct,
+} from '../lib/analytics';
 import { selectOrder } from './order';
 
-const eventTypeForOrderStatus = status => {
+export function eventTypeForOrderStatus(status) {
   switch (status) {
     case 'paid':
       return 'Refill Payment Detected';
@@ -22,58 +27,6 @@ const eventTypeForOrderStatus = status => {
     default:
       return 'Refill Unknown Status: ' + status;
   }
-};
-
-const eventPropertiesForOrder = order => {
-  try {
-    const { id, eurPrice, paymentMethod, operator, itemDesc } = order;
-    return {
-      ...order,
-      order_id: id,
-      affiliation: 'bitrefill',
-      value: eurPrice,
-      revenue: eurPrice,
-      label: paymentMethod,
-      currency: 'EUR',
-      products: [
-        {
-          product_id: operator,
-          sku: operator,
-          name: itemDesc,
-          price: eurPrice,
-          quantity: 1,
-          category: order.operatorType,
-        },
-      ],
-    };
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-function createEvent(state, eventType, payload) {
-  payload = payload || { properties: {} };
-
-  const source = getSource();
-  const platform = getPlatform();
-
-  const additionalKey = payload.traits ? 'traits' : 'properties';
-  const additionalProps = {
-    category: isMobileApp() ? platform : 'website',
-    user_source: source,
-    user_source_platform: platform,
-  };
-
-  return {
-    eventType,
-    eventPayload: {
-      ...payload,
-      [additionalKey]: {
-        ...additionalProps,
-        ...payload[additionalKey],
-      },
-    },
-  };
 }
 
 export default {
@@ -94,6 +47,17 @@ export default {
         event: 'Refill Number Lookup',
         properties: action.payload.query,
       });
+    },
+
+    LOAD_OPERATOR_SUCCESS: (getState, action) => {
+      const properties = eventPropertiesForProduct(action.payload);
+      return (
+        properties &&
+        createEvent(getState(), EventTypes.track, {
+          event: 'Product Viewed',
+          properties,
+        })
+      );
     },
 
     LOAD_ORDER: (getState, action) => {
@@ -118,6 +82,8 @@ export default {
       const { status, data } = payload;
       const isComplete = status === 'confirmed' && typeof data !== 'undefined';
       const state = getState();
+      const orderResult: OrderResult = selectOrder(state);
+      const order = orderResult && orderResult.result;
 
       return [
         createEvent(state, EventTypes.track, {
@@ -127,9 +93,12 @@ export default {
         isComplete
           ? createEvent(state, EventTypes.track, {
               event: 'Order Completed',
-              properties: eventPropertiesForOrder(selectOrder(state).result),
+              properties: { status, ...eventPropertiesForOrder(order) },
             })
-          : null,
+          : createEvent(state, EventTypes.track, {
+              event: 'Order Updated',
+              properties: { status, ...eventPropertiesForOrder(order) },
+            }),
       ].filter(Boolean);
     },
   },

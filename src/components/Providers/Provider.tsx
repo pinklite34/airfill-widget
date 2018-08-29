@@ -1,10 +1,12 @@
 import * as React from 'react';
 import styled from 'react-emotion';
 
-import { Operator } from '../../lib/prop-types';
 import theme from '../../theme';
+import { Operator } from '../../types';
+
 import Card from '../UI/Card';
 import Text from '../UI/Text';
+
 import More from './more.svg';
 import Select from './select.svg';
 

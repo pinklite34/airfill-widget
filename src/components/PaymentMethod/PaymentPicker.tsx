@@ -3,7 +3,14 @@ import * as React from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { compose } from 'recompose';
+
+import {
+  Amount,
+  Config,
+  OperatorResult,
+  OrderOptions,
+  PaymentButton,
+} from '../../types';
 
 import {
   createOrder,
@@ -12,13 +19,6 @@ import {
   setPaymentMethod,
   trigger,
 } from '../../actions';
-import {
-  Amount,
-  Config,
-  OperatorResult,
-  OrderOptions,
-  PaymentButton,
-} from '../../lib/prop-types';
 import { canAfford } from '../../payment-methods';
 import {
   selectAmount,
@@ -28,6 +28,7 @@ import {
   selectOperator,
   selectPaymentMethod,
 } from '../../store';
+
 import ActiveSection from '../UI/ActiveSection';
 import NextButton from '../UI/NextButton';
 import PaymentItem from './PaymentItem';
@@ -112,7 +113,13 @@ class PaymentMethod extends React.Component<PaymentMethodProps> {
             .map(method => {
               const affordable =
                 typeof method.canAfford === 'function'
-                  ? canAfford(method, operator, amount, config.billingCurrency)
+                  ? canAfford(
+                      method,
+                      operator,
+                      amount,
+                      config.billingCurrency,
+                      config.userAccountBalance
+                    )
                   : true;
 
               return (
@@ -131,23 +138,20 @@ class PaymentMethod extends React.Component<PaymentMethodProps> {
   }
 }
 
-export default compose(
-  withRouter,
-  connect(
-    state => ({
-      selectedMethod: selectPaymentMethod(state),
-      number: selectNumber(state),
-      email: selectEmail(state),
-      amount: selectAmount(state),
-      operator: selectOperator(state),
-      country: selectCountry(state),
-    }),
-    {
-      setPaymentMethod,
-      createOrder,
-      setNumber,
-      setEmail,
-      trigger,
-    }
-  )
-)(PaymentMethod);
+export default connect(
+  state => ({
+    selectedMethod: selectPaymentMethod(state),
+    number: selectNumber(state),
+    email: selectEmail(state),
+    amount: selectAmount(state),
+    operator: selectOperator(state),
+    country: selectCountry(state),
+  }),
+  {
+    setPaymentMethod,
+    createOrder,
+    setNumber,
+    setEmail,
+    trigger,
+  }
+)(withRouter(PaymentMethod));

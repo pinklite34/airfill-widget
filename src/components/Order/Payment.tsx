@@ -3,20 +3,18 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import { updatePaymentStatus } from '../../actions';
 import {
   Amount,
   BillingCurrency,
-  CountryProp,
-  Number,
+  Country,
   OperatorResult,
   OrderOptions,
   OrderResult,
   PaymentStatus,
   Recipient,
-} from '../../lib/prop-types';
-import Pusher from '../Pusher';
-import Spinner from '../UI/Spinner';
+} from '../../types';
+
+import { updatePaymentStatus } from '../../actions';
 import {
   selectCountry,
   selectNumber,
@@ -24,6 +22,9 @@ import {
   selectOrder,
   selectPaymentStatus,
 } from './../../store';
+
+import Pusher from '../Pusher';
+import Spinner from '../UI/Spinner';
 import BalanceTooLow from './BalanceTooLow';
 import PaymentConfirmed from './PaymentConfirmed';
 import PaymentDetected from './PaymentDetected';
@@ -72,7 +73,7 @@ interface PaymentProps {
   operator: OperatorResult;
   order: OrderResult;
   number: Recipient;
-  country: CountryProp;
+  country: Country;
   paymentStatus: PaymentStatus;
   updatePaymentStatus: (...args) => void;
   onExternalUrl: () => void;

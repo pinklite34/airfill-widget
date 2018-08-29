@@ -45,6 +45,14 @@
         <option value="EUR">EUR</option>
         <option value="BTC">BTC</option>
       </select>
+      <select name="coin">
+        <option value="bitcoin" selected>BTC</option>
+        <option value="litecoin">Litecoin</option>
+        <option value="dash">Dash</option>
+        <option value="lightning">Lightning (BTC)</option>
+        <option value="ethereum">Ethereum</option>
+        <option value="dogecoin">Dogecoin</option>
+      </select>
       <label for="collectEmail">
         <input type="checkbox" name="collectEmail" id="collectEmail" value="true" /> Collect email
       </label>
@@ -239,6 +247,7 @@
     <script>
       var form = document.querySelector('#options');
       var currency = form.querySelector('select[name=currency]');
+      var coin = form.querySelector('select[name=coin]');
       var collectEmail = form.querySelector('input[name=collectEmail]');
       var instructions = form.querySelector('input[name=instructions]');
       var btc = form.querySelector('input[name=btc]');
@@ -274,7 +283,8 @@
           showInstructions: instructions.checked,
           showBTCAddress: btc.checked,
           showLogo: showLogo.checked,
-          keepDefaultPayment: true
+          keepDefaultPayment: true,
+          coin: coin.value,
         });
       }
 

@@ -1,17 +1,16 @@
-import { History } from 'history';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { compose } from 'recompose';
+import { RouteComponentProps, withRouter } from 'react-router';
+
+import { Operator, Recipient } from '../../types';
 
 import { getRecipientIcon } from '../../lib/icon-picker';
-import { Operator, OperatorResult, Recipient } from '../../lib/prop-types';
 import { selectNumber, selectSelectedOperator } from '../../store';
+
 import Collapsed from '../UI/Collapsed';
 
-interface RecipientCollapsedProps {
+interface RecipientCollapsedProps extends RouteComponentProps<{}> {
   operator: Operator;
-  history: History;
   number: Recipient;
 }
 
@@ -31,10 +30,7 @@ function RecipientCollapsed({
   );
 }
 
-export default compose(
-  withRouter,
-  connect(state => ({
-    operator: selectSelectedOperator(state),
-    number: selectNumber(state),
-  }))
-)(RecipientCollapsed);
+export default connect(state => ({
+  operator: selectSelectedOperator(state),
+  number: selectNumber(state),
+}))(withRouter(RecipientCollapsed));

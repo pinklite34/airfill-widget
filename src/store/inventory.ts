@@ -104,13 +104,17 @@ export const selectAvailableOperators = state => {
     }, {});
 };
 
-export const selectSelectedOperator = state => {
-  const operator = state.airfillWidget.inventory.selectedOperator;
+export function selectOperatorBySlug(state, operatorSlug: string) {
   const country = selectCountry(state);
 
-  if (operator && country && operator in country.operators) {
-    return country.operators[operator];
+  if (country && operatorSlug in country.operators) {
+    return country.operators[operatorSlug];
   }
 
   return null;
+}
+
+export const selectSelectedOperator = state => {
+  const operatorSlug = state.airfillWidget.inventory.selectedOperator;
+  return selectOperatorBySlug(state, operatorSlug);
 };

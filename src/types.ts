@@ -1,9 +1,40 @@
-interface TranslationObject {
+export interface Translatable {
   id: string;
   children: string;
 }
 
-export type TransProp = TranslationObject | any;
+export type TransProp = Translatable | any;
+
+export enum DeviceType {
+  web,
+  ios,
+  android,
+}
+
+export interface DeviceInfo {
+  width: number;
+  height: number;
+  is: {
+    mobile: boolean;
+    tablet: boolean;
+    desktop: boolean;
+  };
+  lessThan: {
+    desktop: boolean;
+    tablet: boolean;
+  };
+  greaterThan: {
+    mobile: boolean;
+    tablet: boolean;
+  };
+  isMobile: boolean;
+  deviceType: DeviceType;
+}
+
+export interface RootState {
+  airfillWidget: any;
+  ui: any;
+}
 
 export interface PaymentButton {
   title: TransProp;
@@ -25,7 +56,20 @@ export type Element = any;
 export type ErrorProp = any;
 export type Recipient = RecipientType;
 
-export interface CountryProp {
+export interface Product {
+  countryCode: string;
+  logoImage: URL;
+  name: string;
+  recipientType: RecipientType;
+  slug: string;
+  stats: {
+    popularity: number;
+    packageSize: number;
+  };
+  type: ProductType;
+}
+
+export interface Country {
   name: string;
   alpha2: string;
   operators: Operator[];
@@ -36,6 +80,7 @@ export type InputType = 'text' | 'tel';
 export type Currency = string;
 export type BillingCurrency = 'XBT' | 'EUR' | 'USD';
 export type RecipientType = 'phone_number' | 'none' | 'email' | 'username';
+export type ProductType = 'refill';
 
 export type CoinCurrency =
   | 'BTC'
@@ -115,6 +160,9 @@ export interface RangeProp {
   max: number;
   step: number;
   userPriceRate: number;
+  customerPriceRate?: number;
+  customerSatoshiPriceRate?: number;
+  customerEurPriceRate?: number;
 }
 
 export interface Package {
@@ -198,6 +246,7 @@ export interface Order {
   operatorType: string;
   operatorResponse: string;
   operatorSlug: string;
+  operatorType: string;
   orderId: string;
   paidAmount: Amount;
   partialPayment: boolean;
@@ -215,6 +264,10 @@ export interface Order {
   valuePackage: Amount;
   willRetry: boolean;
   errorMessage?: string;
+  linkInfo?: {
+    link: string;
+    other: string;
+  };
 }
 
 export type OrderResult = Result<Order>;
@@ -248,8 +301,6 @@ export interface Email {
   value?: string;
   error?: any;
 }
-
-type DeviceType = 'ios' | 'android';
 
 interface Devices {
   tablet: boolean;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'react-emotion';
 
-import { OperatorResult } from '../../lib/prop-types';
+import { OperatorResult } from '../../types';
 import Card from '../UI/Card';
 import Info from '../UI/info.svg';
 

@@ -1,4 +1,3 @@
-import Input from 'material-ui/Input';
 import * as React from 'react';
 import styled from 'react-emotion';
 
@@ -8,72 +7,53 @@ import {
   Config,
   Currency,
   RangeProp,
-} from 'lib/prop-types';
+} from '../../types';
+
 import { getDisplayName, satoshiToBTC } from '../../lib/currency-helpers';
-import SectionTitle from '../UI/SectionTitle';
+import DeviceInfoProvider from '../../lib/DeviceInfoProvider';
+import CardShadow from '../UI/CardShadow';
+import Flex from '../UI/Flex';
 import Text from '../UI/Text';
-import AmountPackage from './AmountPackage';
 
-const Container = styled('div')`
-  margin-top: 16px;
+const Container = styled(Flex)`
+  margin: 0 auto;
+  width: 70%;
+  padding-top: 16px;
 `;
 
-const RangeContainer = styled('div')`
-  margin-left: 32px;
-`;
+const PriceLabel = styled(Text)`
+  text-align: left;
+  font-size: 14px;
 
-const Title = styled(SectionTitle)`
-  margin-left: 36px;
-` as any;
-
-const Row = styled('div')`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  background-color: #fff;
-  margin: 0;
-  border-top: ${(p: any) => p.theme.bd.primary};
-  border-bottom: ${(p: any) => p.theme.bd.primary};
-  padding: 8px 16px;
-`;
-
-const StyledInput = styled(Input)`
-  display: inline-block;
-  width: 100px;
-  padding: 0 !important;
-
-  & input {
-    font-family: inherit;
-    padding: 0 !important;
-    color: #000;
-    font-weight: 500;
+  & > strong {
+    text-align: left;
   }
-` as any;
 
-const Label = styled('label')`
-  position: relative;
-  display: inline-block;
-  color: #000;
-  width: 48px;
-  left: -48px;
-  margin-right: -48px;
-  background-color: #fff;
-  text-align: right;
+  padding: 6px;
+
+  @media (max-width: ${p => p.theme.bp.mobile}) {
+    padding: 0;
+    text-align: center;
+    & > strong {
+      text-align: center;
+    }
+  }
+
+  width: 100%;
+`;
+
+const InputContainer = styled(Flex)`
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+  padding: 6px;
+  width: 100%;
+`;
+
+const Input = styled('input')`
+  border: none;
+  width: 100%;
   font-size: 16px;
-  line-height: 1;
-`;
-
-const Cost = styled('span')`
-  line-height: 20px;
-`;
-
-const Meta = styled('div')`
-  background: rgba(0, 0, 0, 0.1);
-  padding: 4px;
-  font-size: 12px;
-  line-height: 16px;
-  color: #333;
-  margin-left: 16px;
 `;
 
 interface AmountRangeProps {
@@ -83,83 +63,79 @@ interface AmountRangeProps {
   billingCurrency: BillingCurrency;
   onChange: (amount: number) => void;
   config: Config;
+  [x: string]: any;
 }
 
-export default function AmountRange({
-  amount,
-  range,
-  currency,
-  billingCurrency,
-  onChange,
-  config,
-}: AmountRangeProps) {
+export default function AmountRange(props: AmountRangeProps) {
+  const { amount, range, currency, billingCurrency, onChange, config } = props;
   const min = Math.ceil(range.min);
   const max = Math.floor(range.max);
-  const step = range.step;
 
   const cost = Number(amount) * range.userPriceRate;
   const displayableCost =
     billingCurrency === 'XBT' ? satoshiToBTC(cost) : cost.toFixed(2);
 
   const displayedCurrency = getDisplayName(currency);
-  const showPrice = !config.coin || config.coin === 'bitcoin';
+  const showPrice =
+    !config.coin || config.coin === 'bitcoin' || config.coin === 'lightning';
 
   return (
-    <Container>
-      <Title
-        text={{
-          id: 'title.customamount',
-          children: '...or select custom amount',
-        }}
-      />
-      <Row>
-        <RangeContainer>
-          <AmountPackage
-            name={
-              <div>
-                <StyledInput
-                  type="number"
-                  min={min}
-                  max={max}
-                  step={step}
-                  value={amount}
-                  onChange={e => onChange(e.target.value)}
-                  onBlur={() =>
-                    amount > range.max
-                      ? onChange(range.max)
-                      : amount < range.min
-                        ? onChange(range.min)
-                        : null
-                  }
-                  id="custom_amount"
-                />
-                <Label htmlFor="custom_amount">{currency}</Label>
-              </div>
-            }
-            price={
-              showPrice && (
-                <Cost>
-                  {displayableCost > 0 ? displayableCost : '0'}{' '}
-                  {getDisplayName(billingCurrency)}
-                </Cost>
-              )
-            }
-          />
-        </RangeContainer>
+    <DeviceInfoProvider>
+      {({ is }) => (
+        <CardShadow color="white">
+          <Container row={!is.mobile} centered>
+            <div style={{ flex: 3 }}>
+              <Flex>
+                <Flex row justifyContent="unset">
+                  <InputContainer row>
+                    <Input
+                      value={amount}
+                      required
+                      autoFocus
+                      onChange={e => {
+                        const val = Number(e.target.value);
 
-        <Meta>
-          <div>
-            <Text id="amount.min">
-              <strong>Min:</strong> {{ min }} {{ displayedCurrency }}
-            </Text>
-          </div>
-          <div>
-            <Text id="amount.max">
-              <strong>Max:</strong> {{ max }} {{ displayedCurrency }}
-            </Text>
-          </div>
-        </Meta>
-      </Row>
-    </Container>
+                        if (!isNaN(val)) {
+                          onChange(val);
+                        }
+                      }}
+                    />
+                    <Text type="p" size="16px">
+                      {displayedCurrency}
+                    </Text>
+                  </InputContainer>
+                </Flex>
+                <Flex
+                  row
+                  justifyContent={!is.mobile && 'unset'}
+                  centered={is.mobile}
+                >
+                  <Text type="p" padding="0 12px 0 0">
+                    <strong>Min:</strong> {min} {displayedCurrency}
+                  </Text>
+                  <Text type="p">
+                    <strong>Max:</strong> {max} {displayedCurrency}
+                  </Text>
+                </Flex>
+              </Flex>
+            </div>
+            {showPrice && (
+              <div
+                style={{
+                  flex: 2,
+                  width: '100%',
+                  alignSelf: 'flex-start',
+                }}
+              >
+                <PriceLabel type="p" id="package.userprice">
+                  You pay <strong>{{ displayableCost }} </strong>
+                  {getDisplayName(billingCurrency)}
+                </PriceLabel>
+              </div>
+            )}
+          </Container>
+        </CardShadow>
+      )}
+    </DeviceInfoProvider>
   );
 }

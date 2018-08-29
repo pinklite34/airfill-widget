@@ -1,24 +1,18 @@
-import { History } from 'history';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { compose } from 'recompose';
+import { RouteComponentProps, withRouter } from 'react-router';
 
-import { Operator, PaymentButton } from '../../lib/prop-types';
-import { selectPaymentMethod, selectSelectedOperator } from '../../store';
+import { PaymentButton } from '../../types';
+
+import { selectPaymentMethod } from '../../store';
+
 import Collapsed from '../UI/Collapsed';
 
-interface PaymentCollapsedProps {
-  operator: Operator;
-  history: History;
+interface PaymentCollapsedProps extends RouteComponentProps<{}> {
   selectedMethod: PaymentButton;
 }
 
-function PaymentCollapsed({
-  operator,
-  history,
-  selectedMethod,
-}: PaymentCollapsedProps) {
+function PaymentCollapsed({ selectedMethod, history }: PaymentCollapsedProps) {
   const icon = selectedMethod && selectedMethod.icon;
   return (
     <Collapsed
@@ -30,10 +24,6 @@ function PaymentCollapsed({
   );
 }
 
-export default compose(
-  withRouter,
-  connect(state => ({
-    operator: selectSelectedOperator(state),
-    selectedMethod: selectPaymentMethod(state),
-  }))
-)(PaymentCollapsed);
+export default connect(state => ({
+  selectedMethod: selectPaymentMethod(state),
+}))(withRouter(PaymentCollapsed));

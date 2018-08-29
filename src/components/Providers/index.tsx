@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
 import ProviderCollapsed from './ProviderCollapsed';
-import ProviderPicker from './ProviderPicker';
+import ProviderPickerAsync from './ProviderPickerAsync';
 
 export default function Providers() {
   return (
     <Switch>
-      <Route path="/refill" exact component={ProviderPicker} />
-      <Route path="/refill/selectProvider" component={ProviderPicker} />
+      <Route path="/refill" exact component={ProviderPickerAsync} />
+      <Route path="/refill/selectProvider" component={ProviderPickerAsync} />
       <Route path="/refill/selectAmount" component={ProviderCollapsed} />
       <Route render={props => <ProviderCollapsed {...props} />} />
     </Switch>

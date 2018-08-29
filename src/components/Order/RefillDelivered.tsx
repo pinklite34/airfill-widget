@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'react-emotion';
 
-import { Order, PaymentStatus } from '../../lib/prop-types';
+import { Order, PaymentStatus } from '../../types';
 import Button from '../UI/Button';
 import Link from '../UI/Link';
 import OrderHeader from '../UI/OrderHeader';
@@ -28,7 +28,7 @@ interface RefillDeliveredProps {
 }
 
 export default function RefillDelivered(props: RefillDeliveredProps) {
-  const { paymentStatus } = props;
+  const { paymentStatus, order } = props;
 
   /* let pinInfo = {
     pin: '1234 1234 5678 6666',
@@ -40,6 +40,8 @@ export default function RefillDelivered(props: RefillDeliveredProps) {
 
   const pinInfo =
     paymentStatus.deliveryData && paymentStatus.deliveryData.pinInfo;
+
+  const linkInfo = order.linkInfo;
 
   return (
     <React.Fragment>
@@ -111,9 +113,24 @@ export default function RefillDelivered(props: RefillDeliveredProps) {
           </React.Fragment>
         )}
 
-        <Link href="https://www.bitrefill.com/faq/#my-topup-did-not-arrive">
-          <Text id="order.delivered.link">Can&apos;t see your refill?</Text>
-        </Link>
+        {linkInfo && (
+          <Link href={linkInfo.link}>
+            <PinLabel
+              type="p"
+              id="order.delivered.other"
+              margin="8px 0"
+              weight="600"
+            >
+              {linkInfo.other}
+            </PinLabel>
+          </Link>
+        )}
+
+        {!linkInfo && (
+          <Link href="https://www.bitrefill.com/faq/#my-topup-did-not-arrive">
+            <Text id="order.delivered.link">Can&apos;t see your refill?</Text>
+          </Link>
+        )}
 
         <Button
           margin="12px 0 0"

@@ -1,21 +1,18 @@
-import { Order } from 'lib/prop-types';
-import MaterialInput from 'material-ui/Input';
 import * as React from 'react';
+
 import { fetch } from '../../lib/api-client';
+import { Order } from '../../types';
+
 import Button from '../UI/Button';
 import Info from '../UI/info.svg';
+import Input from '../UI/Input';
 import OrderHeader from '../UI/OrderHeader';
-import Text from '../UI/Text';
 import PaymentError from './PaymentError';
 import PaymentLayout from './PaymentLayout';
 
-interface PaymentTwoFactorProps {
+export default class PaymentTwoFactor extends React.Component<{
   order: Order;
-}
-
-const Input = MaterialInput as any;
-
-class PaymentTwoFactor extends React.Component<PaymentTwoFactorProps> {
+}> {
   state = {
     code: '',
     error: null,
@@ -50,10 +47,11 @@ class PaymentTwoFactor extends React.Component<PaymentTwoFactorProps> {
         />
 
         <PaymentLayout {...this.props}>
-          <Text>Enter 2-step verification code:</Text>
           <Input
-            type="text"
-            id="2fa"
+            text={{
+              id: 'order.2farequired.input',
+              children: 'Enter 2-step verification code',
+            }}
             required
             onChange={e => this.setState({ code: e.target.value.trim() })}
             value={code}
@@ -72,5 +70,3 @@ class PaymentTwoFactor extends React.Component<PaymentTwoFactorProps> {
     );
   }
 }
-
-export default PaymentTwoFactor;

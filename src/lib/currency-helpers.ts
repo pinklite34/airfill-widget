@@ -1,4 +1,4 @@
-import { PaymentMode } from './prop-types';
+import { PaymentMode } from '../types';
 
 // Internally we use XBT, however the correct display name is BTC
 export const getDisplayName = currency =>
@@ -41,6 +41,8 @@ export const getPreOrderProps = ({
 
   // picked amount (package amount or ranged)
   amount,
+
+  userAccountBalance,
 }) => {
   let price = 0;
   let btcPrice = 0;
@@ -68,5 +70,5 @@ export const getPreOrderProps = ({
     btcPrice = getPrice(pkg, 'XBT');
   }
 
-  return { btcPrice, price };
+  return { btcPrice, price, billingCurrency, userAccountBalance };
 };

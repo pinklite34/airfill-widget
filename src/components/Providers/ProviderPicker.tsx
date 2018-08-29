@@ -2,14 +2,17 @@ import { History } from 'history';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
+import { Country, NumberLookup, Operator } from '../../types';
+
 import { setOperator } from '../../actions';
-import { CountryProp, NumberLookup, Operator } from '../../lib/prop-types';
+import { trackProductEvent } from '../../actions/analytics-actions';
 import {
   selectAvailableOperators,
   selectCountry,
   selectNumberLookup,
   selectSelectedOperator,
 } from '../../store';
+
 import ActiveSection from '../UI/ActiveSection';
 import ProviderGrid from './ProviderGrid';
 import ProviderSuggested from './ProviderSuggested';
@@ -49,7 +52,8 @@ interface ProviderPickerProps {
   history: History;
   setOperator: typeof setOperator;
   operators: Operator[];
-  country: CountryProp;
+  country: Country;
+  trackProductEvent: typeof trackProductEvent;
 }
 
 class ProviderPicker extends React.PureComponent<ProviderPickerProps> {
@@ -58,18 +62,30 @@ class ProviderPicker extends React.PureComponent<ProviderPickerProps> {
   };
 
   onSelectSuggestedOperator = () => {
-    this.props.setOperator(this.props.numberLookup.operator.slug);
-    this.props.history.push('/refill/selectAmount');
+    const {
+      numberLookup,
+      setOperator,
+      trackProductEvent,
+      history,
+    } = this.props;
+    const operatorSlug = numberLookup.operator.slug;
+    setOperator(operatorSlug);
+    trackProductEvent('Product Clicked', operatorSlug);
+    history.push('/refill/selectAmount');
   };
 
-  onRejectSuggestedOperator = () =>
+  onRejectSuggestedOperator = () => {
+    const { history } = this.props;
     this.setState({ showSuggestedOperator: false }, () =>
-      this.props.history.replace('/refill/selectProvider')
+      history.replace('/refill/selectProvider')
     );
+  };
 
   onSelectOperator = operator => {
-    this.props.setOperator(operator);
-    this.props.history.push('/refill/selectAmount');
+    const { trackProductEvent, setOperator, history } = this.props;
+    setOperator(operator);
+    trackProductEvent('Product Clicked', operator);
+    history.push('/refill/selectAmount');
   };
 
   render() {
@@ -133,5 +149,6 @@ export default connect(
   }),
   {
     setOperator,
+    trackProductEvent,
   }
 )(ProviderPicker);

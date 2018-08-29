@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'react-emotion';
 
-import * as defaultFlag from '../../unknown-flag.png';
+import * as defaultFlag from '../../../unknown-flag.png';
 
 const Img = styled('img')`
   margin: -3px 0;

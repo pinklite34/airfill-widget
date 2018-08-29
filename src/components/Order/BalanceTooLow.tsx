@@ -1,7 +1,7 @@
 import { History } from 'history';
 import * as React from 'react';
 
-import { Order } from '../../lib/prop-types';
+import { Order } from '../../types';
 import Button from '../UI/Button';
 import Text from '../UI/Text';
 import PaymentLayout from './PaymentLayout';

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
 
-import { Config } from '../../lib/prop-types';
+import { Config } from '../../types';
 import AmountCollapsed from './AmountCollapsed';
-import AmountPicker from './AmountPicker';
+import AmountPickerAsync from './AmountPickerAsync';
 
 export default function AmountRoutes({ config }: { config: Config }) {
   return (
@@ -12,7 +12,7 @@ export default function AmountRoutes({ config }: { config: Config }) {
       <Route path="/refill/selectProvider" />
       <Route
         path="/refill/selectAmount"
-        render={props => <AmountPicker config={config} {...props} />}
+        render={props => <AmountPickerAsync config={config} {...props} />}
       />
       <Route component={AmountCollapsed} />
     </Switch>

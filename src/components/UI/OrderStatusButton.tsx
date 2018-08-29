@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Order, TransProp } from '../../lib/prop-types';
+import { Order, TransProp } from '../../types';
 import Button from './Button';
 import Link from './Link';
 

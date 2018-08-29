@@ -2,10 +2,12 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router';
 
-import { Config, OperatorResult } from '../../lib/prop-types';
+import { Config, OperatorResult } from '../../types';
+
 import { selectOperator } from '../../store';
-import RecipientPicker from './Recipient';
+
 import RecipientCollapsed from './RecipientCollapsed';
+import RecipientPickerAsync from './RecipientPickerAsync';
 
 interface RecipientProps {
   config: Config;
@@ -22,7 +24,7 @@ function Recipient({ config, operator }: RecipientProps) {
       <Route path="/refill/selectAmount" />
       <Route
         path="/refill/selectRecipient"
-        render={props => <RecipientPicker {...props} config={config} />}
+        render={props => <RecipientPickerAsync {...props} config={config} />}
       />
       {show && <Route component={RecipientCollapsed} />}
     </Switch>

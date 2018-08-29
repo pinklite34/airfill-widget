@@ -10,8 +10,8 @@ import {
   routerReducer,
 } from 'react-router-redux';
 
+import initAnalytics from './lib/analytics-init';
 import { client } from './lib/api-client';
-import initAnalytics from './lib/init-analytics';
 import configureStore from './store/configureStore';
 
 import Widget from './components/Widget';
@@ -63,6 +63,7 @@ function AirfillWidget(ele, opt) {
     showLogo,
     showInstructions,
     forceOperator,
+    coin,
   } = options;
   const orderOptions = { email, sendEmail, sendSMS, refundAddress };
 
@@ -94,6 +95,7 @@ function AirfillWidget(ele, opt) {
           showPoweredBy={!showLogo}
           keepDefaultPayments={keepDefaultPayments}
           forceOperator={forceOperator}
+          coin={coin}
         />
       </ConnectedRouter>
     </Provider>,

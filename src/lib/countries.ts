@@ -1,18 +1,19 @@
-import { getCountryCallingCode } from 'libphonenumber-js';
-import * as worldCountries from '../countries.json';
+import { CountryCode, getCountryCallingCode } from 'libphonenumber-js';
+
+import worldCountries from '../world-countries';
 
 const selectInternational = countryList =>
   countryList.find(x => x.name === 'International');
 
 // returns missing countries (no providers)
 export const getMissingCountries = countryList =>
-  (worldCountries as any)
+  worldCountries
     .filter(x => !countryList.some(x1 => x1.alpha2 === x.alpha2))
     .map(country => {
       let code;
 
       try {
-        code = '+' + getCountryCallingCode(country.alpha2);
+        code = '+' + getCountryCallingCode(country.alpha2 as CountryCode);
       } catch (ex) {}
 
       const international = selectInternational(countryList);

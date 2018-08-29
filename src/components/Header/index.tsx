@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'react-emotion';
 import { Route, Switch } from 'react-router';
 
-import { Config } from '../../lib/prop-types';
+import { Config } from '../../types';
 import HeaderIntroduction from './HeaderIntroduction';
 import HeaderLogo from './HeaderLogo';
 

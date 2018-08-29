@@ -2,15 +2,15 @@ import * as React from 'react';
 import { Route, Switch } from 'react-router';
 
 import { isValidEmail } from '../../lib/email-validation';
-import { Config } from '../../lib/prop-types';
-import RecipientPicker from './StatusEmail';
-import RecipientCollapsed from './StatusEmailCollapsed';
+import { Config } from '../../types';
+import EmailCollapsed from './EmailCollapsed';
+import EmailPickerAsync from './EmailPickerAsync';
 
-interface StatusEmailProps {
+interface EmailProps {
   config: Config;
 }
 
-function StatusEmail({ config }: StatusEmailProps) {
+function Email({ config }: EmailProps) {
   const show = !isValidEmail(config.orderOptions.email);
 
   return (
@@ -20,12 +20,12 @@ function StatusEmail({ config }: StatusEmailProps) {
       <Route path="/refill/selectAmount" />
       <Route path="/refill/selectRecipient" />
       <Route
-        path="/refill/selectStatusEmail"
-        render={props => <RecipientPicker {...props} config={config} />}
+        path="/refill/selectEmail"
+        render={props => <EmailPickerAsync {...props} config={config} />}
       />
-      {show && <Route component={RecipientCollapsed} />}
+      {show && <Route component={EmailCollapsed} />}
     </Switch>
   );
 }
 
-export default StatusEmail;
+export default Email;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { css } from 'react-emotion';
 
-import { ProviderObject, TransProp } from '../../lib/prop-types';
+import { ProviderObject, TransProp } from '../../types';
 import SectionTitle from '../UI/SectionTitle';
 import Provider, { ShowAll } from './Provider';
 

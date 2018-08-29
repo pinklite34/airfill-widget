@@ -1,4 +1,3 @@
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import styled from 'react-emotion';
 import { Trans } from 'react-i18next';
@@ -151,12 +150,8 @@ export default function Text({
     transProps.children
   );
 
-  const s = <p style={{}} />;
-
   return TextComponent ? (
-    <TextComponent {...textProps} style={{ color: 'red !important' }}>
-      {children}
-    </TextComponent>
+    <TextComponent {...textProps}>{children}</TextComponent>
   ) : (
     children || null
   );

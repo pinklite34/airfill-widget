@@ -20,6 +20,8 @@ const supportedLanguageKeys = supportedLanguages.map(function(x) {
 
 function createI18nConfig(lng) {
   return {
+    // debug: !isProd,
+
     fallbackLng: defaultLngKey,
     lng: lng,
     preload: [lng || defaultLngKey],
@@ -29,15 +31,14 @@ function createI18nConfig(lng) {
     saveMissing: LOCIZE_API_KEY && isProd,
     updateMissing: LOCIZE_API_KEY && isProd,
 
-    ns: namespaces,
     defaultNS: defaultNamespace,
+    ns: namespaces,
 
     backend: {
-      loadPath: '/translations/{{lng}}/{{ns}}.json',
       addPath: 'https://api.locize.io/missing/' + LOCIZE_PROJECT_ID + '/latest/{{lng}}/{{ns}}',
+      loadPath: '/translations/{{lng}}/{{ns}}.json',
     },
 
-    debug: !isProd,
     keySeparator: '### not used ###',
 
     interpolation: {
@@ -51,10 +52,10 @@ function createI18nConfig(lng) {
 }
 
 module.exports = {
+  createI18nConfig: createI18nConfig,
   defaultLngKey: defaultLngKey,
   defaultNamespace: defaultNamespace,
   namespaces: namespaces,
-  createI18nConfig: createI18nConfig,
-  supportedLanguages: supportedLanguages,
   supportedLanguageKeys: supportedLanguageKeys,
+  supportedLanguages: supportedLanguages,
 };

@@ -1,4 +1,4 @@
-import { PaymentButton } from './lib/prop-types';
+import { PaymentButton } from './types';
 
 import {
   BitcoinIcon,
@@ -46,12 +46,19 @@ function openWindow(method, order) {
   );
 }
 
-export function canAfford(method, operator, amount, billingCurrency) {
+export function canAfford(
+  method,
+  operator,
+  amount,
+  billingCurrency,
+  userAccountBalance
+) {
   return method.canAfford(
     getPreOrderProps({
       operator: operator.result,
       billingCurrency,
       amount,
+      userAccountBalance,
     })
   );
 }

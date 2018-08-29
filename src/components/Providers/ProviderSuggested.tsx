@@ -1,7 +1,8 @@
 import * as React from 'react';
 import styled from 'react-emotion';
 
-import { Operator } from 'lib/prop-types';
+import { Operator } from '../../types';
+
 import Button from '../UI/Button';
 import Flex from '../UI/Flex';
 import Info from '../UI/info.svg';

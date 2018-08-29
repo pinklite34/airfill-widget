@@ -4,6 +4,7 @@ import { createAction } from 'redux-actions';
 import { history } from '../components/Widget';
 import { fetch } from '../lib/api-client';
 import { createLoadAction } from '../lib/rest-helpers';
+import { getStorageItem, setStorageItem, StorageKey } from '../lib/storage';
 import {
   selectAmount,
   selectCountry,
@@ -212,7 +213,8 @@ export const createOrder = orderOptions => (dispatch, getState) => {
   const state = getState();
   const number = selectNumber(state);
   const amount = selectAmount(state);
-  const email = selectValidEmail(state) || orderOptions.email;
+  const validEmail = selectValidEmail(state);
+  const email = validEmail || orderOptions.email;
   const operator = selectOperator(state);
   const order = selectOrder(state);
   const isSubscribing = selectSubscribeNewsletter(state);
@@ -228,6 +230,10 @@ export const createOrder = orderOptions => (dispatch, getState) => {
       paymentMethod: method.paymentMode,
     },
   };
+
+  if (validEmail) {
+    setStorageItem(StorageKey.EMAIL, validEmail);
+  }
 
   if (order.isLoading || operator.isLoading) {
     return Promise.reject(); // eslint-disable-line
@@ -295,6 +301,11 @@ export const init = (
     });
   } else if (shouldLookupLocation && !number) {
     dispatch(lookupLocation());
+  }
+
+  const cachedEmail = getStorageItem(StorageKey.EMAIL);
+  if (cachedEmail) {
+    dispatch(setEmail(cachedEmail));
   }
 };
 

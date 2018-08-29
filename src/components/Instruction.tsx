@@ -1,9 +1,11 @@
 import * as React from 'react';
 import styled from 'react-emotion';
 
-import DeviceInfo from '../lib/DeviceInfo';
-import { TransProp } from '../lib/prop-types';
+import { TransProp } from '../types';
+
+import DeviceInfoProvider from '../lib/DeviceInfoProvider';
 import theme from '../theme';
+
 import Text from './UI/Text';
 
 const Container = styled('div')`
@@ -72,7 +74,7 @@ export default function Instruction({
   description,
 }: InstructionProps) {
   return (
-    <DeviceInfo>
+    <DeviceInfoProvider>
       {({ greaterThan }) => (
         <Container>
           <Badge>{number}</Badge>
@@ -92,6 +94,6 @@ export default function Instruction({
           </Content>
         </Container>
       )}
-    </DeviceInfo>
+    </DeviceInfoProvider>
   );
 }

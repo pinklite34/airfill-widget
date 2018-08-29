@@ -4,6 +4,8 @@ node_modules
 .DS_Store
 dist/*
 stats.json
+stats-standalone.json
+stats-module.json
 package-lock.json
 src/translations/*/*.json
 .env.local

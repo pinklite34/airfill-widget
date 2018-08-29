@@ -1,11 +1,12 @@
 import * as React from 'react';
 import styled from 'react-emotion';
 
-import DeviceInfo from '../../lib/DeviceInfo';
+import { ErrorProp } from '../../types';
+
+import DeviceInfoProvider from '../../lib/DeviceInfoProvider';
 import { fromWindow, isMobileApp } from '../../lib/globals';
 import { WidgetRectContext } from '../../lib/WidgetRect';
 
-import { ErrorProp } from 'lib/prop-types';
 import ErrorBanner from './ErrorBanner';
 
 const Container = styled('div')`
@@ -104,7 +105,7 @@ export default function ActiveSection({
   const errorMsg = error && (error.message || error);
 
   return (
-    <DeviceInfo>
+    <DeviceInfoProvider>
       {({ lessThan }) => (
         <Container {...props}>
           {errorMsg && <ErrorBanner text={errorMsg} />}
@@ -135,6 +136,6 @@ export default function ActiveSection({
           ) : null}
         </Container>
       )}
-    </DeviceInfo>
+    </DeviceInfoProvider>
   );
 }

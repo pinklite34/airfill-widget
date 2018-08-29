@@ -2,24 +2,28 @@ import * as React from 'react';
 import styled from 'react-emotion';
 import { connect } from 'react-redux';
 
-import { setPaymentMethod } from '../../actions';
-import {
-  isDirectPayment,
-  isLightningPayment,
-} from '../../lib/currency-helpers';
-import DeviceInfo from '../../lib/DeviceInfo';
-import { getEthInstance, toWei } from '../../lib/eth';
-import { fromWindow } from '../../lib/globals';
-import { getPaymentInfo } from '../../lib/price';
 import {
   Amount,
+  Operator,
   Order,
   OrderOptions,
   PaymentButton,
   PaymentStatus,
-} from '../../lib/prop-types';
+} from '../../types';
+
+import { setPaymentMethod } from '../../actions';
+import { trackProductEvent } from '../../actions/analytics-actions';
+import {
+  isDirectPayment,
+  isLightningPayment,
+} from '../../lib/currency-helpers';
+import DeviceInfoProvider from '../../lib/DeviceInfoProvider';
+import { getEthInstance, toWei } from '../../lib/eth';
+import { fromWindow } from '../../lib/globals';
+import { getPaymentInfo } from '../../lib/price';
 import { selectAmount, selectPaymentMethod } from '../../store';
 import theme from '../../theme';
+
 import Button from '../UI/Button';
 import CopyField from '../UI/CopyField';
 import Flex from '../UI/Flex';
@@ -45,6 +49,7 @@ interface PaymentModeProps {
   paymentMethod: PaymentButton;
   setPaymentMethod: typeof setPaymentMethod;
   onExternalUrl: (uri: string) => void;
+  trackProductEvent: typeof trackProductEvent;
 }
 
 class PaymentMode extends React.PureComponent<PaymentModeProps> {
@@ -55,6 +60,11 @@ class PaymentMode extends React.PureComponent<PaymentModeProps> {
   state = {
     open: false,
     isLoading: false,
+  };
+
+  componentDidMount = () => {
+    const { trackProductEvent, order } = this.props;
+    trackProductEvent('Product Added', order.operator);
   };
 
   onOpenWallet = uri => async () => {
@@ -80,7 +90,9 @@ class PaymentMode extends React.PureComponent<PaymentModeProps> {
         },
         err => {
           console.error(err);
-          onExternalUrl(uri);
+          // onExternalUrl(uri);
+          // this is called when there is no balance
+          // automatically on toshi and causes issues
         }
       );
     } else {
@@ -154,7 +166,7 @@ class PaymentMode extends React.PureComponent<PaymentModeProps> {
           }
         />
 
-        <DeviceInfo>
+        <DeviceInfoProvider>
           {({ is, greaterThan }) => (
             <PaymentLayout fullWidth={isDirect} {...this.props}>
               {!isDirect ? (
@@ -282,7 +294,7 @@ class PaymentMode extends React.PureComponent<PaymentModeProps> {
               )}
             </PaymentLayout>
           )}
-        </DeviceInfo>
+        </DeviceInfoProvider>
       </div>
     );
   }
@@ -295,5 +307,6 @@ export default connect(
   }),
   {
     setPaymentMethod,
+    trackProductEvent,
   }
 )(PaymentMode);

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Order, PaymentStatus } from '../../lib/prop-types';
+import { Order, PaymentStatus } from '../../types';
 import OrderHeader from '../UI/OrderHeader';
 import OrderStatusButton from '../UI/OrderStatusButton';
 import Error from './error.svg';
