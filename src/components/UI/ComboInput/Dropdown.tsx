@@ -3,7 +3,7 @@ import styled from 'react-emotion';
 import { connect } from 'react-redux';
 import VirtualList from 'react-tiny-virtual-list';
 
-import { CountryProp } from '../../../types';
+import { Country } from '../../../types';
 
 import { selectCountryList } from '../../../store';
 
@@ -74,7 +74,7 @@ interface Item {
 
 interface DropdownProps {
   getItemProps: (item: any) => any;
-  countryList: CountryProp[];
+  countryList: Country[];
   items: Item[];
   highlightedIndex: number;
 }

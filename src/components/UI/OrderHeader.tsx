@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'react-emotion';
 
-import DeviceInfo from '../../lib/DeviceInfo';
+import DeviceInfoProvider from '../../lib/DeviceInfoProvider';
 import { Order, TransProp } from '../../types';
 import Text from './Text';
 
@@ -53,7 +53,7 @@ export default class OrderHeader extends React.PureComponent<OrderHeaderProps> {
     const { order, title, subtitle, icon } = this.props;
 
     return (
-      <DeviceInfo>
+      <DeviceInfoProvider>
         {({ greaterThan }) => (
           <Container>
             {greaterThan.mobile && <Icon>{icon}</Icon>}
@@ -68,7 +68,7 @@ export default class OrderHeader extends React.PureComponent<OrderHeaderProps> {
             </TextContainer>
           </Container>
         )}
-      </DeviceInfo>
+      </DeviceInfoProvider>
     );
   }
 }

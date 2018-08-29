@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import { CountryProp } from '../../../types';
+import { Country } from '../../../types';
 import Flag from '../Flag';
 import Row from './Row';
 
 interface CountryRowProps {
-  item: CountryProp;
+  item: Country;
 }
 
 export default function CountryRow({ item, ...props }: CountryRowProps) {

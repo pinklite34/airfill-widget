@@ -2,7 +2,7 @@ import * as React from 'react';
 import { css } from 'react-emotion';
 import { connect } from 'react-redux';
 
-import { CountryProp } from '../../../types';
+import { Country } from '../../../types';
 
 import { selectCountryList } from '../../../store';
 
@@ -18,7 +18,7 @@ const styles = {
 
 interface HistoryRowProps {
   item: any;
-  countryList: CountryProp[];
+  countryList: Country[];
 }
 
 function HistoryRow({ item, countryList, ...props }: HistoryRowProps) {

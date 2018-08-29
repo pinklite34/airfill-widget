@@ -3,7 +3,6 @@ import { ThemeProvider } from 'emotion-theming';
 import createHistory from 'history/createMemoryHistory';
 import * as React from 'react';
 import { I18nextProvider } from 'react-i18next';
-import Media from 'react-media';
 import { connect, Provider } from 'react-redux';
 import { Route, RouteComponentProps, withRouter } from 'react-router';
 import {
@@ -28,11 +27,13 @@ import {
   useRecentRefill,
 } from '../actions';
 import { client } from '../lib/api-client';
+import DeviceInfoProvider from '../lib/DeviceInfoProvider';
 import i18n from '../lib/i18n-instance';
 import WidgetRect from '../lib/WidgetRect';
 
 import Amount from './Amount';
 import Country from './Country';
+import Email from './Email';
 import Footer from './Footer';
 import Header from './Header';
 import Instructions from './Instructions';
@@ -40,7 +41,6 @@ import Order from './Order';
 import Payment from './PaymentMethod';
 import Providers from './Providers';
 import Recipient from './Recipient';
-import StatusEmail from './StatusEmail';
 import Card from './UI/Card';
 import Root from './UI/Root';
 import Spinner from './UI/Spinner';
@@ -212,7 +212,7 @@ class AirfillWidget extends React.Component<AirfillWidgetProps & Config> {
                     <Providers />
                     <Amount config={config} />
                     <Recipient config={config} />
-                    <StatusEmail config={config} />
+                    <Email config={config} />
                     <Payment config={config} />
                     <Order config={config} />
                     {showInstructions && (
@@ -272,9 +272,11 @@ export default function Widget(props) {
   return (
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <Media query="(-moz-touch-enabled: 1), (pointer: coarse)">
-          {isMobile => <StoreWidgetWrapper isMobile={isMobile} {...props} />}
-        </Media>
+        <DeviceInfoProvider>
+          {({ isMobile }) => (
+            <StoreWidgetWrapper isMobile={isMobile} {...props} />
+          )}
+        </DeviceInfoProvider>
       </ConnectedRouter>
     </Provider>
   );

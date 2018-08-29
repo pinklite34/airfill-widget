@@ -3,7 +3,7 @@ import styled from 'react-emotion';
 
 import { TransProp } from '../types';
 
-import DeviceInfo from '../lib/DeviceInfo';
+import DeviceInfoProvider from '../lib/DeviceInfoProvider';
 import theme from '../theme';
 
 import Text from './UI/Text';
@@ -74,7 +74,7 @@ export default function Instruction({
   description,
 }: InstructionProps) {
   return (
-    <DeviceInfo>
+    <DeviceInfoProvider>
       {({ greaterThan }) => (
         <Container>
           <Badge>{number}</Badge>
@@ -94,6 +94,6 @@ export default function Instruction({
           </Content>
         </Container>
       )}
-    </DeviceInfo>
+    </DeviceInfoProvider>
   );
 }

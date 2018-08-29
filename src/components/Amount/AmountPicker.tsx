@@ -69,7 +69,7 @@ class AmountPicker extends React.PureComponent<AmountPickerProps> {
     if (operator.result && operator.result.recipientType !== 'none') {
       history.push('/refill/selectRecipient');
     } else if (!isValidEmail(config.orderOptions.email)) {
-      history.push('/refill/selectStatusEmail');
+      history.push('/refill/selectEmail');
     } else {
       history.push('/refill/selectPayment');
     }

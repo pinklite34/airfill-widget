@@ -17,7 +17,7 @@ import {
   isDirectPayment,
   isLightningPayment,
 } from '../../lib/currency-helpers';
-import DeviceInfo from '../../lib/DeviceInfo';
+import DeviceInfoProvider from '../../lib/DeviceInfoProvider';
 import { getEthInstance, toWei } from '../../lib/eth';
 import { fromWindow } from '../../lib/globals';
 import { getPaymentInfo } from '../../lib/price';
@@ -166,7 +166,7 @@ class PaymentMode extends React.PureComponent<PaymentModeProps> {
           }
         />
 
-        <DeviceInfo>
+        <DeviceInfoProvider>
           {({ is, greaterThan }) => (
             <PaymentLayout fullWidth={isDirect} {...this.props}>
               {!isDirect ? (
@@ -294,7 +294,7 @@ class PaymentMode extends React.PureComponent<PaymentModeProps> {
               )}
             </PaymentLayout>
           )}
-        </DeviceInfo>
+        </DeviceInfoProvider>
       </div>
     );
   }

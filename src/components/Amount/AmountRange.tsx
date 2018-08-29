@@ -10,7 +10,7 @@ import {
 } from '../../types';
 
 import { getDisplayName, satoshiToBTC } from '../../lib/currency-helpers';
-import DeviceInfo from '../../lib/DeviceInfo';
+import DeviceInfoProvider from '../../lib/DeviceInfoProvider';
 import CardShadow from '../UI/CardShadow';
 import Flex from '../UI/Flex';
 import Text from '../UI/Text';
@@ -80,7 +80,7 @@ export default function AmountRange(props: AmountRangeProps) {
     !config.coin || config.coin === 'bitcoin' || config.coin === 'lightning';
 
   return (
-    <DeviceInfo>
+    <DeviceInfoProvider>
       {({ is }) => (
         <CardShadow color="white">
           <Container row={!is.mobile} centered>
@@ -136,6 +136,6 @@ export default function AmountRange(props: AmountRangeProps) {
           </Container>
         </CardShadow>
       )}
-    </DeviceInfo>
+    </DeviceInfoProvider>
   );
 }

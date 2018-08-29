@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'react-emotion';
 
-import DeviceInfo from '../../lib/DeviceInfo';
+import DeviceInfoProvider from '../../lib/DeviceInfoProvider';
 import { TransProp } from '../../types';
 import Button from './Button';
 import Icon from './Icon';
@@ -44,7 +44,7 @@ export default function Collapsed({
   alt,
 }: CollapsedProps) {
   return (
-    <DeviceInfo>
+    <DeviceInfoProvider>
       {({ lessThan }) => (
         <Container>
           <Left>
@@ -83,6 +83,6 @@ export default function Collapsed({
           )}
         </Container>
       )}
-    </DeviceInfo>
+    </DeviceInfoProvider>
   );
 }

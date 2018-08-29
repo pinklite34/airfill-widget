@@ -69,7 +69,7 @@ export interface Product {
   type: ProductType;
 }
 
-export interface CountryProp {
+export interface Country {
   name: string;
   alpha2: string;
   operators: Operator[];

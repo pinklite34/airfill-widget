@@ -1,13 +1,12 @@
 import * as React from 'react';
-import Media from 'react-media';
 
 import { DeviceInfo, DeviceType } from '../types';
 
 import theme from '../theme';
-import { fromWindow } from './globals';
+import { fromWindow, isMobileApp } from './globals';
 
 interface DeviceInfoProps {
-  children: (state: DeviceInfo) => void;
+  children: (state: DeviceInfo) => React.ReactNode;
 }
 
 export default class DeviceInfoProvider extends React.PureComponent<
@@ -21,7 +20,7 @@ export default class DeviceInfoProvider extends React.PureComponent<
     lessThan: { tablet: false, desktop: false },
     greaterThan: { mobile: true, tablet: true },
     deviceType: DeviceType.web,
-    isMobile: false,
+    isMobile: isMobileApp(),
   };
 
   componentDidMount() {
@@ -73,22 +72,24 @@ export default class DeviceInfoProvider extends React.PureComponent<
   }
 
   render() {
-    const { width, height, lessThan, greaterThan, deviceType, is } = this.state;
+    const {
+      width,
+      height,
+      lessThan,
+      greaterThan,
+      deviceType,
+      is,
+      isMobile,
+    } = this.state;
 
-    return (
-      <Media query="(-moz-touch-enabled: 1), (pointer: coarse)">
-        {isMobile =>
-          this.props.children({
-            width,
-            height,
-            is,
-            lessThan,
-            greaterThan,
-            isMobile,
-            deviceType,
-          })
-        }
-      </Media>
-    );
+    return this.props.children({
+      width,
+      height,
+      is,
+      lessThan,
+      greaterThan,
+      isMobile,
+      deviceType,
+    });
   }
 }

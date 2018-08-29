@@ -2,7 +2,7 @@ import { History } from 'history';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { CountryProp, OrderResult } from '../../types';
+import { Country, OrderResult } from '../../types';
 
 import { openComboInput, setComboInputFocus, setCountry } from '../../actions';
 import { trackProductEvent } from '../../actions/analytics-actions';
@@ -14,7 +14,7 @@ import Text from '../UI/Text';
 
 interface CountryCollapsedProps {
   home: any;
-  country: CountryProp;
+  country: Country;
   isNumberLookup: boolean;
   openComboInput: typeof openComboInput;
   setComboInputFocus: typeof setComboInputFocus;

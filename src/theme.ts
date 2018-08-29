@@ -9,6 +9,7 @@ const colors = {
   greyBorder: '#b7c0cc',
   greyDark: '#5e6c82',
   greyLight: '#eeeeee',
+  greyLighter: '#fafafa',
   redDark: '#df1e3b',
   redLight: '#ff4759',
   white: '#ffffff',
@@ -23,10 +24,10 @@ export default {
 
   // background
   bg: {
-    light: colors.greyBlue,
-    dark: colors.blueDark,
+    light: colors.greyLighter,
+    dark: colors.greyDark,
     secondary: colors.blue,
-    primary: colors.green,
+    primary: colors.blue,
     disabled: colors.greyDark,
     red: colors.redLight,
   },
@@ -35,7 +36,7 @@ export default {
   tx: {
     primary: colors.black,
     secondary: colors.greyDark,
-    accent: colors.redLight,
+    accent: colors.blueDark,
     link: colors.blueLight,
     error: colors.redLight,
     success: colors.green,
@@ -43,6 +44,8 @@ export default {
 
   // borders
   bd: {
+    primary: '1px solid rgba(0, 0, 0, 0.08)',
+    dotted: '2px dotted rgba(0, 0, 0, 0.08)',
     input: `2px solid ${colors.greyBlue}`,
     inputActive: `2px solid ${colors.greyDark}`,
     step: `1px solid ${colors.greyBlue}`,
@@ -53,7 +56,7 @@ export default {
 
   // breakpoints
   bp: {
-    mobile: '480px',
-    tablet: '960px',
+    mobile: '460px',
+    tablet: '770px', // raised this to 770px because iPads according to chrome dev tools is 768 px
   },
 };

@@ -25,7 +25,7 @@ import {
 import {
   Amount,
   Config,
-  CountryProp,
+  Country,
   Email,
   OperatorResult,
   PaymentMode,
@@ -53,12 +53,12 @@ interface RecipientProps {
   number: string;
   email: Email;
   paymentMethod: PaymentMode;
-  country: CountryProp;
+  country: Country;
   setSubscribeNewsletter: typeof setSubscribeNewsletter;
   subscribing: boolean;
 }
 
-class Recipient extends React.PureComponent<RecipientProps> {
+class RecipientPicker extends React.PureComponent<RecipientProps> {
   state = {
     error: null,
     placeholder: '',
@@ -163,7 +163,7 @@ class Recipient extends React.PureComponent<RecipientProps> {
 
     if (this.validateInput()) {
       if (!isValidEmail(config.orderOptions.email)) {
-        history.push('/refill/selectStatusEmail');
+        history.push('/refill/selectEmail');
       } else {
         history.push('/refill/selectPayment');
       }
@@ -219,4 +219,4 @@ export default connect(
     trigger,
     setSubscribeNewsletter,
   }
-)(Recipient);
+)(RecipientPicker);

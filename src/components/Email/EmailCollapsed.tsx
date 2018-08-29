@@ -10,14 +10,14 @@ import Collapsed from '../UI/Collapsed';
 
 import Icon from '../../assets/email.svg';
 
-interface StatusEmailCollapsedProps extends RouteComponentProps<{}> {
+interface EmailCollapsedProps extends RouteComponentProps<{}> {
   email: Email;
 }
 
-function StautsEmailCollapsed({ history, email }: StatusEmailCollapsedProps) {
+function EmailCollapsed({ history, email }: EmailCollapsedProps) {
   return (
     <Collapsed
-      onClick={() => history.push('/refill/selectStatusEmail')}
+      onClick={() => history.push('/refill/selectEmail')}
       type="email"
       icon={<Icon />}
       title={email.value}
@@ -28,4 +28,4 @@ function StautsEmailCollapsed({ history, email }: StatusEmailCollapsedProps) {
 export default connect(state => ({
   operator: selectSelectedOperator(state),
   email: selectEmail(state),
-}))(withRouter(StautsEmailCollapsed));
+}))(withRouter(EmailCollapsed));

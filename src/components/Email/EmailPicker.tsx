@@ -23,7 +23,7 @@ const InputContainer = styled('div')`
   }
 `;
 
-class StatusEmail extends React.PureComponent<{
+class EmailPicker extends React.PureComponent<{
   config: Config;
   history: History;
   setEmail: typeof setEmail;
@@ -96,4 +96,4 @@ export default connect(
     setEmail,
     setSubscribeNewsletter,
   }
-)(StatusEmail);
+)(EmailPicker);

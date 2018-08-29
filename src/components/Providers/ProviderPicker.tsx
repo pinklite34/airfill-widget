@@ -2,7 +2,7 @@ import { History } from 'history';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { CountryProp, NumberLookup, Operator } from '../../types';
+import { Country, NumberLookup, Operator } from '../../types';
 
 import { setOperator } from '../../actions';
 import { trackProductEvent } from '../../actions/analytics-actions';
@@ -52,7 +52,7 @@ interface ProviderPickerProps {
   history: History;
   setOperator: typeof setOperator;
   operators: Operator[];
-  country: CountryProp;
+  country: Country;
   trackProductEvent: typeof trackProductEvent;
 }
 
