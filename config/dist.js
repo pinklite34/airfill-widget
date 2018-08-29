@@ -12,22 +12,6 @@ const config = Object.assign({}, baseConfig, {
   cache: false,
   optimization: {
     minimize: true,
-    splitChunks: {
-      cacheGroups: {
-        vendorMain: {
-          chunks: "initial",
-          test: /react|react-dom|i18next|react-i18next|react-redux/,
-          name: "vendor-main",
-          enforce: true,
-        },
-        vendorSecond: {
-          chunks: "initial",
-          test: /libphonenumber-js|color|redux-segment/,
-          name: "vendor-second",
-          enforce: true,
-        },
-      },
-    },
   },
   plugins: baseConfig.plugins.concat([
     new webpack.DefinePlugin(Object.assign({}, getClientEnv().stringified, {
