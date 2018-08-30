@@ -34,11 +34,7 @@ export default function PaymentConfirmed(props: PaymentConfirmedProps) {
         }}
         icon={<Spinner tight />}
       />
-      <PaymentLayout {...props}>
-        <Text id="order.confirmed.info" type="p">
-          The refill should arrive on the target account any minute now.
-        </Text>
-      </PaymentLayout>
+      <PaymentLayout {...props} />
     </React.Fragment>
   );
 }
