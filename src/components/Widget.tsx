@@ -101,6 +101,14 @@ class AirfillWidget extends React.Component<AirfillWidgetProps & Config> {
     };
   }
 
+  configureClient = () => {
+    const { apiKey, baseUrl } = this.props;
+    client.configure({
+      token: apiKey || 'hMY0TozyGOWKfSkV',
+      baseUrl: baseUrl || 'https://api.bitrefill.com/widget',
+    });
+  };
+
   componentDidMount() {
     const {
       apiKey,
@@ -117,10 +125,7 @@ class AirfillWidget extends React.Component<AirfillWidgetProps & Config> {
       openDropdown,
     } = this.props;
 
-    client.configure({
-      token: apiKey || 'hMY0TozyGOWKfSkV',
-      baseUrl: baseUrl || 'https://api.bitrefill.com/widget',
-    });
+    this.configureClient();
 
     init({
       defaultNumber,
@@ -146,6 +151,8 @@ class AirfillWidget extends React.Component<AirfillWidgetProps & Config> {
 
   componentDidUpdate(prevProps) {
     const { onChange } = this.props;
+
+    this.configureClient();
 
     if (onChange) {
       const operator = this.getResultProp(
