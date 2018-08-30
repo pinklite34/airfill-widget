@@ -48,9 +48,9 @@ const componentForStatus = status => {
     case 'failed':
       return RefillFailed;
     case 'payment_error':
-      return PaymentTwoFactor;
       return PaymentError;
     case '2fa_required':
+      return PaymentTwoFactor;
     case 'delivered':
       return RefillDelivered;
     case 'balance-too-low':
