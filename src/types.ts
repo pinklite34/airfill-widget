@@ -196,6 +196,7 @@ export interface PaymentStatus {
   status: string;
   failureData: any;
   deliveryData?: any;
+  paidAmount?: number;
 }
 
 export interface Payment {
@@ -214,6 +215,9 @@ export interface Payment {
   };
   altBasePrice: Amount;
   satoshiPrice: Amount;
+  bitsPrice?: number;
+  litesPrice?: number;
+  lightningInvoice?: string;
 }
 
 export interface OrderOptions {

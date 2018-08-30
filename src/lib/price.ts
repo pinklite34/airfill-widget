@@ -1,26 +1,36 @@
+import { Order, PaymentStatus } from 'types';
 import { isLightningPayment } from './currency-helpers';
 
-export function getPaymentInfo(method, paymentStatus, order) {
+export function getPaymentInfo(
+  method,
+  paymentStatus: PaymentStatus,
+  order: Order
+) {
   let paid;
-  let remaining;
+  let remaining: number;
 
-  const basePrice = order.payment.altBasePrice || order.payment.satoshiPrice;
+  const isPartial = paymentStatus.status === 'partial' || order.partialPayment;
+  const paidAmount: any = paymentStatus.paidAmount || order.paidAmount;
+
+  const basePrice: any =
+    order.payment.altBasePrice || order.payment.satoshiPrice;
+
   let price = order.payment.altcoinPrice || order.btcPrice;
-  let unit = order.payment.altcoinCode || 'BTC';
+  let unit: string = order.payment.altcoinCode || 'BTC';
 
-  if (paymentStatus.status === 'partial') {
+  if (isPartial) {
     if (method === 'ethereum') {
       // convert from Szabo to ETH
-      paid = paymentStatus.paidAmount;
+      paid = paidAmount;
       paid = Math.floor(paid) / 1000000;
-      remaining = basePrice - paymentStatus.paidAmount;
+      remaining = basePrice - paidAmount;
       remaining = Math.floor(remaining) / 1000000;
     } else {
       // bitcoin and bitcoin based altcoins
       // convert from baseAmount to BTC/LTC
-      paid = paymentStatus.paidAmount;
+      paid = paidAmount;
       paid = Math.floor(paid / 10000) / 10000;
-      remaining = basePrice - paymentStatus.paidAmount;
+      remaining = basePrice - paidAmount;
       remaining = Math.floor(remaining / 10000) / 10000;
     }
   }

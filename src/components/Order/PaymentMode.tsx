@@ -109,7 +109,8 @@ class PaymentMode extends React.PureComponent<PaymentModeProps> {
     // decide if the current payment method is a direct coin payment
     const isDirect = isDirectPayment(paymentMethod.paymentMode);
 
-    const isPartial = paymentStatus.status === 'partial';
+    const isPartial =
+      paymentStatus.status === 'partial' || order.partialPayment;
 
     const {
       displayPrice,
