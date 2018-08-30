@@ -243,7 +243,6 @@ export interface Order {
   paid: boolean;
   number: string;
   operator: string;
-  operatorType: string;
   operatorResponse: string;
   operatorSlug: string;
   operatorType: string;
