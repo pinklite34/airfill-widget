@@ -10,12 +10,24 @@ interface PaymentConfirmedProps {
   order: Order;
 }
 
+const refillTitle = {
+  id: 'order.confirmed.title',
+  children: 'Refill sent!',
+};
+
+const deliveryTitle = {
+  id: 'order.confirmed.delivery',
+  children: 'Delivery in progress',
+};
+
 export default function PaymentConfirmed(props: PaymentConfirmedProps) {
   return (
     <React.Fragment>
       <OrderHeader
         order={props.order}
-        title={{ id: 'order.confirmed.title', children: 'Refill sent!' }}
+        title={
+          props.order.operatorType === 'refill' ? refillTitle : deliveryTitle
+        }
         subtitle={{
           id: 'order.confirmed.subtitle',
           children: 'Waiting for delivery confirmation',
